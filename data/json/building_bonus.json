@@ -1,0 +1,232 @@
+[
+  {
+    "buildDegree": 60,
+    "bonus": 50,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 80,
+    "bonus": 60,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 100,
+    "bonus": 70,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 120,
+    "bonus": 80,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 140,
+    "bonus": 90,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 160,
+    "bonus": 100,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 180,
+    "bonus": 110,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 200,
+    "bonus": 120,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 220,
+    "bonus": 130,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 240,
+    "bonus": 140,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 270,
+    "bonus": 150,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 300,
+    "bonus": 160,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 330,
+    "bonus": 170,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 360,
+    "bonus": 180,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 390,
+    "bonus": 190,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 420,
+    "bonus": 200,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 450,
+    "bonus": 210,
+    "characterLimitAdd": 0
+  },
+  {
+    "buildDegree": 500,
+    "bonus": 220,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 550,
+    "bonus": 230,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 600,
+    "bonus": 240,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 650,
+    "bonus": 250,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 700,
+    "bonus": 260,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 750,
+    "bonus": 270,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 800,
+    "bonus": 280,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 850,
+    "bonus": 290,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 900,
+    "bonus": 300,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 950,
+    "bonus": 310,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 1000,
+    "bonus": 320,
+    "characterLimitAdd": 1
+  },
+  {
+    "buildDegree": 1100,
+    "bonus": 330,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1200,
+    "bonus": 340,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1300,
+    "bonus": 350,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1400,
+    "bonus": 360,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1500,
+    "bonus": 370,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1600,
+    "bonus": 380,
+    "characterLimitAdd": 2
+  },
+  {
+    "buildDegree": 1700,
+    "bonus": 390,
+    "characterLimitAdd": 3
+  },
+  {
+    "buildDegree": 1800,
+    "bonus": 400,
+    "characterLimitAdd": 3
+  },
+  {
+    "buildDegree": 1900,
+    "bonus": 410,
+    "characterLimitAdd": 3
+  },
+  {
+    "buildDegree": 2000,
+    "bonus": 420,
+    "characterLimitAdd": 3
+  },
+  {
+    "buildDegree": 2100,
+    "bonus": 430,
+    "characterLimitAdd": 4
+  },
+  {
+    "buildDegree": 2200,
+    "bonus": 440,
+    "characterLimitAdd": 4
+  },
+  {
+    "buildDegree": 2300,
+    "bonus": 450,
+    "characterLimitAdd": 4
+  },
+  {
+    "buildDegree": 2400,
+    "bonus": 460,
+    "characterLimitAdd": 4
+  },
+  {
+    "buildDegree": 2500,
+    "bonus": 470,
+    "characterLimitAdd": 5
+  },
+  {
+    "buildDegree": 2700,
+    "bonus": 480,
+    "characterLimitAdd": 5
+  },
+  {
+    "buildDegree": 2900,
+    "bonus": 490,
+    "characterLimitAdd": 5
+  },
+  {
+    "buildDegree": 3100,
+    "bonus": 500,
+    "characterLimitAdd": 5
+  }
+]

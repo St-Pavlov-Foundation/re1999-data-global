@@ -1,0 +1,47 @@
+[
+  {
+    "level": 1,
+    "cost": 0,
+    "level4": 90,
+    "level5": 80,
+    "level6": 70,
+    "equipLevel": 20,
+    "talentLevel": 4
+  },
+  {
+    "level": 2,
+    "cost": 10,
+    "level4": 120,
+    "level5": 100,
+    "level6": 90,
+    "equipLevel": 30,
+    "talentLevel": 6
+  },
+  {
+    "level": 3,
+    "cost": 30,
+    "level4": 120,
+    "level5": 135,
+    "level6": 121,
+    "equipLevel": 40,
+    "talentLevel": 8
+  },
+  {
+    "level": 4,
+    "cost": 60,
+    "level4": 120,
+    "level5": 165,
+    "level6": 150,
+    "equipLevel": 50,
+    "talentLevel": 12
+  },
+  {
+    "level": 5,
+    "cost": 60,
+    "level4": 120,
+    "level5": 180,
+    "level6": 180,
+    "equipLevel": 60,
+    "talentLevel": 15
+  }
+]

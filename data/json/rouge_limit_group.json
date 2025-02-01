@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1001,
+    "version": "101",
+    "title": "language_10051316",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff1"
+  },
+  {
+    "id": 1002,
+    "version": "101",
+    "title": "language_10051317",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff2"
+  },
+  {
+    "id": 1003,
+    "version": "101",
+    "title": "language_10018002",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff3"
+  },
+  {
+    "id": 1004,
+    "version": "101",
+    "title": "language_10008454",
+    "desc": "language_10051318",
+    "unlockCondition": "19:1001#1002#1003",
+    "icon": "rouge_dlc_debuff4"
+  },
+  {
+    "id": 1005,
+    "version": "101",
+    "title": "language_10008544",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff19"
+  },
+  {
+    "id": 2001,
+    "version": "101",
+    "title": "language_10051319",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff16"
+  },
+  {
+    "id": 2002,
+    "version": "101",
+    "title": "language_10051320",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff17"
+  },
+  {
+    "id": 2003,
+    "version": "101",
+    "title": "language_10051321",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff24"
+  },
+  {
+    "id": 2004,
+    "version": "101",
+    "title": "language_10051322",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff25"
+  },
+  {
+    "id": 2005,
+    "version": "101",
+    "title": "language_10018260",
+    "desc": "language_10051318",
+    "unlockCondition": "19:2002#2003#2004",
+    "icon": "rouge_dlc_debuff18"
+  },
+  {
+    "id": 2006,
+    "version": "101",
+    "title": "language_10051323",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff5"
+  },
+  {
+    "id": 3001,
+    "version": "101",
+    "title": "language_10051324",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff14"
+  },
+  {
+    "id": 3002,
+    "version": "101",
+    "title": "language_10051325",
+    "desc": "language_10051318",
+    "unlockCondition": "19:3001#7002",
+    "icon": "rouge_dlc_debuff15"
+  },
+  {
+    "id": 4001,
+    "version": "101",
+    "title": "language_10051326",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff7"
+  },
+  {
+    "id": 4002,
+    "version": "101",
+    "title": "language_10051327",
+    "desc": "language_10051318",
+    "unlockCondition": "19:4001#5001#4003",
+    "icon": "rouge_dlc_debuff8"
+  },
+  {
+    "id": 4003,
+    "version": "101",
+    "title": "language_10051328",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff9"
+  },
+  {
+    "id": 4004,
+    "version": "101",
+    "title": "language_10051329",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff10"
+  },
+  {
+    "id": 4005,
+    "version": "101",
+    "title": "language_10051330",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff11"
+  },
+  {
+    "id": 5001,
+    "version": "101",
+    "title": "language_10051331",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff6"
+  },
+  {
+    "id": 6001,
+    "version": "101",
+    "title": "language_10051332",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff21"
+  },
+  {
+    "id": 6002,
+    "version": "101",
+    "title": "language_10051333",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff20"
+  },
+  {
+    "id": 6003,
+    "version": "101",
+    "title": "language_10051334",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff22"
+  },
+  {
+    "id": 6004,
+    "version": "101",
+    "title": "language_10051335",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff23"
+  },
+  {
+    "id": 7001,
+    "version": "101",
+    "title": "language_10051336",
+    "desc": "language_10051318",
+    "unlockCondition": "19:6001#6002#6003#6004",
+    "icon": "rouge_dlc_debuff12"
+  },
+  {
+    "id": 7002,
+    "version": "101",
+    "title": "language_10051337",
+    "desc": "",
+    "unlockCondition": "",
+    "icon": "rouge_dlc_debuff13"
+  }
+]

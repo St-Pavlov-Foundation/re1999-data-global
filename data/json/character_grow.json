@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "icon": "sx_1",
+    "hp": 1,
+    "atk": 1,
+    "def": 1,
+    "mdef": 1,
+    "technic": 1
+  },
+  {
+    "id": 2,
+    "icon": "sx_2",
+    "hp": 1182,
+    "atk": 191,
+    "def": 91,
+    "mdef": 91,
+    "technic": 163
+  },
+  {
+    "id": 3,
+    "icon": "sx_3",
+    "hp": 1241,
+    "atk": 201,
+    "def": 95,
+    "mdef": 95,
+    "technic": 191
+  },
+  {
+    "id": 4,
+    "icon": "sx_4",
+    "hp": 1300,
+    "atk": 211,
+    "def": 100,
+    "mdef": 100,
+    "technic": 218
+  },
+  {
+    "id": 5,
+    "icon": "sx_5",
+    "hp": 1359,
+    "atk": 221,
+    "def": 114,
+    "mdef": 114,
+    "technic": 245
+  },
+  {
+    "id": 6,
+    "icon": "sx_6",
+    "hp": 1478,
+    "atk": 233,
+    "def": 125,
+    "mdef": 125,
+    "technic": 273
+  },
+  {
+    "id": 7,
+    "icon": "sx_7",
+    "hp": 1625,
+    "atk": 246,
+    "def": 135,
+    "mdef": 135,
+    "technic": 409
+  },
+  {
+    "id": 8,
+    "icon": "sx_8",
+    "hp": 1921,
+    "atk": 295,
+    "def": 159,
+    "mdef": 159,
+    "technic": 682
+  }
+]

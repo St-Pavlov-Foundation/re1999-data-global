@@ -1,0 +1,2487 @@
+[
+  {
+    "id": 501493,
+    "eventName": "play_activitystorysfx_feichi_water_walk_loop",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501494,
+    "eventName": "play_activitystorysfx_feichi_water_run_loop",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501495,
+    "eventName": "play_activitystorysfx_feichi_tv_open",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501496,
+    "eventName": "play_activitystorysfx_feichi_dragon_roar",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501497,
+    "eventName": "play_activitystorysfx_feichi_dragon_fly",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501498,
+    "eventName": "play_activitystorysfx_feichi_swamp_walk_loop",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501499,
+    "eventName": "play_activitystorysfx_feichi_oars_scratch_loop",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501500,
+    "eventName": "play_activitystorysfx_feichi_balloon_blow",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501501,
+    "eventName": "play_activitystorysfx_feichi_chinaware_clap",
+    "bankName": "activitystory_feichi2_0_yishi_lalaquan_sfx"
+  },
+  {
+    "id": 501502,
+    "eventName": "play_activitystorysfx_feichi_alarm_loop",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501503,
+    "eventName": "play_activitystorysfx_feichi_clock_clap",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501504,
+    "eventName": "play_activitystorysfx_feichi_kiss",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501505,
+    "eventName": "play_activitystorysfx_feichi_balloon_leakage",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501506,
+    "eventName": "play_activitystorysfx_feichi_food_expanded",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501507,
+    "eventName": "play_activitystorysfx_feichi_food_expanded_sudden",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501508,
+    "eventName": "play_activitystorysfx_feichi_food_explode",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501509,
+    "eventName": "play_activitystorysfx_feichi_popcorn_scratch",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501510,
+    "eventName": "play_activitystorysfx_feichi_current",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501511,
+    "eventName": "play_activitystorysfx_feichi_bulb_extinguish",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501512,
+    "eventName": "play_activitystorysfx_feichi_nose_system",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501513,
+    "eventName": "play_activitystorysfx_feichi_bed_push",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501514,
+    "eventName": "play_activitystorysfx_feichi_horse_run",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501515,
+    "eventName": "play_activitystorysfx_feichi_car_exhaust",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501516,
+    "eventName": "play_activitystorysfx_feichi_gasp",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501517,
+    "eventName": "play_activitystorysfx_feichi_bed_push_loop",
+    "bankName": "activitystory_feichi2_0_yishi_sufubi_sfx"
+  },
+  {
+    "id": 501518,
+    "eventName": "play_activitystorysfx_feichi_guitar1",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501519,
+    "eventName": "play_activitystorysfx_feichi_guitar2",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501520,
+    "eventName": "play_activitystorysfx_feichi_pail",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501521,
+    "eventName": "play_activitystorysfx_feichi_whining",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501522,
+    "eventName": "play_activitystorysfx_feichi_pickup",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501523,
+    "eventName": "play_activitystorysfx_feichi_ding",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501524,
+    "eventName": "play_activitystorysfx_feichi_pad",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501525,
+    "eventName": "play_activitystorysfx_feichi_breathe",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501526,
+    "eventName": "play_activitystorysfx_feichi_spit",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501527,
+    "eventName": "play_activitystorysfx_feichi_cards",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501528,
+    "eventName": "play_activitystorysfx_feichi_startle",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501529,
+    "eventName": "play_activitystorysfx_feichi_transition",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501530,
+    "eventName": "play_activitystorysfx_feichi_bracelet",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501531,
+    "eventName": "play_activitystorysfx_feichi_street",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501532,
+    "eventName": "play_activitystorysfx_feichi_driving",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501533,
+    "eventName": "play_activitystorysfx_feichi_whistle",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501534,
+    "eventName": "play_activitystorysfx_feichi_bottle",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501535,
+    "eventName": "play_activitystorysfx_feichi_throw",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501536,
+    "eventName": "play_activitystorysfx_feichi_opendoor",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501537,
+    "eventName": "play_activitystorysfx_feichi_drawer",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501538,
+    "eventName": "play_activitystorysfx_feichi_stoneclock",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501539,
+    "eventName": "play_activitystorysfx_feichi_biscuits1",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501540,
+    "eventName": "play_activitystorysfx_feichi_biscuits2",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501541,
+    "eventName": "play_activitystorysfx_feichi_finger",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501542,
+    "eventName": "play_activitystorysfx_feichi_crash",
+    "bankName": "activitystory_feichi2_0_huanzhuang_sfx"
+  },
+  {
+    "id": 501543,
+    "eventName": "play_activitystorysfx_feichi_boots_upstairs_loop",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501544,
+    "eventName": "play_activitystorysfx_feichi_rooftop_loop",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501545,
+    "eventName": "play_activitystorysfx_feichi_j_introduce",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501546,
+    "eventName": "play_activitystorysfx_feichi_ironbox_slide",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501547,
+    "eventName": "play_activitystorysfx_feichi_parkour_loop",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501548,
+    "eventName": "play_activitystorysfx_feichi_sword_friction",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501549,
+    "eventName": "play_activitystorysfx_feichi_fall",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501550,
+    "eventName": "play_activitystorysfx_feichi_orthopedics",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501551,
+    "eventName": "play_activitystorysfx_feichi_motor_fault",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501552,
+    "eventName": "play_activitystorysfx_feichi_car_horn",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501553,
+    "eventName": "play_activitystorysfx_feichi_ladder_shake",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501554,
+    "eventName": "play_activitystorysfx_feichi_excrement_step",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501555,
+    "eventName": "play_activitystorysfx_feichi_bowl_wash_loop",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501556,
+    "eventName": "play_activitystorysfx_feichi_hand_wash",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501557,
+    "eventName": "play_activitystorysfx_feichi_van_crowd",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501558,
+    "eventName": "play_activitystorysfx_feichi_van_leave",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501559,
+    "eventName": "play_activitystorysfx_feichi_diner_loop",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501560,
+    "eventName": "play_activitystorysfx_feichi_moccasins_walk",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501561,
+    "eventName": "play_activitystorysfx_feichi_food_pan",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501562,
+    "eventName": "play_activitystorysfx_feichi_table_overturned",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501563,
+    "eventName": "play_activitystorysfx_feichi_moccasins_crowd",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501564,
+    "eventName": "play_activitystorysfx_feichi_cabinet_crawl",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501565,
+    "eventName": "play_activitystorysfx_feichi_landed_tumbling",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501566,
+    "eventName": "play_activitystorysfx_feichi_glassdoors_push",
+    "bankName": "activitystory_feichi2_0_j_sfx"
+  },
+  {
+    "id": 501567,
+    "eventName": "play_activitysfx_feichi_disco1",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501568,
+    "eventName": "play_activitysfx_feichi_disco_low",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501569,
+    "eventName": "play_activitysfx_feichi_putdown",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501570,
+    "eventName": "play_activitysfx_feichi_clink",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501571,
+    "eventName": "play_activitysfx_feichi_collide",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501572,
+    "eventName": "play_activitysfx_feichi_multi_steps",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501573,
+    "eventName": "play_activitysfx_feichi_footsteps01",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501574,
+    "eventName": "play_activitysfx_feichi_multi_steps2",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501575,
+    "eventName": "play_activitysfx_feichi_break",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501576,
+    "eventName": "play_activitysfx_feichi_fall",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501577,
+    "eventName": "play_activitysfx_feichi_retreat",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501578,
+    "eventName": "play_activitysfx_feichi_breathe1",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501579,
+    "eventName": "play_activitysfx_feichi_tottered",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501580,
+    "eventName": "play_activitysfx_feichi_fixing",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501581,
+    "eventName": "play_activitysfx_feichi_gasp",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501582,
+    "eventName": "play_activitysfx_feichi_jump",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501583,
+    "eventName": "play_activitysfx_feichi_leave",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501584,
+    "eventName": "play_activitysfx_feichi_coins",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501585,
+    "eventName": "play_activitysfx_feichi_hat",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501586,
+    "eventName": "play_activitysfx_feichi_take_coins",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501587,
+    "eventName": "play_activitysfx_feichi_photo",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501588,
+    "eventName": "play_activitysfx_feichi_noise",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501589,
+    "eventName": "play_activitysfx_feichi_breathe2",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501590,
+    "eventName": "play_activitysfx_feichi_quilt",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501591,
+    "eventName": "play_activitysfx_feichi_touch",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501592,
+    "eventName": "play_activitysfx_feichi_bump",
+    "bankName": "activity_feichi2_0_sfx_part01"
+  },
+  {
+    "id": 501593,
+    "eventName": "play_activitysfx_feichi_multi_paper",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501594,
+    "eventName": "play_activitysfx_feichi_bazaar",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501595,
+    "eventName": "play_activitysfx_feichi_groan",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501596,
+    "eventName": "play_activitysfx_feichi_sand_steps",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501597,
+    "eventName": "play_activitysfx_feichi_obstruct",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501598,
+    "eventName": "play_activitysfx_feichi_two_steps",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501599,
+    "eventName": "play_activitysfx_feichi_faint",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501600,
+    "eventName": "play_activitysfx_feichi_struggle",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501601,
+    "eventName": "play_activitysfx_feichi_flick",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501602,
+    "eventName": "play_activitysfx_feichi_untie",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501603,
+    "eventName": "play_activitysfx_feichi_paved",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501604,
+    "eventName": "play_activitysfx_feichi_mirth_loop",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501605,
+    "eventName": "play_activitysfx_feichi_cleft",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501606,
+    "eventName": "play_activitysfx_feichi_slamdoor",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501607,
+    "eventName": "play_activitysfx_feichi_delimit",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501608,
+    "eventName": "play_activitysfx_feichi_jogging",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501609,
+    "eventName": "play_activitysfx_feichi_moto",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501610,
+    "eventName": "play_activitysfx_feichi_moto_stop",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501611,
+    "eventName": "play_activitysfx_feichi_mojing1",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501612,
+    "eventName": "play_activitysfx_feichi_mojing2",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501613,
+    "eventName": "play_activitysfx_feichi_moto_hasten",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501614,
+    "eventName": "play_activitysfx_feichi_kick",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501615,
+    "eventName": "play_activitysfx_feichi_gaspedal",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501616,
+    "eventName": "play_activitysfx_feichi_wrapped",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501617,
+    "eventName": "play_activitysfx_feichi_biting",
+    "bankName": "activity_feichi2_0_sfx_part02"
+  },
+  {
+    "id": 501618,
+    "eventName": "play_activitysfx_feichi_drag",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501619,
+    "eventName": "play_activitysfx_feichi_tie",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501620,
+    "eventName": "play_activitysfx_feichi_pull",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501621,
+    "eventName": "play_activitysfx_feichi_barefoot1",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501622,
+    "eventName": "play_activitysfx_feichi_barefoot2",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501623,
+    "eventName": "play_activitysfx_feichi_wring",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501624,
+    "eventName": "play_activitysfx_feichi_stone_steps",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501625,
+    "eventName": "play_activitysfx_feichi_remove",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501626,
+    "eventName": "play_activitysfx_feichi_stool",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501627,
+    "eventName": "play_activitysfx_feichi_clench",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501628,
+    "eventName": "play_activitysfx_feichi_gunshot",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501629,
+    "eventName": "play_activitysfx_feichi_boots",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501630,
+    "eventName": "play_activitysfx_feichi_chop",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501631,
+    "eventName": "play_activitysfx_feichi_break_01",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501632,
+    "eventName": "play_activitysfx_feichi_spit",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501633,
+    "eventName": "play_activitysfx_feichi_cutter",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501634,
+    "eventName": "play_activitysfx_feichi_whoa",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501635,
+    "eventName": "play_activitysfx_feichi_bite",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501636,
+    "eventName": "play_activitysfx_feichi_rupture",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501637,
+    "eventName": "play_activitysfx_feichi_pound",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501638,
+    "eventName": "play_activitysfx_feichi_festival",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501639,
+    "eventName": "play_activitysfx_feichi_collection",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501640,
+    "eventName": "play_activitysfx_feichi_catch",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501641,
+    "eventName": "play_activitysfx_feichi_off",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501642,
+    "eventName": "play_activitysfx_feichi_machine",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501643,
+    "eventName": "play_activitysfx_feichi_untie_wrap",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501644,
+    "eventName": "play_activitysfx_feichi_repair",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501645,
+    "eventName": "play_activitysfx_feichi_flameout",
+    "bankName": "activity_feichi2_0_sfx_part03"
+  },
+  {
+    "id": 501646,
+    "eventName": "play_activitysfx_feichi_shine_loop",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501647,
+    "eventName": "play_activitysfx_feichi_portal_twist",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501648,
+    "eventName": "play_activitysfx_feichi_portal_lock",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501649,
+    "eventName": "play_activitysfx_feichi_portal_reach",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501650,
+    "eventName": "play_activitysfx_feichi_spooky_loop",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501651,
+    "eventName": "play_activitysfx_feichi_draw_portal",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501652,
+    "eventName": "play_activitysfx_feichi_ribbon",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501653,
+    "eventName": "play_activitysfx_feichi_forge",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501654,
+    "eventName": "play_activitysfx_feichi_firespout",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501655,
+    "eventName": "play_activitysfx_feichi_door_long",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501656,
+    "eventName": "play_activitysfx_feichi_door_short",
+    "bankName": "activity_feichi2_0_sfx_part04"
+  },
+  {
+    "id": 501657,
+    "eventName": "play_activitysfx_wangshi_getdown",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501658,
+    "eventName": "play_activitysfx_wangshi_shotgun_outdoor",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501659,
+    "eventName": "play_activitysfx_wangshi_shotgun_indoors",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501660,
+    "eventName": "play_activitysfx_wangshi_gunstock_hit",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501661,
+    "eventName": "play_activitysfx_wangshi_shotgun_reload",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501662,
+    "eventName": "play_activitysfx_wangshi_barrel_top",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501663,
+    "eventName": "play_activitysfx_wangshi_banknotes_friction",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501664,
+    "eventName": "play_activitysfx_wangshi_pendant_pull",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501665,
+    "eventName": "play_activitysfx_wangshi_boots_loop",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501666,
+    "eventName": "play_activitysfx_wangshi_boots_stop",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501667,
+    "eventName": "play_activitysfx_wangshi_buggy_start",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501668,
+    "eventName": "play_activitysfx_wangshi_buggy_motor_loop",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501669,
+    "eventName": "play_activitysfx_wangshi_buggy_hasten",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501670,
+    "eventName": "play_activitysfx_wangshi_buggy_driving_loop",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501671,
+    "eventName": "play_activitysfx_wangshi_drift",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501672,
+    "eventName": "play_activitysfx_wangshi_scenery_flit",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501673,
+    "eventName": "play_activitysfx_wangshi_infant_cry",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501674,
+    "eventName": "play_activitysfx_wangshi_infant_cry_far",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501675,
+    "eventName": "play_activitysfx_wangshi_infant_cry_abnormal",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501676,
+    "eventName": "play_activitysfx_wangshi_mumu_hoot_1",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501677,
+    "eventName": "play_activitysfx_wangshi_mumu_hoot_2",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501678,
+    "eventName": "play_activitysfx_wangshi_mumu_fleeing",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501679,
+    "eventName": "play_activitysfx_wangshi_rise",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501680,
+    "eventName": "play_activitysfx_wangshi_hongnujian_takeoff",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501681,
+    "eventName": "play_activitysfx_wangshi_floor_sound",
+    "bankName": "activity_wangshi2_1_sfx_part01"
+  },
+  {
+    "id": 501682,
+    "eventName": "play_activitysfx_wangshi_carpet_steps_loop",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501683,
+    "eventName": "play_activitysfx_wangshi_valise_put",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501684,
+    "eventName": "play_activitysfx_wangshi_morsecode_rap_1",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501685,
+    "eventName": "play_activitysfx_wangshi_morsecode_rap_2",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501686,
+    "eventName": "play_activitysfx_wangshi_waterorgan_hit",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501687,
+    "eventName": "play_activitysfx_wangshi_uncanny_perverse",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501688,
+    "eventName": "play_activitysfx_wangshi_uncanny_doubt",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501689,
+    "eventName": "play_activitysfx_wangshi_uncanny_outburst",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501690,
+    "eventName": "play_activitysfx_wangshi_uncanny_danger",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501691,
+    "eventName": "play_activitysfx_wangshi_circle_burn_loop",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501692,
+    "eventName": "play_activitysfx_wangshi_finger_petting",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501693,
+    "eventName": "play_activitysfx_wangshi_openingdoors_rapid",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501694,
+    "eventName": "play_activitysfx_wangshi_cult_bar_loop",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501695,
+    "eventName": "play_activitysfx_wangshi_door_pushed",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501696,
+    "eventName": "play_activitysfx_wangshi_crowd_laugh",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501697,
+    "eventName": "play_activitysfx_wangshi_table_damage",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501698,
+    "eventName": "play_activitysfx_wangshi_pillow_muffler",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501699,
+    "eventName": "play_activitysfx_wangshi_parchment_friction",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501700,
+    "eventName": "play_activitysfx_wangshi_pistol_suicide",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501701,
+    "eventName": "play_activitysfx_wangshi_phone_bell",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501702,
+    "eventName": "play_activitysfx_wangshi_hotel_doorbell",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501703,
+    "eventName": "play_activitysfx_wangshi_steps_near",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501704,
+    "eventName": "play_activitysfx_wangshi_handsfree_button",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501705,
+    "eventName": "play_activitysfx_wangshi_phone_answer",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501706,
+    "eventName": "play_activitysfx_wangshi_phone_dial",
+    "bankName": "activity_wangshi2_1_sfx_part02"
+  },
+  {
+    "id": 501707,
+    "eventName": "play_activitysfx_wangshi_candy_remove",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501708,
+    "eventName": "play_activitysfx_wangshi_candy_landed",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501709,
+    "eventName": "play_activitysfx_wangshi_heels_reel",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501710,
+    "eventName": "play_activitysfx_wangshi_heels_stomp",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501711,
+    "eventName": "play_activitysfx_wangshi_tinnitus",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501712,
+    "eventName": "play_activitysfx_wangshi_washroom_open",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501713,
+    "eventName": "play_activitysfx_wangshi_field_play",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501714,
+    "eventName": "play_activitysfx_wangshi_flipbook_phone",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501715,
+    "eventName": "play_activitysfx_wangshi_outside_near",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501716,
+    "eventName": "play_activitysfx_wangshi_outside_leave",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501717,
+    "eventName": "play_activitysfx_wangshi_behind_steps",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501718,
+    "eventName": "play_activitysfx_wangshi_busy",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501719,
+    "eventName": "play_activitysfx_wangshi_hotel_crying",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501720,
+    "eventName": "play_activitysfx_wangshi_bullet_cement",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501721,
+    "eventName": "play_activitysfx_wangshi_bullet_sawdust",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501722,
+    "eventName": "play_activitysfx_wangshi_finger_friction",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501723,
+    "eventName": "play_activitysfx_wangshi_steps_water",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501724,
+    "eventName": "play_activitysfx_wangshi_deathknell",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501725,
+    "eventName": "play_activitysfx_wangshi_moor_loop",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501726,
+    "eventName": "play_activitysfx_wangshi_room_loop",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501727,
+    "eventName": "play_activitysfx_wangshi_lamb_hoot",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501728,
+    "eventName": "play_activitysfx_wangshi_lamb_screaming",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501729,
+    "eventName": "play_activitysfx_wangshi_key_unlock",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501730,
+    "eventName": "play_activitysfx_wangshi_lowfrequency_shock",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501731,
+    "eventName": "play_activitysfx_wangshi_litter_gush",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501732,
+    "eventName": "play_activitysfx_wangshi_rain_reversion",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501733,
+    "eventName": "play_activitysfx_wangshi_swaddle_fall",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501734,
+    "eventName": "play_activitysfx_wangshi_door_steps",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501735,
+    "eventName": "play_activitysfx_wangshi_belt_clasp",
+    "bankName": "activity_wangshi2_1_sfx_part03"
+  },
+  {
+    "id": 501736,
+    "eventName": "play_activitysfx_wangshi_missile_initiate",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501737,
+    "eventName": "play_activitysfx_wangshi_woodensigns_flip",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501738,
+    "eventName": "play_activitysfx_wangshi_flipbook_phone_1",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501739,
+    "eventName": "play_activitysfx_wangshi_steps_phone",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501740,
+    "eventName": "play_activitysfx_wangshi_window_shake",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501741,
+    "eventName": "play_activitysfx_wangshi_mechanization_initiate",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501742,
+    "eventName": "play_activitysfx_wangshi_sugar_gobble",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501743,
+    "eventName": "play_activitysfx_wangshi_rain_catch",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501744,
+    "eventName": "play_activitysfx_wangshi_umbrella_open",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501745,
+    "eventName": "play_activitysfx_wangshi_heartbeat_outside_loop",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501746,
+    "eventName": "play_activitysfx_wangshi_glitch_murmur",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501747,
+    "eventName": "play_activitysfx_wangshi_lens_shrink",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501748,
+    "eventName": "play_activitysfx_wangshi_mirror_knock",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501749,
+    "eventName": "play_activitysfx_wangshi_wiper_loop",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501750,
+    "eventName": "play_activitystorysfx_wangshi_gimp_footsteps",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501751,
+    "eventName": "play_activitystorysfx_wangshi_bullriding_loop",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501752,
+    "eventName": "play_activitystorysfx_wangshi_cowbells",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501753,
+    "eventName": "play_activitystorysfx_wangshi_bull_moo",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501754,
+    "eventName": "play_activitystorysfx_wangshi_ironplate_knock",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501755,
+    "eventName": "play_activitystorysfx_wangshi_candy_chew",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501756,
+    "eventName": "play_activitystorysfx_wangshi_jeep_whistle",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501757,
+    "eventName": "play_activitystorysfx_wangshi_woodendoors_open",
+    "bankName": "activitystory_wangshi2_1_aergusi_sfx"
+  },
+  {
+    "id": 501758,
+    "eventName": "play_activitysfx_wangshi_uncanny_perverse_1",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501759,
+    "eventName": "play_activitysfx_wangshi_floor_sound_1",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 501760,
+    "eventName": "play_activitystorysfx_wangshi_knock1",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501761,
+    "eventName": "play_activitystorysfx_wangshi_knock2",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501762,
+    "eventName": "play_activitystorysfx_wangshi_huqi",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501763,
+    "eventName": "play_activitystorysfx_wangshi_huxi",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501764,
+    "eventName": "play_activitystorysfx_wangshi_heartbeat",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501765,
+    "eventName": "play_activitystorysfx_wangshi_spider",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501766,
+    "eventName": "play_activitystorysfx_wangshi_faucet",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501767,
+    "eventName": "play_activitystorysfx_wangshi_closed",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501768,
+    "eventName": "play_activitystorysfx_wangshi_door1",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501769,
+    "eventName": "play_activitystorysfx_wangshi_door2",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501770,
+    "eventName": "play_activitystorysfx_wangshi_scream",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501771,
+    "eventName": "play_activitystorysfx_wangshi_wood",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501772,
+    "eventName": "play_activitystorysfx_wangshi_jump",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501773,
+    "eventName": "play_activitystorysfx_wangshi_sob",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501774,
+    "eventName": "play_activitystorysfx_wangshi_barefoot",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501775,
+    "eventName": "play_activitystorysfx_wangshi_button",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501776,
+    "eventName": "play_activitystorysfx_wangshi_grasp",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501777,
+    "eventName": "play_activitystorysfx_wangshi_tiptoe",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501778,
+    "eventName": "play_activitystorysfx_wangshi_wrung",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501779,
+    "eventName": "play_activitystorysfx_wangshi_paper",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501780,
+    "eventName": "play_activitystorysfx_wangshi_patted",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501781,
+    "eventName": "play_activitystorysfx_wangshi_turn",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501782,
+    "eventName": "play_activitystorysfx_wangshi_suspense",
+    "bankName": "activitystory_wangshi2_1_lanshoupa_sfx"
+  },
+  {
+    "id": 501783,
+    "eventName": "play_activitystorysfx_wangshi_car",
+    "bankName": "activitystory_wangshi2_1_yishi_jinmier_sfx"
+  },
+  {
+    "id": 501784,
+    "eventName": "play_activitystorysfx_wangshi_mouse",
+    "bankName": "activitystory_wangshi2_1_yishi_jinmier_sfx"
+  },
+  {
+    "id": 501785,
+    "eventName": "play_activitystorysfx_wangshi_snot",
+    "bankName": "activitystory_wangshi2_1_yishi_jinmier_sfx"
+  },
+  {
+    "id": 501786,
+    "eventName": "play_activitystorysfx_wangshi_battery",
+    "bankName": "activitystory_wangshi2_1_yishi_jinmier_sfx"
+  },
+  {
+    "id": 501787,
+    "eventName": "play_activitystorysfx_wangshi_k_door",
+    "bankName": "activitystory_wangshi2_1_yishi_jinmier_sfx"
+  },
+  {
+    "id": 22500001,
+    "eventName": "play_chap8_bullet_6",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500002,
+    "eventName": "play_chap8_bullet_bang",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500003,
+    "eventName": "play_chap8_bullet_out",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500004,
+    "eventName": "play_chap8_gun_null",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500005,
+    "eventName": "play_chap8_gun_fall",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500006,
+    "eventName": "play_chap8_hug_own",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500007,
+    "eventName": "play_chap8_chess",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500008,
+    "eventName": "play_chap8_bird1",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500009,
+    "eventName": "play_chap8_bird2",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500010,
+    "eventName": "play_chap8_put_bag",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500011,
+    "eventName": "play_chap8_get_gun",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500012,
+    "eventName": "play_chap8_bird3",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500013,
+    "eventName": "play_chap8_friction1",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500014,
+    "eventName": "play_chap8_shatter1",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500015,
+    "eventName": "play_chap8_shatter2",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500016,
+    "eventName": "play_chap8_hold_friction",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500017,
+    "eventName": "play_chap8_vomit",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500018,
+    "eventName": "play_chap8_thrash_puddle",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500019,
+    "eventName": "play_chap8_fell_puddle",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500020,
+    "eventName": "play_chap8_pace_loop",
+    "bankName": "prologuechapter_8_part01"
+  },
+  {
+    "id": 22500021,
+    "eventName": "play_chap8_burn_stove",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500022,
+    "eventName": "play_chap8_metal_friction",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500023,
+    "eventName": "play_chap8_xiu",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500024,
+    "eventName": "play_chap8_fight",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500025,
+    "eventName": "play_chap8_hit_head",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500026,
+    "eventName": "play_chap8_beast",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500027,
+    "eventName": "play_chap8_breathe",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500028,
+    "eventName": "play_chap8_walk_back",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500029,
+    "eventName": "play_chap8_throw_gun",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500030,
+    "eventName": "play_chap8_paw_scratch",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500031,
+    "eventName": "play_chap8_kneel_hug",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500032,
+    "eventName": "play_chap8_hug_kiss",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500033,
+    "eventName": "play_chap8_softly",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500034,
+    "eventName": "play_chap8_hit_chains",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500035,
+    "eventName": "play_chap8_chains_break",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500036,
+    "eventName": "play_chap8_yacht",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500037,
+    "eventName": "play_chap8_metal_door",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500038,
+    "eventName": "play_chap8_throw_loop",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500039,
+    "eventName": "play_chap8_put_receiver",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500040,
+    "eventName": "play_chap8_door",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500041,
+    "eventName": "play_chap8_hoo1",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500042,
+    "eventName": "play_chap8_walk_leather",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500043,
+    "eventName": "play_chap8_photo_frame",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500044,
+    "eventName": "play_chap8_hoo2",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500045,
+    "eventName": "play_chap8_letters",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500046,
+    "eventName": "play_chap8_bird_strike",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500047,
+    "eventName": "play_chap8_cat_flee",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500048,
+    "eventName": "play_chap8_press",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500049,
+    "eventName": "play_chap8_vial_fall",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500050,
+    "eventName": "play_chap8_flute",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500051,
+    "eventName": "play_chap8_dagger",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500052,
+    "eventName": "play_chap8_metal_hit",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500053,
+    "eventName": "play_chap8_push_person",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500054,
+    "eventName": "play_chap8_barf",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500055,
+    "eventName": "play_chap8_cans1",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500056,
+    "eventName": "play_chap8_cans2",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500057,
+    "eventName": "play_chap8_cans3",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500058,
+    "eventName": "play_chap8_cans4",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500059,
+    "eventName": "play_chap8_swim",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500060,
+    "eventName": "play_chap8_press_chest",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500061,
+    "eventName": "play_chap8_choke",
+    "bankName": "prologuechapter_8_part03"
+  },
+  {
+    "id": 22500062,
+    "eventName": "play_chap8_foot_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500063,
+    "eventName": "play_chap8_wept_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500064,
+    "eventName": "play_chap8_jilt_hook",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500065,
+    "eventName": "play_chap8_grab",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500066,
+    "eventName": "play_chap8_shake",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500067,
+    "eventName": "play_chap8_ship_tilt",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500068,
+    "eventName": "play_chap8_panic_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500069,
+    "eventName": "play_chap8_boots",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500070,
+    "eventName": "play_chap8_candle_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500071,
+    "eventName": "play_chap8_fan_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500072,
+    "eventName": "play_chap8_summer_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500073,
+    "eventName": "play_chap8_ding",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500074,
+    "eventName": "play_chap8_rush_water",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500075,
+    "eventName": "play_chap8_sea_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500076,
+    "eventName": "play_chap8_halt",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500077,
+    "eventName": "play_chap8_run_hug",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500078,
+    "eventName": "play_chap8_diving",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500079,
+    "eventName": "play_chap8_put_gun",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500080,
+    "eventName": "play_chap8_sail_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500081,
+    "eventName": "play_chap8_robot_broken",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500082,
+    "eventName": "play_chap8_birds_loop",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500083,
+    "eventName": "play_chap8_softly2",
+    "bankName": "prologuechapter_8_part02"
+  },
+  {
+    "id": 22500084,
+    "eventName": "play_activitystorysfx_youyu_bare_walk",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500085,
+    "eventName": "play_activitystorysfx_youyu_bite",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500086,
+    "eventName": "play_activitystorysfx_youyu_bare_jump",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500087,
+    "eventName": "play_activitystorysfx_youyu_ice_cream",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500088,
+    "eventName": "play_activitystorysfx_youyu_ball_pen",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500089,
+    "eventName": "play_activitystorysfx_youyu_pen",
+    "bankName": "activitystorysfx_youyu2_2yishi_sanqi"
+  },
+  {
+    "id": 22500090,
+    "eventName": "play_activitystorysfx_youyu_hallway",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500091,
+    "eventName": "play_activitystorysfx_youyu_tick",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500092,
+    "eventName": "play_activitystorysfx_youyu_needling",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500093,
+    "eventName": "play_activitystorysfx_youyu_wheelchair",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500094,
+    "eventName": "play_activitystorysfx_youyu_sickbed",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500095,
+    "eventName": "play_activitystorysfx_youyu_rapid_beep",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500096,
+    "eventName": "play_activitystorysfx_youyu_gentle_beep",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500097,
+    "eventName": "play_activitystorysfx_youyu_boy_cry",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500098,
+    "eventName": "play_activitystorysfx_youyu_camera",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500099,
+    "eventName": "play_activitystorysfx_youyu_metal_rack",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500100,
+    "eventName": "play_activitystorysfx_youyu_crazy_vibe",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500101,
+    "eventName": "play_activitystorysfx_youyu_chaos_vibe",
+    "bankName": "activitystorysfx_youyu2_2yishi_mesmel"
+  },
+  {
+    "id": 22500102,
+    "eventName": "play_activitystory_youyu_whellchairclose",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500103,
+    "eventName": "play_activitystory_youyu_whellchairfast",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500104,
+    "eventName": "play_activitystory_youyu_whellchairleftright",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500105,
+    "eventName": "play_activitystory_youyu_whellchairfar",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500106,
+    "eventName": "play_activitystory_youyu_malecough",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500107,
+    "eventName": "play_activitystory_youyu_monkeyshout",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500108,
+    "eventName": "play_activitystory_youyu_whooshwhite",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500109,
+    "eventName": "play_activitystory_youyu_toydrop",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500110,
+    "eventName": "play_activitystory_youyu_toymorph",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500111,
+    "eventName": "play_activitystory_youyu_macawhoot01",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500112,
+    "eventName": "play_activitystory_youyu_macawhoot02",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500113,
+    "eventName": "play_activitystory_youyu_chessfallfast",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500114,
+    "eventName": "play_activitystory_youyu_chessfallone",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500115,
+    "eventName": "play_activitystory_youyu_clockslow",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500116,
+    "eventName": "play_activitystory_youyu_turnbacktime",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500117,
+    "eventName": "play_activitystory_youyu_birdwing",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500118,
+    "eventName": "play_activitystory_youyu_gunshotceramic",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500119,
+    "eventName": "play_activitystory_youyu_gunkaboom",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500120,
+    "eventName": "play_activitystory_youyu_gunreload",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500121,
+    "eventName": "play_activitystory_youyu_crowdpain",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500122,
+    "eventName": "play_activitystory_youyu_cassettestuck",
+    "bankName": "activitystory_youyu2_2_nana_sfx"
+  },
+  {
+    "id": 22500123,
+    "eventName": "play_chap8_daoxin_broken",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500124,
+    "eventName": "play_chap8_robot_blink_loop",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500125,
+    "eventName": "play_chap8_alchemy",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500126,
+    "eventName": "play_chap8_flyout_hole",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500127,
+    "eventName": "play_chap8_screen_tore_1",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500128,
+    "eventName": "play_chap8_screen_tore_2",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500129,
+    "eventName": "play_chap8_book",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500130,
+    "eventName": "play_chap8_gravel_splash",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500131,
+    "eventName": "play_chap8_hongnu_fly",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500132,
+    "eventName": "play_chap8_gunshot",
+    "bankName": "prologuechapter_8_part04"
+  },
+  {
+    "id": 22500133,
+    "eventName": "play_chap8_typewriter_start",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500134,
+    "eventName": "play_chap8_typewriter_end",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500135,
+    "eventName": "play_activitystorysfx_youyu_busy_loop",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500136,
+    "eventName": "play_activitystorysfx_youyu_rainforest_loop",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500137,
+    "eventName": "play_activitystorysfx_youyu_deck_crowd",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500138,
+    "eventName": "play_activitystorysfx_youyu_dice_strike",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500139,
+    "eventName": "play_activitystorysfx_youyu_pistol_clap",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500140,
+    "eventName": "play_activitystorysfx_youyu_holsters_friction",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500141,
+    "eventName": "play_activitystorysfx_youyu_rainforest_shoot_1",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500142,
+    "eventName": "play_activitystorysfx_youyu_rainforest_shoot_2",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500143,
+    "eventName": "play_activitystorysfx_youyu_door_kick",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500144,
+    "eventName": "play_activitystorysfx_youyu_mire_struggle",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500145,
+    "eventName": "play_activitystorysfx_youyu_mire_chase",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500146,
+    "eventName": "play_activitystorysfx_youyu_deadfish_throw",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500147,
+    "eventName": "play_activitystorysfx_youyu_corpse_kick",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500148,
+    "eventName": "play_activitystorysfx_youyu_dynamo_shake_loop",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500149,
+    "eventName": "play_activitystorysfx_youyu_ricochet_near",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500150,
+    "eventName": "play_activitystorysfx_youyu_crucible_boils",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500151,
+    "eventName": "play_activitystorysfx_youyu_pill_chew",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500152,
+    "eventName": "play_activitystorysfx_youyu_holding",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500153,
+    "eventName": "play_activitystorysfx_youyu_pistol_counter",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500154,
+    "eventName": "play_activitystorysfx_youyu_trance_loop",
+    "bankName": "activitystory_youyu2_2_luopeila_sfx"
+  },
+  {
+    "id": 22500155,
+    "eventName": "play_chap8_devil_whisper_loop",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500156,
+    "eventName": "play_chap8_big_thunder",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500157,
+    "eventName": "play_chap8_blood_lowhit",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500158,
+    "eventName": "play_chap8_claw_strike_double",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500159,
+    "eventName": "play_chap8_claw_strike",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500160,
+    "eventName": "play_chap8_turnaround_cloth",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500161,
+    "eventName": "play_chap8_handscarpwall",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500162,
+    "eventName": "play_chap8_seagull_far",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500163,
+    "eventName": "play_chap8_transfiguration",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500164,
+    "eventName": "play_chap8_walk_bloodfall",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500165,
+    "eventName": "play_chap8_withmask",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 22500166,
+    "eventName": "play_chap8_revolver_heavy",
+    "bankName": "prologuechapter_8_part05"
+  },
+  {
+    "id": 530053,
+    "eventName": "play_activitymusic_thememusic_full_2_0",
+    "bankName": "activity2_0_music"
+  },
+  {
+    "id": 530054,
+    "eventName": "play_activitymusic_tragic_2_0",
+    "bankName": "activity2_0_music"
+  },
+  {
+    "id": 530055,
+    "eventName": "play_activitymusic_fadein_disco_2_0",
+    "bankName": "activity2_0_music"
+  },
+  {
+    "id": 530056,
+    "eventName": "play_activitymusic_flower_2_0",
+    "bankName": "activity2_0_music"
+  },
+  {
+    "id": 530057,
+    "eventName": "play_activitymusic_seasonmain_2_0",
+    "bankName": "plot_music_seasonmain_2_0"
+  },
+  {
+    "id": 21530001,
+    "eventName": "play_activitymusic_theme_2_1",
+    "bankName": "activity2_1_music"
+  },
+  {
+    "id": 21530002,
+    "eventName": "play_activitymusic_mystery_2_1",
+    "bankName": "activity2_1_music"
+  },
+  {
+    "id": 21530003,
+    "eventName": "play_activitymusic_highway_2_1",
+    "bankName": "activity2_1_music"
+  },
+  {
+    "id": 22530001,
+    "eventName": "play_activitymusic_theme_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530002,
+    "eventName": "play_activitymusic_sunset_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530003,
+    "eventName": "play_activitymusic_igorchoose_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530004,
+    "eventName": "play_activitymusic_remember_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530005,
+    "eventName": "play_activitymusic_remember_first_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530006,
+    "eventName": "play_activitymusic_remember_second_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 520105,
+    "eventName": "play_ui_feichi_open_plot",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 520106,
+    "eventName": "play_ui_feichi_stanzas",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 520107,
+    "eventName": "play_ui_feichi_closing",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 520108,
+    "eventName": "play_feichi2_0_cutscene_baolina_sfx_vo",
+    "bankName": "feichi2_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 520109,
+    "eventName": "play_feichi2_0_cutscene_joezhiyuan_sfx_vo",
+    "bankName": "feichi2_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 520110,
+    "eventName": "play_feichi2_0_cutscene_maskist_sfx_vo",
+    "bankName": "feichi2_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 520111,
+    "eventName": "play_feichi2_0_cutscene_joe_sword_sfx_vo",
+    "bankName": "feichi2_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 520112,
+    "eventName": "play_feichi2_0_pv_sfx_vo_music",
+    "bankName": "feichi2_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 520113,
+    "eventName": "play_activitysfx_wangshi_chapter_continue",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 520114,
+    "eventName": "play_activitysfx_wangshi_subsection_open",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 520115,
+    "eventName": "play_activitysfx_wangshi_subsection_close",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 520116,
+    "eventName": "play_wangshi2_1_cutscene_vanish_woman_sfx_vo",
+    "bankName": "wangshi2_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 520117,
+    "eventName": "play_activitysfx_wangshi_chapter_close",
+    "bankName": "activity_wangshi2_1_sfx_part04"
+  },
+  {
+    "id": 520118,
+    "eventName": "play_wangshi2_1_cutscene_lanshoupadahaizi_sfx_vo",
+    "bankName": "wangshi2_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 520119,
+    "eventName": "play_wangshi2_1_cutscene_alcas_sfx_vo",
+    "bankName": "wangshi2_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 520120,
+    "eventName": "play_wangshi2_1_pv_sfx_vo_music",
+    "bankName": "wangshi2_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 22520001,
+    "eventName": "play_ui_checkpoint_2_2youyu_open",
+    "bankName": "ui_checkpoint_2_2youyu_open"
+  },
+  {
+    "id": 22520002,
+    "eventName": "play_plotpvsfx_geer_choice_chap8",
+    "bankName": "prologuechapter_8_cutscene"
+  },
+  {
+    "id": 22520003,
+    "eventName": "play_plotpvsfx_virtin_water_chap8",
+    "bankName": "prologuechapter_8_cutscene"
+  },
+  {
+    "id": 22520004,
+    "eventName": "play_plotpvsfx_lopera_executed_chap8",
+    "bankName": "prologuechapter_8_cutscene"
+  },
+  {
+    "id": 22520005,
+    "eventName": "play_plotpvsfx_nana_sings_chap8",
+    "bankName": "prologuechapter_8_cutscene"
+  },
+  {
+    "id": 22520006,
+    "eventName": "play_youyu2_2_pv_sfx_vo_music",
+    "bankName": "youyu2_2_cutscene_sfx_vo"
+  }
+]

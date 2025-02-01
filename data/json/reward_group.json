@@ -1,0 +1,2801 @@
+[
+  {
+    "id": 1,
+    "group": "exp",
+    "materialType": 3,
+    "materialId": 0,
+    "count": "10*cost",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2,
+    "group": "exp",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "10*cost",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2100001,
+    "group": "hd_waiwei_2_1_1",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100002,
+    "group": "hd_waiwei_2_1_1",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100003,
+    "group": "hd_waiwei_2_1_2",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100004,
+    "group": "hd_waiwei_2_1_2",
+    "materialType": 1,
+    "materialId": 110103,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100005,
+    "group": "hd_waiwei_2_1_3",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100006,
+    "group": "hd_waiwei_2_1_3",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100007,
+    "group": "hd_waiwei_2_1_4",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100008,
+    "group": "hd_waiwei_2_1_4",
+    "materialType": 1,
+    "materialId": 110203,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100009,
+    "group": "hd_waiwei_2_1_5",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100010,
+    "group": "hd_waiwei_2_1_5",
+    "materialType": 1,
+    "materialId": 110704,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100011,
+    "group": "hd_waiwei_2_1_6",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100012,
+    "group": "hd_waiwei_2_1_6",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100013,
+    "group": "hd_waiwei_2_1_7",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100014,
+    "group": "hd_waiwei_2_1_7",
+    "materialType": 1,
+    "materialId": 110803,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100015,
+    "group": "hd_waiwei_2_1_8",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "500",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100016,
+    "group": "hd_waiwei_2_1_8",
+    "materialType": 1,
+    "materialId": 110404,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100017,
+    "group": "hd_story_2_1_1_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100018,
+    "group": "hd_story_2_1_2_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100019,
+    "group": "hd_story_2_1_4_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100020,
+    "group": "hd_story_2_1_6_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100021,
+    "group": "hd_story_2_1_10_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100022,
+    "group": "hd_story_2_1_13_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100023,
+    "group": "hd_story_2_1_14_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100024,
+    "group": "hd_story_2_1_16_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100025,
+    "group": "hd_story_2_1_17_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100026,
+    "group": "hd_story_2_1_18_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "120",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100027,
+    "group": "hd_hard_2_1_4_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "170",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100028,
+    "group": "hd_hard_2_1_10_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "180",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100029,
+    "group": "hd_hard_2_1_18_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "200",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100030,
+    "group": "hd_hard_2_1_4_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100031,
+    "group": "hd_hard_2_1_10_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100032,
+    "group": "hd_hard_2_1_18_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100033,
+    "group": "hd_veryhard_2_1_4_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "250",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100034,
+    "group": "hd_veryhard_2_1_10_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "270",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100035,
+    "group": "hd_veryhard_2_1_18_normal",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "300",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100036,
+    "group": "hd_veryhard_2_1_4_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100037,
+    "group": "hd_veryhard_2_1_10_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100038,
+    "group": "hd_veryhard_2_1_18_first",
+    "materialType": 2,
+    "materialId": 2101,
+    "count": "340",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100039,
+    "group": "sj_1_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100040,
+    "group": "sj_2_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100041,
+    "group": "sj_3_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100042,
+    "group": "sj_4_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100043,
+    "group": "sj_5_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100044,
+    "group": "sj_6_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100045,
+    "group": "sj_7_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100046,
+    "group": "sj_8_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100047,
+    "group": "sj_9_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "1800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100048,
+    "group": "sj_10_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100049,
+    "group": "sj_11_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100050,
+    "group": "sj_12_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100051,
+    "group": "sj_13_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2200",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100052,
+    "group": "sj_14_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2200",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100053,
+    "group": "sj_15_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2400",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100054,
+    "group": "sj_16_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2400",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100055,
+    "group": "sj_17_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2400",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100056,
+    "group": "sj_18_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100057,
+    "group": "sj_19_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100058,
+    "group": "sj_20_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2600",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100059,
+    "group": "sj_21_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100060,
+    "group": "sj_22_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100061,
+    "group": "sj_23_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100062,
+    "group": "sj_24_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "2800",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100063,
+    "group": "sj_25_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "3000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100064,
+    "group": "sj_26_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "3000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100065,
+    "group": "sj_27_first",
+    "materialType": 2,
+    "materialId": 2103,
+    "count": "3000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100066,
+    "group": "sj_jifen",
+    "materialType": 2,
+    "materialId": 2105,
+    "count": "50",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100067,
+    "group": "sj_kabao",
+    "materialType": 1,
+    "materialId": 220001,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100068,
+    "group": "sj_28_first",
+    "materialType": 1,
+    "materialId": 491004,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100069,
+    "group": "jg_lsp_1",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100070,
+    "group": "jg_lsp_1",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100071,
+    "group": "jg_lsp_1",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100072,
+    "group": "jg_lsp_2",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100073,
+    "group": "jg_lsp_2",
+    "materialType": 1,
+    "materialId": 110503,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100074,
+    "group": "jg_lsp_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100075,
+    "group": "jg_lsp_3",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100076,
+    "group": "jg_lsp_3",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100077,
+    "group": "jg_lsp_3",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100078,
+    "group": "jg_lsp_4",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100079,
+    "group": "jg_lsp_4",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100080,
+    "group": "jg_lsp_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100081,
+    "group": "jg_lsp_5",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100082,
+    "group": "jg_lsp_5",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100083,
+    "group": "jg_lsp_5",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100084,
+    "group": "jg_lsp_6",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100085,
+    "group": "jg_lsp_6",
+    "materialType": 1,
+    "materialId": 110503,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100086,
+    "group": "jg_lsp_6",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100087,
+    "group": "jg_lsp_7",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100088,
+    "group": "jg_lsp_7",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100089,
+    "group": "jg_lsp_7",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100090,
+    "group": "jg_lsp_8",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100091,
+    "group": "jg_lsp_8",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100092,
+    "group": "jg_lsp_8",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100093,
+    "group": "jg_lsp_9",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100094,
+    "group": "jg_lsp_9",
+    "materialType": 1,
+    "materialId": 110603,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100095,
+    "group": "jg_lsp_9",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100096,
+    "group": "jg_aegs_1",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100097,
+    "group": "jg_aegs_1",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100098,
+    "group": "jg_aegs_1",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100099,
+    "group": "jg_aegs_2",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100100,
+    "group": "jg_aegs_2",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100101,
+    "group": "jg_aegs_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100102,
+    "group": "jg_aegs_3",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100103,
+    "group": "jg_aegs_3",
+    "materialType": 1,
+    "materialId": 110603,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100104,
+    "group": "jg_aegs_3",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100105,
+    "group": "jg_aegs_4",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100106,
+    "group": "jg_aegs_4",
+    "materialType": 1,
+    "materialId": 110803,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100107,
+    "group": "jg_aegs_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100108,
+    "group": "jg_aegs_5",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100109,
+    "group": "jg_aegs_5",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100110,
+    "group": "jg_aegs_5",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100111,
+    "group": "jg_aegs_6",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100112,
+    "group": "jg_aegs_6",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100113,
+    "group": "jg_aegs_6",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100114,
+    "group": "jg_aegs_7",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100115,
+    "group": "jg_aegs_7",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100116,
+    "group": "jg_aegs_7",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100117,
+    "group": "jg_aegs_8",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100118,
+    "group": "jg_aegs_8",
+    "materialType": 1,
+    "materialId": 110603,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100119,
+    "group": "jg_aegs_8",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100120,
+    "group": "jg_aegs_9",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100121,
+    "group": "jg_aegs_9",
+    "materialType": 1,
+    "materialId": 110503,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2100122,
+    "group": "jg_aegs_9",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200001,
+    "group": "critter_1",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "100",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200002,
+    "group": "critter_2",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "100",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200003,
+    "group": "critter_3",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "100",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200004,
+    "group": "critter_4",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "50",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200005,
+    "group": "critter_5",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "50",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200006,
+    "group": "critter_6",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "50",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200007,
+    "group": "critter_7",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200008,
+    "group": "critter_8",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200009,
+    "group": "critter_9",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200010,
+    "group": "critter_10",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200011,
+    "group": "critter_11",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200012,
+    "group": "critter_12",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200013,
+    "group": "critter_13",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200014,
+    "group": "critter_14",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200015,
+    "group": "critter_15",
+    "materialType": 2,
+    "materialId": 2202,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200016,
+    "group": "jg_tsnn_1",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200017,
+    "group": "jg_tsnn_1",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200018,
+    "group": "jg_tsnn_1",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200019,
+    "group": "jg_tsnn_2",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200020,
+    "group": "jg_tsnn_2",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200021,
+    "group": "jg_tsnn_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200022,
+    "group": "jg_tsnn_3",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200023,
+    "group": "jg_tsnn_3",
+    "materialType": 1,
+    "materialId": 110703,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200024,
+    "group": "jg_tsnn_3",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200025,
+    "group": "jg_tsnn_4",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200026,
+    "group": "jg_tsnn_4",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200027,
+    "group": "jg_tsnn_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200028,
+    "group": "jg_tsnn_5",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200029,
+    "group": "jg_tsnn_5",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200030,
+    "group": "jg_tsnn_5",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200031,
+    "group": "jg_tsnn_6",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200032,
+    "group": "jg_tsnn_6",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200033,
+    "group": "jg_tsnn_6",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200034,
+    "group": "jg_tsnn_7",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200035,
+    "group": "jg_tsnn_7",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200036,
+    "group": "jg_tsnn_7",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200037,
+    "group": "jg_tsnn_8",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200038,
+    "group": "jg_tsnn_8",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200039,
+    "group": "jg_tsnn_8",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200040,
+    "group": "jg_tsnn_9",
+    "materialType": 1,
+    "materialId": 110703,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200041,
+    "group": "jg_tsnn_9",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200042,
+    "group": "jg_tsnn_10",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200043,
+    "group": "jg_tsnn_10",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200044,
+    "group": "jg_tsnn_11",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200045,
+    "group": "jg_tsnn_11",
+    "materialType": 1,
+    "materialId": 110803,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200046,
+    "group": "jg_tsnn_11",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200047,
+    "group": "jg_lpl_1",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200048,
+    "group": "jg_lpl_1",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200049,
+    "group": "jg_lpl_1",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200050,
+    "group": "jg_lpl_2",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200051,
+    "group": "jg_lpl_2",
+    "materialType": 1,
+    "materialId": 110103,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200052,
+    "group": "jg_lpl_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200053,
+    "group": "jg_lpl_3",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200054,
+    "group": "jg_lpl_3",
+    "materialType": 9,
+    "materialId": 1004,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200055,
+    "group": "jg_lpl_3",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200056,
+    "group": "jg_lpl_4",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "30",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200057,
+    "group": "jg_lpl_4",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200058,
+    "group": "jg_lpl_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200059,
+    "group": "jg_lpl_5",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200060,
+    "group": "jg_lpl_5",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200061,
+    "group": "jg_lpl_5",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200062,
+    "group": "jg_lpl_6",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200063,
+    "group": "jg_lpl_6",
+    "materialType": 1,
+    "materialId": 110103,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200064,
+    "group": "jg_lpl_6",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200065,
+    "group": "jg_lpl_7",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200066,
+    "group": "jg_lpl_7",
+    "materialType": 9,
+    "materialId": 1004,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200067,
+    "group": "jg_lpl_7",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200068,
+    "group": "jg_lpl_8",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200069,
+    "group": "jg_lpl_8",
+    "materialType": 9,
+    "materialId": 1003,
+    "count": "4",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200070,
+    "group": "jg_lpl_8",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200071,
+    "group": "jg_lpl_9",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200072,
+    "group": "jg_lpl_9",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "5000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200073,
+    "group": "jg_lpl_10",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "40",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200074,
+    "group": "jg_lpl_10",
+    "materialType": 1,
+    "materialId": 110603,
+    "count": "1",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200075,
+    "group": "jg_lpl_10",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "10000",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200076,
+    "group": "base_exp",
+    "materialType": 3,
+    "materialId": 0,
+    "count": "10*cost",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200077,
+    "group": "base_exp",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "10*cost",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200078,
+    "group": "base_package",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200079,
+    "group": "base_package",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "1000",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200080,
+    "group": "base_package",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "500",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200081,
+    "group": "base_package",
+    "materialType": 9,
+    "materialId": 1002,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200082,
+    "group": "normal_gold_1000",
+    "materialType": 2,
+    "materialId": 3,
+    "count": "1000",
+    "label": "guding",
+    "shownum": 0
+  },
+  {
+    "id": 2200083,
+    "group": "normal_exp_800",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "800",
+    "label": "guding",
+    "shownum": 0
+  },
+  {
+    "id": 2200084,
+    "group": "normal_water_20",
+    "materialType": 2,
+    "materialId": 2,
+    "count": "20",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200085,
+    "group": "normal_mid_6",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200086,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200087,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200088,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200089,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200090,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200091,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200092,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200093,
+    "group": "normal_mid_6",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200094,
+    "group": "normal_mid_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200095,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200096,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200097,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200098,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200099,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200100,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200101,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200102,
+    "group": "normal_mid_4",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200103,
+    "group": "normal_mid_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200104,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200105,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200106,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200107,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200108,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200109,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200110,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200111,
+    "group": "normal_mid_2",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200112,
+    "group": "normal_junior_4",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200113,
+    "group": "normal_junior_4",
+    "materialType": 1,
+    "materialId": 110101,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200114,
+    "group": "normal_junior_4",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200115,
+    "group": "normal_junior_4",
+    "materialType": 1,
+    "materialId": 110301,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200116,
+    "group": "normal_junior_4",
+    "materialType": 1,
+    "materialId": 110401,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200117,
+    "group": "normal_junior_4",
+    "materialType": 1,
+    "materialId": 110501,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200118,
+    "group": "normal_junior_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200119,
+    "group": "normal_junior_2",
+    "materialType": 1,
+    "materialId": 110101,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200120,
+    "group": "normal_junior_2",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200121,
+    "group": "normal_junior_2",
+    "materialType": 1,
+    "materialId": 110301,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200122,
+    "group": "normal_junior_2",
+    "materialType": 1,
+    "materialId": 110401,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200123,
+    "group": "normal_junior_2",
+    "materialType": 1,
+    "materialId": 110501,
+    "count": "1",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200124,
+    "group": "mid_junior_bone_3",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200125,
+    "group": "mid_junior_bone_3",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200126,
+    "group": "mid_junior_bone_3",
+    "materialType": 1,
+    "materialId": 110301,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200127,
+    "group": "mid_junior_metal_3",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200128,
+    "group": "mid_junior_metal_3",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200129,
+    "group": "mid_junior_metal_3",
+    "materialType": 1,
+    "materialId": 110401,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200130,
+    "group": "mid_junior_salt_3",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200131,
+    "group": "mid_junior_salt_3",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200132,
+    "group": "mid_junior_salt_3",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200133,
+    "group": "mid_junior_nightmare_3",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200134,
+    "group": "mid_junior_nightmare_3",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200135,
+    "group": "mid_junior_nightmare_3",
+    "materialType": 1,
+    "materialId": 110101,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200136,
+    "group": "mid_junior_curses_2",
+    "materialType": 2,
+    "materialId": 5,
+    "count": "0",
+    "label": "none",
+    "shownum": 0
+  },
+  {
+    "id": 2200137,
+    "group": "mid_junior_curses_2",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200138,
+    "group": "mid_junior_curses_2",
+    "materialType": 1,
+    "materialId": 110501,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200139,
+    "group": "zx_easy_8_5_main",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200140,
+    "group": "zx_easy_8_9_main",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200141,
+    "group": "zx_easy_8_11_main",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200142,
+    "group": "zx_easy_8_16_main",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200143,
+    "group": "zx_easy_8_18_main",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200144,
+    "group": "zx_easy_8_19_main",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200145,
+    "group": "zx_easy_8_21_main",
+    "materialType": 1,
+    "materialId": 111001,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200146,
+    "group": "zx_dream_8_3_first",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200147,
+    "group": "zx_dream_8_3_first",
+    "materialType": 1,
+    "materialId": 220081,
+    "count": "1",
+    "label": "guding",
+    "shownum": 0
+  },
+  {
+    "id": 2200148,
+    "group": "zx_dream_8_5_first",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200149,
+    "group": "zx_dream_8_7_first",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200150,
+    "group": "zx_dream_8_9_first",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200151,
+    "group": "zx_dream_8_10_first",
+    "materialType": 1,
+    "materialId": 111001,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200152,
+    "group": "zx_dream_8_11_first",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200153,
+    "group": "zx_dream_8_15_first",
+    "materialType": 1,
+    "materialId": 110202,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200154,
+    "group": "zx_dream_8_16_first",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200155,
+    "group": "zx_dream_8_17_first",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200156,
+    "group": "zx_dream_8_18_first",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200157,
+    "group": "zx_dream_8_19_first",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200158,
+    "group": "zx_dream_8_20_first",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "3",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200159,
+    "group": "zx_dream_8_21_first",
+    "materialType": 1,
+    "materialId": 111001,
+    "count": "2",
+    "label": "guding",
+    "shownum": 1
+  },
+  {
+    "id": 2200160,
+    "group": "zx_hard_8_3_main_1",
+    "materialType": 1,
+    "materialId": 110503,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200161,
+    "group": "zx_hard_8_3_main_1",
+    "materialType": 1,
+    "materialId": 110501,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200162,
+    "group": "zx_hard_8_3_main_2",
+    "materialType": 1,
+    "materialId": 110502,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200163,
+    "group": "zx_hard_8_7_main_1",
+    "materialType": 1,
+    "materialId": 110103,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200164,
+    "group": "zx_hard_8_7_main_1",
+    "materialType": 1,
+    "materialId": 110101,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200165,
+    "group": "zx_hard_8_7_main_2",
+    "materialType": 1,
+    "materialId": 110102,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200166,
+    "group": "zx_hard_8_10_main_1",
+    "materialType": 1,
+    "materialId": 110403,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200167,
+    "group": "zx_hard_8_10_main_1",
+    "materialType": 1,
+    "materialId": 110401,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200168,
+    "group": "zx_hard_8_10_main_2",
+    "materialType": 1,
+    "materialId": 110402,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200169,
+    "group": "zx_hard_8_11_main_1",
+    "materialType": 1,
+    "materialId": 111012,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200170,
+    "group": "zx_hard_8_11_main_1",
+    "materialType": 1,
+    "materialId": 110301,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200171,
+    "group": "zx_hard_8_11_main_2",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200172,
+    "group": "zx_hard_8_15_main_1",
+    "materialType": 1,
+    "materialId": 110603,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200173,
+    "group": "zx_hard_8_15_main_1",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200174,
+    "group": "zx_hard_8_15_main_2",
+    "materialType": 1,
+    "materialId": 110602,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200175,
+    "group": "zx_hard_8_17_main_1",
+    "materialType": 1,
+    "materialId": 110203,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200176,
+    "group": "zx_hard_8_17_main_1",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200177,
+    "group": "zx_hard_8_17_main_2",
+    "materialType": 1,
+    "materialId": 110204,
+    "count": "1",
+    "label": "jixiaogailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200178,
+    "group": "zx_hard_8_18_main_1",
+    "materialType": 1,
+    "materialId": 110803,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200179,
+    "group": "zx_hard_8_18_main_1",
+    "materialType": 1,
+    "materialId": 110201,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200180,
+    "group": "zx_hard_8_18_main_2",
+    "materialType": 1,
+    "materialId": 110802,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200181,
+    "group": "zx_hard_8_20_main_1",
+    "materialType": 1,
+    "materialId": 110303,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200182,
+    "group": "zx_hard_8_20_main_1",
+    "materialType": 1,
+    "materialId": 110301,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200183,
+    "group": "zx_hard_8_20_main_2",
+    "materialType": 1,
+    "materialId": 110302,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200184,
+    "group": "zx_hard_8_21_main_1",
+    "materialType": 1,
+    "materialId": 110703,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200185,
+    "group": "zx_hard_8_21_main_1",
+    "materialType": 1,
+    "materialId": 110501,
+    "count": "1",
+    "label": "dagailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200186,
+    "group": "zx_hard_8_21_main_2",
+    "materialType": 1,
+    "materialId": 110702,
+    "count": "1",
+    "label": "gailv",
+    "shownum": 0
+  },
+  {
+    "id": 2200187,
+    "group": "zx_plot_8_14_first",
+    "materialType": 1,
+    "materialId": 220082,
+    "count": "1",
+    "label": "guding",
+    "shownum": 0
+  }
+]

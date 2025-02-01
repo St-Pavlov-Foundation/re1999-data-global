@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1001,
+    "hp": 0,
+    "attack": 0,
+    "def": 0,
+    "mdef": 0,
+    "cri": 0,
+    "recri": 0,
+    "criDmg": 0,
+    "criDef": 0,
+    "addDmg": 0,
+    "dropDmg": 0,
+    "heal": 0,
+    "revive": 0,
+    "defenseIgnore": 0,
+    "absorb": 0,
+    "normalSkillRate": 0,
+    "clutch": 0
+  }
+]

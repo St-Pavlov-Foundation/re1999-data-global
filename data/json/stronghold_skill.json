@@ -1,0 +1,178 @@
+[
+  {
+    "skillId": 22210401,
+    "condition": "HasDiamondFromPutChess#red&&CurrStrongholdIsPutChess",
+    "triggerPoint": 204,
+    "effect": "AddMatch3ExtraMove#1",
+    "roundTriggerCountLimit": 1,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22210402,
+    "condition": "",
+    "triggerPoint": 101,
+    "effect": "SummonChess#222002#2",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 1
+  },
+  {
+    "skillId": 22210403,
+    "condition": "HasDiamondFromPutChess#blue&&CurrStrongholdIsPutChess",
+    "triggerPoint": 204,
+    "effect": "AddMatch3ExtraMove#1",
+    "roundTriggerCountLimit": 1,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22210703,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "IncrDiamondByPutChessCost#red,green,blue,yellow#10",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220101,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "DecrDiamondByPutChessCost#red#5",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220102,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "DecrDiamondByPutChessCost#blue#5",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220201,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "DecrDiamondByPutChessCost#red,blue#10",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220202,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "FullStrongholdAddDiamond#30#red,green,blue,yellow",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 1
+  },
+  {
+    "skillId": 22220502,
+    "condition": "",
+    "triggerPoint": 101,
+    "effect": "SummonChess#222017#1",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 1
+  },
+  {
+    "skillId": 22220601,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "IncrDiamondByPutChessCost#green,blue#10",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220702,
+    "condition": "",
+    "triggerPoint": 4005,
+    "effect": "AddBattleFromPutChess#2",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220703,
+    "condition": "HasDiamondFromPutChess#blue,green&&CurrStrongholdIsPutChess",
+    "triggerPoint": 204,
+    "effect": "IncrDiamondByPutChessCost#red,yellow,blue,green#5",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22220801,
+    "condition": "CurrStrongholdIsPutChess",
+    "triggerPoint": 204,
+    "effect": "CopyChessPieceToRandomOtherStronghold",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230201,
+    "condition": "",
+    "triggerPoint": 908,
+    "effect": "ColorWeightUp#2#blue",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230102,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "IncrDiamondByPutChessCost#blue#10",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230301,
+    "condition": "",
+    "triggerPoint": 4005,
+    "effect": "AddBattleFromPutChess#2",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230302,
+    "condition": "",
+    "triggerPoint": 101,
+    "effect": "SummonChess#222025#2",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 1
+  },
+  {
+    "skillId": 22230602,
+    "condition": "",
+    "triggerPoint": 908,
+    "effect": "ColorWeightUp#2#green",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230701,
+    "condition": "",
+    "triggerPoint": 908,
+    "effect": "ColorWeightUp#2#blue",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230702,
+    "condition": "",
+    "triggerPoint": 908,
+    "effect": "ColorWeightUp#2#red",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22230802,
+    "condition": "",
+    "triggerPoint": 909,
+    "effect": "DecrDiamondByPutChessCost#red,green,blue,yellow#5",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 0
+  },
+  {
+    "skillId": 22240403,
+    "condition": "MySideStage",
+    "triggerPoint": 101,
+    "effect": "IncrDiamondByPutChessCost#red,yellow,blue,green#50",
+    "roundTriggerCountLimit": 0,
+    "totalTriggerCountLimit": 1
+  }
+]

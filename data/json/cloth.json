@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10023265",
+    "enname": "FIRST MELODY",
+    "icon": "1",
+    "skinId": 300201,
+    "desc": "language_10023266"
+  },
+  {
+    "id": 2,
+    "name": "language_10023267",
+    "enname": "GRAND ORCHESTRA",
+    "icon": "2",
+    "skinId": 300201,
+    "desc": "language_10023268"
+  },
+  {
+    "id": 6,
+    "name": "language_10044771",
+    "enname": "Unfinished Tune",
+    "icon": "6",
+    "skinId": 300201,
+    "desc": "language_10044772"
+  }
+]

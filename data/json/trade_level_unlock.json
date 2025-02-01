@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "name": "language_10056960",
+    "icon": "",
+    "type": 1,
+    "levelupDes": "language_10056961",
+    "sort": 101,
+    "itemType": 1
+  },
+  {
+    "id": 4,
+    "name": "language_10056962",
+    "icon": "room_task_icon14",
+    "type": 2,
+    "levelupDes": "language_10056963",
+    "sort": 102,
+    "itemType": 0
+  },
+  {
+    "id": 6,
+    "name": "language_10056964",
+    "icon": "",
+    "type": 2,
+    "levelupDes": "language_10056965",
+    "sort": 201,
+    "itemType": 1
+  },
+  {
+    "id": 7,
+    "name": "language_10056966",
+    "icon": "room_task_icon10",
+    "type": 2,
+    "levelupDes": "language_10056967",
+    "sort": 103,
+    "itemType": 0
+  },
+  {
+    "id": 8,
+    "name": "language_10056968",
+    "icon": "room_task_icon11",
+    "type": 1,
+    "levelupDes": "language_10056969",
+    "sort": 104,
+    "itemType": 0
+  },
+  {
+    "id": 9,
+    "name": "language_10056970",
+    "icon": "room_task_icon16",
+    "type": 1,
+    "levelupDes": "language_10056971",
+    "sort": 105,
+    "itemType": 0
+  },
+  {
+    "id": 10,
+    "name": "language_10056972",
+    "icon": "",
+    "type": 1,
+    "levelupDes": "language_10056973",
+    "sort": 301,
+    "itemType": 2
+  },
+  {
+    "id": 11,
+    "name": "language_10056974",
+    "icon": "room_task_icon13",
+    "type": 1,
+    "levelupDes": "language_10056975",
+    "sort": 107,
+    "itemType": 0
+  },
+  {
+    "id": 12,
+    "name": "language_10056976",
+    "icon": "room_task_icon15",
+    "type": 1,
+    "levelupDes": "language_10056977",
+    "sort": 108,
+    "itemType": 0
+  },
+  {
+    "id": 13,
+    "name": "language_10056978",
+    "icon": "room_task_icon12",
+    "type": 1,
+    "levelupDes": "language_10056979",
+    "sort": 109,
+    "itemType": 0
+  },
+  {
+    "id": 14,
+    "name": "language_10056980",
+    "icon": "room_task_icon11",
+    "type": 2,
+    "levelupDes": "language_10056981",
+    "sort": 110,
+    "itemType": 0
+  }
+]

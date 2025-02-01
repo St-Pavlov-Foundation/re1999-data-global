@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "magicText": "&",
+    "normalText": "<sprite=3>"
+  },
+  {
+    "id": 2,
+    "magicText": "%%",
+    "normalText": "<sprite=4>"
+  },
+  {
+    "id": 3,
+    "magicText": "@",
+    "normalText": " Ένα ευθύγραμμο τμήμα σχηματίζεται όταν ενώσουμε δύο σημεία! "
+  }
+]

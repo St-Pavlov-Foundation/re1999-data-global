@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "language_10041952",
+    "value": 20,
+    "ismul": 0,
+    "icon": "rouge_talen_icon_5"
+  },
+  {
+    "id": 2,
+    "name": "language_10043440",
+    "value": 5,
+    "ismul": 1,
+    "icon": "rouge_talen_icon_2"
+  },
+  {
+    "id": 3,
+    "name": "language_10043441",
+    "value": 2,
+    "ismul": 0,
+    "icon": "rouge_talen_icon_3"
+  },
+  {
+    "id": 4,
+    "name": "language_10043442",
+    "value": 10,
+    "ismul": 1,
+    "icon": "rouge_talen_icon_6"
+  },
+  {
+    "id": 5,
+    "name": "language_10043443",
+    "value": 10,
+    "ismul": 1,
+    "icon": "rouge_talen_icon_1"
+  }
+]

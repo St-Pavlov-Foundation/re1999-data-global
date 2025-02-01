@@ -1,0 +1,62 @@
+[
+  {
+    "dialogId": 1,
+    "stepId": 1,
+    "chessId": 1,
+    "dialog": "对话1111"
+  },
+  {
+    "dialogId": 1,
+    "stepId": 2,
+    "chessId": 5,
+    "dialog": "对话2222"
+  },
+  {
+    "dialogId": 1,
+    "stepId": 3,
+    "chessId": 2,
+    "dialog": "对话3333"
+  },
+  {
+    "dialogId": 1,
+    "stepId": 4,
+    "chessId": 1,
+    "dialog": "对话4444"
+  },
+  {
+    "dialogId": 1,
+    "stepId": 5,
+    "chessId": 3,
+    "dialog": "对话5555"
+  },
+  {
+    "dialogId": 2,
+    "stepId": 1,
+    "chessId": 1,
+    "dialog": "对话111111"
+  },
+  {
+    "dialogId": 2,
+    "stepId": 2,
+    "chessId": 1,
+    "dialog": "对话222222"
+  },
+  {
+    "dialogId": 2,
+    "stepId": 3,
+    "chessId": 3,
+    "dialog": "对话333333"
+  },
+  {
+    "dialogId": 2,
+    "stepId": 4,
+    "chessId": 4,
+    "dialog": "对话444444"
+  },
+  {
+    "dialogId": 2,
+    "stepId": 5,
+    "chessId": 4,
+    "dialog": "对话555555"
+  }
+]

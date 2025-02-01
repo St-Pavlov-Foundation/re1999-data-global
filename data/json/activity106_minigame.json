@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1001,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110101,110102,110103,110104,111001,111002"
+  },
+  {
+    "id": 1002,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110101,110102,110103,110104,111001,111002"
+  },
+  {
+    "id": 1003,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110101,110102,110103,110104,111001,111002"
+  },
+  {
+    "id": 1004,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110101,110102,110103,110104,111001,111002"
+  },
+  {
+    "id": 1005,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110201,110202,110203,110204,111003,111004"
+  },
+  {
+    "id": 1006,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110201,110202,110203,110204,111003,111004"
+  },
+  {
+    "id": 1007,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110201,110202,110203,110204,111003,111004"
+  },
+  {
+    "id": 1008,
+    "minBlock": "0.15",
+    "levelTime": 60,
+    "blockCount": 3,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110201,110202,110203,110204,111003,111004"
+  },
+  {
+    "id": 1009,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110301,110302,110303,110304,111005,111006"
+  },
+  {
+    "id": 1010,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110301,110302,110303,110304,111005,111006"
+  },
+  {
+    "id": 1011,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110301,110302,110303,110304,111005,111006"
+  },
+  {
+    "id": 1012,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110301,110302,110303,110304,111005,111006"
+  },
+  {
+    "id": 1013,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110401,110402,110403,110404,110101,110102,110103,110104"
+  },
+  {
+    "id": 1014,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110401,110402,110403,110404,110101,110102,110103,110104"
+  },
+  {
+    "id": 1015,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110401,110402,110403,110404,110101,110102,110103,110104"
+  },
+  {
+    "id": 1016,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110401,110402,110403,110404,110101,110102,110103,110104"
+  },
+  {
+    "id": 1017,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110501,110502,110503,110504,110201,110202,110203,110204"
+  },
+  {
+    "id": 1018,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110501,110502,110503,110504,110201,110202,110203,110204"
+  },
+  {
+    "id": 1019,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110501,110502,110503,110504,110201,110202,110203,110204"
+  },
+  {
+    "id": 1020,
+    "minBlock": "0.13",
+    "levelTime": 60,
+    "blockCount": 4,
+    "victoryRound": 2,
+    "randomLength": "0",
+    "pointerSpeed": "0.009",
+    "matPool": "110501,110502,110503,110504,110201,110202,110203,110204"
+  }
+]

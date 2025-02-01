@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 11924,
+    "id": 1,
+    "mailId": 500014,
+    "preId": 0,
+    "bonus": "2#2#1800|4#3041#1|10#21#1|1#491003#5|2#3#30000|2#5#5000",
+    "desc": "language_10033765",
+    "sort": 1,
+    "episodeId": 10103
+  },
+  {
+    "activityId": 11924,
+    "id": 2,
+    "mailId": 500015,
+    "preId": 1,
+    "bonus": "1#140001#10",
+    "desc": "language_10033766",
+    "sort": 2,
+    "episodeId": 10115
+  },
+  {
+    "activityId": 11924,
+    "id": 3,
+    "mailId": 500016,
+    "preId": 2,
+    "bonus": "1#140001#10",
+    "desc": "language_10033767",
+    "sort": 3,
+    "episodeId": 10215
+  }
+]

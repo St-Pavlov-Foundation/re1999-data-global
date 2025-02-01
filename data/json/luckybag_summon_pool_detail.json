@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "desc": "",
+    "info": "language_10036615",
+    "name": "第一滴雨",
+    "historyShowType": 99,
+    "order": 999,
+    "openId": 11
+  },
+  {
+    "id": 2,
+    "desc": "",
+    "info": "language_10036616",
+    "name": "常驻角色征集",
+    "historyShowType": 1,
+    "order": 1,
+    "openId": 11
+  },
+  {
+    "id": 3,
+    "desc": "",
+    "info": "language_10036617",
+    "name": "限时活动征集",
+    "historyShowType": 0,
+    "order": 2,
+    "openId": 11
+  },
+  {
+    "id": 4,
+    "desc": "",
+    "info": "language_10036618",
+    "name": "限时角色征集",
+    "historyShowType": 1,
+    "order": 3,
+    "openId": 11
+  }
+]

@@ -1,0 +1,520 @@
+[
+  {
+    "strengthType": 1000,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 100099,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1002,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1003,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1004,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1005,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1501,
+    "hp": 2200,
+    "atk": 370,
+    "def": 200,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1502,
+    "hp": 2200,
+    "atk": 370,
+    "def": 150,
+    "mdef": 200
+  },
+  {
+    "strengthType": 1503,
+    "hp": 2800,
+    "atk": 350,
+    "def": 120,
+    "mdef": 220
+  },
+  {
+    "strengthType": 1504,
+    "hp": 2200,
+    "atk": 360,
+    "def": 180,
+    "mdef": 180
+  },
+  {
+    "strengthType": 1507,
+    "hp": 2200,
+    "atk": 330,
+    "def": 180,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1508,
+    "hp": 2600,
+    "atk": 360,
+    "def": 180,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1510,
+    "hp": 2000,
+    "atk": 410,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1509,
+    "hp": 2200,
+    "atk": 380,
+    "def": 170,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1511,
+    "hp": 2600,
+    "atk": 350,
+    "def": 150,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1401,
+    "hp": 1800,
+    "atk": 300,
+    "def": 160,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1402,
+    "hp": 2000,
+    "atk": 290,
+    "def": 140,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1404,
+    "hp": 2000,
+    "atk": 310,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1405,
+    "hp": 1800,
+    "atk": 300,
+    "def": 150,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1407,
+    "hp": 2000,
+    "atk": 280,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1411,
+    "hp": 2000,
+    "atk": 300,
+    "def": 150,
+    "mdef": 140
+  },
+  {
+    "strengthType": 4103,
+    "hp": 2200,
+    "atk": 260,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 4104,
+    "hp": 2200,
+    "atk": 280,
+    "def": 150,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1306,
+    "hp": 1400,
+    "atk": 190,
+    "def": 120,
+    "mdef": 120
+  },
+  {
+    "strengthType": 1307,
+    "hp": 1300,
+    "atk": 220,
+    "def": 110,
+    "mdef": 110
+  },
+  {
+    "strengthType": 1308,
+    "hp": 1400,
+    "atk": 200,
+    "def": 110,
+    "mdef": 110
+  },
+  {
+    "strengthType": 1309,
+    "hp": 1200,
+    "atk": 220,
+    "def": 120,
+    "mdef": 110
+  },
+  {
+    "strengthType": 1310,
+    "hp": 1400,
+    "atk": 210,
+    "def": 110,
+    "mdef": 110
+  },
+  {
+    "strengthType": 1201,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1202,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1203,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1204,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1205,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1206,
+    "hp": 1100,
+    "atk": 180,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 10000,
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "mdef": 0
+  },
+  {
+    "strengthType": 1512,
+    "hp": 2600,
+    "atk": 340,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1001,
+    "hp": 500,
+    "atk": 100,
+    "def": 50,
+    "mdef": 50
+  },
+  {
+    "strengthType": 1513,
+    "hp": 2000,
+    "atk": 350,
+    "def": 170,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1514,
+    "hp": 2200,
+    "atk": 380,
+    "def": 170,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1413,
+    "hp": 2000,
+    "atk": 310,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1414,
+    "hp": 2000,
+    "atk": 280,
+    "def": 190,
+    "mdef": 120
+  },
+  {
+    "strengthType": 1515,
+    "hp": 2000,
+    "atk": 380,
+    "def": 170,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1420,
+    "hp": 2000,
+    "atk": 280,
+    "def": 150,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1421,
+    "hp": 2000,
+    "atk": 300,
+    "def": 150,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1521,
+    "hp": 2400,
+    "atk": 370,
+    "def": 170,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1522,
+    "hp": 1900,
+    "atk": 370,
+    "def": 160,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1422,
+    "hp": 1900,
+    "atk": 320,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1423,
+    "hp": 2200,
+    "atk": 280,
+    "def": 150,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1523,
+    "hp": 2400,
+    "atk": 380,
+    "def": 150,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1524,
+    "hp": 2200,
+    "atk": 380,
+    "def": 140,
+    "mdef": 180
+  },
+  {
+    "strengthType": 1424,
+    "hp": 1900,
+    "atk": 320,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1425,
+    "hp": 2000,
+    "atk": 310,
+    "def": 140,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1525,
+    "hp": 2700,
+    "atk": 360,
+    "def": 150,
+    "mdef": 180
+  },
+  {
+    "strengthType": 1526,
+    "hp": 2100,
+    "atk": 360,
+    "def": 180,
+    "mdef": 180
+  },
+  {
+    "strengthType": 1426,
+    "hp": 1500,
+    "atk": 340,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1427,
+    "hp": 1800,
+    "atk": 310,
+    "def": 150,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1527,
+    "hp": 2000,
+    "atk": 390,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1528,
+    "hp": 2800,
+    "atk": 300,
+    "def": 170,
+    "mdef": 190
+  },
+  {
+    "strengthType": 1529,
+    "hp": 2800,
+    "atk": 340,
+    "def": 190,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1428,
+    "hp": 1100,
+    "atk": 360,
+    "def": 150,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1429,
+    "hp": 2100,
+    "atk": 320,
+    "def": 140,
+    "mdef": 130
+  },
+  {
+    "strengthType": 1530,
+    "hp": 1600,
+    "atk": 380,
+    "def": 180,
+    "mdef": 190
+  },
+  {
+    "strengthType": 1531,
+    "hp": 2200,
+    "atk": 370,
+    "def": 170,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1532,
+    "hp": 2200,
+    "atk": 380,
+    "def": 150,
+    "mdef": 170
+  },
+  {
+    "strengthType": 1430,
+    "hp": 1900,
+    "atk": 360,
+    "def": 130,
+    "mdef": 120
+  },
+  {
+    "strengthType": 1431,
+    "hp": 1900,
+    "atk": 330,
+    "def": 150,
+    "mdef": 130
+  },
+  {
+    "strengthType": 1533,
+    "hp": 2600,
+    "atk": 360,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1534,
+    "hp": 2600,
+    "atk": 380,
+    "def": 150,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1432,
+    "hp": 2200,
+    "atk": 300,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1433,
+    "hp": 2600,
+    "atk": 280,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1536,
+    "hp": 2600,
+    "atk": 390,
+    "def": 150,
+    "mdef": 150
+  },
+  {
+    "strengthType": 1537,
+    "hp": 2800,
+    "atk": 340,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1434,
+    "hp": 1900,
+    "atk": 360,
+    "def": 120,
+    "mdef": 120
+  },
+  {
+    "strengthType": 1435,
+    "hp": 2200,
+    "atk": 300,
+    "def": 140,
+    "mdef": 140
+  }
+]

@@ -1,0 +1,206 @@
+[
+  {
+    "id": 222107,
+    "dialogSeq": 1,
+    "dialogId": [
+      22001
+    ],
+    "trigger": "TeamChessEnemyPlaceBefore#-1",
+    "auto": 0
+  },
+  {
+    "id": 222201,
+    "dialogSeq": 1,
+    "dialogId": [
+      22002
+    ],
+    "trigger": "TeamChessEnemyPlaceBefore#-1",
+    "auto": 0
+  },
+  {
+    "id": 222205,
+    "dialogSeq": 1,
+    "dialogId": [
+      22003
+    ],
+    "trigger": "TeamChessEnemyPlaceBefore#-1",
+    "auto": 0
+  },
+  {
+    "id": 222208,
+    "dialogSeq": 1,
+    "dialogId": [
+      22004
+    ],
+    "trigger": "TeamChessEnemyPlaceBefore#-1",
+    "auto": 0
+  },
+  {
+    "id": 222309,
+    "dialogSeq": 1,
+    "dialogId": [
+      22005
+    ],
+    "trigger": "TeamChessEnemyPlaceBefore#-1",
+    "auto": 0
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 1,
+    "dialogId": [
+      22006,
+      22007,
+      22008
+    ],
+    "trigger": "ClickMainCharacter#222001",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 2,
+    "dialogId": [
+      22021,
+      22022,
+      22023,
+      22024
+    ],
+    "trigger": "SettleAndToHaveDamage#1#222001",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 3,
+    "dialogId": [
+      22025,
+      22026
+    ],
+    "trigger": "SettleAndToHaveDamage#2#222001",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 4,
+    "dialogId": [
+      22009,
+      22010,
+      22011
+    ],
+    "trigger": "ClickMainCharacter#222002",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 5,
+    "dialogId": [
+      22027,
+      22028,
+      22029
+    ],
+    "trigger": "SettleAndToHaveDamage#1#222002",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 6,
+    "dialogId": [
+      22030,
+      22031
+    ],
+    "trigger": "SettleAndToHaveDamage#2#222002",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 7,
+    "dialogId": [
+      22012,
+      22013,
+      22014
+    ],
+    "trigger": "ClickMainCharacter#222003",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 8,
+    "dialogId": [
+      22032,
+      22033,
+      22034
+    ],
+    "trigger": "SettleAndToHaveDamage#1#222003",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 9,
+    "dialogId": [
+      22035,
+      22036
+    ],
+    "trigger": "SettleAndToHaveDamage#2#222003",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 10,
+    "dialogId": [
+      22015,
+      22016,
+      22017
+    ],
+    "trigger": "ClickMainCharacter#222004",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 11,
+    "dialogId": [
+      22037,
+      22038
+    ],
+    "trigger": "SettleAndToHaveDamage#1#222004",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 12,
+    "dialogId": [
+      22039,
+      22040
+    ],
+    "trigger": "SettleAndToHaveDamage#2#222004",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 13,
+    "dialogId": [
+      22018,
+      22019
+    ],
+    "trigger": "ClickMainCharacter#222005",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 14,
+    "dialogId": [
+      22041,
+      22042,
+      22043
+    ],
+    "trigger": "SettleAndToHaveDamage#1#222005",
+    "auto": 1
+  },
+  {
+    "id": 999999,
+    "dialogSeq": 15,
+    "dialogId": [
+      22041,
+      22042
+    ],
+    "trigger": "SettleAndToHaveDamage#2#222005",
+    "auto": 1
+  }
+]

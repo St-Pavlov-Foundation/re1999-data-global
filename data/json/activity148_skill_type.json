@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "skillName": "language_10028644",
+    "skillValueDesc": "language_10028645",
+    "skillInfoDesc": "language_10028646",
+    "skillIcon": "",
+    "skillNameEn": "language_10028647"
+  },
+  {
+    "id": 3,
+    "skillName": "language_10028648",
+    "skillValueDesc": "language_10028649",
+    "skillInfoDesc": "language_10028650",
+    "skillIcon": "",
+    "skillNameEn": "language_10028651"
+  },
+  {
+    "id": 2,
+    "skillName": "language_10028652",
+    "skillValueDesc": "language_10028653",
+    "skillInfoDesc": "language_10028654",
+    "skillIcon": "",
+    "skillNameEn": "language_10028655"
+  },
+  {
+    "id": 4,
+    "skillName": "language_10028656",
+    "skillValueDesc": "language_10028657",
+    "skillInfoDesc": "language_10028658",
+    "skillIcon": "",
+    "skillNameEn": "language_10028659"
+  }
+]

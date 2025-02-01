@@ -1,0 +1,80 @@
+[
+  {
+    "id": 190001,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027539",
+    "listenerType": "Act130Episode",
+    "listenerParam": "2",
+    "maxProgress": 1,
+    "episodeId": 2,
+    "jumpId": 10502,
+    "bonus": "2#2#40|9#1003#4|2#3#10000"
+  },
+  {
+    "id": 190002,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027540",
+    "listenerType": "Act130Episode",
+    "listenerParam": "3",
+    "maxProgress": 1,
+    "episodeId": 3,
+    "jumpId": 10503,
+    "bonus": "2#2#40|1#110603#1|2#5#10000"
+  },
+  {
+    "id": 190003,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027541",
+    "listenerType": "Act130Episode",
+    "listenerParam": "4",
+    "maxProgress": 1,
+    "episodeId": 4,
+    "jumpId": 10504,
+    "bonus": "2#2#40|9#1003#4|2#3#10000"
+  },
+  {
+    "id": 190004,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027542",
+    "listenerType": "Act130Episode",
+    "listenerParam": "5",
+    "maxProgress": 1,
+    "episodeId": 5,
+    "jumpId": 10505,
+    "bonus": "2#2#40|1#111012#1|2#5#10000"
+  },
+  {
+    "id": 190005,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027543",
+    "listenerType": "Act130Episode",
+    "listenerParam": "6",
+    "maxProgress": 1,
+    "episodeId": 6,
+    "jumpId": 10506,
+    "bonus": "2#2#40|9#1003#4|2#3#10000"
+  },
+  {
+    "id": 190006,
+    "activityId": 11402,
+    "isOnline": 1,
+    "loopType": "language_10027326",
+    "name": "language_10027544",
+    "listenerType": "Act130Episode",
+    "listenerParam": "7",
+    "maxProgress": 1,
+    "episodeId": 7,
+    "jumpId": 10507,
+    "bonus": "2#2#40|1#110403#2|1#110602#4"
+  }
+]

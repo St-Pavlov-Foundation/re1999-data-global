@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "title": "language_10049021",
+    "additionRule": "2#521100001",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049022",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 2,
+    "title": "language_10049023",
+    "additionRule": "2#521100002",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049024",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 3,
+    "title": "language_10006636",
+    "additionRule": "2#521100003",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049025",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 4,
+    "title": "language_10006519",
+    "additionRule": "2#521100004",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049026",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 5,
+    "title": "language_10006694",
+    "additionRule": "2#521100005",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049027",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 6,
+    "title": "language_10006696",
+    "additionRule": "2#521100006",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049028",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 7,
+    "title": "language_10006489",
+    "additionRule": "2#521100007",
+    "hiddenRule": "",
+    "ruleDesc": "language_10015283",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 8,
+    "title": "language_10006682",
+    "additionRule": "2#521100008",
+    "hiddenRule": "",
+    "ruleDesc": "language_10006440",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 9,
+    "title": "language_10006605",
+    "additionRule": "1#521100009",
+    "hiddenRule": "",
+    "ruleDesc": "language_10007139",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 10,
+    "title": "language_10006459",
+    "additionRule": "2#521100010",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049029",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 11,
+    "title": "language_10006457",
+    "additionRule": "2#521100011",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049030",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 12,
+    "title": "language_10006672",
+    "additionRule": "2#521100012",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049031",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 13,
+    "title": "language_10049032",
+    "additionRule": "2#521100013",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049033",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 14,
+    "title": "language_10006714",
+    "additionRule": "2#521100014",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049034",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 15,
+    "title": "language_10006601",
+    "additionRule": "1#521100015",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049035",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 16,
+    "title": "language_10049036",
+    "additionRule": "2#521100016",
+    "hiddenRule": "",
+    "ruleDesc": "language_10051498",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 17,
+    "title": "language_10049038",
+    "additionRule": "2#521100017",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049039",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 18,
+    "title": "language_10049040",
+    "additionRule": "1#521100018",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049041",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 19,
+    "title": "language_10049042",
+    "additionRule": "1#521100019",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049043",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 20,
+    "title": "language_10017080",
+    "additionRule": "2#521100020",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049044",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 21,
+    "title": "language_10049045",
+    "additionRule": "2#521100021",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049046",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 22,
+    "title": "language_10049047",
+    "additionRule": "1#521100022",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049048",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 23,
+    "title": "language_10009322",
+    "additionRule": "1#521100023",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049049",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 24,
+    "title": "language_10006564",
+    "additionRule": "2#521100024",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049050",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 25,
+    "title": "language_10049051",
+    "additionRule": "1#521100025",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049052",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 26,
+    "title": "language_10049053",
+    "additionRule": "1#521100026",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049054",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 27,
+    "title": "language_10049055",
+    "additionRule": "1#521100027",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049056",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 28,
+    "title": "language_10049057",
+    "additionRule": "1#521100028",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049058",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 29,
+    "title": "language_10049059",
+    "additionRule": "1#521100029",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049060",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 30,
+    "title": "language_10049061",
+    "additionRule": "1#521100030",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049062",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 31,
+    "title": "language_10049063",
+    "additionRule": "1#521100031",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049064",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 32,
+    "title": "language_10006708",
+    "additionRule": "2#521100032",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049065",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 33,
+    "title": "language_10049066",
+    "additionRule": "2#521100033",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049067",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 34,
+    "title": "language_10049068",
+    "additionRule": "1#521100034",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049069",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 35,
+    "title": "language_10049070",
+    "additionRule": "1#521100035",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049071",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 36,
+    "title": "language_10049072",
+    "additionRule": "1#521100036",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049073",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 37,
+    "title": "language_10049074",
+    "additionRule": "1#521100037",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049075",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 38,
+    "title": "language_10006451",
+    "additionRule": "2#521100038",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049076",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 39,
+    "title": "language_10006599",
+    "additionRule": "1#521100039",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049077",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 40,
+    "title": "language_10015515",
+    "additionRule": "2#521100040",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049078",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 41,
+    "title": "language_10049079",
+    "additionRule": "1#521100041",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049080",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 42,
+    "title": "language_10049081",
+    "additionRule": "2#521100042",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049082",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 43,
+    "title": "language_10049083",
+    "additionRule": "3#521100043",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049084",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 44,
+    "title": "language_10049085",
+    "additionRule": "2#521100044",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049086",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 45,
+    "title": "language_10006680",
+    "additionRule": "2#521100045",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049087",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 46,
+    "title": "language_10006479",
+    "additionRule": "2#521100046",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049088",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 47,
+    "title": "language_10006648",
+    "additionRule": "2#521100047",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049089",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 48,
+    "title": "language_10006603",
+    "additionRule": "2#521100048",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049090",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 49,
+    "title": "language_10006475",
+    "additionRule": "2#521100049",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049091",
+    "tipsDesc": "language_10051497"
+  },
+  {
+    "id": 50,
+    "title": "language_10049092",
+    "additionRule": "2#521100050",
+    "hiddenRule": "",
+    "ruleDesc": "language_10049093",
+    "tipsDesc": "language_10051497"
+  }
+]

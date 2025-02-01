@@ -1,0 +1,26 @@
+[
+  {
+    "activityId": 12005,
+    "paintedNum": 4,
+    "rewardId": 1,
+    "bonus": "1#110703#1|2#3#10000"
+  },
+  {
+    "activityId": 12005,
+    "paintedNum": 8,
+    "rewardId": 2,
+    "bonus": "1#110503#1|2#5#10000"
+  },
+  {
+    "activityId": 12005,
+    "paintedNum": 12,
+    "rewardId": 3,
+    "bonus": "1#110303#1|2#3#10000"
+  },
+  {
+    "activityId": 12005,
+    "paintedNum": 18,
+    "rewardId": 4,
+    "bonus": "1#110604#1|2#3#10000|11#12021#1"
+  }
+]

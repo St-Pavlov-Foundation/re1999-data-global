@@ -1,0 +1,56 @@
+[
+  {
+    "id": 10000,
+    "name": "language_10003334",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  },
+  {
+    "id": 10001,
+    "name": "language_10003336",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  },
+  {
+    "id": 10002,
+    "name": "language_10003337",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  },
+  {
+    "id": 10003,
+    "name": "language_10003338",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  },
+  {
+    "id": 10004,
+    "name": "language_10003339",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  },
+  {
+    "id": 10005,
+    "name": "language_10003340",
+    "initColors": "language_10003335",
+    "finalColors": "4#1#2#1",
+    "interactbtns": "1#2#3#4",
+    "colorsort": "1#2#3#4",
+    "bonus": ""
+  }
+]

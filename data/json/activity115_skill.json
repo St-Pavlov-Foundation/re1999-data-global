@@ -1,0 +1,20 @@
+[
+  {
+    "activityId": 11203,
+    "id": 1,
+    "type": 1,
+    "param": "2",
+    "canUseCount": 1,
+    "name": "language_10026735",
+    "desc": "language_10026736"
+  },
+  {
+    "activityId": 11203,
+    "id": 2,
+    "type": 2,
+    "param": "1",
+    "canUseCount": 1,
+    "name": "language_10026737",
+    "desc": "language_10026738"
+  }
+]

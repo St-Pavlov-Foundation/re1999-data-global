@@ -1,0 +1,66 @@
+[
+  {
+    "season": 1,
+    "id": 1,
+    "name": "language_10023021",
+    "icon": "rouge_talentree_talen2",
+    "desc": "language_10043340",
+    "cost": 0
+  },
+  {
+    "season": 1,
+    "id": 2,
+    "name": "language_10043341",
+    "icon": "rouge_talentree_talen4",
+    "desc": "language_10043342",
+    "cost": 10
+  },
+  {
+    "season": 1,
+    "id": 3,
+    "name": "language_10043343",
+    "icon": "rouge_talentree_talen3",
+    "desc": "language_10043344",
+    "cost": 10
+  },
+  {
+    "season": 1,
+    "id": 4,
+    "name": "language_10043345",
+    "icon": "rouge_talentree_talen1",
+    "desc": "language_10043346",
+    "cost": 20
+  },
+  {
+    "season": 1,
+    "id": 5,
+    "name": "language_10036922",
+    "icon": "rouge_talentree_talen7",
+    "desc": "language_10043347",
+    "cost": 50
+  },
+  {
+    "season": 1,
+    "id": 6,
+    "name": "language_10043348",
+    "icon": "rouge_talentree_talen5",
+    "desc": "language_10043349",
+    "cost": 70
+  },
+  {
+    "season": 1,
+    "id": 7,
+    "name": "language_10043350",
+    "icon": "rouge_talentree_talen6",
+    "desc": "language_10043351",
+    "cost": 70
+  },
+  {
+    "season": 1,
+    "id": 8,
+    "name": "language_10043352",
+    "icon": "rouge_talentree_talen8",
+    "desc": "language_10043353",
+    "cost": 100
+  }
+]

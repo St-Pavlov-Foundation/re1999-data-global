@@ -1,0 +1,4727 @@
+[
+  {
+    "id": 91110010,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1100,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1200,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1300,
+    "weights": 100
+  },
+  {
+    "id": 91510010,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510020,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510030,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510040,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510050,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510060,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91510070,
+    "groupId": 1400,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1110,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1220,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1210,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1210,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1310,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1320,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1320,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1320,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1320,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1320,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1120,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1220,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1220,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1220,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1220,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 5,
+    "weights": 100
+  },
+  {
+    "id": 91510030,
+    "groupId": 6,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 101402,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 109005,
+    "weights": 100
+  },
+  {
+    "id": 91330030,
+    "groupId": 3,
+    "weights": 100
+  },
+  {
+    "id": 91330040,
+    "groupId": 3,
+    "weights": 100
+  },
+  {
+    "id": 91330050,
+    "groupId": 3,
+    "weights": 100
+  },
+  {
+    "id": 91130010,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91130020,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91130030,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91130040,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91230010,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91230020,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91230030,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91330010,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91330020,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91330040,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91330050,
+    "groupId": 1,
+    "weights": 100
+  },
+  {
+    "id": 91510010,
+    "groupId": 99999,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 11000,
+    "weights": 100
+  },
+  {
+    "id": 91220030,
+    "groupId": 91220030,
+    "weights": 100
+  },
+  {
+    "id": 91320050,
+    "groupId": 91320050,
+    "weights": 100
+  },
+  {
+    "id": 91120020,
+    "groupId": 91120020,
+    "weights": 100
+  },
+  {
+    "id": 91320040,
+    "groupId": 91320040,
+    "weights": 100
+  },
+  {
+    "id": 91320060,
+    "groupId": 91320060,
+    "weights": 100
+  },
+  {
+    "id": 91120030,
+    "groupId": 91120030,
+    "weights": 100
+  },
+  {
+    "id": 91320070,
+    "groupId": 91320070,
+    "weights": 100
+  },
+  {
+    "id": 91320030,
+    "groupId": 91320030,
+    "weights": 100
+  },
+  {
+    "id": 91220020,
+    "groupId": 91220020,
+    "weights": 100
+  },
+  {
+    "id": 91330030,
+    "groupId": 91330030,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 91210040,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 91110010,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1111,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1221,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1211,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1211,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1311,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1321,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1321,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1321,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1321,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1321,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1121,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1221,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1221,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1221,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1221,
+    "weights": 100
+  },
+  {
+    "id": 91130010,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91130020,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91130030,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91130040,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91230010,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91230020,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91230030,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91330010,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91330020,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91330040,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91330050,
+    "groupId": 1530,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1520,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1510,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1521,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1511,
+    "weights": 100
+  },
+  {
+    "id": 91130010,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91130020,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91130030,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91130040,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91230010,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91230020,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91230030,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91330010,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91330020,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91330040,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91330050,
+    "groupId": 1533,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1600,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1610,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1620,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1601,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210010,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91220060,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91310010,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1611,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120040,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120050,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120060,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120070,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120080,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91120090,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91220040,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91220050,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91220070,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91320020,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91320080,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91320090,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91320100,
+    "groupId": 1621,
+    "weights": 100
+  },
+  {
+    "id": 91110010,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120040,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120050,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120060,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120070,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120080,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91120090,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91210010,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91220040,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91220050,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91220060,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91220070,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91310010,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1602,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91320020,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91320080,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91320090,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91320100,
+    "groupId": 1602,
+    "weights": 150
+  },
+  {
+    "id": 91110010,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120040,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120050,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120060,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120070,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120080,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91120090,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91210010,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91220040,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91220050,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91220060,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91220070,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91310010,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1603,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91320020,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91320080,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91320090,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91320100,
+    "groupId": 1603,
+    "weights": 200
+  },
+  {
+    "id": 91110010,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110020,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110030,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110040,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110050,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110060,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110070,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110080,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110090,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110100,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110110,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91110120,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91120010,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120040,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120050,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120060,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120070,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120080,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91120090,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91210010,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210020,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210030,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210040,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210050,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210060,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210070,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91210080,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91220010,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91220040,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91220050,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91220060,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91220070,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91310010,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310020,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310030,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310040,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310050,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310060,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310070,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310080,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310090,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310100,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310110,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310120,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310130,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310140,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310150,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310160,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310170,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91310180,
+    "groupId": 1604,
+    "weights": 100
+  },
+  {
+    "id": 91320010,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91320020,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91320080,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91320090,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91320100,
+    "groupId": 1604,
+    "weights": 250
+  },
+  {
+    "id": 91110010,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110020,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110030,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110040,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110050,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110060,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110070,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110080,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110090,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110100,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110110,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91110120,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210010,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210020,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210030,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210040,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210050,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210060,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210070,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91210080,
+    "groupId": 101101,
+    "weights": 143
+  },
+  {
+    "id": 91220060,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310010,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310020,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310030,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310040,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310050,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310060,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310070,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310080,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310090,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310100,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310110,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310120,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310130,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310140,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310150,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310160,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310170,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91310180,
+    "groupId": 101101,
+    "weights": 28
+  },
+  {
+    "id": 91510010,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510020,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510030,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510040,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510050,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510060,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91510070,
+    "groupId": 101101,
+    "weights": 214
+  },
+  {
+    "id": 91110010,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110020,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110030,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110040,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110050,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110060,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110070,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110080,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110090,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110100,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110110,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91110120,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210010,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210020,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210030,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210040,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210050,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210060,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210070,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91210080,
+    "groupId": 101102,
+    "weights": 190
+  },
+  {
+    "id": 91220060,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310010,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310020,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310030,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310040,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310050,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310060,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310070,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310080,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310090,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310100,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310110,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310120,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310130,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310140,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310150,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310160,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310170,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91310180,
+    "groupId": 101102,
+    "weights": 167
+  },
+  {
+    "id": 91510010,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510020,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510030,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510040,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510050,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510060,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91510070,
+    "groupId": 101102,
+    "weights": 300
+  },
+  {
+    "id": 91110010,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110020,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110030,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110040,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110050,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110060,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110070,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110080,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110090,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110100,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110110,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91110120,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210010,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210020,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210030,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210040,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210050,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210060,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210070,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91210080,
+    "groupId": 101103,
+    "weights": 95
+  },
+  {
+    "id": 91220060,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310010,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310020,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310030,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310040,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310050,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310060,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310070,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310080,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310090,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310100,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310110,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310120,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310130,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310140,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310150,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310160,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310170,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91310180,
+    "groupId": 101103,
+    "weights": 111
+  },
+  {
+    "id": 91120010,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120040,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120050,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120060,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120070,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120080,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91120090,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91220010,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91220040,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91220050,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91220070,
+    "groupId": 101103,
+    "weights": 166
+  },
+  {
+    "id": 91320010,
+    "groupId": 101103,
+    "weights": 200
+  },
+  {
+    "id": 91320020,
+    "groupId": 101103,
+    "weights": 200
+  },
+  {
+    "id": 91320080,
+    "groupId": 101103,
+    "weights": 200
+  },
+  {
+    "id": 91320090,
+    "groupId": 101103,
+    "weights": 200
+  },
+  {
+    "id": 91320100,
+    "groupId": 101103,
+    "weights": 200
+  },
+  {
+    "id": 91510010,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510020,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510030,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510040,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510050,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510060,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91510070,
+    "groupId": 101103,
+    "weights": 300
+  },
+  {
+    "id": 91110010,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110020,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110030,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110040,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110050,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110060,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110070,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110080,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110090,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110100,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110110,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91110120,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210010,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210020,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210030,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210040,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210050,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210060,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210070,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91210080,
+    "groupId": 101104,
+    "weights": 95
+  },
+  {
+    "id": 91220060,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310010,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310020,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310030,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310040,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310050,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310060,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310070,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310080,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310090,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310100,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310110,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310120,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310130,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310140,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310150,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310160,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310170,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91310180,
+    "groupId": 101104,
+    "weights": 111
+  },
+  {
+    "id": 91120010,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120040,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120050,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120060,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120070,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120080,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91120090,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91220010,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91220040,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91220050,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91220070,
+    "groupId": 101104,
+    "weights": 166
+  },
+  {
+    "id": 91320010,
+    "groupId": 101104,
+    "weights": 400
+  },
+  {
+    "id": 91320020,
+    "groupId": 101104,
+    "weights": 400
+  },
+  {
+    "id": 91320080,
+    "groupId": 101104,
+    "weights": 400
+  },
+  {
+    "id": 91320090,
+    "groupId": 101104,
+    "weights": 400
+  },
+  {
+    "id": 91320100,
+    "groupId": 101104,
+    "weights": 400
+  },
+  {
+    "id": 91510010,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510020,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510030,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510040,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510050,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510060,
+    "groupId": 101104,
+    "weights": 200
+  },
+  {
+    "id": 91510070,
+    "groupId": 101104,
+    "weights": 200
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": 10115,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 111101,
+    "completeWithGroup": "10115#0#1#111101",
+    "icon": "yd_img_hujisheng",
+    "isActivityVersion": "0",
+    "des": "language_10029276"
+  },
+  {
+    "id": 10208,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 120601,
+    "completeWithGroup": "10208#0#1#120601",
+    "icon": "yd_img_sanjiaoguai",
+    "isActivityVersion": "0",
+    "des": "language_10029277"
+  },
+  {
+    "id": 10213,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 121103,
+    "completeWithGroup": "10213#0#1#121103",
+    "icon": "yd_img_wuwangwo",
+    "isActivityVersion": "0",
+    "des": "language_10029278"
+  },
+  {
+    "id": 10214,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 121201,
+    "completeWithGroup": "10214#0#1#121201",
+    "icon": "yd_img_guanshangquan01|yd_img_guanshangquan02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029279"
+  },
+  {
+    "id": 60101,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 4030103,
+    "completeWithGroup": "60101#0#2#4030103",
+    "icon": "yd_img_tianeren",
+    "isActivityVersion": "0",
+    "des": "language_10029280"
+  },
+  {
+    "id": 70101,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 7010104,
+    "completeWithGroup": "70101#0#2#7010104|70201#0#2#7020104|70301#0#2#7030104|70401#0#2#7040104",
+    "icon": "yd_img_yanshidongxi01|yd_img_yanshidongxi02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029281"
+  },
+  {
+    "id": 70201,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 7020104,
+    "completeWithGroup": "70101#0#2#7010104|70201#0#2#7020104|70301#0#2#7030104|70401#0#2#7040104",
+    "icon": "yd_img_yanshidongxi01|yd_img_yanshidongxi02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029281"
+  },
+  {
+    "id": 70301,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 7030104,
+    "completeWithGroup": "70101#0#2#7010104|70201#0#2#7020104|70301#0#2#7030104|70401#0#2#7040104",
+    "icon": "yd_img_yanshidongxi01|yd_img_yanshidongxi02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029281"
+  },
+  {
+    "id": 70401,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 7040104,
+    "completeWithGroup": "70101#0#2#7010104|70201#0#2#7020104|70301#0#2#7030104|70401#0#2#7040104",
+    "icon": "yd_img_yanshidongxi01|yd_img_yanshidongxi02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029281"
+  },
+  {
+    "id": 10303,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 130101,
+    "completeWithGroup": "10303#0#1#130101",
+    "icon": "yd_img_lajidai",
+    "isActivityVersion": "0",
+    "des": "language_10029282"
+  },
+  {
+    "id": 10308,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 130501,
+    "completeWithGroup": "10308#0#1#130501",
+    "icon": "yd_img_kongzhonglaixin01|yd_img_kongzhonglaixin02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029283"
+  },
+  {
+    "id": 10315,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 130902,
+    "completeWithGroup": "10315#0#2#130902",
+    "icon": "yd_img_guanshangquan01|yd_img_hongnujian",
+    "isActivityVersion": "0|0",
+    "des": "language_10029284"
+  },
+  {
+    "id": 30305,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 330504,
+    "completeWithGroup": "30305#0#1#330504",
+    "icon": "yd_img_kongzhonglaixin02",
+    "isActivityVersion": "0",
+    "des": "language_10029285"
+  },
+  {
+    "id": 10410,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 140501,
+    "completeWithGroup": "10410#0#1#140501",
+    "icon": "yd_img_zhanbuyaojing01|yd_img_zhanbuyaojing02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029286"
+  },
+  {
+    "id": 10421,
+    "invokeType": 0,
+    "param": 2,
+    "monster": 141102,
+    "completeWithGroup": "10421#0#2#141102",
+    "icon": "yd_img_mengjingzhizhu01|yd_img_mengjingzhizhu02",
+    "isActivityVersion": "0|0",
+    "des": "language_10029287"
+  },
+  {
+    "id": 1110114,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 911011102,
+    "completeWithGroup": "1110114#0#1#911011102",
+    "icon": "yd_img_pamiai|yd_img_jiqiren",
+    "isActivityVersion": "1|1",
+    "des": "language_10029288"
+  },
+  {
+    "id": 1210106,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912010401,
+    "completeWithGroup": "1210106#0#1#912010401",
+    "icon": "yd_kabanglute",
+    "isActivityVersion": "1",
+    "des": "language_10029289"
+  },
+  {
+    "id": 1220106,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912020401,
+    "completeWithGroup": "1220106#0#1#912020401",
+    "icon": "yd_kabanglute",
+    "isActivityVersion": "1",
+    "des": "language_10029289"
+  },
+  {
+    "id": 1230101,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912030401,
+    "completeWithGroup": "1230101#0#1#912030401",
+    "icon": "yd_kabanglute",
+    "isActivityVersion": "1",
+    "des": "language_10029289"
+  },
+  {
+    "id": 1240101,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912040401,
+    "completeWithGroup": "1240101#0#1#912040401",
+    "icon": "yd_kabanglute",
+    "isActivityVersion": "1",
+    "des": "language_10029289"
+  },
+  {
+    "id": 1210116,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912011001,
+    "completeWithGroup": "1210116#0#1#912011001",
+    "icon": "yd_emeng|yd_yaxian",
+    "isActivityVersion": "1|1",
+    "des": "language_10029290"
+  },
+  {
+    "id": 1220116,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912021001,
+    "completeWithGroup": "1220116#0#1#912021001",
+    "icon": "yd_emeng|yd_yaxian",
+    "isActivityVersion": "1|1",
+    "des": "language_10029290"
+  },
+  {
+    "id": 1230103,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912031001,
+    "completeWithGroup": "1230103#0#1#912031001",
+    "icon": "yd_emeng|yd_yaxian",
+    "isActivityVersion": "1|1",
+    "des": "language_10029290"
+  },
+  {
+    "id": 1240103,
+    "invokeType": 0,
+    "param": 1,
+    "monster": 912041001,
+    "completeWithGroup": "1240103#0#1#912041001",
+    "icon": "yd_emeng|yd_yaxian",
+    "isActivityVersion": "1|1",
+    "des": "language_10029290"
+  }
+]

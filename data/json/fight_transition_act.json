@@ -1,0 +1,752 @@
+[
+  {
+    "id": 306402,
+    "fromAct": "idle",
+    "endAct": "giddy",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 670306,
+    "fromAct": "skill2",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 670306,
+    "fromAct": "skill1",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 670306,
+    "fromAct": "unique",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 670306,
+    "fromAct": "idle",
+    "endAct": "freeze",
+    "transitionAct": "0"
+  },
+  {
+    "id": 306402,
+    "fromAct": "idle",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 306402,
+    "fromAct": "giddy",
+    "endAct": "idle",
+    "transitionAct": "change4"
+  },
+  {
+    "id": 620402,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 620402,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620402,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620121,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 620121,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620121,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620122,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 620122,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620122,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620211,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 620211,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 620211,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 670403,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 670403,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 670403,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 670404,
+    "fromAct": "giddy_idle",
+    "endAct": "idle",
+    "transitionAct": "giddy_end"
+  },
+  {
+    "id": 670404,
+    "fromAct": "idle",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 670404,
+    "fromAct": "giddy_start",
+    "endAct": "giddy_idle",
+    "transitionAct": "giddy_start"
+  },
+  {
+    "id": 306501,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 306502,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 630406,
+    "fromAct": "idle",
+    "endAct": "innate1_1",
+    "transitionAct": "innate1"
+  },
+  {
+    "id": 630406,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "innate1_2"
+  },
+  {
+    "id": 630407,
+    "fromAct": "idle",
+    "endAct": "innate1_1",
+    "transitionAct": "innate1"
+  },
+  {
+    "id": 630407,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "innate1_2"
+  },
+  {
+    "id": 630408,
+    "fromAct": "idle",
+    "endAct": "innate1_1",
+    "transitionAct": "innate1"
+  },
+  {
+    "id": 630408,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "innate1_2"
+  },
+  {
+    "id": 301803,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 308701,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308702,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308701,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308702,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308701,
+    "fromAct": "idle",
+    "endAct": "idle_trans",
+    "transitionAct": "trans2"
+  },
+  {
+    "id": 308702,
+    "fromAct": "idle",
+    "endAct": "idle_trans",
+    "transitionAct": "trans2"
+  },
+  {
+    "id": 307701,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change"
+  },
+  {
+    "id": 307702,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change"
+  },
+  {
+    "id": 307801,
+    "fromAct": "hit",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 307802,
+    "fromAct": "hit",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 308701,
+    "fromAct": "freeze",
+    "endAct": "freeze_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308702,
+    "fromAct": "freeze",
+    "endAct": "freeze_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308701,
+    "fromAct": "freeze_trans",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308702,
+    "fromAct": "freeze_trans",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308701,
+    "fromAct": "freeze_trans",
+    "endAct": "hit_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308702,
+    "fromAct": "freeze_trans",
+    "endAct": "hit_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308701,
+    "fromAct": "freeze_trans",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308702,
+    "fromAct": "freeze_trans",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308701,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308702,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 304101,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304102,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304104,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304103,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304101,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304102,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304104,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 304103,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 308001,
+    "fromAct": "idle",
+    "endAct": "hit",
+    "transitionAct": "0"
+  },
+  {
+    "id": 308002,
+    "fromAct": "idle",
+    "endAct": "hit",
+    "transitionAct": "0"
+  },
+  {
+    "id": 308801,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 308801,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 308802,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 308802,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 308601,
+    "fromAct": "posture_trans",
+    "endAct": "idle_trans",
+    "transitionAct": "change2_trans"
+  },
+  {
+    "id": 308602,
+    "fromAct": "posture_trans",
+    "endAct": "idle_trans",
+    "transitionAct": "change2_trans"
+  },
+  {
+    "id": 640302,
+    "fromAct": "skill1",
+    "endAct": "idle2",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 640302,
+    "fromAct": "unique",
+    "endAct": "idle2",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 302301,
+    "fromAct": "hit",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302303,
+    "fromAct": "hit",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302304,
+    "fromAct": "hit",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302301,
+    "fromAct": "giddy",
+    "endAct": "hit",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302303,
+    "fromAct": "giddy",
+    "endAct": "hit",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302304,
+    "fromAct": "giddy",
+    "endAct": "hit",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302301,
+    "fromAct": "idle",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302303,
+    "fromAct": "idle",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302304,
+    "fromAct": "idle",
+    "endAct": "giddy",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302301,
+    "fromAct": "giddy",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302303,
+    "fromAct": "giddy",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302304,
+    "fromAct": "giddy",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302301,
+    "fromAct": "idle",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302303,
+    "fromAct": "idle",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 302304,
+    "fromAct": "idle",
+    "endAct": "die",
+    "transitionAct": "0"
+  },
+  {
+    "id": 307003,
+    "fromAct": "born",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 307003,
+    "fromAct": "idle",
+    "endAct": "born",
+    "transitionAct": "0"
+  },
+  {
+    "id": 307003,
+    "fromAct": "skill1",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 307003,
+    "fromAct": "skill2",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 307003,
+    "fromAct": "unique",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 305101,
+    "fromAct": "idle",
+    "endAct": "die2",
+    "transitionAct": "0"
+  },
+  {
+    "id": 610404,
+    "fromAct": "channel_idle",
+    "endAct": "skill2_1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 610404,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 308703,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308703,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308703,
+    "fromAct": "idle",
+    "endAct": "idle_trans",
+    "transitionAct": "trans2"
+  },
+  {
+    "id": 308703,
+    "fromAct": "freeze",
+    "endAct": "freeze_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308703,
+    "fromAct": "freeze_trans",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308703,
+    "fromAct": "freeze_trans",
+    "endAct": "hit_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308703,
+    "fromAct": "freeze_trans",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308703,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310201,
+    "fromAct": "skill2",
+    "endAct": "idle",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 310201,
+    "fromAct": "skill3",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310201,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310201,
+    "fromAct": "skill1",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "skill2",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "channel_idle",
+    "endAct": "skill3",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "channel_idle",
+    "endAct": "skill1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "channel_idle",
+    "endAct": "skill1_1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "channel_idle",
+    "endAct": "skill2",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310201,
+    "fromAct": "skill2",
+    "endAct": "posture",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 310202,
+    "fromAct": "skill2",
+    "endAct": "idle",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 310202,
+    "fromAct": "skill3",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310202,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310202,
+    "fromAct": "skill1",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "skill2",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "channel_idle",
+    "endAct": "skill3",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "channel_idle",
+    "endAct": "skill1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "channel_idle",
+    "endAct": "skill1_1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "channel_idle",
+    "endAct": "skill2",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310202,
+    "fromAct": "skill2",
+    "endAct": "posture",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 310101,
+    "fromAct": "idle",
+    "endAct": "unique",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310102,
+    "fromAct": "idle",
+    "endAct": "unique",
+    "transitionAct": "0"
+  }
+]

@@ -1,0 +1,7 @@
+module("framework.network.NetworkConst", package.seeall)
+
+return {
+	SocketConnectTimeout = 5,
+	SystemLoginTimeout = 10,
+	UnresponsiveMsgMaxTime = 10
+}

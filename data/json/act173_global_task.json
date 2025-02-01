@@ -1,0 +1,86 @@
+[
+  {
+    "activityId": 12236,
+    "id": 1,
+    "endValue": 600000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 1
+  },
+  {
+    "activityId": 12236,
+    "id": 3,
+    "endValue": 1890000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 4,
+    "endValue": 3248600,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 5,
+    "endValue": 5000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 6,
+    "endValue": 6845413,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 7,
+    "endValue": 8131463,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 8,
+    "endValue": 9842301,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 9,
+    "endValue": 10000000,
+    "isVisible": 1
+  },
+  {
+    "activityId": 12236,
+    "id": 10,
+    "endValue": 13222000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 11,
+    "endValue": 15000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 12,
+    "endValue": 16111111,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 13,
+    "endValue": 18888888,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12236,
+    "id": 14,
+    "endValue": 19990000,
+    "isVisible": 1
+  }
+]

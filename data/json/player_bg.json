@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "language_10035775",
+    "desc": "language_10035776",
+    "item": 0,
+    "lockdesc": "",
+    "bg": "beijing_1",
+    "bgEffect": "defaultbg",
+    "chatbg": "",
+    "infobg": ""
+  },
+  {
+    "id": 2,
+    "name": "language_10035777",
+    "desc": "language_10035778",
+    "item": 210001,
+    "lockdesc": "language_10035779",
+    "bg": "beijing_2",
+    "bgEffect": "bg210001",
+    "chatbg": "mingpian_di_1",
+    "infobg": "mingpian_di_2"
+  }
+]

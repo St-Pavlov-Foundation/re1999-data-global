@@ -1,0 +1,170 @@
+[
+  {
+    "activityId": 12113,
+    "id": 1,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 25000
+  },
+  {
+    "activityId": 12113,
+    "id": 2,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 50000
+  },
+  {
+    "activityId": 12113,
+    "id": 3,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 120000
+  },
+  {
+    "activityId": 12113,
+    "id": 4,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 200000
+  },
+  {
+    "activityId": 12113,
+    "id": 5,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 280000
+  },
+  {
+    "activityId": 12113,
+    "id": 6,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 360000
+  },
+  {
+    "activityId": 12113,
+    "id": 7,
+    "stage": 1,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "1#12113",
+    "display": 450000
+  },
+  {
+    "activityId": 12113,
+    "id": 8,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 25000
+  },
+  {
+    "activityId": 12113,
+    "id": 9,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 50000
+  },
+  {
+    "activityId": 12113,
+    "id": 10,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 120000
+  },
+  {
+    "activityId": 12113,
+    "id": 11,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 200000
+  },
+  {
+    "activityId": 12113,
+    "id": 12,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 280000
+  },
+  {
+    "activityId": 12113,
+    "id": 13,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 360000
+  },
+  {
+    "activityId": 12113,
+    "id": 14,
+    "stage": 2,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "2#12113",
+    "display": 450000
+  },
+  {
+    "activityId": 12113,
+    "id": 15,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 25000
+  },
+  {
+    "activityId": 12113,
+    "id": 16,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 50000
+  },
+  {
+    "activityId": 12113,
+    "id": 17,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 120000
+  },
+  {
+    "activityId": 12113,
+    "id": 18,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 200000
+  },
+  {
+    "activityId": 12113,
+    "id": 19,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 280000
+  },
+  {
+    "activityId": 12113,
+    "id": 20,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 360000
+  },
+  {
+    "activityId": 12113,
+    "id": 21,
+    "stage": 3,
+    "rewardPointNum": "Act128BossLayer4TotalPoint",
+    "reward": "3#12113",
+    "display": 450000
+  }
+]

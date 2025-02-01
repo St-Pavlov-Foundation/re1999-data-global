@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "name": "language_10022997",
+    "nameEn": "Encounter the Wild",
+    "desc": "language_10022998",
+    "rewardIcon": "1",
+    "building": "5001|5002|5003|5004|5005|5006|5007",
+    "packages": "6|7|8|9|10|11|12|13|14|15",
+    "collectionBonus": ""
+  },
+  {
+    "id": 2,
+    "name": "language_10022999",
+    "nameEn": "Where Fog Remains",
+    "desc": "language_10023000",
+    "rewardIcon": "2",
+    "building": "5008|5009|5010|5011|5012",
+    "packages": "17|18|19|20|21|22|23|24",
+    "collectionBonus": "11#5012#1"
+  },
+  {
+    "id": 3,
+    "name": "language_10023001",
+    "nameEn": "Forest of Silence",
+    "desc": "language_10023002",
+    "rewardIcon": "3",
+    "building": "5013|5014|5015|5016|5017|5018|5019",
+    "packages": "25|26|27|28|29|30|31|32",
+    "collectionBonus": "11#5015#1"
+  },
+  {
+    "id": 1301,
+    "name": "language_10023003",
+    "nameEn": "Dīpa Festival",
+    "desc": "language_10023004",
+    "rewardIcon": "1301",
+    "building": "11301|11302|11303|11304|11305|11306",
+    "packages": "1301|1302|1303|1304|1305|1306|1307|1308",
+    "collectionBonus": "11#11304#1"
+  },
+  {
+    "id": 5,
+    "name": "language_10022148",
+    "nameEn": "Thoughts of the Sand",
+    "desc": "language_10023005",
+    "rewardIcon": "4",
+    "building": "5020|5021|5022|5023|5024",
+    "packages": "33|34|35|36|37|38|39|40|41|42",
+    "collectionBonus": "11#5024#1"
+  },
+  {
+    "id": 6,
+    "name": "language_10022146",
+    "nameEn": "Leap Over Red Sands",
+    "desc": "language_10023006",
+    "rewardIcon": "1501",
+    "building": "11501|11502|11503|11504|11505|11509",
+    "packages": "1501|1502|1503|1504|1505|1506|1507|1508",
+    "collectionBonus": "11#11503#1"
+  },
+  {
+    "id": 1601,
+    "name": "language_10022605",
+    "nameEn": "A New Year in Old Town",
+    "desc": "language_10023007",
+    "rewardIcon": "1601",
+    "building": "11601|11602|11603|11604|11605|11606|11607|11609",
+    "packages": "1601|1602|1603|1604|1605|1606|1607|1608",
+    "collectionBonus": "11#11606#1"
+  },
+  {
+    "id": 1701,
+    "name": "language_10035774",
+    "nameEn": "Gate to the Ring Road",
+    "desc": "language_10035817",
+    "rewardIcon": "1701",
+    "building": "11701|11702|11703|11704|11705|11706|11707",
+    "packages": "1701|1702|1703|1704|1705|1706|1707|1708",
+    "collectionBonus": "11#11705#1"
+  },
+  {
+    "id": 1801,
+    "name": "language_10038620",
+    "nameEn": "Greetings From the Snow",
+    "desc": "language_10038654",
+    "rewardIcon": "1801",
+    "building": "11801|11802|11803|11804|11805|11806",
+    "packages": "1801|1802|1803|1804|1805|1806|1807",
+    "collectionBonus": "11#11806#1"
+  },
+  {
+    "id": 1901,
+    "name": "language_10044530",
+    "nameEn": "Silver Fantasy",
+    "desc": "language_10044581",
+    "rewardIcon": "1901",
+    "building": "11901|11902|11903|11904|11905|11906|11907|11908",
+    "packages": "1901|1902|1903|1904|1905|1906|1907",
+    "collectionBonus": "11#11907#1"
+  },
+  {
+    "id": 2001,
+    "name": "language_10047873",
+    "nameEn": "Neon Twilight",
+    "desc": "language_10047903",
+    "rewardIcon": "2001",
+    "building": "12001|12002|12003|12004|12005|12006",
+    "packages": "2001|2002|2003|2004|2005|2006",
+    "collectionBonus": "11#12005#1"
+  },
+  {
+    "id": 2101,
+    "name": "language_10052289",
+    "nameEn": "West by Southwest",
+    "desc": "language_10052337",
+    "rewardIcon": "2101",
+    "building": "12101|12102|12103|12104|12105|12106",
+    "packages": "2101|2102|2103|2104|2105|2106",
+    "collectionBonus": "11#12106#1"
+  },
+  {
+    "id": 2201,
+    "name": "language_10056495",
+    "nameEn": "Tropical Splendor",
+    "desc": "language_10056925",
+    "rewardIcon": "1701300",
+    "building": "12201|12202|12203|12204|12205|12206",
+    "packages": "2201|2202|2203|2204|2205|2206",
+    "collectionBonus": "11#12205#1"
+  }
+]

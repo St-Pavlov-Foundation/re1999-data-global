@@ -1,0 +1,107 @@
+[
+  {
+    "heroId": 3018,
+    "motion": "chadai",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3011,
+    "motion": "wuzui",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3023,
+    "motion": "yangtou|qidao|moxiaba",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3017,
+    "motion": "zhanshi",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3007,
+    "motion": "cashi|jujian|lianxi|xuanshi",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3020,
+    "motion": "lingting",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3024,
+    "motion": "xingfen|sikao|dazhaohu",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3055,
+    "motion": "shikong",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3038,
+    "motion": "liaofa|fumo",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3031,
+    "motion": "dushu",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3045,
+    "motion": "shouzhang",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3053,
+    "motion": "liaofa|fumo|changge|huipai",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3073,
+    "motion": "hequan|cashi|chashou|queyue",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3087,
+    "motion": "jingli",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3088,
+    "motion": "woquan|baoxiong|sikao",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3086,
+    "motion": "sikao|baoxiong|yaotou|taishou",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3094,
+    "motion": "daitoukui1|daitoukui2|daitoukui3",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3048,
+    "motion": "shou|xihao|beishou|zaochen",
+    "onlyStopCut": 0
+  },
+  {
+    "heroId": 3097,
+    "motion": "baqiang1|baqiang2|baqiang3",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3100,
+    "motion": "zhuashoubi|huizhua",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3065,
+    "motion": "xinshang",
+    "onlyStopCut": 1
+  }
+]

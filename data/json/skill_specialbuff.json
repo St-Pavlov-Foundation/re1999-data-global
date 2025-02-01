@@ -1,0 +1,92 @@
+[
+  {
+    "id": 2301,
+    "icon": 103,
+    "lv": "1",
+    "isSpecial": 1
+  },
+  {
+    "id": 2302,
+    "icon": 103,
+    "lv": "2",
+    "isSpecial": 1
+  },
+  {
+    "id": 2303,
+    "icon": 103,
+    "lv": "3",
+    "isSpecial": 1
+  },
+  {
+    "id": 2304,
+    "icon": 102,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 2311,
+    "icon": 102,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 2370,
+    "icon": 103,
+    "lv": "1",
+    "isSpecial": 1
+  },
+  {
+    "id": 5140006,
+    "icon": 102,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 5140005,
+    "icon": 105,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 5140008,
+    "icon": 104,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 215110005,
+    "icon": 104,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 1194009,
+    "icon": 102,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 52100011,
+    "icon": 104,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 52100021,
+    "icon": 101,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 52100031,
+    "icon": 102,
+    "lv": "",
+    "isSpecial": 1
+  },
+  {
+    "id": 52100051,
+    "icon": 105,
+    "lv": "",
+    "isSpecial": 1
+  }
+]

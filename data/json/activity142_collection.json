@@ -1,0 +1,66 @@
+[
+  {
+    "activityId": 11508,
+    "id": 1,
+    "name": "language_10033575",
+    "nameen": "A Clipbook",
+    "desc": "language_10033576",
+    "icon": "v1a5_kerandian_img_pic2"
+  },
+  {
+    "activityId": 11508,
+    "id": 2,
+    "name": "language_10027914",
+    "nameen": "An Eroded Pebble",
+    "desc": "language_10033577",
+    "icon": "v1a5_kerandian_img_pic1"
+  },
+  {
+    "activityId": 11508,
+    "id": 3,
+    "name": "language_10027923",
+    "nameen": "A Training Schedule",
+    "desc": "language_10033578",
+    "icon": "v1a5_kerandian_img_pic8"
+  },
+  {
+    "activityId": 11508,
+    "id": 4,
+    "name": "language_10027935",
+    "nameen": "A Pair of Worn-out Boxing Gloves",
+    "desc": "language_10033579",
+    "icon": "v1a5_kerandian_img_pic5"
+  },
+  {
+    "activityId": 11508,
+    "id": 5,
+    "name": "language_10027945",
+    "nameen": "A Narrow Gold Belt",
+    "desc": "language_10033580",
+    "icon": "v1a5_kerandian_img_pic3"
+  },
+  {
+    "activityId": 11508,
+    "id": 6,
+    "name": "language_10027957",
+    "nameen": "One Piece of Chocolate",
+    "desc": "language_10033581",
+    "icon": "v1a5_kerandian_img_pic6"
+  },
+  {
+    "activityId": 11508,
+    "id": 7,
+    "name": "language_10027968",
+    "nameen": "A Blank Application",
+    "desc": "language_10033582",
+    "icon": "v1a5_kerandian_img_pic4"
+  },
+  {
+    "activityId": 11508,
+    "id": 8,
+    "name": "language_10028056",
+    "nameen": "A Piece of Hot \"Uluru Rock\"",
+    "desc": "language_10033583",
+    "icon": "v1a5_kerandian_img_pic7"
+  }
+]

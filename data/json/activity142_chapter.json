@@ -1,0 +1,38 @@
+[
+  {
+    "activityId": 11508,
+    "id": 1,
+    "name": "language_10032183",
+    "txtColor": "#4C3926",
+    "normalSprite": "v1a5_kerandian_btn_1_1",
+    "selectSprite": "v1a5_kerandian_btn_1",
+    "lockSprite": "v1a5_kerandian_btn_2_2"
+  },
+  {
+    "activityId": 11508,
+    "id": 2,
+    "name": "language_10033560",
+    "txtColor": "#4C3926",
+    "normalSprite": "v1a5_kerandian_btn_2_1",
+    "selectSprite": "v1a5_kerandian_btn_2",
+    "lockSprite": "v1a5_kerandian_btn_2_2"
+  },
+  {
+    "activityId": 11508,
+    "id": 3,
+    "name": "language_10033561",
+    "txtColor": "#fff0e5",
+    "normalSprite": "v1a5_kerandian_btn_3_1",
+    "selectSprite": "v1a5_kerandian_btn_3",
+    "lockSprite": "v1a5_kerandian_btn_3_2"
+  },
+  {
+    "activityId": 11508,
+    "id": 4,
+    "name": "language_10033562",
+    "txtColor": "#fff0e5",
+    "normalSprite": "v1a5_kerandian_btn_4_1",
+    "selectSprite": "v1a5_kerandian_btn_4",
+    "lockSprite": "v1a5_kerandian_btn_4_2"
+  }
+]

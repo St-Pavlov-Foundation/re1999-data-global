@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "icon": "300101",
+    "spine": "rolescg/504301_banshen/504301_banshen.prefab"
+  },
+  {
+    "id": 2,
+    "icon": "507601",
+    "spine": "rolesprefab/507601_zhujue_p/507601_zhujue_p.prefab"
+  },
+  {
+    "id": 3,
+    "icon": "507701",
+    "spine": "rolesprefab/507701_zhujue_p/507701_zhujue_p.prefab"
+  },
+  {
+    "id": 4,
+    "icon": "508701",
+    "spine": "rolesprefab/508701_binghao_p/508701_binghao_p.prefab"
+  },
+  {
+    "id": 5,
+    "icon": "511201",
+    "spine": "rolescg/v1a4_511201_heipao/511201_heipao.prefab"
+  },
+  {
+    "id": 6,
+    "icon": "300112",
+    "spine": "rolesprefab/v1a5_616901_paomo/616901_paomo.prefab"
+  }
+]

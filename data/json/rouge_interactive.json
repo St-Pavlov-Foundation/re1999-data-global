@@ -1,0 +1,86 @@
+[
+  {
+    "id": 701,
+    "tips": "",
+    "type": 6,
+    "typeParam": "30#30#40"
+  },
+  {
+    "id": 301,
+    "tips": "language_10043140",
+    "type": 3,
+    "typeParam": "1#99#500"
+  },
+  {
+    "id": 302,
+    "tips": "",
+    "type": 3,
+    "typeParam": "2#2#500"
+  },
+  {
+    "id": 303,
+    "tips": "language_10043141",
+    "type": 3,
+    "typeParam": "1#99#300"
+  },
+  {
+    "id": 304,
+    "tips": "",
+    "type": 3,
+    "typeParam": "1#99#100"
+  },
+  {
+    "id": 305,
+    "tips": "language_10043142",
+    "type": 3,
+    "typeParam": "1#99#200"
+  },
+  {
+    "id": 306,
+    "tips": "language_10051696",
+    "type": 3,
+    "typeParam": "1#99#250"
+  },
+  {
+    "id": 401,
+    "tips": "",
+    "type": 4,
+    "typeParam": "999"
+  },
+  {
+    "id": 402,
+    "tips": "language_10043143",
+    "type": 4,
+    "typeParam": "1#0"
+  },
+  {
+    "id": 403,
+    "tips": "language_10043144",
+    "type": 4,
+    "typeParam": "1#0"
+  },
+  {
+    "id": 404,
+    "tips": "language_10043143",
+    "type": 4,
+    "typeParam": "1#1"
+  },
+  {
+    "id": 801,
+    "tips": "",
+    "type": 12,
+    "typeParam": "75#25"
+  },
+  {
+    "id": 802,
+    "tips": "",
+    "type": 12,
+    "typeParam": "50#50"
+  },
+  {
+    "id": 803,
+    "tips": "",
+    "type": 12,
+    "typeParam": "25#75"
+  }
+]

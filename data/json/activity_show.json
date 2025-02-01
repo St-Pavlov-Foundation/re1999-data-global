@@ -1,0 +1,65 @@
+[
+  {
+    "activityId": 10010,
+    "id": 1,
+    "actDesc": "language_10000125",
+    "taskDesc": "language_10000126",
+    "showBonus": "9#1404#1#0",
+    "jumpId": 1204,
+    "centerId": 2
+  },
+  {
+    "activityId": 10010,
+    "id": 2,
+    "actDesc": "language_10000125",
+    "taskDesc": "language_10000127",
+    "showBonus": "9#4104#1#0",
+    "jumpId": 1204,
+    "centerId": 2
+  },
+  {
+    "activityId": 10010,
+    "id": 3,
+    "actDesc": "language_10000125",
+    "taskDesc": "language_10000128",
+    "showBonus": "5#302303#1#0",
+    "jumpId": 1204,
+    "centerId": 2
+  },
+  {
+    "activityId": 10010,
+    "id": 4,
+    "actDesc": "language_10000125",
+    "taskDesc": "language_10000129",
+    "showBonus": "2#2#1900#1|1#140001#10#1",
+    "jumpId": 1204,
+    "centerId": 2
+  },
+  {
+    "activityId": 10011,
+    "id": 1,
+    "actDesc": "language_10000130",
+    "taskDesc": "",
+    "showBonus": "2#2#1#0|1#481010#1#0|1#120001#1#0|1#120012#1#0|2#22#1#0|1#120011#1#0",
+    "jumpId": 3801,
+    "centerId": 2
+  },
+  {
+    "activityId": 10012,
+    "id": 1,
+    "actDesc": "language_10000131",
+    "taskDesc": "",
+    "showBonus": "7#2#1#0|2#2#1#0|1#133023#1#0",
+    "jumpId": 16,
+    "centerId": 2
+  },
+  {
+    "activityId": 10013,
+    "id": 1,
+    "actDesc": "language_10000132",
+    "taskDesc": "",
+    "showBonus": "2#2#600#1|2#22#1#0|2#3#1#0",
+    "jumpId": 3801,
+    "centerId": 2
+  }
+]

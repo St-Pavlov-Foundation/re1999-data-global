@@ -1,0 +1,14 @@
+[
+  {
+    "id": 12241,
+    "effectDuration": 0,
+    "mainView": [
+      "#simage_actbg",
+      "left/#go_activity/vx_actbg"
+    ],
+    "mainThumbnailView": [
+      "#simage_actbg",
+      "#simage_logo"
+    ]
+  }
+]

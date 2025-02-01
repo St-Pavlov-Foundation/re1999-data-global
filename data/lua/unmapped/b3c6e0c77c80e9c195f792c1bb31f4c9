@@ -1,0 +1,101 @@
+module("booter.base.oop", package.seeall)
+
+function class(slot0, slot1)
+	slot3 = nil
+
+	if type(slot1) ~= "function" and slot2 ~= "table" then
+		slot2 = nil
+		slot1 = nil
+	end
+
+	if slot2 == "function" or slot1 and slot1.__ctype == 1 then
+		slot3 = {}
+
+		if slot2 == "table" then
+			for slot7, slot8 in pairs(slot1) do
+				slot3[slot7] = slot8
+			end
+
+			slot3.__create = slot1.__create
+			slot3.super = slot1
+		else
+			slot3.__create = slot1
+
+			function slot3.ctor()
+			end
+		end
+
+		slot3.__cname = slot0
+		slot3.__ctype = 1
+
+		function slot3.New(...)
+			slot0 = uv0.__create(...)
+
+			for slot4, slot5 in pairs(uv0) do
+				slot0[slot4] = slot5
+			end
+
+			slot0.class = uv0
+
+			slot0:ctor(...)
+
+			return slot0
+		end
+	else
+		if slot1 then
+			slot3 = {}
+
+			setmetatable(slot3, {
+				__index = slot1
+			})
+
+			slot3.super = slot1
+		else
+			slot3 = {
+				ctor = function ()
+				end
+			}
+		end
+
+		slot3.__cname = slot0
+		slot3.__ctype = 2
+		slot3.__index = slot3
+
+		function slot3.New(...)
+			slot0 = setmetatable({}, uv0)
+			slot0.class = uv0
+
+			slot0:ctor(...)
+
+			return slot0
+		end
+	end
+
+	return slot3
+end
+
+function isTypeOf(slot0, slot1)
+	if slot1 == nil then
+		error("istypeof clsDefine can not be nil! ")
+	end
+
+	if slot0 == nil then
+		return false
+	end
+
+	slot2 = slot1.__cname
+	slot3 = slot0
+
+	while slot3 ~= nil do
+		if slot3.__cname == slot2 then
+			return true
+		end
+
+		slot3 = slot3.super
+	end
+
+	return false
+end
+
+setGlobal("class", class)
+setGlobal("isTypeOf", isTypeOf)

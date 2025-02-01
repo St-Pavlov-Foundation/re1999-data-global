@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "signinBonus": "2#2#30",
+    "signinaddup": 7
+  },
+  {
+    "id": 2,
+    "signinBonus": "2#2#60",
+    "signinaddup": 15
+  },
+  {
+    "id": 3,
+    "signinBonus": "2#2#90",
+    "signinaddup": 25
+  }
+]

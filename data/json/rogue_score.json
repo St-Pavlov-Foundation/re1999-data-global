@@ -1,0 +1,562 @@
+[
+  {
+    "id": 1001,
+    "score": 250,
+    "reward": "2#3#20000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1002,
+    "score": 500,
+    "reward": "1#110503#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1003,
+    "score": 750,
+    "reward": "1#110602#3",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1004,
+    "score": 1000,
+    "reward": "1#120012#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1005,
+    "score": 1250,
+    "reward": "1#110404#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1006,
+    "score": 1500,
+    "reward": "2#5#20000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1007,
+    "score": 1750,
+    "reward": "1#110403#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1008,
+    "score": 2000,
+    "reward": "9#1003#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1009,
+    "score": 2250,
+    "reward": "1#110203#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1010,
+    "score": 2500,
+    "reward": "1#111006#1",
+    "stage": 1,
+    "special": 1
+  },
+  {
+    "id": 1011,
+    "score": 2750,
+    "reward": "2#3#20000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1012,
+    "score": 3000,
+    "reward": "1#110103#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1013,
+    "score": 3250,
+    "reward": "1#110502#3",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1014,
+    "score": 3500,
+    "reward": "1#120012#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1015,
+    "score": 3750,
+    "reward": "1#120013#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1016,
+    "score": 4000,
+    "reward": "2#5#20000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1017,
+    "score": 4250,
+    "reward": "1#110303#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1018,
+    "score": 4500,
+    "reward": "1#120011#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1019,
+    "score": 4750,
+    "reward": "1#110603#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1020,
+    "score": 5000,
+    "reward": "9#1001#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1021,
+    "score": 5300,
+    "reward": "2#3#25000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1022,
+    "score": 5600,
+    "reward": "1#110503#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1023,
+    "score": 5900,
+    "reward": "1#110602#3",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1024,
+    "score": 6200,
+    "reward": "1#120012#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1025,
+    "score": 6500,
+    "reward": "1#110204#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1026,
+    "score": 6800,
+    "reward": "2#5#25000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1027,
+    "score": 7100,
+    "reward": "1#110403#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1028,
+    "score": 7400,
+    "reward": "9#1003#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1029,
+    "score": 7700,
+    "reward": "1#110203#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1030,
+    "score": 8000,
+    "reward": "1#170604#1",
+    "stage": 1,
+    "special": 1
+  },
+  {
+    "id": 1031,
+    "score": 8300,
+    "reward": "2#3#25000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1032,
+    "score": 8600,
+    "reward": "1#110103#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1033,
+    "score": 8900,
+    "reward": "1#110502#3",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1034,
+    "score": 9200,
+    "reward": "1#120012#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1035,
+    "score": 9500,
+    "reward": "1#110104#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1036,
+    "score": 9800,
+    "reward": "2#5#25000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1037,
+    "score": 10100,
+    "reward": "1#110303#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1038,
+    "score": 10400,
+    "reward": "1#120011#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1039,
+    "score": 10700,
+    "reward": "1#110603#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1040,
+    "score": 11000,
+    "reward": "9#1001#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1041,
+    "score": 11300,
+    "reward": "2#3#30000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1042,
+    "score": 11600,
+    "reward": "1#110503#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1043,
+    "score": 11900,
+    "reward": "1#110602#3",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1044,
+    "score": 12200,
+    "reward": "1#120012#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1045,
+    "score": 12500,
+    "reward": "1#120013#1",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1046,
+    "score": 12800,
+    "reward": "2#5#30000",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1047,
+    "score": 13100,
+    "reward": "1#110403#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1048,
+    "score": 13400,
+    "reward": "9#1003#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1049,
+    "score": 13700,
+    "reward": "1#110203#2",
+    "stage": 1,
+    "special": 0
+  },
+  {
+    "id": 1050,
+    "score": 14000,
+    "reward": "9#1000#1",
+    "stage": 1,
+    "special": 1
+  },
+  {
+    "id": 1051,
+    "score": 14300,
+    "reward": "2#3#30000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1052,
+    "score": 14600,
+    "reward": "1#110103#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1053,
+    "score": 14900,
+    "reward": "1#110502#3",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1054,
+    "score": 15200,
+    "reward": "1#120012#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1055,
+    "score": 15500,
+    "reward": "1#481010#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1056,
+    "score": 15800,
+    "reward": "2#5#30000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1057,
+    "score": 16100,
+    "reward": "1#110303#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1058,
+    "score": 16400,
+    "reward": "1#120011#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1059,
+    "score": 16700,
+    "reward": "1#110603#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1060,
+    "score": 17000,
+    "reward": "1#111006#1",
+    "stage": 2,
+    "special": 1
+  },
+  {
+    "id": 1061,
+    "score": 17400,
+    "reward": "2#3#35000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1062,
+    "score": 17800,
+    "reward": "1#110503#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1063,
+    "score": 18200,
+    "reward": "1#110602#3",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1064,
+    "score": 18600,
+    "reward": "1#120012#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1065,
+    "score": 19000,
+    "reward": "1#110704#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1066,
+    "score": 19400,
+    "reward": "2#5#35000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1067,
+    "score": 19800,
+    "reward": "1#110403#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1068,
+    "score": 20200,
+    "reward": "9#1003#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1069,
+    "score": 20600,
+    "reward": "1#110203#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1070,
+    "score": 21000,
+    "reward": "1#111003#1",
+    "stage": 2,
+    "special": 1
+  },
+  {
+    "id": 1071,
+    "score": 21400,
+    "reward": "2#3#40000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1072,
+    "score": 21800,
+    "reward": "1#110103#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1073,
+    "score": 22200,
+    "reward": "1#110502#3",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1074,
+    "score": 22600,
+    "reward": "1#120012#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1075,
+    "score": 23000,
+    "reward": "1#110704#1",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1076,
+    "score": 23400,
+    "reward": "2#5#40000",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1077,
+    "score": 23800,
+    "reward": "1#110303#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1078,
+    "score": 24200,
+    "reward": "1#120011#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1079,
+    "score": 24600,
+    "reward": "1#110603#2",
+    "stage": 2,
+    "special": 0
+  },
+  {
+    "id": 1080,
+    "score": 25000,
+    "reward": "1#110304#1",
+    "stage": 2,
+    "special": 0
+  }
+]

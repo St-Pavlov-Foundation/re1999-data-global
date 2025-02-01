@@ -1,0 +1,227 @@
+[
+  {
+    "skillId": 30040131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30040132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30040133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30040134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30480131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30480132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30480133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30480134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30410131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30410132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30410133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30410134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30630131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30630132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30630133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30630134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30530131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30530132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30530133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30530134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30110131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30110132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30110133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30110134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30150131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30150132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30150133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30150134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30470131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30470132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30470133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30470134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30200131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30200132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30200133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30200134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30490131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30490132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30490133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30490134,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30320131,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30320132,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30320133,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 30770131,
+    "effectName": "all",
+    "exceptEffect": ""
+  },
+  {
+    "skillId": 30770132,
+    "effectName": "all",
+    "exceptEffect": ""
+  }
+]

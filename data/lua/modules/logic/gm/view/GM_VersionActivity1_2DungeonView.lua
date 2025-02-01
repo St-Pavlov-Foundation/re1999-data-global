@@ -1,0 +1,11 @@
+module("modules.logic.gm.view.GM_VersionActivity1_2DungeonView", package.seeall)
+
+slot0 = class("GM_VersionActivity1_2DungeonView", GM_VersionActivity_DungeonMapView)
+
+function slot0.register()
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapView_register(VersionActivity1_2DungeonView)
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XMapEpisodeItem_register(VersionActivity1_2MapEpisodeItem)
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapLevelView_register(VersionActivity1_2DungeonMapLevelView)
+end
+
+return slot0

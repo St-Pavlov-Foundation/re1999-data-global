@@ -1,0 +1,27 @@
+[
+  {
+    "activityId": 11714,
+    "totalLimit": 20,
+    "dailyLimit": 4
+  },
+  {
+    "activityId": 11809,
+    "totalLimit": 20,
+    "dailyLimit": 4
+  },
+  {
+    "activityId": 12023,
+    "totalLimit": 20,
+    "dailyLimit": 4
+  },
+  {
+    "activityId": 12111,
+    "totalLimit": 20,
+    "dailyLimit": 4
+  },
+  {
+    "activityId": 12234,
+    "totalLimit": 20,
+    "dailyLimit": 4
+  }
+]

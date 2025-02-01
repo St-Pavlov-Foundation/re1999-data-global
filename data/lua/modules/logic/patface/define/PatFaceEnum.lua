@@ -1,0 +1,93 @@
+module("modules.logic.patface.define.PatFaceEnum", package.seeall)
+
+slot0 = _M
+slot0.NoneNum = 0
+slot0.patFaceType = {
+	NewDay = 2,
+	FuncUnlock = 3,
+	Login = 1
+}
+slot0.patFace = {
+	SpringSign = 7,
+	V1a9_SemmelWeisGift = 10904,
+	V1a9_Role_PanelSignView_Part1 = 10900,
+	V1a7_Role_PanelSignView_Part1 = 10,
+	LanternFestival = 12,
+	v2a2_Role_SummonNewCustom = 20202,
+	LinkageActivity_Panelview = 20303,
+	V1a8_Role_PanelSignView_Part1 = 13,
+	V2a2_RedLeafFestival_PanelView = 20204,
+	V2a2_Role_PanelSignView_Part1 = 20200,
+	V2a2_LimitDecorate_PanelView = 20205,
+	V2a1_Role_PanelSignView_Part1 = 20100,
+	V2a0_Role_PanelSignView_Part1 = 20001,
+	V1a7_Role_PanelSignView_Part2 = 11,
+	V1a8_Work_PanelSignView = 15,
+	BPSPView = 20203,
+	V1a9_Matildagift = 10902,
+	TurnBackView = 2,
+	GoldenMilletPresent = 5,
+	TurnBackStory = 1,
+	NewYearEve = 8,
+	DecalogPresent = 4,
+	Activity136 = 3,
+	V2a2_SpringFestival_PanelView = 20206,
+	PanelSign = 6,
+	V2a0_SummerSign_PanelView = 20000,
+	V2a1_MoonFestival_PanelView = 20102,
+	DragonBoatFestival = 10903,
+	V1a8_Role_PanelSignView_Part2 = 14,
+	V1a9_Role_PanelSignView_Part2 = 10901,
+	V1a9_AnniversarySign_PanelSignView = 10905,
+	V2a0_Role_PanelSignView_Part2 = 20002,
+	V2a1_Role_PanelSignView_Part2 = 20101,
+	V2a2_Role_PanelSignView_Part2 = 20201
+}
+slot0.CustomCheckCanPatFun = {
+	[slot0.patFace.Activity136] = PatFaceCustomHandler.activity142CheckCanPat,
+	[slot0.patFace.DecalogPresent] = PatFaceCustomHandler.decalogPresentCheckCanPat,
+	[slot0.patFace.GoldenMilletPresent] = PatFaceCustomHandler.goldenMilletPresentCheckCanPat,
+	[slot0.patFace.V1a9_Matildagift] = PatFaceCustomHandler.matildaGiftCheckCanPat,
+	[slot0.patFace.V1a9_SemmelWeisGift] = PatFaceCustomHandler.semmelWeisGiftCheckCanPat,
+	[slot0.patFace.BPSPView] = PatFaceCustomHandler.bPSPViewCanPat,
+	[slot0.patFace.V2a2_LimitDecorate_PanelView] = PatFaceCustomHandler.limitDecorateCanPat
+}
+slot0.CustomPatFun = {
+	[slot0.patFace.DecalogPresent] = PatFaceCustomHandler.decalogPresentPat,
+	[slot0.patFace.GoldenMilletPresent] = PatFaceCustomHandler.goldenMilletPresentPat,
+	[slot0.patFace.V1a9_Matildagift] = PatFaceCustomHandler.matildaGiftPat,
+	[slot0.patFace.V1a9_SemmelWeisGift] = PatFaceCustomHandler.semmelWeisGiftPat
+}
+slot0.patFaceCustomWork = {
+	[slot0.patFace.V2a0_SummerSign_PanelView] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a1_MoonFestival_PanelView] = Activity101SignSpRewardPatFaceWork,
+	[slot0.patFace.LinkageActivity_Panelview] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a2_SpringFestival_PanelView] = Activity101SignPatFaceWork,
+	[slot0.patFace.TurnBackStory] = TurnbackStoryPatFaceWork,
+	[slot0.patFace.TurnBackView] = TurnbackViewPatFaceWork,
+	[slot0.patFace.PanelSign] = ActivityRoleSignWork_1_6,
+	[slot0.patFace.SpringSign] = Activity101SignPatFaceWork,
+	[slot0.patFace.NewYearEve] = Activity152PatFaceWork,
+	[slot0.patFace.V1a7_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V1a7_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.LanternFestival] = LanternFestivalPatFaceWork,
+	[slot0.patFace.V1a8_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V1a8_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.V1a8_Work_PanelSignView] = Activity101SignPatFaceWork,
+	[slot0.patFace.V1a9_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V1a9_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.DragonBoatFestival] = DragonBoatFestivalPatFaceWork,
+	[slot0.patFace.V1a9_AnniversarySign_PanelSignView] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a0_SummerSign_PanelView] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a0_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a0_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a1_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a1_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a1_MoonFestival_PanelView] = Activity101SignSpRewardPatFaceWork,
+	[slot0.patFace.V2a2_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a2_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
+	[slot0.patFace.v2a2_Role_SummonNewCustom] = SummonNewCustomPickPatFaceWork,
+	[slot0.patFace.V2a2_RedLeafFestival_PanelView] = Activity101SignPatFaceWork
+}
+
+return slot0

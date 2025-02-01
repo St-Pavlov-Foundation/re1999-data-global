@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "answer": "",
+    "elementId": 2,
+    "beforeTalkId": 1,
+    "afterTalkId": 2,
+    "successTalkId": 0,
+    "tipsTalkId": 15,
+    "errorTalkId": 0,
+    "storyTalkId": 3
+  },
+  {
+    "id": 2,
+    "answer": "",
+    "elementId": 4,
+    "beforeTalkId": 4,
+    "afterTalkId": 5,
+    "successTalkId": 0,
+    "tipsTalkId": 16,
+    "errorTalkId": 0,
+    "storyTalkId": 6
+  },
+  {
+    "id": 3,
+    "answer": "",
+    "elementId": 6,
+    "beforeTalkId": 7,
+    "afterTalkId": 0,
+    "successTalkId": 8,
+    "tipsTalkId": 17,
+    "errorTalkId": 0,
+    "storyTalkId": 9
+  },
+  {
+    "id": 4,
+    "answer": "6",
+    "elementId": 8,
+    "beforeTalkId": 10,
+    "afterTalkId": 0,
+    "successTalkId": 11,
+    "tipsTalkId": 19,
+    "errorTalkId": 18,
+    "storyTalkId": 0
+  },
+  {
+    "id": 5,
+    "answer": "0",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 0,
+    "tipsTalkId": 20,
+    "errorTalkId": 20,
+    "storyTalkId": 0
+  },
+  {
+    "id": 6,
+    "answer": "37",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 12,
+    "tipsTalkId": 19,
+    "errorTalkId": 18,
+    "storyTalkId": 0
+  },
+  {
+    "id": 7,
+    "answer": "0",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 0,
+    "tipsTalkId": 20,
+    "errorTalkId": 20,
+    "storyTalkId": 0
+  },
+  {
+    "id": 8,
+    "answer": "210",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 13,
+    "tipsTalkId": 19,
+    "errorTalkId": 18,
+    "storyTalkId": 0
+  },
+  {
+    "id": 9,
+    "answer": "0",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 0,
+    "tipsTalkId": 20,
+    "errorTalkId": 20,
+    "storyTalkId": 0
+  },
+  {
+    "id": 10,
+    "answer": "0",
+    "elementId": 8,
+    "beforeTalkId": 0,
+    "afterTalkId": 0,
+    "successTalkId": 0,
+    "tipsTalkId": 21,
+    "errorTalkId": 21,
+    "storyTalkId": 14
+  }
+]

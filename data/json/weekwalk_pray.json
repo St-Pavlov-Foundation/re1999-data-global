@@ -1,0 +1,80 @@
+[
+  {
+    "id": 101,
+    "sacrificeLimit": "2#1",
+    "blessingLimit": "0",
+    "effect": "1#100"
+  },
+  {
+    "id": 102,
+    "sacrificeLimit": "2#1",
+    "blessingLimit": "1",
+    "effect": "1#150"
+  },
+  {
+    "id": 201,
+    "sacrificeLimit": "1#3",
+    "blessingLimit": "1",
+    "effect": "2#201#1000"
+  },
+  {
+    "id": 202,
+    "sacrificeLimit": "1#3",
+    "blessingLimit": "1",
+    "effect": "2#203#1000"
+  },
+  {
+    "id": 203,
+    "sacrificeLimit": "2#50",
+    "blessingLimit": "0",
+    "effect": "2#205#1000"
+  },
+  {
+    "id": 301,
+    "sacrificeLimit": "1#1|2#30",
+    "blessingLimit": "0",
+    "effect": "3#30450141"
+  },
+  {
+    "id": 302,
+    "sacrificeLimit": "1#2|2#30",
+    "blessingLimit": "0",
+    "effect": "3#30280141"
+  },
+  {
+    "id": 303,
+    "sacrificeLimit": "1#3|2#30",
+    "blessingLimit": "0",
+    "effect": "3#30060141"
+  },
+  {
+    "id": 304,
+    "sacrificeLimit": "1#4|2#30",
+    "blessingLimit": "0",
+    "effect": "3#30350141"
+  },
+  {
+    "id": 305,
+    "sacrificeLimit": "3#3052|2#30",
+    "blessingLimit": "1",
+    "effect": "3#30520141"
+  },
+  {
+    "id": 306,
+    "sacrificeLimit": "3#3025|2#30",
+    "blessingLimit": "1",
+    "effect": "3#30250141"
+  },
+  {
+    "id": 307,
+    "sacrificeLimit": "3#3020|2#30",
+    "blessingLimit": "1",
+    "effect": "3#30200141"
+  },
+  {
+    "id": 308,
+    "sacrificeLimit": "3#3032|2#30",
+    "blessingLimit": "1",
+    "effect": "3#30320141"
+  }
+]

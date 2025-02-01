@@ -1,0 +1,72 @@
+[
+  {
+    "activityId": 11622,
+    "id": 1,
+    "preId": 0,
+    "openDay": 1,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "language_10027191",
+    "text": "language_10027192",
+    "bonus": "10#10#1|2#3#4000|1#110202#2",
+    "musictime": 16,
+    "time": 6
+  },
+  {
+    "activityId": 11622,
+    "id": 2,
+    "preId": 1,
+    "openDay": 2,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "language_10027193",
+    "text": "language_10036640",
+    "bonus": "10#10#1|2#5#4000|1#110102#2",
+    "musictime": 24,
+    "time": 6
+  },
+  {
+    "activityId": 11622,
+    "id": 3,
+    "preId": 2,
+    "openDay": 3,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "language_10027195",
+    "text": "language_10036641",
+    "bonus": "10#10#1|2#3#4000|1#110302#2",
+    "musictime": 19,
+    "time": 6
+  },
+  {
+    "activityId": 11622,
+    "id": 4,
+    "preId": 3,
+    "openDay": 4,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "language_10036642",
+    "text": "language_10036643",
+    "bonus": "10#10#1|2#5#4000|1#110402#2",
+    "musictime": 12,
+    "time": 6
+  },
+  {
+    "activityId": 11622,
+    "id": 5,
+    "preId": 4,
+    "openDay": 5,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "language_10027199",
+    "text": "language_10036644",
+    "bonus": "10#10#1|2#3#4000|1#110502#2",
+    "musictime": 16,
+    "time": 6
+  }
+]

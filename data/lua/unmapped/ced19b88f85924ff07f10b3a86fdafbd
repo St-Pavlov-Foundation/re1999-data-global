@@ -1,0 +1,106 @@
+module("framework.gamescene.BaseScene", package.seeall)
+
+slot0 = class("BaseScene")
+
+function slot0.ctor(slot0, slot1)
+	slot0._gameObj = slot1
+	slot0._onPreparedCb = nil
+	slot0._onPreparedCbObj = nil
+	slot0._onPreparedOneCb = nil
+	slot0._onPreparedOneCbObj = nil
+	slot0._curSceneId = 0
+	slot0._curLevelId = 0
+	slot0._isClosing = false
+	slot0._allComps = {}
+
+	slot0:_createAllComps()
+
+	for slot5, slot6 in ipairs(slot0._allComps) do
+		if slot6.onInit then
+			slot6:onInit()
+		end
+	end
+end
+
+function slot0.getSceneContainerGO(slot0)
+	return slot0._gameObj
+end
+
+function slot0.getCurLevelId(slot0)
+	return slot0._curLevelId
+end
+
+function slot0.setCurLevelId(slot0, slot1)
+	slot0._curLevelId = slot1
+end
+
+function slot0.setOnPreparedCb(slot0, slot1, slot2)
+	slot0._onPreparedCb = slot1
+	slot0._onPreparedCbObj = slot2
+end
+
+function slot0.setOnPreparedOneCb(slot0, slot1, slot2)
+	slot0._onPreparedOneCb = slot1
+	slot0._onPreparedOneCbObj = slot2
+end
+
+function slot0.onStart(slot0, slot1, slot2)
+	slot0._curSceneId = slot1
+	slot0._curLevelId = slot2
+
+	for slot6, slot7 in ipairs(slot0._allComps) do
+		if slot7.onSceneStart and not slot7.isOnStarted then
+			slot7:onSceneStart(slot1, slot2)
+		end
+	end
+end
+
+function slot0.onPrepared(slot0)
+	for slot4, slot5 in ipairs(slot0._allComps) do
+		if slot5.onScenePrepared then
+			slot5:onScenePrepared(slot0._curSceneId, slot0._curLevelId)
+		end
+	end
+
+	if not slot0._onPreparedOneCb then
+		return
+	end
+
+	callWithCatch(slot0._onPreparedCb, slot0._onPreparedCbObj)
+end
+
+function slot0.onDirectorLoadedOne(slot0)
+	if not slot0._onPreparedOneCb then
+		return
+	end
+
+	callWithCatch(slot0._onPreparedOneCb, slot0._onPreparedOneCbObj)
+end
+
+function slot0.onClose(slot0)
+	slot0._isClosing = true
+
+	for slot4, slot5 in ipairs(slot0._allComps) do
+		if slot5.onSceneClose then
+			slot5:onSceneClose()
+		end
+	end
+
+	slot0._isClosing = false
+end
+
+function slot0.isClosing(slot0)
+	return slot0._isClosing
+end
+
+function slot0._addComp(slot0, slot1, slot2)
+	slot3 = slot2.New(slot0)
+	slot0[slot1] = slot3
+
+	table.insert(slot0._allComps, slot3)
+end
+
+function slot0._createAllComps(slot0)
+end
+
+return slot0

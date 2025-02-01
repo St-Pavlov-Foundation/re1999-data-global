@@ -1,0 +1,47 @@
+[
+  {
+    "activityId": 11700,
+    "id": 1,
+    "name": "language_10033868",
+    "initWeight": "5#5|4#350|3#4000|2#5645",
+    "awardTime4": "0#25",
+    "awardTime5": "0#50",
+    "changeWeight": "5#10"
+  },
+  {
+    "activityId": 11811,
+    "id": 1,
+    "name": "language_10033868",
+    "initWeight": "5#5|4#350|3#4000|2#5645",
+    "awardTime4": "0#25",
+    "awardTime5": "0#50",
+    "changeWeight": "5#10"
+  },
+  {
+    "activityId": 11906,
+    "id": 1,
+    "name": "language_10033868",
+    "initWeight": "5#5|4#350|3#4000|2#5645",
+    "awardTime4": "0#25",
+    "awardTime5": "0#50",
+    "changeWeight": "5#10"
+  },
+  {
+    "activityId": 12006,
+    "id": 1,
+    "name": "language_10033868",
+    "initWeight": "5#5|4#350|3#4000|2#5645",
+    "awardTime4": "0#25",
+    "awardTime5": "0#50",
+    "changeWeight": "5#10"
+  },
+  {
+    "activityId": 12115,
+    "id": 1,
+    "name": "language_10033868",
+    "initWeight": "5#5|4#350|3#4000|2#5645",
+    "awardTime4": "0#25",
+    "awardTime5": "0#50",
+    "changeWeight": "5#10"
+  }
+]

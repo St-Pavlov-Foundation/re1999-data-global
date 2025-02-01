@@ -1,0 +1,52 @@
+[
+  {
+    "id": 111,
+    "version": "",
+    "name": "language_10043161",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_day_p.prefab",
+    "focusMapPos": "-20#18",
+    "focusCameraSize": 11,
+    "startPos": "-552#83",
+    "endPos": "109.4#-210"
+  },
+  {
+    "id": 121,
+    "version": "",
+    "name": "language_10043162",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_night_a_p.prefab",
+    "focusMapPos": "-32.5#18",
+    "focusCameraSize": 9,
+    "startPos": "-488#-300",
+    "endPos": "140#-150"
+  },
+  {
+    "id": 131,
+    "version": "",
+    "name": "language_10043163",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_night_b_p.prefab",
+    "focusMapPos": "-40#16",
+    "focusCameraSize": 8,
+    "startPos": "-540#-310",
+    "endPos": "85#208"
+  },
+  {
+    "id": 141,
+    "version": "",
+    "name": "language_10043164",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_niuqu_p.prefab",
+    "focusMapPos": "-37#13.7",
+    "focusCameraSize": 13,
+    "startPos": "130#47",
+    "endPos": "-473#-150"
+  },
+  {
+    "id": 142,
+    "version": "",
+    "name": "language_10043164",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_niuqu_p.prefab",
+    "focusMapPos": "-38#12",
+    "focusCameraSize": 7,
+    "startPos": "160#-53",
+    "endPos": "-412.8#128"
+  }
+]

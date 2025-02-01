@@ -1,0 +1,7 @@
+module("framework.gamescene.SceneType", package.seeall)
+
+return {
+	Empty = 1,
+	Main = 2,
+	Fight = 3
+}

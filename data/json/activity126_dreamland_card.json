@@ -1,0 +1,62 @@
+[
+  {
+    "id": 2130101,
+    "activityId": 11310,
+    "skillId": 2130101,
+    "desc": "language_10013654"
+  },
+  {
+    "id": 2130102,
+    "activityId": 11310,
+    "skillId": 2130102,
+    "desc": "language_10013655"
+  },
+  {
+    "id": 2130103,
+    "activityId": 11310,
+    "skillId": 2130103,
+    "desc": "language_10027229"
+  },
+  {
+    "id": 2130104,
+    "activityId": 11310,
+    "skillId": 2130104,
+    "desc": "language_10013657"
+  },
+  {
+    "id": 4130101,
+    "activityId": 11300,
+    "skillId": 4130101,
+    "desc": "language_10013657"
+  },
+  {
+    "id": 4130102,
+    "activityId": 11300,
+    "skillId": 4130102,
+    "desc": "language_10027230"
+  },
+  {
+    "id": 4130103,
+    "activityId": 11300,
+    "skillId": 4130103,
+    "desc": "language_10027231"
+  },
+  {
+    "id": 4130104,
+    "activityId": 11300,
+    "skillId": 4130104,
+    "desc": "language_10027232"
+  },
+  {
+    "id": 4130105,
+    "activityId": 11300,
+    "skillId": 4130105,
+    "desc": "language_10027233"
+  },
+  {
+    "id": 4130106,
+    "activityId": 11300,
+    "skillId": 4130106,
+    "desc": "language_10027234"
+  }
+]

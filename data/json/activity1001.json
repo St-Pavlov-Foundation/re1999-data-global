@@ -1,0 +1,23 @@
+[
+  {
+    "activityId": 100002,
+    "id": 1,
+    "mailId": 500014,
+    "desc": "language_10025000",
+    "sort": 1
+  },
+  {
+    "activityId": 100002,
+    "id": 2,
+    "mailId": 500015,
+    "desc": "language_10025001",
+    "sort": 2
+  },
+  {
+    "activityId": 100002,
+    "id": 3,
+    "mailId": 500016,
+    "desc": "language_10025002",
+    "sort": 3
+  }
+]

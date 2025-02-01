@@ -1,0 +1,52 @@
+[
+  {
+    "activityId": 11605,
+    "storyGroupId": 16601,
+    "episodeGroupId": 16602
+  },
+  {
+    "activityId": 11606,
+    "storyGroupId": 16603,
+    "episodeGroupId": 16604
+  },
+  {
+    "activityId": 11706,
+    "storyGroupId": 17701,
+    "episodeGroupId": 17702
+  },
+  {
+    "activityId": 11707,
+    "storyGroupId": 17703,
+    "episodeGroupId": 17704
+  },
+  {
+    "activityId": 11806,
+    "storyGroupId": 18601,
+    "episodeGroupId": 18602
+  },
+  {
+    "activityId": 11807,
+    "storyGroupId": 18603,
+    "episodeGroupId": 18604
+  },
+  {
+    "activityId": 11908,
+    "storyGroupId": 19601,
+    "episodeGroupId": 19602
+  },
+  {
+    "activityId": 11909,
+    "storyGroupId": 19603,
+    "episodeGroupId": 19604
+  },
+  {
+    "activityId": 12008,
+    "storyGroupId": 20601,
+    "episodeGroupId": 20602
+  },
+  {
+    "activityId": 12009,
+    "storyGroupId": 20603,
+    "episodeGroupId": 20604
+  }
+]

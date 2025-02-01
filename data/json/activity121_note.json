@@ -1,0 +1,152 @@
+[
+  {
+    "noteId": 101,
+    "activityId": 11209,
+    "name": "language_10026996",
+    "unlockType": 0,
+    "episodeId": 1210102,
+    "fightId": "",
+    "desc": "language_10003077",
+    "content": "language_10026997"
+  },
+  {
+    "noteId": 102,
+    "activityId": 11209,
+    "name": "language_10026998",
+    "unlockType": 0,
+    "episodeId": 1210201,
+    "fightId": "",
+    "desc": "language_10026999",
+    "content": "language_10027000"
+  },
+  {
+    "noteId": 103,
+    "activityId": 11209,
+    "name": "language_10027001",
+    "unlockType": 0,
+    "episodeId": 1210202,
+    "fightId": "",
+    "desc": "language_10027002",
+    "content": "language_10027003"
+  },
+  {
+    "noteId": 104,
+    "activityId": 11209,
+    "name": "language_10027004",
+    "unlockType": 0,
+    "episodeId": 1210108,
+    "fightId": "",
+    "desc": "language_10027005",
+    "content": "language_10027006"
+  },
+  {
+    "noteId": 105,
+    "activityId": 11209,
+    "name": "language_10027007",
+    "unlockType": 0,
+    "episodeId": 1210109,
+    "fightId": "",
+    "desc": "language_10027008",
+    "content": "language_10027009"
+  },
+  {
+    "noteId": 201,
+    "activityId": 11209,
+    "name": "language_10027010",
+    "unlockType": 0,
+    "episodeId": 1210103,
+    "fightId": "",
+    "desc": "language_10027011",
+    "content": "language_10027012"
+  },
+  {
+    "noteId": 202,
+    "activityId": 11209,
+    "name": "language_10027013",
+    "unlockType": 0,
+    "episodeId": 1210105,
+    "fightId": "",
+    "desc": "language_10027014",
+    "content": "language_10027015"
+  },
+  {
+    "noteId": 203,
+    "activityId": 11209,
+    "name": "language_10027016",
+    "unlockType": 0,
+    "episodeId": 1210106,
+    "fightId": "",
+    "desc": "language_10027017",
+    "content": "language_10027018"
+  },
+  {
+    "noteId": 204,
+    "activityId": 11209,
+    "name": "language_10027019",
+    "unlockType": 0,
+    "episodeId": 1210108,
+    "fightId": "",
+    "desc": "language_10027020",
+    "content": "language_10027021"
+  },
+  {
+    "noteId": 205,
+    "activityId": 11209,
+    "name": "language_10027022",
+    "unlockType": 1,
+    "episodeId": 1210112,
+    "fightId": "1210111#1",
+    "desc": "language_10027023",
+    "content": "language_10027009"
+  },
+  {
+    "noteId": 301,
+    "activityId": 11209,
+    "name": "language_10027024",
+    "unlockType": 0,
+    "episodeId": 1210110,
+    "fightId": "",
+    "desc": "language_10027025",
+    "content": "language_10027026"
+  },
+  {
+    "noteId": 302,
+    "activityId": 11209,
+    "name": "language_10027027",
+    "unlockType": 1,
+    "episodeId": 1210111,
+    "fightId": "1210110#1",
+    "desc": "language_10027028",
+    "content": "language_10027029"
+  },
+  {
+    "noteId": 303,
+    "activityId": 11209,
+    "name": "language_10027030",
+    "unlockType": 0,
+    "episodeId": 1210111,
+    "fightId": "",
+    "desc": "language_10027031",
+    "content": "language_10027032"
+  },
+  {
+    "noteId": 304,
+    "activityId": 11209,
+    "name": "language_10027022",
+    "unlockType": 1,
+    "episodeId": 1210112,
+    "fightId": "1210111#2",
+    "desc": "language_10027033",
+    "content": "language_10027034"
+  },
+  {
+    "noteId": 305,
+    "activityId": 11209,
+    "name": "language_10027022",
+    "unlockType": 1,
+    "episodeId": 1210112,
+    "fightId": "1210111#3",
+    "desc": "language_10027035",
+    "content": "language_10027009"
+  }
+]

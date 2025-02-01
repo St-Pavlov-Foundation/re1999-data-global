@@ -1,0 +1,74 @@
+[
+  {
+    "id": 101,
+    "res": "common_piece1/m_s09_common_xmj1"
+  },
+  {
+    "id": 102,
+    "res": "common_piece1/m_s09_common_smxj1"
+  },
+  {
+    "id": 103,
+    "res": "common_piece1/m_s09_common_ptyx1"
+  },
+  {
+    "id": 104,
+    "res": "common_piece1/m_s09_common_ptrx1_01"
+  },
+  {
+    "id": 105,
+    "res": "common_piece1/m_s09_common_ptrx1_02"
+  },
+  {
+    "id": 106,
+    "res": "common_piece1/m_s09_common_jxgw1"
+  },
+  {
+    "id": 107,
+    "res": "common_piece1/m_s09_common_dmj1"
+  },
+  {
+    "id": 108,
+    "res": "common_piece1/m_s09_common_csyx1"
+  },
+  {
+    "id": 109,
+    "res": "common_piece1/m_s09_common_csrx1"
+  },
+  {
+    "id": 201,
+    "res": "common_piece1/m_s09_common_xmj2"
+  },
+  {
+    "id": 202,
+    "res": "common_piece1/m_s09_common_smxj2"
+  },
+  {
+    "id": 203,
+    "res": "common_piece1/m_s09_common_ptyx2"
+  },
+  {
+    "id": 204,
+    "res": "common_piece1/m_s09_common_ptrx2_01"
+  },
+  {
+    "id": 205,
+    "res": "common_piece1/m_s09_common_ptrx2_02"
+  },
+  {
+    "id": 206,
+    "res": "common_piece1/m_s09_common_jxgw2"
+  },
+  {
+    "id": 207,
+    "res": "common_piece1/m_s09_common_dmj2"
+  },
+  {
+    "id": 208,
+    "res": "common_piece1/m_s09_common_csyx2"
+  },
+  {
+    "id": 209,
+    "res": "common_piece1/m_s09_common_csrx2"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "storyId": 1,
+    "endingCount": 1,
+    "bonus": 21701011,
+    "showPos": 0
+  },
+  {
+    "storyId": 1,
+    "endingCount": 2,
+    "bonus": 21701021,
+    "showPos": 0
+  },
+  {
+    "storyId": 1,
+    "endingCount": 3,
+    "bonus": 21701031,
+    "showPos": 0
+  },
+  {
+    "storyId": 2,
+    "endingCount": 1,
+    "bonus": 21701041,
+    "showPos": 0
+  },
+  {
+    "storyId": 2,
+    "endingCount": 2,
+    "bonus": 21701051,
+    "showPos": 0
+  },
+  {
+    "storyId": 3,
+    "endingCount": 1,
+    "bonus": 21701061,
+    "showPos": 0
+  },
+  {
+    "storyId": 3,
+    "endingCount": 2,
+    "bonus": 21701071,
+    "showPos": 0
+  },
+  {
+    "storyId": 3,
+    "endingCount": 3,
+    "bonus": 21701081,
+    "showPos": 0
+  }
+]

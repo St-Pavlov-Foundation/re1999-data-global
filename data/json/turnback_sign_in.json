@@ -1,0 +1,37 @@
+[
+  {
+    "turnbackId": 1,
+    "day": 1,
+    "bonus": "2#2#100|10#11#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 2,
+    "bonus": "2#2#100|9#1005#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 3,
+    "bonus": "2#2#100|10#11#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 4,
+    "bonus": "2#2#100|9#1005#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 5,
+    "bonus": "2#2#100|10#11#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 6,
+    "bonus": "2#2#100|9#1005#1"
+  },
+  {
+    "turnbackId": 1,
+    "day": 7,
+    "bonus": "2#2#100|10#11#1"
+  }
+]

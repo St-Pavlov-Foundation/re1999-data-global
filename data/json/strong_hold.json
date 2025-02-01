@@ -1,0 +1,614 @@
+[
+  {
+    "id": 22210101,
+    "name": "language_10056677",
+    "eliminateBg": "img_zhinuo_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_1.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210101
+  },
+  {
+    "id": 22210201,
+    "name": "language_10056677",
+    "eliminateBg": "img_zhinuo_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_1.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210201
+  },
+  {
+    "id": 22210202,
+    "name": "language_10056677",
+    "eliminateBg": "img_zhinuo_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_1.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210202
+  },
+  {
+    "id": 22210301,
+    "name": "language_10056678",
+    "eliminateBg": "img_zhinuo_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210301
+  },
+  {
+    "id": 22210302,
+    "name": "language_10056678",
+    "eliminateBg": "img_zhinuo_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210302
+  },
+  {
+    "id": 22210401,
+    "name": "language_10056679",
+    "eliminateBg": "img_zhinuo_05",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_5.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210401
+  },
+  {
+    "id": 22210402,
+    "name": "language_10056680",
+    "eliminateBg": "img_zhinuo_09",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_9.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210402
+  },
+  {
+    "id": 22210403,
+    "name": "language_10056679",
+    "eliminateBg": "img_zhinuo_05",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_5.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210403
+  },
+  {
+    "id": 22210501,
+    "name": "language_10053447",
+    "eliminateBg": "img_zhinuo_10",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_10.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210501
+  },
+  {
+    "id": 22210502,
+    "name": "language_10053447",
+    "eliminateBg": "img_zhinuo_10",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_10.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210502
+  },
+  {
+    "id": 22210503,
+    "name": "language_10053447",
+    "eliminateBg": "img_zhinuo_10",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_10.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210503
+  },
+  {
+    "id": 22210601,
+    "name": "language_10056678",
+    "eliminateBg": "img_zhinuo_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210601
+  },
+  {
+    "id": 22210602,
+    "name": "language_10000174",
+    "eliminateBg": "img_zhinuo_04",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_4.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210602
+  },
+  {
+    "id": 22210701,
+    "name": "language_10056681",
+    "eliminateBg": "img_zhinuo_06",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_6.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210701
+  },
+  {
+    "id": 22210702,
+    "name": "language_10056682",
+    "eliminateBg": "img_zhinuo_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210702
+  },
+  {
+    "id": 22210703,
+    "name": "language_10056683",
+    "eliminateBg": "img_zhinuo_08",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_8.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210703
+  },
+  {
+    "id": 22220101,
+    "name": "language_10056684",
+    "eliminateBg": "img_pinminku_06",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_6.png",
+    "enemyCapacity": 6,
+    "friendCapacity": 6,
+    "ruleId": 22220101
+  },
+  {
+    "id": 22220102,
+    "name": "language_10056685",
+    "eliminateBg": "img_pinminku_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_1.png",
+    "enemyCapacity": 6,
+    "friendCapacity": 6,
+    "ruleId": 22220102
+  },
+  {
+    "id": 22220201,
+    "name": "language_10056686",
+    "eliminateBg": "img_pinminku_16",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_16.png",
+    "enemyCapacity": 6,
+    "friendCapacity": 6,
+    "ruleId": 22220201
+  },
+  {
+    "id": 22220202,
+    "name": "language_10056687",
+    "eliminateBg": "img_pinminku_14",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_14.png",
+    "enemyCapacity": 6,
+    "friendCapacity": 6,
+    "ruleId": 22220202
+  },
+  {
+    "id": 22220301,
+    "name": "language_10056688",
+    "eliminateBg": "img_pinminku_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220301
+  },
+  {
+    "id": 22220302,
+    "name": "language_10056689",
+    "eliminateBg": "img_pinminku_08",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_8.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220302
+  },
+  {
+    "id": 22220401,
+    "name": "language_10056688",
+    "eliminateBg": "img_pinminku_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220401
+  },
+  {
+    "id": 22220402,
+    "name": "language_10056689",
+    "eliminateBg": "img_pinminku_08",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_8.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220402
+  },
+  {
+    "id": 22220403,
+    "name": "language_10056690",
+    "eliminateBg": "img_pinminku_13",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_13.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220403
+  },
+  {
+    "id": 22220501,
+    "name": "language_10056691",
+    "eliminateBg": "img_pinminku_04",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_4.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220501
+  },
+  {
+    "id": 22220502,
+    "name": "language_10051703",
+    "eliminateBg": "img_pinminku_12",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_12.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220502
+  },
+  {
+    "id": 22220601,
+    "name": "language_10056692",
+    "eliminateBg": "img_pinminku_15",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_15.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220601
+  },
+  {
+    "id": 22220602,
+    "name": "language_10056690",
+    "eliminateBg": "img_pinminku_13",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_13.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220602
+  },
+  {
+    "id": 22220701,
+    "name": "language_10056693",
+    "eliminateBg": "img_pinminku_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220701
+  },
+  {
+    "id": 22220702,
+    "name": "language_10056693",
+    "eliminateBg": "img_pinminku_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220702
+  },
+  {
+    "id": 22220703,
+    "name": "language_10056693",
+    "eliminateBg": "img_pinminku_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220703
+  },
+  {
+    "id": 22220801,
+    "name": "language_10056693",
+    "eliminateBg": "img_pinminku_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220801
+  },
+  {
+    "id": 22220802,
+    "name": "language_10056694",
+    "eliminateBg": "img_pinminku_05",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_5.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220802
+  },
+  {
+    "id": 22220803,
+    "name": "language_10056695",
+    "eliminateBg": "img_pinminku_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220803
+  },
+  {
+    "id": 22230101,
+    "name": "language_10056696",
+    "eliminateBg": "img_xiongdihui_04",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_4.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230101
+  },
+  {
+    "id": 22230102,
+    "name": "language_10056697",
+    "eliminateBg": "img_xiongdihui_06",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_6.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230102
+  },
+  {
+    "id": 22230201,
+    "name": "language_10056698",
+    "eliminateBg": "img_xiongdihui_09",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_9.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230201
+  },
+  {
+    "id": 22230202,
+    "name": "language_10056699",
+    "eliminateBg": "img_xiongdihui_04",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_4.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230202
+  },
+  {
+    "id": 22230301,
+    "name": "language_10056700",
+    "eliminateBg": "img_xiongdihui_07",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_7.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230301
+  },
+  {
+    "id": 22230302,
+    "name": "language_10056700",
+    "eliminateBg": "img_xiongdihui_07",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_7.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230302
+  },
+  {
+    "id": 22230401,
+    "name": "language_10056701",
+    "eliminateBg": "img_xiongdihui_03",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_3.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230401
+  },
+  {
+    "id": 22230402,
+    "name": "language_10056702",
+    "eliminateBg": "img_xiongdihui_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230402
+  },
+  {
+    "id": 22230403,
+    "name": "language_10022231",
+    "eliminateBg": "img_xiongdihui_15",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_15.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230403
+  },
+  {
+    "id": 22230501,
+    "name": "language_10056703",
+    "eliminateBg": "img_xiongdihui_12",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_12.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230501
+  },
+  {
+    "id": 22230502,
+    "name": "language_10056704",
+    "eliminateBg": "img_xiongdihui_18",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_18.png",
+    "enemyCapacity": 1,
+    "friendCapacity": 4,
+    "ruleId": 22230502
+  },
+  {
+    "id": 22230503,
+    "name": "language_10056703",
+    "eliminateBg": "img_xiongdihui_12",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_12.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230503
+  },
+  {
+    "id": 22230601,
+    "name": "language_10056705",
+    "eliminateBg": "img_xiongdihui_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_2.png",
+    "enemyCapacity": 12,
+    "friendCapacity": 12,
+    "ruleId": 22230601
+  },
+  {
+    "id": 22230701,
+    "name": "language_10056705",
+    "eliminateBg": "img_xiongdihui_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230701
+  },
+  {
+    "id": 22230702,
+    "name": "language_10056705",
+    "eliminateBg": "img_xiongdihui_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230702
+  },
+  {
+    "id": 22230801,
+    "name": "language_10056706",
+    "eliminateBg": "img_xiongdihui_10",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_10.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230801
+  },
+  {
+    "id": 22230802,
+    "name": "language_10056696",
+    "eliminateBg": "img_xiongdihui_04",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_4.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230802
+  },
+  {
+    "id": 22230803,
+    "name": "language_10056707",
+    "eliminateBg": "img_xiongdihui_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_1.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230803
+  },
+  {
+    "id": 22230901,
+    "name": "language_10056707",
+    "eliminateBg": "img_xiongdihui_01",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_1.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230901
+  },
+  {
+    "id": 22230902,
+    "name": "language_10053441",
+    "eliminateBg": "img_xiongdihui_11",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_11.png",
+    "enemyCapacity": 1,
+    "friendCapacity": 4,
+    "ruleId": 22230902
+  },
+  {
+    "id": 22230903,
+    "name": "language_10056708",
+    "eliminateBg": "img_xiongdihui_16",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_16.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22230903
+  },
+  {
+    "id": 22240101,
+    "name": "language_10056681",
+    "eliminateBg": "img_zhinuo_06",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_6.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210701
+  },
+  {
+    "id": 22240102,
+    "name": "language_10056682",
+    "eliminateBg": "img_zhinuo_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210702
+  },
+  {
+    "id": 22240103,
+    "name": "language_10056683",
+    "eliminateBg": "img_zhinuo_08",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/zhinuo_8.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22210703
+  },
+  {
+    "id": 22240201,
+    "name": "language_10056693",
+    "eliminateBg": "img_pinminku_17",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_17.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220801
+  },
+  {
+    "id": 22240202,
+    "name": "language_10056694",
+    "eliminateBg": "img_pinminku_05",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_5.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220802
+  },
+  {
+    "id": 22240203,
+    "name": "language_10056695",
+    "eliminateBg": "img_pinminku_02",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/pinminku_2.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22220803
+  },
+  {
+    "id": 22240301,
+    "name": "language_10053441",
+    "eliminateBg": "img_xiongdihui_11",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_11.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22240301
+  },
+  {
+    "id": 22240302,
+    "name": "language_10056708",
+    "eliminateBg": "img_xiongdihui_16",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_16.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22240302
+  },
+  {
+    "id": 22240303,
+    "name": "language_10053441",
+    "eliminateBg": "img_xiongdihui_11",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_11.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22240303
+  },
+  {
+    "id": 22240401,
+    "name": "language_10056703",
+    "eliminateBg": "img_xiongdihui_12",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_12.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22240401
+  },
+  {
+    "id": 22240402,
+    "name": "language_10056704",
+    "eliminateBg": "img_xiongdihui_18",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_18.png",
+    "enemyCapacity": 1,
+    "friendCapacity": 4,
+    "ruleId": 22240402
+  },
+  {
+    "id": 22240403,
+    "name": "language_10056703",
+    "eliminateBg": "img_xiongdihui_12",
+    "strongholdBg": "singlebg/v2a2_eliminate_soltpic_singlebg/xiongdihui_12.png",
+    "enemyCapacity": 4,
+    "friendCapacity": 4,
+    "ruleId": 22240403
+  }
+]

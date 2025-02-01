@@ -1,0 +1,42 @@
+[
+  {
+    "resName": "m_s56_lyr",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s56_anim_cloud_manual",
+    "param2": "0.03#0.02#1#0.1",
+    "param3": "",
+    "param4": ""
+  },
+  {
+    "resName": "m_s57_hycc",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s57_anim_cloud_manual",
+    "param2": "0.13#0.1#0#0",
+    "param3": "",
+    "param4": ""
+  },
+  {
+    "resName": "m_s143_jjhgc_ground",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s143_anim_cloud_manual",
+    "param2": "1#1#0#0",
+    "param3": "",
+    "param4": ""
+  },
+  {
+    "resName": "m_s167_jjhslgc2",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s167_anim_cloud_manual",
+    "param2": "1#1#0#0",
+    "param3": "",
+    "param4": ""
+  },
+  {
+    "resName": "v1a7_m_s212_wyn_plwt",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s212_anim_cloud_manual",
+    "param2": "1#1#0#0",
+    "param3": "",
+    "param4": ""
+  }
+]

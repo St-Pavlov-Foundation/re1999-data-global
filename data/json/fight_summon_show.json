@@ -1,0 +1,47 @@
+[
+  {
+    "skinId": 620208,
+    "actionName": "born",
+    "effect": "",
+    "effectTime": 0,
+    "effectHangPoint": "",
+    "audioId": 462020791,
+    "ingoreEffect": 0
+  },
+  {
+    "skinId": 620207,
+    "actionName": "born",
+    "effect": "",
+    "effectTime": 0,
+    "effectHangPoint": "",
+    "audioId": 462020791,
+    "ingoreEffect": 0
+  },
+  {
+    "skinId": 690112,
+    "actionName": "born",
+    "effect": "v1a4_csyzjhw/csyzjhw_change1_03",
+    "effectTime": 0,
+    "effectHangPoint": "mountroot",
+    "audioId": 0,
+    "ingoreEffect": 0
+  },
+  {
+    "skinId": 6901121,
+    "actionName": "born",
+    "effect": "",
+    "effectTime": 0,
+    "effectHangPoint": "",
+    "audioId": 0,
+    "ingoreEffect": 0
+  },
+  {
+    "skinId": 610405,
+    "actionName": "idle",
+    "effect": "",
+    "effectTime": 0,
+    "effectHangPoint": "",
+    "audioId": 0,
+    "ingoreEffect": 1
+  }
+]

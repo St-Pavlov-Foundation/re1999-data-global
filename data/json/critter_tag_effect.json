@@ -1,0 +1,714 @@
+[
+  {
+    "id": "baseEfficiency_lv1_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseEfficiency#10000"
+  },
+  {
+    "id": "baseEfficiency_lv2_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseEfficiency#12000"
+  },
+  {
+    "id": "baseEfficiency_lv3_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseEfficiency#13000"
+  },
+  {
+    "id": "baseEfficiency_lv4_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseEfficiency#14000"
+  },
+  {
+    "id": "baseEfficiency_lv5_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseEfficiency#15000"
+  },
+  {
+    "id": "basePatience_lv1_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#10000"
+  },
+  {
+    "id": "basePatience_lv2_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#9000"
+  },
+  {
+    "id": "basePatience_lv3_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#8500"
+  },
+  {
+    "id": "basePatience_lv4_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#8000"
+  },
+  {
+    "id": "basePatience_lv5_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#7500"
+  },
+  {
+    "id": "baseIdea_lv1_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#0"
+  },
+  {
+    "id": "baseIdea_lv2_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#500"
+  },
+  {
+    "id": "baseIdea_lv3_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1000"
+  },
+  {
+    "id": "baseIdea_lv4_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1200"
+  },
+  {
+    "id": "baseIdea_lv5_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1500"
+  },
+  {
+    "id": "titekele",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#2500"
+  },
+  {
+    "id": "abangaku",
+    "target": 1,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "telibodeluo_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1000"
+  },
+  {
+    "id": "telibodeluo_02",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#baseLucky#500"
+  },
+  {
+    "id": "fengbaobaomao_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "critters.size()==1 && buildingType==3",
+    "type": 0,
+    "parameter": "rateEfficiency#5000"
+  },
+  {
+    "id": "fengbaobaomao_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "critters.size()==1 && buildingType==3",
+    "type": 0,
+    "parameter": "basePatience#3000"
+  },
+  {
+    "id": "shengshikabang_01",
+    "target": 1,
+    "catalogue": 0,
+    "condition": "buildingType==4 && target.mood<3000",
+    "type": 0,
+    "parameter": "baseMoodRestore#1000"
+  },
+  {
+    "id": "shengshikabang_02",
+    "target": 1,
+    "catalogue": 0,
+    "condition": "buildingType==4 && target.mood>=3000",
+    "type": 0,
+    "parameter": "baseMoodRestore#500"
+  },
+  {
+    "id": "xianjingdudu_01",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#rateEfficiency#1500"
+  },
+  {
+    "id": "fubingliequan",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingType==1",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "ganjukabang",
+    "target": 1,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseMoodRestore#500"
+  },
+  {
+    "id": "jianfengzuanzi",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#750"
+  },
+  {
+    "id": "kabangkelu",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#1500"
+  },
+  {
+    "id": "maoyu_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22006",
+    "type": 0,
+    "parameter": "rateEfficiency#1500"
+  },
+  {
+    "id": "maoyu_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22006",
+    "type": 0,
+    "parameter": "basePatience#-500"
+  },
+  {
+    "id": "saermati_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#-500"
+  },
+  {
+    "id": "saermati_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "shouhuakabang_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "user.mood>=5000",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "shouhuakabang_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "user.mood<5000",
+    "type": 0,
+    "parameter": "rateEfficiency#-1000"
+  },
+  {
+    "id": "yuexiangzhaochao",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#-500"
+  },
+  {
+    "id": "zhixiangkabang_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "user.mood<100",
+    "type": 0,
+    "parameter": "mood#100"
+  },
+  {
+    "id": "zhixiangkabang_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "user.mood<1000",
+    "type": 0,
+    "parameter": "rateEfficiency#-5000"
+  },
+  {
+    "id": "normal_rest_1",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseMoodRestore#1000"
+  },
+  {
+    "id": "normal_mix_1_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_mix_1_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#2000"
+  },
+  {
+    "id": "normal_mix_2_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_mix_2_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#-1000"
+  },
+  {
+    "id": "normal_mix_3_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1000"
+  },
+  {
+    "id": "normal_mix_3_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#2000"
+  },
+  {
+    "id": "normal_mix_4_01",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#1000"
+  },
+  {
+    "id": "normal_mix_4_02",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#-2000"
+  },
+  {
+    "id": "normal_efficiency_1",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "rateEfficiency#1500"
+  },
+  {
+    "id": "normal_efficiency_2",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingType==1",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_3",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22004",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_4",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22005",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_5",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22006",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_6",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22007",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_7",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22008",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_efficiency_8",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22009",
+    "type": 0,
+    "parameter": "rateEfficiency#2000"
+  },
+  {
+    "id": "normal_patience_1",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "basePatience#-500"
+  },
+  {
+    "id": "normal_patience_2",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingType==1",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_3",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22004",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_4",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22005",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_5",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22006",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_6",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22007",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_7",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22008",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_patience_8",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22009",
+    "type": 0,
+    "parameter": "basePatience#-1000"
+  },
+  {
+    "id": "normal_idea_1",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseLucky#750"
+  },
+  {
+    "id": "normal_idea_2",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingType==1",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_3",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22004",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_4",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22005",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_5",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22006",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_6",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22007",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_7",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22008",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_idea_8",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingId==22009",
+    "type": 0,
+    "parameter": "baseLucky#1250"
+  },
+  {
+    "id": "normal_reproduction_1",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseDomesticationEfficiency#500"
+  },
+  {
+    "id": "normal_reproduction_2",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseDomesticationPatience#500"
+  },
+  {
+    "id": "normal_reproduction_3",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "",
+    "type": 0,
+    "parameter": "baseDomesticationLucky#500"
+  },
+  {
+    "id": "telibodeluo_03",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_04",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_05",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_06",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_07",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_08",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_09",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#baseLucky#500"
+  },
+  {
+    "id": "telibodeluo_10",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#baseLucky#500"
+  },
+  {
+    "id": "xianjingdudu_02",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_03",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131314#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_04",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_05",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_06",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131321#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_07",
+    "target": 2,
+    "catalogue": 131314,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_08",
+    "target": 2,
+    "catalogue": 131321,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#rateEfficiency#1500"
+  },
+  {
+    "id": "xianjingdudu_09",
+    "target": 2,
+    "catalogue": 131315,
+    "condition": "",
+    "type": 2,
+    "parameter": "131315#rateEfficiency#1500"
+  }
+]

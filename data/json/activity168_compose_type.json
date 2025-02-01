@@ -1,0 +1,20 @@
+[
+  {
+    "activityId": 12204,
+    "composeType": 1,
+    "name": "language_10058260",
+    "costItems": "1001#1|1002#1|1003#1"
+  },
+  {
+    "activityId": 12204,
+    "composeType": 2,
+    "name": "language_10058261",
+    "costItems": "1004#1|1005#1|1006#1"
+  },
+  {
+    "activityId": 12204,
+    "composeType": 3,
+    "name": "language_10058262",
+    "costItems": "1007#1|1008#1|1009#1"
+  }
+]

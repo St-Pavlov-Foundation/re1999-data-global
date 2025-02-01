@@ -1,0 +1,302 @@
+[
+  {
+    "critterId": 500001,
+    "animName": "taming",
+    "audioId": "20220139"
+  },
+  {
+    "critterId": 500001,
+    "animName": "taming2",
+    "audioId": "20220140"
+  },
+  {
+    "critterId": 500001,
+    "animName": "taming3",
+    "audioId": "20220141"
+  },
+  {
+    "critterId": 500001,
+    "animName": "eat",
+    "audioId": "20220142"
+  },
+  {
+    "critterId": 500002,
+    "animName": "taming",
+    "audioId": "20220143"
+  },
+  {
+    "critterId": 500002,
+    "animName": "taming2",
+    "audioId": "20220144"
+  },
+  {
+    "critterId": 500002,
+    "animName": "taming3",
+    "audioId": "20220145"
+  },
+  {
+    "critterId": 500002,
+    "animName": "eat",
+    "audioId": "20220146"
+  },
+  {
+    "critterId": 500003,
+    "animName": "taming",
+    "audioId": "20220147"
+  },
+  {
+    "critterId": 500003,
+    "animName": "taming2",
+    "audioId": "20220148"
+  },
+  {
+    "critterId": 500003,
+    "animName": "taming3",
+    "audioId": "20220149"
+  },
+  {
+    "critterId": 500003,
+    "animName": "eat",
+    "audioId": "20220150"
+  },
+  {
+    "critterId": 500004,
+    "animName": "taming",
+    "audioId": "20220151"
+  },
+  {
+    "critterId": 500004,
+    "animName": "taming2",
+    "audioId": "20220151"
+  },
+  {
+    "critterId": 500004,
+    "animName": "taming3",
+    "audioId": "20220151"
+  },
+  {
+    "critterId": 500004,
+    "animName": "eat",
+    "audioId": "20220152"
+  },
+  {
+    "critterId": 500005,
+    "animName": "taming",
+    "audioId": "20220153"
+  },
+  {
+    "critterId": 500005,
+    "animName": "taming2",
+    "audioId": "20220153"
+  },
+  {
+    "critterId": 500005,
+    "animName": "taming3",
+    "audioId": "20220153"
+  },
+  {
+    "critterId": 500005,
+    "animName": "eat",
+    "audioId": "20220154"
+  },
+  {
+    "critterId": 500006,
+    "animName": "taming",
+    "audioId": "20220155"
+  },
+  {
+    "critterId": 500006,
+    "animName": "taming2",
+    "audioId": "20220155"
+  },
+  {
+    "critterId": 500006,
+    "animName": "taming3",
+    "audioId": "20220155"
+  },
+  {
+    "critterId": 500006,
+    "animName": "eat",
+    "audioId": "20220156"
+  },
+  {
+    "critterId": 500007,
+    "animName": "taming",
+    "audioId": "20220176"
+  },
+  {
+    "critterId": 500007,
+    "animName": "taming2",
+    "audioId": "20220176"
+  },
+  {
+    "critterId": 500007,
+    "animName": "taming3",
+    "audioId": "20220176"
+  },
+  {
+    "critterId": 500007,
+    "animName": "eat",
+    "audioId": "20220157"
+  },
+  {
+    "critterId": 500008,
+    "animName": "taming",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500008,
+    "animName": "taming2",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500008,
+    "animName": "taming3",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500008,
+    "animName": "eat",
+    "audioId": "20220159"
+  },
+  {
+    "critterId": 500009,
+    "animName": "taming",
+    "audioId": "20220160"
+  },
+  {
+    "critterId": 500009,
+    "animName": "taming2",
+    "audioId": "20220160"
+  },
+  {
+    "critterId": 500009,
+    "animName": "taming3",
+    "audioId": "20220160"
+  },
+  {
+    "critterId": 500009,
+    "animName": "eat",
+    "audioId": "20220160"
+  },
+  {
+    "critterId": 500010,
+    "animName": "taming",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500010,
+    "animName": "taming2",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500010,
+    "animName": "taming3",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500010,
+    "animName": "eat",
+    "audioId": "20220159"
+  },
+  {
+    "critterId": 500011,
+    "animName": "taming",
+    "audioId": "20220177"
+  },
+  {
+    "critterId": 500011,
+    "animName": "taming2",
+    "audioId": "20220177"
+  },
+  {
+    "critterId": 500011,
+    "animName": "taming3",
+    "audioId": "20220177"
+  },
+  {
+    "critterId": 500011,
+    "animName": "eat",
+    "audioId": "20220161"
+  },
+  {
+    "critterId": 500012,
+    "animName": "taming",
+    "audioId": "20220178"
+  },
+  {
+    "critterId": 500012,
+    "animName": "taming2",
+    "audioId": "20220178"
+  },
+  {
+    "critterId": 500012,
+    "animName": "taming3",
+    "audioId": "20220178"
+  },
+  {
+    "critterId": 500012,
+    "animName": "eat",
+    "audioId": "20220162"
+  },
+  {
+    "critterId": 500013,
+    "animName": "taming",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500013,
+    "animName": "taming2",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500013,
+    "animName": "taming3",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500013,
+    "animName": "eat",
+    "audioId": "20220159"
+  },
+  {
+    "critterId": 500014,
+    "animName": "taming",
+    "audioId": "20220163"
+  },
+  {
+    "critterId": 500014,
+    "animName": "taming2",
+    "audioId": "20220163"
+  },
+  {
+    "critterId": 500014,
+    "animName": "taming3",
+    "audioId": "20220163"
+  },
+  {
+    "critterId": 500014,
+    "animName": "eat",
+    "audioId": "20220164"
+  },
+  {
+    "critterId": 500015,
+    "animName": "taming",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500015,
+    "animName": "taming2",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500015,
+    "animName": "taming3",
+    "audioId": "20220158"
+  },
+  {
+    "critterId": 500015,
+    "animName": "eat",
+    "audioId": "20220159"
+  }
+]

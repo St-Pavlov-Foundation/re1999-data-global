@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "effect": "buff/buff_zhunbeigongji",
+    "audioId": 700001,
+    "once": false
+  },
+  {
+    "id": 2,
+    "effect": "buff/buff_chuchang",
+    "audioId": 700002,
+    "once": false
+  },
+  {
+    "id": 3,
+    "effect": "buff/buff_siwang",
+    "audioId": 700003,
+    "once": false
+  },
+  {
+    "id": 4,
+    "effect": "buff/buff_nuqizengjia",
+    "audioId": 410000022,
+    "once": false
+  }
+]

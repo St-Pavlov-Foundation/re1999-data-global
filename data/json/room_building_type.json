@@ -1,0 +1,34 @@
+[
+  {
+    "type": 0,
+    "icon": ""
+  },
+  {
+    "type": 1,
+    "icon": "buildingtype4"
+  },
+  {
+    "type": 2,
+    "icon": "buildingtype2"
+  },
+  {
+    "type": 3,
+    "icon": "buildingtype3"
+  },
+  {
+    "type": 4,
+    "icon": "buildingtype1"
+  },
+  {
+    "type": 5,
+    "icon": "buildingtype5"
+  },
+  {
+    "type": 6,
+    "icon": ""
+  },
+  {
+    "type": 7,
+    "icon": "buildingtype9"
+  }
+]

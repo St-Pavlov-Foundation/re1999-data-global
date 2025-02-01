@@ -1,0 +1,134 @@
+[
+  {
+    "activityId": 11509,
+    "equipId": 1001,
+    "preEquipId": 0,
+    "cost": "",
+    "level": 1,
+    "buffId": 0,
+    "typeId": 1,
+    "name": "language_10028520",
+    "effectDesc": "language_10028521"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 1002,
+    "preEquipId": 1001,
+    "cost": "10301#1",
+    "level": 2,
+    "buffId": 1011,
+    "typeId": 1,
+    "name": "language_10028520",
+    "effectDesc": "language_10028522"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 1003,
+    "preEquipId": 1002,
+    "cost": "10201#10|10101#10|10102#10",
+    "level": 3,
+    "buffId": 1012,
+    "typeId": 1,
+    "name": "language_10028520",
+    "effectDesc": "language_10028523"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 2001,
+    "preEquipId": 0,
+    "cost": "",
+    "level": 1,
+    "buffId": 0,
+    "typeId": 2,
+    "name": "language_10028524",
+    "effectDesc": "language_10028521"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 2002,
+    "preEquipId": 2001,
+    "cost": "20301#1",
+    "level": 2,
+    "buffId": 2011,
+    "typeId": 2,
+    "name": "language_10028524",
+    "effectDesc": "language_10028525"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 2003,
+    "preEquipId": 2002,
+    "cost": "20201#10|20101#10|20102#10",
+    "level": 3,
+    "buffId": 2012,
+    "typeId": 2,
+    "name": "language_10028524",
+    "effectDesc": "language_10028526"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 3001,
+    "preEquipId": 0,
+    "cost": "",
+    "level": 1,
+    "buffId": 0,
+    "typeId": 3,
+    "name": "language_10028527",
+    "effectDesc": "language_10028521"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 3002,
+    "preEquipId": 3001,
+    "cost": "30301#1",
+    "level": 2,
+    "buffId": 3011,
+    "typeId": 3,
+    "name": "language_10028527",
+    "effectDesc": "language_10028528"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 3003,
+    "preEquipId": 3002,
+    "cost": "30101#10|30102#10|30103#10",
+    "level": 3,
+    "buffId": 3012,
+    "typeId": 3,
+    "name": "language_10028527",
+    "effectDesc": "language_10028529"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 4001,
+    "preEquipId": 0,
+    "cost": "",
+    "level": 1,
+    "buffId": 0,
+    "typeId": 4,
+    "name": "language_10010394",
+    "effectDesc": "language_10028521"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 4002,
+    "preEquipId": 4001,
+    "cost": "40301#1",
+    "level": 2,
+    "buffId": 4011,
+    "typeId": 4,
+    "name": "language_10010394",
+    "effectDesc": "language_10028530"
+  },
+  {
+    "activityId": 11509,
+    "equipId": 4003,
+    "preEquipId": 4002,
+    "cost": "40201#10|40101#10|40102#10",
+    "level": 3,
+    "buffId": 4012,
+    "typeId": 4,
+    "name": "language_10010394",
+    "effectDesc": "language_10028531"
+  }
+]

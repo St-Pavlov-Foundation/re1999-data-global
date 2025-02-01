@@ -1,0 +1,50 @@
+[
+  {
+    "activityId": 11202,
+    "id": 1,
+    "attribute": 1,
+    "attrName": "language_10026436",
+    "attributeNum": "100#1|200#2|300#3|400#4|500#5|600#6|700#7|800#8|900#9|1000#10",
+    "educationAttentionConsts": "-13#2342#-163"
+  },
+  {
+    "activityId": 11202,
+    "id": 2,
+    "attribute": 2,
+    "attrName": "language_10026437",
+    "attributeNum": "100#1|200#2|300#3|400#4|500#5|600#6|700#7|800#8|900#9|1000#10",
+    "educationAttentionConsts": "-13#2342#-163"
+  },
+  {
+    "activityId": 11202,
+    "id": 3,
+    "attribute": 3,
+    "attrName": "language_10026438",
+    "attributeNum": "100#1|200#2|300#3|400#4|500#5|600#6|700#7|800#8|900#9|1000#10",
+    "educationAttentionConsts": "-13#2342#-163"
+  },
+  {
+    "activityId": 11202,
+    "id": 4,
+    "attribute": 4,
+    "attrName": "language_10026439",
+    "attributeNum": "100#1|200#2|300#3|400#4|500#5|600#6|700#7|800#8|900#9|1000#10",
+    "educationAttentionConsts": "-13#2342#-163"
+  },
+  {
+    "activityId": 11202,
+    "id": 5,
+    "attribute": 5,
+    "attrName": "language_10026440",
+    "attributeNum": "100#1|200#2|300#3|400#4|500#5|600#6|700#7|800#8|900#9|1000#10",
+    "educationAttentionConsts": "-39#4959#1846"
+  },
+  {
+    "activityId": 11202,
+    "id": 6,
+    "attribute": 1,
+    "attrName": "language_10026436",
+    "attributeNum": "100#-1|200#-2|300#-3|400#-4|500#-5|600#-6|700#-7|800#-8|900#-9|1000#-10",
+    "educationAttentionConsts": ""
+  }
+]

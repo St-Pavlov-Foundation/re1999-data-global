@@ -1,0 +1,1689 @@
+[
+  {
+    "rare": 1,
+    "level": 1,
+    "exp": 0,
+    "scoreCost": 0,
+    "attributeRate": 150
+  },
+  {
+    "rare": 2,
+    "level": 1,
+    "exp": 0,
+    "scoreCost": 0,
+    "attributeRate": 150
+  },
+  {
+    "rare": 2,
+    "level": 2,
+    "exp": 60,
+    "scoreCost": 1000,
+    "attributeRate": 159
+  },
+  {
+    "rare": 2,
+    "level": 3,
+    "exp": 90,
+    "scoreCost": 1000,
+    "attributeRate": 168
+  },
+  {
+    "rare": 2,
+    "level": 4,
+    "exp": 110,
+    "scoreCost": 1000,
+    "attributeRate": 177
+  },
+  {
+    "rare": 2,
+    "level": 5,
+    "exp": 130,
+    "scoreCost": 1000,
+    "attributeRate": 186
+  },
+  {
+    "rare": 2,
+    "level": 6,
+    "exp": 180,
+    "scoreCost": 875,
+    "attributeRate": 195
+  },
+  {
+    "rare": 2,
+    "level": 7,
+    "exp": 200,
+    "scoreCost": 888,
+    "attributeRate": 204
+  },
+  {
+    "rare": 2,
+    "level": 8,
+    "exp": 220,
+    "scoreCost": 900,
+    "attributeRate": 213
+  },
+  {
+    "rare": 2,
+    "level": 9,
+    "exp": 240,
+    "scoreCost": 909,
+    "attributeRate": 222
+  },
+  {
+    "rare": 2,
+    "level": 10,
+    "exp": 270,
+    "scoreCost": 916,
+    "attributeRate": 230
+  },
+  {
+    "rare": 2,
+    "level": 11,
+    "exp": 360,
+    "scoreCost": 750,
+    "attributeRate": 239
+  },
+  {
+    "rare": 2,
+    "level": 12,
+    "exp": 490,
+    "scoreCost": 590,
+    "attributeRate": 248
+  },
+  {
+    "rare": 2,
+    "level": 13,
+    "exp": 630,
+    "scoreCost": 500,
+    "attributeRate": 257
+  },
+  {
+    "rare": 2,
+    "level": 14,
+    "exp": 760,
+    "scoreCost": 441,
+    "attributeRate": 266
+  },
+  {
+    "rare": 2,
+    "level": 15,
+    "exp": 900,
+    "scoreCost": 400,
+    "attributeRate": 275
+  },
+  {
+    "rare": 2,
+    "level": 16,
+    "exp": 900,
+    "scoreCost": 420,
+    "attributeRate": 284
+  },
+  {
+    "rare": 2,
+    "level": 17,
+    "exp": 960,
+    "scoreCost": 420,
+    "attributeRate": 293
+  },
+  {
+    "rare": 2,
+    "level": 18,
+    "exp": 1010,
+    "scoreCost": 420,
+    "attributeRate": 302
+  },
+  {
+    "rare": 2,
+    "level": 19,
+    "exp": 1070,
+    "scoreCost": 420,
+    "attributeRate": 311
+  },
+  {
+    "rare": 2,
+    "level": 20,
+    "exp": 1120,
+    "scoreCost": 420,
+    "attributeRate": 320
+  },
+  {
+    "rare": 2,
+    "level": 21,
+    "exp": 1210,
+    "scoreCost": 407,
+    "attributeRate": 333
+  },
+  {
+    "rare": 2,
+    "level": 22,
+    "exp": 1260,
+    "scoreCost": 410,
+    "attributeRate": 346
+  },
+  {
+    "rare": 2,
+    "level": 23,
+    "exp": 1300,
+    "scoreCost": 413,
+    "attributeRate": 359
+  },
+  {
+    "rare": 2,
+    "level": 24,
+    "exp": 1350,
+    "scoreCost": 415,
+    "attributeRate": 372
+  },
+  {
+    "rare": 2,
+    "level": 25,
+    "exp": 1400,
+    "scoreCost": 416,
+    "attributeRate": 385
+  },
+  {
+    "rare": 2,
+    "level": 26,
+    "exp": 1450,
+    "scoreCost": 417,
+    "attributeRate": 398
+  },
+  {
+    "rare": 2,
+    "level": 27,
+    "exp": 1500,
+    "scoreCost": 419,
+    "attributeRate": 411
+  },
+  {
+    "rare": 2,
+    "level": 28,
+    "exp": 1550,
+    "scoreCost": 419,
+    "attributeRate": 424
+  },
+  {
+    "rare": 2,
+    "level": 29,
+    "exp": 1610,
+    "scoreCost": 418,
+    "attributeRate": 437
+  },
+  {
+    "rare": 2,
+    "level": 30,
+    "exp": 1660,
+    "scoreCost": 418,
+    "attributeRate": 450
+  },
+  {
+    "rare": 2,
+    "level": 31,
+    "exp": 1930,
+    "scoreCost": 372,
+    "attributeRate": 463
+  },
+  {
+    "rare": 2,
+    "level": 32,
+    "exp": 2000,
+    "scoreCost": 370,
+    "attributeRate": 476
+  },
+  {
+    "rare": 2,
+    "level": 33,
+    "exp": 2070,
+    "scoreCost": 368,
+    "attributeRate": 489
+  },
+  {
+    "rare": 2,
+    "level": 34,
+    "exp": 2140,
+    "scoreCost": 366,
+    "attributeRate": 502
+  },
+  {
+    "rare": 2,
+    "level": 35,
+    "exp": 2210,
+    "scoreCost": 365,
+    "attributeRate": 515
+  },
+  {
+    "rare": 2,
+    "level": 36,
+    "exp": 2290,
+    "scoreCost": 362,
+    "attributeRate": 528
+  },
+  {
+    "rare": 2,
+    "level": 37,
+    "exp": 2370,
+    "scoreCost": 360,
+    "attributeRate": 541
+  },
+  {
+    "rare": 2,
+    "level": 38,
+    "exp": 2440,
+    "scoreCost": 358,
+    "attributeRate": 554
+  },
+  {
+    "rare": 2,
+    "level": 39,
+    "exp": 2520,
+    "scoreCost": 355,
+    "attributeRate": 567
+  },
+  {
+    "rare": 2,
+    "level": 40,
+    "exp": 2610,
+    "scoreCost": 353,
+    "attributeRate": 580
+  },
+  {
+    "rare": 2,
+    "level": 41,
+    "exp": 3440,
+    "scoreCost": 274,
+    "attributeRate": 601
+  },
+  {
+    "rare": 2,
+    "level": 42,
+    "exp": 3560,
+    "scoreCost": 271,
+    "attributeRate": 622
+  },
+  {
+    "rare": 2,
+    "level": 43,
+    "exp": 3690,
+    "scoreCost": 268,
+    "attributeRate": 643
+  },
+  {
+    "rare": 2,
+    "level": 44,
+    "exp": 3810,
+    "scoreCost": 265,
+    "attributeRate": 664
+  },
+  {
+    "rare": 2,
+    "level": 45,
+    "exp": 3940,
+    "scoreCost": 262,
+    "attributeRate": 685
+  },
+  {
+    "rare": 2,
+    "level": 46,
+    "exp": 5020,
+    "scoreCost": 210,
+    "attributeRate": 706
+  },
+  {
+    "rare": 2,
+    "level": 47,
+    "exp": 5190,
+    "scoreCost": 207,
+    "attributeRate": 727
+  },
+  {
+    "rare": 2,
+    "level": 48,
+    "exp": 5370,
+    "scoreCost": 205,
+    "attributeRate": 748
+  },
+  {
+    "rare": 2,
+    "level": 49,
+    "exp": 5550,
+    "scoreCost": 202,
+    "attributeRate": 769
+  },
+  {
+    "rare": 2,
+    "level": 50,
+    "exp": 5730,
+    "scoreCost": 200,
+    "attributeRate": 790
+  },
+  {
+    "rare": 2,
+    "level": 51,
+    "exp": 7090,
+    "scoreCost": 164,
+    "attributeRate": 811
+  },
+  {
+    "rare": 2,
+    "level": 52,
+    "exp": 7320,
+    "scoreCost": 162,
+    "attributeRate": 832
+  },
+  {
+    "rare": 2,
+    "level": 53,
+    "exp": 7560,
+    "scoreCost": 160,
+    "attributeRate": 853
+  },
+  {
+    "rare": 2,
+    "level": 54,
+    "exp": 7810,
+    "scoreCost": 158,
+    "attributeRate": 874
+  },
+  {
+    "rare": 2,
+    "level": 55,
+    "exp": 8050,
+    "scoreCost": 156,
+    "attributeRate": 895
+  },
+  {
+    "rare": 2,
+    "level": 56,
+    "exp": 9720,
+    "scoreCost": 131,
+    "attributeRate": 916
+  },
+  {
+    "rare": 2,
+    "level": 57,
+    "exp": 10020,
+    "scoreCost": 130,
+    "attributeRate": 937
+  },
+  {
+    "rare": 2,
+    "level": 58,
+    "exp": 10340,
+    "scoreCost": 128,
+    "attributeRate": 958
+  },
+  {
+    "rare": 2,
+    "level": 59,
+    "exp": 10650,
+    "scoreCost": 126,
+    "attributeRate": 979
+  },
+  {
+    "rare": 2,
+    "level": 60,
+    "exp": 10980,
+    "scoreCost": 125,
+    "attributeRate": 1000
+  },
+  {
+    "rare": 3,
+    "level": 1,
+    "exp": 0,
+    "scoreCost": 0,
+    "attributeRate": 150
+  },
+  {
+    "rare": 3,
+    "level": 2,
+    "exp": 80,
+    "scoreCost": 1000,
+    "attributeRate": 159
+  },
+  {
+    "rare": 3,
+    "level": 3,
+    "exp": 110,
+    "scoreCost": 1000,
+    "attributeRate": 168
+  },
+  {
+    "rare": 3,
+    "level": 4,
+    "exp": 130,
+    "scoreCost": 1000,
+    "attributeRate": 177
+  },
+  {
+    "rare": 3,
+    "level": 5,
+    "exp": 160,
+    "scoreCost": 1000,
+    "attributeRate": 186
+  },
+  {
+    "rare": 3,
+    "level": 6,
+    "exp": 220,
+    "scoreCost": 875,
+    "attributeRate": 195
+  },
+  {
+    "rare": 3,
+    "level": 7,
+    "exp": 240,
+    "scoreCost": 888,
+    "attributeRate": 204
+  },
+  {
+    "rare": 3,
+    "level": 8,
+    "exp": 270,
+    "scoreCost": 900,
+    "attributeRate": 213
+  },
+  {
+    "rare": 3,
+    "level": 9,
+    "exp": 300,
+    "scoreCost": 909,
+    "attributeRate": 222
+  },
+  {
+    "rare": 3,
+    "level": 10,
+    "exp": 330,
+    "scoreCost": 916,
+    "attributeRate": 230
+  },
+  {
+    "rare": 3,
+    "level": 11,
+    "exp": 440,
+    "scoreCost": 750,
+    "attributeRate": 239
+  },
+  {
+    "rare": 3,
+    "level": 12,
+    "exp": 600,
+    "scoreCost": 590,
+    "attributeRate": 248
+  },
+  {
+    "rare": 3,
+    "level": 13,
+    "exp": 770,
+    "scoreCost": 500,
+    "attributeRate": 257
+  },
+  {
+    "rare": 3,
+    "level": 14,
+    "exp": 930,
+    "scoreCost": 441,
+    "attributeRate": 266
+  },
+  {
+    "rare": 3,
+    "level": 15,
+    "exp": 1100,
+    "scoreCost": 400,
+    "attributeRate": 275
+  },
+  {
+    "rare": 3,
+    "level": 16,
+    "exp": 1110,
+    "scoreCost": 420,
+    "attributeRate": 284
+  },
+  {
+    "rare": 3,
+    "level": 17,
+    "exp": 1170,
+    "scoreCost": 420,
+    "attributeRate": 293
+  },
+  {
+    "rare": 3,
+    "level": 18,
+    "exp": 1240,
+    "scoreCost": 420,
+    "attributeRate": 302
+  },
+  {
+    "rare": 3,
+    "level": 19,
+    "exp": 1300,
+    "scoreCost": 420,
+    "attributeRate": 311
+  },
+  {
+    "rare": 3,
+    "level": 20,
+    "exp": 1370,
+    "scoreCost": 420,
+    "attributeRate": 320
+  },
+  {
+    "rare": 3,
+    "level": 21,
+    "exp": 1480,
+    "scoreCost": 407,
+    "attributeRate": 333
+  },
+  {
+    "rare": 3,
+    "level": 22,
+    "exp": 1540,
+    "scoreCost": 410,
+    "attributeRate": 346
+  },
+  {
+    "rare": 3,
+    "level": 23,
+    "exp": 1590,
+    "scoreCost": 413,
+    "attributeRate": 359
+  },
+  {
+    "rare": 3,
+    "level": 24,
+    "exp": 1650,
+    "scoreCost": 415,
+    "attributeRate": 372
+  },
+  {
+    "rare": 3,
+    "level": 25,
+    "exp": 1710,
+    "scoreCost": 416,
+    "attributeRate": 385
+  },
+  {
+    "rare": 3,
+    "level": 26,
+    "exp": 1770,
+    "scoreCost": 417,
+    "attributeRate": 398
+  },
+  {
+    "rare": 3,
+    "level": 27,
+    "exp": 1830,
+    "scoreCost": 419,
+    "attributeRate": 411
+  },
+  {
+    "rare": 3,
+    "level": 28,
+    "exp": 1900,
+    "scoreCost": 419,
+    "attributeRate": 424
+  },
+  {
+    "rare": 3,
+    "level": 29,
+    "exp": 1960,
+    "scoreCost": 418,
+    "attributeRate": 437
+  },
+  {
+    "rare": 3,
+    "level": 30,
+    "exp": 2030,
+    "scoreCost": 418,
+    "attributeRate": 450
+  },
+  {
+    "rare": 3,
+    "level": 31,
+    "exp": 2360,
+    "scoreCost": 372,
+    "attributeRate": 463
+  },
+  {
+    "rare": 3,
+    "level": 32,
+    "exp": 2440,
+    "scoreCost": 370,
+    "attributeRate": 476
+  },
+  {
+    "rare": 3,
+    "level": 33,
+    "exp": 2530,
+    "scoreCost": 368,
+    "attributeRate": 489
+  },
+  {
+    "rare": 3,
+    "level": 34,
+    "exp": 2620,
+    "scoreCost": 366,
+    "attributeRate": 502
+  },
+  {
+    "rare": 3,
+    "level": 35,
+    "exp": 2710,
+    "scoreCost": 365,
+    "attributeRate": 515
+  },
+  {
+    "rare": 3,
+    "level": 36,
+    "exp": 2800,
+    "scoreCost": 362,
+    "attributeRate": 528
+  },
+  {
+    "rare": 3,
+    "level": 37,
+    "exp": 2890,
+    "scoreCost": 360,
+    "attributeRate": 541
+  },
+  {
+    "rare": 3,
+    "level": 38,
+    "exp": 2990,
+    "scoreCost": 358,
+    "attributeRate": 554
+  },
+  {
+    "rare": 3,
+    "level": 39,
+    "exp": 3090,
+    "scoreCost": 355,
+    "attributeRate": 567
+  },
+  {
+    "rare": 3,
+    "level": 40,
+    "exp": 3190,
+    "scoreCost": 353,
+    "attributeRate": 580
+  },
+  {
+    "rare": 3,
+    "level": 41,
+    "exp": 4210,
+    "scoreCost": 274,
+    "attributeRate": 601
+  },
+  {
+    "rare": 3,
+    "level": 42,
+    "exp": 4360,
+    "scoreCost": 271,
+    "attributeRate": 622
+  },
+  {
+    "rare": 3,
+    "level": 43,
+    "exp": 4510,
+    "scoreCost": 268,
+    "attributeRate": 643
+  },
+  {
+    "rare": 3,
+    "level": 44,
+    "exp": 4660,
+    "scoreCost": 265,
+    "attributeRate": 664
+  },
+  {
+    "rare": 3,
+    "level": 45,
+    "exp": 4810,
+    "scoreCost": 262,
+    "attributeRate": 685
+  },
+  {
+    "rare": 3,
+    "level": 46,
+    "exp": 6130,
+    "scoreCost": 210,
+    "attributeRate": 706
+  },
+  {
+    "rare": 3,
+    "level": 47,
+    "exp": 6350,
+    "scoreCost": 207,
+    "attributeRate": 727
+  },
+  {
+    "rare": 3,
+    "level": 48,
+    "exp": 6560,
+    "scoreCost": 205,
+    "attributeRate": 748
+  },
+  {
+    "rare": 3,
+    "level": 49,
+    "exp": 6780,
+    "scoreCost": 202,
+    "attributeRate": 769
+  },
+  {
+    "rare": 3,
+    "level": 50,
+    "exp": 7010,
+    "scoreCost": 200,
+    "attributeRate": 790
+  },
+  {
+    "rare": 3,
+    "level": 51,
+    "exp": 8660,
+    "scoreCost": 164,
+    "attributeRate": 811
+  },
+  {
+    "rare": 3,
+    "level": 52,
+    "exp": 8950,
+    "scoreCost": 162,
+    "attributeRate": 832
+  },
+  {
+    "rare": 3,
+    "level": 53,
+    "exp": 9250,
+    "scoreCost": 160,
+    "attributeRate": 853
+  },
+  {
+    "rare": 3,
+    "level": 54,
+    "exp": 9540,
+    "scoreCost": 158,
+    "attributeRate": 874
+  },
+  {
+    "rare": 3,
+    "level": 55,
+    "exp": 9850,
+    "scoreCost": 156,
+    "attributeRate": 895
+  },
+  {
+    "rare": 3,
+    "level": 56,
+    "exp": 11880,
+    "scoreCost": 131,
+    "attributeRate": 916
+  },
+  {
+    "rare": 3,
+    "level": 57,
+    "exp": 12250,
+    "scoreCost": 130,
+    "attributeRate": 937
+  },
+  {
+    "rare": 3,
+    "level": 58,
+    "exp": 12630,
+    "scoreCost": 128,
+    "attributeRate": 958
+  },
+  {
+    "rare": 3,
+    "level": 59,
+    "exp": 13020,
+    "scoreCost": 126,
+    "attributeRate": 979
+  },
+  {
+    "rare": 3,
+    "level": 60,
+    "exp": 13420,
+    "scoreCost": 125,
+    "attributeRate": 1000
+  },
+  {
+    "rare": 4,
+    "level": 1,
+    "exp": 0,
+    "scoreCost": 0,
+    "attributeRate": 150
+  },
+  {
+    "rare": 4,
+    "level": 2,
+    "exp": 110,
+    "scoreCost": 1000,
+    "attributeRate": 159
+  },
+  {
+    "rare": 4,
+    "level": 3,
+    "exp": 150,
+    "scoreCost": 1000,
+    "attributeRate": 168
+  },
+  {
+    "rare": 4,
+    "level": 4,
+    "exp": 180,
+    "scoreCost": 1000,
+    "attributeRate": 177
+  },
+  {
+    "rare": 4,
+    "level": 5,
+    "exp": 220,
+    "scoreCost": 1000,
+    "attributeRate": 186
+  },
+  {
+    "rare": 4,
+    "level": 6,
+    "exp": 300,
+    "scoreCost": 875,
+    "attributeRate": 195
+  },
+  {
+    "rare": 4,
+    "level": 7,
+    "exp": 330,
+    "scoreCost": 888,
+    "attributeRate": 204
+  },
+  {
+    "rare": 4,
+    "level": 8,
+    "exp": 370,
+    "scoreCost": 900,
+    "attributeRate": 213
+  },
+  {
+    "rare": 4,
+    "level": 9,
+    "exp": 410,
+    "scoreCost": 909,
+    "attributeRate": 222
+  },
+  {
+    "rare": 4,
+    "level": 10,
+    "exp": 450,
+    "scoreCost": 916,
+    "attributeRate": 230
+  },
+  {
+    "rare": 4,
+    "level": 11,
+    "exp": 600,
+    "scoreCost": 750,
+    "attributeRate": 239
+  },
+  {
+    "rare": 4,
+    "level": 12,
+    "exp": 820,
+    "scoreCost": 590,
+    "attributeRate": 248
+  },
+  {
+    "rare": 4,
+    "level": 13,
+    "exp": 1050,
+    "scoreCost": 500,
+    "attributeRate": 257
+  },
+  {
+    "rare": 4,
+    "level": 14,
+    "exp": 1270,
+    "scoreCost": 441,
+    "attributeRate": 266
+  },
+  {
+    "rare": 4,
+    "level": 15,
+    "exp": 1500,
+    "scoreCost": 400,
+    "attributeRate": 275
+  },
+  {
+    "rare": 4,
+    "level": 16,
+    "exp": 1510,
+    "scoreCost": 420,
+    "attributeRate": 284
+  },
+  {
+    "rare": 4,
+    "level": 17,
+    "exp": 1600,
+    "scoreCost": 420,
+    "attributeRate": 293
+  },
+  {
+    "rare": 4,
+    "level": 18,
+    "exp": 1690,
+    "scoreCost": 420,
+    "attributeRate": 302
+  },
+  {
+    "rare": 4,
+    "level": 19,
+    "exp": 1780,
+    "scoreCost": 420,
+    "attributeRate": 311
+  },
+  {
+    "rare": 4,
+    "level": 20,
+    "exp": 1870,
+    "scoreCost": 420,
+    "attributeRate": 320
+  },
+  {
+    "rare": 4,
+    "level": 21,
+    "exp": 2020,
+    "scoreCost": 407,
+    "attributeRate": 333
+  },
+  {
+    "rare": 4,
+    "level": 22,
+    "exp": 2100,
+    "scoreCost": 410,
+    "attributeRate": 346
+  },
+  {
+    "rare": 4,
+    "level": 23,
+    "exp": 2170,
+    "scoreCost": 413,
+    "attributeRate": 359
+  },
+  {
+    "rare": 4,
+    "level": 24,
+    "exp": 2250,
+    "scoreCost": 415,
+    "attributeRate": 372
+  },
+  {
+    "rare": 4,
+    "level": 25,
+    "exp": 2340,
+    "scoreCost": 416,
+    "attributeRate": 385
+  },
+  {
+    "rare": 4,
+    "level": 26,
+    "exp": 2420,
+    "scoreCost": 417,
+    "attributeRate": 398
+  },
+  {
+    "rare": 4,
+    "level": 27,
+    "exp": 2500,
+    "scoreCost": 419,
+    "attributeRate": 411
+  },
+  {
+    "rare": 4,
+    "level": 28,
+    "exp": 2590,
+    "scoreCost": 419,
+    "attributeRate": 424
+  },
+  {
+    "rare": 4,
+    "level": 29,
+    "exp": 2680,
+    "scoreCost": 418,
+    "attributeRate": 437
+  },
+  {
+    "rare": 4,
+    "level": 30,
+    "exp": 2770,
+    "scoreCost": 418,
+    "attributeRate": 450
+  },
+  {
+    "rare": 4,
+    "level": 31,
+    "exp": 3220,
+    "scoreCost": 372,
+    "attributeRate": 463
+  },
+  {
+    "rare": 4,
+    "level": 32,
+    "exp": 3330,
+    "scoreCost": 370,
+    "attributeRate": 476
+  },
+  {
+    "rare": 4,
+    "level": 33,
+    "exp": 3450,
+    "scoreCost": 368,
+    "attributeRate": 489
+  },
+  {
+    "rare": 4,
+    "level": 34,
+    "exp": 3570,
+    "scoreCost": 366,
+    "attributeRate": 502
+  },
+  {
+    "rare": 4,
+    "level": 35,
+    "exp": 3690,
+    "scoreCost": 365,
+    "attributeRate": 515
+  },
+  {
+    "rare": 4,
+    "level": 36,
+    "exp": 3820,
+    "scoreCost": 362,
+    "attributeRate": 528
+  },
+  {
+    "rare": 4,
+    "level": 37,
+    "exp": 3950,
+    "scoreCost": 360,
+    "attributeRate": 541
+  },
+  {
+    "rare": 4,
+    "level": 38,
+    "exp": 4080,
+    "scoreCost": 358,
+    "attributeRate": 554
+  },
+  {
+    "rare": 4,
+    "level": 39,
+    "exp": 4210,
+    "scoreCost": 355,
+    "attributeRate": 567
+  },
+  {
+    "rare": 4,
+    "level": 40,
+    "exp": 4350,
+    "scoreCost": 353,
+    "attributeRate": 580
+  },
+  {
+    "rare": 4,
+    "level": 41,
+    "exp": 5740,
+    "scoreCost": 274,
+    "attributeRate": 601
+  },
+  {
+    "rare": 4,
+    "level": 42,
+    "exp": 5940,
+    "scoreCost": 271,
+    "attributeRate": 622
+  },
+  {
+    "rare": 4,
+    "level": 43,
+    "exp": 6150,
+    "scoreCost": 268,
+    "attributeRate": 643
+  },
+  {
+    "rare": 4,
+    "level": 44,
+    "exp": 6360,
+    "scoreCost": 265,
+    "attributeRate": 664
+  },
+  {
+    "rare": 4,
+    "level": 45,
+    "exp": 6570,
+    "scoreCost": 262,
+    "attributeRate": 685
+  },
+  {
+    "rare": 4,
+    "level": 46,
+    "exp": 8370,
+    "scoreCost": 210,
+    "attributeRate": 706
+  },
+  {
+    "rare": 4,
+    "level": 47,
+    "exp": 8660,
+    "scoreCost": 207,
+    "attributeRate": 727
+  },
+  {
+    "rare": 4,
+    "level": 48,
+    "exp": 8950,
+    "scoreCost": 205,
+    "attributeRate": 748
+  },
+  {
+    "rare": 4,
+    "level": 49,
+    "exp": 9250,
+    "scoreCost": 202,
+    "attributeRate": 769
+  },
+  {
+    "rare": 4,
+    "level": 50,
+    "exp": 9560,
+    "scoreCost": 200,
+    "attributeRate": 790
+  },
+  {
+    "rare": 4,
+    "level": 51,
+    "exp": 11820,
+    "scoreCost": 164,
+    "attributeRate": 811
+  },
+  {
+    "rare": 4,
+    "level": 52,
+    "exp": 12210,
+    "scoreCost": 162,
+    "attributeRate": 832
+  },
+  {
+    "rare": 4,
+    "level": 53,
+    "exp": 12610,
+    "scoreCost": 160,
+    "attributeRate": 853
+  },
+  {
+    "rare": 4,
+    "level": 54,
+    "exp": 13020,
+    "scoreCost": 158,
+    "attributeRate": 874
+  },
+  {
+    "rare": 4,
+    "level": 55,
+    "exp": 13430,
+    "scoreCost": 156,
+    "attributeRate": 895
+  },
+  {
+    "rare": 4,
+    "level": 56,
+    "exp": 16200,
+    "scoreCost": 131,
+    "attributeRate": 916
+  },
+  {
+    "rare": 4,
+    "level": 57,
+    "exp": 16710,
+    "scoreCost": 130,
+    "attributeRate": 937
+  },
+  {
+    "rare": 4,
+    "level": 58,
+    "exp": 17230,
+    "scoreCost": 128,
+    "attributeRate": 958
+  },
+  {
+    "rare": 4,
+    "level": 59,
+    "exp": 17760,
+    "scoreCost": 126,
+    "attributeRate": 979
+  },
+  {
+    "rare": 4,
+    "level": 60,
+    "exp": 18300,
+    "scoreCost": 125,
+    "attributeRate": 1000
+  },
+  {
+    "rare": 5,
+    "level": 1,
+    "exp": 0,
+    "scoreCost": 0,
+    "attributeRate": 150
+  },
+  {
+    "rare": 5,
+    "level": 2,
+    "exp": 150,
+    "scoreCost": 1000,
+    "attributeRate": 159
+  },
+  {
+    "rare": 5,
+    "level": 3,
+    "exp": 200,
+    "scoreCost": 1000,
+    "attributeRate": 168
+  },
+  {
+    "rare": 5,
+    "level": 4,
+    "exp": 250,
+    "scoreCost": 1000,
+    "attributeRate": 177
+  },
+  {
+    "rare": 5,
+    "level": 5,
+    "exp": 300,
+    "scoreCost": 1000,
+    "attributeRate": 186
+  },
+  {
+    "rare": 5,
+    "level": 6,
+    "exp": 400,
+    "scoreCost": 875,
+    "attributeRate": 195
+  },
+  {
+    "rare": 5,
+    "level": 7,
+    "exp": 450,
+    "scoreCost": 888,
+    "attributeRate": 204
+  },
+  {
+    "rare": 5,
+    "level": 8,
+    "exp": 500,
+    "scoreCost": 900,
+    "attributeRate": 213
+  },
+  {
+    "rare": 5,
+    "level": 9,
+    "exp": 550,
+    "scoreCost": 909,
+    "attributeRate": 222
+  },
+  {
+    "rare": 5,
+    "level": 10,
+    "exp": 600,
+    "scoreCost": 916,
+    "attributeRate": 230
+  },
+  {
+    "rare": 5,
+    "level": 11,
+    "exp": 800,
+    "scoreCost": 750,
+    "attributeRate": 239
+  },
+  {
+    "rare": 5,
+    "level": 12,
+    "exp": 1100,
+    "scoreCost": 590,
+    "attributeRate": 248
+  },
+  {
+    "rare": 5,
+    "level": 13,
+    "exp": 1400,
+    "scoreCost": 500,
+    "attributeRate": 257
+  },
+  {
+    "rare": 5,
+    "level": 14,
+    "exp": 1700,
+    "scoreCost": 441,
+    "attributeRate": 266
+  },
+  {
+    "rare": 5,
+    "level": 15,
+    "exp": 2000,
+    "scoreCost": 400,
+    "attributeRate": 275
+  },
+  {
+    "rare": 5,
+    "level": 16,
+    "exp": 2020,
+    "scoreCost": 420,
+    "attributeRate": 284
+  },
+  {
+    "rare": 5,
+    "level": 17,
+    "exp": 2140,
+    "scoreCost": 420,
+    "attributeRate": 293
+  },
+  {
+    "rare": 5,
+    "level": 18,
+    "exp": 2260,
+    "scoreCost": 420,
+    "attributeRate": 302
+  },
+  {
+    "rare": 5,
+    "level": 19,
+    "exp": 2380,
+    "scoreCost": 420,
+    "attributeRate": 311
+  },
+  {
+    "rare": 5,
+    "level": 20,
+    "exp": 2500,
+    "scoreCost": 420,
+    "attributeRate": 320
+  },
+  {
+    "rare": 5,
+    "level": 21,
+    "exp": 2700,
+    "scoreCost": 407,
+    "attributeRate": 333
+  },
+  {
+    "rare": 5,
+    "level": 22,
+    "exp": 2800,
+    "scoreCost": 410,
+    "attributeRate": 346
+  },
+  {
+    "rare": 5,
+    "level": 23,
+    "exp": 2900,
+    "scoreCost": 413,
+    "attributeRate": 359
+  },
+  {
+    "rare": 5,
+    "level": 24,
+    "exp": 3010,
+    "scoreCost": 415,
+    "attributeRate": 372
+  },
+  {
+    "rare": 5,
+    "level": 25,
+    "exp": 3120,
+    "scoreCost": 416,
+    "attributeRate": 385
+  },
+  {
+    "rare": 5,
+    "level": 26,
+    "exp": 3230,
+    "scoreCost": 417,
+    "attributeRate": 398
+  },
+  {
+    "rare": 5,
+    "level": 27,
+    "exp": 3340,
+    "scoreCost": 419,
+    "attributeRate": 411
+  },
+  {
+    "rare": 5,
+    "level": 28,
+    "exp": 3460,
+    "scoreCost": 419,
+    "attributeRate": 424
+  },
+  {
+    "rare": 5,
+    "level": 29,
+    "exp": 3580,
+    "scoreCost": 418,
+    "attributeRate": 437
+  },
+  {
+    "rare": 5,
+    "level": 30,
+    "exp": 3700,
+    "scoreCost": 418,
+    "attributeRate": 450
+  },
+  {
+    "rare": 5,
+    "level": 31,
+    "exp": 4300,
+    "scoreCost": 372,
+    "attributeRate": 463
+  },
+  {
+    "rare": 5,
+    "level": 32,
+    "exp": 4450,
+    "scoreCost": 370,
+    "attributeRate": 476
+  },
+  {
+    "rare": 5,
+    "level": 33,
+    "exp": 4610,
+    "scoreCost": 368,
+    "attributeRate": 489
+  },
+  {
+    "rare": 5,
+    "level": 34,
+    "exp": 4770,
+    "scoreCost": 366,
+    "attributeRate": 502
+  },
+  {
+    "rare": 5,
+    "level": 35,
+    "exp": 4930,
+    "scoreCost": 365,
+    "attributeRate": 515
+  },
+  {
+    "rare": 5,
+    "level": 36,
+    "exp": 5100,
+    "scoreCost": 362,
+    "attributeRate": 528
+  },
+  {
+    "rare": 5,
+    "level": 37,
+    "exp": 5270,
+    "scoreCost": 360,
+    "attributeRate": 541
+  },
+  {
+    "rare": 5,
+    "level": 38,
+    "exp": 5440,
+    "scoreCost": 358,
+    "attributeRate": 554
+  },
+  {
+    "rare": 5,
+    "level": 39,
+    "exp": 5620,
+    "scoreCost": 355,
+    "attributeRate": 567
+  },
+  {
+    "rare": 5,
+    "level": 40,
+    "exp": 5800,
+    "scoreCost": 353,
+    "attributeRate": 580
+  },
+  {
+    "rare": 5,
+    "level": 41,
+    "exp": 7660,
+    "scoreCost": 274,
+    "attributeRate": 601
+  },
+  {
+    "rare": 5,
+    "level": 42,
+    "exp": 7930,
+    "scoreCost": 271,
+    "attributeRate": 622
+  },
+  {
+    "rare": 5,
+    "level": 43,
+    "exp": 8200,
+    "scoreCost": 268,
+    "attributeRate": 643
+  },
+  {
+    "rare": 5,
+    "level": 44,
+    "exp": 8480,
+    "scoreCost": 265,
+    "attributeRate": 664
+  },
+  {
+    "rare": 5,
+    "level": 45,
+    "exp": 8760,
+    "scoreCost": 262,
+    "attributeRate": 685
+  },
+  {
+    "rare": 5,
+    "level": 46,
+    "exp": 11160,
+    "scoreCost": 210,
+    "attributeRate": 706
+  },
+  {
+    "rare": 5,
+    "level": 47,
+    "exp": 11550,
+    "scoreCost": 207,
+    "attributeRate": 727
+  },
+  {
+    "rare": 5,
+    "level": 48,
+    "exp": 11940,
+    "scoreCost": 205,
+    "attributeRate": 748
+  },
+  {
+    "rare": 5,
+    "level": 49,
+    "exp": 12340,
+    "scoreCost": 202,
+    "attributeRate": 769
+  },
+  {
+    "rare": 5,
+    "level": 50,
+    "exp": 12750,
+    "scoreCost": 200,
+    "attributeRate": 790
+  },
+  {
+    "rare": 5,
+    "level": 51,
+    "exp": 15760,
+    "scoreCost": 164,
+    "attributeRate": 811
+  },
+  {
+    "rare": 5,
+    "level": 52,
+    "exp": 16280,
+    "scoreCost": 162,
+    "attributeRate": 832
+  },
+  {
+    "rare": 5,
+    "level": 53,
+    "exp": 16820,
+    "scoreCost": 160,
+    "attributeRate": 853
+  },
+  {
+    "rare": 5,
+    "level": 54,
+    "exp": 17360,
+    "scoreCost": 158,
+    "attributeRate": 874
+  },
+  {
+    "rare": 5,
+    "level": 55,
+    "exp": 17910,
+    "scoreCost": 156,
+    "attributeRate": 895
+  },
+  {
+    "rare": 5,
+    "level": 56,
+    "exp": 21600,
+    "scoreCost": 131,
+    "attributeRate": 916
+  },
+  {
+    "rare": 5,
+    "level": 57,
+    "exp": 22280,
+    "scoreCost": 130,
+    "attributeRate": 937
+  },
+  {
+    "rare": 5,
+    "level": 58,
+    "exp": 22980,
+    "scoreCost": 128,
+    "attributeRate": 958
+  },
+  {
+    "rare": 5,
+    "level": 59,
+    "exp": 23680,
+    "scoreCost": 126,
+    "attributeRate": 979
+  },
+  {
+    "rare": 5,
+    "level": 60,
+    "exp": 24400,
+    "scoreCost": 125,
+    "attributeRate": 1000
+  }
+]

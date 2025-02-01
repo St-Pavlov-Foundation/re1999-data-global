@@ -1,0 +1,20 @@
+[
+  {
+    "activityId": 11304,
+    "characterType": 1,
+    "moveObstacle": 1,
+    "destroyObstacle": 1,
+    "trapDecrHp": 1,
+    "fireDecrHp": 1,
+    "pushOverObstacle": 1
+  },
+  {
+    "activityId": 11304,
+    "characterType": 18,
+    "moveObstacle": 0,
+    "destroyObstacle": 1,
+    "trapDecrHp": 0,
+    "fireDecrHp": 1,
+    "pushOverObstacle": 0
+  }
+]

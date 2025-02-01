@@ -1,0 +1,98 @@
+[
+  {
+    "name": "LeftControl",
+    "replacedName": "LCtrl"
+  },
+  {
+    "name": "RightControl",
+    "replacedName": "RCtrl"
+  },
+  {
+    "name": "Alpha1",
+    "replacedName": "1"
+  },
+  {
+    "name": "Alpha2",
+    "replacedName": "2"
+  },
+  {
+    "name": "Alpha3",
+    "replacedName": "3"
+  },
+  {
+    "name": "Alpha4",
+    "replacedName": "4"
+  },
+  {
+    "name": "Alpha5",
+    "replacedName": "5"
+  },
+  {
+    "name": "Alpha6",
+    "replacedName": "6"
+  },
+  {
+    "name": "Alpha7",
+    "replacedName": "7"
+  },
+  {
+    "name": "Alpha8",
+    "replacedName": "8"
+  },
+  {
+    "name": "Alpha9",
+    "replacedName": "9"
+  },
+  {
+    "name": "Alpha0",
+    "replacedName": "0"
+  },
+  {
+    "name": "BackQuote",
+    "replacedName": "~"
+  },
+  {
+    "name": "Return",
+    "replacedName": "Enter"
+  },
+  {
+    "name": "Keypad1",
+    "replacedName": "Pad1"
+  },
+  {
+    "name": "Keypad2",
+    "replacedName": "Pad2"
+  },
+  {
+    "name": "Keypad3",
+    "replacedName": "Pad3"
+  },
+  {
+    "name": "Keypad4",
+    "replacedName": "Pad4"
+  },
+  {
+    "name": "Keypad5",
+    "replacedName": "Pad5"
+  },
+  {
+    "name": "Keypad6",
+    "replacedName": "Pad6"
+  },
+  {
+    "name": "Keypad7",
+    "replacedName": "Pad7"
+  },
+  {
+    "name": "Keypad8",
+    "replacedName": "Pad8"
+  },
+  {
+    "name": "Keypad9",
+    "replacedName": "Pad9"
+  },
+  {
+    "name": "Keypad0",
+    "replacedName": "Pad10"
+  }
+]

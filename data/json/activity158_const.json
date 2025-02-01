@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "activityId": 11905,
+    "value": "1|2#1902#1"
+  },
+  {
+    "id": 2,
+    "activityId": 11905,
+    "value": "2#1902#500"
+  },
+  {
+    "id": 3,
+    "activityId": 11905,
+    "value": "400"
+  },
+  {
+    "id": 4,
+    "activityId": 11905,
+    "value": "1500"
+  },
+  {
+    "id": 5,
+    "activityId": 11905,
+    "value": "3"
+  }
+]

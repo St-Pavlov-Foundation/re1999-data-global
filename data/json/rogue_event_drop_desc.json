@@ -1,0 +1,74 @@
+[
+  {
+    "type": 1,
+    "id": 1,
+    "title": "language_10000896",
+    "desc": "language_10000897",
+    "icon": "100603",
+    "iconbg": "v1a6_cachot_reward_bg1"
+  },
+  {
+    "type": 1,
+    "id": 2,
+    "title": "language_10000898",
+    "desc": "language_10000899",
+    "icon": "100604",
+    "iconbg": "v1a6_cachot_reward_bg1"
+  },
+  {
+    "type": 2,
+    "id": 1,
+    "title": "language_10000900",
+    "desc": "language_10000901",
+    "icon": "v1a6_cachot_reward_icon4",
+    "iconbg": "v1a6_cachot_reward_bg4"
+  },
+  {
+    "type": 2,
+    "id": 2,
+    "title": "language_10000900",
+    "desc": "language_10000902",
+    "icon": "v1a6_cachot_reward_icon4",
+    "iconbg": "v1a6_cachot_reward_bg4"
+  },
+  {
+    "type": 2,
+    "id": 3,
+    "title": "language_10000900",
+    "desc": "language_10000903",
+    "icon": "v1a6_cachot_reward_icon4",
+    "iconbg": "v1a6_cachot_reward_bg4"
+  },
+  {
+    "type": 3,
+    "id": 1,
+    "title": "language_10000904",
+    "desc": "language_10000905",
+    "icon": "v1a6_cachot_reward_icon3",
+    "iconbg": "v1a6_cachot_reward_bg4"
+  },
+  {
+    "type": 4,
+    "id": 1,
+    "title": "language_10000906",
+    "desc": "language_10000907",
+    "icon": "v1a6_cachot_reward_icon1",
+    "iconbg": "v1a6_cachot_reward_bg2"
+  },
+  {
+    "type": 5,
+    "id": 1,
+    "title": "language_10000908",
+    "desc": "",
+    "icon": "",
+    "iconbg": "v1a6_cachot_reward_bg1"
+  },
+  {
+    "type": 6,
+    "id": 1,
+    "title": "language_10000909",
+    "desc": "language_10000910",
+    "icon": "v1a6_cachot_reward_icon2",
+    "iconbg": "v1a6_cachot_reward_bg3"
+  }
+]

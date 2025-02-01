@@ -1,0 +1,58 @@
+[
+  {
+    "id": 150001,
+    "type": 3,
+    "name": "language_10019425",
+    "desc": "language_10019426",
+    "desc2": "language_10019427",
+    "icon": "icon_yanbei",
+    "audioId": 25004116,
+    "isStackable": false,
+    "isClientStackable": false,
+    "effect": "1#209",
+    "interactEffect": "1",
+    "isReserve": false
+  },
+  {
+    "id": 150002,
+    "type": 2,
+    "name": "language_10019428",
+    "desc": "language_10019429",
+    "desc2": "language_10019430",
+    "icon": "icon_mofa",
+    "audioId": 0,
+    "isStackable": false,
+    "isClientStackable": false,
+    "effect": "2",
+    "interactEffect": "",
+    "isReserve": false
+  },
+  {
+    "id": 150003,
+    "type": 1,
+    "name": "language_10019431",
+    "desc": "language_10019432",
+    "desc2": "language_10019433",
+    "icon": "icon_guangyuan",
+    "audioId": 25004116,
+    "isStackable": false,
+    "isClientStackable": false,
+    "effect": "3#216",
+    "interactEffect": "1",
+    "isReserve": true
+  },
+  {
+    "id": 150004,
+    "type": 1,
+    "name": "language_10019434",
+    "desc": "language_10019435",
+    "desc2": "language_10019436",
+    "icon": "icon_lengjinglingjian",
+    "audioId": 0,
+    "isStackable": false,
+    "isClientStackable": false,
+    "effect": "4",
+    "interactEffect": "",
+    "isReserve": false
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "heroResName": "307301_kerandian",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_shengqi2",
+    "node": "Drawables/bone3/effect-Bone/roleeffect_shengqi_glow"
+  },
+  {
+    "heroResName": "308601_luxi",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_tongku|e_chijing|e_chijing1",
+    "node": "Drawables/bone/effect-Bone/roleeffect_lx_tongku|Drawables/bone/effect-Bone/roleeffect_lx_chijing|Drawables/bone1/effect-Bone/roleeffect_lx_chijing1#Drawables/bone3/effect-Bone/roleeffect_lx_chijing1"
+  },
+  {
+    "heroResName": "308602_luxi",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_tongku|e_chijing|e_chijing1",
+    "node": "Drawables/bone/effect-Bone/roleeffect_lx_tongku|Drawables/bone/effect-Bone/roleeffect_lx_chijing|Drawables/bone1/effect-Bone/roleeffect_lx_chijing1#Drawables/bone3/effect-Bone/roleeffect_lx_chijing1"
+  },
+  {
+    "heroResName": "309701_aegs",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_shenmishu",
+    "node": "Drawables/bone/effect-Bone/roleeffect_aegs_sms"
+  },
+  {
+    "heroResName": "309702_aegs",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_shenmishu",
+    "node": "Drawables/bone/effect-Bone/roleeffect_aegs_sms"
+  },
+  {
+    "heroResName": "310101_blm",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
+    "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
+  },
+  {
+    "heroResName": "310101_blm_p",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
+    "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
+  },
+  {
+    "heroResName": "310102_blm_p",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
+    "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
+  }
+]

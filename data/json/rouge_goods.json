@@ -1,0 +1,2722 @@
+[
+  {
+    "id": 11112101,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 480,
+    "weights": 100,
+    "creator": 8310022
+  },
+  {
+    "id": 11112102,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8310108
+  },
+  {
+    "id": 11112003,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 510,
+    "weights": 100,
+    "creator": 8310114
+  },
+  {
+    "id": 11112004,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 412,
+    "weights": 100,
+    "creator": 8310212
+  },
+  {
+    "id": 11112005,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 516,
+    "weights": 100,
+    "creator": 8310407
+  },
+  {
+    "id": 11112006,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 500,
+    "weights": 100,
+    "creator": 8310510
+  },
+  {
+    "id": 11112007,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8310608
+  },
+  {
+    "id": 11112008,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 480,
+    "weights": 100,
+    "creator": 8310609
+  },
+  {
+    "id": 11112009,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 540,
+    "weights": 100,
+    "creator": 8310706
+  },
+  {
+    "id": 11112010,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 600,
+    "weights": 100,
+    "creator": 8310810
+  },
+  {
+    "id": 11112011,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8310815
+  },
+  {
+    "id": 11112012,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 284,
+    "weights": 100,
+    "creator": 8320046
+  },
+  {
+    "id": 11112013,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8320049
+  },
+  {
+    "id": 11112014,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 448,
+    "weights": 100,
+    "creator": 8320109
+  },
+  {
+    "id": 11112015,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8320207
+  },
+  {
+    "id": 11112016,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8320210
+  },
+  {
+    "id": 11112017,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 360,
+    "weights": 100,
+    "creator": 8320310
+  },
+  {
+    "id": 11112018,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 308,
+    "weights": 100,
+    "creator": 8320408
+  },
+  {
+    "id": 11112019,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 194,
+    "weights": 100,
+    "creator": 8320506
+  },
+  {
+    "id": 11112020,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8320511
+  },
+  {
+    "id": 11112021,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 250,
+    "weights": 100,
+    "creator": 8320514
+  },
+  {
+    "id": 11112022,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 320,
+    "weights": 100,
+    "creator": 8320617
+  },
+  {
+    "id": 11112023,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8320618
+  },
+  {
+    "id": 11112024,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 435,
+    "weights": 100,
+    "creator": 8320709
+  },
+  {
+    "id": 11112025,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8320809
+  },
+  {
+    "id": 11112026,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8320812
+  },
+  {
+    "id": 11112027,
+    "goodsGroup": 111121,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8350043
+  },
+  {
+    "id": 11112201,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8320811
+  },
+  {
+    "id": 11112202,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8330001
+  },
+  {
+    "id": 11112203,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8330002
+  },
+  {
+    "id": 11112204,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 392,
+    "weights": 100,
+    "creator": 8330005
+  },
+  {
+    "id": 11112205,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 308,
+    "weights": 100,
+    "creator": 8330020
+  },
+  {
+    "id": 11112206,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8330023
+  },
+  {
+    "id": 11112207,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8330026
+  },
+  {
+    "id": 11112208,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 252,
+    "weights": 100,
+    "creator": 8330111
+  },
+  {
+    "id": 11112209,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 149,
+    "weights": 100,
+    "creator": 8330112
+  },
+  {
+    "id": 11112210,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 103,
+    "weights": 100,
+    "creator": 8330211
+  },
+  {
+    "id": 11112211,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 344,
+    "weights": 100,
+    "creator": 8330218
+  },
+  {
+    "id": 11112213,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 162,
+    "weights": 100,
+    "creator": 8330412
+  },
+  {
+    "id": 11112214,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 224,
+    "weights": 100,
+    "creator": 8330413
+  },
+  {
+    "id": 11112215,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 322,
+    "weights": 100,
+    "creator": 8330417
+  },
+  {
+    "id": 11112216,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 504,
+    "weights": 100,
+    "creator": 8330418
+  },
+  {
+    "id": 11112217,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8330513
+  },
+  {
+    "id": 11112218,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 392,
+    "weights": 100,
+    "creator": 8330607
+  },
+  {
+    "id": 11112219,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 336,
+    "weights": 100,
+    "creator": 8330708
+  },
+  {
+    "id": 11112220,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 168,
+    "weights": 100,
+    "creator": 8330715
+  },
+  {
+    "id": 11112221,
+    "goodsGroup": 111122,
+    "currency": 1,
+    "price": 112,
+    "weights": 100,
+    "creator": 8330816
+  },
+  {
+    "id": 11112222,
+    "goodsGroup": 111122,
+    "currency": 0,
+    "price": 98,
+    "weights": 100,
+    "creator": 8330817
+  },
+  {
+    "id": 11112301,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 146,
+    "weights": 100,
+    "creator": 8120035
+  },
+  {
+    "id": 11112302,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 55,
+    "weights": 100,
+    "creator": 8120047
+  },
+  {
+    "id": 11112303,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 140,
+    "weights": 100,
+    "creator": 8210031
+  },
+  {
+    "id": 11112304,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8210032
+  },
+  {
+    "id": 11112305,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 184,
+    "weights": 100,
+    "creator": 8210045
+  },
+  {
+    "id": 11112306,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8210105
+  },
+  {
+    "id": 11112307,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 97,
+    "weights": 100,
+    "creator": 8210113
+  },
+  {
+    "id": 11112308,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 142,
+    "weights": 100,
+    "creator": 8210205
+  },
+  {
+    "id": 11112309,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8210411
+  },
+  {
+    "id": 11112310,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 174,
+    "weights": 100,
+    "creator": 8210508
+  },
+  {
+    "id": 11112311,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 267,
+    "weights": 100,
+    "creator": 8210611
+  },
+  {
+    "id": 11112312,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 294,
+    "weights": 100,
+    "creator": 8210711
+  },
+  {
+    "id": 11112313,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 282,
+    "weights": 100,
+    "creator": 8210712
+  },
+  {
+    "id": 11112314,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 140,
+    "weights": 100,
+    "creator": 8210713
+  },
+  {
+    "id": 11112315,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8210818
+  },
+  {
+    "id": 11112316,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8210819
+  },
+  {
+    "id": 11112317,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 78,
+    "weights": 100,
+    "creator": 8220033
+  },
+  {
+    "id": 11112318,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8220036
+  },
+  {
+    "id": 11112319,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 99,
+    "weights": 100,
+    "creator": 8220044
+  },
+  {
+    "id": 11112320,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8220051
+  },
+  {
+    "id": 11112321,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 190,
+    "weights": 100,
+    "creator": 8220052
+  },
+  {
+    "id": 11112322,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 112,
+    "weights": 100,
+    "creator": 8220106
+  },
+  {
+    "id": 11112323,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 285,
+    "weights": 100,
+    "creator": 8220214
+  },
+  {
+    "id": 11112324,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 204,
+    "weights": 100,
+    "creator": 8220215
+  },
+  {
+    "id": 11112325,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 168,
+    "weights": 100,
+    "creator": 8220409
+  },
+  {
+    "id": 11112326,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8220415
+  },
+  {
+    "id": 11112327,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 232,
+    "weights": 100,
+    "creator": 8220515
+  },
+  {
+    "id": 11112328,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 180,
+    "weights": 100,
+    "creator": 8220516
+  },
+  {
+    "id": 11112329,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8220612
+  },
+  {
+    "id": 11112330,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 270,
+    "weights": 100,
+    "creator": 8220613
+  },
+  {
+    "id": 11112331,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8220806
+  },
+  {
+    "id": 11112332,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8220813
+  },
+  {
+    "id": 11112333,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8220820
+  },
+  {
+    "id": 11112334,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 180,
+    "weights": 100,
+    "creator": 8250007
+  },
+  {
+    "id": 11112335,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250009
+  },
+  {
+    "id": 11112336,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 160,
+    "weights": 100,
+    "creator": 8250011
+  },
+  {
+    "id": 11112337,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250013
+  },
+  {
+    "id": 11112338,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250015
+  },
+  {
+    "id": 11112339,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8250017
+  },
+  {
+    "id": 11112340,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 222,
+    "weights": 100,
+    "creator": 8210314
+  },
+  {
+    "id": 11112341,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 114,
+    "weights": 100,
+    "creator": 8220318
+  },
+  {
+    "id": 11112342,
+    "goodsGroup": 111123,
+    "currency": 1,
+    "price": 103,
+    "weights": 100,
+    "creator": 8230305
+  },
+  {
+    "id": 11112401,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8130018
+  },
+  {
+    "id": 11112402,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8220807
+  },
+  {
+    "id": 11112403,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8220814
+  },
+  {
+    "id": 11112404,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230004
+  },
+  {
+    "id": 11112405,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230019
+  },
+  {
+    "id": 11112407,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230027
+  },
+  {
+    "id": 11112408,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230028
+  },
+  {
+    "id": 11112409,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230037
+  },
+  {
+    "id": 11112410,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230038
+  },
+  {
+    "id": 11112411,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230039
+  },
+  {
+    "id": 11112412,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230040
+  },
+  {
+    "id": 11112413,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230050
+  },
+  {
+    "id": 11112414,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230204
+  },
+  {
+    "id": 11112415,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230316
+  },
+  {
+    "id": 11112416,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230414
+  },
+  {
+    "id": 11112417,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230509
+  },
+  {
+    "id": 11112419,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230614
+  },
+  {
+    "id": 11112420,
+    "goodsGroup": 111124,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8230714
+  },
+  {
+    "id": 11112501,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 55,
+    "weights": 100,
+    "creator": 8110021
+  },
+  {
+    "id": 11112502,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 105,
+    "weights": 100,
+    "creator": 8110029
+  },
+  {
+    "id": 11112503,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 98,
+    "weights": 100,
+    "creator": 8110030
+  },
+  {
+    "id": 11112504,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 90,
+    "weights": 100,
+    "creator": 8110213
+  },
+  {
+    "id": 11112505,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 56,
+    "weights": 100,
+    "creator": 8110410
+  },
+  {
+    "id": 11112506,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 63,
+    "weights": 100,
+    "creator": 8110507
+  },
+  {
+    "id": 11112507,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 60,
+    "weights": 100,
+    "creator": 8110616
+  },
+  {
+    "id": 11112508,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 78,
+    "weights": 100,
+    "creator": 8110716
+  },
+  {
+    "id": 11112509,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8110805
+  },
+  {
+    "id": 11112510,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 46,
+    "weights": 100,
+    "creator": 8120034
+  },
+  {
+    "id": 11112511,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 51,
+    "weights": 100,
+    "creator": 8120104
+  },
+  {
+    "id": 11112512,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 157,
+    "weights": 100,
+    "creator": 8120110
+  },
+  {
+    "id": 11112513,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 60,
+    "weights": 100,
+    "creator": 8120208
+  },
+  {
+    "id": 11112514,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 91,
+    "weights": 100,
+    "creator": 8120216
+  },
+  {
+    "id": 11112515,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 72,
+    "weights": 100,
+    "creator": 8120317
+  },
+  {
+    "id": 11112516,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8120406
+  },
+  {
+    "id": 11112517,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 110,
+    "weights": 100,
+    "creator": 8120416
+  },
+  {
+    "id": 11112518,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 69,
+    "weights": 100,
+    "creator": 8120512
+  },
+  {
+    "id": 11112519,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 132,
+    "weights": 100,
+    "creator": 8120610
+  },
+  {
+    "id": 11112520,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8120703
+  },
+  {
+    "id": 11112521,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 60,
+    "weights": 100,
+    "creator": 8120704
+  },
+  {
+    "id": 11112522,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 122,
+    "weights": 100,
+    "creator": 8120705
+  },
+  {
+    "id": 11112523,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 150,
+    "weights": 100,
+    "creator": 8120808
+  },
+  {
+    "id": 11112524,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8120821
+  },
+  {
+    "id": 11112525,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 90,
+    "weights": 100,
+    "creator": 8150006
+  },
+  {
+    "id": 11112526,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150008
+  },
+  {
+    "id": 11112527,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8150010
+  },
+  {
+    "id": 11112528,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150012
+  },
+  {
+    "id": 11112529,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150014
+  },
+  {
+    "id": 11112530,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150016
+  },
+  {
+    "id": 11112531,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 72,
+    "weights": 100,
+    "creator": 8110307
+  },
+  {
+    "id": 11112532,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 96,
+    "weights": 100,
+    "creator": 8110312
+  },
+  {
+    "id": 11112533,
+    "goodsGroup": 111125,
+    "currency": 1,
+    "price": 35,
+    "weights": 100,
+    "creator": 8130303
+  },
+  {
+    "id": 11112601,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 42,
+    "weights": 100,
+    "creator": 8110048
+  },
+  {
+    "id": 11112602,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8130041
+  },
+  {
+    "id": 11112603,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 34,
+    "weights": 100,
+    "creator": 8130103
+  },
+  {
+    "id": 11112604,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8130107
+  },
+  {
+    "id": 11112605,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 47,
+    "weights": 100,
+    "creator": 8130115
+  },
+  {
+    "id": 11112606,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 38,
+    "weights": 100,
+    "creator": 8130203
+  },
+  {
+    "id": 11112607,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 98,
+    "weights": 100,
+    "creator": 8130217
+  },
+  {
+    "id": 11112608,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8130315
+  },
+  {
+    "id": 11112609,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 52,
+    "weights": 100,
+    "creator": 8130403
+  },
+  {
+    "id": 11112610,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 71,
+    "weights": 100,
+    "creator": 8130404
+  },
+  {
+    "id": 11112611,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 49,
+    "weights": 100,
+    "creator": 8130503
+  },
+  {
+    "id": 11112612,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 84,
+    "weights": 100,
+    "creator": 8130504
+  },
+  {
+    "id": 11112613,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 81,
+    "weights": 100,
+    "creator": 8130505
+  },
+  {
+    "id": 11112614,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8130603
+  },
+  {
+    "id": 11112615,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8130604
+  },
+  {
+    "id": 11112616,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8130605
+  },
+  {
+    "id": 11112617,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 35,
+    "weights": 100,
+    "creator": 8130803
+  },
+  {
+    "id": 11112618,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 70,
+    "weights": 100,
+    "creator": 8130804
+  },
+  {
+    "id": 11112619,
+    "goodsGroup": 111126,
+    "currency": 1,
+    "price": 38,
+    "weights": 100,
+    "creator": 8230042
+  },
+  {
+    "id": 11112701,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140101
+  },
+  {
+    "id": 11112702,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140201
+  },
+  {
+    "id": 11112703,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140301
+  },
+  {
+    "id": 11112704,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140401
+  },
+  {
+    "id": 11112705,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140501
+  },
+  {
+    "id": 11112706,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140601
+  },
+  {
+    "id": 11112707,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140701
+  },
+  {
+    "id": 11112708,
+    "goodsGroup": 111127,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140801
+  },
+  {
+    "id": 11112801,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240102
+  },
+  {
+    "id": 11112802,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240202
+  },
+  {
+    "id": 11112803,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240302
+  },
+  {
+    "id": 11112804,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240402
+  },
+  {
+    "id": 11112805,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240502
+  },
+  {
+    "id": 11112806,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240602
+  },
+  {
+    "id": 11112807,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240702
+  },
+  {
+    "id": 11112808,
+    "goodsGroup": 111128,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240802
+  },
+  {
+    "id": 11112901,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 55,
+    "weights": 100,
+    "creator": 8120047
+  },
+  {
+    "id": 11112902,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 51,
+    "weights": 100,
+    "creator": 8120104
+  },
+  {
+    "id": 11112903,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 157,
+    "weights": 100,
+    "creator": 8120110
+  },
+  {
+    "id": 11112904,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 60,
+    "weights": 100,
+    "creator": 8120208
+  },
+  {
+    "id": 11112905,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 91,
+    "weights": 100,
+    "creator": 8120216
+  },
+  {
+    "id": 11112906,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 72,
+    "weights": 100,
+    "creator": 8120317
+  },
+  {
+    "id": 11112907,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8120406
+  },
+  {
+    "id": 11112908,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 110,
+    "weights": 100,
+    "creator": 8120416
+  },
+  {
+    "id": 11112909,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 69,
+    "weights": 100,
+    "creator": 8120512
+  },
+  {
+    "id": 11112910,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 132,
+    "weights": 100,
+    "creator": 8120610
+  },
+  {
+    "id": 11112911,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8120703
+  },
+  {
+    "id": 11112912,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 60,
+    "weights": 100,
+    "creator": 8120704
+  },
+  {
+    "id": 11112913,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 122,
+    "weights": 100,
+    "creator": 8120705
+  },
+  {
+    "id": 11112914,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 150,
+    "weights": 100,
+    "creator": 8120808
+  },
+  {
+    "id": 11112915,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8120821
+  },
+  {
+    "id": 11112916,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 105,
+    "weights": 100,
+    "creator": 8130018
+  },
+  {
+    "id": 11112917,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8130041
+  },
+  {
+    "id": 11112918,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 34,
+    "weights": 100,
+    "creator": 8130103
+  },
+  {
+    "id": 11112919,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8130107
+  },
+  {
+    "id": 11112920,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 47,
+    "weights": 100,
+    "creator": 8130115
+  },
+  {
+    "id": 11112921,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 38,
+    "weights": 100,
+    "creator": 8130203
+  },
+  {
+    "id": 11112922,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 98,
+    "weights": 100,
+    "creator": 8130217
+  },
+  {
+    "id": 11112923,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8130315
+  },
+  {
+    "id": 11112924,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 52,
+    "weights": 100,
+    "creator": 8130403
+  },
+  {
+    "id": 11112925,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 71,
+    "weights": 100,
+    "creator": 8130404
+  },
+  {
+    "id": 11112926,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 49,
+    "weights": 100,
+    "creator": 8130503
+  },
+  {
+    "id": 11112927,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 84,
+    "weights": 100,
+    "creator": 8130504
+  },
+  {
+    "id": 11112928,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 81,
+    "weights": 100,
+    "creator": 8130505
+  },
+  {
+    "id": 11112929,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 40,
+    "weights": 100,
+    "creator": 8130603
+  },
+  {
+    "id": 11112930,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 85,
+    "weights": 100,
+    "creator": 8130604
+  },
+  {
+    "id": 11112931,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8130605
+  },
+  {
+    "id": 11112932,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 35,
+    "weights": 100,
+    "creator": 8130803
+  },
+  {
+    "id": 11112933,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 70,
+    "weights": 100,
+    "creator": 8130804
+  },
+  {
+    "id": 11112934,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140101
+  },
+  {
+    "id": 11112935,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140201
+  },
+  {
+    "id": 11112936,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140301
+  },
+  {
+    "id": 11112937,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140401
+  },
+  {
+    "id": 11112938,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140501
+  },
+  {
+    "id": 11112939,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140601
+  },
+  {
+    "id": 11112940,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140701
+  },
+  {
+    "id": 11112941,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 25,
+    "weights": 100,
+    "creator": 8140801
+  },
+  {
+    "id": 11112942,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 90,
+    "weights": 100,
+    "creator": 8150006
+  },
+  {
+    "id": 11112943,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150008
+  },
+  {
+    "id": 11112944,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8150010
+  },
+  {
+    "id": 11112945,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150012
+  },
+  {
+    "id": 11112946,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150014
+  },
+  {
+    "id": 11112947,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 100,
+    "weights": 100,
+    "creator": 8150016
+  },
+  {
+    "id": 11112948,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 140,
+    "weights": 100,
+    "creator": 8210031
+  },
+  {
+    "id": 11112949,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8210032
+  },
+  {
+    "id": 11112950,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 184,
+    "weights": 100,
+    "creator": 8210045
+  },
+  {
+    "id": 11112951,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8210105
+  },
+  {
+    "id": 11112952,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 97,
+    "weights": 100,
+    "creator": 8210113
+  },
+  {
+    "id": 11112953,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 142,
+    "weights": 100,
+    "creator": 8210205
+  },
+  {
+    "id": 11112954,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8210411
+  },
+  {
+    "id": 11112955,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 174,
+    "weights": 100,
+    "creator": 8210508
+  },
+  {
+    "id": 11112956,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 267,
+    "weights": 100,
+    "creator": 8210611
+  },
+  {
+    "id": 11112957,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 294,
+    "weights": 100,
+    "creator": 8210711
+  },
+  {
+    "id": 11112958,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 282,
+    "weights": 100,
+    "creator": 8210712
+  },
+  {
+    "id": 11112959,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 140,
+    "weights": 100,
+    "creator": 8210713
+  },
+  {
+    "id": 11112960,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8210818
+  },
+  {
+    "id": 11112961,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8210819
+  },
+  {
+    "id": 11112962,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 78,
+    "weights": 100,
+    "creator": 8220033
+  },
+  {
+    "id": 11112963,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8220036
+  },
+  {
+    "id": 11112964,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 99,
+    "weights": 100,
+    "creator": 8220044
+  },
+  {
+    "id": 11112965,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 80,
+    "weights": 100,
+    "creator": 8220051
+  },
+  {
+    "id": 11112966,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 190,
+    "weights": 100,
+    "creator": 8220052
+  },
+  {
+    "id": 11112967,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 112,
+    "weights": 100,
+    "creator": 8220106
+  },
+  {
+    "id": 11112968,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 285,
+    "weights": 100,
+    "creator": 8220214
+  },
+  {
+    "id": 11112969,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 204,
+    "weights": 100,
+    "creator": 8220215
+  },
+  {
+    "id": 11112970,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 168,
+    "weights": 100,
+    "creator": 8220409
+  },
+  {
+    "id": 11112971,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 164,
+    "weights": 100,
+    "creator": 8220415
+  },
+  {
+    "id": 11112972,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 232,
+    "weights": 100,
+    "creator": 8220515
+  },
+  {
+    "id": 11112973,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 180,
+    "weights": 100,
+    "creator": 8220516
+  },
+  {
+    "id": 11112974,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8220612
+  },
+  {
+    "id": 11112975,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 270,
+    "weights": 100,
+    "creator": 8220613
+  },
+  {
+    "id": 11112976,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8220806
+  },
+  {
+    "id": 11112977,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 315,
+    "weights": 100,
+    "creator": 8220807
+  },
+  {
+    "id": 11112978,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8220813
+  },
+  {
+    "id": 11112979,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 126,
+    "weights": 100,
+    "creator": 8220814
+  },
+  {
+    "id": 11112980,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8220820
+  },
+  {
+    "id": 11112981,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 66,
+    "weights": 100,
+    "creator": 8230004
+  },
+  {
+    "id": 11112982,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 89,
+    "weights": 100,
+    "creator": 8230019
+  },
+  {
+    "id": 11112983,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 87,
+    "weights": 100,
+    "creator": 8230027
+  },
+  {
+    "id": 11112984,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 87,
+    "weights": 100,
+    "creator": 8230028
+  },
+  {
+    "id": 11112985,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 105,
+    "weights": 100,
+    "creator": 8230037
+  },
+  {
+    "id": 11112986,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 161,
+    "weights": 100,
+    "creator": 8230038
+  },
+  {
+    "id": 11112987,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 176,
+    "weights": 100,
+    "creator": 8230039
+  },
+  {
+    "id": 11112988,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 105,
+    "weights": 100,
+    "creator": 8230040
+  },
+  {
+    "id": 11112989,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 38,
+    "weights": 100,
+    "creator": 8230042
+  },
+  {
+    "id": 11112990,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 166,
+    "weights": 100,
+    "creator": 8230050
+  },
+  {
+    "id": 11112991,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 133,
+    "weights": 100,
+    "creator": 8230204
+  },
+  {
+    "id": 11112992,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 116,
+    "weights": 100,
+    "creator": 8230316
+  },
+  {
+    "id": 11112993,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8230414
+  },
+  {
+    "id": 11112994,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8230509
+  },
+  {
+    "id": 11112995,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 249,
+    "weights": 100,
+    "creator": 8230614
+  },
+  {
+    "id": 11112996,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 101,
+    "weights": 100,
+    "creator": 8230714
+  },
+  {
+    "id": 11112997,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240102
+  },
+  {
+    "id": 11112998,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240202
+  },
+  {
+    "id": 11112999,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240302
+  },
+  {
+    "id": 11113000,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240402
+  },
+  {
+    "id": 11113001,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240502
+  },
+  {
+    "id": 11113002,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240602
+  },
+  {
+    "id": 11113003,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240702
+  },
+  {
+    "id": 11113004,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 50,
+    "weights": 100,
+    "creator": 8240802
+  },
+  {
+    "id": 11113005,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 180,
+    "weights": 100,
+    "creator": 8250007
+  },
+  {
+    "id": 11113006,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250009
+  },
+  {
+    "id": 11113007,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 160,
+    "weights": 100,
+    "creator": 8250011
+  },
+  {
+    "id": 11113008,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250013
+  },
+  {
+    "id": 11113009,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8250015
+  },
+  {
+    "id": 11113010,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8250017
+  },
+  {
+    "id": 11113011,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 480,
+    "weights": 100,
+    "creator": 8310022
+  },
+  {
+    "id": 11113012,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8310108
+  },
+  {
+    "id": 11113013,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 510,
+    "weights": 100,
+    "creator": 8310114
+  },
+  {
+    "id": 11113014,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 412,
+    "weights": 100,
+    "creator": 8310212
+  },
+  {
+    "id": 11113015,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 516,
+    "weights": 100,
+    "creator": 8310407
+  },
+  {
+    "id": 11113016,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 500,
+    "weights": 100,
+    "creator": 8310510
+  },
+  {
+    "id": 11113017,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8310608
+  },
+  {
+    "id": 11113018,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 480,
+    "weights": 100,
+    "creator": 8310609
+  },
+  {
+    "id": 11113019,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 540,
+    "weights": 100,
+    "creator": 8310706
+  },
+  {
+    "id": 11113020,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 600,
+    "weights": 100,
+    "creator": 8310810
+  },
+  {
+    "id": 11113021,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8310815
+  },
+  {
+    "id": 11113022,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 284,
+    "weights": 100,
+    "creator": 8320046
+  },
+  {
+    "id": 11113023,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8320049
+  },
+  {
+    "id": 11113024,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 448,
+    "weights": 100,
+    "creator": 8320109
+  },
+  {
+    "id": 11113025,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 240,
+    "weights": 100,
+    "creator": 8320207
+  },
+  {
+    "id": 11113026,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8320210
+  },
+  {
+    "id": 11113027,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 360,
+    "weights": 100,
+    "creator": 8320310
+  },
+  {
+    "id": 11113028,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 308,
+    "weights": 100,
+    "creator": 8320408
+  },
+  {
+    "id": 11113029,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 194,
+    "weights": 100,
+    "creator": 8320506
+  },
+  {
+    "id": 11113030,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8320511
+  },
+  {
+    "id": 11113031,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 250,
+    "weights": 100,
+    "creator": 8320514
+  },
+  {
+    "id": 11113032,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 320,
+    "weights": 100,
+    "creator": 8320617
+  },
+  {
+    "id": 11113033,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 200,
+    "weights": 100,
+    "creator": 8320618
+  },
+  {
+    "id": 11113034,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 435,
+    "weights": 100,
+    "creator": 8320709
+  },
+  {
+    "id": 11113035,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8320809
+  },
+  {
+    "id": 11113036,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8320811
+  },
+  {
+    "id": 11113037,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 400,
+    "weights": 100,
+    "creator": 8320812
+  },
+  {
+    "id": 11113038,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8330001
+  },
+  {
+    "id": 11113039,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 182,
+    "weights": 100,
+    "creator": 8330002
+  },
+  {
+    "id": 11113040,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 392,
+    "weights": 100,
+    "creator": 8330005
+  },
+  {
+    "id": 11113041,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 308,
+    "weights": 100,
+    "creator": 8330020
+  },
+  {
+    "id": 11113042,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 352,
+    "weights": 100,
+    "creator": 8330023
+  },
+  {
+    "id": 11113043,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 420,
+    "weights": 100,
+    "creator": 8330026
+  },
+  {
+    "id": 11113044,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 252,
+    "weights": 100,
+    "creator": 8330111
+  },
+  {
+    "id": 11113045,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 149,
+    "weights": 100,
+    "creator": 8330112
+  },
+  {
+    "id": 11113046,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 103,
+    "weights": 100,
+    "creator": 8330211
+  },
+  {
+    "id": 11113047,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 344,
+    "weights": 100,
+    "creator": 8330218
+  },
+  {
+    "id": 11113049,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 162,
+    "weights": 100,
+    "creator": 8330412
+  },
+  {
+    "id": 11113050,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 224,
+    "weights": 100,
+    "creator": 8330413
+  },
+  {
+    "id": 11113051,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 322,
+    "weights": 100,
+    "creator": 8330417
+  },
+  {
+    "id": 11113052,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 504,
+    "weights": 100,
+    "creator": 8330418
+  },
+  {
+    "id": 11113053,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 154,
+    "weights": 100,
+    "creator": 8330513
+  },
+  {
+    "id": 11113054,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 392,
+    "weights": 100,
+    "creator": 8330607
+  },
+  {
+    "id": 11113055,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 336,
+    "weights": 100,
+    "creator": 8330708
+  },
+  {
+    "id": 11113056,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 168,
+    "weights": 100,
+    "creator": 8330715
+  },
+  {
+    "id": 11113057,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 112,
+    "weights": 100,
+    "creator": 8330816
+  },
+  {
+    "id": 11113058,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 98,
+    "weights": 100,
+    "creator": 8330817
+  },
+  {
+    "id": 11113059,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 300,
+    "weights": 100,
+    "creator": 8350043
+  },
+  {
+    "id": 11113060,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 72,
+    "weights": 100,
+    "creator": 8110307
+  },
+  {
+    "id": 11113061,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 96,
+    "weights": 100,
+    "creator": 8110312
+  },
+  {
+    "id": 11113062,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 35,
+    "weights": 100,
+    "creator": 8130303
+  },
+  {
+    "id": 11113063,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 222,
+    "weights": 100,
+    "creator": 8210314
+  },
+  {
+    "id": 11113064,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 114,
+    "weights": 100,
+    "creator": 8220318
+  },
+  {
+    "id": 11113065,
+    "goodsGroup": 111129,
+    "currency": 1,
+    "price": 103,
+    "weights": 100,
+    "creator": 8230305
+  }
+]

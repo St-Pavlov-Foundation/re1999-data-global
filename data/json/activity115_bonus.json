@@ -1,0 +1,58 @@
+[
+  {
+    "activityId": 11203,
+    "id": 1,
+    "needScore": 8,
+    "bonus": "2#2#30|1#110102#2|9#1003#2",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 2,
+    "needScore": 12,
+    "bonus": "2#2#30|1#110203#1|2#5#10000",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 3,
+    "needScore": 18,
+    "bonus": "2#2#30|1#111001#2|9#1003#2",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 4,
+    "needScore": 24,
+    "bonus": "2#2#30|1#110303#1|2#3#10000",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 5,
+    "needScore": 30,
+    "bonus": "2#2#30|1#110102#2|9#1003#2",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 6,
+    "needScore": 33,
+    "bonus": "2#2#30|1#110203#1|2#5#10000",
+    "important": 1
+  },
+  {
+    "activityId": 11203,
+    "id": 7,
+    "needScore": 37,
+    "bonus": "2#2#30|1#111001#2|9#1003#2",
+    "important": 0
+  },
+  {
+    "activityId": 11203,
+    "id": 8,
+    "needScore": 40,
+    "bonus": "2#2#30|1#110303#1|2#3#10000",
+    "important": 1
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "activityId": 11505,
+    "heroId": 3074,
+    "title": "language_10027810",
+    "heroTabIcon": "v1a5_revival_btn_role1",
+    "heroIcon": "v1a5_revival_img_role1",
+    "desc": "language_10027811",
+    "reward": "1#110303#1",
+    "preEpisodeId": 1510106,
+    "toastId": 50301
+  },
+  {
+    "id": 2,
+    "activityId": 11505,
+    "heroId": 3073,
+    "title": "language_10027812",
+    "heroTabIcon": "v1a5_revival_btn_role2",
+    "heroIcon": "v1a5_revival_img_role2",
+    "desc": "language_10027813",
+    "reward": "1#110203#1",
+    "preEpisodeId": 1510107,
+    "toastId": 50301
+  },
+  {
+    "id": 3,
+    "activityId": 11505,
+    "heroId": 3075,
+    "title": "language_10027814",
+    "heroTabIcon": "v1a5_revival_btn_role3",
+    "heroIcon": "v1a5_revival_img_role3",
+    "desc": "language_10027815",
+    "reward": "1#110603#1",
+    "preEpisodeId": 1510109,
+    "toastId": 50301
+  }
+]

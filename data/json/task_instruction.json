@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "术的凝结",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "30102",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 2,
+    "name": "灵感克制",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "30101",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 3,
+    "name": "无害化",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "30104",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 4,
+    "name": "律的使用",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 5,
+    "name": "快速行动",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 6,
+    "name": "克敌先机",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 7,
+    "name": "挑战",
+    "minType": "教学笔记任务",
+    "desc": "",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "2#2#30"
+  },
+  {
+    "id": 8,
+    "name": "",
+    "minType": "教学笔记任务",
+    "desc": "最终奖励的任务描述，测试用",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "",
+    "maxProgress": 15,
+    "bonus": ""
+  }
+]

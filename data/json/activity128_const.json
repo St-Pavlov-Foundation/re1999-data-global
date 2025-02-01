@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "value1": 1000,
+    "value2": ""
+  },
+  {
+    "id": 2,
+    "value1": 3,
+    "value2": ""
+  },
+  {
+    "id": 3,
+    "value1": 0,
+    "value2": "2#21#0|1#110304#0|1#110604#0|1#110404#0|9#1005#0|1#120012#0"
+  },
+  {
+    "id": 1501,
+    "value1": 25000,
+    "value2": "v1a4_bossrush_ig_tipsbg1"
+  },
+  {
+    "id": 1502,
+    "value1": 120000,
+    "value2": "v1a4_bossrush_ig_tipsbg2"
+  },
+  {
+    "id": 1503,
+    "value1": 280000,
+    "value2": "v1a4_bossrush_ig_tipsbg3"
+  },
+  {
+    "id": 1504,
+    "value1": 450000,
+    "value2": "v1a4_bossrush_ig_tipsbg4"
+  },
+  {
+    "id": 2501,
+    "value1": 25000,
+    "value2": "v1a4_bossrush_ig_tipsbg1"
+  },
+  {
+    "id": 2502,
+    "value1": 120000,
+    "value2": "v1a4_bossrush_ig_tipsbg2"
+  },
+  {
+    "id": 2503,
+    "value1": 280000,
+    "value2": "v1a4_bossrush_ig_tipsbg3"
+  },
+  {
+    "id": 2504,
+    "value1": 450000,
+    "value2": "v1a4_bossrush_ig_tipsbg4"
+  },
+  {
+    "id": 3501,
+    "value1": 25000,
+    "value2": "v1a4_bossrush_ig_tipsbg1"
+  },
+  {
+    "id": 3502,
+    "value1": 120000,
+    "value2": "v1a4_bossrush_ig_tipsbg2"
+  },
+  {
+    "id": 3503,
+    "value1": 280000,
+    "value2": "v1a4_bossrush_ig_tipsbg3"
+  },
+  {
+    "id": 3504,
+    "value1": 450000,
+    "value2": "v1a4_bossrush_ig_tipsbg4"
+  }
+]

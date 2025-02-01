@@ -1,0 +1,98 @@
+[
+  {
+    "skillId": 30410131,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30410132,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30410133,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30410134,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30480131,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30480132,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30480133,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30480134,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.5
+  },
+  {
+    "skillId": 30040131,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_slicing",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30040132,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_slicing",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30040133,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_slicing",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30040134,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_slicing",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30630131,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30630132,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30630133,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.6
+  },
+  {
+    "skillId": 30630134,
+    "monsterId": "680401#680402#680403#680404",
+    "effectName": "roleeffects/roleeffect_uniformsize",
+    "scale": 0.6
+  }
+]

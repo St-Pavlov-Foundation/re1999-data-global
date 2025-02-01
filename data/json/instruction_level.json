@@ -1,0 +1,192 @@
+[
+  {
+    "id": 101,
+    "topicId": 1,
+    "episodeId": 110101,
+    "instructionDesc": "language_10017563",
+    "desc_en": "Sometimes, our afflatus will be suppressed by the enemy. We need to follow the principle and select the proper arcane skills.",
+    "desc": "language_10017564",
+    "picRes": "bg_jiaoxuebiji_kezhi",
+    "preEpisode": 0
+  },
+  {
+    "id": 102,
+    "topicId": 1,
+    "episodeId": 110102,
+    "instructionDesc": "language_10017565",
+    "desc_en": "When the enemies abound, they are always fearless. We need to find out the most threatening individual and defeat it first.",
+    "desc": "language_10017566",
+    "picRes": "bg_jiaoxuebiji_jihuo",
+    "preEpisode": 110101
+  },
+  {
+    "id": 103,
+    "topicId": 1,
+    "episodeId": 110103,
+    "instructionDesc": "language_10017567",
+    "desc_en": "Some enemies are particularly agile. Certain damage can't hurt them. Please keep in mind the type of each incantation and select the proper one.",
+    "desc": "language_10017568",
+    "picRes": "bg_jiaoxuebiji_leixing",
+    "preEpisode": 110102
+  },
+  {
+    "id": 201,
+    "topicId": 2,
+    "episodeId": 110201,
+    "instructionDesc": "language_10017569",
+    "desc_en": "When normal incantations make little difference, we need to merge them to enhance the power.",
+    "desc": "language_10017570",
+    "picRes": "bg_jiaoxuebiji_hecheng",
+    "preEpisode": 0
+  },
+  {
+    "id": 202,
+    "topicId": 2,
+    "episodeId": 110202,
+    "instructionDesc": "language_10017571",
+    "desc_en": "Automatic merging can save the times of action. During the battle, we will have plenty opportunities to merge the incantations automatically.",
+    "desc": "language_10017572",
+    "picRes": "bg_jiaoxuebiji_hecheng_1",
+    "preEpisode": 110201
+  },
+  {
+    "id": 203,
+    "topicId": 2,
+    "episodeId": 110203,
+    "instructionDesc": "language_10017573",
+    "desc_en": "The action points are limited. Moving the incantations will consume certain points. Please be prudent.",
+    "desc": "language_10017574",
+    "picRes": "bg_jiaoxuebiji_hecheng_2",
+    "preEpisode": 110202
+  },
+  {
+    "id": 301,
+    "topicId": 3,
+    "episodeId": 110301,
+    "instructionDesc": "language_10017575",
+    "desc_en": "If the enemies are fierce, select disarm incantations to hinder their attack.\n\nThe instructor of that course was very strict. I was one of the few students who passed the exam.",
+    "desc": "language_10017576",
+    "picRes": "bg_jiaoxuebiji_jiaoxie",
+    "preEpisode": 0
+  },
+  {
+    "id": 302,
+    "topicId": 3,
+    "episodeId": 110302,
+    "instructionDesc": "language_10017577",
+    "desc_en": "Silence incantations is a great option in the face of those enemies conversant with assiting arcane skills. These kind of incantation can minimize the interference caused by the enemies and prevent them from helping each other.",
+    "desc": "language_10017578",
+    "picRes": "bg_jiaoxuebiji_jianmo",
+    "preEpisode": 110301
+  },
+  {
+    "id": 303,
+    "topicId": 3,
+    "episodeId": 110303,
+    "instructionDesc": "language_10017579",
+    "desc_en": "Some enemies are energetic. They will use the \"Ultimate\" in every turn. Therefore, we need to select certain incantations to seal them or reduce their passion.",
+    "desc": "language_10017580",
+    "picRes": "bg_jiaoxuebiji_fengyin",
+    "preEpisode": 110302
+  },
+  {
+    "id": 401,
+    "topicId": 4,
+    "episodeId": 110401,
+    "instructionDesc": "language_10017581",
+    "desc_en": "Sometimes, normal arcane skills make no difference and only the \"Ultimate\" works. By then, we need to frequently take actions through merging, swapping, and playing incantations to quickly get the \"Ultimate\" ready.",
+    "desc": "language_10017582",
+    "picRes": "bg_jiaoxuebiji_jiqing",
+    "preEpisode": 0
+  },
+  {
+    "id": 402,
+    "topicId": 4,
+    "episodeId": 110402,
+    "instructionDesc": "language_10017583",
+    "desc_en": "Control the pace when you beat the enemies to buy time for the preparation before the key enemy arrives.",
+    "desc": "language_10017584",
+    "picRes": "bg_jiaoxuebiji_cunliangzhunze",
+    "preEpisode": 110401
+  },
+  {
+    "id": 403,
+    "topicId": 4,
+    "episodeId": 110403,
+    "instructionDesc": "language_10017585",
+    "desc_en": "The enemies will start the second round with fierce attack. If our \"Ultimates\" are not ready, we are very likely to be defeated.",
+    "desc": "language_10017586",
+    "picRes": "bg_jiaoxuebiji_jiqing_1",
+    "preEpisode": 110402
+  },
+  {
+    "id": 501,
+    "topicId": 5,
+    "episodeId": 110501,
+    "instructionDesc": "language_10017587",
+    "desc_en": "When normal arcane skills fail, only the \"Alighment of Rhythm\" can turn the tables and get out of the dangerous situation.",
+    "desc": "language_10017588",
+    "picRes": "bg_jiaoxuebiji_zhujuejineng",
+    "preEpisode": 0
+  },
+  {
+    "id": 502,
+    "topicId": 5,
+    "episodeId": 110502,
+    "instructionDesc": "language_10017589",
+    "desc_en": "Replacing the current incantations with unknown ones is a risky move, but it is your only chance at critical moments.",
+    "desc": "language_10017590",
+    "picRes": "bg_jiaoxuebiji_zhujuejineng_1",
+    "preEpisode": 110501
+  },
+  {
+    "id": 601,
+    "topicId": 6,
+    "episodeId": 110601,
+    "instructionDesc": "language_10017591",
+    "desc_en": " Some area incantations can attack 2 enemies, but the second target is always random. When there are 3 enemies, take out the one that will affect your area incantations' targeting first, so their targets will be fixed.",
+    "desc": "language_10017592",
+    "picRes": "bg_jiaoxuebiji_qungong",
+    "preEpisode": 110502
+  },
+  {
+    "id": 602,
+    "topicId": 6,
+    "episodeId": 110602,
+    "instructionDesc": "language_10017593",
+    "desc_en": "Always be clear of the incantations you have. Some of them have special effects when certain conditions are met.",
+    "desc": "language_10017594",
+    "picRes": "bg_jiaoxuebiji_shunxu",
+    "preEpisode": 110601
+  },
+  {
+    "id": 701,
+    "topicId": 7,
+    "episodeId": 110701,
+    "instructionDesc": "language_10017595",
+    "desc_en": "Some enemies heal their allies when they die. In this case, take out one of the other two first and then use area incantations to wipe out the rest at one go.",
+    "desc": "language_10017596",
+    "picRes": "bg_jiaoxuebiji_tiaozhan1",
+    "preEpisode": 11602
+  },
+  {
+    "id": 702,
+    "topicId": 7,
+    "episodeId": 110702,
+    "instructionDesc": "language_10017597",
+    "desc_en": "The attack of some enemies follow certain rules. If you can find out the clue, it will be the key to win the battle.Facing unknown enemies, we can first adopt the strategy to weaken them.",
+    "desc": "language_10017598",
+    "picRes": "bg_jiaoxuebiji_sp_xulie",
+    "preEpisode": 110701
+  },
+  {
+    "id": 703,
+    "topicId": 7,
+    "episodeId": 110703,
+    "instructionDesc": "language_10017599",
+    "desc_en": "If the enemies are more powerful than us, we need to cast a buff on ourselves using arcane skills before attack. Utilizing the strategy to pin them down and buy time for the \"Ultimate\".",
+    "desc": "language_10017600",
+    "picRes": "bg_jiaoxuebiji_sp_qianzhi",
+    "preEpisode": 110702
+  }
+]

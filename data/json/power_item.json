@@ -1,0 +1,67 @@
+[
+  {
+    "id": 10,
+    "name": "language_10003200",
+    "icon": "100101",
+    "rare": 3,
+    "highQuality": 0,
+    "expireType": 1,
+    "expireTime": "2",
+    "useDesc": "language_10003201",
+    "desc": "language_10003202",
+    "effect": 60,
+    "sources": "1202|610001"
+  },
+  {
+    "id": 11,
+    "name": "language_10003203",
+    "icon": "100201",
+    "rare": 4,
+    "highQuality": 0,
+    "expireType": 1,
+    "expireTime": "2",
+    "useDesc": "language_10003204",
+    "desc": "language_10003205",
+    "effect": 120,
+    "sources": "1202|610001|610002"
+  },
+  {
+    "id": 20,
+    "name": "language_10003200",
+    "icon": "100101",
+    "rare": 3,
+    "highQuality": 0,
+    "expireType": 0,
+    "expireTime": "",
+    "useDesc": "language_10003201",
+    "desc": "language_10003206",
+    "effect": 60,
+    "sources": "1202|610001"
+  },
+  {
+    "id": 21,
+    "name": "language_10003203",
+    "icon": "100201",
+    "rare": 4,
+    "highQuality": 0,
+    "expireType": 0,
+    "expireTime": "",
+    "useDesc": "language_10003204",
+    "desc": "language_10003207",
+    "effect": 120,
+    "sources": "1202|610001|610002"
+  },
+  {
+    "id": 30,
+    "name": "language_10033886",
+    "icon": "30",
+    "rare": 3,
+    "highQuality": 0,
+    "expireType": 1,
+    "expireTime": "2",
+    "useDesc": "language_10033887",
+    "desc": "language_10033888",
+    "effect": 5,
+    "sources": ""
+  }
+]

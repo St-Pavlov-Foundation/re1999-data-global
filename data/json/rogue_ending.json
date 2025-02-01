@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "language_10001445",
+    "storyId": 600605,
+    "endingIcon": "v1a6_cachot_ending_cg1",
+    "resultIcon": "v1a6_cachot_finish_resultbg3",
+    "endingDesc": "language_10001446"
+  },
+  {
+    "id": 2,
+    "title": "language_10001447",
+    "storyId": 600606,
+    "endingIcon": "v1a6_cachot_ending_cg2",
+    "resultIcon": "v1a6_cachot_finish_resultbg4",
+    "endingDesc": "language_10001448"
+  }
+]

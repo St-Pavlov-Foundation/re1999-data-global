@@ -1,0 +1,143 @@
+module("framework.mvc.ModuleMgr", package.seeall)
+
+slot0 = class("ModuleMgr")
+
+function slot0.ctor(slot0)
+	slot0._moduleSetting = nil
+	slot0._models = {}
+	slot0._rpcs = {}
+	slot0._controllers = {}
+end
+
+function slot0.init(slot0, slot1, slot2, slot3)
+	slot0._moduleSetting = slot1
+	slot0._onInitCallback = slot2
+	slot0._onInitCallbackObj = slot3
+
+	slot0:_initModules()
+end
+
+function slot0.reInit(slot0)
+	for slot4, slot5 in ipairs(slot0._models) do
+		slot5.instance:reInitInternal()
+	end
+
+	for slot4, slot5 in ipairs(slot0._rpcs) do
+		slot5.instance:reInitInternal()
+	end
+
+	for slot4, slot5 in ipairs(slot0._controllers) do
+		slot5.instance:reInit()
+	end
+end
+
+function slot0.getSetting(slot0, slot1)
+	return slot0._moduleSetting[slot1]
+end
+
+function slot0._initModules(slot0)
+	slot0._frameHandleNum = 5
+	slot0._nowHandNum = 0
+	slot0._allHandNum = tabletool.len(slot0._moduleSetting)
+	slot0._moduleSettingList = {}
+
+	for slot4, slot5 in pairs(slot0._moduleSetting) do
+		table.insert(slot0._moduleSettingList, slot5)
+	end
+
+	TaskDispatcher.runRepeat(slot0._initModulesRepeat, slot0, 0.01)
+end
+
+function slot0._initModulesRepeat(slot0)
+	for slot4 = 1, slot0._frameHandleNum do
+		slot0._nowHandNum = slot0._nowHandNum + 1
+		slot5 = slot0._moduleSettingList[slot0._nowHandNum]
+
+		slot0:_initConfigs(slot5.config)
+		slot0:_initModels(slot5.model)
+		slot0:_initRpcs(slot5.rpc)
+		slot0:_initControllers(slot5.controller)
+
+		if slot0._nowHandNum == slot0._allHandNum then
+			TaskDispatcher.cancelTask(slot0._initModulesRepeat, slot0)
+			slot0:_initFinish()
+
+			break
+		end
+	end
+end
+
+function slot0._initConfigs(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		if _G[slot6] then
+			slot7.instance:onInit()
+			ConfigMgr.instance:addRequestor(slot7.instance)
+		else
+			logError("config not found: " .. slot6)
+		end
+	end
+end
+
+function slot0._initModels(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		if _G[slot6] then
+			slot7.instance:onInit()
+			table.insert(slot0._models, slot7)
+		else
+			logError("model not found: " .. slot6)
+		end
+	end
+end
+
+function slot0._initRpcs(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		if _G[slot6] then
+			slot7.instance:onInitInternal()
+			table.insert(slot0._rpcs, slot7)
+		else
+			logError("rpc not found: " .. slot6)
+		end
+	end
+end
+
+function slot0._initControllers(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		if _G[slot6] then
+			LuaEventSystem.addEventMechanism(slot7.instance)
+			slot7.instance:__onInit()
+			slot7.instance:onInit()
+			table.insert(slot0._controllers, slot7)
+		else
+			logError("controller not found: " .. slot6)
+		end
+	end
+end
+
+function slot0._initFinish(slot0)
+	for slot4, slot5 in ipairs(slot0._controllers) do
+		slot5.instance:onInitFinish()
+		slot5.instance:addConstEvents()
+	end
+
+	slot0._onInitCallback(slot0._onInitCallbackObj)
+end
+
+slot0.instance = slot0.New()
+
+return slot0

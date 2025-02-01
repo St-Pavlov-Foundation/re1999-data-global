@@ -1,0 +1,569 @@
+[
+  {
+    "chapterId": 1401,
+    "id": 140101,
+    "title": "language_10019348",
+    "desc": "language_10019197",
+    "res": "dungeon_secretroom_img_1_01",
+    "type": 1,
+    "content": "language_10019349"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140102,
+    "title": "language_10019350",
+    "desc": "language_10019200",
+    "res": "dungeon_secretroom_img_1_02",
+    "type": 1,
+    "content": "language_10019351"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140103,
+    "title": "language_10019352",
+    "desc": "language_10019201",
+    "res": "dungeon_secretroom_img_1_03",
+    "type": 1,
+    "content": "language_10019353"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140104,
+    "title": "language_10019354",
+    "desc": "language_10019202",
+    "res": "dungeon_secretroom_img_1_04",
+    "type": 1,
+    "content": "language_10019355"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140105,
+    "title": "language_10019356",
+    "desc": "language_10019203",
+    "res": "dungeon_secretroom_img_zx_01",
+    "type": 2,
+    "content": "language_10019357"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140106,
+    "title": "language_10019358",
+    "desc": "language_10019204",
+    "res": "dungeon_secretroom_img_zx_02",
+    "type": 2,
+    "content": "language_10019359"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140107,
+    "title": "language_10019360",
+    "desc": "language_10019205",
+    "res": "dungeon_secretroom_img_2_01",
+    "type": 1,
+    "content": "language_10019361"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140108,
+    "title": "language_10019362",
+    "desc": "language_10019206",
+    "res": "dungeon_secretroom_img_2_02",
+    "type": 1,
+    "content": "language_10019363"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140109,
+    "title": "language_10019364",
+    "desc": "language_10019207",
+    "res": "dungeon_secretroom_img_2_03",
+    "type": 1,
+    "content": "language_10019365"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140110,
+    "title": "language_10019366",
+    "desc": "language_10019208",
+    "res": "dungeon_secretroom_img_2_04",
+    "type": 1,
+    "content": "language_10019367"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140111,
+    "title": "language_10019368",
+    "desc": "language_10019209",
+    "res": "dungeon_secretroom_img_zx_03",
+    "type": 2,
+    "content": "language_10019369"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140112,
+    "title": "language_10019370",
+    "desc": "language_10019210",
+    "res": "dungeon_secretroom_img_zx_04",
+    "type": 2,
+    "content": "language_10019371"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140113,
+    "title": "language_10019372",
+    "desc": "language_10019211",
+    "res": "dungeon_secretroom_img_3_01",
+    "type": 1,
+    "content": "language_10019373"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140114,
+    "title": "language_10019374",
+    "desc": "language_10019212",
+    "res": "dungeon_secretroom_img_3_02",
+    "type": 1,
+    "content": "language_10019375"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140115,
+    "title": "language_10019376",
+    "desc": "language_10019213",
+    "res": "dungeon_secretroom_img_3_03",
+    "type": 1,
+    "content": "language_10019377"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140116,
+    "title": "language_10019378",
+    "desc": "language_10019214",
+    "res": "dungeon_secretroom_img_3_04",
+    "type": 1,
+    "content": "language_10019379"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140117,
+    "title": "language_10019380",
+    "desc": "language_10019215",
+    "res": "dungeon_secretroom_img_3_05",
+    "type": 1,
+    "content": "language_10019381"
+  },
+  {
+    "chapterId": 1401,
+    "id": 140118,
+    "title": "language_10019382",
+    "desc": "language_10019216",
+    "res": "dungeon_secretroom_img_3_06",
+    "type": 1,
+    "content": "language_10019383"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402101,
+    "title": "language_10019384",
+    "desc": "language_10019281",
+    "res": "dungeon_secretroom_chapter2_img_0101",
+    "type": 1,
+    "content": "language_10019385"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402102,
+    "title": "language_10019386",
+    "desc": "language_10019282",
+    "res": "dungeon_secretroom_chapter2_img_0102",
+    "type": 1,
+    "content": "language_10019387"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402103,
+    "title": "language_10019388",
+    "desc": "language_10019283",
+    "res": "dungeon_secretroom_chapter2_img_0103",
+    "type": 1,
+    "content": "language_10019389"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402104,
+    "title": "language_10019390",
+    "desc": "language_10019284",
+    "res": "dungeon_secretroom_chapter2_img_0104",
+    "type": 1,
+    "content": "language_10019391"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402105,
+    "title": "language_10019392",
+    "desc": "language_10019285",
+    "res": "dungeon_secretroom_chapter2_img_0105",
+    "type": 1,
+    "content": "language_10019393"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402111,
+    "title": "language_10019394",
+    "desc": "language_10019286",
+    "res": "dungeon_secretroom_chapter2_img_zx_0101",
+    "type": 2,
+    "content": "language_10019395"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402201,
+    "title": "language_10019396",
+    "desc": "language_10019287",
+    "res": "dungeon_secretroom_chapter2_img_0201",
+    "type": 1,
+    "content": "language_10019397"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402202,
+    "title": "language_10019390",
+    "desc": "language_10019288",
+    "res": "dungeon_secretroom_chapter2_img_0202",
+    "type": 1,
+    "content": "language_10019398"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402203,
+    "title": "language_10019399",
+    "desc": "language_10019289",
+    "res": "dungeon_secretroom_chapter2_img_0203",
+    "type": 1,
+    "content": "language_10019400"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402204,
+    "title": "language_10019401",
+    "desc": "language_10019290",
+    "res": "dungeon_secretroom_chapter2_img_0204",
+    "type": 1,
+    "content": "language_10019402"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402205,
+    "title": "language_10019403",
+    "desc": "language_10019291",
+    "res": "dungeon_secretroom_chapter2_img_0205",
+    "type": 1,
+    "content": "language_10019404"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402206,
+    "title": "language_10019405",
+    "desc": "language_10019292",
+    "res": "dungeon_secretroom_chapter2_img_0206",
+    "type": 1,
+    "content": "language_10019406"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402211,
+    "title": "language_10019407",
+    "desc": "language_10019293",
+    "res": "dungeon_secretroom_chapter2_img_zx_0201",
+    "type": 2,
+    "content": "language_10019408"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402212,
+    "title": "language_10019409",
+    "desc": "language_10019294",
+    "res": "dungeon_secretroom_chapter2_img_zx_0202",
+    "type": 2,
+    "content": "language_10019410"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402301,
+    "title": "language_10019411",
+    "desc": "language_10019295",
+    "res": "dungeon_secretroom_chapter2_img_0301",
+    "type": 1,
+    "content": "language_10019412"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402302,
+    "title": "language_10019413",
+    "desc": "language_10019296",
+    "res": "dungeon_secretroom_chapter2_img_0302",
+    "type": 1,
+    "content": "language_10019414"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402303,
+    "title": "language_10019390",
+    "desc": "language_10019297",
+    "res": "dungeon_secretroom_chapter2_img_0303",
+    "type": 1,
+    "content": "language_10019415"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402304,
+    "title": "language_10019416",
+    "desc": "language_10019298",
+    "res": "dungeon_secretroom_chapter2_img_0304",
+    "type": 1,
+    "content": "language_10019417"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402305,
+    "title": "language_10019418",
+    "desc": "language_10019299",
+    "res": "dungeon_secretroom_chapter2_img_0305",
+    "type": 1,
+    "content": "language_10019419"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402306,
+    "title": "language_10019388",
+    "desc": "language_10019300",
+    "res": "dungeon_secretroom_chapter2_img_0306",
+    "type": 1,
+    "content": "language_10019420"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402311,
+    "title": "language_10019421",
+    "desc": "language_10019301",
+    "res": "dungeon_secretroom_chapter2_img_zx_0302",
+    "type": 2,
+    "content": "language_10019422"
+  },
+  {
+    "chapterId": 1402,
+    "id": 1402312,
+    "title": "language_10019423",
+    "desc": "language_10019302",
+    "res": "dungeon_secretroom_chapter2_img_zx_0301",
+    "type": 2,
+    "content": "language_10019424"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403101,
+    "title": "language_10042304",
+    "desc": "language_10042230",
+    "res": "explore_chapter3_0101",
+    "type": 1,
+    "content": "language_10042305"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403102,
+    "title": "language_10042306",
+    "desc": "language_10042231",
+    "res": "explore_chapter3_0102",
+    "type": 1,
+    "content": "language_10042307"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403103,
+    "title": "language_10042308",
+    "desc": "language_10042232",
+    "res": "explore_chapter3_0103",
+    "type": 1,
+    "content": "language_10042309"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403104,
+    "title": "language_10042310",
+    "desc": "language_10042233",
+    "res": "explore_chapter3_0104",
+    "type": 1,
+    "content": "language_10042311"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403105,
+    "title": "language_10042312",
+    "desc": "language_10042234",
+    "res": "explore_chapter3_0105",
+    "type": 1,
+    "content": "language_10042313"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403111,
+    "title": "language_10042314",
+    "desc": "language_10042235",
+    "res": "explore_chapter3_zx_0101",
+    "type": 2,
+    "content": "language_10042315"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403112,
+    "title": "language_10042316",
+    "desc": "language_10042236",
+    "res": "explore_chapter3_zx_0102",
+    "type": 2,
+    "content": "language_10042317"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403201,
+    "title": "language_10042318",
+    "desc": "language_10042237",
+    "res": "explore_chapter3_0201",
+    "type": 1,
+    "content": "language_10042319"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403202,
+    "title": "language_10042320",
+    "desc": "language_10042238",
+    "res": "explore_chapter3_0202",
+    "type": 1,
+    "content": "language_10042321"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403203,
+    "title": "language_10042322",
+    "desc": "language_10042239",
+    "res": "explore_chapter3_0203",
+    "type": 1,
+    "content": "language_10042323"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403204,
+    "title": "language_10042324",
+    "desc": "language_10042240",
+    "res": "explore_chapter3_0204",
+    "type": 1,
+    "content": "language_10042325"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403205,
+    "title": "language_10042326",
+    "desc": "language_10042241",
+    "res": "explore_chapter3_0205",
+    "type": 1,
+    "content": "language_10042327"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403206,
+    "title": "language_10000911",
+    "desc": "language_10042242",
+    "res": "explore_chapter3_0206",
+    "type": 1,
+    "content": "language_10042328"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403207,
+    "title": "language_10042329",
+    "desc": "language_10042243",
+    "res": "explore_chapter3_0207",
+    "type": 1,
+    "content": "language_10042330"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403211,
+    "title": "language_10042331",
+    "desc": "language_10042244",
+    "res": "explore_chapter3_zx_0201",
+    "type": 2,
+    "content": "language_10042332"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403212,
+    "title": "language_10042333",
+    "desc": "language_10042245",
+    "res": "explore_chapter3_zx_0202",
+    "type": 2,
+    "content": "language_10042334"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403301,
+    "title": "language_10042335",
+    "desc": "language_10042246",
+    "res": "explore_chapter3_0301",
+    "type": 1,
+    "content": "language_10042336"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403302,
+    "title": "language_10042337",
+    "desc": "language_10042247",
+    "res": "explore_chapter3_0302",
+    "type": 1,
+    "content": "language_10042338"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403303,
+    "title": "language_10042339",
+    "desc": "language_10042248",
+    "res": "explore_chapter3_0303",
+    "type": 1,
+    "content": "language_10042340"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403304,
+    "title": "language_10042341",
+    "desc": "language_10042249",
+    "res": "explore_chapter3_0304",
+    "type": 1,
+    "content": "language_10042342"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403305,
+    "title": "language_10042343",
+    "desc": "language_10042250",
+    "res": "explore_chapter3_0305",
+    "type": 1,
+    "content": "language_10042344"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403311,
+    "title": "language_10042345",
+    "desc": "language_10042251",
+    "res": "explore_chapter3_zx_0301",
+    "type": 2,
+    "content": "language_10042346"
+  },
+  {
+    "chapterId": 1403,
+    "id": 1403312,
+    "title": "language_10042347",
+    "desc": "language_10042252",
+    "res": "explore_chapter3_zx_0302",
+    "type": 2,
+    "content": "language_10042348"
+  }
+]

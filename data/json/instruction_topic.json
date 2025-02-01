@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "chapterId": 1101,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 2,
+    "chapterId": 1102,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 3,
+    "chapterId": 1103,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 4,
+    "chapterId": 1104,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 5,
+    "chapterId": 1105,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 6,
+    "chapterId": 1106,
+    "bonus": "2#2#60"
+  },
+  {
+    "id": 7,
+    "chapterId": 1107,
+    "bonus": "2#2#100"
+  }
+]

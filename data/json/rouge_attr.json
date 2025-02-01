@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1001,
+    "flag": "count1"
+  },
+  {
+    "id": 1002,
+    "flag": "count2"
+  },
+  {
+    "id": 1003,
+    "flag": "count3"
+  },
+  {
+    "id": 1004,
+    "flag": "count4"
+  },
+  {
+    "id": 1005,
+    "flag": "count5"
+  },
+  {
+    "id": 1006,
+    "flag": "count6"
+  },
+  {
+    "id": 1007,
+    "flag": "count7"
+  },
+  {
+    "id": 1008,
+    "flag": "count8"
+  },
+  {
+    "id": 1009,
+    "flag": "count9"
+  },
+  {
+    "id": 1011,
+    "flag": "priceCorrect"
+  },
+  {
+    "id": 1012,
+    "flag": "priceCorrectRatio"
+  },
+  {
+    "id": 1021,
+    "flag": "refreshCorrect"
+  },
+  {
+    "id": 1022,
+    "flag": "refreshCorrectRatio"
+  },
+  {
+    "id": 1031,
+    "flag": "refreshTimeCorrect"
+  },
+  {
+    "id": 1041,
+    "flag": "dropTimeCorrect"
+  }
+]

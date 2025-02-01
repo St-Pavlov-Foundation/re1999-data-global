@@ -1,0 +1,52 @@
+[
+  {
+    "id": 101,
+    "turnbackId": 1,
+    "name": "language_10007613",
+    "nameEn": "language_10007614",
+    "actDesc": "language_10007615",
+    "showInPopup": 1,
+    "jumpId": 0,
+    "reddotId": 1092
+  },
+  {
+    "id": 102,
+    "turnbackId": 1,
+    "name": "language_10007616",
+    "nameEn": "language_10007617",
+    "actDesc": "language_10007618",
+    "showInPopup": 1,
+    "jumpId": 0,
+    "reddotId": 1093
+  },
+  {
+    "id": 103,
+    "turnbackId": 1,
+    "name": "language_10007619",
+    "nameEn": "language_10007620",
+    "actDesc": "language_10007621",
+    "showInPopup": 1,
+    "jumpId": 52,
+    "reddotId": 1094
+  },
+  {
+    "id": 104,
+    "turnbackId": 1,
+    "name": "language_10007622",
+    "nameEn": "language_10007623",
+    "actDesc": "language_10007624",
+    "showInPopup": 0,
+    "jumpId": 0,
+    "reddotId": 1091
+  },
+  {
+    "id": 105,
+    "turnbackId": 1,
+    "name": "language_10037494",
+    "nameEn": "language_10037495",
+    "actDesc": "language_10037496",
+    "showInPopup": 1,
+    "jumpId": 0,
+    "reddotId": 1094
+  }
+]

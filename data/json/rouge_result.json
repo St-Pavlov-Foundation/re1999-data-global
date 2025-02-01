@@ -1,0 +1,326 @@
+[
+  {
+    "season": 1,
+    "id": 1,
+    "type": 1,
+    "desc": "language_10043696",
+    "priority": 0,
+    "trigger": 17,
+    "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 2,
+    "type": 2,
+    "desc": "language_10043697",
+    "priority": 1,
+    "trigger": 1,
+    "triggerParam": "20"
+  },
+  {
+    "season": 1,
+    "id": 3,
+    "type": 2,
+    "desc": "language_10043698",
+    "priority": 2,
+    "trigger": 2,
+    "triggerParam": "10"
+  },
+  {
+    "season": 1,
+    "id": 4,
+    "type": 2,
+    "desc": "language_10043699",
+    "priority": 3,
+    "trigger": 3,
+    "triggerParam": "2"
+  },
+  {
+    "season": 1,
+    "id": 5,
+    "type": 2,
+    "desc": "language_10043700",
+    "priority": 4,
+    "trigger": 4,
+    "triggerParam": "10"
+  },
+  {
+    "season": 1,
+    "id": 6,
+    "type": 3,
+    "desc": "language_10043701",
+    "priority": 1,
+    "trigger": 5,
+    "triggerParam": "10"
+  },
+  {
+    "season": 1,
+    "id": 7,
+    "type": 3,
+    "desc": "language_10043702",
+    "priority": 2,
+    "trigger": 6,
+    "triggerParam": "120"
+  },
+  {
+    "season": 1,
+    "id": 8,
+    "type": 3,
+    "desc": "language_10043703",
+    "priority": 3,
+    "trigger": 7,
+    "triggerParam": "75000"
+  },
+  {
+    "season": 1,
+    "id": 9,
+    "type": 3,
+    "desc": "language_10043704",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103201"
+  },
+  {
+    "season": 1,
+    "id": 10,
+    "type": 3,
+    "desc": "language_10043705",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103202"
+  },
+  {
+    "season": 1,
+    "id": 11,
+    "type": 3,
+    "desc": "language_10043706",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103203"
+  },
+  {
+    "season": 1,
+    "id": 12,
+    "type": 3,
+    "desc": "language_10043707",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103204"
+  },
+  {
+    "season": 1,
+    "id": 13,
+    "type": 3,
+    "desc": "language_10043708",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103301"
+  },
+  {
+    "season": 1,
+    "id": 14,
+    "type": 3,
+    "desc": "language_10043709",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103302"
+  },
+  {
+    "season": 1,
+    "id": 15,
+    "type": 3,
+    "desc": "language_10043710",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103303"
+  },
+  {
+    "season": 1,
+    "id": 16,
+    "type": 3,
+    "desc": "language_10043711",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103304"
+  },
+  {
+    "season": 1,
+    "id": 17,
+    "type": 3,
+    "desc": "language_10043712",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103305"
+  },
+  {
+    "season": 1,
+    "id": 18,
+    "type": 3,
+    "desc": "language_10043712",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103306"
+  },
+  {
+    "season": 1,
+    "id": 19,
+    "type": 3,
+    "desc": "language_10043713",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103401"
+  },
+  {
+    "season": 1,
+    "id": 20,
+    "type": 3,
+    "desc": "language_10043714",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103402"
+  },
+  {
+    "season": 1,
+    "id": 21,
+    "type": 3,
+    "desc": "language_10043715",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103403"
+  },
+  {
+    "season": 1,
+    "id": 22,
+    "type": 3,
+    "desc": "language_10043716",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103404"
+  },
+  {
+    "season": 1,
+    "id": 23,
+    "type": 3,
+    "desc": "language_10043716",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103405"
+  },
+  {
+    "season": 1,
+    "id": 24,
+    "type": 3,
+    "desc": "language_10043717",
+    "priority": 4,
+    "trigger": 8,
+    "triggerParam": "103406"
+  },
+  {
+    "season": 1,
+    "id": 25,
+    "type": 4,
+    "desc": "language_10043718",
+    "priority": 0,
+    "trigger": 20,
+    "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 26,
+    "type": 4,
+    "desc": "language_10043719",
+    "priority": 0,
+    "trigger": 18,
+    "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 27,
+    "type": 5,
+    "desc": "language_10043720",
+    "priority": 0,
+    "trigger": 19,
+    "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 28,
+    "type": 5,
+    "desc": "language_10043721",
+    "priority": 2,
+    "trigger": 11,
+    "triggerParam": "2"
+  },
+  {
+    "season": 1,
+    "id": 29,
+    "type": 5,
+    "desc": "language_10043722",
+    "priority": 3,
+    "trigger": 12,
+    "triggerParam": "3"
+  },
+  {
+    "season": 1,
+    "id": 30,
+    "type": 5,
+    "desc": "language_10043723",
+    "priority": 1,
+    "trigger": 10,
+    "triggerParam": "200"
+  },
+  {
+    "season": 1,
+    "id": 31,
+    "type": 6,
+    "desc": "language_10043724",
+    "priority": 1,
+    "trigger": 13,
+    "triggerParam": "101"
+  },
+  {
+    "season": 1,
+    "id": 32,
+    "type": 6,
+    "desc": "language_10043725",
+    "priority": 1,
+    "trigger": 13,
+    "triggerParam": "102"
+  },
+  {
+    "season": 1,
+    "id": 33,
+    "type": 6,
+    "desc": "language_10043726",
+    "priority": 1,
+    "trigger": 14,
+    "triggerParam": "101"
+  },
+  {
+    "season": 1,
+    "id": 34,
+    "type": 6,
+    "desc": "language_10043727",
+    "priority": 1,
+    "trigger": 14,
+    "triggerParam": "102"
+  },
+  {
+    "season": 1,
+    "id": 35,
+    "type": 6,
+    "desc": "language_10043728",
+    "priority": 1,
+    "trigger": 15,
+    "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 36,
+    "type": 6,
+    "desc": "language_10043729",
+    "priority": 1,
+    "trigger": 16,
+    "triggerParam": ""
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 23220101,
+    "buildingId": 22202,
+    "itemId": 232203,
+    "name": "language_10053760",
+    "useDesc": "language_10053761",
+    "desc": "language_10053762",
+    "icon": "22205",
+    "rewardIcon": "22205",
+    "rare": 4,
+    "nameEn": "Summer Sweetheart",
+    "path": "scenes/m_s07_xiaowu/prefab/building/2_2_simulate/simulate_pika_02.prefab",
+    "vehicleId": 22205
+  },
+  {
+    "id": 23220102,
+    "buildingId": 22203,
+    "itemId": 232204,
+    "name": "language_10053763",
+    "useDesc": "language_10053764",
+    "desc": "language_10053765",
+    "icon": "22206",
+    "rewardIcon": "22206",
+    "rare": 4,
+    "nameEn": "Free Drifter",
+    "path": "scenes/m_s07_xiaowu/prefab/building/2_2_simulate/simulate_huochuan_02.prefab",
+    "vehicleId": 22206
+  },
+  {
+    "id": 23220103,
+    "buildingId": 22204,
+    "itemId": 232205,
+    "name": "language_10053766",
+    "useDesc": "language_10053767",
+    "desc": "language_10053768",
+    "icon": "22207",
+    "rewardIcon": "22207",
+    "rare": 5,
+    "nameEn": "Sunchaser",
+    "path": "scenes/m_s07_xiaowu/prefab/building/2_2_simulate/simulate_zhishengji_02.prefab",
+    "vehicleId": 22207
+  }
+]

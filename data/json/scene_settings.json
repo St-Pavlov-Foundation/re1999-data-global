@@ -1,0 +1,88 @@
+[
+  {
+    "id": 1,
+    "spineOffset": [
+      0,
+      0
+    ],
+    "lightColor1": [
+      255,
+      233,
+      167,
+      159
+    ],
+    "lightColor2": [
+      131,
+      215,
+      255,
+      139
+    ],
+    "lightColor3": [
+      255,
+      182,
+      129,
+      150
+    ],
+    "lightColor4": [
+      117,
+      208,
+      255,
+      255
+    ],
+    "prefabLightStartRotation": [
+      75,
+      75,
+      75,
+      75
+    ],
+    "effectLightStartRotation": [
+      75,
+      75,
+      75,
+      75
+    ]
+  },
+  {
+    "id": 2,
+    "spineOffset": [
+      0.3,
+      0
+    ],
+    "lightColor1": [
+      255,
+      238,
+      186,
+      153
+    ],
+    "lightColor2": [
+      140,
+      219,
+      255,
+      61
+    ],
+    "lightColor3": [
+      255,
+      182,
+      130,
+      150
+    ],
+    "lightColor4": [
+      90,
+      175,
+      255,
+      100
+    ],
+    "prefabLightStartRotation": [
+      63,
+      63,
+      295,
+      295
+    ],
+    "effectLightStartRotation": [
+      63,
+      63,
+      295,
+      295
+    ]
+  }
+]

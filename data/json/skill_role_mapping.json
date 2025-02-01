@@ -1,0 +1,7510 @@
+[
+  {
+    "skillId": 30020111,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020112,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020113,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020121,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020122,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020123,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020131,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020132,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020133,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30020134,
+    "heroId": 3002
+  },
+  {
+    "skillId": 30030111,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030112,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030113,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030114,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030115,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030116,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030121,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030122,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030123,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030124,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030125,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030126,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030127,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030128,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030129,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030131,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030132,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030133,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030134,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030135,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030136,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030141,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030142,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30030143,
+    "heroId": 3003
+  },
+  {
+    "skillId": 30040111,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040112,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040113,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040114,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040115,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040116,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040117,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040118,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040119,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040121,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040122,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040123,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040124,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040125,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040126,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040131,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040132,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040133,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040134,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040135,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040136,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040141,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040142,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040143,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040144,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040151,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040152,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040153,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040154,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040155,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040156,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040157,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040158,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30040159,
+    "heroId": 3004
+  },
+  {
+    "skillId": 30050111,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050112,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050113,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050114,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050115,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050116,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050121,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050122,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050123,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050124,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050125,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050126,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050131,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050132,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050133,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050134,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050135,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050136,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050141,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30050142,
+    "heroId": 3005
+  },
+  {
+    "skillId": 30060111,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060112,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060113,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060114,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060115,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060116,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060117,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060118,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060119,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060121,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060122,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060123,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060124,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060125,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060126,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060131,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060132,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060133,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060134,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060135,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060136,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060141,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060142,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30060151,
+    "heroId": 3006
+  },
+  {
+    "skillId": 30070111,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070112,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070113,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070114,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070115,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070116,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070121,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070122,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070123,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070124,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070125,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070126,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070131,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070132,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070133,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070134,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070135,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070136,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070141,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070142,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30070143,
+    "heroId": 3007
+  },
+  {
+    "skillId": 30080111,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080112,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080113,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080121,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080122,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080123,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080131,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080132,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080133,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080134,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080135,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080136,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080141,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080142,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30080143,
+    "heroId": 3008
+  },
+  {
+    "skillId": 30090111,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090112,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090113,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090114,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090115,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090116,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090117,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090118,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090119,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090121,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090122,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090123,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090124,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090125,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090126,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090131,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090132,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090133,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090134,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090135,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090136,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090141,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090142,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30090143,
+    "heroId": 3009
+  },
+  {
+    "skillId": 30100111,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100112,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100113,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100114,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100115,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100116,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100121,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100122,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100123,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100124,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100125,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100126,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100131,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100132,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100133,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100134,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100135,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100136,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100141,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100142,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30100143,
+    "heroId": 3010
+  },
+  {
+    "skillId": 30110111,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110112,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110113,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110114,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110115,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110116,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110121,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110122,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110123,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110124,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110125,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110126,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110131,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110132,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110133,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110134,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110135,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110136,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110141,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110142,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30110143,
+    "heroId": 3011
+  },
+  {
+    "skillId": 30120111,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120112,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120113,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120114,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120115,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120116,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120121,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120122,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120123,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120124,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120125,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120126,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120131,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120132,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120133,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120134,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120135,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120136,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120141,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30120142,
+    "heroId": 3012
+  },
+  {
+    "skillId": 30130111,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130112,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130113,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130114,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130115,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130116,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130121,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130122,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130123,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130124,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130125,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130126,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130131,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130132,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130133,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130134,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130135,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130136,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130141,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30130142,
+    "heroId": 3013
+  },
+  {
+    "skillId": 30140111,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140112,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140113,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140114,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140115,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140116,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140121,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140122,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140123,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140124,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140125,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140126,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140131,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140132,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140133,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140134,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140135,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140136,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140141,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30140142,
+    "heroId": 3014
+  },
+  {
+    "skillId": 30150111,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150112,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150113,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150114,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150115,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150116,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150121,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150122,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150123,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150124,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150125,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150126,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150131,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150132,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150133,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150134,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150135,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150136,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150141,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150142,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30150151,
+    "heroId": 3015
+  },
+  {
+    "skillId": 30160111,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160112,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160113,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160114,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160115,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160116,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160121,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160122,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160123,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160124,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160125,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160126,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160131,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160132,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160133,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160134,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160135,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160136,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160141,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160142,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30160143,
+    "heroId": 3016
+  },
+  {
+    "skillId": 30170111,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170112,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170113,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170114,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170115,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170116,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170121,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170122,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170123,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170124,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170125,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170126,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170131,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170132,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170133,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170134,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170135,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170136,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170141,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170142,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30170143,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30180111,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180112,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180113,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180114,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180115,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180116,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180121,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180122,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180123,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180131,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180132,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180133,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180134,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180135,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180136,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180141,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180142,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30180143,
+    "heroId": 3018
+  },
+  {
+    "skillId": 30190111,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190112,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190113,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190121,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190122,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190123,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190131,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190132,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190133,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190134,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190135,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190136,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190141,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190142,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30190143,
+    "heroId": 3019
+  },
+  {
+    "skillId": 30200111,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200112,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200113,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200114,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200115,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200116,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200121,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200122,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200123,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200131,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200132,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200133,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200134,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200135,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200136,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200141,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200142,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30200143,
+    "heroId": 3020
+  },
+  {
+    "skillId": 30220111,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220112,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220113,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220114,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220115,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220116,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220121,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220122,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220123,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220124,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220125,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220126,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220131,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220132,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220133,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220134,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220135,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220136,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220137,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220138,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220141,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220142,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30220143,
+    "heroId": 3022
+  },
+  {
+    "skillId": 30230111,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230112,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230113,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230114,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230115,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230116,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230121,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230122,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230123,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230124,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230125,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230126,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230131,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230132,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230133,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230134,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230135,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230136,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230137,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230141,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230142,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30230143,
+    "heroId": 3023
+  },
+  {
+    "skillId": 30240111,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240112,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240113,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240114,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240115,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240116,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240121,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240122,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240123,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240124,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240125,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240126,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240131,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240132,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240133,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240134,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240135,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240136,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240141,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240142,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30240143,
+    "heroId": 3024
+  },
+  {
+    "skillId": 30250111,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250112,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250113,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250114,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250115,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250116,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250121,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250122,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250123,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250124,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250125,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250126,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250131,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250132,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250133,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250134,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250135,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250136,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250141,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250142,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250143,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30250144,
+    "heroId": 3025
+  },
+  {
+    "skillId": 30260111,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260112,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260113,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260114,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260115,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260116,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260121,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260122,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260123,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260124,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260125,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260126,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260131,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260132,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260133,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260134,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260135,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260136,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260141,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30260142,
+    "heroId": 3026
+  },
+  {
+    "skillId": 30270111,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270112,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270113,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270114,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270115,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270116,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270121,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270122,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270123,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270124,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270125,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270126,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270131,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270132,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270133,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270134,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270135,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270136,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270141,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30270142,
+    "heroId": 3027
+  },
+  {
+    "skillId": 30280111,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280112,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280113,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280114,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280115,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280116,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280121,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280122,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280123,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280124,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280125,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280126,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280131,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280132,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280133,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280134,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280135,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280136,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280141,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30280142,
+    "heroId": 3028
+  },
+  {
+    "skillId": 30300111,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300112,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300113,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300114,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300115,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300116,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300121,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300122,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300123,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300124,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300125,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300126,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300131,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300132,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300133,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300134,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300135,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300136,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300141,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30300142,
+    "heroId": 3030
+  },
+  {
+    "skillId": 30310111,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310112,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310113,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310114,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310115,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310116,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310121,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310122,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310123,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310131,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310132,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310133,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310134,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310135,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310136,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310141,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30310142,
+    "heroId": 3031
+  },
+  {
+    "skillId": 30320111,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320112,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320113,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320114,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320115,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320116,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320117,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320118,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320119,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320121,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320122,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320123,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320124,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320125,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320126,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320131,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320132,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320133,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320134,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320135,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320136,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320141,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320142,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30320143,
+    "heroId": 3032
+  },
+  {
+    "skillId": 30330111,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330112,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330113,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330114,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330115,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330116,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330121,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330122,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330123,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330124,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330125,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330126,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330131,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330132,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330133,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330134,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330135,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330136,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330141,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30330142,
+    "heroId": 3033
+  },
+  {
+    "skillId": 30340111,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340112,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340113,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340114,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340115,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340116,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340117,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340118,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340119,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340121,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340122,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340123,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340131,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340132,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340133,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340134,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340135,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340136,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340141,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30340142,
+    "heroId": 3034
+  },
+  {
+    "skillId": 30350111,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350112,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350113,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350114,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350115,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350116,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350121,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350122,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350123,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350124,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350125,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350126,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350131,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350132,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350133,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350134,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350135,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350136,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350141,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350142,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30350143,
+    "heroId": 3035
+  },
+  {
+    "skillId": 30360111,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360112,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360113,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360114,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360115,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360116,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360121,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360122,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360123,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360124,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360125,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360126,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360131,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360132,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360133,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360134,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360135,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360136,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360141,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30360142,
+    "heroId": 3036
+  },
+  {
+    "skillId": 30370111,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370112,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370113,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370114,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370115,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370116,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370121,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370122,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370123,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370124,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370125,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370126,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370131,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370132,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370133,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370134,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370135,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370136,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370141,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370142,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30370143,
+    "heroId": 3037
+  },
+  {
+    "skillId": 30380111,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380112,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380113,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380114,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380115,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380116,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380121,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380122,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380123,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380124,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380125,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380126,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380131,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380132,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380133,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380134,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380135,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380136,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380141,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380142,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380143,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30380151,
+    "heroId": 3038
+  },
+  {
+    "skillId": 30390111,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390112,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390113,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390114,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390115,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390116,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390117,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390118,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390119,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390121,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390122,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390123,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390124,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390125,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390126,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390131,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390132,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390133,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390134,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390141,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390142,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390143,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390144,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30390145,
+    "heroId": 3039
+  },
+  {
+    "skillId": 30400111,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400112,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400113,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400114,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400115,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400116,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400121,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400122,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400123,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400124,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400125,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400126,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400131,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400132,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400133,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400134,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400135,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400136,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400141,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30400142,
+    "heroId": 3040
+  },
+  {
+    "skillId": 30410111,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410112,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410113,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410114,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410115,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410116,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410121,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410122,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410123,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410124,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410125,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410126,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410131,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410132,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410133,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410134,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410141,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410142,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30410143,
+    "heroId": 3041
+  },
+  {
+    "skillId": 30420111,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420112,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420113,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420114,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420115,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420116,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420121,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420122,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420123,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420124,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420125,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420126,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420131,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420132,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420133,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420134,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420135,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420136,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420141,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30420142,
+    "heroId": 3042
+  },
+  {
+    "skillId": 30430111,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430112,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430113,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430114,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430115,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430116,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430121,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430122,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430123,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430124,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430125,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430126,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430131,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430132,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430133,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430134,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430135,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430136,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430141,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430142,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430143,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30440111,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440112,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440113,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440114,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440115,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440116,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440121,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440122,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440123,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440124,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440125,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440126,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440131,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440132,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440133,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440134,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440135,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440136,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440141,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30440142,
+    "heroId": 3044
+  },
+  {
+    "skillId": 30450111,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450112,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450113,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450114,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450115,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450116,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450121,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450122,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450123,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450124,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450125,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450126,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450131,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450132,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450133,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450134,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450135,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450136,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450141,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30450142,
+    "heroId": 3045
+  },
+  {
+    "skillId": 30460111,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460112,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460113,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460114,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460115,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460116,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460121,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460122,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460123,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460124,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460125,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460126,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460131,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460132,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460133,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460134,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460135,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460136,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460141,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30460142,
+    "heroId": 3046
+  },
+  {
+    "skillId": 30470111,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470112,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470113,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470114,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470115,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470116,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470117,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470118,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470119,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470121,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470122,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470123,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470124,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470125,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470126,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470131,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470132,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470133,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470134,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470141,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470142,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470143,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30470144,
+    "heroId": 3047
+  },
+  {
+    "skillId": 30480111,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480112,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480113,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480114,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480115,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480116,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480121,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480122,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480123,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480124,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480125,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480126,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480131,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480132,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480133,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480134,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480135,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480141,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480142,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480143,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480144,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30480145,
+    "heroId": 3048
+  },
+  {
+    "skillId": 30490111,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490112,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490113,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490114,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490115,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490116,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490121,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490122,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490123,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490124,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490125,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490126,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490131,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490132,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490133,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490134,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490135,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490136,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490141,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490142,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30490143,
+    "heroId": 3049
+  },
+  {
+    "skillId": 30500111,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500112,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500113,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500114,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500115,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500116,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500121,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500122,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500123,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500124,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500125,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500126,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500131,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500132,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500133,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500134,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500135,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500136,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500141,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30500142,
+    "heroId": 3050
+  },
+  {
+    "skillId": 30510111,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510112,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510113,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510114,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510115,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510116,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510121,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510122,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510123,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510124,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510125,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510126,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510131,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510132,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510133,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510134,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510135,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510136,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510141,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510142,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30510143,
+    "heroId": 3051
+  },
+  {
+    "skillId": 30520111,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520112,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520113,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520114,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520115,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520116,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520121,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520122,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520123,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520124,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520125,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520126,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520131,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520132,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520133,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520134,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520135,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520136,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520141,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520142,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520143,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520151,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520152,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520153,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520154,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520155,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30520156,
+    "heroId": 3052
+  },
+  {
+    "skillId": 30530111,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530112,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530113,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530114,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530115,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530116,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530121,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530122,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530123,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530124,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530125,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530126,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530131,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530132,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530141,
+    "heroId": 3053
+  },
+  {
+    "skillId": 305301411,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530142,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530143,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530144,
+    "heroId": 3053
+  },
+  {
+    "skillId": 305301441,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30530145,
+    "heroId": 3053
+  },
+  {
+    "skillId": 305301451,
+    "heroId": 3053
+  },
+  {
+    "skillId": 30540111,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540112,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540113,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540114,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540115,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540116,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540121,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540122,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540123,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540124,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540125,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540126,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540131,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540132,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540133,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540134,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540135,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540136,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540141,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30540142,
+    "heroId": 3054
+  },
+  {
+    "skillId": 30550111,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550112,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550113,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550114,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550115,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550116,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550117,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550118,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550119,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550121,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550122,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550123,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550124,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550125,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550126,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550131,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550132,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550133,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550134,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550135,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550136,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550141,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30550142,
+    "heroId": 3055
+  },
+  {
+    "skillId": 30560111,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560112,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560113,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560114,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560115,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560116,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560121,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560122,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560123,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560124,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560125,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560126,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560131,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560132,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560133,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560141,
+    "heroId": 3056
+  },
+  {
+    "skillId": 305601411,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560142,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560143,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30560144,
+    "heroId": 3056
+  },
+  {
+    "skillId": 305601441,
+    "heroId": 3056
+  },
+  {
+    "skillId": 30570111,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570112,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570113,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570114,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570115,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570116,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570121,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570122,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570123,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570124,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570125,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570126,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570131,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570132,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570133,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570134,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570135,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570141,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30570142,
+    "heroId": 3057
+  },
+  {
+    "skillId": 30580111,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580112,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580113,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580114,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580115,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580116,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580121,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580122,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580123,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580124,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580125,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580126,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580131,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580132,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580133,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580134,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580135,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580136,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580141,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30580142,
+    "heroId": 3058
+  },
+  {
+    "skillId": 30590111,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590112,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590113,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590114,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590115,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590116,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590121,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590122,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590123,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590124,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590125,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590126,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590131,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590132,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590133,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590134,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590141,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30590142,
+    "heroId": 3059
+  },
+  {
+    "skillId": 30600111,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600112,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600113,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600114,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600115,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600116,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600121,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600122,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600123,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600124,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600125,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600126,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600131,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600132,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600133,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600134,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600141,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600142,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30600143,
+    "heroId": 3060
+  },
+  {
+    "skillId": 30610111,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610112,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610113,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610114,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610115,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610116,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610121,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610122,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610123,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610124,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610125,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610126,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610131,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610132,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610133,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610134,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610141,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610142,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30610143,
+    "heroId": 3061
+  },
+  {
+    "skillId": 30620111,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620112,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620113,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620114,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620115,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620116,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620121,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620122,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620123,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620124,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620125,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620126,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620131,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620132,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620133,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620134,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620141,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620142,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620143,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620151,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30620152,
+    "heroId": 3062
+  },
+  {
+    "skillId": 30630111,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630112,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630113,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630114,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630115,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630116,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630121,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630122,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630123,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630124,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630125,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630126,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630131,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630132,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630133,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630134,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630141,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630142,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30630143,
+    "heroId": 3063
+  },
+  {
+    "skillId": 30640111,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640112,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640113,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640114,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640115,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640116,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640117,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640118,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640119,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640121,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640122,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640123,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640124,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640125,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640126,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640131,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640132,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640133,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640134,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640141,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640142,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30640143,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30990111,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990112,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990113,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990121,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990122,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990123,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990131,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990132,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990133,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990134,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990135,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30990136,
+    "heroId": 3099
+  },
+  {
+    "skillId": 30720111,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720112,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720113,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720114,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720115,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720116,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720121,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720122,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720123,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720131,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720132,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720133,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720134,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720141,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720142,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720143,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30720144,
+    "heroId": 3072
+  },
+  {
+    "skillId": 30710111,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710112,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710113,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710114,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710115,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710116,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710117,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710118,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710119,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710121,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710122,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710123,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710124,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710125,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710126,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710131,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710132,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710133,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710141,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710142,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30710143,
+    "heroId": 3071
+  },
+  {
+    "skillId": 30700111,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700112,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700113,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700114,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700115,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700116,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700117,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700118,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700119,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700121,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700122,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700123,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700124,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700125,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700126,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700127,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700128,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700129,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700131,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700132,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700133,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700134,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700135,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700136,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700137,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700138,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700141,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700142,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700143,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700144,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700151,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700161,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700162,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700163,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700171,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700172,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700173,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700181,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700182,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700183,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700184,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700185,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700186,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700191,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700192,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700193,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700194,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700195,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700196,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700201,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700202,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30700203,
+    "heroId": 3070
+  },
+  {
+    "skillId": 30640151,
+    "heroId": 3064
+  },
+  {
+    "skillId": 30170137,
+    "heroId": 3017
+  },
+  {
+    "skillId": 30430127,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30430128,
+    "heroId": 3043
+  },
+  {
+    "skillId": 30790111,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790112,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790113,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790121,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790122,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790123,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790124,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790125,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790126,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790131,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790132,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790133,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790134,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790141,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790142,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790143,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790144,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30790151,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30660111,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660112,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660113,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660121,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660122,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660123,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660131,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660132,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660133,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660141,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660142,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660143,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660151,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660161,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660162,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660181,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660182,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660183,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660191,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660192,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30660193,
+    "heroId": 3066
+  },
+  {
+    "skillId": 30750111,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750112,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750113,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750114,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750115,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750116,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750121,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750122,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750123,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750124,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750125,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750126,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750131,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750132,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750133,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750134,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750141,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750142,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750143,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750151,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30750152,
+    "heroId": 3075
+  },
+  {
+    "skillId": 30730111,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730112,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730113,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730114,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730115,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730116,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730117,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730118,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730119,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730121,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730122,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730123,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730124,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730125,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730126,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730127,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730128,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730129,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730131,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730132,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730133,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730141,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730144,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730142,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30730143,
+    "heroId": 3073
+  },
+  {
+    "skillId": 30760111,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760112,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760113,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760114,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760115,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760116,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760117,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760118,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760119,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760121,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760122,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760123,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760124,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760125,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760126,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760131,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760132,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760141,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760144,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760142,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30760143,
+    "heroId": 3076
+  },
+  {
+    "skillId": 30740111,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740112,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740113,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740114,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740115,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740116,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740117,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740118,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740119,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740121,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740122,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740123,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740124,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740125,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740126,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740127,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740128,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740129,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740131,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740132,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740133,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740141,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740142,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740143,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740144,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740145,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740146,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740151,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740161,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740162,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740163,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740164,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740171,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740172,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740173,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740174,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740191,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740192,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740193,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740194,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740195,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740196,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740197,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30740198,
+    "heroId": 3074
+  },
+  {
+    "skillId": 30840111,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840112,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840113,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840114,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840115,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840116,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840121,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840122,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840123,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401211,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401221,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401231,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401212,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401222,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401232,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401213,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401223,
+    "heroId": 3084
+  },
+  {
+    "skillId": 308401233,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840131,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840132,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840141,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840142,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840143,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840144,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840145,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840151,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840152,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840153,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840154,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840161,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30840171,
+    "heroId": 3084
+  },
+  {
+    "skillId": 30820111,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820112,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820113,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820114,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820115,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820116,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820121,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820122,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820123,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820124,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820125,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820126,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820131,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820132,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820133,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820134,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820141,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820142,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820143,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820144,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30820145,
+    "heroId": 3082
+  },
+  {
+    "skillId": 30830111,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830112,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830113,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830114,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830115,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830116,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830117,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830118,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830119,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830121,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830122,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830123,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830124,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830125,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830126,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830127,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830128,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830129,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830131,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830132,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830141,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830142,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830151,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830161,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830162,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830163,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830171,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830172,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830173,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830174,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830175,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830181,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830182,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830183,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830184,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30830185,
+    "heroId": 3083
+  },
+  {
+    "skillId": 30650111,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650112,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650113,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650114,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650115,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650116,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650121,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650122,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650123,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650124,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650125,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650126,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650131,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650132,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650141,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650142,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650151,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650161,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650162,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30650163,
+    "heroId": 3065
+  },
+  {
+    "skillId": 30810111,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810112,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810113,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810114,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810115,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810116,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810117,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810118,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810119,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810181,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810182,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810183,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810184,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810185,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810186,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810121,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810122,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810123,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810131,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810132,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810133,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810134,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810141,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810142,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810143,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810144,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810145,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810151,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810161,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810162,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810163,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810164,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810165,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810171,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810172,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810173,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30810174,
+    "heroId": 3081
+  },
+  {
+    "skillId": 30780111,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780112,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780113,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780114,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780115,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780116,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780117,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780118,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780119,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780121,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780122,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780123,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780124,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780125,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780126,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780127,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780128,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780129,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780131,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780132,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780141,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780151,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30780161,
+    "heroId": 3078
+  },
+  {
+    "skillId": 30870111,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870112,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870113,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870114,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870115,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870116,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870117,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870118,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870119,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870121,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870122,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870123,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870131,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870132,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870133,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870134,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870135,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870136,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870141,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870151,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870161,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870171,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870181,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870191,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870201,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870202,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870203,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870204,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870205,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30870206,
+    "heroId": 3087
+  },
+  {
+    "skillId": 30770111,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770112,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770113,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770114,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770115,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770116,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770117,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770118,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770119,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770121,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770122,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770123,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770124,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770125,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770126,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770127,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770128,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770129,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770161,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770162,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770163,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770131,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770132,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770141,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770142,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770143,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770144,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770145,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770146,
+    "heroId": 3077
+  },
+  {
+    "skillId": 30770147,
+    "heroId": 3077
+  },
+  {
+    "skillId": 307701311,
+    "heroId": 3077
+  },
+  {
+    "skillId": 307701321,
+    "heroId": 3077
+  },
+  {
+    "skillId": 307901311,
+    "heroId": 3079
+  },
+  {
+    "skillId": 307901321,
+    "heroId": 3079
+  },
+  {
+    "skillId": 307901331,
+    "heroId": 3079
+  },
+  {
+    "skillId": 307901341,
+    "heroId": 3079
+  },
+  {
+    "skillId": 307901431,
+    "heroId": 3079
+  },
+  {
+    "skillId": 30880111,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880112,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880113,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880114,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880115,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880116,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880121,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880122,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880123,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880124,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880125,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880126,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880131,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880132,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880133,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880141,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880151,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880161,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880162,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880163,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880164,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880171,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880172,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880181,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30880182,
+    "heroId": 3088
+  },
+  {
+    "skillId": 30860111,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860112,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860113,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861111,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861112,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861113,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860121,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860122,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860123,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861121,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861122,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861123,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860131,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861131,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860132,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861132,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860133,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861133,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860134,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861134,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860141,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861141,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860142,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861142,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860143,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861143,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860151,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860152,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860153,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860154,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860155,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860156,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860161,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860171,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861171,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860172,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861172,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860173,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861173,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860174,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861174,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860175,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861175,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30860176,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30861176,
+    "heroId": 3086
+  },
+  {
+    "skillId": 30910111,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910112,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910113,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910121,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910122,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910123,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910131,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910132,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910133,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910134,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910141,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910142,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910143,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910151,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30910161,
+    "heroId": 3091
+  },
+  {
+    "skillId": 30940111,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940112,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940113,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940121,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940122,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940123,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940124,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940125,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940126,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940131,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940132,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940141,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940142,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940143,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940151,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940161,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940162,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940171,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30940172,
+    "heroId": 3094
+  },
+  {
+    "skillId": 30960111,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960112,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960113,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960114,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960115,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960116,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960121,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960122,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960123,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960124,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960125,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960126,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960131,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960132,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960133,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960134,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960141,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960142,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960143,
+    "heroId": 3096
+  },
+  {
+    "skillId": 30960151,
+    "heroId": 3096
+  }
+]

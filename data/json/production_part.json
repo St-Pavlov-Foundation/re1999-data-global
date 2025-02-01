@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "language_10022626",
+    "nameEn": "Dust Bell Tower",
+    "productionLines": [
+      1,
+      2,
+      3
+    ],
+    "cameraParam": "6.115#0.360#1.039#0.629",
+    "audio": 20009042,
+    "changeAudio": 20009046
+  },
+  {
+    "id": 2,
+    "name": "language_10022627",
+    "nameEn": "Sharpodonty Market",
+    "productionLines": [
+      4,
+      5,
+      6
+    ],
+    "cameraParam": "0.303#0.415#0.659#0.426",
+    "audio": 20009041,
+    "changeAudio": 0
+  },
+  {
+    "id": 3,
+    "name": "language_10022628",
+    "nameEn": "Wishing Spring",
+    "productionLines": [
+      7
+    ],
+    "cameraParam": "0.019#0.711#0.599#0.237",
+    "audio": 20009043,
+    "changeAudio": 0
+  }
+]

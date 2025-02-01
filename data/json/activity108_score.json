@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "grade": "D",
+    "minScore": 0,
+    "maxScore": 49
+  },
+  {
+    "id": 2,
+    "grade": "C",
+    "minScore": 50,
+    "maxScore": 69
+  },
+  {
+    "id": 3,
+    "grade": "B",
+    "minScore": 70,
+    "maxScore": 89
+  },
+  {
+    "id": 4,
+    "grade": "A",
+    "minScore": 90,
+    "maxScore": 100
+  }
+]

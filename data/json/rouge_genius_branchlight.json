@@ -1,0 +1,394 @@
+[
+  {
+    "id": 1,
+    "talent": 999,
+    "lightname": "#simage_light1",
+    "pos": "",
+    "order": 1
+  },
+  {
+    "id": 2,
+    "talent": 999,
+    "lightname": "#simage_light2",
+    "pos": "2|3",
+    "order": 2
+  },
+  {
+    "id": 3,
+    "talent": 999,
+    "lightname": "#simage_light2_2",
+    "pos": "2",
+    "order": 3
+  },
+  {
+    "id": 4,
+    "talent": 999,
+    "lightname": "#simage_light2_3",
+    "pos": "3",
+    "order": 3
+  },
+  {
+    "id": 5,
+    "talent": 999,
+    "lightname": "#simage_light2_1",
+    "pos": "4",
+    "order": 4
+  },
+  {
+    "id": 6,
+    "talent": 999,
+    "lightname": "#simage_light3",
+    "pos": "5",
+    "order": 5
+  },
+  {
+    "id": 7,
+    "talent": 999,
+    "lightname": "#simage_light4",
+    "pos": "6|7",
+    "order": 6
+  },
+  {
+    "id": 8,
+    "talent": 999,
+    "lightname": "#simage_light4_2",
+    "pos": "6",
+    "order": 7
+  },
+  {
+    "id": 9,
+    "talent": 999,
+    "lightname": "#simage_light4_3",
+    "pos": "7",
+    "order": 7
+  },
+  {
+    "id": 10,
+    "talent": 999,
+    "lightname": "#simage_light4_1",
+    "pos": "8",
+    "order": 8
+  },
+  {
+    "id": 11,
+    "talent": 999,
+    "lightname": "#simage_light5",
+    "pos": "8",
+    "order": 9
+  },
+  {
+    "id": 12,
+    "talent": 1,
+    "lightname": "#simage_light1",
+    "pos": "105|109",
+    "order": 1
+  },
+  {
+    "id": 13,
+    "talent": 1,
+    "lightname": "#simage_light2_1",
+    "pos": "105",
+    "order": 2
+  },
+  {
+    "id": 14,
+    "talent": 1,
+    "lightname": "#simage_light2_2",
+    "pos": "109",
+    "order": 2
+  },
+  {
+    "id": 15,
+    "talent": 1,
+    "lightname": "#simage_light3_1",
+    "pos": "108",
+    "order": 3
+  },
+  {
+    "id": 16,
+    "talent": 1,
+    "lightname": "#simage_light3_2",
+    "pos": "112",
+    "order": 3
+  },
+  {
+    "id": 17,
+    "talent": 2,
+    "lightname": "#simage_light1",
+    "pos": "204|207|210|213",
+    "order": 1
+  },
+  {
+    "id": 18,
+    "talent": 2,
+    "lightname": "#simage_light2",
+    "pos": "204",
+    "order": 2
+  },
+  {
+    "id": 19,
+    "talent": 2,
+    "lightname": "#simage_light3",
+    "pos": "207",
+    "order": 2
+  },
+  {
+    "id": 20,
+    "talent": 2,
+    "lightname": "#simage_light4",
+    "pos": "210",
+    "order": 2
+  },
+  {
+    "id": 21,
+    "talent": 2,
+    "lightname": "#simage_light5",
+    "pos": "213",
+    "order": 2
+  },
+  {
+    "id": 22,
+    "talent": 3,
+    "lightname": "#simage_light1",
+    "pos": "304",
+    "order": 1
+  },
+  {
+    "id": 23,
+    "talent": 3,
+    "lightname": "#simage_light2_1",
+    "pos": "307",
+    "order": 2
+  },
+  {
+    "id": 24,
+    "talent": 3,
+    "lightname": "#simage_light2_2",
+    "pos": "310",
+    "order": 2
+  },
+  {
+    "id": 25,
+    "talent": 3,
+    "lightname": "#simage_light3_1",
+    "pos": "307#313",
+    "order": 3
+  },
+  {
+    "id": 26,
+    "talent": 3,
+    "lightname": "#simage_light3_2",
+    "pos": "310#313",
+    "order": 3
+  },
+  {
+    "id": 27,
+    "talent": 3,
+    "lightname": "#simage_light4",
+    "pos": "313",
+    "order": 4
+  },
+  {
+    "id": 28,
+    "talent": 4,
+    "lightname": "#simage_light1_1",
+    "pos": "403#407|403#412",
+    "order": 1
+  },
+  {
+    "id": 29,
+    "talent": 4,
+    "lightname": "#simage_light1_2",
+    "pos": "405#407|405#412",
+    "order": 1
+  },
+  {
+    "id": 30,
+    "talent": 4,
+    "lightname": "#simage_light2_1",
+    "pos": "407",
+    "order": 2
+  },
+  {
+    "id": 31,
+    "talent": 4,
+    "lightname": "#simage_light2_2",
+    "pos": "412",
+    "order": 2
+  },
+  {
+    "id": 32,
+    "talent": 4,
+    "lightname": "#simage_light3_1",
+    "pos": "411",
+    "order": 3
+  },
+  {
+    "id": 33,
+    "talent": 4,
+    "lightname": "#simage_light3_2",
+    "pos": "416",
+    "order": 3
+  },
+  {
+    "id": 34,
+    "talent": 5,
+    "lightname": "#simage_light1",
+    "pos": "504|509",
+    "order": 1
+  },
+  {
+    "id": 35,
+    "talent": 5,
+    "lightname": "#simage_light2_1",
+    "pos": "504",
+    "order": 2
+  },
+  {
+    "id": 36,
+    "talent": 5,
+    "lightname": "#simage_light2_2",
+    "pos": "509",
+    "order": 2
+  },
+  {
+    "id": 37,
+    "talent": 5,
+    "lightname": "#simage_light3_1",
+    "pos": "506",
+    "order": 3
+  },
+  {
+    "id": 38,
+    "talent": 5,
+    "lightname": "#simage_light3_2",
+    "pos": "511",
+    "order": 3
+  },
+  {
+    "id": 39,
+    "talent": 6,
+    "lightname": "#simage_light1",
+    "pos": "604",
+    "order": 1
+  },
+  {
+    "id": 40,
+    "talent": 6,
+    "lightname": "#simage_light2_1",
+    "pos": "607",
+    "order": 2
+  },
+  {
+    "id": 41,
+    "talent": 6,
+    "lightname": "#simage_light2_2",
+    "pos": "610",
+    "order": 2
+  },
+  {
+    "id": 42,
+    "talent": 6,
+    "lightname": "#simage_light3_1",
+    "pos": "607#613",
+    "order": 3
+  },
+  {
+    "id": 43,
+    "talent": 6,
+    "lightname": "#simage_light3_2",
+    "pos": "610#613",
+    "order": 3
+  },
+  {
+    "id": 44,
+    "talent": 6,
+    "lightname": "#simage_light4",
+    "pos": "613",
+    "order": 4
+  },
+  {
+    "id": 45,
+    "talent": 7,
+    "lightname": "#simage_light1",
+    "pos": "704|707",
+    "order": 1
+  },
+  {
+    "id": 46,
+    "talent": 7,
+    "lightname": "#simage_light2_1",
+    "pos": "704",
+    "order": 2
+  },
+  {
+    "id": 47,
+    "talent": 7,
+    "lightname": "#simage_light2_2",
+    "pos": "707",
+    "order": 2
+  },
+  {
+    "id": 48,
+    "talent": 7,
+    "lightname": "#simage_light3_1",
+    "pos": "704#710",
+    "order": 3
+  },
+  {
+    "id": 49,
+    "talent": 7,
+    "lightname": "#simage_light3_2",
+    "pos": "707#710",
+    "order": 3
+  },
+  {
+    "id": 50,
+    "talent": 7,
+    "lightname": "#simage_light4",
+    "pos": "710",
+    "order": 4
+  },
+  {
+    "id": 51,
+    "talent": 7,
+    "lightname": "#simage_light5",
+    "pos": "713",
+    "order": 5
+  },
+  {
+    "id": 52,
+    "talent": 8,
+    "lightname": "#simage_light1",
+    "pos": "804|810",
+    "order": 1
+  },
+  {
+    "id": 53,
+    "talent": 8,
+    "lightname": "#simage_light2_1",
+    "pos": "804",
+    "order": 2
+  },
+  {
+    "id": 54,
+    "talent": 8,
+    "lightname": "#simage_light2_2",
+    "pos": "810",
+    "order": 2
+  },
+  {
+    "id": 55,
+    "talent": 8,
+    "lightname": "#simage_light3_1",
+    "pos": "807",
+    "order": 3
+  },
+  {
+    "id": 56,
+    "talent": 8,
+    "lightname": "#simage_light3_2",
+    "pos": "813",
+    "order": 3
+  }
+]

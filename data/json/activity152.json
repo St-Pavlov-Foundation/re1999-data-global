@@ -1,0 +1,67 @@
+[
+  {
+    "activityId": 11621,
+    "presentId": 1,
+    "presentName": "language_10022186",
+    "presentIcon": "v1a6_antique_icon_1",
+    "presentSign": "3009",
+    "roleIcon": "300901",
+    "roleName": "language_10005338",
+    "roleNameEn": "Sotheby",
+    "dialog": "language_10028660",
+    "bonus": "18#161001#1",
+    "acceptDate": "2024-05-30 20:00:00"
+  },
+  {
+    "activityId": 11621,
+    "presentId": 2,
+    "presentName": "language_10022188",
+    "presentIcon": "v1a6_antique_icon_2",
+    "presentSign": "3003",
+    "roleIcon": "300301",
+    "roleName": "language_10003434",
+    "roleNameEn": "Druvis III",
+    "dialog": "language_10028661",
+    "bonus": "18#161002#1",
+    "acceptDate": "2024-05-30 21:00:00"
+  },
+  {
+    "activityId": 11621,
+    "presentId": 3,
+    "presentName": "language_10022190",
+    "presentIcon": "v1a6_antique_icon_3",
+    "presentSign": "3004",
+    "roleIcon": "300401",
+    "roleName": "language_10005333",
+    "roleNameEn": "Lilya",
+    "dialog": "language_10028662",
+    "bonus": "18#161003#1",
+    "acceptDate": "2024-05-30 22:00:00"
+  },
+  {
+    "activityId": 11621,
+    "presentId": 4,
+    "presentName": "language_10022192",
+    "presentIcon": "v1a6_antique_icon_4",
+    "presentSign": "3039",
+    "roleIcon": "303901",
+    "roleName": "language_10005824",
+    "roleNameEn": "An-an Lee",
+    "dialog": "language_10028663",
+    "bonus": "18#161004#1",
+    "acceptDate": "2024-05-30 23:00:00"
+  },
+  {
+    "activityId": 11621,
+    "presentId": 5,
+    "presentName": "language_10022194",
+    "presentIcon": "v1a6_antique_icon_5",
+    "presentSign": "501201",
+    "roleIcon": "501201",
+    "roleName": "language_10028664",
+    "roleNameEn": "Madam Z",
+    "dialog": "language_10028665",
+    "bonus": "18#161005#1",
+    "acceptDate": "2024-05-30 24:00:00"
+  }
+]

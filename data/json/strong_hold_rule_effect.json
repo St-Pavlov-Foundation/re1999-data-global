@@ -1,0 +1,62 @@
+[
+  {
+    "id": 22210301,
+    "effectName": "AddExtraBattleByInStationChessPieceCost",
+    "effectParams": "yellow,blue#1"
+  },
+  {
+    "id": 22210302,
+    "effectName": "AddExtraBattleByInStationChessPieceCost",
+    "effectParams": "red,green#1"
+  },
+  {
+    "id": 22220402,
+    "effectName": "AddExtraBattleByInStationChessPieceCost",
+    "effectParams": "yellow,blue#2"
+  },
+  {
+    "id": 22220403,
+    "effectName": "AddExtraBattleByInStationChessPieceCost",
+    "effectParams": "red,green#2"
+  },
+  {
+    "id": 22220301,
+    "effectName": "AddExtraBattleToChessPiece",
+    "effectParams": "1"
+  },
+  {
+    "id": 22220401,
+    "effectName": "AddExtraBattleToChessPiece",
+    "effectParams": "2"
+  },
+  {
+    "id": 22230501,
+    "effectName": "StrongHoldFullAddExtraBattle",
+    "effectParams": "5"
+  },
+  {
+    "id": 22230503,
+    "effectName": "StrongHoldFullAddExtraBattle",
+    "effectParams": "5"
+  },
+  {
+    "id": 22230901,
+    "effectName": "StrongestPowerAddExtraBattle",
+    "effectParams": "3"
+  },
+  {
+    "id": 22230903,
+    "effectName": "SharePowerToOtherStrongholds",
+    "effectParams": ""
+  },
+  {
+    "id": 22240103,
+    "effectName": "StrongHoldFullAddExtraBattle",
+    "effectParams": "5"
+  },
+  {
+    "id": 22240401,
+    "effectName": "SharePowerToOtherStrongholds",
+    "effectParams": ""
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 12210,
+    "baseId": 1,
+    "episodeId": 2201101,
+    "talentId": 2201,
+    "name": "language_10057775",
+    "desc": "language_10057776",
+    "level": 150,
+    "strategy": "language_10057777"
+  },
+  {
+    "activityId": 12210,
+    "baseId": 2,
+    "episodeId": 2201102,
+    "talentId": 2202,
+    "name": "language_10057778",
+    "desc": "language_10057779",
+    "level": 150,
+    "strategy": "language_10057780"
+  },
+  {
+    "activityId": 12210,
+    "baseId": 3,
+    "episodeId": 2201103,
+    "talentId": 2203,
+    "name": "language_10057781",
+    "desc": "language_10057782",
+    "level": 150,
+    "strategy": "language_10057783"
+  }
+]

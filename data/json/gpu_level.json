@@ -1,0 +1,618 @@
+[
+  {
+    "name": "Adreno (TM) 200",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 203",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 205",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 225",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 302",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 304",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 305",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 306",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 308",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 320",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 330",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 405",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 418",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 420",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 430",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 505",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 506",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 508",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 509",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 510",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 512",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 610",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 612",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 615",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 530",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 540",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 616",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 618",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 619",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 619L",
+    "level": 3
+  },
+  {
+    "name": "Adreno (TM) 620",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 630",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 640",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 642",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 642L",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 650",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 680",
+    "level": 1
+  },
+  {
+    "name": "Adreno",
+    "level": 1
+  },
+  {
+    "name": "Mali-400 MP",
+    "level": 3
+  },
+  {
+    "name": "Mali-450",
+    "level": 3
+  },
+  {
+    "name": "Mali-450 MP4",
+    "level": 3
+  },
+  {
+    "name": "Mali-G51",
+    "level": 3
+  },
+  {
+    "name": "Mali-G51 MP4",
+    "level": 3
+  },
+  {
+    "name": "Mali-G71",
+    "level": 3
+  },
+  {
+    "name": "Mali-G71 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-G71 MP8",
+    "level": 3
+  },
+  {
+    "name": "Mali-G71 MP20",
+    "level": 3
+  },
+  {
+    "name": "Mali-G72",
+    "level": 3
+  },
+  {
+    "name": "Mali-G72 MP3",
+    "level": 3
+  },
+  {
+    "name": "Mali-G72 MP12",
+    "level": 3
+  },
+  {
+    "name": "Mali-G72 MP18",
+    "level": 3
+  },
+  {
+    "name": "Mali-T604",
+    "level": 3
+  },
+  {
+    "name": "Mali-T622",
+    "level": 3
+  },
+  {
+    "name": "Mali-T624",
+    "level": 3
+  },
+  {
+    "name": "Mali-T624 MP4",
+    "level": 3
+  },
+  {
+    "name": "Mali-T628",
+    "level": 3
+  },
+  {
+    "name": "Mali-T628 MP4",
+    "level": 3
+  },
+  {
+    "name": "Mali-T628 MP6",
+    "level": 3
+  },
+  {
+    "name": "Mali-T720",
+    "level": 3
+  },
+  {
+    "name": "Mali-T720 MP1",
+    "level": 3
+  },
+  {
+    "name": "Mali-T720 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-T720 MP3",
+    "level": 3
+  },
+  {
+    "name": "Mali-T760",
+    "level": 3
+  },
+  {
+    "name": "Mali-T760 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-T760 MP8",
+    "level": 3
+  },
+  {
+    "name": "Mali-T820",
+    "level": 3
+  },
+  {
+    "name": "Mali-T820 MP1",
+    "level": 3
+  },
+  {
+    "name": "Mali-T830",
+    "level": 3
+  },
+  {
+    "name": "Mali-T830 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-T830 MP?",
+    "level": 3
+  },
+  {
+    "name": "Mali-T860",
+    "level": 3
+  },
+  {
+    "name": "Mali-T860 MP1",
+    "level": 3
+  },
+  {
+    "name": "Mali-T860 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-T880",
+    "level": 3
+  },
+  {
+    "name": "Mali-T880 MP2",
+    "level": 3
+  },
+  {
+    "name": "Mali-T880 MP4",
+    "level": 3
+  },
+  {
+    "name": "Mali-T880 MP10",
+    "level": 3
+  },
+  {
+    "name": "Mali-T880 MP12",
+    "level": 3
+  },
+  {
+    "name": "Mali-G52",
+    "level": 3
+  },
+  {
+    "name": "Mali-G52 3EE",
+    "level": 3
+  },
+  {
+    "name": "Mali-G52 MC2",
+    "level": 3
+  },
+  {
+    "name": "Mali-G52 MP6",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57 MP1",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57 MC2",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57 MC3",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57 MC5",
+    "level": 3
+  },
+  {
+    "name": "Mali-G57 MP6",
+    "level": 3
+  },
+  {
+    "name": "Mali-G68",
+    "level": 2
+  },
+  {
+    "name": "Mali-G68 MC4",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76 MC4",
+    "level": 3
+  },
+  {
+    "name": "Mali-G76 MP5",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76 MP10",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76 MP12",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76 MP14",
+    "level": 2
+  },
+  {
+    "name": "Mali-G76 MP16",
+    "level": 2
+  },
+  {
+    "name": "Mali-G77",
+    "level": 2
+  },
+  {
+    "name": "Mali-G77 MC4",
+    "level": 2
+  },
+  {
+    "name": "Mali-G77 MP8",
+    "level": 2
+  },
+  {
+    "name": "Mali-G77 MC9",
+    "level": 2
+  },
+  {
+    "name": "Mali-G77 MP11",
+    "level": 2
+  },
+  {
+    "name": "Mali-G78",
+    "level": 1
+  },
+  {
+    "name": "Mali-G78 MP10",
+    "level": 1
+  },
+  {
+    "name": "Mali-G78 MP14",
+    "level": 1
+  },
+  {
+    "name": "Mali-G78 MP22",
+    "level": 1
+  },
+  {
+    "name": "Mali-G78 MP24",
+    "level": 1
+  },
+  {
+    "name": "Mali-G710",
+    "level": 1
+  },
+  {
+    "name": "Mali-G710 MC10 ",
+    "level": 1
+  },
+  {
+    "name": "Xclipse 920",
+    "level": 1
+  },
+  {
+    "name": "NVIDIA Tegra",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue G6200",
+    "level": 3
+  },
+  {
+    "name": "PowerVR SGX 544MP",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GE8100",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GE8300",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GE8320",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GE8322",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GM9446",
+    "level": 3
+  },
+  {
+    "name": "PowerVR Rogue GT7400",
+    "level": 3
+  },
+  {
+    "name": "Apple A4 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A4X GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A5 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A5X GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A6 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A6X GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A7 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A8 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A8X GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A9 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A9X GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A10 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A10 Fusion GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A10X Fusion GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A11 GPU",
+    "level": 3
+  },
+  {
+    "name": "Apple A12 GPU",
+    "level": 2
+  },
+  {
+    "name": "Apple A13 GPU",
+    "level": 1
+  },
+  {
+    "name": "Apple A14 GPU",
+    "level": 1
+  },
+  {
+    "name": "Apple A15 GPU",
+    "level": 1
+  },
+  {
+    "name": "Apple A16 GPU",
+    "level": 1
+  },
+  {
+    "name": "Apple M1 GPU",
+    "level": 1
+  },
+  {
+    "name": "Apple A17 Pro GPU",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 750",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 740",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 730",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 725",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 660",
+    "level": 1
+  },
+  {
+    "name": "Adreno (TM) 644",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 710",
+    "level": 2
+  },
+  {
+    "name": "Adreno (TM) 613",
+    "level": 2
+  },
+  {
+    "name": "Immortalis G720 MC12",
+    "level": 1
+  },
+  {
+    "name": "Immortalis G715 MC11",
+    "level": 1
+  },
+  {
+    "name": "Xclipse 940",
+    "level": 1
+  },
+  {
+    "name": "Mali-G610 MC6",
+    "level": 1
+  },
+  {
+    "name": "Apple M2",
+    "level": 1
+  }
+]

@@ -1,0 +1,551 @@
+[
+  {
+    "prefabPath": "zj_01_jh_bx_01",
+    "animName": "normal",
+    "effectPath": "dynamic_bxyj_normal",
+    "isOnce": 0,
+    "audioId": 0,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_bx_01",
+    "animName": "active",
+    "effectPath": "dynamic_bxyj_active",
+    "isOnce": 1,
+    "audioId": 25004106,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_bx_01",
+    "animName": "nToA",
+    "effectPath": "dynamic_bxyj_ntoa",
+    "isOnce": 0,
+    "audioId": 25004105,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_dt_01",
+    "animName": "active",
+    "effectPath": "zj_01_jh_dt_01_1",
+    "isOnce": 0,
+    "audioId": 25004112,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_02",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_03",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_04",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_01",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_02",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_03",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_block_04",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004104,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_zljg_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004103,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_ctjg_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004103,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_fighting_01",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004109,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_fighting_02",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004109,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_exit_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004113,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_sj_01",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004114,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_sj_02",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004115,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_jyzb_01_1",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004118,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_jyzb_01_1",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004117,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_jyzb_01_2",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004118,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_jyzb_01_2",
+    "animName": "enter",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004117,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_mfjg_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004111,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_jh_dt_01",
+    "animName": "normal",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 25004128,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_fw_dianji_01",
+    "animName": "active",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165002,
+    "isBindGo": 1,
+    "isLoopAudio": 1
+  },
+  {
+    "prefabPath": "zj_03_fw_dianji_01",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165003,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_fw_xianquan_01",
+    "animName": "active",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165004,
+    "isBindGo": 1,
+    "isLoopAudio": 1
+  },
+  {
+    "prefabPath": "zj_03_fw_xianquan_01",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165005,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_01",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165007,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_02",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165007,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_03",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165007,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_04",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165007,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_03",
+    "animName": "fix",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165008,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_03",
+    "animName": "fix_finish",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165009,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_04",
+    "animName": "fix",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165008,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_04",
+    "animName": "fix_finish",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165009,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "mishi_jinengguangyuan",
+    "animName": "normal",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165010,
+    "isBindGo": 1,
+    "isLoopAudio": 1
+  },
+  {
+    "prefabPath": "mishi_jinengguangyuan",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165011,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_fglj_05",
+    "animName": "exit",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165013,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_jsq_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165016,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_jsq_01",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165017,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_jsq_01a",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165016,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_jh_jsq_01a",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165017,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_03_fw_dangangui_01a",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165018,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_fw_chair_01",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165019,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_01_fw_yiqi_01",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165020,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "mishi_jinengguangyuan",
+    "animName": "enter",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165022,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_fw_ganguo_01c",
+    "animName": "drag",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20165007,
+    "isBindGo": 0,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_01",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195002,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_02",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195002,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_03",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195002,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_04",
+    "animName": "aToN",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195002,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_02",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_03",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_chucunqi_04",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_ganyingqi_01",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_ganyingqi_02",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_ganyingqi_03",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  },
+  {
+    "prefabPath": "zj_02_jh_ganyingqi_04",
+    "animName": "nToA",
+    "effectPath": "",
+    "isOnce": 0,
+    "audioId": 20195001,
+    "isBindGo": 1,
+    "isLoopAudio": 0
+  }
+]

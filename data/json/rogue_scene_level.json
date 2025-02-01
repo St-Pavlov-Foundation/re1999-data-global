@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "layer": 1,
+    "sceneLevel": 90002
+  },
+  {
+    "id": 2,
+    "layer": 1,
+    "sceneLevel": 90003
+  },
+  {
+    "id": 3,
+    "layer": 1,
+    "sceneLevel": 90004
+  },
+  {
+    "id": 4,
+    "layer": 1,
+    "sceneLevel": 90005
+  },
+  {
+    "id": 5,
+    "layer": 1,
+    "sceneLevel": 90006
+  },
+  {
+    "id": 6,
+    "layer": 2,
+    "sceneLevel": 90007
+  },
+  {
+    "id": 7,
+    "layer": 2,
+    "sceneLevel": 90008
+  },
+  {
+    "id": 8,
+    "layer": 2,
+    "sceneLevel": 90009
+  },
+  {
+    "id": 9,
+    "layer": 2,
+    "sceneLevel": 90010
+  },
+  {
+    "id": 10,
+    "layer": 2,
+    "sceneLevel": 90011
+  },
+  {
+    "id": 11,
+    "layer": 3,
+    "sceneLevel": 90012
+  },
+  {
+    "id": 12,
+    "layer": 3,
+    "sceneLevel": 90013
+  },
+  {
+    "id": 13,
+    "layer": 3,
+    "sceneLevel": 90014
+  },
+  {
+    "id": 14,
+    "layer": 3,
+    "sceneLevel": 90015
+  },
+  {
+    "id": 15,
+    "layer": 3,
+    "sceneLevel": 90016
+  }
+]

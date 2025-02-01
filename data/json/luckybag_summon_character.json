@@ -1,0 +1,158 @@
+[
+  {
+    "id": 11,
+    "heroId": 3004,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 12,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 13,
+    "heroId": 3051,
+    "skinId": 0,
+    "location": 3
+  },
+  {
+    "id": 21,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 22,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 101111,
+    "heroId": 3009,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 101211,
+    "heroId": 3007,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111111,
+    "heroId": 3062,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111211,
+    "heroId": 3063,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111212,
+    "heroId": 3064,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 111311,
+    "heroId": 3048,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111411,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111511,
+    "heroId": 3004,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121111,
+    "heroId": 3053,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121112,
+    "heroId": 3060,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 121211,
+    "heroId": 3056,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121212,
+    "heroId": 3061,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 121311,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121411,
+    "heroId": 3051,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121511,
+    "heroId": 3039,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131111,
+    "heroId": 3072,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131112,
+    "heroId": 3071,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 131211,
+    "heroId": 3070,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131311,
+    "heroId": 3032,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131411,
+    "heroId": 3047,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131511,
+    "heroId": 3052,
+    "skinId": 0,
+    "location": 1
+  }
+]

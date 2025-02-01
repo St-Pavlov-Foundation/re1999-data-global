@@ -1,0 +1,25 @@
+module("modules.logic.bgmswitch.define.BGMSwitchEvent", package.seeall)
+
+slot0 = _M
+slot0.ItemSelected = GameUtil.getEventId()
+slot0.FilterClassSelect = GameUtil.getEventId()
+slot0.SetPlayingBgm = GameUtil.getEventId()
+slot0.RandomFinished = GameUtil.getEventId()
+slot0.SelectPlayGear = GameUtil.getEventId()
+slot0.FilterItemSelect = GameUtil.getEventId()
+slot0.BgmSwitched = GameUtil.getEventId()
+slot0.BgmFavorite = GameUtil.getEventId()
+slot0.BgmUpdated = GameUtil.getEventId()
+slot0.BGMSwitchClose = GameUtil.getEventId()
+slot0.BgmMarkRead = GameUtil.getEventId()
+slot0.ClickBgmEntranceInGuide = GameUtil.getEventId()
+slot0.BgmDevicePlayNoise = GameUtil.getEventId()
+slot0.PlayShakingAni = GameUtil.getEventId()
+slot0.BGMDeviceShowNormalView = GameUtil.getEventId()
+slot0.ToggleEggForGuide = GameUtil.getEventId()
+slot0.SwitchGearByGuide = GameUtil.getEventId()
+slot0.OnPlayMainBgm = GameUtil.getEventId()
+slot0.SlideValueUpdate = GameUtil.getEventId()
+slot0.BgmProgressEnd = GameUtil.getEventId()
+
+return slot0

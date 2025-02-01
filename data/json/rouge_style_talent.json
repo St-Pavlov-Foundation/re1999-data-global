@@ -1,0 +1,672 @@
+[
+  {
+    "id": 101,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110001",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043643",
+    "unlockType": 0
+  },
+  {
+    "id": 102,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110002",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043644",
+    "unlockType": 0
+  },
+  {
+    "id": 103,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110003",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043645",
+    "unlockType": 0
+  },
+  {
+    "id": 104,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110004",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043646",
+    "unlockType": 0
+  },
+  {
+    "id": 105,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110005",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043647",
+    "unlockType": 0
+  },
+  {
+    "id": 106,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110006",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043648",
+    "unlockType": 0
+  },
+  {
+    "id": 107,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110007",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043649",
+    "unlockType": 0
+  },
+  {
+    "id": 108,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110008",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043650",
+    "unlockType": 0
+  },
+  {
+    "id": 109,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110009",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043651",
+    "unlockType": 0
+  },
+  {
+    "id": 110,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110010",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043652",
+    "unlockType": 0
+  },
+  {
+    "id": 111,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110011",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043653",
+    "unlockType": 0
+  },
+  {
+    "id": 112,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110012",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043654",
+    "unlockType": 0
+  },
+  {
+    "id": 113,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110075",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10042833",
+    "unlockType": 0
+  },
+  {
+    "id": 114,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110076",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043655",
+    "unlockType": 0
+  },
+  {
+    "id": 115,
+    "type": 1,
+    "version": "",
+    "interactive": "1#11110077",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043656",
+    "unlockType": 0
+  },
+  {
+    "id": 116,
+    "type": 1,
+    "version": "101",
+    "interactive": "1#21110008",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051773",
+    "unlockType": 0
+  },
+  {
+    "id": 117,
+    "type": 1,
+    "version": "101",
+    "interactive": "1#21110009",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051774",
+    "unlockType": 0
+  },
+  {
+    "id": 118,
+    "type": 1,
+    "version": "101",
+    "interactive": "1#21110010",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051775",
+    "unlockType": 0
+  },
+  {
+    "id": 119,
+    "type": 1,
+    "version": "101",
+    "interactive": "1#21110011",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051776",
+    "unlockType": 0
+  },
+  {
+    "id": 201,
+    "type": 2,
+    "version": "",
+    "interactive": "1#11110017",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043657",
+    "unlockType": 0
+  },
+  {
+    "id": 202,
+    "type": 2,
+    "version": "",
+    "interactive": "1#11110018",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043658",
+    "unlockType": 0
+  },
+  {
+    "id": 203,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043659",
+    "unlockType": 0
+  },
+  {
+    "id": 204,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043660",
+    "unlockType": 0
+  },
+  {
+    "id": 205,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043661",
+    "unlockType": 0
+  },
+  {
+    "id": 206,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043662",
+    "unlockType": 0
+  },
+  {
+    "id": 207,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043663",
+    "unlockType": 0
+  },
+  {
+    "id": 208,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043664",
+    "unlockType": 0
+  },
+  {
+    "id": 209,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043665",
+    "unlockType": 0
+  },
+  {
+    "id": 210,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043666",
+    "unlockType": 0
+  },
+  {
+    "id": 211,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043667",
+    "unlockType": 0
+  },
+  {
+    "id": 212,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043668",
+    "unlockType": 0
+  },
+  {
+    "id": 213,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043669",
+    "unlockType": 0
+  },
+  {
+    "id": 214,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043670",
+    "unlockType": 0
+  },
+  {
+    "id": 215,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043671",
+    "unlockType": 0
+  },
+  {
+    "id": 216,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043672",
+    "unlockType": 0
+  },
+  {
+    "id": 217,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043673",
+    "unlockType": 0
+  },
+  {
+    "id": 218,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043674",
+    "unlockType": 0
+  },
+  {
+    "id": 219,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043675",
+    "unlockType": 0
+  },
+  {
+    "id": 220,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043676",
+    "unlockType": 0
+  },
+  {
+    "id": 221,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043677",
+    "unlockType": 0
+  },
+  {
+    "id": 222,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043678",
+    "unlockType": 0
+  },
+  {
+    "id": 223,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "6",
+    "desc": "language_10043679",
+    "unlockType": 0
+  },
+  {
+    "id": 224,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043680",
+    "unlockType": 0
+  },
+  {
+    "id": 225,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043681",
+    "unlockType": 0
+  },
+  {
+    "id": 226,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043682",
+    "unlockType": 0
+  },
+  {
+    "id": 227,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043683",
+    "unlockType": 0
+  },
+  {
+    "id": 228,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043684",
+    "unlockType": 0
+  },
+  {
+    "id": 229,
+    "type": 2,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043685",
+    "unlockType": 0
+  },
+  {
+    "id": 230,
+    "type": 2,
+    "version": "101",
+    "interactive": "2#1",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051777",
+    "unlockType": 0
+  },
+  {
+    "id": 231,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051778",
+    "unlockType": 0
+  },
+  {
+    "id": 232,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051779",
+    "unlockType": 0
+  },
+  {
+    "id": 233,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051780",
+    "unlockType": 0
+  },
+  {
+    "id": 234,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051781",
+    "unlockType": 0
+  },
+  {
+    "id": 235,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051782",
+    "unlockType": 0
+  },
+  {
+    "id": 236,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051783",
+    "unlockType": 0
+  },
+  {
+    "id": 242,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051784",
+    "unlockType": 0
+  },
+  {
+    "id": 243,
+    "type": 2,
+    "version": "101",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10051785",
+    "unlockType": 0
+  },
+  {
+    "id": 301,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "102#60",
+    "ban": "",
+    "desc": "language_10043686",
+    "unlockType": 0
+  },
+  {
+    "id": 302,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "101#120",
+    "ban": "",
+    "desc": "language_10043687",
+    "unlockType": 0
+  },
+  {
+    "id": 303,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "103#60",
+    "ban": "",
+    "desc": "language_10043688",
+    "unlockType": 0
+  },
+  {
+    "id": 304,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "104#60",
+    "ban": "",
+    "desc": "language_10043689",
+    "unlockType": 0
+  },
+  {
+    "id": 305,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "201#100",
+    "ban": "",
+    "desc": "language_10043690",
+    "unlockType": 0
+  },
+  {
+    "id": 306,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "203#150",
+    "ban": "",
+    "desc": "language_10043691",
+    "unlockType": 0
+  },
+  {
+    "id": 307,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043692",
+    "unlockType": 0
+  },
+  {
+    "id": 308,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043693",
+    "unlockType": 0
+  },
+  {
+    "id": 309,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043694",
+    "unlockType": 0
+  },
+  {
+    "id": 310,
+    "type": 3,
+    "version": "",
+    "interactive": "",
+    "attribute": "",
+    "ban": "",
+    "desc": "language_10043695",
+    "unlockType": 0
+  }
+]

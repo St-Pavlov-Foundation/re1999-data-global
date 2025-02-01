@@ -1,0 +1,83 @@
+[
+  {
+    "id": 620402,
+    "part": 1,
+    "virtualStance": [
+      1.5,
+      0,
+      0
+    ],
+    "virtualSpinePos": [
+      1.35,
+      1.43,
+      0
+    ],
+    "virtualSpineSize": [
+      2.8,
+      2.7
+    ],
+    "clickIndex": 10,
+    "selectPos": [
+      1.3,
+      1.4
+    ],
+    "hpPos": [
+      1.07,
+      1.51
+    ]
+  },
+  {
+    "id": 6204021,
+    "part": 2,
+    "virtualStance": [
+      -2.07,
+      0,
+      0
+    ],
+    "virtualSpinePos": [
+      -2.07,
+      0,
+      0
+    ],
+    "virtualSpineSize": [
+      10.5,
+      3.7
+    ],
+    "clickIndex": 1,
+    "selectPos": [
+      -2.15,
+      1.25
+    ],
+    "hpPos": [
+      -2.15,
+      0.7
+    ]
+  },
+  {
+    "id": 6204022,
+    "part": 3,
+    "virtualStance": [
+      2,
+      3.53,
+      0
+    ],
+    "virtualSpinePos": [
+      1.51,
+      5.65,
+      0
+    ],
+    "virtualSpineSize": [
+      4.85,
+      3
+    ],
+    "clickIndex": 5,
+    "selectPos": [
+      1,
+      5.3
+    ],
+    "hpPos": [
+      2.26,
+      4.81
+    ]
+  }
+]

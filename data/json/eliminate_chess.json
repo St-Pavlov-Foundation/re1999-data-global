@@ -1,0 +1,36 @@
+[
+  {
+    "chessId": 22101,
+    "name": "【临时文本】棋子1",
+    "rare": 1,
+    "defaultPower": 5,
+    "cost": [
+      1,
+      1,
+      0,
+      0,
+      0
+    ],
+    "resPic": "v2a2_store_chess",
+    "resModel": "",
+    "skillId": 22401,
+    "defaultUnlock": 1
+  },
+  {
+    "chessId": 22102,
+    "name": "【临时文本】棋子2",
+    "rare": 5,
+    "defaultPower": 10,
+    "cost": [
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "resPic": "v2a2_store_chess",
+    "resModel": "",
+    "skillId": 22402,
+    "defaultUnlock": 0
+  }
+]

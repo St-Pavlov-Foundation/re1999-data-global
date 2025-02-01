@@ -1,0 +1,200 @@
+[
+  {
+    "clueId": 1,
+    "clueIcon": "v2a1_aergusi_chat_clue9",
+    "clueName": "language_10050785",
+    "clueDesc": "language_10053112",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 2,
+    "clueIcon": "v2a1_aergusi_chat_clue1",
+    "clueName": "language_10053113",
+    "clueDesc": "language_10053114",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 3,
+    "clueIcon": "v2a1_aergusi_chat_clue8",
+    "clueName": "language_10053115",
+    "clueDesc": "language_10053116",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 4,
+    "clueIcon": "v2a1_aergusi_chat_clue6",
+    "clueName": "language_10053117",
+    "clueDesc": "language_10053118",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 5,
+    "clueIcon": "v2a1_aergusi_chat_clue3",
+    "clueName": "language_10053119",
+    "clueDesc": "language_10053120",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 6,
+    "clueIcon": "v2a1_aergusi_chat_clue5",
+    "clueName": "language_10052815",
+    "clueDesc": "language_10053121",
+    "episodeId": 1210501,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 7,
+    "clueIcon": "v2a1_aergusi_chat_clue7",
+    "clueName": "language_10053122",
+    "clueDesc": "language_10053123",
+    "episodeId": 1210502,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 8,
+    "clueIcon": "v2a1_aergusi_chat_clue6",
+    "clueName": "language_10052894",
+    "clueDesc": "language_10053124",
+    "episodeId": 1210502,
+    "materialId": "",
+    "replaceId": 4
+  },
+  {
+    "clueId": 9,
+    "clueIcon": "v2a1_aergusi_chat_clue11",
+    "clueName": "language_10053125",
+    "clueDesc": "language_10053126",
+    "episodeId": 1210503,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 10,
+    "clueIcon": "v2a1_aergusi_chat_clue12",
+    "clueName": "language_10053127",
+    "clueDesc": "language_10053128",
+    "episodeId": 1210503,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 11,
+    "clueIcon": "v2a1_aergusi_chat_clue12",
+    "clueName": "language_10053127",
+    "clueDesc": "language_10053129",
+    "episodeId": 1210503,
+    "materialId": "9#10",
+    "replaceId": 0
+  },
+  {
+    "clueId": 12,
+    "clueIcon": "v2a1_aergusi_chat_clue3",
+    "clueName": "language_10048516",
+    "clueDesc": "language_10053130",
+    "episodeId": 1210503,
+    "materialId": "",
+    "replaceId": 5
+  },
+  {
+    "clueId": 13,
+    "clueIcon": "v2a1_aergusi_chat_clue5",
+    "clueName": "language_10052815",
+    "clueDesc": "language_10053131",
+    "episodeId": 1210503,
+    "materialId": "",
+    "replaceId": 6
+  },
+  {
+    "clueId": 14,
+    "clueIcon": "v2a1_aergusi_chat_clue4",
+    "clueName": "language_10053132",
+    "clueDesc": "language_10053133",
+    "episodeId": 1210504,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 15,
+    "clueIcon": "v2a1_aergusi_chat_clue7",
+    "clueName": "language_10053122",
+    "clueDesc": "language_10053134",
+    "episodeId": 1210504,
+    "materialId": "",
+    "replaceId": 7
+  },
+  {
+    "clueId": 16,
+    "clueIcon": "v2a1_aergusi_chat_clue4",
+    "clueName": "language_10053132",
+    "clueDesc": "language_10053135",
+    "episodeId": 1210504,
+    "materialId": "14#15",
+    "replaceId": 0
+  },
+  {
+    "clueId": 17,
+    "clueIcon": "v2a1_aergusi_chat_clue10",
+    "clueName": "language_10053136",
+    "clueDesc": "language_10053137",
+    "episodeId": 1210504,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 18,
+    "clueIcon": "v2a1_aergusi_chat_clue3",
+    "clueName": "language_10048516",
+    "clueDesc": "language_10053138",
+    "episodeId": 1210506,
+    "materialId": "",
+    "replaceId": 12
+  },
+  {
+    "clueId": 19,
+    "clueIcon": "v2a1_aergusi_chat_clue10",
+    "clueName": "language_10053136",
+    "clueDesc": "language_10053139",
+    "episodeId": 1210506,
+    "materialId": "",
+    "replaceId": 17
+  },
+  {
+    "clueId": 20,
+    "clueIcon": "v2a1_aergusi_chat_clue2",
+    "clueName": "language_10053140",
+    "clueDesc": "language_10053141",
+    "episodeId": 1210507,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 21,
+    "clueIcon": "v2a1_aergusi_chat_clue7",
+    "clueName": "language_10053122",
+    "clueDesc": "language_10053142",
+    "episodeId": 1210507,
+    "materialId": "",
+    "replaceId": 0
+  },
+  {
+    "clueId": 22,
+    "clueIcon": "v2a1_aergusi_chat_clue6",
+    "clueName": "language_10052894",
+    "clueDesc": "language_10053143",
+    "episodeId": 1210507,
+    "materialId": "16#8",
+    "replaceId": 0
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "yaw": 0.0,
+    "pitch": 90.0,
+    "distance": 20.0,
+    "fov": 35.0,
+    "focusZ": 3.0,
+    "yOffset": 5.8
+  },
+  {
+    "id": 2,
+    "yaw": 0.0,
+    "pitch": 75.0,
+    "distance": 20.0,
+    "fov": 35.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 3,
+    "yaw": 0.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 36.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 4,
+    "yaw": 0.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 50.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 5,
+    "yaw": 90.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 36.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 6,
+    "yaw": 90.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 50.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 7,
+    "yaw": -90.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 36.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  },
+  {
+    "id": 8,
+    "yaw": -90.0,
+    "pitch": 40.0,
+    "distance": 8.0,
+    "fov": 50.0,
+    "focusZ": 0.0,
+    "yOffset": 2.0
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "rare": 2,
+    "breakLevel": 0,
+    "level": 20,
+    "cost": "",
+    "scoreCost": 0
+  },
+  {
+    "rare": 2,
+    "breakLevel": 1,
+    "level": 40,
+    "cost": "1#180001#2",
+    "scoreCost": 4500
+  },
+  {
+    "rare": 2,
+    "breakLevel": 2,
+    "level": 50,
+    "cost": "1#180002#2",
+    "scoreCost": 6750
+  },
+  {
+    "rare": 2,
+    "breakLevel": 3,
+    "level": 60,
+    "cost": "1#180003#2",
+    "scoreCost": 11250
+  },
+  {
+    "rare": 3,
+    "breakLevel": 0,
+    "level": 20,
+    "cost": "",
+    "scoreCost": 0
+  },
+  {
+    "rare": 3,
+    "breakLevel": 1,
+    "level": 40,
+    "cost": "1#180001#3",
+    "scoreCost": 5500
+  },
+  {
+    "rare": 3,
+    "breakLevel": 2,
+    "level": 50,
+    "cost": "1#180002#3",
+    "scoreCost": 8250
+  },
+  {
+    "rare": 3,
+    "breakLevel": 3,
+    "level": 60,
+    "cost": "1#180003#3",
+    "scoreCost": 13750
+  },
+  {
+    "rare": 4,
+    "breakLevel": 0,
+    "level": 20,
+    "cost": "",
+    "scoreCost": 0
+  },
+  {
+    "rare": 4,
+    "breakLevel": 1,
+    "level": 40,
+    "cost": "1#180001#4",
+    "scoreCost": 7500
+  },
+  {
+    "rare": 4,
+    "breakLevel": 2,
+    "level": 50,
+    "cost": "1#180002#4",
+    "scoreCost": 11250
+  },
+  {
+    "rare": 4,
+    "breakLevel": 3,
+    "level": 60,
+    "cost": "1#180003#4",
+    "scoreCost": 18750
+  },
+  {
+    "rare": 5,
+    "breakLevel": 0,
+    "level": 20,
+    "cost": "",
+    "scoreCost": 0
+  },
+  {
+    "rare": 5,
+    "breakLevel": 1,
+    "level": 40,
+    "cost": "1#180001#5",
+    "scoreCost": 10000
+  },
+  {
+    "rare": 5,
+    "breakLevel": 2,
+    "level": 50,
+    "cost": "1#180002#5",
+    "scoreCost": 15000
+  },
+  {
+    "rare": 5,
+    "breakLevel": 3,
+    "level": 60,
+    "cost": "1#180003#5",
+    "scoreCost": 25000
+  }
+]

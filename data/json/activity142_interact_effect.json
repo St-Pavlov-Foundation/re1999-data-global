@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "effectType": 1,
+    "piontName": "center",
+    "avatar": "scenes/v1a5_m_s12_dfw_krd/perefab/vx_icon_hero"
+  },
+  {
+    "id": 4,
+    "effectType": 4,
+    "piontName": "center",
+    "avatar": "scenes/v1a5_m_s12_dfw_krd/perefab/vx_icon_monster"
+  }
+]

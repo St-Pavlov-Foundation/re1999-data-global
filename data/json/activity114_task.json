@@ -1,0 +1,122 @@
+[
+  {
+    "activityId": 11202,
+    "taskId": 1,
+    "minTypeId": 3,
+    "desc": "language_10026624",
+    "listenerType": "Activity114Attr",
+    "listenerParam": "1",
+    "maxProgress": 3,
+    "bonus": "2#2#30|9#1003#4"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 2,
+    "minTypeId": 3,
+    "desc": "language_10026625",
+    "listenerType": "Activity114Attr",
+    "listenerParam": "2",
+    "maxProgress": 3,
+    "bonus": "2#2#30|2#3#10000"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 3,
+    "minTypeId": 3,
+    "desc": "language_10026626",
+    "listenerType": "Activity114Attr",
+    "listenerParam": "3",
+    "maxProgress": 3,
+    "bonus": "2#2#30|9#1003#4"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 4,
+    "minTypeId": 3,
+    "desc": "language_10026627",
+    "listenerType": "Activity114Attr",
+    "listenerParam": "4",
+    "maxProgress": 3,
+    "bonus": "2#2#30|2#5#10000"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 5,
+    "minTypeId": 3,
+    "desc": "language_10026628",
+    "listenerType": "Activity114Attr",
+    "listenerParam": "5",
+    "maxProgress": 3,
+    "bonus": "2#2#30|9#1003#4"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 6,
+    "minTypeId": 3,
+    "desc": "language_10026629",
+    "listenerType": "Activity114PhotoCount",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110202#3"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 7,
+    "minTypeId": 3,
+    "desc": "language_10026630",
+    "listenerType": "Activity114PhotoCount",
+    "listenerParam": "",
+    "maxProgress": 3,
+    "bonus": "2#2#30|1#110202#3"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 8,
+    "minTypeId": 3,
+    "desc": "language_10026631",
+    "listenerType": "Activity114PhotoCount",
+    "listenerParam": "",
+    "maxProgress": 5,
+    "bonus": "1#110403#1|1#110302#3"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 9,
+    "minTypeId": 3,
+    "desc": "language_10026632",
+    "listenerType": "Activity114PhotoCount",
+    "listenerParam": "",
+    "maxProgress": 7,
+    "bonus": "1#110503#1|1#110302#3"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 10,
+    "minTypeId": 3,
+    "desc": "language_10026633",
+    "listenerType": "Activity114Assessment",
+    "listenerParam": "1500",
+    "maxProgress": 1,
+    "bonus": "1#110403#1|2#5#10000"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 11,
+    "minTypeId": 3,
+    "desc": "language_10026634",
+    "listenerType": "Activity114Assessment",
+    "listenerParam": "2000",
+    "maxProgress": 1,
+    "bonus": "2#2#30|2#3#10000"
+  },
+  {
+    "activityId": 11202,
+    "taskId": 12,
+    "minTypeId": 3,
+    "desc": "language_10026635",
+    "listenerType": "Activity114Assessment",
+    "listenerParam": "2600",
+    "maxProgress": 1,
+    "bonus": "1#110503#1|2#5#10000"
+  }
+]

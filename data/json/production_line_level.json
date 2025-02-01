@@ -1,0 +1,162 @@
+[
+  {
+    "groupId": 200201,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "changeFormulaId": "",
+    "modulePart": "part1_1",
+    "icon": "chitang_1",
+    "needRoomLevel": 1
+  },
+  {
+    "groupId": 200201,
+    "id": 2,
+    "effect": "1#300",
+    "cost": "1#190007#8",
+    "changeFormulaId": "2002002",
+    "modulePart": "part1_1",
+    "icon": "chitang_2",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 200201,
+    "id": 3,
+    "effect": "1#900",
+    "cost": "1#190007#20",
+    "changeFormulaId": "2002003",
+    "modulePart": "part1_2",
+    "icon": "chitang_3",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 200201,
+    "id": 4,
+    "effect": "1#1320",
+    "cost": "1#190007#25|1#190008#1",
+    "changeFormulaId": "2002004",
+    "modulePart": "part1_2",
+    "icon": "tingyuan_1",
+    "needRoomLevel": 3
+  },
+  {
+    "groupId": 200201,
+    "id": 5,
+    "effect": "1#2640",
+    "cost": "1#190007#30|1#190008#1",
+    "changeFormulaId": "2002005",
+    "modulePart": "part1_3",
+    "icon": "tingyuan_1",
+    "needRoomLevel": 4
+  },
+  {
+    "groupId": 200201,
+    "id": 6,
+    "effect": "1#4200",
+    "cost": "1#190007#35|1#190008#1",
+    "changeFormulaId": "2002006",
+    "modulePart": "part1_3",
+    "icon": "tingyuan_1",
+    "needRoomLevel": 5
+  },
+  {
+    "groupId": 210101,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "changeFormulaId": "",
+    "modulePart": "part2_1",
+    "icon": "yeyingyingdi_1",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 210101,
+    "id": 2,
+    "effect": "1#150",
+    "cost": "1#190007#8",
+    "changeFormulaId": "2101002",
+    "modulePart": "part2_1",
+    "icon": "yeyingyingdi_2",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 210101,
+    "id": 3,
+    "effect": "1#360",
+    "cost": "1#190007#20",
+    "changeFormulaId": "2101003",
+    "modulePart": "part2_2",
+    "icon": "yeyingyingdi_3",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 210101,
+    "id": 4,
+    "effect": "1#550",
+    "cost": "1#190007#25|1#190008#1",
+    "changeFormulaId": "2101004",
+    "modulePart": "part2_2",
+    "icon": "shibiao_1",
+    "needRoomLevel": 3
+  },
+  {
+    "groupId": 210101,
+    "id": 5,
+    "effect": "1#1125",
+    "cost": "1#190007#30|1#190008#1",
+    "changeFormulaId": "2101005",
+    "modulePart": "part2_3",
+    "icon": "shibiao_1",
+    "needRoomLevel": 4
+  },
+  {
+    "groupId": 210101,
+    "id": 6,
+    "effect": "1#1800",
+    "cost": "1#190007#35|1#190008#1",
+    "changeFormulaId": "2101006",
+    "modulePart": "part2_3",
+    "icon": "shibiao_2",
+    "needRoomLevel": 5
+  },
+  {
+    "groupId": 220101,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "changeFormulaId": "",
+    "modulePart": "part3_1",
+    "icon": "",
+    "needRoomLevel": 2
+  },
+  {
+    "groupId": 220101,
+    "id": 2,
+    "effect": "",
+    "cost": "1#190007#15",
+    "changeFormulaId": "",
+    "modulePart": "part3_2",
+    "icon": "",
+    "needRoomLevel": 3
+  },
+  {
+    "groupId": 220101,
+    "id": 3,
+    "effect": "",
+    "cost": "1#190007#25|1#190008#1",
+    "changeFormulaId": "",
+    "modulePart": "part3_2",
+    "icon": "",
+    "needRoomLevel": 4
+  },
+  {
+    "groupId": 220101,
+    "id": 4,
+    "effect": "",
+    "cost": "1#190007#40|1#190008#1",
+    "changeFormulaId": "",
+    "modulePart": "part3_3",
+    "icon": "",
+    "needRoomLevel": 4
+  }
+]

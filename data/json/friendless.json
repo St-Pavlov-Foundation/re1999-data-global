@@ -1,0 +1,406 @@
+[
+  {
+    "percentage": 0,
+    "friendliness": 0
+  },
+  {
+    "percentage": 1,
+    "friendliness": 30
+  },
+  {
+    "percentage": 2,
+    "friendliness": 30
+  },
+  {
+    "percentage": 3,
+    "friendliness": 30
+  },
+  {
+    "percentage": 4,
+    "friendliness": 30
+  },
+  {
+    "percentage": 5,
+    "friendliness": 30
+  },
+  {
+    "percentage": 6,
+    "friendliness": 30
+  },
+  {
+    "percentage": 7,
+    "friendliness": 30
+  },
+  {
+    "percentage": 8,
+    "friendliness": 30
+  },
+  {
+    "percentage": 9,
+    "friendliness": 30
+  },
+  {
+    "percentage": 10,
+    "friendliness": 30
+  },
+  {
+    "percentage": 11,
+    "friendliness": 40
+  },
+  {
+    "percentage": 12,
+    "friendliness": 40
+  },
+  {
+    "percentage": 13,
+    "friendliness": 40
+  },
+  {
+    "percentage": 14,
+    "friendliness": 40
+  },
+  {
+    "percentage": 15,
+    "friendliness": 40
+  },
+  {
+    "percentage": 16,
+    "friendliness": 40
+  },
+  {
+    "percentage": 17,
+    "friendliness": 40
+  },
+  {
+    "percentage": 18,
+    "friendliness": 40
+  },
+  {
+    "percentage": 19,
+    "friendliness": 40
+  },
+  {
+    "percentage": 20,
+    "friendliness": 40
+  },
+  {
+    "percentage": 21,
+    "friendliness": 50
+  },
+  {
+    "percentage": 22,
+    "friendliness": 50
+  },
+  {
+    "percentage": 23,
+    "friendliness": 50
+  },
+  {
+    "percentage": 24,
+    "friendliness": 50
+  },
+  {
+    "percentage": 25,
+    "friendliness": 50
+  },
+  {
+    "percentage": 26,
+    "friendliness": 50
+  },
+  {
+    "percentage": 27,
+    "friendliness": 50
+  },
+  {
+    "percentage": 28,
+    "friendliness": 50
+  },
+  {
+    "percentage": 29,
+    "friendliness": 50
+  },
+  {
+    "percentage": 30,
+    "friendliness": 50
+  },
+  {
+    "percentage": 31,
+    "friendliness": 60
+  },
+  {
+    "percentage": 32,
+    "friendliness": 60
+  },
+  {
+    "percentage": 33,
+    "friendliness": 60
+  },
+  {
+    "percentage": 34,
+    "friendliness": 60
+  },
+  {
+    "percentage": 35,
+    "friendliness": 60
+  },
+  {
+    "percentage": 36,
+    "friendliness": 60
+  },
+  {
+    "percentage": 37,
+    "friendliness": 60
+  },
+  {
+    "percentage": 38,
+    "friendliness": 60
+  },
+  {
+    "percentage": 39,
+    "friendliness": 60
+  },
+  {
+    "percentage": 40,
+    "friendliness": 60
+  },
+  {
+    "percentage": 41,
+    "friendliness": 100
+  },
+  {
+    "percentage": 42,
+    "friendliness": 100
+  },
+  {
+    "percentage": 43,
+    "friendliness": 100
+  },
+  {
+    "percentage": 44,
+    "friendliness": 100
+  },
+  {
+    "percentage": 45,
+    "friendliness": 100
+  },
+  {
+    "percentage": 46,
+    "friendliness": 120
+  },
+  {
+    "percentage": 47,
+    "friendliness": 120
+  },
+  {
+    "percentage": 48,
+    "friendliness": 120
+  },
+  {
+    "percentage": 49,
+    "friendliness": 120
+  },
+  {
+    "percentage": 50,
+    "friendliness": 120
+  },
+  {
+    "percentage": 51,
+    "friendliness": 150
+  },
+  {
+    "percentage": 52,
+    "friendliness": 150
+  },
+  {
+    "percentage": 53,
+    "friendliness": 150
+  },
+  {
+    "percentage": 54,
+    "friendliness": 150
+  },
+  {
+    "percentage": 55,
+    "friendliness": 150
+  },
+  {
+    "percentage": 56,
+    "friendliness": 150
+  },
+  {
+    "percentage": 57,
+    "friendliness": 150
+  },
+  {
+    "percentage": 58,
+    "friendliness": 150
+  },
+  {
+    "percentage": 59,
+    "friendliness": 150
+  },
+  {
+    "percentage": 60,
+    "friendliness": 150
+  },
+  {
+    "percentage": 61,
+    "friendliness": 150
+  },
+  {
+    "percentage": 62,
+    "friendliness": 150
+  },
+  {
+    "percentage": 63,
+    "friendliness": 150
+  },
+  {
+    "percentage": 64,
+    "friendliness": 150
+  },
+  {
+    "percentage": 65,
+    "friendliness": 150
+  },
+  {
+    "percentage": 66,
+    "friendliness": 150
+  },
+  {
+    "percentage": 67,
+    "friendliness": 150
+  },
+  {
+    "percentage": 68,
+    "friendliness": 150
+  },
+  {
+    "percentage": 69,
+    "friendliness": 150
+  },
+  {
+    "percentage": 70,
+    "friendliness": 150
+  },
+  {
+    "percentage": 71,
+    "friendliness": 150
+  },
+  {
+    "percentage": 72,
+    "friendliness": 150
+  },
+  {
+    "percentage": 73,
+    "friendliness": 150
+  },
+  {
+    "percentage": 74,
+    "friendliness": 150
+  },
+  {
+    "percentage": 75,
+    "friendliness": 150
+  },
+  {
+    "percentage": 76,
+    "friendliness": 150
+  },
+  {
+    "percentage": 77,
+    "friendliness": 150
+  },
+  {
+    "percentage": 78,
+    "friendliness": 150
+  },
+  {
+    "percentage": 79,
+    "friendliness": 150
+  },
+  {
+    "percentage": 80,
+    "friendliness": 150
+  },
+  {
+    "percentage": 81,
+    "friendliness": 150
+  },
+  {
+    "percentage": 82,
+    "friendliness": 150
+  },
+  {
+    "percentage": 83,
+    "friendliness": 150
+  },
+  {
+    "percentage": 84,
+    "friendliness": 150
+  },
+  {
+    "percentage": 85,
+    "friendliness": 150
+  },
+  {
+    "percentage": 86,
+    "friendliness": 150
+  },
+  {
+    "percentage": 87,
+    "friendliness": 150
+  },
+  {
+    "percentage": 88,
+    "friendliness": 150
+  },
+  {
+    "percentage": 89,
+    "friendliness": 150
+  },
+  {
+    "percentage": 90,
+    "friendliness": 150
+  },
+  {
+    "percentage": 91,
+    "friendliness": 150
+  },
+  {
+    "percentage": 92,
+    "friendliness": 150
+  },
+  {
+    "percentage": 93,
+    "friendliness": 150
+  },
+  {
+    "percentage": 94,
+    "friendliness": 150
+  },
+  {
+    "percentage": 95,
+    "friendliness": 150
+  },
+  {
+    "percentage": 96,
+    "friendliness": 150
+  },
+  {
+    "percentage": 97,
+    "friendliness": 150
+  },
+  {
+    "percentage": 98,
+    "friendliness": 150
+  },
+  {
+    "percentage": 99,
+    "friendliness": 150
+  },
+  {
+    "percentage": 100,
+    "friendliness": 150
+  }
+]

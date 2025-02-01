@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "language_10023257",
+    "icon": "banner1",
+    "sortId": 1,
+    "jumpId": 410101,
+    "startEnd": "2020-02-30 12:23:00#2020-12-30 12:23:03",
+    "appearanceRole": "1#10101",
+    "vanishingRule": "1#0"
+  },
+  {
+    "id": 2,
+    "name": "language_10023258",
+    "icon": "banner2",
+    "sortId": 2,
+    "jumpId": 410101,
+    "startEnd": "2019-02-30 12:23:00#2019-06-30 12:23:03",
+    "appearanceRole": "",
+    "vanishingRule": ""
+  },
+  {
+    "id": 3,
+    "name": "language_10023259",
+    "icon": "banner3",
+    "sortId": 3,
+    "jumpId": 410101,
+    "startEnd": "2020-02-30 12:23:00#2020-06-30 12:23:03",
+    "appearanceRole": "",
+    "vanishingRule": ""
+  }
+]

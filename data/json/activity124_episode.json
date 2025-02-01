@@ -1,0 +1,56 @@
+[
+  {
+    "activityId": 11305,
+    "episodeId": 1,
+    "preEpisode": 0,
+    "openDay": 1,
+    "firstBonus": "2#2#40|1#110403#2|1#120011#3",
+    "name": "language_10027175",
+    "mapId": 101
+  },
+  {
+    "activityId": 11305,
+    "episodeId": 2,
+    "preEpisode": 1,
+    "openDay": 2,
+    "firstBonus": "2#2#40|1#110103#2|2#3#10000",
+    "name": "language_10027176",
+    "mapId": 102
+  },
+  {
+    "activityId": 11305,
+    "episodeId": 3,
+    "preEpisode": 2,
+    "openDay": 3,
+    "firstBonus": "2#2#40|1#110403#2|1#120011#3",
+    "name": "language_10027177",
+    "mapId": 103
+  },
+  {
+    "activityId": 11305,
+    "episodeId": 4,
+    "preEpisode": 3,
+    "openDay": 4,
+    "firstBonus": "2#2#40|1#110103#2|2#5#10000",
+    "name": "language_10027178",
+    "mapId": 104
+  },
+  {
+    "activityId": 11305,
+    "episodeId": 5,
+    "preEpisode": 4,
+    "openDay": 5,
+    "firstBonus": "2#2#40|1#110403#2|1#120011#3",
+    "name": "language_10027179",
+    "mapId": 105
+  },
+  {
+    "activityId": 11305,
+    "episodeId": 6,
+    "preEpisode": 5,
+    "openDay": 6,
+    "firstBonus": "2#2#40|1#110103#2|2#3#10000",
+    "name": "language_10027180",
+    "mapId": 106
+  }
+]

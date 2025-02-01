@@ -1,0 +1,17 @@
+[
+  {
+    "activityId": 12204,
+    "id": 1,
+    "scene": "v2a2_lopera_levelmap1"
+  },
+  {
+    "activityId": 12204,
+    "id": 2,
+    "scene": "v2a2_lopera_levelmap2"
+  },
+  {
+    "activityId": 12204,
+    "id": 3,
+    "scene": "v2a2_lopera_levelmap3"
+  }
+]

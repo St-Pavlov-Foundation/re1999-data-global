@@ -1,0 +1,634 @@
+[
+  {
+    "activityId": 11402,
+    "elementId": 14101,
+    "type": "5",
+    "param": "14111_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14102,
+    "type": "4#5#9",
+    "param": "14101#14112_1#2",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14103,
+    "type": "4#5#6",
+    "param": "14102#14113_1#101",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14104,
+    "type": "4#6",
+    "param": "14103#101_1",
+    "skipFinish": 0,
+    "res": "jz2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14105,
+    "type": "4#6",
+    "param": "14104#101_2",
+    "skipFinish": 0,
+    "res": "jz1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14106,
+    "type": "5",
+    "param": "14114_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14107,
+    "type": "4#6",
+    "param": "14105#101_3",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14109,
+    "type": "5#7",
+    "param": "14115_1#101",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14108,
+    "type": "8",
+    "param": "101",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14121,
+    "type": "4",
+    "param": "14121",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14122,
+    "type": "4",
+    "param": "14122",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14131,
+    "type": "4",
+    "param": "14131",
+    "skipFinish": 1,
+    "res": "6"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14132,
+    "type": "4",
+    "param": "14132",
+    "skipFinish": 1,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14201,
+    "type": "5",
+    "param": "14211_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14202,
+    "type": "4#5#6",
+    "param": "14201#14212_1#401",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14203,
+    "type": "4#5#6",
+    "param": "14202#14213_1#401_4",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14204,
+    "type": "4#6",
+    "param": "14203#401_1",
+    "skipFinish": 0,
+    "res": "jz2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14205,
+    "type": "4#6",
+    "param": "14204#401_2",
+    "skipFinish": 0,
+    "res": "jz1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14206,
+    "type": "5",
+    "param": "14214_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14207,
+    "type": "4#6",
+    "param": "14205#401_5",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14209,
+    "type": "5#7",
+    "param": "14215_1#401",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14208,
+    "type": "8",
+    "param": "401",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14221,
+    "type": "4",
+    "param": "14221",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14222,
+    "type": "4",
+    "param": "14222",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14231,
+    "type": "4",
+    "param": "14231",
+    "skipFinish": 1,
+    "res": "jiluyuan"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14301,
+    "type": "5",
+    "param": "14311_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14302,
+    "type": "4#5",
+    "param": "14301#14312_1",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14303,
+    "type": "4#5",
+    "param": "14302#14313_1",
+    "skipFinish": 0,
+    "res": "jzxh_boy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14304,
+    "type": "4#5#6",
+    "param": "14303#14314_1#301",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14305,
+    "type": "4#6",
+    "param": "14304#301_1",
+    "skipFinish": 0,
+    "res": "jz2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14306,
+    "type": "4#6",
+    "param": "14305#301_2",
+    "skipFinish": 0,
+    "res": "jz1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14307,
+    "type": "4#6",
+    "param": "14306#301_4",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14308,
+    "type": "4#6",
+    "param": "14307#301_6",
+    "skipFinish": 0,
+    "res": "jzxh_boy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14309,
+    "type": "4#6",
+    "param": "14308#301_5",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14310,
+    "type": "5#7",
+    "param": "14315_1#301",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14311,
+    "type": "8",
+    "param": "301",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14321,
+    "type": "4",
+    "param": "14321",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14322,
+    "type": "4",
+    "param": "14322",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14331,
+    "type": "4",
+    "param": "14331",
+    "skipFinish": 1,
+    "res": "jiluyuan"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14401,
+    "type": "5",
+    "param": "14411_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14402,
+    "type": "4#5",
+    "param": "14401#14412_1",
+    "skipFinish": 0,
+    "res": "210"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14403,
+    "type": "4#5#6",
+    "param": "14402#14413_1#601",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14404,
+    "type": "4#6#6#6#6#6#6",
+    "param": "14403#601_1#601_2#601_3#601_4#601_5#601_6",
+    "skipFinish": 0,
+    "res": "210"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14406,
+    "type": "5#7",
+    "param": "14415_1#601",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14405,
+    "type": "8#4",
+    "param": "601#14404",
+    "skipFinish": 0,
+    "res": "210"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14421,
+    "type": "4",
+    "param": "14421",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14422,
+    "type": "4",
+    "param": "14422",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14431,
+    "type": "4",
+    "param": "14431",
+    "skipFinish": 1,
+    "res": "renqun2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14432,
+    "type": "4",
+    "param": "14432",
+    "skipFinish": 1,
+    "res": "renqun3"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14433,
+    "type": "4",
+    "param": "14433",
+    "skipFinish": 1,
+    "res": "renqun4"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14434,
+    "type": "4",
+    "param": "14434",
+    "skipFinish": 1,
+    "res": "jiluyuan"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14435,
+    "type": "4",
+    "param": "14435",
+    "skipFinish": 1,
+    "res": "renqun1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14501,
+    "type": "5",
+    "param": "14511_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14502,
+    "type": "4#5",
+    "param": "14501#14512_1",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14503,
+    "type": "4#5#6#6",
+    "param": "14502#14513_1#501#501_4",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14504,
+    "type": "4#6",
+    "param": "14503#501_1",
+    "skipFinish": 0,
+    "res": "jz2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14505,
+    "type": "4#6",
+    "param": "14504#501_2",
+    "skipFinish": 0,
+    "res": "jz1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14506,
+    "type": "4#6",
+    "param": "14505#501_6",
+    "skipFinish": 0,
+    "res": "jzxh_boy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14507,
+    "type": "4#6",
+    "param": "14506#501_5",
+    "skipFinish": 0,
+    "res": "37"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14508,
+    "type": "4#6",
+    "param": "14507#501_3",
+    "skipFinish": 0,
+    "res": "210"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14509,
+    "type": "4#6",
+    "param": "14508#501_7",
+    "skipFinish": 0,
+    "res": "jzxh_girl"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14510,
+    "type": "5#4",
+    "param": "14514_1#14509",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14511,
+    "type": "5#7",
+    "param": "14515_1#501",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14512,
+    "type": "8",
+    "param": "501",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14521,
+    "type": "4",
+    "param": "14521",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14522,
+    "type": "4",
+    "param": "14522",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14531,
+    "type": "4",
+    "param": "14531",
+    "skipFinish": 1,
+    "res": "renqun2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14532,
+    "type": "4",
+    "param": "14532",
+    "skipFinish": 1,
+    "res": "renqun1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14533,
+    "type": "4",
+    "param": "14533",
+    "skipFinish": 1,
+    "res": "renqun3"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14534,
+    "type": "4",
+    "param": "14534",
+    "skipFinish": 1,
+    "res": "jiluyuan"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14601,
+    "type": "5",
+    "param": "14611_1",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14602,
+    "type": "4#6#6#6#6#6#6#6",
+    "param": "14601#801_1#801_2#801_3#801_4#801_5#801_6#801_7",
+    "skipFinish": 0,
+    "res": "sfy"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14604,
+    "type": "5#7",
+    "param": "14612_1#801",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14603,
+    "type": "8#4",
+    "param": "801#14602",
+    "skipFinish": 0,
+    "res": ""
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14631,
+    "type": "4",
+    "param": "14631",
+    "skipFinish": 1,
+    "res": "jz2"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14632,
+    "type": "4",
+    "param": "14632",
+    "skipFinish": 1,
+    "res": "jz1(1)"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14633,
+    "type": "4",
+    "param": "14633",
+    "skipFinish": 1,
+    "res": "jz1"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14634,
+    "type": "4",
+    "param": "14634",
+    "skipFinish": 1,
+    "res": "jz2(1)"
+  },
+  {
+    "activityId": 11402,
+    "elementId": 14635,
+    "type": "4",
+    "param": "14635",
+    "skipFinish": 1,
+    "res": "6"
+  }
+]

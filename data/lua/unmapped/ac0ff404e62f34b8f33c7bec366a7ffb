@@ -1,0 +1,10 @@
+module("framework.network.socket.ConnectEvent", package.seeall)
+
+return {
+	OnLostConnect = 1,
+	OnReconnectSucc = 2,
+	OnReconnectFail = 3,
+	OnServerKickedOut = 4,
+	OnLostMessage = 5,
+	OnMsgTimeout = 6
+}

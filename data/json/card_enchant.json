@@ -1,0 +1,62 @@
+[
+  {
+    "id": 10001,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10002#10005",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "frozen",
+    "desc": "language_10040055"
+  },
+  {
+    "id": 10002,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10001#10005",
+    "stage": 301,
+    "decStage": 303,
+    "feature": "burn#100#100",
+    "desc": "language_90001048"
+  },
+  {
+    "id": 10003,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10006",
+    "stage": 301,
+    "decStage": 303,
+    "feature": "chaos",
+    "desc": "language_10015882"
+  },
+  {
+    "id": 10004,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "discard",
+    "desc": "language_10054302"
+  },
+  {
+    "id": 10005,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10001#10002",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "blockade",
+    "desc": "language_10054303"
+  },
+  {
+    "id": 10006,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10003",
+    "stage": 201,
+    "decStage": 303,
+    "feature": "precision#201#1000#213#1000",
+    "desc": "language_10054304"
+  }
+]

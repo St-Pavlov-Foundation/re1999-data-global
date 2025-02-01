@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "card1": "kapai_001",
+    "attribute": "attribute_1",
+    "card2": "jnk_gj1",
+    "cardname_en": "Attack",
+    "cardname": "language_10029291",
+    "carddescription1": "",
+    "carddescription2": "language_10029292"
+  },
+  {
+    "id": 2,
+    "card1": "kapai_002",
+    "attribute": "attribute_4",
+    "card2": "jnk_gj4",
+    "cardname_en": "Buff",
+    "cardname": "language_10017160",
+    "carddescription1": "",
+    "carddescription2": "language_10029293"
+  },
+  {
+    "id": 3,
+    "card1": "kapai_003",
+    "attribute": "attribute_5",
+    "card2": "jnk_gj5",
+    "cardname_en": "Counter",
+    "cardname": "language_10017147",
+    "carddescription1": "",
+    "carddescription2": "language_10029294"
+  },
+  {
+    "id": 4,
+    "card1": "kapai_004",
+    "attribute": "attribute_3",
+    "card2": "jnk_gj3",
+    "cardname_en": "Debuff",
+    "cardname": "language_10017172",
+    "carddescription1": "",
+    "carddescription2": "language_10029295"
+  },
+  {
+    "id": 5,
+    "card1": "kapai_005",
+    "attribute": "attribute_6",
+    "card2": "jnk_gj6",
+    "cardname_en": "Health",
+    "cardname": "language_90001008",
+    "carddescription1": "",
+    "carddescription2": "language_10029296"
+  },
+  {
+    "id": 6,
+    "card1": "dzkapai_002",
+    "attribute": "",
+    "card2": "kp_04",
+    "cardname_en": "Ultimate",
+    "cardname": "language_10025487",
+    "carddescription1": "",
+    "carddescription2": "language_10029297"
+  }
+]

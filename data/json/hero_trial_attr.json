@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1191001,
+    "name": "language_10040326",
+    "activeSkill": "1#119600111#119600112#119600113|2#119600121#119600122#119600123",
+    "passiveSkill": "119600141|119600142",
+    "uniqueSkill": 119600131,
+    "noShowExSkill": 1,
+    "life": 1000,
+    "attack": 300,
+    "defense": 150,
+    "mdefense": 150,
+    "technic": 150,
+    "cri": 200,
+    "recri": 100,
+    "criDmg": 200,
+    "criDef": 100,
+    "addDmg": 200,
+    "dropDmg": 100
+  }
+]

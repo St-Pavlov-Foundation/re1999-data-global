@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "version": "",
+    "product": 8240102,
+    "synthetics": "8140101#8140101"
+  },
+  {
+    "id": 2,
+    "version": "",
+    "product": 8240202,
+    "synthetics": "8140201#8140201"
+  },
+  {
+    "id": 3,
+    "version": "",
+    "product": 8240302,
+    "synthetics": "8140301#8140301"
+  },
+  {
+    "id": 4,
+    "version": "",
+    "product": 8240402,
+    "synthetics": "8140401#8140401"
+  },
+  {
+    "id": 5,
+    "version": "",
+    "product": 8240502,
+    "synthetics": "8140501#8140501"
+  },
+  {
+    "id": 6,
+    "version": "",
+    "product": 8240602,
+    "synthetics": "8140601#8140601"
+  },
+  {
+    "id": 7,
+    "version": "",
+    "product": 8240702,
+    "synthetics": "8140701#8140701"
+  },
+  {
+    "id": 8,
+    "version": "",
+    "product": 8240802,
+    "synthetics": "8140801#8140801"
+  },
+  {
+    "id": 9,
+    "version": "",
+    "product": 8250007,
+    "synthetics": "8150006#8150006"
+  },
+  {
+    "id": 10,
+    "version": "",
+    "product": 8250009,
+    "synthetics": "8150008#8150008"
+  },
+  {
+    "id": 11,
+    "version": "",
+    "product": 8250011,
+    "synthetics": "8150010#8150010"
+  },
+  {
+    "id": 12,
+    "version": "",
+    "product": 8250013,
+    "synthetics": "8150012#8150012"
+  },
+  {
+    "id": 13,
+    "version": "",
+    "product": 8250015,
+    "synthetics": "8150014#8150014"
+  },
+  {
+    "id": 14,
+    "version": "",
+    "product": 8250017,
+    "synthetics": "8150016#8150016"
+  },
+  {
+    "id": 15,
+    "version": "",
+    "product": 8130804,
+    "synthetics": "8130803#8130803"
+  },
+  {
+    "id": 16,
+    "version": "",
+    "product": 8210508,
+    "synthetics": "8110616#8120512"
+  },
+  {
+    "id": 17,
+    "version": "",
+    "product": 8320709,
+    "synthetics": "8120512#8120705"
+  },
+  {
+    "id": 18,
+    "version": "101",
+    "product": 8320323,
+    "synthetics": "8110321#8120322"
+  },
+  {
+    "id": 19,
+    "version": "",
+    "product": 8330023,
+    "synthetics": "8230038#8230040"
+  },
+  {
+    "id": 20,
+    "version": "",
+    "product": 8330417,
+    "synthetics": "8230414#8230509"
+  },
+  {
+    "id": 21,
+    "version": "",
+    "product": 8330026,
+    "synthetics": "8230027#8230028"
+  },
+  {
+    "id": 22,
+    "version": "",
+    "product": 8330005,
+    "synthetics": "8230004#8230004"
+  },
+  {
+    "id": 23,
+    "version": "",
+    "product": 8310815,
+    "synthetics": "8210818#8130804"
+  },
+  {
+    "id": 24,
+    "version": "",
+    "product": 8310810,
+    "synthetics": "8210819#8130804"
+  },
+  {
+    "id": 25,
+    "version": "",
+    "product": 8310114,
+    "synthetics": "8210113#8220036"
+  },
+  {
+    "id": 26,
+    "version": "",
+    "product": 8310407,
+    "synthetics": "8210411#8220409"
+  },
+  {
+    "id": 27,
+    "version": "",
+    "product": 8320811,
+    "synthetics": "8220814#8220807#8330816"
+  }
+]

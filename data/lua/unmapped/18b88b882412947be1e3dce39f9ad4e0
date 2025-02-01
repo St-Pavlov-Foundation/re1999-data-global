@@ -1,0 +1,16 @@
+module("framework.mvc.model.MixScrollParam", package.seeall)
+
+slot0 = pureTable("MixScrollParam")
+
+function slot0.ctor(slot0)
+	slot0.scrollGOPath = nil
+	slot0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	slot0.prefabUrl = nil
+	slot0.cellClass = nil
+	slot0.scrollDir = ScrollEnum.ScrollDirH
+	slot0.emptyScrollParam = nil
+	slot0.startSpace = 0
+	slot0.endSpace = 0
+end
+
+return slot0

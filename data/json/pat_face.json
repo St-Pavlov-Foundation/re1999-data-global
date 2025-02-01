@@ -1,0 +1,247 @@
+[
+  {
+    "id": 1,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 1
+  },
+  {
+    "id": 2,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "TurnbackPopupBeginnerView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 99999
+  },
+  {
+    "id": 3,
+    "patFaceActivityId": 12238,
+    "patFaceViewName": "Activity136View",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20203
+  },
+  {
+    "id": 4,
+    "patFaceActivityId": 11918,
+    "patFaceViewName": "DecalogPresentView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20204
+  },
+  {
+    "id": 5,
+    "patFaceActivityId": 11615,
+    "patFaceViewName": "GoldenMilletPresentView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2
+  },
+  {
+    "id": 6,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 7,
+    "patFaceActivityId": 11618,
+    "patFaceViewName": "V1a6_Spring_PanelSignView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 8
+  },
+  {
+    "id": 8,
+    "patFaceActivityId": 11621,
+    "patFaceViewName": "NewYearEveGiftView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 9,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 7
+  },
+  {
+    "id": 10,
+    "patFaceActivityId": 11711,
+    "patFaceViewName": "V1a7_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 11,
+    "patFaceActivityId": 11712,
+    "patFaceViewName": "V1a7_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 7
+  },
+  {
+    "id": 12,
+    "patFaceActivityId": 11710,
+    "patFaceViewName": "LanternFestivalView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 8
+  },
+  {
+    "id": 13,
+    "patFaceActivityId": 11800,
+    "patFaceViewName": "V1a8_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 1
+  },
+  {
+    "id": 14,
+    "patFaceActivityId": 11801,
+    "patFaceViewName": "V1a8_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2
+  },
+  {
+    "id": 15,
+    "patFaceActivityId": 11808,
+    "patFaceViewName": "V1a8_Work_PanelSignView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 3
+  },
+  {
+    "id": 10900,
+    "patFaceActivityId": 11913,
+    "patFaceViewName": "V1a9_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 10901,
+    "patFaceActivityId": 11914,
+    "patFaceViewName": "V1a9_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 10902,
+    "patFaceActivityId": 11915,
+    "patFaceViewName": "V1a9_MatildagiftView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2
+  },
+  {
+    "id": 10903,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 0
+  },
+  {
+    "id": 10904,
+    "patFaceActivityId": 11916,
+    "patFaceViewName": "SemmelWeisGiftView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 1
+  },
+  {
+    "id": 10905,
+    "patFaceActivityId": 11919,
+    "patFaceViewName": "V1a9_AnniversarySign_PanelSignView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 8
+  },
+  {
+    "id": 20000,
+    "patFaceActivityId": 12020,
+    "patFaceViewName": "V2a0_SummerSign_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20000
+  },
+  {
+    "id": 20001,
+    "patFaceActivityId": 12021,
+    "patFaceViewName": "V2a0_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 20002,
+    "patFaceActivityId": 12022,
+    "patFaceViewName": "V2a0_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 20100,
+    "patFaceActivityId": 12108,
+    "patFaceViewName": "V2a1_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 20101,
+    "patFaceActivityId": 12109,
+    "patFaceViewName": "V2a1_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 20102,
+    "patFaceActivityId": 12110,
+    "patFaceViewName": "V2a1_MoonFestival_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 7
+  },
+  {
+    "id": 20200,
+    "patFaceActivityId": 12230,
+    "patFaceViewName": "V2a2_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20206
+  },
+  {
+    "id": 20201,
+    "patFaceActivityId": 12231,
+    "patFaceViewName": "V2a2_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20207
+  },
+  {
+    "id": 20202,
+    "patFaceActivityId": 12235,
+    "patFaceViewName": "SummonNewCustomPickFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20200
+  },
+  {
+    "id": 20203,
+    "patFaceActivityId": 12243,
+    "patFaceViewName": "BPSPFaceView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20201
+  },
+  {
+    "id": 20204,
+    "patFaceActivityId": 12232,
+    "patFaceViewName": "V2a2_RedLeafFestival_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20209
+  },
+  {
+    "id": 20205,
+    "patFaceActivityId": 12236,
+    "patFaceViewName": "Activity173FullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20208
+  },
+  {
+    "id": 20206,
+    "patFaceActivityId": 12244,
+    "patFaceViewName": "V2a2_SpringFestival_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20299
+  },
+  {
+    "id": 20303,
+    "patFaceActivityId": 12312,
+    "patFaceViewName": "LinkageActivity_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 7
+  }
+]

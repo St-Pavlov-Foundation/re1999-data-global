@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "language_10022691",
+    "type": 1,
+    "logic": 1,
+    "reserve": 1200,
+    "initFormula": 2002001,
+    "levelGroup": 200201,
+    "needRoomLevel": 1
+  },
+  {
+    "id": 2,
+    "name": "language_10022692",
+    "type": 1,
+    "logic": 1,
+    "reserve": 1200,
+    "initFormula": 2002001,
+    "levelGroup": 200201,
+    "needRoomLevel": 2
+  },
+  {
+    "id": 3,
+    "name": "language_10022693",
+    "type": 1,
+    "logic": 1,
+    "reserve": 1200,
+    "initFormula": 2002001,
+    "levelGroup": 200201,
+    "needRoomLevel": 3
+  },
+  {
+    "id": 4,
+    "name": "language_10022691",
+    "type": 2,
+    "logic": 1,
+    "reserve": 600,
+    "initFormula": 2101001,
+    "levelGroup": 210101,
+    "needRoomLevel": 2
+  },
+  {
+    "id": 5,
+    "name": "language_10022692",
+    "type": 2,
+    "logic": 1,
+    "reserve": 600,
+    "initFormula": 2101001,
+    "levelGroup": 210101,
+    "needRoomLevel": 2
+  },
+  {
+    "id": 6,
+    "name": "language_10022693",
+    "type": 2,
+    "logic": 1,
+    "reserve": 600,
+    "initFormula": 2101001,
+    "levelGroup": 210101,
+    "needRoomLevel": 3
+  },
+  {
+    "id": 7,
+    "name": "language_10022628",
+    "type": 3,
+    "logic": 2,
+    "reserve": 0,
+    "initFormula": 3001012,
+    "levelGroup": 220101,
+    "needRoomLevel": 2
+  }
+]

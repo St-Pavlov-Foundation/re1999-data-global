@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "desc": "language_10003341",
+    "interactvalue": "1|1#2"
+  },
+  {
+    "id": 2,
+    "desc": "language_10003342",
+    "interactvalue": "1|2#4"
+  },
+  {
+    "id": 3,
+    "desc": "language_10003343",
+    "interactvalue": "1|1#3#4"
+  },
+  {
+    "id": 4,
+    "desc": "language_10003344",
+    "interactvalue": "1|1#4"
+  },
+  {
+    "id": 5,
+    "desc": "language_10003345",
+    "interactvalue": "2|1"
+  },
+  {
+    "id": 6,
+    "desc": "language_10003346",
+    "interactvalue": "2|2#4"
+  }
+]

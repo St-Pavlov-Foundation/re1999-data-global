@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "value": "50",
+    "value2": ""
+  },
+  {
+    "id": 2,
+    "value": "100",
+    "value2": ""
+  },
+  {
+    "id": 3,
+    "value": "800|200",
+    "value2": ""
+  },
+  {
+    "id": 4,
+    "value": "0",
+    "value2": ""
+  },
+  {
+    "id": 5,
+    "value": "0",
+    "value2": ""
+  },
+  {
+    "id": 6,
+    "value": "1",
+    "value2": "language_10050579"
+  },
+  {
+    "id": 7,
+    "value": "2",
+    "value2": "language_10050580"
+  },
+  {
+    "id": 8,
+    "value": "1",
+    "value2": "language_10050207"
+  },
+  {
+    "id": 9,
+    "value": "2",
+    "value2": "language_10050209"
+  },
+  {
+    "id": 10,
+    "value": "0",
+    "value2": ""
+  },
+  {
+    "id": 11,
+    "value": "0",
+    "value2": ""
+  },
+  {
+    "id": 12,
+    "value": "",
+    "value2": "language_10050581"
+  },
+  {
+    "id": 13,
+    "value": "",
+    "value2": "language_10050582"
+  },
+  {
+    "id": 14,
+    "value": "",
+    "value2": "language_10050583"
+  },
+  {
+    "id": 15,
+    "value": "",
+    "value2": "language_10050584"
+  },
+  {
+    "id": 16,
+    "value": "",
+    "value2": "language_10050585"
+  },
+  {
+    "id": 17,
+    "value": "",
+    "value2": "language_10050586"
+  },
+  {
+    "id": 18,
+    "value": "",
+    "value2": "language_10050587"
+  },
+  {
+    "id": 19,
+    "value": "",
+    "value2": "language_10050588"
+  },
+  {
+    "id": 20,
+    "value": "",
+    "value2": "language_10050589"
+  }
+]

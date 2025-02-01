@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "language_10022445",
+    "nameEng": "PUREBLOOD",
+    "icon": 1
+  },
+  {
+    "id": 2,
+    "name": "language_10022446",
+    "nameEng": "MIXED",
+    "icon": 2
+  },
+  {
+    "id": 3,
+    "name": "language_10022447",
+    "nameEng": "INFECTED",
+    "icon": 3
+  },
+  {
+    "id": 4,
+    "name": "language_10022448",
+    "nameEng": "BEYOND",
+    "icon": 4
+  },
+  {
+    "id": 5,
+    "name": "language_10022449",
+    "nameEng": "AWAKENED",
+    "icon": 5
+  },
+  {
+    "id": 6,
+    "name": "language_10022450",
+    "nameEng": "HUMAN",
+    "icon": 6
+  }
+]

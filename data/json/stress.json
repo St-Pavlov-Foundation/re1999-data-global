@@ -1,0 +1,8132 @@
+[
+  {
+    "id": 1001,
+    "identity": 1001,
+    "desc": "",
+    "title": "敌人退场时，自身应激-5",
+    "condition": 0,
+    "type": "baseAdd",
+    "pressParam": "1#1",
+    "rule": "1001"
+  },
+  {
+    "id": 1002,
+    "identity": 1001,
+    "desc": "",
+    "title": "击败敌人时，自身应激-10",
+    "condition": 0,
+    "type": "baseAdd",
+    "pressParam": "1#1",
+    "rule": "1002"
+  },
+  {
+    "id": 1003,
+    "identity": 1001,
+    "desc": "",
+    "title": "其他友方阵亡时，自身应激+25",
+    "condition": 0,
+    "type": "baseAdd",
+    "pressParam": "1#1",
+    "rule": "1003"
+  },
+  {
+    "id": 1004,
+    "identity": 1001,
+    "desc": "",
+    "title": "低应激时，概率根据灵感触发警觉行为",
+    "condition": 0,
+    "type": "baseReduce",
+    "pressParam": "1#1",
+    "rule": "1004"
+  },
+  {
+    "id": 1005,
+    "identity": 1001,
+    "desc": "",
+    "title": "高应激时，概率根据灵感触发紊乱行为",
+    "condition": 0,
+    "type": "baseReduce",
+    "pressParam": "1#1",
+    "rule": "1005"
+  },
+  {
+    "id": 1006,
+    "identity": 1001,
+    "desc": "",
+    "title": "应激到达50时，触发专注或失控行为",
+    "condition": 0,
+    "type": "baseResolute",
+    "pressParam": "1#1",
+    "rule": "1006"
+  },
+  {
+    "id": 1007,
+    "identity": 1001,
+    "desc": "",
+    "title": "专注：帮助队伍，比如降低友方应激",
+    "condition": 0,
+    "type": "baseResolute",
+    "pressParam": "1#1",
+    "rule": "1007"
+  },
+  {
+    "id": 1008,
+    "identity": 1001,
+    "desc": "",
+    "title": "失控：打乱规划，比如使自身无法行动",
+    "condition": 0,
+    "type": "baseResolute",
+    "pressParam": "1#1",
+    "rule": "1008"
+  },
+  {
+    "id": 20011,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—正面行为",
+    "condition": 304,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200111"
+  },
+  {
+    "id": 20021,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—正面行为",
+    "condition": 100,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200211"
+  },
+  {
+    "id": 20031,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—正面行为",
+    "condition": 304,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200311"
+  },
+  {
+    "id": 20041,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—正面行为",
+    "condition": 100,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200411"
+  },
+  {
+    "id": 20051,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—正面行为",
+    "condition": 304,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200511"
+  },
+  {
+    "id": 20061,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—正面行为",
+    "condition": 0,
+    "type": "positive",
+    "pressParam": "0#0.5",
+    "rule": "200611"
+  },
+  {
+    "id": 20012,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—负面行为",
+    "condition": 304,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200121"
+  },
+  {
+    "id": 20022,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—负面行为",
+    "condition": 100,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200221"
+  },
+  {
+    "id": 20032,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—负面行为",
+    "condition": 304,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200321"
+  },
+  {
+    "id": 20042,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—负面行为",
+    "condition": 100,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200421"
+  },
+  {
+    "id": 20052,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—负面行为",
+    "condition": 304,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200521"
+  },
+  {
+    "id": 20062,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—负面行为",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "0.5#1",
+    "rule": "200621"
+  },
+  {
+    "id": 10013,
+    "identity": 1001,
+    "desc": "",
+    "title": "角色通用—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "100131"
+  },
+  {
+    "id": 20013,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200131"
+  },
+  {
+    "id": 20023,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200231"
+  },
+  {
+    "id": 20033,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200331"
+  },
+  {
+    "id": 20043,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200431"
+  },
+  {
+    "id": 20053,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200531"
+  },
+  {
+    "id": 20063,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—坚决行为",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200631"
+  },
+  {
+    "id": 40013,
+    "identity": 4001,
+    "desc": "",
+    "title": "现实创伤—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "400131"
+  },
+  {
+    "id": 40023,
+    "identity": 4002,
+    "desc": "",
+    "title": "精神创伤—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "400231"
+  },
+  {
+    "id": 41013,
+    "identity": 4101,
+    "desc": "",
+    "title": "输出—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410131"
+  },
+  {
+    "id": 41023,
+    "identity": 4102,
+    "desc": "",
+    "title": "防御—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410231"
+  },
+  {
+    "id": 41033,
+    "identity": 4103,
+    "desc": "",
+    "title": "辅助—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410331"
+  },
+  {
+    "id": 41043,
+    "identity": 4104,
+    "desc": "",
+    "title": "治疗—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410431"
+  },
+  {
+    "id": 41053,
+    "identity": 4105,
+    "desc": "",
+    "title": "爆发—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410531"
+  },
+  {
+    "id": 41063,
+    "identity": 4106,
+    "desc": "",
+    "title": "削弱—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410631"
+  },
+  {
+    "id": 41073,
+    "identity": 4107,
+    "desc": "",
+    "title": "控制—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410731"
+  },
+  {
+    "id": 41083,
+    "identity": 4108,
+    "desc": "",
+    "title": "护盾—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410831"
+  },
+  {
+    "id": 41093,
+    "identity": 4109,
+    "desc": "",
+    "title": "驱散—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410931"
+  },
+  {
+    "id": 41103,
+    "identity": 4110,
+    "desc": "",
+    "title": "净化—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411031"
+  },
+  {
+    "id": 41113,
+    "identity": 4111,
+    "desc": "",
+    "title": "自愈—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411131"
+  },
+  {
+    "id": 41123,
+    "identity": 4112,
+    "desc": "",
+    "title": "中毒—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411231"
+  },
+  {
+    "id": 41133,
+    "identity": 4113,
+    "desc": "",
+    "title": "重伤—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411331"
+  },
+  {
+    "id": 41143,
+    "identity": 4114,
+    "desc": "",
+    "title": "额外行动—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411431"
+  },
+  {
+    "id": 41153,
+    "identity": 4115,
+    "desc": "",
+    "title": "追击—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411531"
+  },
+  {
+    "id": 41163,
+    "identity": 4116,
+    "desc": "",
+    "title": "反击—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411631"
+  },
+  {
+    "id": 41183,
+    "identity": 4118,
+    "desc": "",
+    "title": "燃烧—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411831"
+  },
+  {
+    "id": 41193,
+    "identity": 4119,
+    "desc": "",
+    "title": "免疫—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411931"
+  },
+  {
+    "id": 41203,
+    "identity": 4120,
+    "desc": "",
+    "title": "收割—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412031"
+  },
+  {
+    "id": 41213,
+    "identity": 4121,
+    "desc": "",
+    "title": "燃血—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412131"
+  },
+  {
+    "id": 41223,
+    "identity": 4122,
+    "desc": "",
+    "title": "位移—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412231"
+  },
+  {
+    "id": 41233,
+    "identity": 4123,
+    "desc": "",
+    "title": "调阶—坚决行为",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412331"
+  },
+  {
+    "id": 10014,
+    "identity": 1001,
+    "desc": "",
+    "title": "角色通用—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "100141"
+  },
+  {
+    "id": 20014,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200141"
+  },
+  {
+    "id": 20024,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200241"
+  },
+  {
+    "id": 20034,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200341"
+  },
+  {
+    "id": 20044,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200441"
+  },
+  {
+    "id": 20054,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200541"
+  },
+  {
+    "id": 20064,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—崩溃行为",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200641"
+  },
+  {
+    "id": 40014,
+    "identity": 4001,
+    "desc": "",
+    "title": "现实创伤—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "400141"
+  },
+  {
+    "id": 40024,
+    "identity": 4002,
+    "desc": "",
+    "title": "精神创伤—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "400241"
+  },
+  {
+    "id": 41014,
+    "identity": 4101,
+    "desc": "",
+    "title": "输出—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410141"
+  },
+  {
+    "id": 41024,
+    "identity": 4102,
+    "desc": "",
+    "title": "防御—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410241"
+  },
+  {
+    "id": 41034,
+    "identity": 4103,
+    "desc": "",
+    "title": "辅助—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410341"
+  },
+  {
+    "id": 41044,
+    "identity": 4104,
+    "desc": "",
+    "title": "治疗—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410441"
+  },
+  {
+    "id": 41054,
+    "identity": 4105,
+    "desc": "",
+    "title": "爆发—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410541"
+  },
+  {
+    "id": 41064,
+    "identity": 4106,
+    "desc": "",
+    "title": "削弱—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410641"
+  },
+  {
+    "id": 41074,
+    "identity": 4107,
+    "desc": "",
+    "title": "控制—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410741"
+  },
+  {
+    "id": 41084,
+    "identity": 4108,
+    "desc": "",
+    "title": "护盾—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410841"
+  },
+  {
+    "id": 41094,
+    "identity": 4109,
+    "desc": "",
+    "title": "驱散—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410941"
+  },
+  {
+    "id": 41104,
+    "identity": 4110,
+    "desc": "",
+    "title": "净化—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411041"
+  },
+  {
+    "id": 41114,
+    "identity": 4111,
+    "desc": "",
+    "title": "自愈—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411141"
+  },
+  {
+    "id": 41124,
+    "identity": 4112,
+    "desc": "",
+    "title": "中毒—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411241"
+  },
+  {
+    "id": 41134,
+    "identity": 4113,
+    "desc": "",
+    "title": "重伤—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411341"
+  },
+  {
+    "id": 41144,
+    "identity": 4114,
+    "desc": "",
+    "title": "额外行动—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411441"
+  },
+  {
+    "id": 41154,
+    "identity": 4115,
+    "desc": "",
+    "title": "追击—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411541"
+  },
+  {
+    "id": 41164,
+    "identity": 4116,
+    "desc": "",
+    "title": "反击—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411641"
+  },
+  {
+    "id": 41184,
+    "identity": 4118,
+    "desc": "",
+    "title": "燃烧—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411841"
+  },
+  {
+    "id": 41194,
+    "identity": 4119,
+    "desc": "",
+    "title": "免疫—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411941"
+  },
+  {
+    "id": 41204,
+    "identity": 4120,
+    "desc": "",
+    "title": "收割—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412041"
+  },
+  {
+    "id": 41214,
+    "identity": 4121,
+    "desc": "",
+    "title": "燃血—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412141"
+  },
+  {
+    "id": 41224,
+    "identity": 4122,
+    "desc": "",
+    "title": "位移—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412241"
+  },
+  {
+    "id": 41234,
+    "identity": 4123,
+    "desc": "",
+    "title": "调阶—崩溃行为",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412341"
+  },
+  {
+    "id": 530911,
+    "identity": 53091,
+    "desc": "",
+    "title": "罗蕾莱-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530911"
+  },
+  {
+    "id": 530812,
+    "identity": 53081,
+    "desc": "",
+    "title": "伊索尔德-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530812"
+  },
+  {
+    "id": 530651,
+    "identity": 53065,
+    "desc": "",
+    "title": "马库斯-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530651"
+  },
+  {
+    "id": 530862,
+    "identity": 53086,
+    "desc": "",
+    "title": "露西-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530862"
+  },
+  {
+    "id": 530982,
+    "identity": 53098,
+    "desc": "",
+    "title": "蓝手帕-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530982"
+  },
+  {
+    "id": 530972,
+    "identity": 53097,
+    "desc": "",
+    "title": "阿尔古斯-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530972"
+  },
+  {
+    "id": 530992,
+    "identity": 53099,
+    "desc": "",
+    "title": "数羊羔-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530992"
+  },
+  {
+    "id": 530271,
+    "identity": 53027,
+    "desc": "",
+    "title": "无线电小姐-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530271"
+  },
+  {
+    "id": 530791,
+    "identity": 53079,
+    "desc": "",
+    "title": "6-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530791"
+  },
+  {
+    "id": 530041,
+    "identity": 53004,
+    "desc": "",
+    "title": "红弩箭-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530041"
+  },
+  {
+    "id": 530251,
+    "identity": 53025,
+    "desc": "",
+    "title": "星锑-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530251"
+  },
+  {
+    "id": 530281,
+    "identity": 53028,
+    "desc": "",
+    "title": "APPLe-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530281"
+  },
+  {
+    "id": 530231,
+    "identity": 53023,
+    "desc": "",
+    "title": "十四行诗-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530231"
+  },
+  {
+    "id": 530412,
+    "identity": 53041,
+    "desc": "",
+    "title": "玛蒂尔达-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530412"
+  },
+  {
+    "id": 530091,
+    "identity": 53009,
+    "desc": "",
+    "title": "苏芙比-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530091"
+  },
+  {
+    "id": 530032,
+    "identity": 53003,
+    "desc": "",
+    "title": "槲寄生-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530032"
+  },
+  {
+    "id": 530471,
+    "identity": 53047,
+    "desc": "",
+    "title": "兔毛手袋-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530471"
+  },
+  {
+    "id": 530572,
+    "identity": 53057,
+    "desc": "",
+    "title": "小梅斯梅尔-坚决",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530572"
+  },
+  {
+    "id": 530912,
+    "identity": 53091,
+    "desc": "",
+    "title": "罗蕾莱-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530912"
+  },
+  {
+    "id": 530802,
+    "identity": 53080,
+    "desc": "",
+    "title": "卡卡尼亚-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530802"
+  },
+  {
+    "id": 530813,
+    "identity": 53081,
+    "desc": "",
+    "title": "伊索尔德-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530813"
+  },
+  {
+    "id": 530652,
+    "identity": 53065,
+    "desc": "",
+    "title": "马库斯-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530652"
+  },
+  {
+    "id": 530863,
+    "identity": 53086,
+    "desc": "",
+    "title": "露西-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530863"
+  },
+  {
+    "id": 530983,
+    "identity": 53098,
+    "desc": "",
+    "title": "蓝手帕-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530983"
+  },
+  {
+    "id": 530973,
+    "identity": 53097,
+    "desc": "",
+    "title": "阿尔古斯-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530973"
+  },
+  {
+    "id": 530993,
+    "identity": 53099,
+    "desc": "",
+    "title": "数羊羔-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530993"
+  },
+  {
+    "id": 530272,
+    "identity": 53027,
+    "desc": "",
+    "title": "无线电小姐-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530272"
+  },
+  {
+    "id": 530792,
+    "identity": 53079,
+    "desc": "",
+    "title": "6-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530792"
+  },
+  {
+    "id": 530042,
+    "identity": 53004,
+    "desc": "",
+    "title": "红弩箭-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530042"
+  },
+  {
+    "id": 530252,
+    "identity": 53025,
+    "desc": "",
+    "title": "星锑-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530252"
+  },
+  {
+    "id": 530282,
+    "identity": 53028,
+    "desc": "",
+    "title": "APPLe-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530282"
+  },
+  {
+    "id": 530232,
+    "identity": 53023,
+    "desc": "",
+    "title": "十四行诗-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530232"
+  },
+  {
+    "id": 530413,
+    "identity": 53041,
+    "desc": "",
+    "title": "玛蒂尔达-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530413"
+  },
+  {
+    "id": 530092,
+    "identity": 53009,
+    "desc": "",
+    "title": "苏芙比-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530092"
+  },
+  {
+    "id": 530033,
+    "identity": 53003,
+    "desc": "",
+    "title": "槲寄生-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530033"
+  },
+  {
+    "id": 530472,
+    "identity": 53047,
+    "desc": "",
+    "title": "兔毛手袋-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530472"
+  },
+  {
+    "id": 530573,
+    "identity": 53057,
+    "desc": "",
+    "title": "小梅斯梅尔-崩溃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530573"
+  },
+  {
+    "id": 5210001,
+    "identity": 5210001,
+    "desc": "",
+    "title": "海怪-难度4",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210001"
+  },
+  {
+    "id": 5210002,
+    "identity": 5210002,
+    "desc": "",
+    "title": "触手1-难度4",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210002"
+  },
+  {
+    "id": 5210003,
+    "identity": 5210003,
+    "desc": "",
+    "title": "触手2-难度4",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210003"
+  },
+  {
+    "id": 5210011,
+    "identity": 5210011,
+    "desc": "",
+    "title": "岛之主-难度4",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210011"
+  },
+  {
+    "id": 5210012,
+    "identity": 5210012,
+    "desc": "",
+    "title": "放牧人-难度4",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210012"
+  },
+  {
+    "id": 5210013,
+    "identity": 5210013,
+    "desc": "",
+    "title": "奉酒人-难度4",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210013"
+  },
+  {
+    "id": 5210021,
+    "identity": 5210021,
+    "desc": "",
+    "title": "大地的愠怒-难度4",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210021"
+  },
+  {
+    "id": 5210022,
+    "identity": 5210022,
+    "desc": "",
+    "title": "原初居民-难度4",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5210022"
+  },
+  {
+    "id": 1211001,
+    "identity": 1211001,
+    "desc": "",
+    "title": "2.1-主活动通用身份",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "1211001"
+  },
+  {
+    "id": 8011101,
+    "identity": 8011101,
+    "desc": "",
+    "title": "1.9地牢-市区-警惕的卫兵",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011101"
+  },
+  {
+    "id": 8011102,
+    "identity": 8011102,
+    "desc": "",
+    "title": "1.9地牢-市区-敬业的卫兵",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011102"
+  },
+  {
+    "id": 8011103,
+    "identity": 8011103,
+    "desc": "",
+    "title": "1.9地牢-市区-暴动者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011103"
+  },
+  {
+    "id": 8011104,
+    "identity": 8011104,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011104"
+  },
+  {
+    "id": 8011105,
+    "identity": 8011105,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011105"
+  },
+  {
+    "id": 8011106,
+    "identity": 8011106,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁之主",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011106"
+  },
+  {
+    "id": 2190002,
+    "identity": 2190002,
+    "desc": "",
+    "title": "1.9地牢-2层通用-流浪汉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190002"
+  },
+  {
+    "id": 2190003,
+    "identity": 2190003,
+    "desc": "",
+    "title": "1.9地牢-2层通用-醉汉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190003"
+  },
+  {
+    "id": 2190004,
+    "identity": 2190004,
+    "desc": "",
+    "title": "1.9地牢-2层通用-无知恶童",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190004"
+  },
+  {
+    "id": 2190005,
+    "identity": 2190005,
+    "desc": "",
+    "title": "1.9地牢-2层通用-粗鲁恶童",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190005"
+  },
+  {
+    "id": 2190006,
+    "identity": 2190006,
+    "desc": "",
+    "title": "1.9地牢-2层通用-采访记者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190006"
+  },
+  {
+    "id": 2190007,
+    "identity": 2190007,
+    "desc": "",
+    "title": "1.9地牢-3层通用-迎宾士",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190007"
+  },
+  {
+    "id": 2190008,
+    "identity": 2190008,
+    "desc": "",
+    "title": "1.9地牢-3层通用-盾迎宾士",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190008"
+  },
+  {
+    "id": 2190009,
+    "identity": 2190009,
+    "desc": "",
+    "title": "1.9地牢-3层通用-唁丧迎宾士",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190009"
+  },
+  {
+    "id": 2190010,
+    "identity": 2190010,
+    "desc": "",
+    "title": "1.9地牢-3层通用-礼乐人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190010"
+  },
+  {
+    "id": 2190011,
+    "identity": 2190011,
+    "desc": "",
+    "title": "1.9地牢-3层通用-杖礼乐人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190011"
+  },
+  {
+    "id": 2190012,
+    "identity": 2190012,
+    "desc": "",
+    "title": "1.9地牢-3层通用-仪枪礼乐人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190012"
+  },
+  {
+    "id": 2190013,
+    "identity": 2190013,
+    "desc": "",
+    "title": "1.9地牢-3层通用-鼓槌手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190013"
+  },
+  {
+    "id": 2190014,
+    "identity": 2190014,
+    "desc": "",
+    "title": "1.9地牢-3层通用-敲击手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190014"
+  },
+  {
+    "id": 2190015,
+    "identity": 2190015,
+    "desc": "",
+    "title": "1.9地牢-4层通用-防护警卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190015"
+  },
+  {
+    "id": 2190016,
+    "identity": 2190016,
+    "desc": "",
+    "title": "1.9地牢-4层通用-持盾警卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190016"
+  },
+  {
+    "id": 2190017,
+    "identity": 2190017,
+    "desc": "",
+    "title": "1.9地牢-4层通用-持械警卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190017"
+  },
+  {
+    "id": 2190018,
+    "identity": 2190018,
+    "desc": "",
+    "title": "1.9地牢-4层通用-防暴警卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190018"
+  },
+  {
+    "id": 2190019,
+    "identity": 2190019,
+    "desc": "",
+    "title": "1.9地牢-4层通用-普通职员",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190019"
+  },
+  {
+    "id": 2190020,
+    "identity": 2190020,
+    "desc": "",
+    "title": "1.9地牢-4层通用-平凡职员",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190020"
+  },
+  {
+    "id": 2190021,
+    "identity": 2190021,
+    "desc": "",
+    "title": "1.9地牢-4层通用-踏实的防卫者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190021"
+  },
+  {
+    "id": 2190022,
+    "identity": 2190022,
+    "desc": "",
+    "title": "1.9地牢-4层通用-普通守卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190022"
+  },
+  {
+    "id": 2190023,
+    "identity": 2190023,
+    "desc": "",
+    "title": "1.9地牢-4层通用-平凡守卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190023"
+  },
+  {
+    "id": 2190024,
+    "identity": 2190024,
+    "desc": "",
+    "title": "1.9地牢-4层通用-精英守卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190024"
+  },
+  {
+    "id": 2190025,
+    "identity": 2190025,
+    "desc": "",
+    "title": "1.9地牢-4层通用-电枪守卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "2190025"
+  },
+  {
+    "id": 8018101,
+    "identity": 8018101,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剧院观众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018101"
+  },
+  {
+    "id": 8018103,
+    "identity": 8018103,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-重塑·教众男",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018103"
+  },
+  {
+    "id": 8018104,
+    "identity": 8018104,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-重塑·教众女",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018104"
+  },
+  {
+    "id": 8018105,
+    "identity": 8018105,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-道具盔甲",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018105"
+  },
+  {
+    "id": 8018106,
+    "identity": 8018106,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-道具魔杖",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018106"
+  },
+  {
+    "id": 8018107,
+    "identity": 8018107,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-浊导从者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018107"
+  },
+  {
+    "id": 8018108,
+    "identity": 8018108,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-观演者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018108"
+  },
+  {
+    "id": 8018109,
+    "identity": 8018109,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-黑脓敲击手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018109"
+  },
+  {
+    "id": 8018110,
+    "identity": 8018110,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-飞艇",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018110"
+  },
+  {
+    "id": 8018301,
+    "identity": 8018301,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剃刀队长",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018301"
+  },
+  {
+    "id": 8018302,
+    "identity": 8018302,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-战争坦克",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018302"
+  },
+  {
+    "id": 8018303,
+    "identity": 8018303,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剃刀队员",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018303"
+  },
+  {
+    "id": 8011401,
+    "identity": 8011401,
+    "desc": "",
+    "title": "1.9地牢-事件关-杰克巨兔",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011401"
+  },
+  {
+    "id": 8011402,
+    "identity": 8011402,
+    "desc": "",
+    "title": "1.9地牢-事件关-垃圾袋1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011402"
+  },
+  {
+    "id": 8011403,
+    "identity": 8011403,
+    "desc": "",
+    "title": "1.9地牢-事件关-垃圾袋2（玛蒂尔达）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011403"
+  },
+  {
+    "id": 8011404,
+    "identity": 8011404,
+    "desc": "",
+    "title": "1.9地牢-事件关-玛蒂尔达",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011404"
+  },
+  {
+    "id": 8011405,
+    "identity": 8011405,
+    "desc": "",
+    "title": "1.9地牢-事件关-黄金卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011405"
+  },
+  {
+    "id": 8011406,
+    "identity": 8011406,
+    "desc": "",
+    "title": "1.9地牢-事件关-狼群（黑帮的清算小组）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011406"
+  },
+  {
+    "id": 8011407,
+    "identity": 8011407,
+    "desc": "",
+    "title": "1.9地牢-事件关-奇怪的苹果",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011407"
+  },
+  {
+    "id": 8011408,
+    "identity": 8011408,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—尾",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011408"
+  },
+  {
+    "id": 8011409,
+    "identity": 8011409,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011409"
+  },
+  {
+    "id": 8011410,
+    "identity": 8011410,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—口",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011410"
+  },
+  {
+    "id": 8011411,
+    "identity": 8011411,
+    "desc": "",
+    "title": "1.9地牢-事件关-催眠幽灵",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011411"
+  },
+  {
+    "id": 8011412,
+    "identity": 8011412,
+    "desc": "",
+    "title": "1.9地牢-事件关-催眠泡泡",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011412"
+  },
+  {
+    "id": 8011413,
+    "identity": 8011413,
+    "desc": "",
+    "title": "1.9地牢-事件关-梦魇",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011413"
+  },
+  {
+    "id": 8011414,
+    "identity": 8011414,
+    "desc": "",
+    "title": "1.9地牢-事件关-银行资本家",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011414"
+  },
+  {
+    "id": 8011415,
+    "identity": 8011415,
+    "desc": "",
+    "title": "1.9地牢-事件关-皮克勒斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011415"
+  },
+  {
+    "id": 8011701,
+    "identity": 8011701,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-大奥利图欧",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011701"
+  },
+  {
+    "id": 8011702,
+    "identity": 8011702,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-奥利图欧",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011702"
+  },
+  {
+    "id": 8011703,
+    "identity": 8011703,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-牙仙女王",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011703"
+  },
+  {
+    "id": 8011704,
+    "identity": 8011704,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-牙仙精灵",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011704"
+  },
+  {
+    "id": 8011705,
+    "identity": 8011705,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-挖掘艺术",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011705"
+  },
+  {
+    "id": 8011706,
+    "identity": 8011706,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-重塑阿奇翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011706"
+  },
+  {
+    "id": 8011707,
+    "identity": 8011707,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-巨大卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011707"
+  },
+  {
+    "id": 8011708,
+    "identity": 8011708,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-凝眸的造物",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011708"
+  },
+  {
+    "id": 8011709,
+    "identity": 8011709,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-黑豆国王",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011709"
+  },
+  {
+    "id": 8011710,
+    "identity": 8011710,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-白公鸡国王",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011710"
+  },
+  {
+    "id": 8011711,
+    "identity": 8011711,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-褴褛新郎",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011711"
+  },
+  {
+    "id": 8011712,
+    "identity": 8011712,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-沙米尔壤虫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011712"
+  },
+  {
+    "id": 8011713,
+    "identity": 8011713,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-屠夫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011713"
+  },
+  {
+    "id": 8011714,
+    "identity": 8011714,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-梦境核心",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8011714"
+  },
+  {
+    "id": 8013501,
+    "identity": 8013501,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-绿湖卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8013501"
+  },
+  {
+    "id": 8013502,
+    "identity": 8013502,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-仙人掌魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8013502"
+  },
+  {
+    "id": 8013503,
+    "identity": 8013503,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-斗士魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8013503"
+  },
+  {
+    "id": 8013504,
+    "identity": 8013504,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-自爆魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8013504"
+  },
+  {
+    "id": 8013505,
+    "identity": 8013505,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-仙人掌魔精群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8013505"
+  },
+  {
+    "id": 8015501,
+    "identity": 8015501,
+    "desc": "",
+    "title": "1.9地牢-委托关-拳击手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015501"
+  },
+  {
+    "id": 8016501,
+    "identity": 8016501,
+    "desc": "",
+    "title": "1.9地牢-委托关-拉拉泉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016501"
+  },
+  {
+    "id": 8016502,
+    "identity": 8016502,
+    "desc": "",
+    "title": "1.9地牢-委托关-讣告人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016502"
+  },
+  {
+    "id": 8016503,
+    "identity": 8016503,
+    "desc": "",
+    "title": "1.9地牢-委托关-门",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016503"
+  },
+  {
+    "id": 8016504,
+    "identity": 8016504,
+    "desc": "",
+    "title": "1.9地牢-委托关-梦境高级守卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016504"
+  },
+  {
+    "id": 8017501,
+    "identity": 8017501,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-槲寄生",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017501"
+  },
+  {
+    "id": 8017502,
+    "identity": 8017502,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-坦南特",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017502"
+  },
+  {
+    "id": 8017503,
+    "identity": 8017503,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-罗蕾莱",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017503"
+  },
+  {
+    "id": 801120101,
+    "identity": 801120101,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-草坪沙米尔虫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120101"
+  },
+  {
+    "id": 801120103,
+    "identity": 801120103,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-矮树丛怪鸟",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120103"
+  },
+  {
+    "id": 801120106,
+    "identity": 801120106,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-草丛塔泽尔亚龙",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120106"
+  },
+  {
+    "id": 801120108,
+    "identity": 801120108,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-绿荫郊狼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120108"
+  },
+  {
+    "id": 801120110,
+    "identity": 801120110,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-巨型灰白蛾",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120110"
+  },
+  {
+    "id": 801120111,
+    "identity": 801120111,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-巨型灰白蛾",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120111"
+  },
+  {
+    "id": 801120112,
+    "identity": 801120112,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-公园守卫者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120112"
+  },
+  {
+    "id": 801120113,
+    "identity": 801120113,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-绿地巨鸟",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801120113"
+  },
+  {
+    "id": 801130101,
+    "identity": 801130101,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚追寻者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130101"
+  },
+  {
+    "id": 801130102,
+    "identity": 801130102,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚体验者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130102"
+  },
+  {
+    "id": 801130103,
+    "identity": 801130103,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚初探者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130103"
+  },
+  {
+    "id": 801130104,
+    "identity": 801130104,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚捍卫者",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130104"
+  },
+  {
+    "id": 801130105,
+    "identity": 801130105,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-真正的绅士",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130105"
+  },
+  {
+    "id": 801130106,
+    "identity": 801130106,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士聚会筹划队",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130106"
+  },
+  {
+    "id": 801130107,
+    "identity": 801130107,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士聚会话事人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130107"
+  },
+  {
+    "id": 801130108,
+    "identity": 801130108,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚特邀人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130108"
+  },
+  {
+    "id": 801130109,
+    "identity": 801130109,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-轮班警卫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "801130109"
+  },
+  {
+    "id": 8014106,
+    "identity": 8014106,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-阿其翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014106"
+  },
+  {
+    "id": 8014107,
+    "identity": 8014107,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-火苗",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014107"
+  },
+  {
+    "id": 8014108,
+    "identity": 8014108,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-岩·卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014108"
+  },
+  {
+    "id": 8014109,
+    "identity": 8014109,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-修罗石像1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014109"
+  },
+  {
+    "id": 8014110,
+    "identity": 8014110,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-修罗石像2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014110"
+  },
+  {
+    "id": 8014111,
+    "identity": 8014111,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-兽·卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014111"
+  },
+  {
+    "id": 8014112,
+    "identity": 8014112,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-变色装置",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014112"
+  },
+  {
+    "id": 8014201,
+    "identity": 8014201,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-大型烛夜",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014201"
+  },
+  {
+    "id": 8014202,
+    "identity": 8014202,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-守卫魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014202"
+  },
+  {
+    "id": 8014203,
+    "identity": 8014203,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-换皮屠夫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014203"
+  },
+  {
+    "id": 8014204,
+    "identity": 8014204,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-巨大石像",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014204"
+  },
+  {
+    "id": 8014301,
+    "identity": 8014301,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-巨大和平乌鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014301"
+  },
+  {
+    "id": 8014302,
+    "identity": 8014302,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-湿婆神像（攻击形态）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014302"
+  },
+  {
+    "id": 8014303,
+    "identity": 8014303,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-湿婆神像（防御形态）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014303"
+  },
+  {
+    "id": 8014304,
+    "identity": 8014304,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段1）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014304"
+  },
+  {
+    "id": 8014305,
+    "identity": 8014305,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段2）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014305"
+  },
+  {
+    "id": 8014306,
+    "identity": 8014306,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段3）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014306"
+  },
+  {
+    "id": 8015101,
+    "identity": 8015101,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-少毛卡邦克鲁群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015101"
+  },
+  {
+    "id": 8015102,
+    "identity": 8015102,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-多毛狼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015102"
+  },
+  {
+    "id": 8015103,
+    "identity": 8015103,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-多毛蜘蛛",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015103"
+  },
+  {
+    "id": 8015104,
+    "identity": 8015104,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-研究协会成员A",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015104"
+  },
+  {
+    "id": 8015105,
+    "identity": 8015105,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-研究协会成员B",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015105"
+  },
+  {
+    "id": 8015106,
+    "identity": 8015106,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-少毛卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015106"
+  },
+  {
+    "id": 8015107,
+    "identity": 8015107,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-奇肯恩",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015107"
+  },
+  {
+    "id": 8015108,
+    "identity": 8015108,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-岩城弓箭手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015108"
+  },
+  {
+    "id": 8015109,
+    "identity": 8015109,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-子弹箱",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015109"
+  },
+  {
+    "id": 8015201,
+    "identity": 8015201,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-多毛守卫魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015201"
+  },
+  {
+    "id": 8015202,
+    "identity": 8015202,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-变异奇肯恩",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015202"
+  },
+  {
+    "id": 8015203,
+    "identity": 8015203,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-岩城扫除人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015203"
+  },
+  {
+    "id": 8015301,
+    "identity": 8015301,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-雪山卡邦克鲁之王",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015301"
+  },
+  {
+    "id": 8015302,
+    "identity": 8015302,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-重塑意志聚合体",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015302"
+  },
+  {
+    "id": 8015303,
+    "identity": 8015303,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-猪脸杰克",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015303"
+  },
+  {
+    "id": 8015304,
+    "identity": 8015304,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-小指彼得",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015304"
+  },
+  {
+    "id": 8016106,
+    "identity": 8016106,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-捕食雕像",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016106"
+  },
+  {
+    "id": 8016107,
+    "identity": 8016107,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-猎食雕像",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016107"
+  },
+  {
+    "id": 8016108,
+    "identity": 8016108,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-逐昏双狼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016108"
+  },
+  {
+    "id": 8016109,
+    "identity": 8016109,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-变异布鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016109"
+  },
+  {
+    "id": 8016110,
+    "identity": 8016110,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-变异林德虫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016110"
+  },
+  {
+    "id": 8016111,
+    "identity": 8016111,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-绿湖卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016111"
+  },
+  {
+    "id": 8016112,
+    "identity": 8016112,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-老鼠",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016112"
+  },
+  {
+    "id": 8016113,
+    "identity": 8016113,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-重塑意志聚合物",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016113"
+  },
+  {
+    "id": 8016114,
+    "identity": 8016114,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-吉卜赛住民",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016114"
+  },
+  {
+    "id": 8016115,
+    "identity": 8016115,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-换皮阿奇翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016115"
+  },
+  {
+    "id": 8016201,
+    "identity": 8016201,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-爱宠",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016201"
+  },
+  {
+    "id": 8016202,
+    "identity": 8016202,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-洋葱头",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016202"
+  },
+  {
+    "id": 8016203,
+    "identity": 8016203,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-兽·露萨尔姬",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016203"
+  },
+  {
+    "id": 8016204,
+    "identity": 8016204,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-木·露萨尔姬",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016204"
+  },
+  {
+    "id": 8016205,
+    "identity": 8016205,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-变异天使猫",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016205"
+  },
+  {
+    "id": 8016206,
+    "identity": 8016206,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-苏芙比",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016206"
+  },
+  {
+    "id": 8016207,
+    "identity": 8016207,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-换皮大阿其翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016207"
+  },
+  {
+    "id": 8016301,
+    "identity": 8016301,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-食人树",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016301"
+  },
+  {
+    "id": 8016302,
+    "identity": 8016302,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016302"
+  },
+  {
+    "id": 8016303,
+    "identity": 8016303,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-伽菈波那1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016303"
+  },
+  {
+    "id": 8016304,
+    "identity": 8016304,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-伽菈波那2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016304"
+  },
+  {
+    "id": 8016305,
+    "identity": 8016305,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花（残血）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016305"
+  },
+  {
+    "id": 8016306,
+    "identity": 8016306,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花（满血）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016306"
+  },
+  {
+    "id": 8017101,
+    "identity": 8017101,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-灵体1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017101"
+  },
+  {
+    "id": 8017102,
+    "identity": 8017102,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-灵体2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017102"
+  },
+  {
+    "id": 8017103,
+    "identity": 8017103,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-鬼火",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017103"
+  },
+  {
+    "id": 8017104,
+    "identity": 8017104,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-幽灵树精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017104"
+  },
+  {
+    "id": 8017105,
+    "identity": 8017105,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-斯普特尼克",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017105"
+  },
+  {
+    "id": 8017106,
+    "identity": 8017106,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-星之眼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017106"
+  },
+  {
+    "id": 8017107,
+    "identity": 8017107,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-凶星",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017107"
+  },
+  {
+    "id": 8017201,
+    "identity": 8017201,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-盔甲石像1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017201"
+  },
+  {
+    "id": 8017202,
+    "identity": 8017202,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-盔甲石像2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017202"
+  },
+  {
+    "id": 8017203,
+    "identity": 8017203,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-帕米埃",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017203"
+  },
+  {
+    "id": 8017204,
+    "identity": 8017204,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-TTT",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017204"
+  },
+  {
+    "id": 8017205,
+    "identity": 8017205,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-远旅",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017205"
+  },
+  {
+    "id": 8017206,
+    "identity": 8017206,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-天体",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017206"
+  },
+  {
+    "id": 8017301,
+    "identity": 8017301,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-未锈铠",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017301"
+  },
+  {
+    "id": 8017302,
+    "identity": 8017302,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-吵闹鬼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017302"
+  },
+  {
+    "id": 8017303,
+    "identity": 8017303,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-库玛尔",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017303"
+  },
+  {
+    "id": 8017304,
+    "identity": 8017304,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·土星",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017304"
+  },
+  {
+    "id": 8017305,
+    "identity": 8017305,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·火星",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017305"
+  },
+  {
+    "id": 8017306,
+    "identity": 8017306,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·太阳",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017306"
+  },
+  {
+    "id": 8017307,
+    "identity": 8017307,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·计都",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017307"
+  },
+  {
+    "id": 8017308,
+    "identity": 8017308,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·罗睺",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017308"
+  },
+  {
+    "id": 8017311,
+    "identity": 8017311,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-未锈铠(助战）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017311"
+  },
+  {
+    "id": 8017312,
+    "identity": 8017312,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-吵闹鬼(助战）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017312"
+  },
+  {
+    "id": 8016401,
+    "identity": 8016401,
+    "desc": "",
+    "title": "1.8赛季-坎吉拉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8016401"
+  },
+  {
+    "id": 8017401,
+    "identity": 8017401,
+    "desc": "",
+    "title": "1.8赛季-奥利图欧",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017401"
+  },
+  {
+    "id": 6210101,
+    "identity": 6210101,
+    "desc": "",
+    "title": "2.1肉鸽曲娘事件关-曲娘",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210101"
+  },
+  {
+    "id": 6210102,
+    "identity": 6210102,
+    "desc": "",
+    "title": "2.1肉鸽曲娘事件关-拉拉泉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210102"
+  },
+  {
+    "id": 6210103,
+    "identity": 6210103,
+    "desc": "",
+    "title": "2.1肉鸽歌剧事件关-伊索尔德",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210103"
+  },
+  {
+    "id": 6210104,
+    "identity": 6210104,
+    "desc": "",
+    "title": "2.1肉鸽应激触发事件关-塞梅",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210104"
+  },
+  {
+    "id": 6210105,
+    "identity": 6210105,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-爱兹拉",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210105"
+  },
+  {
+    "id": 6210106,
+    "identity": 6210106,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-仙人掌魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210106"
+  },
+  {
+    "id": 6210107,
+    "identity": 6210107,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-仙人掌魔精群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210107"
+  },
+  {
+    "id": 6210108,
+    "identity": 6210108,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-柑橘魔精",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210108"
+  },
+  {
+    "id": 6210109,
+    "identity": 6210109,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-柑橘魔精群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210109"
+  },
+  {
+    "id": 6210110,
+    "identity": 6210110,
+    "desc": "",
+    "title": "2.1肉鸽金币触发事件关-温妮",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210110"
+  },
+  {
+    "id": 6210111,
+    "identity": 6210111,
+    "desc": "",
+    "title": "2.1肉鸽应激触发事件关-塞梅幻想体",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210111"
+  },
+  {
+    "id": 8012401,
+    "identity": 8012401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-莱格斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8012401"
+  },
+  {
+    "id": 8012402,
+    "identity": 8012402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-特种格拉瓦库斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8012402"
+  },
+  {
+    "id": 8015401,
+    "identity": 8015401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-地脉净化者·迸发",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015401"
+  },
+  {
+    "id": 8015402,
+    "identity": 8015402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-鳞翼基基图克",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8015402"
+  },
+  {
+    "id": 8014401,
+    "identity": 8014401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-可燃点",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014401"
+  },
+  {
+    "id": 8014402,
+    "identity": 8014402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-巨大和平乌鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014402"
+  },
+  {
+    "id": 8014403,
+    "identity": 8014403,
+    "desc": "",
+    "title": "2.1肉鸽据点关-火苗",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8014403"
+  },
+  {
+    "id": 8017402,
+    "identity": 8017402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-咔嚓咔嚓",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8017402"
+  },
+  {
+    "id": 8018401,
+    "identity": 8018401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-黑脓敲击手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8018401"
+  },
+  {
+    "id": 6210121,
+    "identity": 6210121,
+    "desc": "",
+    "title": "2.1肉鸽据点关-城门郎A",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210121"
+  },
+  {
+    "id": 6210122,
+    "identity": 6210122,
+    "desc": "",
+    "title": "2.1肉鸽据点关-城门郎B",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210122"
+  },
+  {
+    "id": 6210123,
+    "identity": 6210123,
+    "desc": "",
+    "title": "2.1肉鸽据点关-斑纹马",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210123"
+  },
+  {
+    "id": 6210124,
+    "identity": 6210124,
+    "desc": "",
+    "title": "2.1肉鸽据点关-红尾斑纹马",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210124"
+  },
+  {
+    "id": 6210125,
+    "identity": 6210125,
+    "desc": "",
+    "title": "2.1肉鸽据点关-葛天",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210125"
+  },
+  {
+    "id": 6210126,
+    "identity": 6210126,
+    "desc": "",
+    "title": "2.1肉鸽据点关-勿忘我",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210126"
+  },
+  {
+    "id": 6210127,
+    "identity": 6210127,
+    "desc": "",
+    "title": "2.1肉鸽据点关-重塑·苏菲亚",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210127"
+  },
+  {
+    "id": 6210128,
+    "identity": 6210128,
+    "desc": "",
+    "title": "2.1肉鸽据点关-重塑·女性教众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210128"
+  },
+  {
+    "id": 6210129,
+    "identity": 6210129,
+    "desc": "",
+    "title": "2.1肉鸽据点关-幻想可燃点",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6210129"
+  },
+  {
+    "id": 8026101,
+    "identity": 8026101,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛普通-启明会青年女",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026101"
+  },
+  {
+    "id": 8026102,
+    "identity": 8026102,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛普通-启明会青年男",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026102"
+  },
+  {
+    "id": 8026103,
+    "identity": 8026103,
+    "desc": "",
+    "title": "2.1地牢-旧贵族普通-诡异卵",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026103"
+  },
+  {
+    "id": 8026104,
+    "identity": 8026104,
+    "desc": "",
+    "title": "2.1地牢-旧贵族普通-僵尸新郎",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026104"
+  },
+  {
+    "id": 8026105,
+    "identity": 8026105,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市-捕食雕像",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026105"
+  },
+  {
+    "id": 8026106,
+    "identity": 8026106,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市-猎食雕像",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026106"
+  },
+  {
+    "id": 8026107,
+    "identity": 8026107,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-J",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026107"
+  },
+  {
+    "id": 8026108,
+    "identity": 8026108,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-燃烧可燃点",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026108"
+  },
+  {
+    "id": 8026109,
+    "identity": 8026109,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-凝滞的造物",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026109"
+  },
+  {
+    "id": 8026110,
+    "identity": 8026110,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-泥浆傀偶",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026110"
+  },
+  {
+    "id": 8026111,
+    "identity": 8026111,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老奶奶（现实版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026111"
+  },
+  {
+    "id": 8026112,
+    "identity": 8026112,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-屠夫（现实版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026112"
+  },
+  {
+    "id": 8026113,
+    "identity": 8026113,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老爷爷（现实版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026113"
+  },
+  {
+    "id": 8026114,
+    "identity": 8026114,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-镜中幽灵（现实版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026114"
+  },
+  {
+    "id": 8026115,
+    "identity": 8026115,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老奶奶（精神版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026115"
+  },
+  {
+    "id": 8026116,
+    "identity": 8026116,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-屠夫（精神版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026116"
+  },
+  {
+    "id": 8026117,
+    "identity": 8026117,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老爷爷（精神版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026117"
+  },
+  {
+    "id": 8026118,
+    "identity": 8026118,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-镜中幽灵（精神版）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026118"
+  },
+  {
+    "id": 8026119,
+    "identity": 8026119,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-食人树",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026119"
+  },
+  {
+    "id": 8026120,
+    "identity": 8026120,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-伴生腺体*3",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026120"
+  },
+  {
+    "id": 8026121,
+    "identity": 8026121,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-数羊羔",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026121"
+  },
+  {
+    "id": 8026122,
+    "identity": 8026122,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-飞艇",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026122"
+  },
+  {
+    "id": 8026123,
+    "identity": 8026123,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑·教众男",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026123"
+  },
+  {
+    "id": 8026124,
+    "identity": 8026124,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑·教众女",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026124"
+  },
+  {
+    "id": 8026125,
+    "identity": 8026125,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑剧院观众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026125"
+  },
+  {
+    "id": 8026126,
+    "identity": 8026126,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-梦幻泡影",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8026126"
+  },
+  {
+    "id": 8022101,
+    "identity": 8022101,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛蜘蛛",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022101"
+  },
+  {
+    "id": 8022102,
+    "identity": 8022102,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛狼",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022102"
+  },
+  {
+    "id": 8022103,
+    "identity": 8022103,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛卡邦克鲁群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022103"
+  },
+  {
+    "id": 8022104,
+    "identity": 8022104,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022104"
+  },
+  {
+    "id": 8023101,
+    "identity": 8023101,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-中层帮众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023101"
+  },
+  {
+    "id": 8023102,
+    "identity": 8023102,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-高级帮众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023102"
+  },
+  {
+    "id": 8023103,
+    "identity": 8023103,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-帮派话事人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023103"
+  },
+  {
+    "id": 8023104,
+    "identity": 8023104,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-高级帮众",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023104"
+  },
+  {
+    "id": 8024101,
+    "identity": 8024101,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-兽·卡邦克鲁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024101"
+  },
+  {
+    "id": 8024102,
+    "identity": 8024102,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-大型烛夜",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024102"
+  },
+  {
+    "id": 8024103,
+    "identity": 8024103,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-阿其翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024103"
+  },
+  {
+    "id": 8024104,
+    "identity": 8024104,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）火苗",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024104"
+  },
+  {
+    "id": 8025101,
+    "identity": 8025101,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城狙击手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025101"
+  },
+  {
+    "id": 8025102,
+    "identity": 8025102,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城弓箭手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025102"
+  },
+  {
+    "id": 8025103,
+    "identity": 8025103,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城圣裁人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025103"
+  },
+  {
+    "id": 8025104,
+    "identity": 8025104,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城扫除人",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025104"
+  },
+  {
+    "id": 8025105,
+    "identity": 8025105,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城远射手",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025105"
+  },
+  {
+    "id": 8022201,
+    "identity": 8022201,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-特种格拉瓦库斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022201"
+  },
+  {
+    "id": 8022202,
+    "identity": 8022202,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-箱子",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022202"
+  },
+  {
+    "id": 8022203,
+    "identity": 8022203,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-实体地脉能力",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022203"
+  },
+  {
+    "id": 8022204,
+    "identity": 8022204,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-基基图克",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8022204"
+  },
+  {
+    "id": 8023201,
+    "identity": 8023201,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-莱格斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023201"
+  },
+  {
+    "id": 8023202,
+    "identity": 8023202,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-警戒火炮",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023202"
+  },
+  {
+    "id": 8023203,
+    "identity": 8023203,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-莱格斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023203"
+  },
+  {
+    "id": 8023204,
+    "identity": 8023204,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-特种格拉瓦库斯",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8023204"
+  },
+  {
+    "id": 8024201,
+    "identity": 8024201,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-大型烛夜",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024201"
+  },
+  {
+    "id": 8024202,
+    "identity": 8024202,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-阿其翁",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024202"
+  },
+  {
+    "id": 8024203,
+    "identity": 8024203,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-敌方中立位置医疗箱",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024203"
+  },
+  {
+    "id": 8024204,
+    "identity": 8024204,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物进阶+造物碎片1+造物碎片2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024204"
+  },
+  {
+    "id": 8024205,
+    "identity": 8024205,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物碎片1",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024205"
+  },
+  {
+    "id": 8024206,
+    "identity": 8024206,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物碎片2",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8024206"
+  },
+  {
+    "id": 8025201,
+    "identity": 8025201,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-雪山之女",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025201"
+  },
+  {
+    "id": 8025202,
+    "identity": 8025202,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-我方中立位置火苗",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025202"
+  },
+  {
+    "id": 8025203,
+    "identity": 8025203,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-雪山之女",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025203"
+  },
+  {
+    "id": 8025204,
+    "identity": 8025204,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-多毛卡邦克鲁群",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "8025204"
+  },
+  {
+    "id": 100130,
+    "identity": 1001,
+    "desc": "",
+    "title": "角色通用—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "100131"
+  },
+  {
+    "id": 200130,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200131"
+  },
+  {
+    "id": 200230,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200231"
+  },
+  {
+    "id": 200330,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200331"
+  },
+  {
+    "id": 200430,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200431"
+  },
+  {
+    "id": 200530,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200531"
+  },
+  {
+    "id": 200630,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "200631"
+  },
+  {
+    "id": 400130,
+    "identity": 4001,
+    "desc": "",
+    "title": "现实创伤—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "400131"
+  },
+  {
+    "id": 400230,
+    "identity": 4002,
+    "desc": "",
+    "title": "精神创伤—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "400231"
+  },
+  {
+    "id": 410130,
+    "identity": 4101,
+    "desc": "",
+    "title": "输出—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410131"
+  },
+  {
+    "id": 410230,
+    "identity": 4102,
+    "desc": "",
+    "title": "防御—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410231"
+  },
+  {
+    "id": 410330,
+    "identity": 4103,
+    "desc": "",
+    "title": "辅助—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410331"
+  },
+  {
+    "id": 410430,
+    "identity": 4104,
+    "desc": "",
+    "title": "治疗—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410431"
+  },
+  {
+    "id": 410530,
+    "identity": 4105,
+    "desc": "",
+    "title": "爆发—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410531"
+  },
+  {
+    "id": 410630,
+    "identity": 4106,
+    "desc": "",
+    "title": "削弱—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410631"
+  },
+  {
+    "id": 410730,
+    "identity": 4107,
+    "desc": "",
+    "title": "控制—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410731"
+  },
+  {
+    "id": 410830,
+    "identity": 4108,
+    "desc": "",
+    "title": "护盾—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410831"
+  },
+  {
+    "id": 410930,
+    "identity": 4109,
+    "desc": "",
+    "title": "驱散—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "410931"
+  },
+  {
+    "id": 411030,
+    "identity": 4110,
+    "desc": "",
+    "title": "净化—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411031"
+  },
+  {
+    "id": 411130,
+    "identity": 4111,
+    "desc": "",
+    "title": "自愈—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411131"
+  },
+  {
+    "id": 411230,
+    "identity": 4112,
+    "desc": "",
+    "title": "中毒—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411231"
+  },
+  {
+    "id": 411330,
+    "identity": 4113,
+    "desc": "",
+    "title": "重伤—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411331"
+  },
+  {
+    "id": 411430,
+    "identity": 4114,
+    "desc": "",
+    "title": "额外行动—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411431"
+  },
+  {
+    "id": 411530,
+    "identity": 4115,
+    "desc": "",
+    "title": "追击—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411531"
+  },
+  {
+    "id": 411630,
+    "identity": 4116,
+    "desc": "",
+    "title": "反击—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411631"
+  },
+  {
+    "id": 411830,
+    "identity": 4118,
+    "desc": "",
+    "title": "燃烧—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411831"
+  },
+  {
+    "id": 411930,
+    "identity": 4119,
+    "desc": "",
+    "title": "免疫—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "411931"
+  },
+  {
+    "id": 412030,
+    "identity": 4120,
+    "desc": "",
+    "title": "收割—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412031"
+  },
+  {
+    "id": 412130,
+    "identity": 4121,
+    "desc": "",
+    "title": "燃血—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412131"
+  },
+  {
+    "id": 412230,
+    "identity": 4122,
+    "desc": "",
+    "title": "位移—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412231"
+  },
+  {
+    "id": 412330,
+    "identity": 4123,
+    "desc": "",
+    "title": "调阶—坚决行为",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "412331"
+  },
+  {
+    "id": 100140,
+    "identity": 1001,
+    "desc": "",
+    "title": "角色通用—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "100141"
+  },
+  {
+    "id": 200140,
+    "identity": 2001,
+    "desc": "",
+    "title": "岩—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200141"
+  },
+  {
+    "id": 200240,
+    "identity": 2002,
+    "desc": "",
+    "title": "星—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200241"
+  },
+  {
+    "id": 200340,
+    "identity": 2003,
+    "desc": "",
+    "title": "木—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200341"
+  },
+  {
+    "id": 200440,
+    "identity": 2004,
+    "desc": "",
+    "title": "兽—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200441"
+  },
+  {
+    "id": 200540,
+    "identity": 2005,
+    "desc": "",
+    "title": "灵—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200541"
+  },
+  {
+    "id": 200640,
+    "identity": 2006,
+    "desc": "",
+    "title": "智—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "200641"
+  },
+  {
+    "id": 400140,
+    "identity": 4001,
+    "desc": "",
+    "title": "现实创伤—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "400141"
+  },
+  {
+    "id": 400240,
+    "identity": 4002,
+    "desc": "",
+    "title": "精神创伤—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "400241"
+  },
+  {
+    "id": 410140,
+    "identity": 4101,
+    "desc": "",
+    "title": "输出—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410141"
+  },
+  {
+    "id": 410240,
+    "identity": 4102,
+    "desc": "",
+    "title": "防御—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410241"
+  },
+  {
+    "id": 410340,
+    "identity": 4103,
+    "desc": "",
+    "title": "辅助—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410341"
+  },
+  {
+    "id": 410440,
+    "identity": 4104,
+    "desc": "",
+    "title": "治疗—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410441"
+  },
+  {
+    "id": 410540,
+    "identity": 4105,
+    "desc": "",
+    "title": "爆发—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410541"
+  },
+  {
+    "id": 410640,
+    "identity": 4106,
+    "desc": "",
+    "title": "削弱—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410641"
+  },
+  {
+    "id": 410740,
+    "identity": 4107,
+    "desc": "",
+    "title": "控制—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410741"
+  },
+  {
+    "id": 410840,
+    "identity": 4108,
+    "desc": "",
+    "title": "护盾—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410841"
+  },
+  {
+    "id": 410940,
+    "identity": 4109,
+    "desc": "",
+    "title": "驱散—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "410941"
+  },
+  {
+    "id": 411040,
+    "identity": 4110,
+    "desc": "",
+    "title": "净化—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411041"
+  },
+  {
+    "id": 411140,
+    "identity": 4111,
+    "desc": "",
+    "title": "自愈—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411141"
+  },
+  {
+    "id": 411240,
+    "identity": 4112,
+    "desc": "",
+    "title": "中毒—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411241"
+  },
+  {
+    "id": 411340,
+    "identity": 4113,
+    "desc": "",
+    "title": "重伤—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411341"
+  },
+  {
+    "id": 411440,
+    "identity": 4114,
+    "desc": "",
+    "title": "额外行动—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411441"
+  },
+  {
+    "id": 411540,
+    "identity": 4115,
+    "desc": "",
+    "title": "追击—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411541"
+  },
+  {
+    "id": 411640,
+    "identity": 4116,
+    "desc": "",
+    "title": "反击—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411641"
+  },
+  {
+    "id": 411840,
+    "identity": 4118,
+    "desc": "",
+    "title": "燃烧—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411841"
+  },
+  {
+    "id": 411940,
+    "identity": 4119,
+    "desc": "",
+    "title": "免疫—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "411941"
+  },
+  {
+    "id": 412040,
+    "identity": 4120,
+    "desc": "",
+    "title": "收割—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412041"
+  },
+  {
+    "id": 412140,
+    "identity": 4121,
+    "desc": "",
+    "title": "燃血—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412141"
+  },
+  {
+    "id": 412240,
+    "identity": 4122,
+    "desc": "",
+    "title": "位移—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412241"
+  },
+  {
+    "id": 412340,
+    "identity": 4123,
+    "desc": "",
+    "title": "调阶—崩溃行为",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "412341"
+  },
+  {
+    "id": 5309110,
+    "identity": 53091,
+    "desc": "",
+    "title": "罗蕾莱-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530911"
+  },
+  {
+    "id": 5308120,
+    "identity": 53081,
+    "desc": "",
+    "title": "伊索尔德-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530812"
+  },
+  {
+    "id": 5306510,
+    "identity": 53065,
+    "desc": "",
+    "title": "马库斯-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530651"
+  },
+  {
+    "id": 5308620,
+    "identity": 53086,
+    "desc": "",
+    "title": "露西-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530862"
+  },
+  {
+    "id": 5309820,
+    "identity": 53098,
+    "desc": "",
+    "title": "蓝手帕-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530982"
+  },
+  {
+    "id": 5309720,
+    "identity": 53097,
+    "desc": "",
+    "title": "阿尔古斯-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530972"
+  },
+  {
+    "id": 5309920,
+    "identity": 53099,
+    "desc": "",
+    "title": "数羊羔-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530992"
+  },
+  {
+    "id": 5302710,
+    "identity": 53027,
+    "desc": "",
+    "title": "无线电小姐-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530271"
+  },
+  {
+    "id": 5307910,
+    "identity": 53079,
+    "desc": "",
+    "title": "6-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530791"
+  },
+  {
+    "id": 5300410,
+    "identity": 53004,
+    "desc": "",
+    "title": "红弩箭-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530041"
+  },
+  {
+    "id": 5302510,
+    "identity": 53025,
+    "desc": "",
+    "title": "星锑-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530251"
+  },
+  {
+    "id": 5302810,
+    "identity": 53028,
+    "desc": "",
+    "title": "APPLe-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530281"
+  },
+  {
+    "id": 5302310,
+    "identity": 53023,
+    "desc": "",
+    "title": "十四行诗-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530231"
+  },
+  {
+    "id": 5304120,
+    "identity": 53041,
+    "desc": "",
+    "title": "玛蒂尔达-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530412"
+  },
+  {
+    "id": 5300910,
+    "identity": 53009,
+    "desc": "",
+    "title": "苏芙比-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530091"
+  },
+  {
+    "id": 5300320,
+    "identity": 53003,
+    "desc": "",
+    "title": "槲寄生-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530032"
+  },
+  {
+    "id": 5304710,
+    "identity": 53047,
+    "desc": "",
+    "title": "兔毛手袋-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530471"
+  },
+  {
+    "id": 5305720,
+    "identity": 53057,
+    "desc": "",
+    "title": "小梅斯梅尔-坚决",
+    "condition": 2,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "530572"
+  },
+  {
+    "id": 5309120,
+    "identity": 53091,
+    "desc": "",
+    "title": "罗蕾莱-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530912"
+  },
+  {
+    "id": 5308020,
+    "identity": 53080,
+    "desc": "",
+    "title": "卡卡尼亚-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530802"
+  },
+  {
+    "id": 5308130,
+    "identity": 53081,
+    "desc": "",
+    "title": "伊索尔德-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530813"
+  },
+  {
+    "id": 5306520,
+    "identity": 53065,
+    "desc": "",
+    "title": "马库斯-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530652"
+  },
+  {
+    "id": 5308630,
+    "identity": 53086,
+    "desc": "",
+    "title": "露西-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530863"
+  },
+  {
+    "id": 5309830,
+    "identity": 53098,
+    "desc": "",
+    "title": "蓝手帕-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530983"
+  },
+  {
+    "id": 5309730,
+    "identity": 53097,
+    "desc": "",
+    "title": "阿尔古斯-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530973"
+  },
+  {
+    "id": 5309930,
+    "identity": 53099,
+    "desc": "",
+    "title": "数羊羔-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530993"
+  },
+  {
+    "id": 5302720,
+    "identity": 53027,
+    "desc": "",
+    "title": "无线电小姐-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530272"
+  },
+  {
+    "id": 5307920,
+    "identity": 53079,
+    "desc": "",
+    "title": "6-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530792"
+  },
+  {
+    "id": 5300420,
+    "identity": 53004,
+    "desc": "",
+    "title": "红弩箭-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530042"
+  },
+  {
+    "id": 5302520,
+    "identity": 53025,
+    "desc": "",
+    "title": "星锑-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530252"
+  },
+  {
+    "id": 5302820,
+    "identity": 53028,
+    "desc": "",
+    "title": "APPLe-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530282"
+  },
+  {
+    "id": 5302320,
+    "identity": 53023,
+    "desc": "",
+    "title": "十四行诗-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530232"
+  },
+  {
+    "id": 5304130,
+    "identity": 53041,
+    "desc": "",
+    "title": "玛蒂尔达-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530413"
+  },
+  {
+    "id": 5300920,
+    "identity": 53009,
+    "desc": "",
+    "title": "苏芙比-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530092"
+  },
+  {
+    "id": 5300330,
+    "identity": 53003,
+    "desc": "",
+    "title": "槲寄生-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530033"
+  },
+  {
+    "id": 5304720,
+    "identity": 53047,
+    "desc": "",
+    "title": "兔毛手袋-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530472"
+  },
+  {
+    "id": 5305730,
+    "identity": 53057,
+    "desc": "",
+    "title": "小梅斯梅尔-崩溃",
+    "condition": 2,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "530573"
+  },
+  {
+    "id": 5211001,
+    "identity": 8011101,
+    "desc": "",
+    "title": "1.9地牢-市区-警惕的卫兵",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "0#2",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211002,
+    "identity": 8011102,
+    "desc": "",
+    "title": "1.9地牢-市区-敬业的卫兵",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211003,
+    "identity": 8011103,
+    "desc": "",
+    "title": "1.9地牢-市区-暴动者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211004,
+    "identity": 8011104,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211005,
+    "identity": 8011105,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211006,
+    "identity": 8011106,
+    "desc": "",
+    "title": "1.9地牢-市区-卡邦克鲁之主",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211007,
+    "identity": 2190002,
+    "desc": "",
+    "title": "1.9地牢-2层通用-流浪汉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211008,
+    "identity": 2190003,
+    "desc": "",
+    "title": "1.9地牢-2层通用-醉汉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211009,
+    "identity": 2190004,
+    "desc": "",
+    "title": "1.9地牢-2层通用-无知恶童",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211010,
+    "identity": 2190005,
+    "desc": "",
+    "title": "1.9地牢-2层通用-粗鲁恶童",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211011,
+    "identity": 2190006,
+    "desc": "",
+    "title": "1.9地牢-2层通用-采访记者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211012,
+    "identity": 2190007,
+    "desc": "",
+    "title": "1.9地牢-3层通用-迎宾士",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211013,
+    "identity": 2190008,
+    "desc": "",
+    "title": "1.9地牢-3层通用-盾迎宾士",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211014,
+    "identity": 2190009,
+    "desc": "",
+    "title": "1.9地牢-3层通用-唁丧迎宾士",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211015,
+    "identity": 2190010,
+    "desc": "",
+    "title": "1.9地牢-3层通用-礼乐人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211016,
+    "identity": 2190011,
+    "desc": "",
+    "title": "1.9地牢-3层通用-杖礼乐人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211017,
+    "identity": 2190012,
+    "desc": "",
+    "title": "1.9地牢-3层通用-仪枪礼乐人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211018,
+    "identity": 2190013,
+    "desc": "",
+    "title": "1.9地牢-3层通用-鼓槌手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211019,
+    "identity": 2190014,
+    "desc": "",
+    "title": "1.9地牢-3层通用-敲击手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211020,
+    "identity": 2190015,
+    "desc": "",
+    "title": "1.9地牢-4层通用-防护警卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211021,
+    "identity": 2190016,
+    "desc": "",
+    "title": "1.9地牢-4层通用-持盾警卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211022,
+    "identity": 2190017,
+    "desc": "",
+    "title": "1.9地牢-4层通用-持械警卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211023,
+    "identity": 2190018,
+    "desc": "",
+    "title": "1.9地牢-4层通用-防暴警卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211024,
+    "identity": 2190019,
+    "desc": "",
+    "title": "1.9地牢-4层通用-普通职员",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211025,
+    "identity": 2190020,
+    "desc": "",
+    "title": "1.9地牢-4层通用-平凡职员",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211026,
+    "identity": 2190021,
+    "desc": "",
+    "title": "1.9地牢-4层通用-踏实的防卫者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211027,
+    "identity": 2190022,
+    "desc": "",
+    "title": "1.9地牢-4层通用-普通守卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211028,
+    "identity": 2190023,
+    "desc": "",
+    "title": "1.9地牢-4层通用-平凡守卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211029,
+    "identity": 2190024,
+    "desc": "",
+    "title": "1.9地牢-4层通用-精英守卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211030,
+    "identity": 2190025,
+    "desc": "",
+    "title": "1.9地牢-4层通用-电枪守卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211031,
+    "identity": 8018101,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剧院观众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211032,
+    "identity": 8018103,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-重塑·教众男",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211033,
+    "identity": 8018104,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-重塑·教众女",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211034,
+    "identity": 8018105,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-道具盔甲",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211035,
+    "identity": 8018106,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-道具魔杖",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211036,
+    "identity": 8018107,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-浊导从者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211037,
+    "identity": 8018108,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-观演者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211038,
+    "identity": 8018109,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-黑脓敲击手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211039,
+    "identity": 8018110,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-飞艇",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211040,
+    "identity": 8018301,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剃刀队长",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211041,
+    "identity": 8018302,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-战争坦克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211042,
+    "identity": 8018303,
+    "desc": "",
+    "title": "1.9地牢-暴雨扭曲的城市-剃刀队员",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211043,
+    "identity": 8011401,
+    "desc": "",
+    "title": "1.9地牢-事件关-杰克巨兔",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211044,
+    "identity": 8011402,
+    "desc": "",
+    "title": "1.9地牢-事件关-垃圾袋1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211045,
+    "identity": 8011403,
+    "desc": "",
+    "title": "1.9地牢-事件关-垃圾袋2（玛蒂尔达）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211046,
+    "identity": 8011404,
+    "desc": "",
+    "title": "1.9地牢-事件关-玛蒂尔达",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211047,
+    "identity": 8011405,
+    "desc": "",
+    "title": "1.9地牢-事件关-黄金卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211048,
+    "identity": 8011406,
+    "desc": "",
+    "title": "1.9地牢-事件关-狼群（黑帮的清算小组）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211049,
+    "identity": 8011407,
+    "desc": "",
+    "title": "1.9地牢-事件关-奇怪的苹果",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211050,
+    "identity": 8011408,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—尾",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211051,
+    "identity": 8011409,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211052,
+    "identity": 8011410,
+    "desc": "",
+    "title": "1.9地牢-事件关-巨大本耶普—口",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211053,
+    "identity": 8011411,
+    "desc": "",
+    "title": "1.9地牢-事件关-催眠幽灵",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211054,
+    "identity": 8011412,
+    "desc": "",
+    "title": "1.9地牢-事件关-催眠泡泡",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211055,
+    "identity": 8011413,
+    "desc": "",
+    "title": "1.9地牢-事件关-梦魇",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211056,
+    "identity": 8011414,
+    "desc": "",
+    "title": "1.9地牢-事件关-银行资本家",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211057,
+    "identity": 8011415,
+    "desc": "",
+    "title": "1.9地牢-事件关-皮克勒斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211058,
+    "identity": 8011701,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-大奥利图欧",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211059,
+    "identity": 8011702,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-奥利图欧",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211060,
+    "identity": 8011703,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-牙仙女王",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211061,
+    "identity": 8011704,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-牙仙精灵",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211062,
+    "identity": 8011705,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-挖掘艺术",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211063,
+    "identity": 8011706,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-重塑阿奇翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211064,
+    "identity": 8011707,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-巨大卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211065,
+    "identity": 8011708,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-凝眸的造物",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211066,
+    "identity": 8011709,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-黑豆国王",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211067,
+    "identity": 8011710,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-白公鸡国王",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211068,
+    "identity": 8011711,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-褴褛新郎",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211069,
+    "identity": 8011712,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-沙米尔壤虫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211070,
+    "identity": 8011713,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-屠夫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211071,
+    "identity": 8011714,
+    "desc": "",
+    "title": "1.9地牢-通用精英关卡-梦境核心",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211072,
+    "identity": 8013501,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-绿湖卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211073,
+    "identity": 8013502,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-仙人掌魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211074,
+    "identity": 8013503,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-斗士魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211075,
+    "identity": 8013504,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-自爆魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211076,
+    "identity": 8013505,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-仙人掌魔精群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211077,
+    "identity": 8015501,
+    "desc": "",
+    "title": "1.9地牢-委托关-拳击手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211078,
+    "identity": 8016501,
+    "desc": "",
+    "title": "1.9地牢-委托关-拉拉泉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211079,
+    "identity": 8016502,
+    "desc": "",
+    "title": "1.9地牢-委托关-讣告人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211080,
+    "identity": 8016503,
+    "desc": "",
+    "title": "1.9地牢-委托关-门",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211081,
+    "identity": 8016504,
+    "desc": "",
+    "title": "1.9地牢-委托关-梦境高级守卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211082,
+    "identity": 8017501,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-槲寄生",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211083,
+    "identity": 8017502,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-坦南特",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211084,
+    "identity": 8017503,
+    "desc": "",
+    "title": "1.9地牢-委托关卡-罗蕾莱",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211085,
+    "identity": 801120101,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-草坪沙米尔虫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211086,
+    "identity": 801120103,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-矮树丛怪鸟",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211087,
+    "identity": 801120106,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-草丛塔泽尔亚龙",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211088,
+    "identity": 801120108,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-绿荫郊狼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211089,
+    "identity": 801120110,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-巨型灰白蛾",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211090,
+    "identity": 801120111,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-巨型灰白蛾",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211091,
+    "identity": 801120112,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-公园守卫者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211092,
+    "identity": 801120113,
+    "desc": "",
+    "title": "1.9肉鸽-动物园-绿地巨鸟",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211093,
+    "identity": 801130101,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚追寻者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211094,
+    "identity": 801130102,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚体验者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211095,
+    "identity": 801130103,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚初探者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211096,
+    "identity": 801130104,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚捍卫者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211097,
+    "identity": 801130105,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-真正的绅士",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211098,
+    "identity": 801130106,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士聚会筹划队",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211099,
+    "identity": 801130107,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士聚会话事人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211100,
+    "identity": 801130108,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-绅士风尚特邀人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211101,
+    "identity": 801130109,
+    "desc": "",
+    "title": "1.9肉鸽-贫民窟-轮班警卫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211102,
+    "identity": 8014106,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-阿其翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211103,
+    "identity": 8014107,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-火苗",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211104,
+    "identity": 8014108,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-岩·卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211105,
+    "identity": 8014109,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-修罗石像1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211106,
+    "identity": 8014110,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-修罗石像2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211107,
+    "identity": 8014111,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-兽·卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211108,
+    "identity": 8014112,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊小怪-变色装置",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211109,
+    "identity": 8014201,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-大型烛夜",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211110,
+    "identity": 8014202,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-守卫魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211111,
+    "identity": 8014203,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-换皮屠夫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211112,
+    "identity": 8014204,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊精英-巨大石像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211113,
+    "identity": 8014301,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-巨大和平乌鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211114,
+    "identity": 8014302,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-湿婆神像（攻击形态）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211115,
+    "identity": 8014303,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-湿婆神像（防御形态）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211116,
+    "identity": 8014304,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段1）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211117,
+    "identity": 8014305,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段2）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211118,
+    "identity": 8014306,
+    "desc": "",
+    "title": "1.9地牢-地下湖泊Boss-伊索尔德（阶段3）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211119,
+    "identity": 8015101,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-少毛卡邦克鲁群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211120,
+    "identity": 8015102,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-多毛狼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211121,
+    "identity": 8015103,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-多毛蜘蛛",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211122,
+    "identity": 8015104,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-研究协会成员A",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211123,
+    "identity": 8015105,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-研究协会成员B",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211124,
+    "identity": 8015106,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-少毛卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211125,
+    "identity": 8015107,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-奇肯恩",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211126,
+    "identity": 8015108,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-岩城弓箭手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211127,
+    "identity": 8015109,
+    "desc": "",
+    "title": "1.9地牢-下水道小怪-子弹箱",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211128,
+    "identity": 8015201,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-多毛守卫魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211129,
+    "identity": 8015202,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-变异奇肯恩",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211130,
+    "identity": 8015203,
+    "desc": "",
+    "title": "1.9地牢-下水道精英-岩城扫除人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211131,
+    "identity": 8015301,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-雪山卡邦克鲁之王",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211132,
+    "identity": 8015302,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-重塑意志聚合体",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211133,
+    "identity": 8015303,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-猪脸杰克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211134,
+    "identity": 8015304,
+    "desc": "",
+    "title": "1.9地牢-下水道Boss-小指彼得",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211135,
+    "identity": 8016106,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-捕食雕像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211136,
+    "identity": 8016107,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-猎食雕像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211137,
+    "identity": 8016108,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-逐昏双狼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211138,
+    "identity": 8016109,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-变异布鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211139,
+    "identity": 8016110,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-变异林德虫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211140,
+    "identity": 8016111,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-绿湖卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211141,
+    "identity": 8016112,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-老鼠",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211142,
+    "identity": 8016113,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-重塑意志聚合物",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211143,
+    "identity": 8016114,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-吉卜赛住民",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211144,
+    "identity": 8016115,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛小怪-换皮阿奇翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211145,
+    "identity": 8016201,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-爱宠",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211146,
+    "identity": 8016202,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-洋葱头",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211147,
+    "identity": 8016203,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-兽·露萨尔姬",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211148,
+    "identity": 8016204,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-木·露萨尔姬",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211149,
+    "identity": 8016205,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-变异天使猫",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211150,
+    "identity": 8016206,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-苏芙比",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211151,
+    "identity": 8016207,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛精英-换皮大阿其翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211152,
+    "identity": 8016301,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-食人树",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211153,
+    "identity": 8016302,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211154,
+    "identity": 8016303,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-伽菈波那1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211155,
+    "identity": 8016304,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-伽菈波那2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211156,
+    "identity": 8016305,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花（残血）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211157,
+    "identity": 8016306,
+    "desc": "",
+    "title": "1.9地牢-吉卜赛Boss-泥人花（满血）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211158,
+    "identity": 8017101,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-灵体1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211159,
+    "identity": 8017102,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-灵体2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211160,
+    "identity": 8017103,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-鬼火",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211161,
+    "identity": 8017104,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-幽灵树精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211162,
+    "identity": 8017105,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-斯普特尼克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211163,
+    "identity": 8017106,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-星之眼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211164,
+    "identity": 8017107,
+    "desc": "",
+    "title": "1.9地牢-旧贵族小怪-凶星",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211165,
+    "identity": 8017201,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-盔甲石像1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211166,
+    "identity": 8017202,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-盔甲石像2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211167,
+    "identity": 8017203,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-帕米埃",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211168,
+    "identity": 8017204,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-TTT",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211169,
+    "identity": 8017205,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-远旅",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211170,
+    "identity": 8017206,
+    "desc": "",
+    "title": "1.9地牢-旧贵族精英-天体",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211171,
+    "identity": 8017301,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-未锈铠",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211172,
+    "identity": 8017302,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-吵闹鬼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211173,
+    "identity": 8017303,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-库玛尔",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211174,
+    "identity": 8017304,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·土星",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211175,
+    "identity": 8017305,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·火星",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211176,
+    "identity": 8017306,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·太阳",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211177,
+    "identity": 8017307,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·计都",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211178,
+    "identity": 8017308,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-凶星·罗睺",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211179,
+    "identity": 8017311,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-未锈铠(助战）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211180,
+    "identity": 8017312,
+    "desc": "",
+    "title": "1.9地牢-旧贵族Boss-吵闹鬼(助战）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211181,
+    "identity": 8016401,
+    "desc": "",
+    "title": "1.8赛季-坎吉拉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211182,
+    "identity": 8017401,
+    "desc": "",
+    "title": "1.8赛季-奥利图欧",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211183,
+    "identity": 6210101,
+    "desc": "",
+    "title": "2.1肉鸽曲娘事件关-曲娘",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211184,
+    "identity": 6210102,
+    "desc": "",
+    "title": "2.1肉鸽曲娘事件关-拉拉泉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211185,
+    "identity": 6210103,
+    "desc": "",
+    "title": "2.1肉鸽歌剧事件关-伊索尔德",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211186,
+    "identity": 6210104,
+    "desc": "",
+    "title": "2.1肉鸽应激触发事件关-塞梅",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211187,
+    "identity": 6210105,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-爱兹拉",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211188,
+    "identity": 6210106,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-仙人掌魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211189,
+    "identity": 6210107,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-仙人掌魔精群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211190,
+    "identity": 6210108,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-柑橘魔精",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211191,
+    "identity": 6210109,
+    "desc": "",
+    "title": "2.1肉鸽媒介触发事件关-柑橘魔精群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211192,
+    "identity": 6210110,
+    "desc": "",
+    "title": "2.1肉鸽金币触发事件关-温妮",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211193,
+    "identity": 6210111,
+    "desc": "",
+    "title": "2.1肉鸽应激触发事件关-塞梅幻想体",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211194,
+    "identity": 8012401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-莱格斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211195,
+    "identity": 8012402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-特种格拉瓦库斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211196,
+    "identity": 8015401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-地脉净化者·迸发",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211197,
+    "identity": 8015402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-鳞翼基基图克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211198,
+    "identity": 8014401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-可燃点",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211199,
+    "identity": 8014402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-巨大和平乌鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211200,
+    "identity": 8014403,
+    "desc": "",
+    "title": "2.1肉鸽据点关-火苗",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211201,
+    "identity": 8017402,
+    "desc": "",
+    "title": "2.1肉鸽据点关-咔嚓咔嚓",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211202,
+    "identity": 8018401,
+    "desc": "",
+    "title": "2.1肉鸽据点关-黑脓敲击手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211203,
+    "identity": 6210121,
+    "desc": "",
+    "title": "2.1肉鸽据点关-城门郎A",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211204,
+    "identity": 6210122,
+    "desc": "",
+    "title": "2.1肉鸽据点关-城门郎B",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211205,
+    "identity": 6210123,
+    "desc": "",
+    "title": "2.1肉鸽据点关-斑纹马",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211206,
+    "identity": 6210124,
+    "desc": "",
+    "title": "2.1肉鸽据点关-红尾斑纹马",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211207,
+    "identity": 6210125,
+    "desc": "",
+    "title": "2.1肉鸽据点关-葛天",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211208,
+    "identity": 6210126,
+    "desc": "",
+    "title": "2.1肉鸽据点关-勿忘我",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211209,
+    "identity": 6210127,
+    "desc": "",
+    "title": "2.1肉鸽据点关-重塑·苏菲亚",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211210,
+    "identity": 6210128,
+    "desc": "",
+    "title": "2.1肉鸽据点关-重塑·女性教众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211211,
+    "identity": 6210129,
+    "desc": "",
+    "title": "2.1肉鸽据点关-幻想可燃点",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211212,
+    "identity": 8026101,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛普通-启明会青年女",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211213,
+    "identity": 8026102,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛普通-启明会青年男",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211214,
+    "identity": 8026103,
+    "desc": "",
+    "title": "2.1地牢-旧贵族普通-诡异卵",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211215,
+    "identity": 8026104,
+    "desc": "",
+    "title": "2.1地牢-旧贵族普通-僵尸新郎",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211216,
+    "identity": 8026105,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市-捕食雕像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211217,
+    "identity": 8026106,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市-猎食雕像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211218,
+    "identity": 8026107,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-J",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211219,
+    "identity": 8026108,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-燃烧可燃点",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211220,
+    "identity": 8026109,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-凝滞的造物",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211221,
+    "identity": 8026110,
+    "desc": "",
+    "title": "2.1地牢-吉卜赛精英-泥浆傀偶",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211222,
+    "identity": 8026111,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老奶奶（现实版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211223,
+    "identity": 8026112,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-屠夫（现实版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211224,
+    "identity": 8026113,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老爷爷（现实版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211225,
+    "identity": 8026114,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-镜中幽灵（现实版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211226,
+    "identity": 8026115,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老奶奶（精神版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211227,
+    "identity": 8026116,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-屠夫（精神版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211228,
+    "identity": 8026117,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-老爷爷（精神版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211229,
+    "identity": 8026118,
+    "desc": "",
+    "title": "2.1地牢-旧贵族精英-镜中幽灵（精神版）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211230,
+    "identity": 8026119,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-食人树",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211231,
+    "identity": 8026120,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-伴生腺体*3",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211232,
+    "identity": 8026121,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-数羊羔",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211233,
+    "identity": 8026122,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-飞艇",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211234,
+    "identity": 8026123,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑·教众男",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211235,
+    "identity": 8026124,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑·教众女",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211236,
+    "identity": 8026125,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-空降兵重塑剧院观众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211237,
+    "identity": 8026126,
+    "desc": "",
+    "title": "2.1地牢-暴雨扭曲的城市精英-梦幻泡影",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211238,
+    "identity": 8022101,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛蜘蛛",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211239,
+    "identity": 8022102,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛狼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211240,
+    "identity": 8022103,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛卡邦克鲁群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211241,
+    "identity": 8022104,
+    "desc": "",
+    "title": "2.1地牢-动物园普通（公园区）-多毛卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211242,
+    "identity": 8023101,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-中层帮众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211243,
+    "identity": 8023102,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-高级帮众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211244,
+    "identity": 8023103,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-帮派话事人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211245,
+    "identity": 8023104,
+    "desc": "",
+    "title": "2.1地牢-黑帮普通（贫民窟）-高级帮众",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211246,
+    "identity": 8024101,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-兽·卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211247,
+    "identity": 8024102,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-大型烛夜",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211248,
+    "identity": 8024103,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）-阿其翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211249,
+    "identity": 8024104,
+    "desc": "",
+    "title": "2.1地牢-熔岩普通（地下湖泊）火苗",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211250,
+    "identity": 8025101,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城狙击手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211251,
+    "identity": 8025102,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城弓箭手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211252,
+    "identity": 8025103,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城圣裁人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211253,
+    "identity": 8025104,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城扫除人",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211254,
+    "identity": 8025105,
+    "desc": "",
+    "title": "2.1地牢-冰雪普通（下水道）-岩城远射手",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211255,
+    "identity": 8022201,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-特种格拉瓦库斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211256,
+    "identity": 8022202,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-箱子",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211257,
+    "identity": 8022203,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-实体地脉能力",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211258,
+    "identity": 8022204,
+    "desc": "",
+    "title": "2.1地牢-动物园精英（公园区）-基基图克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211259,
+    "identity": 8023201,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-莱格斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211260,
+    "identity": 8023202,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-警戒火炮",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211261,
+    "identity": 8023203,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-莱格斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211262,
+    "identity": 8023204,
+    "desc": "",
+    "title": "2.1地牢-黑帮精英（贫民窟）-特种格拉瓦库斯",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211263,
+    "identity": 8024201,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-大型烛夜",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211264,
+    "identity": 8024202,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-阿其翁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211265,
+    "identity": 8024203,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-敌方中立位置医疗箱",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211266,
+    "identity": 8024204,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物进阶+造物碎片1+造物碎片2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211267,
+    "identity": 8024205,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物碎片1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211268,
+    "identity": 8024206,
+    "desc": "",
+    "title": "2.1地牢-熔岩精英（地下湖泊）-造物碎片2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300102"
+  },
+  {
+    "id": 5211269,
+    "identity": 8025201,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-雪山之女",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211270,
+    "identity": 8025202,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-我方中立位置火苗",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211271,
+    "identity": 8025203,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-雪山之女",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211272,
+    "identity": 8025204,
+    "desc": "",
+    "title": "2.1地牢-冰雪精英（下水道）-多毛卡邦克鲁群",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211273,
+    "identity": 801120112,
+    "desc": "",
+    "title": "2.1-肉鸽应激-林间小径-公园守卫者",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300002"
+  },
+  {
+    "id": 5211274,
+    "identity": 801120113,
+    "desc": "",
+    "title": "2.1-肉鸽应激-林间小径-绿地怪鸟",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300003"
+  },
+  {
+    "id": 5211275,
+    "identity": 801130105,
+    "desc": "",
+    "title": "2.1-肉鸽应激-阴矮小巷-卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300004"
+  },
+  {
+    "id": 5211276,
+    "identity": 801130108,
+    "desc": "",
+    "title": "2.1-肉鸽应激-阴矮小巷-坦南特",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300005"
+  },
+  {
+    "id": 5211277,
+    "identity": 8014301,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-巨大和平乌鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300006"
+  },
+  {
+    "id": 5211278,
+    "identity": 8014302,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-石像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300007"
+  },
+  {
+    "id": 5211279,
+    "identity": 8014303,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-石像",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300007"
+  },
+  {
+    "id": 5211280,
+    "identity": 8014304,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-伊索尔德1",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300008"
+  },
+  {
+    "id": 5211281,
+    "identity": 8014305,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-伊索尔德2",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300009"
+  },
+  {
+    "id": 5211282,
+    "identity": 8014306,
+    "desc": "",
+    "title": "2.1-肉鸽应激-地下矿场-伊索尔德3",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300010"
+  },
+  {
+    "id": 5211283,
+    "identity": 8015301,
+    "desc": "",
+    "title": "2.1-肉鸽应激-下水道-冰雪卡邦克鲁",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300011"
+  },
+  {
+    "id": 5211284,
+    "identity": 8015302,
+    "desc": "",
+    "title": "2.1-肉鸽应激-下水道-重塑意志聚合体",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300012"
+  },
+  {
+    "id": 5211285,
+    "identity": 8015303,
+    "desc": "",
+    "title": "2.1-肉鸽应激-下水道-防毒面具哥",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300013"
+  },
+  {
+    "id": 5211286,
+    "identity": 8015304,
+    "desc": "",
+    "title": "2.1-肉鸽应激-下水道-防毒面具哥",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300013"
+  },
+  {
+    "id": 5211287,
+    "identity": 8016301,
+    "desc": "",
+    "title": "2.1-肉鸽应激-移民区-食人树",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300014"
+  },
+  {
+    "id": 5211288,
+    "identity": 8016302,
+    "desc": "",
+    "title": "2.1-肉鸽应激-移民区-泥人花",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300015"
+  },
+  {
+    "id": 5211289,
+    "identity": 8016303,
+    "desc": "",
+    "title": "2.1-肉鸽应激-移民区-伽菈波那",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300016"
+  },
+  {
+    "id": 5211290,
+    "identity": 8016304,
+    "desc": "",
+    "title": "2.1-肉鸽应激-移民区-伽菈波那",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300016"
+  },
+  {
+    "id": 5211291,
+    "identity": 8017301,
+    "desc": "",
+    "title": "2.1-肉鸽应激-老城区-未锈铠",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300017"
+  },
+  {
+    "id": 5211292,
+    "identity": 8017302,
+    "desc": "",
+    "title": "2.1-肉鸽应激-老城区-吵闹鬼",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300018"
+  },
+  {
+    "id": 5211293,
+    "identity": 8017303,
+    "desc": "",
+    "title": "2.1-肉鸽应激-老城区-库玛尔",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300019"
+  },
+  {
+    "id": 5211294,
+    "identity": 8018301,
+    "desc": "",
+    "title": "2.1-肉鸽应激-暴雨-剃刀小队",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300020"
+  },
+  {
+    "id": 5211295,
+    "identity": 8018302,
+    "desc": "",
+    "title": "2.1-肉鸽应激-暴雨-战争坦克",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521300021"
+  },
+  {
+    "id": 621114,
+    "identity": 621114,
+    "desc": "",
+    "title": "2.1赛季-绅士卡邦克鲁之主",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "621114"
+  },
+  {
+    "id": 621125,
+    "identity": 621125,
+    "desc": "",
+    "title": "2.1赛季-莫桑女士",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "621125"
+  },
+  {
+    "id": 621135,
+    "identity": 621135,
+    "desc": "",
+    "title": "2.1赛季-地脉能量",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "621135"
+  },
+  {
+    "id": 621146,
+    "identity": 621146,
+    "desc": "",
+    "title": "2.1赛季-37",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "621146"
+  },
+  {
+    "id": 5211296,
+    "identity": 621114,
+    "desc": "",
+    "title": "2.1赛季-绅士卡邦克鲁之主",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211297,
+    "identity": 621125,
+    "desc": "",
+    "title": "2.1赛季-莫桑女士",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211298,
+    "identity": 621135,
+    "desc": "",
+    "title": "2.1赛季-地脉能量",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5211299,
+    "identity": 621146,
+    "desc": "",
+    "title": "2.1赛季-37",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 5220001,
+    "identity": 5220001,
+    "desc": "2.2 bossrush-艾佛森-难度4",
+    "title": "",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220001"
+  },
+  {
+    "id": 5220002,
+    "identity": 5220002,
+    "desc": "2.2 bossrush-大机器人-难度4",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220002"
+  },
+  {
+    "id": 5220003,
+    "identity": 5220003,
+    "desc": "2.2 bossrush-小机器人-难度4",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220003"
+  },
+  {
+    "id": 5220004,
+    "identity": 5220004,
+    "desc": "2.2 bossrush-小机器人2-难度4",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220004"
+  },
+  {
+    "id": 5220011,
+    "identity": 5220011,
+    "desc": "2.2 bossrush-重塑人面花-难度4",
+    "title": "",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220011"
+  },
+  {
+    "id": 5220012,
+    "identity": 5220012,
+    "desc": "2.2 bossrush-迎宾士-难度4",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220012"
+  },
+  {
+    "id": 5220013,
+    "identity": 5220013,
+    "desc": "2.2 bossrush-礼乐人-难度4",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220013"
+  },
+  {
+    "id": 5220021,
+    "identity": 5220021,
+    "desc": "2.2 bossrush-飞艇",
+    "title": "",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220021"
+  },
+  {
+    "id": 5220022,
+    "identity": 5220022,
+    "desc": "2.2 bossrush-男性教众",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220022"
+  },
+  {
+    "id": 5220023,
+    "identity": 5220023,
+    "desc": "2.2 bossrush-女性教众",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220023"
+  },
+  {
+    "id": 5220024,
+    "identity": 5220024,
+    "desc": "2.2 bossrush-术士",
+    "title": "",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "5220024"
+  }
+]

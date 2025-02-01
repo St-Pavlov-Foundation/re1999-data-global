@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "interval": "0,15",
+    "word": "language_10026645"
+  },
+  {
+    "id": 2,
+    "interval": "16,35",
+    "word": "language_90001003"
+  },
+  {
+    "id": 3,
+    "interval": "36,65",
+    "word": "language_10026646"
+  },
+  {
+    "id": 4,
+    "interval": "66,85",
+    "word": "language_10026647"
+  },
+  {
+    "id": 5,
+    "interval": "86,100",
+    "word": "language_10026648"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "taskId": 380001,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateUnlockClueCount",
+    "listenerParam": "",
+    "maxProgress": 2,
+    "desc": "language_10053417",
+    "bonus": "1#111002#1|1#120012#1",
+    "jumpId": 10012211
+  },
+  {
+    "taskId": 380002,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateUnlockClueCount",
+    "listenerParam": "",
+    "maxProgress": 5,
+    "desc": "language_10053418",
+    "bonus": "1#110203#1|1#120012#1",
+    "jumpId": 10012211
+  },
+  {
+    "taskId": 380003,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateUnlockClueCount",
+    "listenerParam": "",
+    "maxProgress": 10,
+    "desc": "language_10053419",
+    "bonus": "1#110503#1|1#120012#1",
+    "jumpId": 10012211
+  },
+  {
+    "taskId": 380004,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "1",
+    "maxProgress": 1,
+    "desc": "language_10053420",
+    "bonus": "1#110803#1|2#3#10000",
+    "jumpId": 10012212
+  },
+  {
+    "taskId": 380005,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "2",
+    "maxProgress": 1,
+    "desc": "language_10053421",
+    "bonus": "1#110403#1|2#5#10000",
+    "jumpId": 10012213
+  },
+  {
+    "taskId": 380006,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "3",
+    "maxProgress": 1,
+    "desc": "language_10053422",
+    "bonus": "1#110303#1|2#3#10000",
+    "jumpId": 10012214
+  },
+  {
+    "taskId": 380007,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "4",
+    "maxProgress": 1,
+    "desc": "language_10053423",
+    "bonus": "1#110603#1|2#5#10000",
+    "jumpId": 10012215
+  },
+  {
+    "taskId": 380008,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "5",
+    "maxProgress": 1,
+    "desc": "language_10053424",
+    "bonus": "1#111012#1|2#3#10000",
+    "jumpId": 10012216
+  },
+  {
+    "taskId": 380009,
+    "minType": "language_10053372",
+    "listenerType": "InvestigateCompleted",
+    "listenerParam": "6",
+    "maxProgress": 1,
+    "desc": "language_10053425",
+    "bonus": "1#110703#1|2#5#10000",
+    "jumpId": 10012217
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "episode": 10804,
+    "group": 1,
+    "entrance": 1,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role1_1.png",
+    "unlockDesc": "language_10053373",
+    "desc": "language_10053374",
+    "clueNumber": 1,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg3.png",
+    "conclusionDesc": "language_10053375"
+  },
+  {
+    "id": 2,
+    "episode": 10804,
+    "group": 1,
+    "entrance": 0,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role1_2.png",
+    "unlockDesc": "language_10053373",
+    "desc": "language_10053376",
+    "clueNumber": 2,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg4.png",
+    "conclusionDesc": "language_10053377"
+  },
+  {
+    "id": 3,
+    "episode": 10804,
+    "group": 1,
+    "entrance": 0,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role1_3.png",
+    "unlockDesc": "language_10053373",
+    "desc": "language_10053378",
+    "clueNumber": 2,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg8.png",
+    "conclusionDesc": "language_10053379"
+  },
+  {
+    "id": 4,
+    "episode": 10801,
+    "group": 2,
+    "entrance": 2,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role2.png",
+    "unlockDesc": "language_10053380",
+    "desc": "language_10053381",
+    "clueNumber": 3,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg5.png",
+    "conclusionDesc": "language_10053382"
+  },
+  {
+    "id": 5,
+    "episode": 10806,
+    "group": 3,
+    "entrance": 3,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role4.png",
+    "unlockDesc": "language_10053383",
+    "desc": "language_10053384",
+    "clueNumber": 3,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg6.png",
+    "conclusionDesc": "language_10053385"
+  },
+  {
+    "id": 6,
+    "episode": 10808,
+    "group": 4,
+    "entrance": 4,
+    "name": "language_10053372",
+    "icon": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_role3.png",
+    "unlockDesc": "language_10053386",
+    "desc": "language_10053387",
+    "clueNumber": 3,
+    "conclusionBg": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_fullbg7.png",
+    "conclusionDesc": "language_10053388"
+  }
+]

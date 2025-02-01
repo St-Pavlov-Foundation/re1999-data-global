@@ -1,0 +1,20 @@
+[
+  {
+    "characterId": 22301,
+    "name": "【临时文本】主战者1",
+    "hp": 100,
+    "resPic": "300101",
+    "skillName1": "【临时文本】主动技能名称1",
+    "skillName2": "【临时文本】被动技能名称1",
+    "defaultUnlock": 1
+  },
+  {
+    "characterId": 22302,
+    "name": "【临时文本】主战者2",
+    "hp": 150,
+    "resPic": "300110",
+    "skillName1": "【临时文本】主动技能名称2",
+    "skillName2": "【临时文本】被动技能名称2",
+    "defaultUnlock": 0
+  }
+]

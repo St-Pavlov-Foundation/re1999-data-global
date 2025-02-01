@@ -1,0 +1,14 @@
+[
+  {
+    "heroId": 3091,
+    "motion": "idle",
+    "whenStopped": 0,
+    "whenNotStopped": 1
+  },
+  {
+    "heroId": 3097,
+    "motion": "baqiang1|baqiang2|baqiang3",
+    "whenStopped": 0,
+    "whenNotStopped": 0
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "icon": "shen_guize_01",
+    "additionRule": "1#1082",
+    "isCn": 0
+  },
+  {
+    "id": 2,
+    "icon": "shen_guize_02",
+    "additionRule": "1#1083",
+    "isCn": 0
+  },
+  {
+    "id": 3,
+    "icon": "shen_guize_03",
+    "additionRule": "1#1080",
+    "isCn": 1
+  },
+  {
+    "id": 4,
+    "icon": "shen_guize_04",
+    "additionRule": "1#1081",
+    "isCn": 1
+  },
+  {
+    "id": 5,
+    "icon": "shen_guize_05",
+    "additionRule": "1#1078",
+    "isCn": 0
+  },
+  {
+    "id": 6,
+    "icon": "shen_guize_06",
+    "additionRule": "1#1102",
+    "isCn": 0
+  },
+  {
+    "id": 7,
+    "icon": "shen_guize_07",
+    "additionRule": "1#1079",
+    "isCn": 0
+  },
+  {
+    "id": 8,
+    "icon": "shen_guize_08",
+    "additionRule": "1#1130001",
+    "isCn": 0
+  },
+  {
+    "id": 9,
+    "icon": "shen_guize_09",
+    "additionRule": "1#1130002",
+    "isCn": 0
+  },
+  {
+    "id": 10,
+    "icon": "shen_guize_10",
+    "additionRule": "1#1130003",
+    "isCn": 0
+  },
+  {
+    "id": 11,
+    "icon": "shen_guize_11",
+    "additionRule": "1#1140001",
+    "isCn": 0
+  },
+  {
+    "id": 12,
+    "icon": "shen_guize_12",
+    "additionRule": "1#1140002",
+    "isCn": 0
+  },
+  {
+    "id": 13,
+    "icon": "shen_guize_13",
+    "additionRule": "1#6150001",
+    "isCn": 0
+  },
+  {
+    "id": 14,
+    "icon": "shen_guize_14",
+    "additionRule": "1#6150008",
+    "isCn": 0
+  },
+  {
+    "id": 15,
+    "icon": "shen_guize_15",
+    "additionRule": "1#6150015",
+    "isCn": 0
+  },
+  {
+    "id": 16,
+    "icon": "shen_guize_16",
+    "additionRule": "1#1160001",
+    "isCn": 0
+  },
+  {
+    "id": 17,
+    "icon": "shen_guize_17",
+    "additionRule": "1#1160002",
+    "isCn": 0
+  },
+  {
+    "id": 18,
+    "icon": "shen_guize_18",
+    "additionRule": "1#1160003",
+    "isCn": 0
+  },
+  {
+    "id": 19,
+    "icon": "shen_guize_19",
+    "additionRule": "1#3170010",
+    "isCn": 0
+  },
+  {
+    "id": 20,
+    "icon": "shen_guize_20",
+    "additionRule": "1#3170020",
+    "isCn": 0
+  },
+  {
+    "id": 21,
+    "icon": "shen_guize_21",
+    "additionRule": "1#3170030",
+    "isCn": 0
+  },
+  {
+    "id": 22,
+    "icon": "shen_guize_22",
+    "additionRule": "1#6180001",
+    "isCn": 0
+  },
+  {
+    "id": 23,
+    "icon": "shen_guize_23",
+    "additionRule": "1#6180011",
+    "isCn": 0
+  },
+  {
+    "id": 24,
+    "icon": "shen_guize_24",
+    "additionRule": "1#6180021",
+    "isCn": 0
+  },
+  {
+    "id": 25,
+    "icon": "shen_guize_12",
+    "additionRule": "1#8190001",
+    "isCn": 0
+  },
+  {
+    "id": 26,
+    "icon": "shen_guize_22",
+    "additionRule": "1#8190011",
+    "isCn": 0
+  },
+  {
+    "id": 27,
+    "icon": "shen_guize_11",
+    "additionRule": "1#1209011",
+    "isCn": 0
+  },
+  {
+    "id": 28,
+    "icon": "shen_guize_10",
+    "additionRule": "1#1209012",
+    "isCn": 0
+  },
+  {
+    "id": 29,
+    "icon": "shen_guize_12",
+    "additionRule": "1#1209013",
+    "isCn": 0
+  },
+  {
+    "id": 30,
+    "icon": "shen_guize_20",
+    "additionRule": "1#1219001",
+    "isCn": 0
+  },
+  {
+    "id": 31,
+    "icon": "shen_guize_12",
+    "additionRule": "1#1219002",
+    "isCn": 0
+  },
+  {
+    "id": 32,
+    "icon": "shen_guize_21",
+    "additionRule": "1#1219003",
+    "isCn": 0
+  },
+  {
+    "id": 33,
+    "icon": "shen_guize_07",
+    "additionRule": "1#1229001",
+    "isCn": 0
+  },
+  {
+    "id": 34,
+    "icon": "shen_guize_22",
+    "additionRule": "1#1229002",
+    "isCn": 0
+  },
+  {
+    "id": 35,
+    "icon": "shen_guize_08",
+    "additionRule": "1#1229001",
+    "isCn": 0
+  }
+]

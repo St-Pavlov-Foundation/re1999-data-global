@@ -1,0 +1,306 @@
+[
+  {
+    "name": "hi6210sft",
+    "level": 3
+  },
+  {
+    "name": "hi6620oem",
+    "level": 3
+  },
+  {
+    "name": "Hisilicon Kirin 930",
+    "level": 3
+  },
+  {
+    "name": "Hisilicon Kirin 935",
+    "level": 3
+  },
+  {
+    "name": "Kirin920",
+    "level": 3
+  },
+  {
+    "name": "Kirin925",
+    "level": 3
+  },
+  {
+    "name": "Leadcore Innopower",
+    "level": 3
+  },
+  {
+    "name": "MT6582",
+    "level": 3
+  },
+  {
+    "name": "MT6592",
+    "level": 3
+  },
+  {
+    "name": "MT6595",
+    "level": 3
+  },
+  {
+    "name": "MT6735",
+    "level": 3
+  },
+  {
+    "name": "MT6735P",
+    "level": 3
+  },
+  {
+    "name": "MT6737",
+    "level": 3
+  },
+  {
+    "name": "MT6737T",
+    "level": 3
+  },
+  {
+    "name": "MT6750",
+    "level": 3
+  },
+  {
+    "name": "MT6750V/DN",
+    "level": 3
+  },
+  {
+    "name": "MT6753",
+    "level": 3
+  },
+  {
+    "name": "MT6753T",
+    "level": 3
+  },
+  {
+    "name": "MT6755",
+    "level": 3
+  },
+  {
+    "name": "MT6755M",
+    "level": 3
+  },
+  {
+    "name": "MT6755V/CM",
+    "level": 3
+  },
+  {
+    "name": "MT6757",
+    "level": 3
+  },
+  {
+    "name": "MT6757CD",
+    "level": 3
+  },
+  {
+    "name": "MT6763V/B",
+    "level": 3
+  },
+  {
+    "name": "MT6763V/CT",
+    "level": 3
+  },
+  {
+    "name": "MT6795",
+    "level": 3
+  },
+  {
+    "name": "MT6795M",
+    "level": 3
+  },
+  {
+    "name": "MT6795T",
+    "level": 3
+  },
+  {
+    "name": "MTK Helio P25",
+    "level": 3
+  },
+  {
+    "name": "MTK P30",
+    "level": 3
+  },
+  {
+    "name": "QCT APQ8064 FLO",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8226 (Flattened Device Tree)",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8939 HUAWEI KIW-AL10",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8939 HUAWEI KIW-CL00",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8939 HUAWEI KIW-TL00H",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8939 HUAWEI KIW-UL10",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM 8974 (Flattened Device Tree)",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM8974",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM8974PRO-AA",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM8974PRO-AB",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm MSM8974PRO-AC",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc 450",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8909",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8916",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8917",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8920",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8929",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8937",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8939",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8940",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8952",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8953Pro",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8992",
+    "level": 3
+  },
+  {
+    "name": "SAMSUNG Exynos7580",
+    "level": 3
+  },
+  {
+    "name": "sc9832a",
+    "level": 3
+  },
+  {
+    "name": "UNIVERSAL3475",
+    "level": 3
+  },
+  {
+    "name": "UNIVERSAL4412",
+    "level": 3
+  },
+  {
+    "name": "hi6250",
+    "level": 3
+  },
+  {
+    "name": "Hisilicon Kirin 950",
+    "level": 3
+  },
+  {
+    "name": "Hisilicon Kirin 955",
+    "level": 3
+  },
+  {
+    "name": "MT6752",
+    "level": 3
+  },
+  {
+    "name": "MT6797",
+    "level": 3
+  },
+  {
+    "name": "MT6797M",
+    "level": 3
+  },
+  {
+    "name": "MT6797T",
+    "level": 3
+  },
+  {
+    "name": "MT6797X",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8953",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8976",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8976SG",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc MSM8996",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies, Inc TRINKET",
+    "level": 3
+  },
+  {
+    "name": "Qualcomm Technologies Inc SDM630",
+    "level": 3
+  },
+  {
+    "name": "Samsung EXYNOS5420",
+    "level": 3
+  },
+  {
+    "name": "Samsung EXYNOS5430",
+    "level": 3
+  },
+  {
+    "name": "SAMSUNG Exynos7420",
+    "level": 3
+  },
+  {
+    "name": "UNIVERSAL5410",
+    "level": 3
+  },
+  {
+    "name": "UNIVERSAL5420",
+    "level": 3
+  }
+]

@@ -1,0 +1,190 @@
+slot1 = require("protobuf.protobuf")
+
+module("modules.proto.InvestigateModule_pb", package.seeall)
+
+slot2 = {
+	INVESTIGATEINFOPUSH_MSG = slot1.Descriptor(),
+	INVESTIGATEINFOPUSHINFOFIELD = slot1.FieldDescriptor(),
+	INTELBOX_MSG = slot1.Descriptor(),
+	INTELBOXIDFIELD = slot1.FieldDescriptor(),
+	INTELBOXCLUEIDSFIELD = slot1.FieldDescriptor(),
+	INVESTIGATEINFO_MSG = slot1.Descriptor(),
+	INVESTIGATEINFOINTELBOXFIELD = slot1.FieldDescriptor(),
+	INVESTIGATEINFOCLUEIDSFIELD = slot1.FieldDescriptor(),
+	GETINVESTIGATEREQUEST_MSG = slot1.Descriptor(),
+	PUTCLUEREQUEST_MSG = slot1.Descriptor(),
+	PUTCLUEREQUESTIDFIELD = slot1.FieldDescriptor(),
+	PUTCLUEREQUESTCLUEIDFIELD = slot1.FieldDescriptor(),
+	PUTCLUEREPLY_MSG = slot1.Descriptor(),
+	PUTCLUEREPLYIDFIELD = slot1.FieldDescriptor(),
+	PUTCLUEREPLYCLUEIDFIELD = slot1.FieldDescriptor(),
+	GETINVESTIGATEREPLY_MSG = slot1.Descriptor(),
+	GETINVESTIGATEREPLYINFOFIELD = slot1.FieldDescriptor()
+}
+slot2.INVESTIGATEINFOPUSHINFOFIELD.name = "info"
+slot2.INVESTIGATEINFOPUSHINFOFIELD.full_name = ".InvestigateInfoPush.info"
+slot2.INVESTIGATEINFOPUSHINFOFIELD.number = 1
+slot2.INVESTIGATEINFOPUSHINFOFIELD.index = 0
+slot2.INVESTIGATEINFOPUSHINFOFIELD.label = 1
+slot2.INVESTIGATEINFOPUSHINFOFIELD.has_default_value = false
+slot2.INVESTIGATEINFOPUSHINFOFIELD.default_value = nil
+slot2.INVESTIGATEINFOPUSHINFOFIELD.message_type = slot2.INVESTIGATEINFO_MSG
+slot2.INVESTIGATEINFOPUSHINFOFIELD.type = 11
+slot2.INVESTIGATEINFOPUSHINFOFIELD.cpp_type = 10
+slot2.INVESTIGATEINFOPUSH_MSG.name = "InvestigateInfoPush"
+slot2.INVESTIGATEINFOPUSH_MSG.full_name = ".InvestigateInfoPush"
+slot2.INVESTIGATEINFOPUSH_MSG.nested_types = {}
+slot2.INVESTIGATEINFOPUSH_MSG.enum_types = {}
+slot2.INVESTIGATEINFOPUSH_MSG.fields = {
+	slot2.INVESTIGATEINFOPUSHINFOFIELD
+}
+slot2.INVESTIGATEINFOPUSH_MSG.is_extendable = false
+slot2.INVESTIGATEINFOPUSH_MSG.extensions = {}
+slot2.INTELBOXIDFIELD.name = "id"
+slot2.INTELBOXIDFIELD.full_name = ".IntelBox.id"
+slot2.INTELBOXIDFIELD.number = 1
+slot2.INTELBOXIDFIELD.index = 0
+slot2.INTELBOXIDFIELD.label = 1
+slot2.INTELBOXIDFIELD.has_default_value = false
+slot2.INTELBOXIDFIELD.default_value = 0
+slot2.INTELBOXIDFIELD.type = 5
+slot2.INTELBOXIDFIELD.cpp_type = 1
+slot2.INTELBOXCLUEIDSFIELD.name = "clueIds"
+slot2.INTELBOXCLUEIDSFIELD.full_name = ".IntelBox.clueIds"
+slot2.INTELBOXCLUEIDSFIELD.number = 2
+slot2.INTELBOXCLUEIDSFIELD.index = 1
+slot2.INTELBOXCLUEIDSFIELD.label = 3
+slot2.INTELBOXCLUEIDSFIELD.has_default_value = false
+slot2.INTELBOXCLUEIDSFIELD.default_value = {}
+slot2.INTELBOXCLUEIDSFIELD.type = 5
+slot2.INTELBOXCLUEIDSFIELD.cpp_type = 1
+slot2.INTELBOX_MSG.name = "IntelBox"
+slot2.INTELBOX_MSG.full_name = ".IntelBox"
+slot2.INTELBOX_MSG.nested_types = {}
+slot2.INTELBOX_MSG.enum_types = {}
+slot2.INTELBOX_MSG.fields = {
+	slot2.INTELBOXIDFIELD,
+	slot2.INTELBOXCLUEIDSFIELD
+}
+slot2.INTELBOX_MSG.is_extendable = false
+slot2.INTELBOX_MSG.extensions = {}
+slot2.INVESTIGATEINFOINTELBOXFIELD.name = "intelBox"
+slot2.INVESTIGATEINFOINTELBOXFIELD.full_name = ".InvestigateInfo.intelBox"
+slot2.INVESTIGATEINFOINTELBOXFIELD.number = 1
+slot2.INVESTIGATEINFOINTELBOXFIELD.index = 0
+slot2.INVESTIGATEINFOINTELBOXFIELD.label = 3
+slot2.INVESTIGATEINFOINTELBOXFIELD.has_default_value = false
+slot2.INVESTIGATEINFOINTELBOXFIELD.default_value = {}
+slot2.INVESTIGATEINFOINTELBOXFIELD.message_type = slot2.INTELBOX_MSG
+slot2.INVESTIGATEINFOINTELBOXFIELD.type = 11
+slot2.INVESTIGATEINFOINTELBOXFIELD.cpp_type = 10
+slot2.INVESTIGATEINFOCLUEIDSFIELD.name = "clueIds"
+slot2.INVESTIGATEINFOCLUEIDSFIELD.full_name = ".InvestigateInfo.clueIds"
+slot2.INVESTIGATEINFOCLUEIDSFIELD.number = 2
+slot2.INVESTIGATEINFOCLUEIDSFIELD.index = 1
+slot2.INVESTIGATEINFOCLUEIDSFIELD.label = 3
+slot2.INVESTIGATEINFOCLUEIDSFIELD.has_default_value = false
+slot2.INVESTIGATEINFOCLUEIDSFIELD.default_value = {}
+slot2.INVESTIGATEINFOCLUEIDSFIELD.type = 5
+slot2.INVESTIGATEINFOCLUEIDSFIELD.cpp_type = 1
+slot2.INVESTIGATEINFO_MSG.name = "InvestigateInfo"
+slot2.INVESTIGATEINFO_MSG.full_name = ".InvestigateInfo"
+slot2.INVESTIGATEINFO_MSG.nested_types = {}
+slot2.INVESTIGATEINFO_MSG.enum_types = {}
+slot2.INVESTIGATEINFO_MSG.fields = {
+	slot2.INVESTIGATEINFOINTELBOXFIELD,
+	slot2.INVESTIGATEINFOCLUEIDSFIELD
+}
+slot2.INVESTIGATEINFO_MSG.is_extendable = false
+slot2.INVESTIGATEINFO_MSG.extensions = {}
+slot2.GETINVESTIGATEREQUEST_MSG.name = "GetInvestigateRequest"
+slot2.GETINVESTIGATEREQUEST_MSG.full_name = ".GetInvestigateRequest"
+slot2.GETINVESTIGATEREQUEST_MSG.nested_types = {}
+slot2.GETINVESTIGATEREQUEST_MSG.enum_types = {}
+slot2.GETINVESTIGATEREQUEST_MSG.fields = {}
+slot2.GETINVESTIGATEREQUEST_MSG.is_extendable = false
+slot2.GETINVESTIGATEREQUEST_MSG.extensions = {}
+slot2.PUTCLUEREQUESTIDFIELD.name = "id"
+slot2.PUTCLUEREQUESTIDFIELD.full_name = ".PutClueRequest.id"
+slot2.PUTCLUEREQUESTIDFIELD.number = 1
+slot2.PUTCLUEREQUESTIDFIELD.index = 0
+slot2.PUTCLUEREQUESTIDFIELD.label = 1
+slot2.PUTCLUEREQUESTIDFIELD.has_default_value = false
+slot2.PUTCLUEREQUESTIDFIELD.default_value = 0
+slot2.PUTCLUEREQUESTIDFIELD.type = 5
+slot2.PUTCLUEREQUESTIDFIELD.cpp_type = 1
+slot2.PUTCLUEREQUESTCLUEIDFIELD.name = "clueId"
+slot2.PUTCLUEREQUESTCLUEIDFIELD.full_name = ".PutClueRequest.clueId"
+slot2.PUTCLUEREQUESTCLUEIDFIELD.number = 2
+slot2.PUTCLUEREQUESTCLUEIDFIELD.index = 1
+slot2.PUTCLUEREQUESTCLUEIDFIELD.label = 1
+slot2.PUTCLUEREQUESTCLUEIDFIELD.has_default_value = false
+slot2.PUTCLUEREQUESTCLUEIDFIELD.default_value = 0
+slot2.PUTCLUEREQUESTCLUEIDFIELD.type = 5
+slot2.PUTCLUEREQUESTCLUEIDFIELD.cpp_type = 1
+slot2.PUTCLUEREQUEST_MSG.name = "PutClueRequest"
+slot2.PUTCLUEREQUEST_MSG.full_name = ".PutClueRequest"
+slot2.PUTCLUEREQUEST_MSG.nested_types = {}
+slot2.PUTCLUEREQUEST_MSG.enum_types = {}
+slot2.PUTCLUEREQUEST_MSG.fields = {
+	slot2.PUTCLUEREQUESTIDFIELD,
+	slot2.PUTCLUEREQUESTCLUEIDFIELD
+}
+slot2.PUTCLUEREQUEST_MSG.is_extendable = false
+slot2.PUTCLUEREQUEST_MSG.extensions = {}
+slot2.PUTCLUEREPLYIDFIELD.name = "id"
+slot2.PUTCLUEREPLYIDFIELD.full_name = ".PutClueReply.id"
+slot2.PUTCLUEREPLYIDFIELD.number = 1
+slot2.PUTCLUEREPLYIDFIELD.index = 0
+slot2.PUTCLUEREPLYIDFIELD.label = 1
+slot2.PUTCLUEREPLYIDFIELD.has_default_value = false
+slot2.PUTCLUEREPLYIDFIELD.default_value = 0
+slot2.PUTCLUEREPLYIDFIELD.type = 5
+slot2.PUTCLUEREPLYIDFIELD.cpp_type = 1
+slot2.PUTCLUEREPLYCLUEIDFIELD.name = "clueId"
+slot2.PUTCLUEREPLYCLUEIDFIELD.full_name = ".PutClueReply.clueId"
+slot2.PUTCLUEREPLYCLUEIDFIELD.number = 2
+slot2.PUTCLUEREPLYCLUEIDFIELD.index = 1
+slot2.PUTCLUEREPLYCLUEIDFIELD.label = 1
+slot2.PUTCLUEREPLYCLUEIDFIELD.has_default_value = false
+slot2.PUTCLUEREPLYCLUEIDFIELD.default_value = 0
+slot2.PUTCLUEREPLYCLUEIDFIELD.type = 5
+slot2.PUTCLUEREPLYCLUEIDFIELD.cpp_type = 1
+slot2.PUTCLUEREPLY_MSG.name = "PutClueReply"
+slot2.PUTCLUEREPLY_MSG.full_name = ".PutClueReply"
+slot2.PUTCLUEREPLY_MSG.nested_types = {}
+slot2.PUTCLUEREPLY_MSG.enum_types = {}
+slot2.PUTCLUEREPLY_MSG.fields = {
+	slot2.PUTCLUEREPLYIDFIELD,
+	slot2.PUTCLUEREPLYCLUEIDFIELD
+}
+slot2.PUTCLUEREPLY_MSG.is_extendable = false
+slot2.PUTCLUEREPLY_MSG.extensions = {}
+slot2.GETINVESTIGATEREPLYINFOFIELD.name = "info"
+slot2.GETINVESTIGATEREPLYINFOFIELD.full_name = ".GetInvestigateReply.info"
+slot2.GETINVESTIGATEREPLYINFOFIELD.number = 1
+slot2.GETINVESTIGATEREPLYINFOFIELD.index = 0
+slot2.GETINVESTIGATEREPLYINFOFIELD.label = 1
+slot2.GETINVESTIGATEREPLYINFOFIELD.has_default_value = false
+slot2.GETINVESTIGATEREPLYINFOFIELD.default_value = nil
+slot2.GETINVESTIGATEREPLYINFOFIELD.message_type = slot2.INVESTIGATEINFO_MSG
+slot2.GETINVESTIGATEREPLYINFOFIELD.type = 11
+slot2.GETINVESTIGATEREPLYINFOFIELD.cpp_type = 10
+slot2.GETINVESTIGATEREPLY_MSG.name = "GetInvestigateReply"
+slot2.GETINVESTIGATEREPLY_MSG.full_name = ".GetInvestigateReply"
+slot2.GETINVESTIGATEREPLY_MSG.nested_types = {}
+slot2.GETINVESTIGATEREPLY_MSG.enum_types = {}
+slot2.GETINVESTIGATEREPLY_MSG.fields = {
+	slot2.GETINVESTIGATEREPLYINFOFIELD
+}
+slot2.GETINVESTIGATEREPLY_MSG.is_extendable = false
+slot2.GETINVESTIGATEREPLY_MSG.extensions = {}
+slot2.GetInvestigateReply = slot1.Message(slot2.GETINVESTIGATEREPLY_MSG)
+slot2.GetInvestigateRequest = slot1.Message(slot2.GETINVESTIGATEREQUEST_MSG)
+slot2.IntelBox = slot1.Message(slot2.INTELBOX_MSG)
+slot2.InvestigateInfo = slot1.Message(slot2.INVESTIGATEINFO_MSG)
+slot2.InvestigateInfoPush = slot1.Message(slot2.INVESTIGATEINFOPUSH_MSG)
+slot2.PutClueReply = slot1.Message(slot2.PUTCLUEREPLY_MSG)
+slot2.PutClueRequest = slot1.Message(slot2.PUTCLUEREQUEST_MSG)
+
+return slot2

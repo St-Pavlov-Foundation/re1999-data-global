@@ -1,0 +1,158 @@
+[
+  {
+    "effectId": 10001,
+    "effectType": 1,
+    "effectParams": "+6",
+    "desc": "language_10058237"
+  },
+  {
+    "effectId": 10002,
+    "effectType": 1,
+    "effectParams": "+8",
+    "desc": "language_10058238"
+  },
+  {
+    "effectId": 10003,
+    "effectType": 1,
+    "effectParams": "+12",
+    "desc": "language_10058239"
+  },
+  {
+    "effectId": 10004,
+    "effectType": 1,
+    "effectParams": "-2",
+    "desc": "language_10058240"
+  },
+  {
+    "effectId": 10005,
+    "effectType": 1,
+    "effectParams": "-4",
+    "desc": "language_10058241"
+  },
+  {
+    "effectId": 10006,
+    "effectType": 1,
+    "effectParams": "-6",
+    "desc": "language_10058242"
+  },
+  {
+    "effectId": 10007,
+    "effectType": 1,
+    "effectParams": "-8",
+    "desc": "language_10058243"
+  },
+  {
+    "effectId": 11001,
+    "effectType": 2,
+    "effectParams": "2#2",
+    "desc": "language_10058244"
+  },
+  {
+    "effectId": 11002,
+    "effectType": 2,
+    "effectParams": "4#2",
+    "desc": "language_10058245"
+  },
+  {
+    "effectId": 11003,
+    "effectType": 2,
+    "effectParams": "6#2",
+    "desc": "language_10058246"
+  },
+  {
+    "effectId": 11004,
+    "effectType": 2,
+    "effectParams": "-2#2",
+    "desc": "language_10058247"
+  },
+  {
+    "effectId": 11005,
+    "effectType": 2,
+    "effectParams": "-4#2",
+    "desc": "language_10058248"
+  },
+  {
+    "effectId": 11006,
+    "effectType": 2,
+    "effectParams": "-6#2",
+    "desc": "language_10058249"
+  },
+  {
+    "effectId": 20001,
+    "effectType": 1,
+    "effectParams": "+6",
+    "desc": "language_10058237"
+  },
+  {
+    "effectId": 20002,
+    "effectType": 1,
+    "effectParams": "+12",
+    "desc": "language_10058239"
+  },
+  {
+    "effectId": 20003,
+    "effectType": 1,
+    "effectParams": "+18",
+    "desc": "language_10058250"
+  },
+  {
+    "effectId": 20004,
+    "effectType": 1,
+    "effectParams": "-9",
+    "desc": "language_10058251"
+  },
+  {
+    "effectId": 20005,
+    "effectType": 1,
+    "effectParams": "-12",
+    "desc": "language_10058252"
+  },
+  {
+    "effectId": 20006,
+    "effectType": 1,
+    "effectParams": "-18",
+    "desc": "language_10058253"
+  },
+  {
+    "effectId": 20007,
+    "effectType": 1,
+    "effectParams": "-24",
+    "desc": "language_10058254"
+  },
+  {
+    "effectId": 21001,
+    "effectType": 2,
+    "effectParams": "6#2",
+    "desc": "language_10058246"
+  },
+  {
+    "effectId": 21002,
+    "effectType": 2,
+    "effectParams": "9#2",
+    "desc": "language_10058255"
+  },
+  {
+    "effectId": 21003,
+    "effectType": 2,
+    "effectParams": "12#2",
+    "desc": "language_10058256"
+  },
+  {
+    "effectId": 21004,
+    "effectType": 2,
+    "effectParams": "-3#2",
+    "desc": "language_10058257"
+  },
+  {
+    "effectId": 21005,
+    "effectType": 2,
+    "effectParams": "-6#3",
+    "desc": "language_10058258"
+  },
+  {
+    "effectId": 21006,
+    "effectType": 2,
+    "effectParams": "-9#2",
+    "desc": "language_10058259"
+  }
+]

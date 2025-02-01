@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1011,
+    "branchId": 101,
+    "type": 0,
+    "position": "-3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1012,
+    "branchId": 101,
+    "type": 1,
+    "position": "-1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1013,
+    "branchId": 101,
+    "type": 0,
+    "position": "1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1014,
+    "branchId": 101,
+    "type": 1,
+    "position": "3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1021,
+    "branchId": 102,
+    "type": 0,
+    "position": "-3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1022,
+    "branchId": 102,
+    "type": 1,
+    "position": "-1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1023,
+    "branchId": 102,
+    "type": 0,
+    "position": "1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1024,
+    "branchId": 102,
+    "type": 1,
+    "position": "3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1031,
+    "branchId": 103,
+    "type": 0,
+    "position": "-3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1032,
+    "branchId": 103,
+    "type": 1,
+    "position": "-1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1033,
+    "branchId": 103,
+    "type": 0,
+    "position": "1#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  },
+  {
+    "id": 1034,
+    "branchId": 103,
+    "type": 1,
+    "position": "3#0",
+    "positionOffset": "0#1",
+    "text": "test！test！test！test！test！test！test！test！test！test！test！test！"
+  }
+]

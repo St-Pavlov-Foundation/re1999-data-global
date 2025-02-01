@@ -1,0 +1,56 @@
+[
+  {
+    "level": 1,
+    "cost": "",
+    "needBlockCount": 0,
+    "maxBlockCount": 60,
+    "characterLimit": 4,
+    "needCost": "",
+    "needEpisode": 0
+  },
+  {
+    "level": 2,
+    "cost": "1#190010#1",
+    "needBlockCount": 20,
+    "maxBlockCount": 80,
+    "characterLimit": 5,
+    "needCost": "1#190010",
+    "needEpisode": 10214
+  },
+  {
+    "level": 3,
+    "cost": "1#190010#1|1#190007#40",
+    "needBlockCount": 45,
+    "maxBlockCount": 100,
+    "characterLimit": 6,
+    "needCost": "1#190010",
+    "needEpisode": 10315
+  },
+  {
+    "level": 4,
+    "cost": "1#190010#1|1#190008#2",
+    "needBlockCount": 60,
+    "maxBlockCount": 110,
+    "characterLimit": 7,
+    "needCost": "1#190010",
+    "needEpisode": 0
+  },
+  {
+    "level": 5,
+    "cost": "1#190010#1|1#190008#2",
+    "needBlockCount": 80,
+    "maxBlockCount": 120,
+    "characterLimit": 8,
+    "needCost": "1#190010",
+    "needEpisode": 0
+  },
+  {
+    "level": 6,
+    "cost": "1#190010#1|1#190008#3",
+    "needBlockCount": 100,
+    "maxBlockCount": 150,
+    "characterLimit": 9,
+    "needCost": "1#190010",
+    "needEpisode": 0
+  }
+]

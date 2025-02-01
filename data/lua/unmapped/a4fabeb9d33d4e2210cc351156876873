@@ -1,0 +1,5 @@
+module("framework.gamescene.SceneTag", package.seeall)
+
+return {
+	Untagged = "Untagged"
+}

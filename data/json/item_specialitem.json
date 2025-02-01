@@ -1,0 +1,30 @@
+[
+  {
+    "id": 3,
+    "name": "language_10003323",
+    "icon": "3",
+    "desc": "language_10003324",
+    "rare": 5
+  },
+  {
+    "id": 6,
+    "name": "language_10003325",
+    "icon": "6",
+    "desc": "language_10003326",
+    "rare": 4
+  },
+  {
+    "id": 8,
+    "name": "language_10003327",
+    "icon": "8",
+    "desc": "language_10003328",
+    "rare": 3
+  },
+  {
+    "id": 25,
+    "name": "language_10003023",
+    "icon": "970001",
+    "desc": "language_10053322",
+    "rare": 3
+  }
+]

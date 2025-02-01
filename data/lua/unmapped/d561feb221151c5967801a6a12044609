@@ -1,0 +1,67 @@
+module("framework.mvc.model.ListScrollModel", package.seeall)
+
+slot0 = class("ListScrollModel", BaseModel)
+
+function slot0.ctor(slot0)
+	uv0.super.ctor(slot0)
+
+	slot0._scrollViews = {}
+end
+
+function slot0.reInitInternal(slot0)
+	uv0.super.reInitInternal(slot0)
+
+	for slot4, slot5 in ipairs(slot0._scrollViews) do
+		if slot5.clear then
+			slot5:clear()
+		end
+	end
+end
+
+function slot0.addScrollView(slot0, slot1)
+	table.insert(slot0._scrollViews, slot1)
+end
+
+function slot0.removeScrollView(slot0, slot1)
+	tabletool.removeValue(slot0._scrollViews, slot1)
+end
+
+function slot0.onModelUpdate(slot0)
+	for slot4, slot5 in ipairs(slot0._scrollViews) do
+		slot5:onModelUpdate()
+	end
+end
+
+function slot0.selectCell(slot0, slot1, slot2)
+	for slot6, slot7 in ipairs(slot0._scrollViews) do
+		slot7:selectCell(slot1, slot2)
+	end
+end
+
+function slot0.sort(slot0, slot1)
+	uv0.super.sort(slot0, slot1)
+	slot0:onModelUpdate()
+end
+
+function slot0.addList(slot0, slot1)
+	uv0.super.addList(slot0, slot1)
+	slot0:onModelUpdate()
+end
+
+function slot0.addAt(slot0, slot1, slot2)
+	uv0.super.addAt(slot0, slot1, slot2)
+	slot0:onModelUpdate()
+end
+
+function slot0.removeAt(slot0, slot1)
+	slot0:onModelUpdate()
+
+	return uv0.super.removeAt(slot0, slot1)
+end
+
+function slot0.clear(slot0)
+	uv0.super.clear(slot0)
+	slot0:onModelUpdate()
+end
+
+return slot0

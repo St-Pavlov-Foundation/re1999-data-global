@@ -1,0 +1,3542 @@
+[
+  {
+    "id": 1001,
+    "name": "language_10050741",
+    "identity": "base",
+    "typeParam": "1",
+    "effect": "addSkill",
+    "param": "521300201",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2001,
+    "name": "language_10017234",
+    "identity": "career",
+    "typeParam": "1",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050742"
+  },
+  {
+    "id": 2002,
+    "name": "language_10017233",
+    "identity": "career",
+    "typeParam": "2",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050743"
+  },
+  {
+    "id": 2003,
+    "name": "language_10017232",
+    "identity": "career",
+    "typeParam": "3",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050744"
+  },
+  {
+    "id": 2004,
+    "name": "language_10017231",
+    "identity": "career",
+    "typeParam": "4",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050745"
+  },
+  {
+    "id": 2005,
+    "name": "language_10017235",
+    "identity": "career",
+    "typeParam": "5",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050746"
+  },
+  {
+    "id": 2006,
+    "name": "language_10017236",
+    "identity": "career",
+    "typeParam": "6",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050747"
+  },
+  {
+    "id": 3001,
+    "name": "language_10022445",
+    "identity": "heroType",
+    "typeParam": "1",
+    "effect": "addSkill",
+    "param": "38003001",
+    "isNoShow": 0,
+    "desc": "language_10050748"
+  },
+  {
+    "id": 3002,
+    "name": "language_10022446",
+    "identity": "heroType",
+    "typeParam": "2",
+    "effect": "addSkill",
+    "param": "38003002",
+    "isNoShow": 0,
+    "desc": "language_10050749"
+  },
+  {
+    "id": 3003,
+    "name": "language_10022447",
+    "identity": "heroType",
+    "typeParam": "3",
+    "effect": "addSkill",
+    "param": "38003003",
+    "isNoShow": 0,
+    "desc": "language_10050750"
+  },
+  {
+    "id": 3004,
+    "name": "language_10022448",
+    "identity": "heroType",
+    "typeParam": "4",
+    "effect": "addSkill",
+    "param": "38003004",
+    "isNoShow": 0,
+    "desc": "language_10050751"
+  },
+  {
+    "id": 3005,
+    "name": "language_10022449",
+    "identity": "heroType",
+    "typeParam": "5",
+    "effect": "addSkill",
+    "param": "38003005",
+    "isNoShow": 0,
+    "desc": "language_10050752"
+  },
+  {
+    "id": 3006,
+    "name": "language_10022450",
+    "identity": "heroType",
+    "typeParam": "6",
+    "effect": "addSkill",
+    "param": "38003006",
+    "isNoShow": 0,
+    "desc": "language_10050753"
+  },
+  {
+    "id": 4001,
+    "name": "language_10018033",
+    "identity": "battleTag",
+    "typeParam": "1",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050754"
+  },
+  {
+    "id": 4002,
+    "name": "language_10018034",
+    "identity": "battleTag",
+    "typeParam": "2",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050755"
+  },
+  {
+    "id": 4101,
+    "name": "language_10018035",
+    "identity": "battleTag",
+    "typeParam": "101",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050756"
+  },
+  {
+    "id": 4102,
+    "name": "language_10018036",
+    "identity": "battleTag",
+    "typeParam": "102",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050757"
+  },
+  {
+    "id": 4103,
+    "name": "language_10018037",
+    "identity": "battleTag",
+    "typeParam": "103",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050758"
+  },
+  {
+    "id": 4104,
+    "name": "language_10017009",
+    "identity": "battleTag",
+    "typeParam": "104",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050759"
+  },
+  {
+    "id": 4105,
+    "name": "language_10018038",
+    "identity": "battleTag",
+    "typeParam": "105",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050760"
+  },
+  {
+    "id": 4106,
+    "name": "language_10018039",
+    "identity": "battleTag",
+    "typeParam": "106",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050761"
+  },
+  {
+    "id": 4107,
+    "name": "language_10017155",
+    "identity": "battleTag",
+    "typeParam": "107",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050762"
+  },
+  {
+    "id": 4108,
+    "name": "language_10015499",
+    "identity": "battleTag",
+    "typeParam": "108",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050763"
+  },
+  {
+    "id": 4109,
+    "name": "language_10018040",
+    "identity": "battleTag",
+    "typeParam": "109",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050764"
+  },
+  {
+    "id": 4110,
+    "name": "language_10009336",
+    "identity": "battleTag",
+    "typeParam": "110",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050765"
+  },
+  {
+    "id": 4111,
+    "name": "language_10015538",
+    "identity": "battleTag",
+    "typeParam": "111",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050766"
+  },
+  {
+    "id": 4112,
+    "name": "language_10015372",
+    "identity": "battleTag",
+    "typeParam": "112",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050767"
+  },
+  {
+    "id": 4113,
+    "name": "language_10008465",
+    "identity": "battleTag",
+    "typeParam": "113",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050768"
+  },
+  {
+    "id": 4114,
+    "name": "language_10018041",
+    "identity": "battleTag",
+    "typeParam": "114",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050769"
+  },
+  {
+    "id": 4115,
+    "name": "language_10018042",
+    "identity": "battleTag",
+    "typeParam": "115",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050769"
+  },
+  {
+    "id": 4116,
+    "name": "language_10017149",
+    "identity": "battleTag",
+    "typeParam": "116",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050770"
+  },
+  {
+    "id": 4118,
+    "name": "language_10008540",
+    "identity": "battleTag",
+    "typeParam": "118",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050771"
+  },
+  {
+    "id": 4119,
+    "name": "language_10015515",
+    "identity": "battleTag",
+    "typeParam": "119",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050772"
+  },
+  {
+    "id": 4120,
+    "name": "language_10041776",
+    "identity": "battleTag",
+    "typeParam": "120",
+    "effect": "addSkill",
+    "param": "38004120",
+    "isNoShow": 0,
+    "desc": "language_10050773"
+  },
+  {
+    "id": 4121,
+    "name": "language_10041777",
+    "identity": "battleTag",
+    "typeParam": "121",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050774"
+  },
+  {
+    "id": 4122,
+    "name": "language_10047672",
+    "identity": "battleTag",
+    "typeParam": "122",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050775"
+  },
+  {
+    "id": 4123,
+    "name": "language_10047404",
+    "identity": "battleTag",
+    "typeParam": "123",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050776"
+  },
+  {
+    "id": 53088,
+    "name": "language_10024711",
+    "identity": "id",
+    "typeParam": "3088",
+    "effect": "addSkill",
+    "param": "38530881",
+    "isNoShow": 0,
+    "desc": "language_10050777"
+  },
+  {
+    "id": 53091,
+    "name": "language_10040103",
+    "identity": "id",
+    "typeParam": "3091",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050778"
+  },
+  {
+    "id": 53080,
+    "name": "language_10034438",
+    "identity": "id",
+    "typeParam": "3080",
+    "effect": "addSkill",
+    "param": "38530801",
+    "isNoShow": 0,
+    "desc": "language_10050779"
+  },
+  {
+    "id": 53081,
+    "name": "language_10034441",
+    "identity": "id",
+    "typeParam": "3081",
+    "effect": "addSkill",
+    "param": "38530811",
+    "isNoShow": 0,
+    "desc": "language_10050780"
+  },
+  {
+    "id": 53065,
+    "name": "language_10035464",
+    "identity": "id",
+    "typeParam": "3065",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050781"
+  },
+  {
+    "id": 53086,
+    "name": "language_10041764",
+    "identity": "id",
+    "typeParam": "3086",
+    "effect": "addSkill",
+    "param": "38530861",
+    "isNoShow": 0,
+    "desc": "language_10050782"
+  },
+  {
+    "id": 53098,
+    "name": "language_10050783",
+    "identity": "id",
+    "typeParam": "3098",
+    "effect": "addSkill",
+    "param": "38530981",
+    "isNoShow": 0,
+    "desc": "language_10050784"
+  },
+  {
+    "id": 53097,
+    "name": "language_10050785",
+    "identity": "id",
+    "typeParam": "3097",
+    "effect": "addSkill",
+    "param": "38530971",
+    "isNoShow": 0,
+    "desc": "language_10050786"
+  },
+  {
+    "id": 53099,
+    "name": "language_10050787",
+    "identity": "id",
+    "typeParam": "3099",
+    "effect": "addSkill",
+    "param": "38530991",
+    "isNoShow": 0,
+    "desc": "language_10050788"
+  },
+  {
+    "id": 53027,
+    "name": "language_10005357",
+    "identity": "id",
+    "typeParam": "3027",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050789"
+  },
+  {
+    "id": 53066,
+    "name": "language_10017972",
+    "identity": "id",
+    "typeParam": "3066",
+    "effect": "addSkill",
+    "param": "38530661",
+    "isNoShow": 0,
+    "desc": "language_10050790"
+  },
+  {
+    "id": 53079,
+    "name": "language_10017975",
+    "identity": "id",
+    "typeParam": "3079",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050791"
+  },
+  {
+    "id": 53004,
+    "name": "language_10005333",
+    "identity": "id",
+    "typeParam": "3004",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050792"
+  },
+  {
+    "id": 53025,
+    "name": "language_10005352",
+    "identity": "id",
+    "typeParam": "3025",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050793"
+  },
+  {
+    "id": 53028,
+    "name": "language_10005358",
+    "identity": "id",
+    "typeParam": "3028",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050794"
+  },
+  {
+    "id": 53023,
+    "name": "language_10005348",
+    "identity": "id",
+    "typeParam": "3023",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050795"
+  },
+  {
+    "id": 53041,
+    "name": "language_10005368",
+    "identity": "id",
+    "typeParam": "3041",
+    "effect": "addSkill",
+    "param": "38530411",
+    "isNoShow": 0,
+    "desc": "language_10050796"
+  },
+  {
+    "id": 53009,
+    "name": "language_10005338",
+    "identity": "id",
+    "typeParam": "3009",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050797"
+  },
+  {
+    "id": 53003,
+    "name": "language_10003434",
+    "identity": "id",
+    "typeParam": "3003",
+    "effect": "addSkill",
+    "param": "38530031",
+    "isNoShow": 0,
+    "desc": "language_10050798"
+  },
+  {
+    "id": 53047,
+    "name": "language_10005974",
+    "identity": "id",
+    "typeParam": "3047",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050799"
+  },
+  {
+    "id": 53057,
+    "name": "language_10017949",
+    "identity": "id",
+    "typeParam": "3057",
+    "effect": "addSkill",
+    "param": "38530571",
+    "isNoShow": 0,
+    "desc": "language_10050800"
+  },
+  {
+    "id": 5210001,
+    "name": "language_10050801",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210002,
+    "name": "language_10050802",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210003,
+    "name": "language_10050803",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210011,
+    "name": "language_10050804",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210012,
+    "name": "language_10050805",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210013,
+    "name": "language_10050806",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210021,
+    "name": "language_10050807",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5210022,
+    "name": "language_10050808",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 1211001,
+    "name": "language_10050809",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011101,
+    "name": "language_10050810",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011102,
+    "name": "language_10050811",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011103,
+    "name": "language_10050812",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011104,
+    "name": "language_10050813",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011105,
+    "name": "language_10050814",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011106,
+    "name": "language_10050815",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190002,
+    "name": "language_10050816",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190003,
+    "name": "language_10050817",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190004,
+    "name": "language_10050818",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190005,
+    "name": "language_10050819",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190006,
+    "name": "language_10050820",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190007,
+    "name": "language_10050821",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190008,
+    "name": "language_10050822",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190009,
+    "name": "language_10050823",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190010,
+    "name": "language_10050824",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190011,
+    "name": "language_10050825",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190012,
+    "name": "language_10050826",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190013,
+    "name": "language_10050827",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190014,
+    "name": "language_10050828",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190015,
+    "name": "language_10050829",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190016,
+    "name": "language_10050830",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190017,
+    "name": "language_10050831",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190018,
+    "name": "language_10050832",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190019,
+    "name": "language_10050833",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190020,
+    "name": "language_10050834",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190021,
+    "name": "language_10050835",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190022,
+    "name": "language_10050836",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190023,
+    "name": "language_10050837",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190024,
+    "name": "language_10050838",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 2190025,
+    "name": "language_10050839",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018101,
+    "name": "language_10050840",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018103,
+    "name": "language_10050841",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018104,
+    "name": "language_10050842",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018105,
+    "name": "language_10050843",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018106,
+    "name": "language_10050844",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018107,
+    "name": "language_10050845",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018108,
+    "name": "language_10050846",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018109,
+    "name": "language_10050847",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018110,
+    "name": "language_10050848",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018301,
+    "name": "language_10050849",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300020",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018302,
+    "name": "language_10050850",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300021",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018303,
+    "name": "language_10050851",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011401,
+    "name": "language_10050852",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011402,
+    "name": "language_10050853",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011403,
+    "name": "language_10050854",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011404,
+    "name": "language_10050855",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011405,
+    "name": "language_10050856",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011406,
+    "name": "language_10050857",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011407,
+    "name": "language_10050858",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011408,
+    "name": "language_10050859",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011409,
+    "name": "language_10050860",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011410,
+    "name": "language_10050861",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011411,
+    "name": "language_10050862",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011412,
+    "name": "language_10050863",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011413,
+    "name": "language_10050864",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011414,
+    "name": "language_10050865",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011415,
+    "name": "language_10050866",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011701,
+    "name": "language_10050867",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011702,
+    "name": "language_10050868",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011703,
+    "name": "language_10050869",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011704,
+    "name": "language_10050870",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011705,
+    "name": "language_10050871",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011706,
+    "name": "language_10050872",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011707,
+    "name": "language_10050873",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011708,
+    "name": "language_10050874",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011709,
+    "name": "language_10050875",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011710,
+    "name": "language_10050876",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011711,
+    "name": "language_10050877",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011712,
+    "name": "language_10050878",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011713,
+    "name": "language_10050879",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8011714,
+    "name": "language_10050880",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8013501,
+    "name": "language_10050881",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8013502,
+    "name": "language_10050882",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8013503,
+    "name": "language_10050883",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8013504,
+    "name": "language_10050884",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8013505,
+    "name": "language_10050885",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015501,
+    "name": "language_10050886",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016501,
+    "name": "language_10050887",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016502,
+    "name": "language_10050888",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016503,
+    "name": "language_10050889",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016504,
+    "name": "language_10050890",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017501,
+    "name": "language_10050891",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017502,
+    "name": "language_10050892",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017503,
+    "name": "language_10050893",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120101,
+    "name": "language_10050894",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120103,
+    "name": "language_10050895",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120106,
+    "name": "language_10050896",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120108,
+    "name": "language_10050897",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120110,
+    "name": "language_10050898",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120111,
+    "name": "language_10050898",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120112,
+    "name": "language_10050899",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300002",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801120113,
+    "name": "language_10050900",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300003",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130101,
+    "name": "language_10050901",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130102,
+    "name": "language_10050902",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130103,
+    "name": "language_10050903",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130104,
+    "name": "language_10050904",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130105,
+    "name": "language_10050905",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300004",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130106,
+    "name": "language_10050906",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130107,
+    "name": "language_10050907",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130108,
+    "name": "language_10050908",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300005",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 801130109,
+    "name": "language_10050909",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014106,
+    "name": "language_10050910",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014107,
+    "name": "language_10050911",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014108,
+    "name": "language_10050912",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014109,
+    "name": "language_10050913",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014110,
+    "name": "language_10050914",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014111,
+    "name": "language_10050915",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014112,
+    "name": "language_10050916",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014201,
+    "name": "language_10050917",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014202,
+    "name": "language_10050918",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014203,
+    "name": "language_10050919",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014204,
+    "name": "language_10050920",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014301,
+    "name": "language_10050921",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300006",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014302,
+    "name": "language_10050922",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300007",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014303,
+    "name": "language_10050923",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300007",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014304,
+    "name": "language_10050924",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300008",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014305,
+    "name": "language_10050925",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300009",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014306,
+    "name": "language_10050926",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300010",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015101,
+    "name": "language_10050927",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015102,
+    "name": "language_10050928",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015103,
+    "name": "language_10050929",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015104,
+    "name": "language_10050930",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015105,
+    "name": "language_10050931",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015106,
+    "name": "language_10050932",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015107,
+    "name": "language_10050933",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015108,
+    "name": "language_10050934",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015109,
+    "name": "language_10050935",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015201,
+    "name": "language_10050936",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015202,
+    "name": "language_10050937",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015203,
+    "name": "language_10050938",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015301,
+    "name": "language_10050939",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300011",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015302,
+    "name": "language_10050940",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300012",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015303,
+    "name": "language_10050941",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300013",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015304,
+    "name": "language_10050942",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300013",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016106,
+    "name": "language_10050943",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016107,
+    "name": "language_10050944",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016108,
+    "name": "language_10050945",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016109,
+    "name": "language_10050946",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016110,
+    "name": "language_10050947",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016111,
+    "name": "language_10050948",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016112,
+    "name": "language_10050949",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016113,
+    "name": "language_10050950",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016114,
+    "name": "language_10050951",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016115,
+    "name": "language_10050952",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016201,
+    "name": "language_10050953",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016202,
+    "name": "language_10050954",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016203,
+    "name": "language_10050955",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016204,
+    "name": "language_10050956",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016205,
+    "name": "language_10050957",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016206,
+    "name": "language_10050958",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016207,
+    "name": "language_10050959",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016301,
+    "name": "language_10050960",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300014",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016302,
+    "name": "language_10050961",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300015",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016303,
+    "name": "language_10050962",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300016",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016304,
+    "name": "language_10050963",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300016",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016305,
+    "name": "language_10050964",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300015",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016306,
+    "name": "language_10050965",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300015",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017101,
+    "name": "language_10050966",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017102,
+    "name": "language_10050967",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017103,
+    "name": "language_10050968",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017104,
+    "name": "language_10050969",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017105,
+    "name": "language_10050970",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017106,
+    "name": "language_10050971",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017107,
+    "name": "language_10050972",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017201,
+    "name": "language_10050973",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017202,
+    "name": "language_10050974",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017203,
+    "name": "language_10050975",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017204,
+    "name": "language_10050976",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017205,
+    "name": "language_10050977",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017206,
+    "name": "language_10050978",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017301,
+    "name": "language_10050979",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300017",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017302,
+    "name": "language_10050980",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300018",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017303,
+    "name": "language_10050981",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300019",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017304,
+    "name": "language_10050982",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017305,
+    "name": "language_10050983",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017306,
+    "name": "language_10050984",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017307,
+    "name": "language_10050985",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017308,
+    "name": "language_10050986",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017311,
+    "name": "language_10050987",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017312,
+    "name": "language_10050988",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8016401,
+    "name": "language_10050989",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017401,
+    "name": "language_10050990",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210101,
+    "name": "language_10050991",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210102,
+    "name": "language_10050992",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210103,
+    "name": "language_10050993",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210104,
+    "name": "language_10050994",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210105,
+    "name": "language_10050995",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210106,
+    "name": "language_10050996",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210107,
+    "name": "language_10050997",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210108,
+    "name": "language_10050998",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210109,
+    "name": "language_10050999",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210110,
+    "name": "language_10051000",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210111,
+    "name": "language_10051001",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8012401,
+    "name": "language_10051002",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8012402,
+    "name": "language_10051003",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015401,
+    "name": "language_10051004",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8015402,
+    "name": "language_10051005",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014401,
+    "name": "language_10051006",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014402,
+    "name": "language_10051007",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8014403,
+    "name": "language_10051008",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8017402,
+    "name": "language_10051009",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8018401,
+    "name": "language_10051010",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210121,
+    "name": "language_10051011",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210122,
+    "name": "language_10051012",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210123,
+    "name": "language_10051013",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210124,
+    "name": "language_10051014",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210125,
+    "name": "language_10051015",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210126,
+    "name": "language_10051016",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210127,
+    "name": "language_10051017",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210128,
+    "name": "language_10051018",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 6210129,
+    "name": "language_10051019",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026101,
+    "name": "language_10051020",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026102,
+    "name": "language_10051021",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026103,
+    "name": "language_10051022",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026104,
+    "name": "language_10051023",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026105,
+    "name": "language_10051024",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026106,
+    "name": "language_10051025",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026107,
+    "name": "language_10051026",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026108,
+    "name": "language_10051027",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026109,
+    "name": "language_10051028",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026110,
+    "name": "language_10051029",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026111,
+    "name": "language_10051030",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026112,
+    "name": "language_10051031",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026113,
+    "name": "language_10051032",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026114,
+    "name": "language_10051033",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026115,
+    "name": "language_10051034",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026116,
+    "name": "language_10051035",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026117,
+    "name": "language_10051036",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026118,
+    "name": "language_10051037",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026119,
+    "name": "language_10051038",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026120,
+    "name": "language_10051039",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026121,
+    "name": "language_10051040",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026122,
+    "name": "language_10051041",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026123,
+    "name": "language_10051042",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026124,
+    "name": "language_10051043",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026125,
+    "name": "language_10051044",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8026126,
+    "name": "language_10051045",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022101,
+    "name": "language_10051046",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022102,
+    "name": "language_10051047",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022103,
+    "name": "language_10051048",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022104,
+    "name": "language_10051049",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023101,
+    "name": "language_10051050",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023102,
+    "name": "language_10051051",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023103,
+    "name": "language_10051052",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023104,
+    "name": "language_10051051",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024101,
+    "name": "language_10051053",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024102,
+    "name": "language_10051054",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024103,
+    "name": "language_10051055",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024104,
+    "name": "language_10051056",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025101,
+    "name": "language_10051057",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025102,
+    "name": "language_10051058",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025103,
+    "name": "language_10051059",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025104,
+    "name": "language_10051060",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025105,
+    "name": "language_10051061",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022201,
+    "name": "language_10051062",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022202,
+    "name": "language_10051063",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022203,
+    "name": "language_10051064",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8022204,
+    "name": "language_10051065",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023201,
+    "name": "language_10051066",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023202,
+    "name": "language_10051067",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023203,
+    "name": "language_10051066",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8023204,
+    "name": "language_10051068",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024201,
+    "name": "language_10051069",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024202,
+    "name": "language_10051070",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024203,
+    "name": "language_10051071",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024204,
+    "name": "language_10051072",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024205,
+    "name": "language_10051073",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8024206,
+    "name": "language_10051074",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025201,
+    "name": "language_10051075",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025202,
+    "name": "language_10051076",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025203,
+    "name": "language_10051075",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 8025204,
+    "name": "language_10051077",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 621114,
+    "name": "language_10051078",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 621125,
+    "name": "language_10051079",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 621135,
+    "name": "language_10051080",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 621146,
+    "name": "language_10051081",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220001,
+    "name": "language_10055445",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220002,
+    "name": "language_10055446",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220003,
+    "name": "language_10055447",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220004,
+    "name": "language_10055448",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220011,
+    "name": "language_10055449",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220012,
+    "name": "language_10055450",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220013,
+    "name": "language_10055451",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220021,
+    "name": "language_10055452",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220022,
+    "name": "language_10055453",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220023,
+    "name": "language_10055454",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  },
+  {
+    "id": 5220024,
+    "name": "language_10055455",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "52100061",
+    "isNoShow": 1,
+    "desc": ""
+  }
+]

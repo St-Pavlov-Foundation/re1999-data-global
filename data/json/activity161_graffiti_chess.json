@@ -1,0 +1,27 @@
+[
+  {
+    "chessId": 1,
+    "resource": "v2a0_dungeon_chess_1",
+    "pos": "-322#59#0"
+  },
+  {
+    "chessId": 2,
+    "resource": "v2a0_dungeon_chess_2",
+    "pos": "-200#0#0"
+  },
+  {
+    "chessId": 3,
+    "resource": "v2a0_dungeon_chess_3",
+    "pos": "-47#84#0"
+  },
+  {
+    "chessId": 4,
+    "resource": "v2a0_dungeon_chess_4",
+    "pos": "190#15#0"
+  },
+  {
+    "chessId": 5,
+    "resource": "v2a0_dungeon_chess_5",
+    "pos": "190#15#0"
+  }
+]

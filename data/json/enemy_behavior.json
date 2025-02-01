@@ -1,0 +1,2002 @@
+[
+  {
+    "id": 222101001,
+    "behaviorGroup": 222101,
+    "effectRound": 1,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222101002,
+    "behaviorGroup": 222101,
+    "effectRound": 2,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222102001,
+    "behaviorGroup": 222102,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222102002,
+    "behaviorGroup": 222102,
+    "effectRound": 1,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222102003,
+    "behaviorGroup": 222102,
+    "effectRound": 2,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222102004,
+    "behaviorGroup": 222102,
+    "effectRound": 2,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222103001,
+    "behaviorGroup": 222103,
+    "effectRound": 2,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222103002,
+    "behaviorGroup": 222103,
+    "effectRound": 2,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222103003,
+    "behaviorGroup": 222103,
+    "effectRound": 3,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222103004,
+    "behaviorGroup": 222103,
+    "effectRound": 4,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222104001,
+    "behaviorGroup": 222104,
+    "effectRound": 2,
+    "chessId": 222002,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222104002,
+    "behaviorGroup": 222104,
+    "effectRound": 2,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222104003,
+    "behaviorGroup": 222104,
+    "effectRound": 3,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222104004,
+    "behaviorGroup": 222104,
+    "effectRound": 4,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222104005,
+    "behaviorGroup": 222104,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222104006,
+    "behaviorGroup": 222104,
+    "effectRound": 5,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222104007,
+    "behaviorGroup": 222104,
+    "effectRound": 5,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222105001,
+    "behaviorGroup": 222105,
+    "effectRound": 1,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222105002,
+    "behaviorGroup": 222105,
+    "effectRound": 1,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222105003,
+    "behaviorGroup": 222105,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222105004,
+    "behaviorGroup": 222105,
+    "effectRound": 2,
+    "chessId": 222050,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222105005,
+    "behaviorGroup": 222105,
+    "effectRound": 3,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222105006,
+    "behaviorGroup": 222105,
+    "effectRound": 4,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222105007,
+    "behaviorGroup": 222105,
+    "effectRound": 5,
+    "chessId": 222050,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222105008,
+    "behaviorGroup": 222105,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222105009,
+    "behaviorGroup": 222105,
+    "effectRound": 5,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222105010,
+    "behaviorGroup": 222105,
+    "effectRound": 6,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222106001,
+    "behaviorGroup": 222106,
+    "effectRound": 2,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222106002,
+    "behaviorGroup": 222106,
+    "effectRound": 2,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222106003,
+    "behaviorGroup": 222106,
+    "effectRound": 3,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222106004,
+    "behaviorGroup": 222106,
+    "effectRound": 4,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222106005,
+    "behaviorGroup": 222106,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222106006,
+    "behaviorGroup": 222106,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222106007,
+    "behaviorGroup": 222106,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222106008,
+    "behaviorGroup": 222106,
+    "effectRound": 6,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222107001,
+    "behaviorGroup": 222107,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222107002,
+    "behaviorGroup": 222107,
+    "effectRound": 1,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222107003,
+    "behaviorGroup": 222107,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222107004,
+    "behaviorGroup": 222107,
+    "effectRound": 2,
+    "chessId": 222050,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222107005,
+    "behaviorGroup": 222107,
+    "effectRound": 2,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222107006,
+    "behaviorGroup": 222107,
+    "effectRound": 3,
+    "chessId": 222008,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222107007,
+    "behaviorGroup": 222107,
+    "effectRound": 4,
+    "chessId": 222006,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222107008,
+    "behaviorGroup": 222107,
+    "effectRound": 4,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222107009,
+    "behaviorGroup": 222107,
+    "effectRound": 4,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222107010,
+    "behaviorGroup": 222107,
+    "effectRound": 5,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222107011,
+    "behaviorGroup": 222107,
+    "effectRound": 6,
+    "chessId": 222008,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222107012,
+    "behaviorGroup": 222107,
+    "effectRound": 6,
+    "chessId": 222034,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222107013,
+    "behaviorGroup": 222107,
+    "effectRound": 6,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222107014,
+    "behaviorGroup": 222107,
+    "effectRound": 7,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222201001,
+    "behaviorGroup": 222201,
+    "effectRound": 2,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222201002,
+    "behaviorGroup": 222201,
+    "effectRound": 2,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222201003,
+    "behaviorGroup": 222201,
+    "effectRound": 2,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222201004,
+    "behaviorGroup": 222201,
+    "effectRound": 3,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222201005,
+    "behaviorGroup": 222201,
+    "effectRound": 3,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222201006,
+    "behaviorGroup": 222201,
+    "effectRound": 3,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222201007,
+    "behaviorGroup": 222201,
+    "effectRound": 4,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222201008,
+    "behaviorGroup": 222201,
+    "effectRound": 5,
+    "chessId": 222012,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222202001,
+    "behaviorGroup": 222202,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222202002,
+    "behaviorGroup": 222202,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222202003,
+    "behaviorGroup": 222202,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222202004,
+    "behaviorGroup": 222202,
+    "effectRound": 4,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222202005,
+    "behaviorGroup": 222202,
+    "effectRound": 4,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222202006,
+    "behaviorGroup": 222202,
+    "effectRound": 5,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222203001,
+    "behaviorGroup": 222203,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222203002,
+    "behaviorGroup": 222203,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222203003,
+    "behaviorGroup": 222203,
+    "effectRound": 3,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222203004,
+    "behaviorGroup": 222203,
+    "effectRound": 4,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222203005,
+    "behaviorGroup": 222203,
+    "effectRound": 4,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222203006,
+    "behaviorGroup": 222203,
+    "effectRound": 5,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222203007,
+    "behaviorGroup": 222203,
+    "effectRound": 6,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222203008,
+    "behaviorGroup": 222203,
+    "effectRound": 6,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222203009,
+    "behaviorGroup": 222203,
+    "effectRound": 6,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222203010,
+    "behaviorGroup": 222203,
+    "effectRound": 7,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222204001,
+    "behaviorGroup": 222204,
+    "effectRound": 1,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222204002,
+    "behaviorGroup": 222204,
+    "effectRound": 2,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222204003,
+    "behaviorGroup": 222204,
+    "effectRound": 3,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222204004,
+    "behaviorGroup": 222204,
+    "effectRound": 4,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222204005,
+    "behaviorGroup": 222204,
+    "effectRound": 5,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222204006,
+    "behaviorGroup": 222204,
+    "effectRound": 6,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222204007,
+    "behaviorGroup": 222204,
+    "effectRound": 8,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205001,
+    "behaviorGroup": 222205,
+    "effectRound": 2,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205002,
+    "behaviorGroup": 222205,
+    "effectRound": 2,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205003,
+    "behaviorGroup": 222205,
+    "effectRound": 2,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205004,
+    "behaviorGroup": 222205,
+    "effectRound": 3,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205005,
+    "behaviorGroup": 222205,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205006,
+    "behaviorGroup": 222205,
+    "effectRound": 5,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205007,
+    "behaviorGroup": 222205,
+    "effectRound": 5,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222205008,
+    "behaviorGroup": 222205,
+    "effectRound": 6,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222206001,
+    "behaviorGroup": 222206,
+    "effectRound": 2,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222206002,
+    "behaviorGroup": 222206,
+    "effectRound": 2,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222206003,
+    "behaviorGroup": 222206,
+    "effectRound": 2,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222206004,
+    "behaviorGroup": 222206,
+    "effectRound": 2,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222206005,
+    "behaviorGroup": 222206,
+    "effectRound": 3,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222206006,
+    "behaviorGroup": 222206,
+    "effectRound": 3,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222206007,
+    "behaviorGroup": 222206,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222206008,
+    "behaviorGroup": 222206,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222206009,
+    "behaviorGroup": 222206,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222206010,
+    "behaviorGroup": 222206,
+    "effectRound": 5,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222206011,
+    "behaviorGroup": 222206,
+    "effectRound": 6,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222206012,
+    "behaviorGroup": 222206,
+    "effectRound": 7,
+    "chessId": 222021,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222207001,
+    "behaviorGroup": 222207,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222207002,
+    "behaviorGroup": 222207,
+    "effectRound": 2,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222207003,
+    "behaviorGroup": 222207,
+    "effectRound": 3,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222207004,
+    "behaviorGroup": 222207,
+    "effectRound": 4,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222207005,
+    "behaviorGroup": 222207,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222207006,
+    "behaviorGroup": 222207,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222207007,
+    "behaviorGroup": 222207,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222207008,
+    "behaviorGroup": 222207,
+    "effectRound": 6,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222207009,
+    "behaviorGroup": 222207,
+    "effectRound": 7,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222208001,
+    "behaviorGroup": 222208,
+    "effectRound": 1,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222208002,
+    "behaviorGroup": 222208,
+    "effectRound": 1,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222208003,
+    "behaviorGroup": 222208,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222208004,
+    "behaviorGroup": 222208,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222208005,
+    "behaviorGroup": 222208,
+    "effectRound": 4,
+    "chessId": 222056,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222208006,
+    "behaviorGroup": 222208,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222208007,
+    "behaviorGroup": 222208,
+    "effectRound": 6,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222208008,
+    "behaviorGroup": 222208,
+    "effectRound": 7,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222208009,
+    "behaviorGroup": 222208,
+    "effectRound": 7,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222208010,
+    "behaviorGroup": 222208,
+    "effectRound": 8,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222301002,
+    "behaviorGroup": 222301,
+    "effectRound": 1,
+    "chessId": 222011,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222301003,
+    "behaviorGroup": 222301,
+    "effectRound": 3,
+    "chessId": 222011,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222301007,
+    "behaviorGroup": 222301,
+    "effectRound": 4,
+    "chessId": 222011,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222301008,
+    "behaviorGroup": 222301,
+    "effectRound": 5,
+    "chessId": 222011,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222302001,
+    "behaviorGroup": 222302,
+    "effectRound": 2,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222302002,
+    "behaviorGroup": 222302,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222302003,
+    "behaviorGroup": 222302,
+    "effectRound": 3,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222302004,
+    "behaviorGroup": 222302,
+    "effectRound": 4,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222302005,
+    "behaviorGroup": 222302,
+    "effectRound": 4,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222302006,
+    "behaviorGroup": 222302,
+    "effectRound": 5,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222302007,
+    "behaviorGroup": 222302,
+    "effectRound": 6,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222303001,
+    "behaviorGroup": 222303,
+    "effectRound": 2,
+    "chessId": 222031,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222303002,
+    "behaviorGroup": 222303,
+    "effectRound": 3,
+    "chessId": 222065,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222303003,
+    "behaviorGroup": 222303,
+    "effectRound": 4,
+    "chessId": 222065,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222303004,
+    "behaviorGroup": 222303,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222304001,
+    "behaviorGroup": 222304,
+    "effectRound": 1,
+    "chessId": 222031,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222304002,
+    "behaviorGroup": 222304,
+    "effectRound": 1,
+    "chessId": 222031,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222304003,
+    "behaviorGroup": 222304,
+    "effectRound": 2,
+    "chessId": 222065,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222304004,
+    "behaviorGroup": 222304,
+    "effectRound": 3,
+    "chessId": 222031,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222304005,
+    "behaviorGroup": 222304,
+    "effectRound": 4,
+    "chessId": 222065,
+    "effectCondition": "",
+    "strategy": "enemysoldiermore"
+  },
+  {
+    "id": 222304006,
+    "behaviorGroup": 222304,
+    "effectRound": 4,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222304007,
+    "behaviorGroup": 222304,
+    "effectRound": 4,
+    "chessId": 222065,
+    "effectCondition": "",
+    "strategy": "enemysoldiermore"
+  },
+  {
+    "id": 222304008,
+    "behaviorGroup": 222304,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222304009,
+    "behaviorGroup": 222304,
+    "effectRound": 6,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222305001,
+    "behaviorGroup": 222305,
+    "effectRound": 1,
+    "chessId": 222059,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222305002,
+    "behaviorGroup": 222305,
+    "effectRound": 2,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222305003,
+    "behaviorGroup": 222305,
+    "effectRound": 3,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222305004,
+    "behaviorGroup": 222305,
+    "effectRound": 4,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222305005,
+    "behaviorGroup": 222305,
+    "effectRound": 4,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222305006,
+    "behaviorGroup": 222305,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222305007,
+    "behaviorGroup": 222305,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222305008,
+    "behaviorGroup": 222305,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222305009,
+    "behaviorGroup": 222305,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222306001,
+    "behaviorGroup": 222306,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306002,
+    "behaviorGroup": 222306,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306003,
+    "behaviorGroup": 222306,
+    "effectRound": 2,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306004,
+    "behaviorGroup": 222306,
+    "effectRound": 3,
+    "chessId": 222018,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306005,
+    "behaviorGroup": 222306,
+    "effectRound": 3,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306006,
+    "behaviorGroup": 222306,
+    "effectRound": 3,
+    "chessId": 222017,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306007,
+    "behaviorGroup": 222306,
+    "effectRound": 4,
+    "chessId": 222020,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306008,
+    "behaviorGroup": 222306,
+    "effectRound": 4,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306009,
+    "behaviorGroup": 222306,
+    "effectRound": 5,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306010,
+    "behaviorGroup": 222306,
+    "effectRound": 6,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222306011,
+    "behaviorGroup": 222306,
+    "effectRound": 7,
+    "chessId": 222022,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307001,
+    "behaviorGroup": 222307,
+    "effectRound": 2,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222307002,
+    "behaviorGroup": 222307,
+    "effectRound": 2,
+    "chessId": 222062,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222307003,
+    "behaviorGroup": 222307,
+    "effectRound": 3,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222307004,
+    "behaviorGroup": 222307,
+    "effectRound": 3,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222307005,
+    "behaviorGroup": 222307,
+    "effectRound": 4,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307006,
+    "behaviorGroup": 222307,
+    "effectRound": 4,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307007,
+    "behaviorGroup": 222307,
+    "effectRound": 4,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307008,
+    "behaviorGroup": 222307,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307009,
+    "behaviorGroup": 222307,
+    "effectRound": 6,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222307010,
+    "behaviorGroup": 222307,
+    "effectRound": 7,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222308001,
+    "behaviorGroup": 222308,
+    "effectRound": 1,
+    "chessId": 222032,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222308002,
+    "behaviorGroup": 222308,
+    "effectRound": 2,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222308003,
+    "behaviorGroup": 222308,
+    "effectRound": 2,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222308004,
+    "behaviorGroup": 222308,
+    "effectRound": 2,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222308005,
+    "behaviorGroup": 222308,
+    "effectRound": 3,
+    "chessId": 222028,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222308006,
+    "behaviorGroup": 222308,
+    "effectRound": 3,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222308007,
+    "behaviorGroup": 222308,
+    "effectRound": 4,
+    "chessId": 222006,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222308008,
+    "behaviorGroup": 222308,
+    "effectRound": 5,
+    "chessId": 222028,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222308009,
+    "behaviorGroup": 222308,
+    "effectRound": 6,
+    "chessId": 222006,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222308010,
+    "behaviorGroup": 222308,
+    "effectRound": 6,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222308011,
+    "behaviorGroup": 222308,
+    "effectRound": 7,
+    "chessId": 222067,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222309001,
+    "behaviorGroup": 222309,
+    "effectRound": 1,
+    "chessId": 222057,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222309002,
+    "behaviorGroup": 222309,
+    "effectRound": 2,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222309003,
+    "behaviorGroup": 222309,
+    "effectRound": 3,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222309004,
+    "behaviorGroup": 222309,
+    "effectRound": 3,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222309005,
+    "behaviorGroup": 222309,
+    "effectRound": 4,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222309006,
+    "behaviorGroup": 222309,
+    "effectRound": 4,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222309007,
+    "behaviorGroup": 222309,
+    "effectRound": 5,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222309008,
+    "behaviorGroup": 222309,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222309009,
+    "behaviorGroup": 222309,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401001,
+    "behaviorGroup": 222401,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222401002,
+    "behaviorGroup": 222401,
+    "effectRound": 1,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222401003,
+    "behaviorGroup": 222401,
+    "effectRound": 1,
+    "chessId": 222004,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222401004,
+    "behaviorGroup": 222401,
+    "effectRound": 2,
+    "chessId": 222050,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222401005,
+    "behaviorGroup": 222401,
+    "effectRound": 2,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222401006,
+    "behaviorGroup": 222401,
+    "effectRound": 3,
+    "chessId": 222008,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401007,
+    "behaviorGroup": 222401,
+    "effectRound": 4,
+    "chessId": 222006,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401008,
+    "behaviorGroup": 222401,
+    "effectRound": 4,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401009,
+    "behaviorGroup": 222401,
+    "effectRound": 4,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401010,
+    "behaviorGroup": 222401,
+    "effectRound": 4,
+    "chessId": 222006,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401011,
+    "behaviorGroup": 222401,
+    "effectRound": 6,
+    "chessId": 222008,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222401012,
+    "behaviorGroup": 222401,
+    "effectRound": 6,
+    "chessId": 222034,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222401013,
+    "behaviorGroup": 222401,
+    "effectRound": 6,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222401014,
+    "behaviorGroup": 222401,
+    "effectRound": 7,
+    "chessId": 222051,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222401015,
+    "behaviorGroup": 222401,
+    "effectRound": 8,
+    "chessId": 222052,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222402001,
+    "behaviorGroup": 222402,
+    "effectRound": 1,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222402002,
+    "behaviorGroup": 222402,
+    "effectRound": 1,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222402003,
+    "behaviorGroup": 222402,
+    "effectRound": 1,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402004,
+    "behaviorGroup": 222402,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402005,
+    "behaviorGroup": 222402,
+    "effectRound": 3,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402006,
+    "behaviorGroup": 222402,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402007,
+    "behaviorGroup": 222402,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402008,
+    "behaviorGroup": 222402,
+    "effectRound": 4,
+    "chessId": 222056,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402009,
+    "behaviorGroup": 222402,
+    "effectRound": 4,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222402010,
+    "behaviorGroup": 222402,
+    "effectRound": 5,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222402011,
+    "behaviorGroup": 222402,
+    "effectRound": 5,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222402012,
+    "behaviorGroup": 222402,
+    "effectRound": 5,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222402013,
+    "behaviorGroup": 222402,
+    "effectRound": 6,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222402014,
+    "behaviorGroup": 222402,
+    "effectRound": 6,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222402015,
+    "behaviorGroup": 222402,
+    "effectRound": 7,
+    "chessId": 222066,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403001,
+    "behaviorGroup": 222403,
+    "effectRound": 1,
+    "chessId": 222057,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222403002,
+    "behaviorGroup": 222403,
+    "effectRound": 1,
+    "chessId": 222057,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222403003,
+    "behaviorGroup": 222403,
+    "effectRound": 3,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222403004,
+    "behaviorGroup": 222403,
+    "effectRound": 3,
+    "chessId": 222054,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222403005,
+    "behaviorGroup": 222403,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403006,
+    "behaviorGroup": 222403,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403007,
+    "behaviorGroup": 222403,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403008,
+    "behaviorGroup": 222403,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403009,
+    "behaviorGroup": 222403,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403010,
+    "behaviorGroup": 222403,
+    "effectRound": 6,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403011,
+    "behaviorGroup": 222403,
+    "effectRound": 7,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222403012,
+    "behaviorGroup": 222403,
+    "effectRound": 8,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "enemypowerlow"
+  },
+  {
+    "id": 222404001,
+    "behaviorGroup": 222404,
+    "effectRound": 1,
+    "chessId": 222060,
+    "effectCondition": "",
+    "strategy": "stronghold2"
+  },
+  {
+    "id": 222404002,
+    "behaviorGroup": 222404,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404003,
+    "behaviorGroup": 222404,
+    "effectRound": 2,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404004,
+    "behaviorGroup": 222404,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404005,
+    "behaviorGroup": 222404,
+    "effectRound": 3,
+    "chessId": 222055,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404006,
+    "behaviorGroup": 222404,
+    "effectRound": 4,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404007,
+    "behaviorGroup": 222404,
+    "effectRound": 4,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404008,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404009,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222061,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404010,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404011,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404012,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404013,
+    "behaviorGroup": 222404,
+    "effectRound": 5,
+    "chessId": 222023,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  },
+  {
+    "id": 222404014,
+    "behaviorGroup": 222404,
+    "effectRound": 6,
+    "chessId": 222059,
+    "effectCondition": "",
+    "strategy": "stronghold1"
+  },
+  {
+    "id": 222404015,
+    "behaviorGroup": 222404,
+    "effectRound": 7,
+    "chessId": 222059,
+    "effectCondition": "",
+    "strategy": "stronghold3"
+  }
+]

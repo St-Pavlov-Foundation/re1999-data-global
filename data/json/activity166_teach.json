@@ -1,0 +1,29 @@
+[
+  {
+    "teachId": 1,
+    "preTeachId": 0,
+    "episodeId": 2203101,
+    "firstBonus": "1#110103#1",
+    "name": "language_10054092",
+    "desc": "language_10057805",
+    "strategy": "language_10057806"
+  },
+  {
+    "teachId": 2,
+    "preTeachId": 1,
+    "episodeId": 2203102,
+    "firstBonus": "1#110603#1",
+    "name": "language_10054093",
+    "desc": "language_10057807",
+    "strategy": "language_10057808"
+  },
+  {
+    "teachId": 3,
+    "preTeachId": 2,
+    "episodeId": 2203103,
+    "firstBonus": "1#110103#1",
+    "name": "language_90001063",
+    "desc": "language_10057809",
+    "strategy": "language_10057810"
+  }
+]

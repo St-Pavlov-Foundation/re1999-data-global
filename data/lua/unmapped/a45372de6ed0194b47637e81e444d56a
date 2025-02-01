@@ -1,0 +1,11 @@
+module("framework.mvc.view.UILayerName", package.seeall)
+
+return {
+	Hud = "HUD",
+	PopUp = "POPUP",
+	PopUpTop = "POPUP_TOP",
+	Guide = "GUIDE",
+	Message = "MESSAGE",
+	Top = "TOP",
+	IDCanvasPopUp = "IDCanvas/POPUP"
+}

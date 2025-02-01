@@ -1,0 +1,212 @@
+[
+  {
+    "activityId": 11205,
+    "id": 1,
+    "name": "DAY1交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110101",
+    "maxProgress": 2,
+    "icon": "0_0015_2"
+  },
+  {
+    "activityId": 11205,
+    "id": 2,
+    "name": "DAY1交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110201",
+    "maxProgress": 2,
+    "icon": "0_0015_2"
+  },
+  {
+    "activityId": 11205,
+    "id": 3,
+    "name": "DAY2交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110401",
+    "maxProgress": 2,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 4,
+    "name": "DAY2交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110501",
+    "maxProgress": 2,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 5,
+    "name": "DAY3交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110202",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 6,
+    "name": "DAY3交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110301",
+    "maxProgress": 3,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 7,
+    "name": "DAY4交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110402",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 8,
+    "name": "DAY4交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110102",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 9,
+    "name": "DAY5交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110502",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 10,
+    "name": "DAY5交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110302",
+    "maxProgress": 2,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 11,
+    "name": "DAY6交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115011",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 12,
+    "name": "DAY6交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115031",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 13,
+    "name": "DAY7交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115021",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 14,
+    "name": "DAY7交易需求",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115041",
+    "maxProgress": 1,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 15,
+    "name": "DAY1一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110401",
+    "maxProgress": 6,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 16,
+    "name": "DAY2一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110101",
+    "maxProgress": 6,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 17,
+    "name": "DAY3一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "190007",
+    "maxProgress": 12,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 18,
+    "name": "DAY4一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110501",
+    "maxProgress": 6,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 19,
+    "name": "DAY5一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "110301",
+    "maxProgress": 6,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 20,
+    "name": "DAY6一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115031",
+    "maxProgress": 3,
+    "icon": ""
+  },
+  {
+    "activityId": 11205,
+    "id": 21,
+    "name": "DAY7一口价",
+    "desc": "需求材料",
+    "listenerType": "ItemTotal",
+    "listenerParam": "115021",
+    "maxProgress": 3,
+    "icon": ""
+  }
+]

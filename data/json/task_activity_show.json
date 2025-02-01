@@ -1,0 +1,24 @@
+[
+  {
+    "id": 160002,
+    "isOnline": 1,
+    "minType": "language_10021991",
+    "name": "language_10021992",
+    "desc": "language_10021993",
+    "listenerType": "WeekwalkLayerId",
+    "listenerParam": "103",
+    "maxProgress": 1,
+    "maxFinishCount": 1,
+    "activity": 0,
+    "sortId": 1,
+    "prepose": "",
+    "openLimit": "",
+    "bonusMail": 0,
+    "params": "",
+    "priority": "",
+    "needAccept": 0,
+    "bonus": "1#133023#1",
+    "jumpId": 51,
+    "activityId": 10011
+  }
+]

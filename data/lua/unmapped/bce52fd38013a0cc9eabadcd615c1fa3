@@ -1,0 +1,25 @@
+module("framework.mvc.model.ListScrollParam", package.seeall)
+
+slot0 = pureTable("ListScrollParam")
+
+function slot0.ctor(slot0)
+	slot0.scrollGOPath = nil
+	slot0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	slot0.prefabUrl = nil
+	slot0.cellClass = nil
+	slot0.multiSelect = false
+	slot0.scrollDir = ScrollEnum.ScrollDirH
+	slot0.lineCount = 1
+	slot0.cellWidth = 100
+	slot0.cellHeight = 100
+	slot0.cellSpaceH = 0
+	slot0.cellSpaceV = 0
+	slot0.startSpace = 0
+	slot0.endSpace = 0
+	slot0.sortMode = ScrollEnum.ScrollSortNone
+	slot0.frameUpdateMs = 10
+	slot0.minUpdateCountInFrame = 1
+	slot0.emptyScrollParam = nil
+end
+
+return slot0

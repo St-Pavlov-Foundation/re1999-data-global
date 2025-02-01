@@ -1,0 +1,222 @@
+[
+  {
+    "level": 1,
+    "strLevel": "C",
+    "spriteName": "bossrush_icon_assess_c",
+    "needPointBoss1": 25000,
+    "needPointBoss2": 25000,
+    "needPointBoss3": 25000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg1",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 2,
+    "strLevel": "C+",
+    "spriteName": "bossrush_icon_assess_c1",
+    "needPointBoss1": 50000,
+    "needPointBoss2": 50000,
+    "needPointBoss3": 50000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg1",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 3,
+    "strLevel": "B",
+    "spriteName": "bossrush_icon_assess_b",
+    "needPointBoss1": 120000,
+    "needPointBoss2": 120000,
+    "needPointBoss3": 120000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg2",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 4,
+    "strLevel": "B+",
+    "spriteName": "bossrush_icon_assess_b1",
+    "needPointBoss1": 200000,
+    "needPointBoss2": 200000,
+    "needPointBoss3": 200000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg2",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 5,
+    "strLevel": "A",
+    "spriteName": "bossrush_icon_assess_a",
+    "needPointBoss1": 280000,
+    "needPointBoss2": 280000,
+    "needPointBoss3": 280000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg3",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 6,
+    "strLevel": "A+",
+    "spriteName": "bossrush_icon_assess_a1",
+    "needPointBoss1": 360000,
+    "needPointBoss2": 360000,
+    "needPointBoss3": 360000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg3",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 7,
+    "strLevel": "S",
+    "spriteName": "bossrush_icon_assess_s",
+    "needPointBoss1": 450000,
+    "needPointBoss2": 450000,
+    "needPointBoss3": 450000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 8,
+    "strLevel": "SS",
+    "spriteName": "bossrush_icon_assess_ss",
+    "needPointBoss1": 650000,
+    "needPointBoss2": 650000,
+    "needPointBoss3": 650000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 0
+  },
+  {
+    "level": 9,
+    "strLevel": "SSS",
+    "spriteName": "bossrush_icon_assess_sss",
+    "needPointBoss1": 850000,
+    "needPointBoss2": 850000,
+    "needPointBoss3": 850000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg2",
+    "layer4Assess": 0
+  },
+  {
+    "level": 10,
+    "strLevel": "SSSS",
+    "spriteName": "bossrush_icon_assess_sss2",
+    "needPointBoss1": 1200000,
+    "needPointBoss2": 1200000,
+    "needPointBoss3": 1200000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg3",
+    "layer4Assess": 0
+  },
+  {
+    "level": 11,
+    "strLevel": "C",
+    "spriteName": "bossrush_icon_assess_c2",
+    "needPointBoss1": 25000,
+    "needPointBoss2": 25000,
+    "needPointBoss3": 25000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg1",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 12,
+    "strLevel": "C+",
+    "spriteName": "bossrush_icon_assess_c3",
+    "needPointBoss1": 50000,
+    "needPointBoss2": 50000,
+    "needPointBoss3": 50000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg1",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 13,
+    "strLevel": "B",
+    "spriteName": "bossrush_icon_assess_b2",
+    "needPointBoss1": 120000,
+    "needPointBoss2": 120000,
+    "needPointBoss3": 120000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg2",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 14,
+    "strLevel": "B+",
+    "spriteName": "bossrush_icon_assess_b3",
+    "needPointBoss1": 200000,
+    "needPointBoss2": 200000,
+    "needPointBoss3": 200000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg2",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 15,
+    "strLevel": "A",
+    "spriteName": "bossrush_icon_assess_a4",
+    "needPointBoss1": 280000,
+    "needPointBoss2": 280000,
+    "needPointBoss3": 280000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg3",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 16,
+    "strLevel": "A+",
+    "spriteName": "bossrush_icon_assess_a5",
+    "needPointBoss1": 360000,
+    "needPointBoss2": 360000,
+    "needPointBoss3": 360000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg3",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 17,
+    "strLevel": "S",
+    "spriteName": "bossrush_icon_assess_s1",
+    "needPointBoss1": 450000,
+    "needPointBoss2": 450000,
+    "needPointBoss3": 450000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 18,
+    "strLevel": "SS",
+    "spriteName": "bossrush_icon_assess_ss1",
+    "needPointBoss1": 650000,
+    "needPointBoss2": 650000,
+    "needPointBoss3": 650000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg1",
+    "layer4Assess": 1
+  },
+  {
+    "level": 19,
+    "strLevel": "SSS",
+    "spriteName": "bossrush_icon_assess_sss1",
+    "needPointBoss1": 850000,
+    "needPointBoss2": 850000,
+    "needPointBoss3": 850000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg2",
+    "layer4Assess": 1
+  },
+  {
+    "level": 20,
+    "strLevel": "SSSS",
+    "spriteName": "bossrush_icon_assess_sss3",
+    "needPointBoss1": 1200000,
+    "needPointBoss2": 1200000,
+    "needPointBoss3": 1200000,
+    "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
+    "mainBg": "v1a6_bossrush_taskitembg3",
+    "layer4Assess": 1
+  }
+]

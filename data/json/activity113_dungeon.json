@@ -1,0 +1,167 @@
+[
+  {
+    "chapterId": 11101,
+    "activityId": 11104,
+    "openDay": 1
+  },
+  {
+    "chapterId": 11201,
+    "activityId": 11104,
+    "openDay": 1
+  },
+  {
+    "chapterId": 11301,
+    "activityId": 11104,
+    "openDay": 1
+  },
+  {
+    "chapterId": 11401,
+    "activityId": 11104,
+    "openDay": 1
+  },
+  {
+    "chapterId": 12101,
+    "activityId": 11208,
+    "openDay": 1
+  },
+  {
+    "chapterId": 12201,
+    "activityId": 11208,
+    "openDay": 1
+  },
+  {
+    "chapterId": 12301,
+    "activityId": 11208,
+    "openDay": 1
+  },
+  {
+    "chapterId": 12401,
+    "activityId": 11208,
+    "openDay": 1
+  },
+  {
+    "chapterId": 12701,
+    "activityId": 11208,
+    "openDay": 1
+  },
+  {
+    "chapterId": 13101,
+    "activityId": 11302,
+    "openDay": 1
+  },
+  {
+    "chapterId": 13201,
+    "activityId": 11302,
+    "openDay": 1
+  },
+  {
+    "chapterId": 13301,
+    "activityId": 11302,
+    "openDay": 1
+  },
+  {
+    "chapterId": 13401,
+    "activityId": 11302,
+    "openDay": 1
+  },
+  {
+    "chapterId": 15101,
+    "activityId": 11502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 15201,
+    "activityId": 11502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 15301,
+    "activityId": 11502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 15401,
+    "activityId": 11502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 16101,
+    "activityId": 11602,
+    "openDay": 1
+  },
+  {
+    "chapterId": 16201,
+    "activityId": 11602,
+    "openDay": 8
+  },
+  {
+    "chapterId": 16301,
+    "activityId": 11602,
+    "openDay": 1
+  },
+  {
+    "chapterId": 16401,
+    "activityId": 11602,
+    "openDay": 1
+  },
+  {
+    "chapterId": 18101,
+    "activityId": 11804,
+    "openDay": 1
+  },
+  {
+    "chapterId": 18201,
+    "activityId": 11804,
+    "openDay": 8
+  },
+  {
+    "chapterId": 18301,
+    "activityId": 11804,
+    "openDay": 1
+  },
+  {
+    "chapterId": 18401,
+    "activityId": 11804,
+    "openDay": 1
+  },
+  {
+    "chapterId": 20101,
+    "activityId": 12003,
+    "openDay": 1
+  },
+  {
+    "chapterId": 20201,
+    "activityId": 12003,
+    "openDay": 8
+  },
+  {
+    "chapterId": 20301,
+    "activityId": 12003,
+    "openDay": 1
+  },
+  {
+    "chapterId": 20401,
+    "activityId": 12003,
+    "openDay": 1
+  },
+  {
+    "chapterId": 21101,
+    "activityId": 12102,
+    "openDay": 1
+  },
+  {
+    "chapterId": 21201,
+    "activityId": 12102,
+    "openDay": 8
+  },
+  {
+    "chapterId": 21301,
+    "activityId": 12102,
+    "openDay": 1
+  },
+  {
+    "chapterId": 21401,
+    "activityId": 12102,
+    "openDay": 1
+  }
+]

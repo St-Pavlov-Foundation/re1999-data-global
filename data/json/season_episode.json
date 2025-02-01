@@ -1,0 +1,110 @@
+[
+  {
+    "id": 11100,
+    "seasonEpisodeId": 1,
+    "name": "曼彻斯城",
+    "openDate": 0,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  },
+  {
+    "id": 11100,
+    "seasonEpisodeId": 2,
+    "name": "格林威镇",
+    "openDate": 0,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  },
+  {
+    "id": 11100,
+    "seasonEpisodeId": 3,
+    "name": "斯图尔特镇",
+    "openDate": 2,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  },
+  {
+    "id": 11100,
+    "seasonEpisodeId": 4,
+    "name": "莱顿镇",
+    "openDate": 4,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  },
+  {
+    "id": 11100,
+    "seasonEpisodeId": 5,
+    "name": "戈森堡镇",
+    "openDate": 6,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  },
+  {
+    "id": 11100,
+    "seasonEpisodeId": 6,
+    "name": "格雷戈利亚镇",
+    "openDate": 8,
+    "gradeCondition": [
+      5,
+      30,
+      60,
+      100,
+      150,
+      300
+    ],
+    "buffName": "泡泡季节",
+    "desc": "随着每行动3次或释放1次至终的仪式将使广告牌的数字提升1点\n当达到10点后根据最后1名行动的角色灵感赋予特殊效果",
+    "icon": "101",
+    "waveScoreRate": ""
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "activityId": 11304,
+    "characterType": 1,
+    "canTriggerPedal": 1,
+    "canLightBrazier": 1,
+    "canUseFireball": 1,
+    "canBreakTile": 1
+  },
+  {
+    "activityId": 11304,
+    "characterType": 18,
+    "canTriggerPedal": 0,
+    "canLightBrazier": 1,
+    "canUseFireball": 1,
+    "canBreakTile": 0
+  }
+]

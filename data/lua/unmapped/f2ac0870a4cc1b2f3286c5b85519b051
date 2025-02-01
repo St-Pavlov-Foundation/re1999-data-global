@@ -1,0 +1,15 @@
+module("framework.mvc.BaseConfig", package.seeall)
+
+slot0 = class("BaseConfig")
+
+function slot0.reqConfigNames(slot0)
+	return nil
+end
+
+function slot0.onInit(slot0)
+end
+
+function slot0.onConfigLoaded(slot0, slot1, slot2)
+end
+
+return slot0

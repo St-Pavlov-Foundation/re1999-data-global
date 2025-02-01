@@ -1,0 +1,74 @@
+[
+  {
+    "activityId": 12434,
+    "id": 1,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 2,
+    "bonus": "1#110504#1",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 3,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 4,
+    "bonus": "10#11#1",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 5,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 6,
+    "bonus": "1#110104#1",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 7,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 8,
+    "bonus": "10#11#1",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 9,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 10,
+    "bonus": "10#11#1",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 11,
+    "bonus": "2#2#30",
+    "bonusWeight": 1
+  },
+  {
+    "activityId": 12434,
+    "id": 12,
+    "bonus": "2#2#60",
+    "bonusWeight": 1
+  }
+]

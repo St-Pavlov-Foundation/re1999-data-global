@@ -1,0 +1,18 @@
+[
+  {
+    "id": 30001,
+    "isOnline": 0,
+    "minType": "language_10005086",
+    "name": "language_10021936",
+    "desc": "language_10021936",
+    "needAccept": 0,
+    "bonusMail": 0,
+    "params": "",
+    "openLimit": "",
+    "listenerType": "HeroCount",
+    "listenerParam": "0",
+    "maxProgress": 5,
+    "maxFinishCount": 1,
+    "bonus": "2#2#30"
+  }
+]

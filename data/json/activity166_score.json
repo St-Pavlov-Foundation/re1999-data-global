@@ -1,0 +1,26 @@
+[
+  {
+    "activityId": 12210,
+    "level": 1,
+    "needScore": 400000,
+    "star": 1
+  },
+  {
+    "activityId": 12210,
+    "level": 2,
+    "needScore": 700000,
+    "star": 2
+  },
+  {
+    "activityId": 12210,
+    "level": 3,
+    "needScore": 900000,
+    "star": 3
+  },
+  {
+    "activityId": 12210,
+    "level": 4,
+    "needScore": 1000000,
+    "star": 3
+  }
+]

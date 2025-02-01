@@ -1,0 +1,26 @@
+[
+  {
+    "activityId": 11203,
+    "id": 1,
+    "name": "language_10026700",
+    "name_En": "Dense Woods",
+    "openId": 50,
+    "ambientAudio": 3300017
+  },
+  {
+    "activityId": 11203,
+    "id": 2,
+    "name": "language_10026701",
+    "name_En": "Around the Cabin",
+    "openId": 50,
+    "ambientAudio": 3300017
+  },
+  {
+    "activityId": 11203,
+    "id": 3,
+    "name": "language_10026702",
+    "name_En": "Critter Residence",
+    "openId": 50,
+    "ambientAudio": 3300017
+  }
+]

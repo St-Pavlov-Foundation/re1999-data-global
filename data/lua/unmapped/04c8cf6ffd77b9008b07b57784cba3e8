@@ -1,0 +1,23 @@
+module("framework.mvc.view.ViewEvent", package.seeall)
+
+return {
+	OnOpenView = 1,
+	OnOpenViewFinish = 2,
+	OnCloseView = 3,
+	OnCloseViewFinish = 4,
+	OnOpenModalView = 5,
+	OnOpenModalViewFinish = 6,
+	OnCloseModalView = 7,
+	OnCloseModalViewFinish = 8,
+	OnOpenFullView = 9,
+	OnOpenFullViewFinish = 10,
+	OnCloseFullView = 11,
+	OnCloseFullViewFinish = 12,
+	ReOpenWhileOpen = 13,
+	BeforeOpenView = 14,
+	DestroyViewFinish = 15,
+	DestroyFullViewFinish = 16,
+	DestroyModalViewFinish = 17,
+	ToSwitchTab = "ToSwitchTab",
+	BeforeOpenTabView = 100
+}

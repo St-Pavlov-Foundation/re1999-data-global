@@ -1,0 +1,234 @@
+[
+  {
+    "id": 30730121,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730111",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730122,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730112",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730123,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730113",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730124,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730114",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730125,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730115",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730126,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730116",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730127,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730117",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730128,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730118",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30730129,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30730119",
+    "exclusion": 1,
+    "tempCard": true
+  },
+  {
+    "id": 30650131,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30650111",
+    "exclusion": 306501,
+    "tempCard": true
+  },
+  {
+    "id": 30650132,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30650114",
+    "exclusion": 306501,
+    "tempCard": true
+  },
+  {
+    "id": 30770121,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770111",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770122,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770111#30770111",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770123,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770111#30770111#30770111",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770124,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770125,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114#30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770126,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114#30770114#30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770127,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770128,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114#30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770129,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770114#30770114#30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770161,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770117",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770162,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770117#30770117",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770163,
+    "priority": 1,
+    "condition": "",
+    "skillId": "30770117#30770117#30770117",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770131,
+    "priority": 1,
+    "condition": "1#3&2#0",
+    "skillId": "30770111",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770131,
+    "priority": 2,
+    "condition": "1#3&2#1",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770131,
+    "priority": 3,
+    "condition": "1#3&2#2",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770132,
+    "priority": 1,
+    "condition": "1#3&2#3",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770132,
+    "priority": 2,
+    "condition": "1#3&2#4",
+    "skillId": "30770114",
+    "exclusion": 0,
+    "tempCard": true
+  },
+  {
+    "id": 30770132,
+    "priority": 3,
+    "condition": "1#3&2#5",
+    "skillId": "30770117",
+    "exclusion": 0,
+    "tempCard": true
+  }
+]

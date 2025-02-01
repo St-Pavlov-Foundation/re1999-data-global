@@ -1,0 +1,28 @@
+module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaEvent", package.seeall)
+
+slot0 = _M
+slot1 = GameUtil.getUniqueTb()
+slot0.LoadLevelFinish = slot1()
+slot0.DragScene = slot1()
+slot0.ExitLevel = slot1()
+slot0.OnFlowEnd = slot1()
+slot0.RoundUpdate = slot1()
+slot0.ResetScene = slot1()
+slot0.RoundFail = slot1()
+slot0.CheckMapCollapse = slot1()
+slot0.PlayerMove = slot1()
+slot0.StatuChange = slot1()
+slot0.WaitClickJumpRound = slot1()
+slot0.CubePointUpdate = slot1()
+slot0.OneClickClaimReward = slot1()
+slot0.DragMainScene = slot1()
+slot0.EnterLevelScene = slot1()
+slot0.EpisodeClick = slot1()
+slot0.EpisodeStarChange = slot1()
+slot0.EpisodeFinish = slot1()
+slot0.EnterMapAndInitDone = slot1()
+slot0.GuideClickNode = slot1()
+slot0.OnWaitDragEnd = slot1()
+slot0.OnGuideTrigger = slot1()
+
+return slot0

@@ -1,0 +1,200 @@
+[
+  {
+    "battleId": 1014111,
+    "monsterId": "10141111#10141121#10141131#10141141",
+    "finalMonsterId": "10141141",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1014211,
+    "monsterId": "10142111#10142112#10142113#10142114",
+    "finalMonsterId": "10142114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1014311,
+    "monsterId": "10143111#10143112#10143113#10143114",
+    "finalMonsterId": "10143114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1014101,
+    "monsterId": "10141101",
+    "finalMonsterId": "10141101",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1014102,
+    "monsterId": "10141102",
+    "finalMonsterId": "10141102",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1014201,
+    "monsterId": "10142011",
+    "finalMonsterId": "10142011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1014202,
+    "monsterId": "10142016",
+    "finalMonsterId": "10142016",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1014301,
+    "monsterId": "10143011",
+    "finalMonsterId": "10143011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1014302,
+    "monsterId": "10143016",
+    "finalMonsterId": "10143016",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1015101,
+    "monsterId": "10151011",
+    "finalMonsterId": "10151011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1015102,
+    "monsterId": "10151012",
+    "finalMonsterId": "10151012",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1015111,
+    "monsterId": "10151111#10151112#10151113#10151114",
+    "finalMonsterId": "10151114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1016101,
+    "monsterId": "10161011",
+    "finalMonsterId": "10161011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1016102,
+    "monsterId": "10161021",
+    "finalMonsterId": "10161021",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1016111,
+    "monsterId": "10161111#10161121#10161131#10161141",
+    "finalMonsterId": "10161141",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1017101,
+    "monsterId": "10171011",
+    "finalMonsterId": "10171011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1017102,
+    "monsterId": "10171012",
+    "finalMonsterId": "10171012",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1017111,
+    "monsterId": "10171111#10171112#10171113#10171114",
+    "finalMonsterId": "10171114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1018101,
+    "monsterId": "101810111",
+    "finalMonsterId": "101810111",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1018102,
+    "monsterId": "101810211",
+    "finalMonsterId": "101810211",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1018111,
+    "monsterId": "101811111#101811112#101811113#101811114",
+    "finalMonsterId": "101811114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1020101,
+    "monsterId": "10201011",
+    "finalMonsterId": "10201011",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1020102,
+    "monsterId": "10201012",
+    "finalMonsterId": "10201012",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1020111,
+    "monsterId": "10201111#10201112#10201113#10201114",
+    "finalMonsterId": "10201114",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1021211,
+    "monsterId": "10212111",
+    "finalMonsterId": "10212111",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1021212,
+    "monsterId": "10212121",
+    "finalMonsterId": "10212121",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1021213,
+    "monsterId": "10212131",
+    "finalMonsterId": "10212131",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1022111,
+    "monsterId": "102211101",
+    "finalMonsterId": "102211101",
+    "maxPoints": 25000
+  },
+  {
+    "battleId": 1022101,
+    "monsterId": "102210101",
+    "finalMonsterId": "102210101",
+    "maxPoints": 50000
+  },
+  {
+    "battleId": 1022102,
+    "monsterId": "102211111#102210121#102210231#102210241",
+    "finalMonsterId": "102210241",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1022211,
+    "monsterId": "10222111",
+    "finalMonsterId": "10222111",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1022212,
+    "monsterId": "10222121",
+    "finalMonsterId": "10222121",
+    "maxPoints": 0
+  },
+  {
+    "battleId": 1022213,
+    "monsterId": "10222131",
+    "finalMonsterId": "10222131",
+    "maxPoints": 0
+  }
+]

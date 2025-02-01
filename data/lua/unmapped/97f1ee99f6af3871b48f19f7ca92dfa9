@@ -1,0 +1,27 @@
+module("framework.network.socket.work.WorkResendPackets", package.seeall)
+
+slot0 = class("WorkResendPackets", BaseWork)
+slot0.NonResendCmdDict = {}
+
+function slot0.onStart(slot0)
+	ConnectAliveMgr.instance:clearUnresponsiveMsgList()
+
+	slot2 = {}
+
+	for slot6 = 1, #ConnectAliveMgr.instance:getUnresponsiveMsgList() do
+		if not uv0.NonResendCmdDict[slot1[slot6].cmd] then
+			slot7.time = Time.realtimeSinceStartup
+
+			LuaSocketMgr.instance:sendMsg(slot7.msg, slot7.socketId)
+			table.insert(slot2, slot7.msg.__cname)
+		end
+	end
+
+	if #slot2 > 0 then
+		logNormal("前端补包协议：" .. table.concat(slot2, ","))
+	end
+
+	slot0:onDone(true)
+end
+
+return slot0

@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "career1": 1000,
+    "career2": 1000,
+    "career3": 1000,
+    "career4": 1300,
+    "career5": 1000,
+    "career6": 1000
+  },
+  {
+    "id": 2,
+    "career1": 1300,
+    "career2": 1000,
+    "career3": 1000,
+    "career4": 1000,
+    "career5": 1000,
+    "career6": 1000
+  },
+  {
+    "id": 3,
+    "career1": 1000,
+    "career2": 1300,
+    "career3": 1000,
+    "career4": 1000,
+    "career5": 1000,
+    "career6": 1000
+  },
+  {
+    "id": 4,
+    "career1": 1000,
+    "career2": 1000,
+    "career3": 1300,
+    "career4": 1000,
+    "career5": 1000,
+    "career6": 1000
+  },
+  {
+    "id": 5,
+    "career1": 1000,
+    "career2": 1000,
+    "career3": 1000,
+    "career4": 1000,
+    "career5": 1000,
+    "career6": 1300
+  },
+  {
+    "id": 6,
+    "career1": 1000,
+    "career2": 1000,
+    "career3": 1000,
+    "career4": 1000,
+    "career5": 1300,
+    "career6": 1000
+  }
+]

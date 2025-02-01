@@ -1,0 +1,29 @@
+[
+  {
+    "type": 1,
+    "heroCd": 0,
+    "star": 1,
+    "canResetLayer": 0,
+    "isRefresh": 0,
+    "showDetail": 1,
+    "starNum": 2
+  },
+  {
+    "type": 2,
+    "heroCd": 1,
+    "star": 1,
+    "canResetLayer": 1,
+    "isRefresh": 0,
+    "showDetail": 1,
+    "starNum": 2
+  },
+  {
+    "type": 3,
+    "heroCd": 1,
+    "star": 1,
+    "canResetLayer": 1,
+    "isRefresh": 1,
+    "showDetail": 1,
+    "starNum": 3
+  }
+]

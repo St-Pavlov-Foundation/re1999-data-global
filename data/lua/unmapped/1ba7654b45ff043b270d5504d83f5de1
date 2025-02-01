@@ -1,0 +1,10 @@
+module("framework.network.socket.work.WorkSocketDispose", package.seeall)
+
+slot0 = class("WorkSocketDispose", BaseWork)
+
+function slot0.onStart(slot0, slot1)
+	LuaSocketMgr.instance:reInit()
+	slot0:onDone(true)
+end
+
+return slot0

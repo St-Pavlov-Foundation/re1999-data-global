@@ -1,0 +1,212 @@
+[
+  {
+    "activityId": 12204,
+    "itemId": 1,
+    "name": "language_10058263",
+    "type": 1,
+    "compostType": 1,
+    "weight": 50,
+    "icon": "logo_zidan",
+    "desc": "language_10058264"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 2,
+    "name": "language_10017118",
+    "type": 1,
+    "compostType": 1,
+    "weight": 50,
+    "icon": "logo_duxing",
+    "desc": "language_10058264"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 3,
+    "name": "language_10058265",
+    "type": 1,
+    "compostType": 1,
+    "weight": 50,
+    "icon": "logo_fushi",
+    "desc": "language_10058264"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 4,
+    "name": "language_10058266",
+    "type": 1,
+    "compostType": 1,
+    "weight": 50,
+    "icon": "logo_baozha",
+    "desc": "language_10058264"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 5,
+    "name": "language_10058267",
+    "type": 1,
+    "compostType": 2,
+    "weight": 50,
+    "icon": "logo_jinyu",
+    "desc": "language_10058268"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 6,
+    "name": "language_10058269",
+    "type": 1,
+    "compostType": 2,
+    "weight": 50,
+    "icon": "logo_hudie",
+    "desc": "language_10058268"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 7,
+    "name": "language_10058270",
+    "type": 1,
+    "compostType": 2,
+    "weight": 50,
+    "icon": "logo_yanwu",
+    "desc": "language_10058268"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 8,
+    "name": "language_10058271",
+    "type": 1,
+    "compostType": 2,
+    "weight": 50,
+    "icon": "logo_shanguang",
+    "desc": "language_10058268"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 9,
+    "name": "language_10058272",
+    "type": 1,
+    "compostType": 2,
+    "weight": 50,
+    "icon": "logo_xianjing",
+    "desc": "language_10058268"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 10,
+    "name": "language_10058273",
+    "type": 1,
+    "compostType": 3,
+    "weight": 50,
+    "icon": "logo_yeti",
+    "desc": "language_10058274"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 11,
+    "name": "language_10058275",
+    "type": 1,
+    "compostType": 3,
+    "weight": 50,
+    "icon": "logo_guozhi",
+    "desc": "language_10058274"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 12,
+    "name": "language_10058276",
+    "type": 1,
+    "compostType": 3,
+    "weight": 50,
+    "icon": "logo_xiangtian",
+    "desc": "language_10058274"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1001,
+    "name": "language_10058277",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_huoyao",
+    "desc": "language_10058278"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1002,
+    "name": "language_10058279",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_chong",
+    "desc": "language_10058278"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1003,
+    "name": "language_10058280",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_xiangjiao",
+    "desc": "language_10058278"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1004,
+    "name": "language_10058281",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_yumao",
+    "desc": "language_10058282"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1005,
+    "name": "language_10058283",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_jiabi",
+    "desc": "language_10058282"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1006,
+    "name": "language_10058284",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_ankangyu",
+    "desc": "language_10058282"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1007,
+    "name": "language_10058285",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_mogu",
+    "desc": "language_10058286"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1008,
+    "name": "language_10034372",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_keke",
+    "desc": "language_10058286"
+  },
+  {
+    "activityId": 12204,
+    "itemId": 1009,
+    "name": "language_10058287",
+    "type": 2,
+    "compostType": 0,
+    "weight": 0,
+    "icon": "logo_guaguo",
+    "desc": "language_10058286"
+  }
+]

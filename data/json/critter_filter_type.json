@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "language_10056236",
+    "nameEn": "Taxon",
+    "filterTab": "131300#132100#133300",
+    "tabName": "",
+    "tabIcon": ""
+  },
+  {
+    "id": 2,
+    "name": "language_90001077",
+    "nameEn": "Feature",
+    "filterTab": "201#202#203#204#205",
+    "tabName": "language_10056237",
+    "tabIcon": "critter_manufacture_skillicon_4#critter_manufacture_skillicon_1#critter_manufacture_skillicon_5#critter_manufacture_skillicon_3#critter_manufacture_skillicon_6"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "monsterId": 4020601,
+    "guardPoint": 1
+  },
+  {
+    "id": 2,
+    "monsterId": 4020602,
+    "guardPoint": 2
+  },
+  {
+    "id": 3,
+    "monsterId": 4020603,
+    "guardPoint": 3
+  },
+  {
+    "id": 4,
+    "monsterId": 4020604,
+    "guardPoint": 4
+  },
+  {
+    "id": 5,
+    "monsterId": 4020605,
+    "guardPoint": 5
+  },
+  {
+    "id": 6,
+    "monsterId": 4020606,
+    "guardPoint": 6
+  }
+]

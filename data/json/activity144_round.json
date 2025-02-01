@@ -1,0 +1,398 @@
+[
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 1,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 2,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 3,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 4,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 5,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 6,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 7,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 8,
+    "isPass": 1,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 9,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 10,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 11,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 1,
+    "round": 12,
+    "isPass": 0,
+    "actionPoint": 12,
+    "keepMaterialRate": 500,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 1,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 2,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 3,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 4,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 5,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 6,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 7,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 8,
+    "isPass": 1,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 9,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 10,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 11,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 2,
+    "round": 12,
+    "isPass": 0,
+    "actionPoint": 13,
+    "keepMaterialRate": 400,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 1,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 2,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 3,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 4,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 5,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 6,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 7,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 8,
+    "isPass": 1,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 9,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 10,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 11,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 3,
+    "round": 12,
+    "isPass": 0,
+    "actionPoint": 14,
+    "keepMaterialRate": 300,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 1,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 2,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 3,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 4,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 5,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 6,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 7,
+    "isPass": 0,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  },
+  {
+    "activityId": 11509,
+    "episodeId": 4,
+    "round": 8,
+    "isPass": 1,
+    "actionPoint": 15,
+    "keepMaterialRate": 250,
+    "name": ""
+  }
+]

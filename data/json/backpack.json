@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "language_10003208",
+    "subname": "All",
+    "includeitem": "",
+    "includecurrency": "1#2#3#10#11#21"
+  },
+  {
+    "id": 2,
+    "name": "language_10003209",
+    "subname": "Materials",
+    "includeitem": "11#12#13#16#18#19#98",
+    "includecurrency": ""
+  },
+  {
+    "id": 3,
+    "name": "language_10003210",
+    "subname": "Consumables",
+    "includeitem": "14#48#49#50#52#53#60#61#54",
+    "includecurrency": ""
+  }
+]

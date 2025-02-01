@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "language_10040337",
+    "icon": "302802",
+    "type": 1,
+    "param": "1191001",
+    "desc": "language_10040338"
+  },
+  {
+    "id": 2,
+    "name": "language_10040339",
+    "icon": "302301",
+    "type": 2,
+    "param": "1#1199001",
+    "desc": "language_10040340"
+  },
+  {
+    "id": 3,
+    "name": "language_10040341",
+    "icon": "300402",
+    "type": 3,
+    "param": "1199002#4#4",
+    "desc": "language_10040342"
+  },
+  {
+    "id": 4,
+    "name": "language_10040343",
+    "icon": "302501_3",
+    "type": 3,
+    "param": "1199003#4#4",
+    "desc": "language_10040344"
+  },
+  {
+    "id": 5,
+    "name": "language_10040345",
+    "icon": "306601_2",
+    "type": 3,
+    "param": "1199004#3#3",
+    "desc": "language_10040346"
+  }
+]

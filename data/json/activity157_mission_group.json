@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 11815,
+    "missionGroupId": 101,
+    "type": 1,
+    "mapName": "language_10039300"
+  },
+  {
+    "activityId": 11815,
+    "missionGroupId": 201,
+    "type": 2,
+    "mapName": "language_10039301"
+  },
+  {
+    "activityId": 11815,
+    "missionGroupId": 202,
+    "type": 2,
+    "mapName": "language_10039302"
+  },
+  {
+    "activityId": 11815,
+    "missionGroupId": 203,
+    "type": 2,
+    "mapName": "language_10039303"
+  },
+  {
+    "activityId": 11815,
+    "missionGroupId": 204,
+    "type": 2,
+    "mapName": "language_10039304"
+  }
+]

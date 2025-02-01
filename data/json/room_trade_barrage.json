@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "icon": "room_trade_weathericon_2",
+    "heroId": 0,
+    "desc": "language_10056832"
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "icon": "room_trade_weathericon_1",
+    "heroId": 0,
+    "desc": "language_10056833"
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "icon": "room_trade_weathericon_4",
+    "heroId": 0,
+    "desc": "language_10056834"
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "icon": "room_trade_weathericon_3",
+    "heroId": 0,
+    "desc": "language_10056835"
+  },
+  {
+    "id": 5,
+    "type": 2,
+    "icon": "",
+    "heroId": 0,
+    "desc": "language_10056836"
+  },
+  {
+    "id": 6,
+    "type": 3,
+    "icon": "250041",
+    "heroId": 0,
+    "desc": "language_10056837"
+  },
+  {
+    "id": 7,
+    "type": 3,
+    "icon": "250031",
+    "heroId": 0,
+    "desc": "language_10056838"
+  },
+  {
+    "id": 8,
+    "type": 3,
+    "icon": "250035",
+    "heroId": 0,
+    "desc": "language_10056839"
+  },
+  {
+    "id": 9,
+    "type": 3,
+    "icon": "250033",
+    "heroId": 0,
+    "desc": "language_10056839"
+  },
+  {
+    "id": 10,
+    "type": 3,
+    "icon": "250037",
+    "heroId": 0,
+    "desc": "language_10056840"
+  },
+  {
+    "id": 11,
+    "type": 3,
+    "icon": "250028",
+    "heroId": 0,
+    "desc": "language_10056841"
+  },
+  {
+    "id": 12,
+    "type": 3,
+    "icon": "250029",
+    "heroId": 0,
+    "desc": "language_10056842"
+  },
+  {
+    "id": 13,
+    "type": 3,
+    "icon": "250040",
+    "heroId": 0,
+    "desc": "language_10056843"
+  },
+  {
+    "id": 14,
+    "type": 3,
+    "icon": "250027",
+    "heroId": 0,
+    "desc": "language_10056844"
+  },
+  {
+    "id": 15,
+    "type": 3,
+    "icon": "250038",
+    "heroId": 3041,
+    "desc": "language_10056845"
+  }
+]

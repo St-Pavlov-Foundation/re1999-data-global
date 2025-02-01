@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "language_10003347",
+    "colorvalue": "#0077FF"
+  },
+  {
+    "id": 2,
+    "name": "language_10003348",
+    "colorvalue": "#FF8300"
+  },
+  {
+    "id": 3,
+    "name": "language_10003349",
+    "colorvalue": "#fb0000"
+  },
+  {
+    "id": 4,
+    "name": "language_10003350",
+    "colorvalue": "#00720c"
+  },
+  {
+    "id": 5,
+    "name": "language_10003351",
+    "colorvalue": "#ffffff"
+  },
+  {
+    "id": 6,
+    "name": "language_10003352",
+    "colorvalue": "#FFF600"
+  },
+  {
+    "id": 7,
+    "name": "language_10003353",
+    "colorvalue": "#FA00FF"
+  }
+]

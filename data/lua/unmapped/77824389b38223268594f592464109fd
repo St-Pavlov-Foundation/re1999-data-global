@@ -1,0 +1,18 @@
+module("projbooter.gamepad.define.GamepadXBoxKey", package.seeall)
+
+slot0 = _M
+slot1 = UnityEngine.KeyCode
+slot0.AxisKeys = {
+	XAxis = GamepadEnum.KeyCode.LeftStickHorizontal,
+	YAxis = GamepadEnum.KeyCode.LeftStickVertical,
+	["5thAxis"] = GamepadEnum.KeyCode.RightStickHorizontal,
+	["4thAxis"] = GamepadEnum.KeyCode.RightStickVertical
+}
+slot0.JoystickKeys = {
+	[slot1.JoystickButton0] = GamepadEnum.KeyCode.A,
+	[slot1.JoystickButton1] = GamepadEnum.KeyCode.B,
+	[slot1.JoystickButton4] = GamepadEnum.KeyCode.LB,
+	[slot1.JoystickButton5] = GamepadEnum.KeyCode.RB
+}
+
+return slot0

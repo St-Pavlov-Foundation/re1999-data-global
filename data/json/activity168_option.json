@@ -1,0 +1,2216 @@
+[
+  {
+    "activityId": 12204,
+    "optionId": 101,
+    "name": "language_10058017",
+    "desc": "language_10058018",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 102,
+    "name": "language_10058019",
+    "desc": "language_10058020",
+    "effectId": 0,
+    "costItems": "4#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 201,
+    "name": "language_10058021",
+    "desc": "language_10058022",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 202,
+    "name": "language_10028377",
+    "desc": "language_10058023",
+    "effectId": 0,
+    "costItems": "10#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 301,
+    "name": "language_10058024",
+    "desc": "language_10058025",
+    "effectId": 10003,
+    "costItems": "9#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 302,
+    "name": "language_10058026",
+    "desc": "language_10058027",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 401,
+    "name": "language_10058028",
+    "desc": "language_10058029",
+    "effectId": 0,
+    "costItems": "1#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 402,
+    "name": "language_10058030",
+    "desc": "language_10058031",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 501,
+    "name": "language_10058032",
+    "desc": "language_10058033",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 502,
+    "name": "language_10028496",
+    "desc": "language_10058034",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 601,
+    "name": "language_10058035",
+    "desc": "language_10058036",
+    "effectId": 0,
+    "costItems": "12#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 602,
+    "name": "language_10001155",
+    "desc": "language_10058037",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 701,
+    "name": "language_10058038",
+    "desc": "language_10058039",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 702,
+    "name": "language_10058040",
+    "desc": "language_10058041",
+    "effectId": 0,
+    "costItems": "4#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 801,
+    "name": "language_10058042",
+    "desc": "language_10058043",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 802,
+    "name": "language_10058044",
+    "desc": "language_10058045",
+    "effectId": 0,
+    "costItems": "8#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 901,
+    "name": "language_10058042",
+    "desc": "language_10058046",
+    "effectId": 0,
+    "costItems": "1#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 902,
+    "name": "language_10058044",
+    "desc": "language_10058047",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1001,
+    "name": "language_10058048",
+    "desc": "language_10058049",
+    "effectId": 0,
+    "costItems": "11#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1002,
+    "name": "language_10028228",
+    "desc": "language_10058050",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1101,
+    "name": "language_10058051",
+    "desc": "language_10058052",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1102,
+    "name": "language_10058053",
+    "desc": "language_10058054",
+    "effectId": 0,
+    "costItems": "9#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1201,
+    "name": "language_10058055",
+    "desc": "language_10058056",
+    "effectId": 0,
+    "costItems": "10#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1202,
+    "name": "language_10058057",
+    "desc": "language_10058058",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1301,
+    "name": "language_10058059",
+    "desc": "language_10058060",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1302,
+    "name": "language_10058030",
+    "desc": "language_10058061",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1401,
+    "name": "language_10056563",
+    "desc": "language_10058062",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1402,
+    "name": "language_10058063",
+    "desc": "language_10058064",
+    "effectId": 0,
+    "costItems": "7#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1403,
+    "name": "language_10058065",
+    "desc": "language_10058066",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1501,
+    "name": "language_10058067",
+    "desc": "language_10058068",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1502,
+    "name": "language_10058069",
+    "desc": "language_10058070",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1503,
+    "name": "language_10058071",
+    "desc": "language_10058072",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1601,
+    "name": "language_10058073",
+    "desc": "language_10058074",
+    "effectId": 0,
+    "costItems": "4#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1602,
+    "name": "language_10058075",
+    "desc": "language_10058076",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1002#2|1003#2|1004#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1603,
+    "name": "language_10058077",
+    "desc": "language_10058078",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1701,
+    "name": "language_10058079",
+    "desc": "language_10058080",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1702,
+    "name": "language_10058081",
+    "desc": "language_10058082",
+    "effectId": 0,
+    "costItems": "3#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1703,
+    "name": "language_10058083",
+    "desc": "language_10058084",
+    "effectId": 11004,
+    "costItems": "12#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1801,
+    "name": "language_10058085",
+    "desc": "language_10058086",
+    "effectId": 0,
+    "costItems": "1#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1802,
+    "name": "language_10028242",
+    "desc": "language_10058087",
+    "effectId": 11005,
+    "costItems": "2#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1803,
+    "name": "language_10051639",
+    "desc": "language_10058088",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1901,
+    "name": "language_10058089",
+    "desc": "language_10058090",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1902,
+    "name": "language_10058091",
+    "desc": "language_10058092",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 1903,
+    "name": "language_10058093",
+    "desc": "language_10058094",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2001,
+    "name": "language_10028275",
+    "desc": "language_10058095",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2002,
+    "name": "language_10058096",
+    "desc": "language_10058097",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2003,
+    "name": "language_10058098",
+    "desc": "language_10058099",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2004,
+    "name": "language_10043004",
+    "desc": "language_10058100",
+    "effectId": 10003,
+    "costItems": "10#1",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2101,
+    "name": "language_10058101",
+    "desc": "language_10058102",
+    "effectId": 0,
+    "costItems": "3#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2102,
+    "name": "language_10028496",
+    "desc": "language_10058103",
+    "effectId": 11004,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2201,
+    "name": "language_10058104",
+    "desc": "language_10058105",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2202,
+    "name": "language_10058106",
+    "desc": "language_10058107",
+    "effectId": 0,
+    "costItems": "3#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2301,
+    "name": "language_10058108",
+    "desc": "language_10058109",
+    "effectId": 11005,
+    "costItems": "6#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2302,
+    "name": "language_10058110",
+    "desc": "language_10058111",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2401,
+    "name": "language_10058112",
+    "desc": "language_10058113",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2402,
+    "name": "language_10058114",
+    "desc": "language_10058115",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2501,
+    "name": "language_10058116",
+    "desc": "language_10058117",
+    "effectId": 11005,
+    "costItems": "1#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2502,
+    "name": "language_10028352",
+    "desc": "language_10058118",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2601,
+    "name": "language_10058119",
+    "desc": "language_10058120",
+    "effectId": 0,
+    "costItems": "7#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2602,
+    "name": "language_10028252",
+    "desc": "language_10058121",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2701,
+    "name": "language_10058122",
+    "desc": "language_10058123",
+    "effectId": 0,
+    "costItems": "9#1",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2702,
+    "name": "language_10058124",
+    "desc": "language_10058125",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2801,
+    "name": "language_10058126",
+    "desc": "language_10058127",
+    "effectId": 11004,
+    "costItems": "5#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2802,
+    "name": "language_10058128",
+    "desc": "language_10058129",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2901,
+    "name": "language_10001179",
+    "desc": "language_10058130",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 2902,
+    "name": "language_10058131",
+    "desc": "language_10058132",
+    "effectId": 11004,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3001,
+    "name": "language_10058133",
+    "desc": "language_10058134",
+    "effectId": 0,
+    "costItems": "11#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3002,
+    "name": "language_10058135",
+    "desc": "language_10058136",
+    "effectId": 11004,
+    "costItems": "2#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3003,
+    "name": "language_10058137",
+    "desc": "language_10058138",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3101,
+    "name": "language_10058112",
+    "desc": "language_10058139",
+    "effectId": 10007,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3102,
+    "name": "language_10058140",
+    "desc": "language_10058141",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3103,
+    "name": "language_10058142",
+    "desc": "language_10058143",
+    "effectId": 0,
+    "costItems": "11#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3201,
+    "name": "language_10058144",
+    "desc": "language_10058145",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3202,
+    "name": "language_10058146",
+    "desc": "language_10058147",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3203,
+    "name": "language_10028496",
+    "desc": "language_10058148",
+    "effectId": 11004,
+    "costItems": "10#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3301,
+    "name": "language_10058149",
+    "desc": "language_10058150",
+    "effectId": 0,
+    "costItems": "4#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3302,
+    "name": "language_10058151",
+    "desc": "language_10058152",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3303,
+    "name": "language_10058153",
+    "desc": "language_10058154",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3401,
+    "name": "language_10058155",
+    "desc": "language_10058156",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3402,
+    "name": "language_10058157",
+    "desc": "language_10058158",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3403,
+    "name": "language_10058159",
+    "desc": "language_10058160",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3404,
+    "name": "language_10058161",
+    "desc": "language_10058162",
+    "effectId": 10002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3501,
+    "name": "language_10021057",
+    "desc": "language_10058163",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3502,
+    "name": "language_10058164",
+    "desc": "language_10058165",
+    "effectId": 0,
+    "costItems": "2#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3601,
+    "name": "language_10058166",
+    "desc": "language_10058167",
+    "effectId": 0,
+    "costItems": "12#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3602,
+    "name": "language_10058168",
+    "desc": "language_10058169",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3701,
+    "name": "language_10058170",
+    "desc": "language_10058171",
+    "effectId": 10001,
+    "costItems": "10#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3702,
+    "name": "language_10058172",
+    "desc": "language_10058173",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3801,
+    "name": "language_10058101",
+    "desc": "language_10058174",
+    "effectId": 0,
+    "costItems": "4#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3802,
+    "name": "language_10028496",
+    "desc": "language_10058175",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3901,
+    "name": "language_10058081",
+    "desc": "language_10058176",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 3902,
+    "name": "language_10058177",
+    "desc": "language_10058178",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4001,
+    "name": "language_10026562",
+    "desc": "language_10058179",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4002,
+    "name": "language_10028370",
+    "desc": "language_10058180",
+    "effectId": 11004,
+    "costItems": "5#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4101,
+    "name": "language_10058181",
+    "desc": "language_10058182",
+    "effectId": 11004,
+    "costItems": "6#1",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4102,
+    "name": "language_10058183",
+    "desc": "language_10058184",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4201,
+    "name": "language_10058185",
+    "desc": "language_10058186",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4202,
+    "name": "language_10058187",
+    "desc": "language_10058188",
+    "effectId": 11003,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4301,
+    "name": "language_10058189",
+    "desc": "language_10058190",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4302,
+    "name": "language_10028496",
+    "desc": "language_10058191",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4303,
+    "name": "language_10058192",
+    "desc": "language_10058193",
+    "effectId": 11006,
+    "costItems": "12#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4401,
+    "name": "language_10058194",
+    "desc": "language_10058195",
+    "effectId": 10003,
+    "costItems": "3#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4402,
+    "name": "language_10058196",
+    "desc": "language_10058197",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4403,
+    "name": "language_10058198",
+    "desc": "language_10058199",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4501,
+    "name": "language_10058200",
+    "desc": "language_10058201",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4502,
+    "name": "language_10058202",
+    "desc": "language_10058203",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4503,
+    "name": "language_10058063",
+    "desc": "language_10058204",
+    "effectId": 0,
+    "costItems": "7#1",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4601,
+    "name": "language_10058205",
+    "desc": "language_10058206",
+    "effectId": 11006,
+    "costItems": "11#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4602,
+    "name": "language_10058207",
+    "desc": "language_10058208",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4603,
+    "name": "language_10058209",
+    "desc": "language_10058210",
+    "effectId": 10001,
+    "costItems": "4#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4701,
+    "name": "language_10058211",
+    "desc": "language_10058212",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4702,
+    "name": "language_10058213",
+    "desc": "language_10058214",
+    "effectId": 11004,
+    "costItems": "1#1",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4703,
+    "name": "language_10058215",
+    "desc": "language_10058216",
+    "effectId": 10001,
+    "costItems": "11#1",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4801,
+    "name": "language_10058217",
+    "desc": "language_10058218",
+    "effectId": 10005,
+    "costItems": "11#1",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4802,
+    "name": "language_10058219",
+    "desc": "language_10058220",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4803,
+    "name": "language_10058221",
+    "desc": "language_10058222",
+    "effectId": 11004,
+    "costItems": "1#1",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4901,
+    "name": "language_10058223",
+    "desc": "language_10058224",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4902,
+    "name": "language_10058225",
+    "desc": "language_10058226",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 4903,
+    "name": "language_10058227",
+    "desc": "language_10058228",
+    "effectId": 11006,
+    "costItems": "5#1",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 5001,
+    "name": "language_10058229",
+    "desc": "language_10058230",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 5002,
+    "name": "language_10058231",
+    "desc": "language_10058232",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 5003,
+    "name": "language_10058233",
+    "desc": "language_10058234",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 5004,
+    "name": "language_10058235",
+    "desc": "language_10058236",
+    "effectId": 10003,
+    "costItems": "8#1",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10101,
+    "name": "language_10058017",
+    "desc": "language_10058018",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10102,
+    "name": "language_10058019",
+    "desc": "language_10058020",
+    "effectId": 0,
+    "costItems": "4#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10201,
+    "name": "language_10058021",
+    "desc": "language_10058022",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10202,
+    "name": "language_10028377",
+    "desc": "language_10058023",
+    "effectId": 0,
+    "costItems": "10#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10301,
+    "name": "language_10058024",
+    "desc": "language_10058025",
+    "effectId": 10003,
+    "costItems": "9#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10302,
+    "name": "language_10058026",
+    "desc": "language_10058027",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10401,
+    "name": "language_10058028",
+    "desc": "language_10058029",
+    "effectId": 0,
+    "costItems": "1#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10402,
+    "name": "language_10058030",
+    "desc": "language_10058031",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10501,
+    "name": "language_10058032",
+    "desc": "language_10058033",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10502,
+    "name": "language_10028496",
+    "desc": "language_10058034",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10601,
+    "name": "language_10058035",
+    "desc": "language_10058036",
+    "effectId": 0,
+    "costItems": "12#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10602,
+    "name": "language_10001155",
+    "desc": "language_10058037",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10701,
+    "name": "language_10058038",
+    "desc": "language_10058039",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10702,
+    "name": "language_10058040",
+    "desc": "language_10058041",
+    "effectId": 0,
+    "costItems": "4#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10801,
+    "name": "language_10058042",
+    "desc": "language_10058043",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10802,
+    "name": "language_10058044",
+    "desc": "language_10058045",
+    "effectId": 0,
+    "costItems": "8#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10901,
+    "name": "language_10058042",
+    "desc": "language_10058046",
+    "effectId": 0,
+    "costItems": "1#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 10902,
+    "name": "language_10058044",
+    "desc": "language_10058047",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11001,
+    "name": "language_10058048",
+    "desc": "language_10058049",
+    "effectId": 0,
+    "costItems": "11#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11002,
+    "name": "language_10028228",
+    "desc": "language_10058050",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11101,
+    "name": "language_10058051",
+    "desc": "language_10058052",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11102,
+    "name": "language_10058053",
+    "desc": "language_10058054",
+    "effectId": 0,
+    "costItems": "9#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11201,
+    "name": "language_10058055",
+    "desc": "language_10058056",
+    "effectId": 0,
+    "costItems": "10#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11202,
+    "name": "language_10058057",
+    "desc": "language_10058058",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11301,
+    "name": "language_10058059",
+    "desc": "language_10058060",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11302,
+    "name": "language_10058030",
+    "desc": "language_10058061",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11401,
+    "name": "language_10056563",
+    "desc": "language_10058062",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11402,
+    "name": "language_10058063",
+    "desc": "language_10058064",
+    "effectId": 0,
+    "costItems": "7#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11403,
+    "name": "language_10058065",
+    "desc": "language_10058066",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11501,
+    "name": "language_10058067",
+    "desc": "language_10058068",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11502,
+    "name": "language_10058069",
+    "desc": "language_10058070",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11503,
+    "name": "language_10058071",
+    "desc": "language_10058072",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11601,
+    "name": "language_10058073",
+    "desc": "language_10058074",
+    "effectId": 0,
+    "costItems": "4#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11602,
+    "name": "language_10058075",
+    "desc": "language_10058076",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1002#2|1003#2|1004#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11603,
+    "name": "language_10058077",
+    "desc": "language_10058078",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11701,
+    "name": "language_10058079",
+    "desc": "language_10058080",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11702,
+    "name": "language_10058081",
+    "desc": "language_10058082",
+    "effectId": 0,
+    "costItems": "3#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11703,
+    "name": "language_10058083",
+    "desc": "language_10058084",
+    "effectId": 11004,
+    "costItems": "12#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11801,
+    "name": "language_10058085",
+    "desc": "language_10058086",
+    "effectId": 0,
+    "costItems": "1#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11802,
+    "name": "language_10028242",
+    "desc": "language_10058087",
+    "effectId": 11005,
+    "costItems": "2#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11803,
+    "name": "language_10051639",
+    "desc": "language_10058088",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11901,
+    "name": "language_10058089",
+    "desc": "language_10058090",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11902,
+    "name": "language_10058091",
+    "desc": "language_10058092",
+    "effectId": 11002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 11903,
+    "name": "language_10058093",
+    "desc": "language_10058094",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12001,
+    "name": "language_10028275",
+    "desc": "language_10058095",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12002,
+    "name": "language_10058096",
+    "desc": "language_10058097",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12003,
+    "name": "language_10058098",
+    "desc": "language_10058099",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12004,
+    "name": "language_10043004",
+    "desc": "language_10058100",
+    "effectId": 10003,
+    "costItems": "10#2",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12101,
+    "name": "language_10058101",
+    "desc": "language_10058102",
+    "effectId": 0,
+    "costItems": "3#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12102,
+    "name": "language_10028496",
+    "desc": "language_10058103",
+    "effectId": 11004,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12201,
+    "name": "language_10058104",
+    "desc": "language_10058105",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12202,
+    "name": "language_10058106",
+    "desc": "language_10058107",
+    "effectId": 0,
+    "costItems": "3#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12301,
+    "name": "language_10058108",
+    "desc": "language_10058109",
+    "effectId": 11005,
+    "costItems": "6#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12302,
+    "name": "language_10058110",
+    "desc": "language_10058111",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12401,
+    "name": "language_10058112",
+    "desc": "language_10058113",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12402,
+    "name": "language_10058114",
+    "desc": "language_10058115",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12501,
+    "name": "language_10058116",
+    "desc": "language_10058117",
+    "effectId": 11005,
+    "costItems": "1#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12502,
+    "name": "language_10028352",
+    "desc": "language_10058118",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12601,
+    "name": "language_10058119",
+    "desc": "language_10058120",
+    "effectId": 0,
+    "costItems": "7#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12602,
+    "name": "language_10028252",
+    "desc": "language_10058121",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12701,
+    "name": "language_10058122",
+    "desc": "language_10058123",
+    "effectId": 0,
+    "costItems": "9#2",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12702,
+    "name": "language_10058124",
+    "desc": "language_10058125",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12801,
+    "name": "language_10058126",
+    "desc": "language_10058127",
+    "effectId": 11004,
+    "costItems": "5#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12802,
+    "name": "language_10058128",
+    "desc": "language_10058129",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12901,
+    "name": "language_10001179",
+    "desc": "language_10058130",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 12902,
+    "name": "language_10058131",
+    "desc": "language_10058132",
+    "effectId": 11004,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13001,
+    "name": "language_10058133",
+    "desc": "language_10058134",
+    "effectId": 0,
+    "costItems": "11#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13002,
+    "name": "language_10058135",
+    "desc": "language_10058136",
+    "effectId": 11004,
+    "costItems": "2#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13003,
+    "name": "language_10058137",
+    "desc": "language_10058138",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13101,
+    "name": "language_10058112",
+    "desc": "language_10058139",
+    "effectId": 10007,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13102,
+    "name": "language_10058140",
+    "desc": "language_10058141",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13103,
+    "name": "language_10058142",
+    "desc": "language_10058143",
+    "effectId": 0,
+    "costItems": "11#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13201,
+    "name": "language_10058144",
+    "desc": "language_10058145",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13202,
+    "name": "language_10058146",
+    "desc": "language_10058147",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13203,
+    "name": "language_10028496",
+    "desc": "language_10058148",
+    "effectId": 11004,
+    "costItems": "10#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13301,
+    "name": "language_10058149",
+    "desc": "language_10058150",
+    "effectId": 0,
+    "costItems": "4#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13302,
+    "name": "language_10058151",
+    "desc": "language_10058152",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13303,
+    "name": "language_10058153",
+    "desc": "language_10058154",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13401,
+    "name": "language_10058155",
+    "desc": "language_10058156",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13402,
+    "name": "language_10058157",
+    "desc": "language_10058158",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13403,
+    "name": "language_10058159",
+    "desc": "language_10058160",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13404,
+    "name": "language_10058161",
+    "desc": "language_10058162",
+    "effectId": 10002,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13501,
+    "name": "language_10021057",
+    "desc": "language_10058163",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13502,
+    "name": "language_10058164",
+    "desc": "language_10058165",
+    "effectId": 0,
+    "costItems": "2#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13601,
+    "name": "language_10058166",
+    "desc": "language_10058167",
+    "effectId": 0,
+    "costItems": "12#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13602,
+    "name": "language_10058168",
+    "desc": "language_10058169",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13701,
+    "name": "language_10058170",
+    "desc": "language_10058171",
+    "effectId": 10001,
+    "costItems": "10#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13702,
+    "name": "language_10058172",
+    "desc": "language_10058173",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13801,
+    "name": "language_10058101",
+    "desc": "language_10058174",
+    "effectId": 0,
+    "costItems": "4#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13802,
+    "name": "language_10028496",
+    "desc": "language_10058175",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13901,
+    "name": "language_10058081",
+    "desc": "language_10058176",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 13902,
+    "name": "language_10058177",
+    "desc": "language_10058178",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14001,
+    "name": "language_10026562",
+    "desc": "language_10058179",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14002,
+    "name": "language_10028370",
+    "desc": "language_10058180",
+    "effectId": 11004,
+    "costItems": "5#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14101,
+    "name": "language_10058181",
+    "desc": "language_10058182",
+    "effectId": 11004,
+    "costItems": "6#2",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14102,
+    "name": "language_10058183",
+    "desc": "language_10058184",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14201,
+    "name": "language_10058185",
+    "desc": "language_10058186",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14202,
+    "name": "language_10058187",
+    "desc": "language_10058188",
+    "effectId": 11003,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14301,
+    "name": "language_10058189",
+    "desc": "language_10058190",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14302,
+    "name": "language_10028496",
+    "desc": "language_10058191",
+    "effectId": 0,
+    "costItems": "",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14303,
+    "name": "language_10058192",
+    "desc": "language_10058193",
+    "effectId": 11006,
+    "costItems": "12#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14401,
+    "name": "language_10058194",
+    "desc": "language_10058195",
+    "effectId": 10003,
+    "costItems": "3#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14402,
+    "name": "language_10058196",
+    "desc": "language_10058197",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14403,
+    "name": "language_10058198",
+    "desc": "language_10058199",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14501,
+    "name": "language_10058200",
+    "desc": "language_10058201",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14502,
+    "name": "language_10058202",
+    "desc": "language_10058203",
+    "effectId": 10004,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14503,
+    "name": "language_10058063",
+    "desc": "language_10058204",
+    "effectId": 0,
+    "costItems": "7#2",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14601,
+    "name": "language_10058205",
+    "desc": "language_10058206",
+    "effectId": 11006,
+    "costItems": "11#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14602,
+    "name": "language_10058207",
+    "desc": "language_10058208",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14603,
+    "name": "language_10058209",
+    "desc": "language_10058210",
+    "effectId": 10001,
+    "costItems": "4#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14701,
+    "name": "language_10058211",
+    "desc": "language_10058212",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14702,
+    "name": "language_10058213",
+    "desc": "language_10058214",
+    "effectId": 11004,
+    "costItems": "1#2",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14703,
+    "name": "language_10058215",
+    "desc": "language_10058216",
+    "effectId": 10001,
+    "costItems": "11#2",
+    "mustDrop": "1009#2|1001#2|1002#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14801,
+    "name": "language_10058217",
+    "desc": "language_10058218",
+    "effectId": 10005,
+    "costItems": "11#2",
+    "mustDrop": "1007#2|1008#2|1009#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14802,
+    "name": "language_10058219",
+    "desc": "language_10058220",
+    "effectId": 11001,
+    "costItems": "",
+    "mustDrop": "1001#2|1002#2|1003#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14803,
+    "name": "language_10058221",
+    "desc": "language_10058222",
+    "effectId": 11004,
+    "costItems": "1#2",
+    "mustDrop": "1003#2|1004#2|1005#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14901,
+    "name": "language_10058223",
+    "desc": "language_10058224",
+    "effectId": 10006,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14902,
+    "name": "language_10058225",
+    "desc": "language_10058226",
+    "effectId": 10001,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 14903,
+    "name": "language_10058227",
+    "desc": "language_10058228",
+    "effectId": 11006,
+    "costItems": "5#2",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 15001,
+    "name": "language_10058229",
+    "desc": "language_10058230",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 15002,
+    "name": "language_10058231",
+    "desc": "language_10058232",
+    "effectId": 11005,
+    "costItems": "",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 15003,
+    "name": "language_10058233",
+    "desc": "language_10058234",
+    "effectId": 10005,
+    "costItems": "",
+    "mustDrop": "1004#2|1005#2|1006#2"
+  },
+  {
+    "activityId": 12204,
+    "optionId": 15004,
+    "name": "language_10058235",
+    "desc": "language_10058236",
+    "effectId": 10003,
+    "costItems": "8#2",
+    "mustDrop": "1006#2|1007#2|1008#2"
+  }
+]

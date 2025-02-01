@@ -1,0 +1,17 @@
+[
+  {
+    "id": 22101,
+    "restSlotNum": 6,
+    "buySlotCost": "2#2202#2000"
+  },
+  {
+    "id": 22102,
+    "restSlotNum": 6,
+    "buySlotCost": "2#2202#4000"
+  },
+  {
+    "id": 22103,
+    "restSlotNum": 6,
+    "buySlotCost": "2#2202#8000"
+  }
+]

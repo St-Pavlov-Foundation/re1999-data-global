@@ -1,0 +1,165 @@
+module("framework.mvc.view.scroll.LuaTreeScrollView", package.seeall)
+
+slot0 = class("LuaTreeScrollView", BaseScrollView)
+slot0.PrefabInstName = "prefabInst"
+slot0.DefaultTransitionSeconds = 0.3
+
+function slot0.ctor(slot0, slot1, slot2)
+	uv0.super.ctor(slot0, slot1, slot2.emptyScrollParam)
+
+	slot0._csTreeScroll = nil
+	slot0._model = slot1
+	slot0._param = slot2
+	slot0._prefabInViewList = nil
+	slot0._nodePrefab = nil
+	slot0._cellCompDict = {}
+	slot0._selectMOs = {}
+end
+
+function slot0.onInitView(slot0)
+	uv0.super.onInitView(slot0)
+
+	if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+		slot0._prefabInViewList = {}
+
+		for slot4, slot5 in ipairs(slot0._param.prefabUrls) do
+			slot6 = gohelper.findChild(slot0.viewGO, slot5)
+
+			table.insert(slot0._prefabInViewList, slot6)
+			gohelper.setActive(slot6, false)
+		end
+	end
+
+	slot0._csTreeScroll = SLFramework.UGUI.TreeScrollView.Get(gohelper.findChild(slot0.viewGO, slot0._param.scrollGOPath))
+
+	slot0._csTreeScroll:Init(slot0._param.scrollDir, slot0._onUpdateCell, slot0._onSelectCell, slot0)
+end
+
+function slot0.getCsScroll(slot0)
+	return slot0._csTreeScroll
+end
+
+function slot0.refreshScroll(slot0)
+	uv0.super.refreshScroll(slot0)
+	slot0._csTreeScroll:UpdateTreeInfoList(slot0._model:getInfoList())
+	slot0:updateEmptyGO(slot0._model:getRootCount())
+end
+
+function slot0._onUpdateCell(slot0, slot1, slot2, slot3, slot4)
+	slot6 = nil
+
+	if gohelper.findChild(slot1, uv0.PrefabInstName) then
+		slot6 = MonoHelper.getLuaComFromGo(slot5, slot0._param.cellClass)
+	else
+		if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			slot5 = slot0:getResInst(slot0._param.prefabUrls[slot2], slot1, uv0.PrefabInstName)
+		elseif slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			gohelper.setActive(gohelper.clone(slot0._prefabInViewList[slot2], slot1, uv0.PrefabInstName), true)
+		else
+			logError("TreeScrollView prefabType not support: " .. slot0._param.prefabType)
+		end
+
+		slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, slot0._param.cellClass)
+
+		slot6:initInternal(slot5, slot0)
+
+		slot0._cellCompDict[slot6] = true
+	end
+
+	slot6._rootIndex = slot3 + 1
+	slot6._nodeIndex = slot4 + 1
+
+	if slot4 == -1 then
+		slot6:onUpdateRootMOInternal(slot0._model:getByIndex(slot3 + 1, slot4 + 1))
+	else
+		slot6:onUpdateNodeMOInternal(slot7)
+	end
+
+	if tabletool.indexOf(slot0._selectMOs, slot7) then
+		slot6:onSelect(true)
+	else
+		slot6:onSelect(false)
+	end
+end
+
+function slot0._onSelectCell(slot0, slot1, slot2)
+	MonoHelper.getLuaComFromGo(gohelper.findChild(slot1, uv0.PrefabInstName), slot0._param.cellClass):onSelect(slot2)
+end
+
+function slot0.selectCell(slot0, slot1, slot2, slot3)
+	if slot0._model:getByIndex(slot1, slot2) then
+		if tabletool.indexOf(slot0._selectMOs, slot4) and not slot3 then
+			table.remove(slot0._selectMOs, slot5)
+		elseif slot3 and not slot5 then
+			table.insert(slot0._selectMOs, slot4)
+		end
+
+		slot0._csTreeScroll:SelectCell(slot1 - 1, slot2 - 1, slot3)
+	end
+end
+
+function slot0.getSelectItems(slot0)
+	return slot0._selectMOs
+end
+
+function slot0.setSelectItems(slot0, slot1)
+	slot0._selectMOs = slot1
+
+	slot0._csTreeScroll:UpdateCells(true, false)
+end
+
+function slot0.expand(slot0, slot1, slot2, slot3, slot4, slot5)
+	if slot0:isInTransition(slot1) then
+		return
+	end
+
+	if slot2 == nil then
+		slot2 = true
+	end
+
+	slot0._csTreeScroll:Expand(slot1 - 1, slot2, slot3 or uv0.DefaultTransitionSeconds, slot4, slot5)
+end
+
+function slot0.shrink(slot0, slot1, slot2, slot3, slot4, slot5)
+	if slot0:isInTransition(slot1) then
+		return
+	end
+
+	if slot2 == nil then
+		slot2 = true
+	end
+
+	slot0._csTreeScroll:Shrink(slot1 - 1, slot2, slot3 or uv0.DefaultTransitionSeconds, slot4, slot5)
+end
+
+function slot0.isInTransition(slot0, slot1)
+	return slot0._csTreeScroll:IsInTransition(slot1 - 1)
+end
+
+function slot0.isExpand(slot0, slot1)
+	return slot0._csTreeScroll:IsExpand(slot1 - 1)
+end
+
+function slot0.reverseRootOp(slot0, slot1, slot2, slot3, slot4, slot5)
+	if slot0:isExpand(slot1) then
+		slot0:shrink(slot1, slot2, slot3, slot4, slot5)
+	else
+		slot0:expand(slot1, slot2, slot3, slot4, slot5)
+	end
+end
+
+function slot0.clear(slot0)
+	if slot0._csTreeScroll then
+		slot0._csTreeScroll:Clear()
+	end
+end
+
+function slot0.onDestroyView(slot0)
+	uv0.super.onDestroyView(slot0)
+
+	if slot0._csTreeScroll then
+		slot0._csTreeScroll:Clear()
+	end
+end
+
+return slot0

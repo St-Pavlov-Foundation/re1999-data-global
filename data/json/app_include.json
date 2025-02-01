@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "character": [
+      3003,
+      3004,
+      3006,
+      3009,
+      3010,
+      3023,
+      3024,
+      3025,
+      3028,
+      3032,
+      3035,
+      3017,
+      3041
+    ],
+    "chapter": [
+      101,
+      102,
+      201,
+      202,
+      301,
+      302,
+      401,
+      501,
+      601,
+      701,
+      702,
+      703,
+      704,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107
+    ],
+    "story": [
+      100023,
+      100024
+    ],
+    "seasonIds": [],
+    "guide": [],
+    "video": [
+      "videos/make_name_start.mp4",
+      "videos/make_name_loop.mp4",
+      "videos/make_name_end.mp4"
+    ],
+    "path": [
+      "singlebg/storybg/bg/huashengdunguangchang.jpg"
+    ],
+    "maxWeekWalk": 0,
+    "roomTheme": [
+      1
+    ],
+    "heroStoryIds": []
+  },
+  {
+    "id": 2,
+    "character": [
+      3066,
+      3087,
+      3065,
+      3072
+    ],
+    "chapter": [],
+    "story": [],
+    "seasonIds": [],
+    "guide": [],
+    "video": [],
+    "path": [],
+    "maxWeekWalk": 0,
+    "roomTheme": [],
+    "heroStoryIds": []
+  }
+]

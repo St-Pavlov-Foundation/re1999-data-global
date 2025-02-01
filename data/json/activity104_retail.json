@@ -1,0 +1,338 @@
+[
+  {
+    "activityId": 11100,
+    "stage": 1,
+    "retailEpisodeIdPool": "1102101#1102102#1102103",
+    "enemyTag": "language_10025146",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11100,
+    "stage": 2,
+    "retailEpisodeIdPool": "1102104#1102105#1102106#1102107",
+    "enemyTag": "language_10025147",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11100,
+    "stage": 3,
+    "retailEpisodeIdPool": "1102108#1102109#1102110#1102111",
+    "enemyTag": "language_10025147",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11100,
+    "stage": 4,
+    "retailEpisodeIdPool": "1102112#1102113#1102114#1102115#1102116",
+    "enemyTag": "language_10025148",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11100,
+    "stage": 5,
+    "retailEpisodeIdPool": "1102117#1102118#1102119#1102120#1102121",
+    "enemyTag": "language_10025148",
+    "level": 120,
+    "equipRareWeight": "2#15|3#12|4#3"
+  },
+  {
+    "activityId": 11100,
+    "stage": 6,
+    "retailEpisodeIdPool": "1102122#1102123#1102124#1102125#1102126#1102127",
+    "enemyTag": "language_10025149",
+    "level": 125,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 11100,
+    "stage": 7,
+    "retailEpisodeIdPool": "1102122#1102123#1102124#1102125#1102126#1102127",
+    "enemyTag": "language_10025149",
+    "level": 125,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 11200,
+    "stage": 1,
+    "retailEpisodeIdPool": "1202101#1202102#1202103",
+    "enemyTag": "language_10025150",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11200,
+    "stage": 2,
+    "retailEpisodeIdPool": "1202104#1202105#1202106#1202107",
+    "enemyTag": "language_10025151",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11200,
+    "stage": 3,
+    "retailEpisodeIdPool": "1202108#1202109#1202110#1202111#1202112",
+    "enemyTag": "language_10025152",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11200,
+    "stage": 4,
+    "retailEpisodeIdPool": "1202113#1202114#1202115#1202116#1202117#1202118",
+    "enemyTag": "language_10025153",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11200,
+    "stage": 5,
+    "retailEpisodeIdPool": "1202119#1202120#1202121#1202122#1202123#1202124#1202125",
+    "enemyTag": "language_10025154",
+    "level": 120,
+    "equipRareWeight": "1#4|2#9|3#11|4#3"
+  },
+  {
+    "activityId": 11200,
+    "stage": 6,
+    "retailEpisodeIdPool": "1202126#1202127#1202128#1202129#1202130#1202131#1202132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11200,
+    "stage": 7,
+    "retailEpisodeIdPool": "1202126#1202127#1202128#1202129#1202130#1202131#1202132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11300,
+    "stage": 1,
+    "retailEpisodeIdPool": "1302101#1302102#1302103",
+    "enemyTag": "language_10025155",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11300,
+    "stage": 2,
+    "retailEpisodeIdPool": "1302104#1302105#1302106#1302107",
+    "enemyTag": "language_10025156",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11300,
+    "stage": 3,
+    "retailEpisodeIdPool": "1302108#1302109#1302110#1302111#1302112",
+    "enemyTag": "language_10025157",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11300,
+    "stage": 4,
+    "retailEpisodeIdPool": "1302113#1302114#1302115#1302116#1302117#1302118",
+    "enemyTag": "language_10025158",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11300,
+    "stage": 5,
+    "retailEpisodeIdPool": "1302119#1302120#1302121#1302122#1302123#1302124#1302125",
+    "enemyTag": "language_10025159",
+    "level": 120,
+    "equipRareWeight": "1#4|2#9|3#11|4#3"
+  },
+  {
+    "activityId": 11300,
+    "stage": 6,
+    "retailEpisodeIdPool": "1302126#1302127#1302128#1302129#1302130#1302131#1302132",
+    "enemyTag": "language_10025159",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11300,
+    "stage": 7,
+    "retailEpisodeIdPool": "1302126#1302127#1302128#1302129#1302130#1302131#1302132",
+    "enemyTag": "language_10025159",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11400,
+    "stage": 1,
+    "retailEpisodeIdPool": "1402101#1402102#1402103",
+    "enemyTag": "language_10025150",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11400,
+    "stage": 2,
+    "retailEpisodeIdPool": "1402104#1402105#1402106#1402107",
+    "enemyTag": "language_10025151",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11400,
+    "stage": 3,
+    "retailEpisodeIdPool": "1402108#1402109#1402110#1402111#1402112",
+    "enemyTag": "language_10025160",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11400,
+    "stage": 4,
+    "retailEpisodeIdPool": "1402113#1402114#1402115#1402116#1402117#1402118",
+    "enemyTag": "language_10025161",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11400,
+    "stage": 5,
+    "retailEpisodeIdPool": "1402119#1402120#1402121#1402122#1402123#1402124#1402125",
+    "enemyTag": "language_10025162",
+    "level": 120,
+    "equipRareWeight": "1#4|2#9|3#11|4#3"
+  },
+  {
+    "activityId": 11400,
+    "stage": 6,
+    "retailEpisodeIdPool": "1402126#1402127#1402128#1402129#1402130#1402131#1402132",
+    "enemyTag": "language_10025162",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11400,
+    "stage": 7,
+    "retailEpisodeIdPool": "1402126#1402127#1402128#1402129#1402130#1402131#1402132",
+    "enemyTag": "language_10025162",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11500,
+    "stage": 1,
+    "retailEpisodeIdPool": "1502101#1502102#1502103",
+    "enemyTag": "language_10025150",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11500,
+    "stage": 2,
+    "retailEpisodeIdPool": "1502104#1502105#1502106#1502107",
+    "enemyTag": "language_10025151",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11500,
+    "stage": 3,
+    "retailEpisodeIdPool": "1502108#1502109#1502110#1502111#1502112",
+    "enemyTag": "language_10025152",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11500,
+    "stage": 4,
+    "retailEpisodeIdPool": "1502113#1502114#1502115#1502116#1502117#1502118",
+    "enemyTag": "language_10025153",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11500,
+    "stage": 5,
+    "retailEpisodeIdPool": "1502119#1502120#1502121#1502122#1502123#1502124#1502125",
+    "enemyTag": "language_10025154",
+    "level": 120,
+    "equipRareWeight": "1#4|2#9|3#11|4#3"
+  },
+  {
+    "activityId": 11500,
+    "stage": 6,
+    "retailEpisodeIdPool": "1502126#1502127#1502128#1502129#1502130#1502131#1502132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11500,
+    "stage": 7,
+    "retailEpisodeIdPool": "1502126#1502127#1502128#1502129#1502130#1502131#1502132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11600,
+    "stage": 1,
+    "retailEpisodeIdPool": "1602101#1602102#1602103",
+    "enemyTag": "language_10025150",
+    "level": 70,
+    "equipRareWeight": "1#20|2#10"
+  },
+  {
+    "activityId": 11600,
+    "stage": 2,
+    "retailEpisodeIdPool": "1602104#1602105#1602106#1602107",
+    "enemyTag": "language_10025151",
+    "level": 80,
+    "equipRareWeight": "1#15|2#15"
+  },
+  {
+    "activityId": 11600,
+    "stage": 3,
+    "retailEpisodeIdPool": "1602108#1602109#1602110#1602111#1602112",
+    "enemyTag": "language_10025152",
+    "level": 95,
+    "equipRareWeight": "1#10|2#15|3#5"
+  },
+  {
+    "activityId": 11600,
+    "stage": 4,
+    "retailEpisodeIdPool": "1602113#1602114#1602115#1602116#1602117#1602118",
+    "enemyTag": "language_10025153",
+    "level": 105,
+    "equipRareWeight": "1#5|2#15|3#10"
+  },
+  {
+    "activityId": 11600,
+    "stage": 5,
+    "retailEpisodeIdPool": "1602119#1602120#1602121#1602122#1602123#1602124#1602125",
+    "enemyTag": "language_10025154",
+    "level": 120,
+    "equipRareWeight": "1#4|2#9|3#11|4#3"
+  },
+  {
+    "activityId": 11600,
+    "stage": 6,
+    "retailEpisodeIdPool": "1602126#1602127#1602128#1602129#1602130#1602131#1602132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  },
+  {
+    "activityId": 11600,
+    "stage": 7,
+    "retailEpisodeIdPool": "1602126#1602127#1602128#1602129#1602130#1602131#1602132",
+    "enemyTag": "language_10025154",
+    "level": 125,
+    "equipRareWeight": "1#3|2#8|3#12|4#9"
+  }
+]

@@ -1,0 +1,502 @@
+[
+  {
+    "difficulty": 1,
+    "layer": 1,
+    "stepAttr": "hp#190|addDmg#33"
+  },
+  {
+    "difficulty": 1,
+    "layer": 2,
+    "stepAttr": "hp#239|addDmg#39"
+  },
+  {
+    "difficulty": 1,
+    "layer": 3,
+    "stepAttr": "hp#290|addDmg#45"
+  },
+  {
+    "difficulty": 1,
+    "layer": 4,
+    "stepAttr": "hp#359|addDmg#59"
+  },
+  {
+    "difficulty": 1,
+    "layer": 5,
+    "stepAttr": "hp#562|addDmg#99"
+  },
+  {
+    "difficulty": 2,
+    "layer": 1,
+    "stepAttr": "hp#190|addDmg#33"
+  },
+  {
+    "difficulty": 2,
+    "layer": 2,
+    "stepAttr": "hp#239|addDmg#39"
+  },
+  {
+    "difficulty": 2,
+    "layer": 3,
+    "stepAttr": "hp#290|addDmg#45"
+  },
+  {
+    "difficulty": 2,
+    "layer": 4,
+    "stepAttr": "hp#359|addDmg#59"
+  },
+  {
+    "difficulty": 2,
+    "layer": 5,
+    "stepAttr": "hp#562|addDmg#99"
+  },
+  {
+    "difficulty": 3,
+    "layer": 1,
+    "stepAttr": "hp#190|addDmg#33"
+  },
+  {
+    "difficulty": 3,
+    "layer": 2,
+    "stepAttr": "hp#239|addDmg#39"
+  },
+  {
+    "difficulty": 3,
+    "layer": 3,
+    "stepAttr": "hp#290|addDmg#45"
+  },
+  {
+    "difficulty": 3,
+    "layer": 4,
+    "stepAttr": "hp#359|addDmg#59"
+  },
+  {
+    "difficulty": 3,
+    "layer": 5,
+    "stepAttr": "hp#562|addDmg#99"
+  },
+  {
+    "difficulty": 4,
+    "layer": 1,
+    "stepAttr": "hp#190|addDmg#33"
+  },
+  {
+    "difficulty": 4,
+    "layer": 2,
+    "stepAttr": "hp#239|addDmg#39"
+  },
+  {
+    "difficulty": 4,
+    "layer": 3,
+    "stepAttr": "hp#290|addDmg#45"
+  },
+  {
+    "difficulty": 4,
+    "layer": 4,
+    "stepAttr": "hp#359|addDmg#59"
+  },
+  {
+    "difficulty": 4,
+    "layer": 5,
+    "stepAttr": "hp#562|addDmg#99"
+  },
+  {
+    "difficulty": 5,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 5,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 5,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 5,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 5,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 6,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 6,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 6,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 6,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 6,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 7,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 7,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 7,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 7,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 7,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 8,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 8,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 8,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 8,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 8,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 9,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 9,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 9,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 9,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 9,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 10,
+    "layer": 1,
+    "stepAttr": "hp#377|addDmg#33"
+  },
+  {
+    "difficulty": 10,
+    "layer": 2,
+    "stepAttr": "hp#309|addDmg#39"
+  },
+  {
+    "difficulty": 10,
+    "layer": 3,
+    "stepAttr": "hp#380|addDmg#45"
+  },
+  {
+    "difficulty": 10,
+    "layer": 4,
+    "stepAttr": "hp#449|addDmg#59"
+  },
+  {
+    "difficulty": 10,
+    "layer": 5,
+    "stepAttr": "hp#652|addDmg#99"
+  },
+  {
+    "difficulty": 11,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 11,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 11,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 11,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 11,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 12,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 12,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 12,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 12,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 12,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 13,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 13,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 13,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 13,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 13,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 14,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 14,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 14,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 14,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 14,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 15,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 15,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 15,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 15,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 15,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 16,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 16,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 16,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 16,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 16,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 17,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 17,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 17,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 17,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 17,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 18,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 18,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 18,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 18,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 18,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 19,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 19,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 19,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 19,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 19,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  },
+  {
+    "difficulty": 20,
+    "layer": 1,
+    "stepAttr": "hp#290|addDmg#33"
+  },
+  {
+    "difficulty": 20,
+    "layer": 2,
+    "stepAttr": "hp#379|addDmg#39"
+  },
+  {
+    "difficulty": 20,
+    "layer": 3,
+    "stepAttr": "hp#470|addDmg#45"
+  },
+  {
+    "difficulty": 20,
+    "layer": 4,
+    "stepAttr": "hp#662|addDmg#59"
+  },
+  {
+    "difficulty": 20,
+    "layer": 5,
+    "stepAttr": "hp#770|addDmg#99"
+  }
+]

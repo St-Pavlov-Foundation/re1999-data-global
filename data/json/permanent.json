@@ -1,0 +1,27 @@
+[
+  {
+    "id": 11101,
+    "kvIcon": "reappear_img_kv01",
+    "enterview": "Permanent1_1EnterView"
+  },
+  {
+    "id": 11201,
+    "kvIcon": "reappear_img_kv02",
+    "enterview": "Permanent1_2EnterView"
+  },
+  {
+    "id": 11301,
+    "kvIcon": "reappear_img_kv03",
+    "enterview": "Permanent1_3EnterView"
+  },
+  {
+    "id": 11401,
+    "kvIcon": "reappear_img_kv04",
+    "enterview": "Permanent1_4EnterView"
+  },
+  {
+    "id": 11501,
+    "kvIcon": "reappear_img_kv05",
+    "enterview": "Permanent1_5EnterView"
+  }
+]

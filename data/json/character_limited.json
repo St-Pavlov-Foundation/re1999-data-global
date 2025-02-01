@@ -1,0 +1,160 @@
+[
+  {
+    "id": 308301,
+    "spine": "v1a6_qnxx_cs/qnxx_cs",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "",
+    "mvtime": 0,
+    "voice": [],
+    "actionTime": [],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 0
+  },
+  {
+    "id": 308302,
+    "spine": "v1a6_qnxx/qnxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "quniang",
+    "mvtime": 19,
+    "voice": [
+      1307800
+    ],
+    "actionTime": [
+      5
+    ],
+    "entranceEffect": "story/v1a6_qunian_live",
+    "effectDuration": 5,
+    "audio": 20161101,
+    "stopAudio": 20161102
+  },
+  {
+    "id": 308601,
+    "spine": "v1a9_lxxx_1/lxxx_1",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "",
+    "mvtime": 0,
+    "voice": [],
+    "actionTime": [],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 0
+  },
+  {
+    "id": 308602,
+    "spine": "v1a9_lxxx_2/lxxx_2",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "luxi_v1a9",
+    "mvtime": 17,
+    "voice": [
+      1308600,
+      1308639
+    ],
+    "actionTime": [
+      10,
+      10
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 20191101,
+    "stopAudio": 20191102
+  },
+  {
+    "id": 302504,
+    "spine": "v1a9_xtxx/xtxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "xingti_v1a9",
+    "mvtime": 16,
+    "voice": [
+      1302578
+    ],
+    "actionTime": [
+      5
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 20191103,
+    "stopAudio": 20191104
+  },
+  {
+    "id": 306604,
+    "spine": "v2a2_37xx_3/37xx_3",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "37_v2a2",
+    "mvtime": 15,
+    "voice": [
+      1306669
+    ],
+    "actionTime": [
+      13
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 20221103,
+    "stopAudio": 20221104
+  },
+  {
+    "id": 310001,
+    "spine": "v2a2_tsnnxx_1/tsnnxx_1",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "",
+    "mvtime": 0,
+    "voice": [],
+    "actionTime": [],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 0
+  },
+  {
+    "id": 310002,
+    "spine": "v2a2_310002_tsnnxx/310002_tsnnxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "tsnn_v2a2",
+    "mvtime": 15,
+    "voice": [
+      1310000
+    ],
+    "actionTime": [
+      8
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 20221101,
+    "stopAudio": 20221102
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "activityId": 11710,
+    "day": 1,
+    "puzzleId": 117101,
+    "puzzleTitle": "language_10036619",
+    "puzzleDesc": "language_10036620",
+    "puzzleIcon": "v1a7_lamp_puzzlepic_1",
+    "answerId": 3,
+    "bonus": "2#2#60|2#5#4000"
+  },
+  {
+    "activityId": 11710,
+    "day": 2,
+    "puzzleId": 117102,
+    "puzzleTitle": "language_10036621",
+    "puzzleDesc": "language_10036622",
+    "puzzleIcon": "v1a7_lamp_puzzlepic_2",
+    "answerId": 3,
+    "bonus": "10#11#1|1#115033#6"
+  },
+  {
+    "activityId": 11710,
+    "day": 3,
+    "puzzleId": 117103,
+    "puzzleTitle": "language_10036623",
+    "puzzleDesc": "language_10036624",
+    "puzzleIcon": "v1a7_lamp_puzzlepic_3",
+    "answerId": 2,
+    "bonus": "11#11711#1|1#110202#5"
+  },
+  {
+    "activityId": 11710,
+    "day": 4,
+    "puzzleId": 117104,
+    "puzzleTitle": "language_10036625",
+    "puzzleDesc": "language_10036626",
+    "puzzleIcon": "v1a7_lamp_puzzlepic_4",
+    "answerId": 3,
+    "bonus": "1#115043#6|2#3#4000"
+  },
+  {
+    "activityId": 11710,
+    "day": 5,
+    "puzzleId": 117105,
+    "puzzleTitle": "language_10036627",
+    "puzzleDesc": "language_10036628",
+    "puzzleIcon": "v1a7_lamp_puzzlepic_5",
+    "answerId": 3,
+    "bonus": "2#2#60|9#1003#5"
+  }
+]

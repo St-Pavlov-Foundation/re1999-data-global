@@ -1,0 +1,156 @@
+[
+  {
+    "id": 11,
+    "defaultUnlock": 1,
+    "mapElement": 0,
+    "infoID": 1,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic01.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion01.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion01_locked.png",
+    "detailedDesc": "language_10053389",
+    "relatedDesc": "language_10053390"
+  },
+  {
+    "id": 21,
+    "defaultUnlock": 0,
+    "mapElement": 1080802,
+    "infoID": 2,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic02.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion02.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion02_locked.png",
+    "detailedDesc": "language_10053391",
+    "relatedDesc": "language_10053392"
+  },
+  {
+    "id": 22,
+    "defaultUnlock": 0,
+    "mapElement": 1081202,
+    "infoID": 2,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic03.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion03.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion03_locked.png",
+    "detailedDesc": "language_10053393",
+    "relatedDesc": "language_10053394"
+  },
+  {
+    "id": 31,
+    "defaultUnlock": 0,
+    "mapElement": 1081701,
+    "infoID": 3,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic04.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion04.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion04_locked.png",
+    "detailedDesc": "language_10053395",
+    "relatedDesc": "language_10053396"
+  },
+  {
+    "id": 32,
+    "defaultUnlock": 0,
+    "mapElement": 1081801,
+    "infoID": 3,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic05.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion05.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion05_locked.png",
+    "detailedDesc": "language_10053397",
+    "relatedDesc": "language_10053398"
+  },
+  {
+    "id": 41,
+    "defaultUnlock": 1,
+    "mapElement": 0,
+    "infoID": 4,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic09.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion09.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion09_locked.png",
+    "detailedDesc": "language_10053399",
+    "relatedDesc": "language_10053400"
+  },
+  {
+    "id": 42,
+    "defaultUnlock": 0,
+    "mapElement": 1082001,
+    "infoID": 4,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic10.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion10.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion10_locked.png",
+    "detailedDesc": "language_10053401",
+    "relatedDesc": "language_10053402"
+  },
+  {
+    "id": 43,
+    "defaultUnlock": 0,
+    "mapElement": 1082402,
+    "infoID": 4,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic11.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion11.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion11_locked.png",
+    "detailedDesc": "language_10053403",
+    "relatedDesc": "language_10053404"
+  },
+  {
+    "id": 51,
+    "defaultUnlock": 1,
+    "mapElement": 0,
+    "infoID": 5,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic06.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion06.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion06_locked.png",
+    "detailedDesc": "language_10053405",
+    "relatedDesc": "language_10053406"
+  },
+  {
+    "id": 52,
+    "defaultUnlock": 0,
+    "mapElement": 1081101,
+    "infoID": 5,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic07.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion07.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion07_locked.png",
+    "detailedDesc": "language_10053407",
+    "relatedDesc": "language_10053408"
+  },
+  {
+    "id": 53,
+    "defaultUnlock": 0,
+    "mapElement": 1081902,
+    "infoID": 5,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic08.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion08.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion08_locked.png",
+    "detailedDesc": "language_10053409",
+    "relatedDesc": "language_10053410"
+  },
+  {
+    "id": 61,
+    "defaultUnlock": 1,
+    "mapElement": 0,
+    "infoID": 6,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic12.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion12.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion12_locked.png",
+    "detailedDesc": "language_10053411",
+    "relatedDesc": "language_10053412"
+  },
+  {
+    "id": 62,
+    "defaultUnlock": 0,
+    "mapElement": 1080902,
+    "infoID": 6,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic13.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion13.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion13_locked.png",
+    "detailedDesc": "language_10053413",
+    "relatedDesc": "language_10053414"
+  },
+  {
+    "id": 63,
+    "defaultUnlock": 0,
+    "mapElement": 1082202,
+    "infoID": 6,
+    "mapRes": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_pic14.png",
+    "res": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion14.png",
+    "mapResLocked": "singlebg/v2a2_investigate_singlebg/v2a2_investigate_opinion14_locked.png",
+    "detailedDesc": "language_10053415",
+    "relatedDesc": "language_10053416"
+  }
+]

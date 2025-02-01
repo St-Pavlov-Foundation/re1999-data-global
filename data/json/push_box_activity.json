@@ -1,0 +1,33 @@
+[
+  {
+    "activityId": 11113,
+    "stageId": 1,
+    "episodeIds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "openDay": 1
+  },
+  {
+    "activityId": 11113,
+    "stageId": 2,
+    "episodeIds": [
+      5,
+      6,
+      7
+    ],
+    "openDay": 1
+  },
+  {
+    "activityId": 11113,
+    "stageId": 3,
+    "episodeIds": [
+      8,
+      9,
+      10
+    ],
+    "openDay": 1
+  }
+]

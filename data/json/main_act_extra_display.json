@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "",
+    "icon": "",
+    "sortId": 1,
+    "show": 1
+  },
+  {
+    "id": 2,
+    "name": "",
+    "icon": "",
+    "sortId": 2,
+    "show": 1
+  },
+  {
+    "id": 3,
+    "name": "language_10039385",
+    "icon": "singlebg/dungeon/rolestory_singlebg/season_img_01.png",
+    "sortId": 3,
+    "show": 1
+  },
+  {
+    "id": 4,
+    "name": "",
+    "icon": "singlebg_lang/txt_rouge/enter/rk_rouge.png",
+    "sortId": 4,
+    "show": 1
+  }
+]

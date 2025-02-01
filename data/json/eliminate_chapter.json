@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10056516",
+    "activityId": 0,
+    "map": "singlebg/v2a2_eliminate_singlebg/v2a2_eliminate_map01.png"
+  },
+  {
+    "id": 2,
+    "name": "language_10056517",
+    "activityId": 0,
+    "map": "singlebg/v2a2_eliminate_singlebg/v2a2_eliminate_map02.png"
+  },
+  {
+    "id": 3,
+    "name": "language_10056518",
+    "activityId": 0,
+    "map": "singlebg/v2a2_eliminate_singlebg/v2a2_eliminate_map03.png"
+  },
+  {
+    "id": 4,
+    "name": "language_10056519",
+    "activityId": 0,
+    "map": "singlebg/v2a2_eliminate_singlebg/v2a2_eliminate_map04.png"
+  }
+]

@@ -1,0 +1,155 @@
+[
+  {
+    "endingId": 101,
+    "belongStoryId": 2,
+    "finalStepId": 1801,
+    "endingText": "language_10053296",
+    "text": "language_10053297",
+    "level": "b",
+    "pic": "v2a1_strangetale_ending1_1"
+  },
+  {
+    "endingId": 102,
+    "belongStoryId": 2,
+    "finalStepId": 1802,
+    "endingText": "language_10053298",
+    "text": "language_10053299",
+    "level": "a",
+    "pic": "v2a1_strangetale_ending1_2"
+  },
+  {
+    "endingId": 103,
+    "belongStoryId": 2,
+    "finalStepId": 1803,
+    "endingText": "language_10053300",
+    "text": "language_10053301",
+    "level": "c",
+    "pic": "v2a1_strangetale_ending1_3"
+  },
+  {
+    "endingId": 104,
+    "belongStoryId": 2,
+    "finalStepId": 1804,
+    "endingText": "language_10053302",
+    "text": "language_10053303",
+    "level": "s",
+    "pic": "v2a1_strangetale_ending1_4"
+  },
+  {
+    "endingId": 105,
+    "belongStoryId": 2,
+    "finalStepId": 1805,
+    "endingText": "language_10053304",
+    "text": "language_10053305",
+    "level": "a",
+    "pic": "v2a1_strangetale_ending3_7"
+  },
+  {
+    "endingId": 201,
+    "belongStoryId": 1,
+    "finalStepId": 2801,
+    "endingText": "language_10053306",
+    "text": "language_10053303",
+    "level": "s",
+    "pic": "v2a1_strangetale_ending2_2"
+  },
+  {
+    "endingId": 202,
+    "belongStoryId": 1,
+    "finalStepId": 2802,
+    "endingText": "language_10053307",
+    "text": "language_10053297",
+    "level": "b",
+    "pic": "v2a1_strangetale_ending2_3"
+  },
+  {
+    "endingId": 203,
+    "belongStoryId": 1,
+    "finalStepId": 2803,
+    "endingText": "language_10053308",
+    "text": "language_10053299",
+    "level": "a",
+    "pic": "v2a1_strangetale_ending2_5"
+  },
+  {
+    "endingId": 204,
+    "belongStoryId": 1,
+    "finalStepId": 2804,
+    "endingText": "language_10053309",
+    "text": "language_10053310",
+    "level": "s",
+    "pic": "v2a1_strangetale_ending2_1"
+  },
+  {
+    "endingId": 205,
+    "belongStoryId": 1,
+    "finalStepId": 2805,
+    "endingText": "language_10053311",
+    "text": "language_10053312",
+    "level": "b",
+    "pic": "v2a1_strangetale_ending2_4"
+  },
+  {
+    "endingId": 206,
+    "belongStoryId": 1,
+    "finalStepId": 2806,
+    "endingText": "language_10053313",
+    "text": "language_10053301",
+    "level": "c",
+    "pic": "v2a1_strangetale_ending2_6"
+  },
+  {
+    "endingId": 301,
+    "belongStoryId": 3,
+    "finalStepId": 3801,
+    "endingText": "language_10053314",
+    "text": "language_10053301",
+    "level": "c",
+    "pic": "v2a1_strangetale_ending3_6"
+  },
+  {
+    "endingId": 302,
+    "belongStoryId": 3,
+    "finalStepId": 3802,
+    "endingText": "language_10053315",
+    "text": "language_10053316",
+    "level": "a",
+    "pic": "v2a1_strangetale_ending3_4"
+  },
+  {
+    "endingId": 303,
+    "belongStoryId": 3,
+    "finalStepId": 3803,
+    "endingText": "language_10053317",
+    "text": "language_10053299",
+    "level": "a",
+    "pic": "v2a1_strangetale_ending3_2"
+  },
+  {
+    "endingId": 304,
+    "belongStoryId": 3,
+    "finalStepId": 3804,
+    "endingText": "language_10053318",
+    "text": "language_10053297",
+    "level": "b",
+    "pic": "v2a1_strangetale_ending3_3"
+  },
+  {
+    "endingId": 305,
+    "belongStoryId": 3,
+    "finalStepId": 3805,
+    "endingText": "language_10053319",
+    "text": "language_10053297",
+    "level": "b",
+    "pic": "v2a1_strangetale_ending3_5"
+  },
+  {
+    "endingId": 306,
+    "belongStoryId": 3,
+    "finalStepId": 3806,
+    "endingText": "language_10053320",
+    "text": "language_10053303",
+    "level": "s",
+    "pic": "v2a1_strangetale_ending3_1"
+  }
+]

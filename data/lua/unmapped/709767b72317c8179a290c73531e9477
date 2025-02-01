@@ -1,0 +1,14 @@
+module("framework.network.socket.pre.BasePreReceiver", package.seeall)
+
+slot0 = class("BasePreReceiver")
+
+function slot0.ctor(slot0)
+end
+
+function slot0.preReceiveMsg(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+end
+
+function slot0.preReceiveSysMsg(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+end
+
+return slot0

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 489092,
+    "name": "language_10054002",
+    "icon": "489092",
+    "rare": 4,
+    "heroRares": "1#2#3#4#5",
+    "heroRank": 2,
+    "expireHours": 504,
+    "useDesc": "language_10054003",
+    "desc": "language_10054004",
+    "useTitle": "language_10054005",
+    "effect": "1#71",
+    "sources": ""
+  },
+  {
+    "id": 489093,
+    "name": "language_10054006",
+    "icon": "489093",
+    "rare": 5,
+    "heroRares": "5",
+    "heroRank": 3,
+    "expireHours": 504,
+    "useDesc": "language_10054007",
+    "desc": "language_10054008",
+    "useTitle": "language_10054009",
+    "effect": "2#121",
+    "sources": ""
+  }
+]

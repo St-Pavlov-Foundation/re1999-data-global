@@ -1,0 +1,142 @@
+[
+  {
+    "id": 306301,
+    "animName": "idle",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306302,
+    "animName": "idle",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 30,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306301,
+    "animName": "click",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306302,
+    "animName": "click",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 30,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306301,
+    "animName": "idle_room",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306302,
+    "animName": "idle_room",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 30,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306201,
+    "animName": "interact",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306202,
+    "animName": "interact",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 301003,
+    "animName": "idle",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 27,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 301003,
+    "animName": "click",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 27,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 301003,
+    "animName": "idle_room",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 27,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 301003,
+    "animName": "walk",
+    "upTime": 0,
+    "upDuration": 0,
+    "upDistance": 27,
+    "downTime": 0,
+    "downDuration": 0,
+    "cameraState": 0
+  },
+  {
+    "id": 306301,
+    "animName": "interact",
+    "upTime": 0,
+    "upDuration": 500,
+    "upDistance": 20,
+    "downTime": 0,
+    "downDuration": 500,
+    "cameraState": 0
+  },
+  {
+    "id": 306302,
+    "animName": "interact",
+    "upTime": 0,
+    "upDuration": 500,
+    "upDistance": 30,
+    "downTime": 0,
+    "downDuration": 500,
+    "cameraState": 0
+  }
+]

@@ -1,0 +1,12 @@
+module("framework.helper.boxCollider2dhelper", package.seeall)
+
+slot1 = SLFramework.UGUI.boxCollider2dhelper
+
+return {
+	getOffset = function (slot0)
+		return uv0.GetOffset(slot0, 0, 0)
+	end,
+	getSize = function (slot0)
+		return uv0.GetSize(slot0, 0, 0)
+	end
+}

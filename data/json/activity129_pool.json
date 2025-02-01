@@ -1,0 +1,47 @@
+[
+  {
+    "activityId": 11406,
+    "poolId": 1401,
+    "type": 1,
+    "name": "language_10027263",
+    "nameEn": "language_10027264",
+    "cost": "2#1401#200",
+    "maxDraw": 10
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1402,
+    "type": 1,
+    "name": "language_10027265",
+    "nameEn": "language_10027266",
+    "cost": "2#1401#200",
+    "maxDraw": 10
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1403,
+    "type": 1,
+    "name": "language_10027267",
+    "nameEn": "language_10027268",
+    "cost": "2#1401#200",
+    "maxDraw": 10
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1404,
+    "type": 1,
+    "name": "language_10027269",
+    "nameEn": "language_10027270",
+    "cost": "2#1401#200",
+    "maxDraw": 10
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1405,
+    "type": 2,
+    "name": "language_10027271",
+    "nameEn": "language_10027272",
+    "cost": "2#1401#10",
+    "maxDraw": 100
+  }
+]

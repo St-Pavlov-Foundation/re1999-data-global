@@ -1,0 +1,338 @@
+[
+  {
+    "id": 1,
+    "command": "set dungeon 10003 2",
+    "name": "开启目标选择",
+    "desc": ""
+  },
+  {
+    "id": 2,
+    "command": "add material 2#1#10000",
+    "name": "加物品",
+    "desc": "add material 大类#id#数量|大类#id#数量"
+  },
+  {
+    "id": 3,
+    "command": "add hero 3003",
+    "name": "加英雄",
+    "desc": "add hero id#id#id"
+  },
+  {
+    "id": 4,
+    "command": "add mail id",
+    "name": "发一封模版邮件",
+    "desc": "add mail id"
+  },
+  {
+    "id": 5,
+    "command": "add mailv2 标题 正文",
+    "name": "发一封非模版邮件",
+    "desc": "add mailv2 标题 正文"
+  },
+  {
+    "id": 6,
+    "command": "delete material 1#11010001#100",
+    "name": "扣物品",
+    "desc": "delete material 大类#id#数量|大类#id#数量"
+  },
+  {
+    "id": 7,
+    "command": "resetAllHero",
+    "name": "重置所有英雄数据到1级",
+    "desc": ""
+  },
+  {
+    "id": 8,
+    "command": "set dungeon all",
+    "name": "全关卡开启",
+    "desc": ""
+  },
+  {
+    "id": 9,
+    "command": "set dungeon allv2",
+    "name": "全关卡开启(不含元件)",
+    "desc": ""
+  },
+  {
+    "id": 11,
+    "command": "delete allItem",
+    "name": "清空道具背包",
+    "desc": ""
+  },
+  {
+    "id": 12,
+    "command": "set level 1",
+    "name": "设置玩家等级",
+    "desc": "set level 等级"
+  },
+  {
+    "id": 13,
+    "command": "delete birthday",
+    "name": "删除生日信息",
+    "desc": ""
+  },
+  {
+    "id": 14,
+    "command": "add heroVoice 3002 1300209",
+    "name": "给某个英雄解锁特定语音",
+    "desc": "add heroVoice heroid voiceid"
+  },
+  {
+    "id": 15,
+    "command": "add material 6#3002#1",
+    "name": "加英雄好感度",
+    "desc": "add material 6#heroid#好感度数量"
+  },
+  {
+    "id": 16,
+    "command": "set taskProgress 1",
+    "name": "设置任务进度",
+    "desc": "set taskProgress 进度值"
+  },
+  {
+    "id": 17,
+    "command": "set taskfinish 40028 40029 40030",
+    "name": "直接完成任务",
+    "desc": "set taskfinish id1 id2 id3 ..."
+  },
+  {
+    "id": 18,
+    "command": "#weather 天气id",
+    "name": "更改主界面天气",
+    "desc": ""
+  },
+  {
+    "id": 19,
+    "command": "add hero all 1",
+    "name": "全英雄获得",
+    "desc": "啥都不用写"
+  },
+  {
+    "id": 20,
+    "command": "add allitem 100",
+    "name": "全道具获得",
+    "desc": "最末尾填写获得数量"
+  },
+  {
+    "id": 21,
+    "command": "add allequip 1",
+    "name": "全装备获得",
+    "desc": "最末尾填写获得数量"
+  },
+  {
+    "id": 22,
+    "command": "add allheroskin 1",
+    "name": "全皮肤获得",
+    "desc": "最末尾填写获得数量"
+  },
+  {
+    "id": 23,
+    "command": "delete allDungeon",
+    "name": "清空副本进度",
+    "desc": ""
+  },
+  {
+    "id": 24,
+    "command": "delete guide all",
+    "name": "清空所有指引进度",
+    "desc": ""
+  },
+  {
+    "id": 25,
+    "command": "add rewardpoint 50",
+    "name": "增加行迹点",
+    "desc": "add rewardpoint 章节id 奖励点增量"
+  },
+  {
+    "id": 26,
+    "command": "delete weekwalk",
+    "name": "重置人工梦游（重登）",
+    "desc": ""
+  },
+  {
+    "id": 27,
+    "command": "set weekwalkElement 层id 元件ID 类型进度",
+    "name": "设置梦游元件进度",
+    "desc": ""
+  },
+  {
+    "id": 28,
+    "command": "set weekwalk 9999",
+    "name": "梦游全地图开启",
+    "desc": ""
+  },
+  {
+    "id": 29,
+    "command": "finishWeekwalk 101",
+    "name": "梦游完成地图",
+    "desc": ""
+  },
+  {
+    "id": 30,
+    "command": "set weekwalkissue 期数",
+    "name": "梦游设置本账号期数",
+    "desc": ""
+  },
+  {
+    "id": 31,
+    "command": "set activity104 层数",
+    "name": "赛季关卡通关层（重登）",
+    "desc": ""
+  },
+  {
+    "id": 32,
+    "command": "set activity104Pre 层数",
+    "name": "赛季设置回顾层数（重登）",
+    "desc": ""
+  },
+  {
+    "id": 33,
+    "command": "add allActivity104Equip",
+    "name": "赛季添加所有名人卡",
+    "desc": ""
+  },
+  {
+    "id": 34,
+    "command": "delete activity104",
+    "name": "清空赛季数据（重登）",
+    "desc": ""
+  },
+  {
+    "id": 35,
+    "command": "delete activity111",
+    "name": "清空推箱子（重登）",
+    "desc": ""
+  },
+  {
+    "id": 36,
+    "command": "delete activity111",
+    "name": "清空兑换活动（重登）",
+    "desc": ""
+  },
+  {
+    "id": 37,
+    "command": "#mainheromode 0",
+    "name": "主界面立绘入相框",
+    "desc": "0是相框，1是场景"
+  },
+  {
+    "id": 38,
+    "command": "delete activity114",
+    "name": "清空杰西卡（重登）",
+    "desc": ""
+  },
+  {
+    "id": 39,
+    "command": "set activity114 round 周 日 回合",
+    "name": "设置杰西卡回合",
+    "desc": ""
+  },
+  {
+    "id": 40,
+    "command": "set activity114 attr 类型1~7#变更值|...",
+    "name": "设置杰西卡属性特质",
+    "desc": ""
+  },
+  {
+    "id": 41,
+    "command": "set activity114 battle 战斗事件",
+    "name": "设置杰西卡战斗事件",
+    "desc": ""
+  },
+  {
+    "id": 42,
+    "command": "set activity114Photo (结局id)",
+    "name": "解锁杰西卡结局",
+    "desc": ""
+  },
+  {
+    "id": 43,
+    "command": "set activity114AllEvent",
+    "name": "解锁杰西卡所有事件会面出行",
+    "desc": ""
+  },
+  {
+    "id": 44,
+    "command": "delete explore",
+    "name": "清空探索数据（重登）",
+    "desc": ""
+  },
+  {
+    "id": 45,
+    "command": "delete activity115",
+    "name": "清空牙仙关卡数据",
+    "desc": ""
+  },
+  {
+    "id": 46,
+    "command": "delete roomInteraction",
+    "name": "清空小屋角色交互数据",
+    "desc": ""
+  },
+  {
+    "id": 47,
+    "command": "delete story 100001",
+    "name": "清除单个剧情的播放记录",
+    "desc": ""
+  },
+  {
+    "id": 48,
+    "command": "add heroStoryTicket 1",
+    "name": "轶事增加当期门票",
+    "desc": ""
+  },
+  {
+    "id": 49,
+    "command": "set heroStory 期数 0",
+    "name": "轶事设置当前活动期数",
+    "desc": ""
+  },
+  {
+    "id": 50,
+    "command": "set heroStory 期数 1",
+    "name": "轶事设置当前常驻期数",
+    "desc": ""
+  },
+  {
+    "id": 51,
+    "command": "set heroStory 0",
+    "name": "清除轶事的GM设定跟随游戏活动配置",
+    "desc": ""
+  },
+  {
+    "id": 52,
+    "command": "set heroStoryScore 期数 分数",
+    "name": "设置轶事活动积分",
+    "desc": ""
+  },
+  {
+    "id": 53,
+    "command": "completedHeroDispatch 派遣ID",
+    "name": "完成单个派遣",
+    "desc": ""
+  },
+  {
+    "id": 54,
+    "command": "oneKeyCompletedHeroDispatch",
+    "name": "完成当前所有派遣",
+    "desc": ""
+  },
+  {
+    "id": 55,
+    "command": "resetHeroStoryDispatch 派遣ID",
+    "name": "重置单个派遣",
+    "desc": ""
+  },
+  {
+    "id": 56,
+    "command": "resetAllHeroStoryDispatch",
+    "name": "重置所有派遣",
+    "desc": ""
+  },
+  {
+    "id": 57,
+    "command": "clearChooseMultiUpHero poolId",
+    "name": "清除自选up池的选择 需要替换poolId",
+    "desc": ""
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 100000,
+    "bloomColor1": "0#0#0#0",
+    "bloomColor2": "0#0#0#0",
+    "bloomColor3": "0#0#0#0",
+    "bloomColor4": "0#0#0#0",
+    "mainColor1": "255#255#255#0",
+    "mainColor2": "255#255#255#0",
+    "mainColor3": "255#255#255#0",
+    "mainColor4": "255#255#255#0",
+    "emissionColor1": "0#0#0#0",
+    "emissionColor2": "0#0#0#0",
+    "emissionColor3": "0#0#0#0",
+    "emissionColor4": "0#0#0#0"
+  },
+  {
+    "id": 100001,
+    "bloomColor1": "188#160#102#0",
+    "bloomColor2": "40#41#43#0",
+    "bloomColor3": "191#100#48#0",
+    "bloomColor4": "77#128#204#0",
+    "mainColor1": "248#242#242#0",
+    "mainColor2": "232#232#232#0",
+    "mainColor3": "214#214#214#0",
+    "mainColor4": "227#230#230#0",
+    "emissionColor1": "191#173#152#1.17",
+    "emissionColor2": "191#156#148#1",
+    "emissionColor3": "191#97#33#1",
+    "emissionColor4": "128#182#191#1.09"
+  }
+]

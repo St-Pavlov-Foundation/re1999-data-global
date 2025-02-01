@@ -1,0 +1,77 @@
+[
+  {
+    "tradeGroupId": 11,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 12,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 13,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 21,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 21,
+    "tradeLevel": 6,
+    "maxCritterCount": 2
+  },
+  {
+    "tradeGroupId": 22,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 22,
+    "tradeLevel": 8,
+    "maxCritterCount": 2
+  },
+  {
+    "tradeGroupId": 23,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 23,
+    "tradeLevel": 11,
+    "maxCritterCount": 2
+  },
+  {
+    "tradeGroupId": 31,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 31,
+    "tradeLevel": 9,
+    "maxCritterCount": 2
+  },
+  {
+    "tradeGroupId": 32,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 32,
+    "tradeLevel": 11,
+    "maxCritterCount": 2
+  },
+  {
+    "tradeGroupId": 33,
+    "tradeLevel": 1,
+    "maxCritterCount": 1
+  },
+  {
+    "tradeGroupId": 33,
+    "tradeLevel": 11,
+    "maxCritterCount": 2
+  }
+]

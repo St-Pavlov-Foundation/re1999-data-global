@@ -1,0 +1,533 @@
+[
+  {
+    "buffId": 301401,
+    "orEnemy": 1,
+    "skinId": 301103,
+    "effectPath": "buff/buff_v1a4_malilian_innate",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530102,
+    "orEnemy": 2,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530103,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530104,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530105,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530106,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530107,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30530108,
+    "orEnemy": 1,
+    "skinId": 305303,
+    "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30391,
+    "orEnemy": 2,
+    "skinId": 303903,
+    "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
+    "triggerEffect": "",
+    "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "audio": 0
+  },
+  {
+    "buffId": 30394,
+    "orEnemy": 2,
+    "skinId": 303903,
+    "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
+    "triggerEffect": "",
+    "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "audio": 0
+  },
+  {
+    "buffId": 601107,
+    "orEnemy": 2,
+    "skinId": 306203,
+    "effectPath": "buff/pre_v1a7_meilanni_innate3_01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 306601311,
+    "orEnemy": 2,
+    "skinId": 306603,
+    "effectPath": "v1a7_37_bnr/37_bnr_innate5",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 306601312,
+    "orEnemy": 2,
+    "skinId": 306603,
+    "effectPath": "v1a7_37_bnr/37_bnr_innate1",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30631,
+    "orEnemy": 2,
+    "skinId": 306303,
+    "effectPath": "buff/buff_pkls_innate_1_idle_306303",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30251,
+    "orEnemy": 2,
+    "skinId": 302504,
+    "effectPath": "buff/pre_xt_innate01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430250401
+  },
+  {
+    "buffId": 30790601,
+    "orEnemy": 2,
+    "skinId": 307903,
+    "effectPath": "v2a0_6_hshd/6_hshd_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 4307922
+  },
+  {
+    "buffId": 30790602,
+    "orEnemy": 2,
+    "skinId": 307903,
+    "effectPath": "v2a0_6_hshd/6_hshd_skill2_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 4307923
+  },
+  {
+    "buffId": 30600101,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30600103,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30601,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30603,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 4120037,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 2130027,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 2130028,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 2130029,
+    "orEnemy": 2,
+    "skinId": 306003,
+    "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810101,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_01_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810102,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810103,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810110,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810111,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810112,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810113,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810114,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30810115,
+    "orEnemy": 2,
+    "skinId": 308103,
+    "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30870111,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870114,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870117,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870121,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870124,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870127,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870131,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870344
+  },
+  {
+    "buffId": 30870132,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870344
+  },
+  {
+    "buffId": 30870141,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870142,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30650104,
+    "orEnemy": 1,
+    "skinId": 306503,
+    "effectPath": "v2a2_makusi/makusi_biaozhu",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30720101,
+    "orEnemy": 2,
+    "skinId": 307203,
+    "effectPath": "v2a2_zongmaoshali/v2a2_zongmaoshali_beidong_01",
+    "triggerEffect": "",
+    "delEffect": "v2a2_zongmaoshali/v2a2_zongmaoshali_beidong_02",
+    "audio": 0
+  },
+  {
+    "buffId": 30530102,
+    "orEnemy": 2,
+    "skinId": 305304,
+    "effectPath": "buff/pre_yaxian_innate_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430530441
+  },
+  {
+    "buffId": 30840121,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840122,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840123,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840124,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840125,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840126,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840127,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840128,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840129,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840130,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840131,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30840132,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  }
+]

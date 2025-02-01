@@ -1,0 +1,101 @@
+[
+  {
+    "activityId": 11202,
+    "id": 1,
+    "condition": "2#0#1499",
+    "name": "language_10026476",
+    "nameEn": "Retake the Course",
+    "smallCg": "img_zhaopian1",
+    "bigCg": "img_1",
+    "features": "13",
+    "desc": "language_10026636"
+  },
+  {
+    "activityId": 11202,
+    "id": 2,
+    "condition": "2#1500|5#7",
+    "name": "language_10026486",
+    "nameEn": "New Food! New Taste!",
+    "smallCg": "img_zhaopian6",
+    "bigCg": "img_6",
+    "features": "18",
+    "desc": "language_10026637"
+  },
+  {
+    "activityId": 11202,
+    "id": 3,
+    "condition": "2#1500|5#2|5#5",
+    "name": "language_10026480",
+    "nameEn": "Ms. Misery",
+    "smallCg": "img_zhaopian3",
+    "bigCg": "img_3",
+    "features": "15",
+    "desc": "language_10026638"
+  },
+  {
+    "activityId": 11202,
+    "id": 4,
+    "condition": "2#2000|5#3|5#9",
+    "name": "language_10026482",
+    "nameEn": "The Listener with Long Ears",
+    "smallCg": "img_zhaopian4",
+    "bigCg": "img_4",
+    "features": "16",
+    "desc": "language_10026639"
+  },
+  {
+    "activityId": 11202,
+    "id": 5,
+    "condition": "2#1500|3#9120501|3#9120503|3#9120504|3#9120505",
+    "name": "language_10026488",
+    "nameEn": "Fight Club",
+    "smallCg": "img_zhaopian7",
+    "bigCg": "img_7",
+    "features": "19",
+    "desc": "language_10026640"
+  },
+  {
+    "activityId": 11202,
+    "id": 6,
+    "condition": "2#2000|5#10|5#22",
+    "name": "language_10026478",
+    "nameEn": "Critters' Good Friend",
+    "smallCg": "img_zhaopian2",
+    "bigCg": "img_2",
+    "features": "14",
+    "desc": "language_10026641"
+  },
+  {
+    "activityId": 11202,
+    "id": 7,
+    "condition": "2#2000|5#1|5#4|5#8",
+    "name": "language_10026484",
+    "nameEn": "The Unknown Starlet",
+    "smallCg": "img_zhaopian5",
+    "bigCg": "img_5",
+    "features": "17",
+    "desc": "language_10026642"
+  },
+  {
+    "activityId": 11202,
+    "id": 8,
+    "condition": "2#2600|6",
+    "name": "language_10008675",
+    "nameEn": "Peacelover",
+    "smallCg": "img_zhaopian8",
+    "bigCg": "img_8",
+    "features": "20",
+    "desc": "language_10026643"
+  },
+  {
+    "activityId": 11202,
+    "id": 9,
+    "condition": "2#1500",
+    "name": "language_10000028",
+    "nameEn": "One Flew Over the Old House",
+    "smallCg": "img_zhaopian9",
+    "bigCg": "img_9",
+    "features": "21",
+    "desc": "language_10026644"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "id": 11302,
+    "buffId": 101,
+    "name": "菩提根",
+    "desc": "平衡与智慧。口、耳、脑。交流、聆听、思考。游刃的才华与从容使你理解所有。",
+    "skillId": 811201,
+    "preBuffId": 0,
+    "cost": "2#1#10",
+    "taskId": 0,
+    "icon": "v1a3_buff_001",
+    "bigIcon": "v1a3_bigbuff_001"
+  },
+  {
+    "id": 11302,
+    "buffId": 102,
+    "name": "摩耶梦",
+    "desc": "同理与敏锐。闭眼时黄金如流沙般错手而过。如果不握紧，尚有余温的怀抱也将失去。",
+    "skillId": 811204,
+    "preBuffId": 101,
+    "cost": "2#1#11",
+    "taskId": 0,
+    "icon": "v1a3_buff_002",
+    "bigIcon": "v1a3_bigbuff_002"
+  },
+  {
+    "id": 11302,
+    "buffId": 103,
+    "name": "祈祷者",
+    "desc": "接纳与激励。万物在此徘徊许久，不曾离去，直至找到那个本质与充盈的力量。",
+    "skillId": 811211,
+    "preBuffId": 102,
+    "cost": "2#1#12",
+    "taskId": 0,
+    "icon": "v1a3_buff_003",
+    "bigIcon": "v1a3_bigbuff_003"
+  },
+  {
+    "id": 11302,
+    "buffId": 104,
+    "name": "红树林",
+    "desc": "决心与意志。别令自己被束缚，既生出那双腿，便是为了恒久地奔走。",
+    "skillId": 811215,
+    "preBuffId": 103,
+    "cost": "2#1#13",
+    "taskId": 0,
+    "icon": "v1a3_buff_004",
+    "bigIcon": "v1a3_bigbuff_004"
+  },
+  {
+    "id": 11302,
+    "buffId": 105,
+    "name": "楼陀罗",
+    "desc": "坚韧与固守。一切都这样站立于大地之上，苦难也是如此。",
+    "skillId": 811283,
+    "preBuffId": 104,
+    "cost": "2#1#14",
+    "taskId": 0,
+    "icon": "v1a3_buff_005",
+    "bigIcon": "v1a3_bigbuff_005"
+  },
+  {
+    "id": 11302,
+    "buffId": 201,
+    "name": "日蚀",
+    "desc": "走向尾声。天幕将要落下，新的光明在哪里？",
+    "skillId": 0,
+    "preBuffId": 0,
+    "cost": "",
+    "taskId": 0,
+    "icon": "v1a3_buff_006",
+    "bigIcon": "v1a3_bigbuff_006"
+  },
+  {
+    "id": 11302,
+    "buffId": 202,
+    "name": "月蚀",
+    "desc": "大幕再起。走出月南交的坠落处，睁眼便可看见这光辉的前路。",
+    "skillId": 0,
+    "preBuffId": 0,
+    "cost": "",
+    "taskId": 0,
+    "icon": "v1a3_buff_007",
+    "bigIcon": "v1a3_bigbuff_007"
+  },
+  {
+    "id": 11302,
+    "buffId": 203,
+    "name": "一次完满",
+    "desc": "所有来时的路都是你走过的路。看吧，一场奇妙完整的轮回。",
+    "skillId": 0,
+    "preBuffId": 0,
+    "cost": "",
+    "taskId": 0,
+    "icon": "v1a3_buff_008",
+    "bigIcon": "v1a3_bigbuff_008"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 12210,
+    "id": 1,
+    "value1": 2203,
+    "value2": ""
+  },
+  {
+    "activityId": 12210,
+    "id": 2,
+    "value1": 8,
+    "value2": ""
+  },
+  {
+    "activityId": 12210,
+    "id": 3,
+    "value1": 14,
+    "value2": ""
+  },
+  {
+    "activityId": 12210,
+    "id": 4,
+    "value1": 0,
+    "value2": "singlebg/v2a2_mainactivity_singlebg/v2a2_season_enter_fullbg.png"
+  },
+  {
+    "activityId": 12210,
+    "id": 5,
+    "value1": 0,
+    "value2": "ui/viewres/seasonver/act166/bg/season166mainbg1.prefab"
+  }
+]

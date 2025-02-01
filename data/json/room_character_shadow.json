@@ -1,0 +1,127 @@
+[
+  {
+    "skinId": 303203,
+    "animName": "idle_room",
+    "shadow": 1
+  },
+  {
+    "skinId": 305301,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 305302,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 305601,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 305602,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307001,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307002,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307201,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307202,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 305303,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 308001,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 308002,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 308601,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 308602,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309401,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309402,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309501,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309502,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309701,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309702,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310001,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310002,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310201,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310202,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307203,
+    "animName": "interact",
+    "shadow": 1
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10000124",
+    "order": 1,
+    "bgIcon": "themesource_1",
+    "nameColor": "#ead59f",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": 2,
+    "name": "language_10032753",
+    "order": 2,
+    "bgIcon": "themesource_2",
+    "nameColor": "#ff702b",
+    "bgColor": "#ffffff"
+  },
+  {
+    "id": 3,
+    "name": "language_10032754",
+    "order": 3,
+    "bgIcon": "themesource_3",
+    "nameColor": "#7fc8ff",
+    "bgColor": "#5492c1"
+  }
+]

@@ -1,0 +1,338 @@
+[
+  {
+    "id": 1001,
+    "storyId": 1,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 1002,
+    "storyId": 1,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 1003,
+    "storyId": 1,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 1004,
+    "storyId": 1,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 1005,
+    "storyId": 1,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 1006,
+    "storyId": 1,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 1007,
+    "storyId": 1,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 2001,
+    "storyId": 2,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 2002,
+    "storyId": 2,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 2003,
+    "storyId": 2,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 2004,
+    "storyId": 2,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 2005,
+    "storyId": 2,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 2006,
+    "storyId": 2,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 2007,
+    "storyId": 2,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 1011,
+    "storyId": 3,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 1012,
+    "storyId": 3,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 1013,
+    "storyId": 3,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 1014,
+    "storyId": 3,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 1015,
+    "storyId": 3,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 1016,
+    "storyId": 3,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 1017,
+    "storyId": 3,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 2011,
+    "storyId": 4,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 2012,
+    "storyId": 4,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 2013,
+    "storyId": 4,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 2014,
+    "storyId": 4,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 2015,
+    "storyId": 4,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 2016,
+    "storyId": 4,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 2017,
+    "storyId": 4,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 1021,
+    "storyId": 5,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 1022,
+    "storyId": 5,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 1023,
+    "storyId": 5,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 1024,
+    "storyId": 5,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 1025,
+    "storyId": 5,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 1026,
+    "storyId": 5,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 1027,
+    "storyId": 5,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 2021,
+    "storyId": 6,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 2022,
+    "storyId": 6,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 2023,
+    "storyId": 6,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 2024,
+    "storyId": 6,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 2025,
+    "storyId": 6,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 2026,
+    "storyId": 6,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 2027,
+    "storyId": 6,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 1031,
+    "storyId": 7,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 1032,
+    "storyId": 7,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 1033,
+    "storyId": 7,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 1034,
+    "storyId": 7,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 1035,
+    "storyId": 7,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 1036,
+    "storyId": 7,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 1037,
+    "storyId": 7,
+    "wave": "7",
+    "score": 250
+  },
+  {
+    "id": 2031,
+    "storyId": 8,
+    "wave": "1",
+    "score": 50
+  },
+  {
+    "id": 2032,
+    "storyId": 8,
+    "wave": "2",
+    "score": 100
+  },
+  {
+    "id": 2033,
+    "storyId": 8,
+    "wave": "3",
+    "score": 100
+  },
+  {
+    "id": 2034,
+    "storyId": 8,
+    "wave": "4",
+    "score": 150
+  },
+  {
+    "id": 2035,
+    "storyId": 8,
+    "wave": "5",
+    "score": 150
+  },
+  {
+    "id": 2036,
+    "storyId": 8,
+    "wave": "6",
+    "score": 200
+  },
+  {
+    "id": 2037,
+    "storyId": 8,
+    "wave": "7",
+    "score": 250
+  }
+]

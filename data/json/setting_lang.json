@@ -1,0 +1,66 @@
+[
+  {
+    "shortcuts": "en",
+    "lang": "English",
+    "fontasset1": "regularpro",
+    "fontasset2": "regularpro",
+    "textfontasset1": "hwzs.ttf",
+    "textfontasset2": "hwzs.ttf"
+  },
+  {
+    "shortcuts": "jp",
+    "lang": "日本語",
+    "fontasset1": "japanpro",
+    "fontasset2": "japankot",
+    "textfontasset1": "japan.otf",
+    "textfontasset2": "japankot.otf"
+  },
+  {
+    "shortcuts": "zh",
+    "lang": "简体中文",
+    "fontasset1": "hwzs_dynamic",
+    "fontasset2": "hkxzyt_dynamic",
+    "textfontasset1": "hwzs.ttf",
+    "textfontasset2": "hkxzyt.ttf"
+  },
+  {
+    "shortcuts": "kr",
+    "lang": "한국어",
+    "fontasset1": "koreapro",
+    "fontasset2": "koreapro",
+    "textfontasset1": "korea.ttf",
+    "textfontasset2": "korea.ttf"
+  },
+  {
+    "shortcuts": "thai",
+    "lang": "泰文",
+    "fontasset1": "thaipro",
+    "fontasset2": "thaipro",
+    "textfontasset1": "thaittf.ttf",
+    "textfontasset2": "thaittf.ttf"
+  },
+  {
+    "shortcuts": "tw",
+    "lang": "繁體中文",
+    "fontasset1": "hwzs_dynamic",
+    "fontasset2": "hwzs_dynamic",
+    "textfontasset1": "hwzs.ttf",
+    "textfontasset2": "hwzs.ttf"
+  },
+  {
+    "shortcuts": "de",
+    "lang": "德文",
+    "fontasset1": "regularpro",
+    "fontasset2": "regularpro",
+    "textfontasset1": "hwzs.ttf",
+    "textfontasset2": "hwzs.ttf"
+  },
+  {
+    "shortcuts": "fr",
+    "lang": "法文",
+    "fontasset1": "regularpro",
+    "fontasset2": "regularpro",
+    "textfontasset1": "hwzs.ttf",
+    "textfontasset2": "hwzs.ttf"
+  }
+]

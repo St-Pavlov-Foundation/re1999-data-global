@@ -1,0 +1,58 @@
+[
+  {
+    "status": 9,
+    "index": 1,
+    "effectPath": "entry",
+    "hangPath": "",
+    "audioId": 25004120
+  },
+  {
+    "status": 9,
+    "index": 2,
+    "effectPath": "entry_1",
+    "hangPath": "Bip001",
+    "audioId": 0
+  },
+  {
+    "status": 4,
+    "index": 1,
+    "effectPath": "glide",
+    "hangPath": "Bip001/effect",
+    "audioId": 0
+  },
+  {
+    "status": 0,
+    "index": 1,
+    "effectPath": "",
+    "hangPath": "",
+    "audioId": 0
+  },
+  {
+    "status": 3,
+    "index": 1,
+    "effectPath": "",
+    "hangPath": "",
+    "audioId": 25004123
+  },
+  {
+    "status": 7,
+    "index": 1,
+    "effectPath": "",
+    "hangPath": "",
+    "audioId": 25004126
+  },
+  {
+    "status": 8,
+    "index": 1,
+    "effectPath": "",
+    "hangPath": "",
+    "audioId": 25004126
+  },
+  {
+    "status": 10,
+    "index": 1,
+    "effectPath": "",
+    "hangPath": "",
+    "audioId": 25004126
+  }
+]

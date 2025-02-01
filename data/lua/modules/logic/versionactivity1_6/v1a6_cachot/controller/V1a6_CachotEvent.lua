@@ -1,0 +1,57 @@
+module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotEvent", package.seeall)
+
+slot0 = _M
+slot0.ScenePreloaded = 1001
+slot0.PlayerBeginMove = 1002
+slot0.PlayerMove = 1003
+slot0.PlayerStopMove = 1004
+slot0.PlayerTriggerInteract = 1005
+slot0.RoomAssetLoaded = 1006
+slot0.PlayerMoveTo = 1007
+slot0.RoomChange = 1008
+slot0.RoomChangePlayAnim = 1009
+slot0.RoomChangeAnimEnd = 1010
+slot0.RoomChangeBegin = 1011
+slot0.RoomViewOpenAnimEnd = 1012
+slot0.CheckPlayStory = 1013
+slot0.EventChangePush = 2001
+slot0.NearEventMoChange = 2002
+slot0.SelectChoice = 2003
+slot0.PlayChoiceDialog = 2004
+slot0.SelectHero = 2005
+slot0.RoomEventChange = 2006
+slot0.SelectEventChange = 2007
+slot0.SelectEventRemove = 2008
+slot0.OnReceiveFightReward = 2009
+slot0.BeginTriggerEvent = 2010
+slot0.ClickNearEvent = 2011
+slot0.TriggerEvent = 2012
+slot0.ShowHideChoice = 2013
+slot0.OnSelectCollectionItem = 3001
+slot0.OnSwitchCategory = 3002
+slot0.OnSelectBagCollection = 4001
+slot0.OnSelectEnchantCollection = 5001
+slot0.OnUpdateRogueStateInfo = 6001
+slot0.OnUpdateRogueInfo = 6002
+slot0.OnUpdateGoodsInfos = 6003
+slot0.OnUpdateGroupBoxStar = 6004
+slot0.OnUpdateCoin = 6005
+slot0.OnUpdateCurrency = 6006
+slot0.OnUpdateHeart = 6007
+slot0.OnUpdateCollectionsInfo = 6008
+slot0.OnEventFinish = 6009
+slot0.OnReceiveEnterRogueReply = 7001
+slot0.OnClickTeamItem = 8001
+slot0.OnSeatUpgradeSuccess = 8002
+slot0.OnClickCachotOverItem = 9001
+slot0.OnFinishGame = 10001
+slot0.CheckOpenEnding = 10002
+slot0.CheckGuideEnterLayerRoom = 20000
+slot0.GuideEnterLayerRoom = 20001
+slot0.GuideNearEvent = 20002
+slot0.GuideHeartChange = 20003
+slot0.GuideCanEnchant = 20004
+slot0.GuideDragTip = 20005
+slot0.GuideMoveCollection = 20006
+
+return slot0

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "bindActivityId": 10014,
+    "name": "language_10000052",
+    "offlineDays": 14,
+    "condition": "EpisodeFinish=10115",
+    "durationDays": 14,
+    "startStory": 501401,
+    "endStory": 501402,
+    "taskBonusMailId": 3035,
+    "subModuleIds": "101#102#103#104#105",
+    "onceBonus": "2#2#360|9#1005#1|10#11#2|1#110503#5|1#110403#5|2#23#300|2#3#10000|2#5#10000",
+    "additionDurationDays": 8,
+    "additionType": "2#4",
+    "additionRate": 1000,
+    "additionChapterIds": "401#501#701#702#703#704",
+    "jumpId": 10401,
+    "priority": 1,
+    "bonusPointMaterial": "2#31"
+  }
+]

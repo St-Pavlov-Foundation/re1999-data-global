@@ -1,0 +1,209 @@
+[
+  {
+    "evidenceId": 101,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052788",
+    "conditionStr": "language_10052789",
+    "errorTip": 2,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 102,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052788",
+    "conditionStr": "language_10052790",
+    "errorTip": 2,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 103,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052788",
+    "conditionStr": "language_10052791",
+    "errorTip": 2,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 104,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052792",
+    "conditionStr": "language_10052793",
+    "errorTip": 2,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 105,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052792",
+    "conditionStr": "language_10052794",
+    "errorTip": 2,
+    "tips": 0,
+    "showFusion": 1
+  },
+  {
+    "evidenceId": 123,
+    "dialogGroupType": 1,
+    "puzzleTxt": "",
+    "conditionStr": "",
+    "errorTip": 0,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 106,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052796",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 107,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052797",
+    "errorTip": 6,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 108,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052798",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 109,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052799",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 110,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052800",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 111,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052801",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 1
+  },
+  {
+    "evidenceId": 112,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052795",
+    "conditionStr": "language_10052802",
+    "errorTip": 6,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 113,
+    "dialogGroupType": 1,
+    "puzzleTxt": "",
+    "conditionStr": "",
+    "errorTip": 0,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 114,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052804",
+    "errorTip": 14,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 115,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052805",
+    "errorTip": 14,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 116,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052806",
+    "errorTip": 14,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 117,
+    "dialogGroupType": 2,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052807",
+    "errorTip": 14,
+    "tips": 3,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 118,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052808",
+    "errorTip": 14,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 119,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052809",
+    "errorTip": 14,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 120,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052810",
+    "errorTip": 14,
+    "tips": 0,
+    "showFusion": 1
+  },
+  {
+    "evidenceId": 121,
+    "dialogGroupType": 1,
+    "puzzleTxt": "language_10052803",
+    "conditionStr": "language_10052811",
+    "errorTip": 14,
+    "tips": 0,
+    "showFusion": 0
+  },
+  {
+    "evidenceId": 122,
+    "dialogGroupType": 1,
+    "puzzleTxt": "",
+    "conditionStr": "",
+    "errorTip": 0,
+    "tips": 0,
+    "showFusion": 0
+  }
+]

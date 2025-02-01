@@ -1,0 +1,50 @@
+module("modules.logic.critter.controller.CritterEvent", package.seeall)
+
+slot0 = _M
+slot0.CheckCritterIconSelected = 100
+slot0.CritterBuildingHideView = 101
+slot0.CritterBuildingShowView = 102
+slot0.CritterBuildingSelectCritter = 103
+slot0.CritterBuildingChangeRestingCritter = 104
+slot0.CritterBuildingChangSeatSlotVisible = 105
+slot0.CritterBuildingSetCanOperateRestingCritter = 106
+slot0.CritterBuildingCameraTweenFinish = 107
+slot0.CritterListOnDragBeginListener = 108
+slot0.CritterListOnDragListener = 109
+slot0.CritterListOnDragEndListener = 110
+slot0.CritterUnlockSeatSlot = 111
+slot0.CritterFeedFood = 112
+slot0.CritterInfoPushUpdate = 113
+slot0.CritterDecomposeReply = 114
+slot0.CritterGuideReply = 115
+slot0.PlayAddCritterEff = 116
+slot0.CritterChangeFilterType = 200
+slot0.CritterChangeSort = 201
+slot0.CritterUpdateAttrPreview = 202
+slot0.CritterListUpdate = 203
+slot0.CritterListResetScrollPos = 204
+slot0.CritterDecomposeChangeSelect = 301
+slot0.BeforeDecomposeCritter = 302
+slot0.CritterChangeLockStatus = 303
+slot0.UITrainSelectCritter = 401
+slot0.UITrainSelectHero = 402
+slot0.UITrainSelectSlot = 403
+slot0.UITrainSubTab = 404
+slot0.UITrainCdTime = 405
+slot0.UIChangeTrainCritter = 406
+slot0.UITrainViewGoBack = 407
+slot0.TrainSelectEventOptionReply = 1001
+slot0.TrainFinishTrainCritterReply = 1002
+slot0.TrainCancelTrainReply = 1003
+slot0.TrainStartTrainCritterReply = 1004
+slot0.CritterInfoPushReply = 1005
+slot0.FastForwardTrainReply = 1006
+slot0.StartTrainCritterPreviewReply = 1007
+slot0.onEnterCritterBuildingView = 501
+slot0.CritterBuildingViewRefreshCamera = 502
+slot0.CritterBuildingViewChange = 503
+slot0.CritterBuildingViewChangeBuilding = 504
+slot0.CritterTrainStarted = 6001
+slot0.CritterTrainFinished = 6002
+
+return slot0

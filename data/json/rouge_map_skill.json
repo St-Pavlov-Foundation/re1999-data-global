@@ -1,0 +1,110 @@
+[
+  {
+    "id": 10101,
+    "version": "101",
+    "powerCost": 20,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38010101",
+    "desc": "language_10051764",
+    "icon": "rouge_faction_smallicon_23",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 10901,
+    "version": "101",
+    "powerCost": 30,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38010901",
+    "desc": "language_10051765",
+    "icon": "rouge_faction_smallicon_24",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 11201,
+    "version": "101",
+    "powerCost": 20,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38011201",
+    "desc": "language_10051766",
+    "icon": "rouge_faction_smallicon_25",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 12401,
+    "version": "101",
+    "powerCost": 15,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38012401",
+    "desc": "language_10051767",
+    "icon": "rouge_faction_smallicon_26",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 13001,
+    "version": "101",
+    "powerCost": 5,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38013001",
+    "desc": "language_10051768",
+    "icon": "rouge_faction_smallicon_27",
+    "middleLayerLimit": 0
+  },
+  {
+    "id": 13002,
+    "version": "101",
+    "powerCost": 10,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38013002",
+    "desc": "language_10051769",
+    "icon": "rouge_faction_smallicon_28",
+    "middleLayerLimit": 0
+  },
+  {
+    "id": 13003,
+    "version": "101",
+    "powerCost": 10,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38013003",
+    "desc": "language_10051770",
+    "icon": "rouge_faction_smallicon_30",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 13301,
+    "version": "101",
+    "powerCost": 15,
+    "coinCost": 0,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38013301",
+    "desc": "language_10051771",
+    "icon": "rouge_faction_smallicon_29",
+    "middleLayerLimit": 1
+  },
+  {
+    "id": 11011,
+    "version": "101",
+    "powerCost": 30,
+    "coinCost": 100,
+    "stepCd": 1,
+    "useLimit": 1,
+    "effects": "38011017",
+    "desc": "language_10051772",
+    "icon": "rouge_faction_smallicon_19",
+    "middleLayerLimit": 1
+  }
+]

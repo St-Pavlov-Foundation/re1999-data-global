@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_chadi.prefab",
+    "duration": 10,
+    "audioId": 0
+  },
+  {
+    "id": 2,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_h.prefab",
+    "duration": 13,
+    "audioId": 20009066
+  },
+  {
+    "id": 3,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_m.prefab",
+    "duration": 10,
+    "audioId": 20009065
+  },
+  {
+    "id": 4,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_l.prefab",
+    "duration": 5,
+    "audioId": 20009064
+  },
+  {
+    "id": 5,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_zd.prefab",
+    "duration": 60,
+    "audioId": 20009067
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "param": "20#60",
+    "motion": "waitou#0",
+    "face": "language_10026662"
+  },
+  {
+    "id": 2,
+    "type": 2,
+    "param": "3",
+    "motion": "moxiaba#0",
+    "face": "language_10026663"
+  },
+  {
+    "id": 3,
+    "type": 3,
+    "param": "2",
+    "motion": "diantou#0",
+    "face": "language_10026664"
+  },
+  {
+    "id": 4,
+    "type": 3,
+    "param": "1",
+    "motion": "yaotou#0",
+    "face": "language_10026665"
+  },
+  {
+    "id": 5,
+    "type": 4,
+    "param": "3",
+    "motion": "diantou#0",
+    "face": "language_10026666"
+  },
+  {
+    "id": 6,
+    "type": 4,
+    "param": "2",
+    "motion": "diantou#0",
+    "face": "language_10026664"
+  },
+  {
+    "id": 7,
+    "type": 4,
+    "param": "1",
+    "motion": "yaotou#0",
+    "face": "language_10026667"
+  },
+  {
+    "id": 8,
+    "type": 5,
+    "param": "1",
+    "motion": "moxiaba#0",
+    "face": "language_10026668"
+  },
+  {
+    "id": 9,
+    "type": 5,
+    "param": "2",
+    "motion": "motoufa#0",
+    "face": "language_10026669"
+  }
+]

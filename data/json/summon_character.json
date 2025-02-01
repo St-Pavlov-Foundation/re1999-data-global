@@ -1,0 +1,518 @@
+[
+  {
+    "id": 11,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 12,
+    "heroId": 3062,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 13,
+    "heroId": 3004,
+    "skinId": 0,
+    "location": 3
+  },
+  {
+    "id": 21,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 22,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 101111,
+    "heroId": 3009,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 101211,
+    "heroId": 3007,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111111,
+    "heroId": 3062,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111211,
+    "heroId": 3063,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111212,
+    "heroId": 3064,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 111311,
+    "heroId": 3048,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111411,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 111511,
+    "heroId": 3004,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121111,
+    "heroId": 3053,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121112,
+    "heroId": 3060,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 121211,
+    "heroId": 3056,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121212,
+    "heroId": 3061,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 121311,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121411,
+    "heroId": 3051,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 121511,
+    "heroId": 3039,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131111,
+    "heroId": 3072,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131112,
+    "heroId": 3071,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 131211,
+    "heroId": 3070,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131311,
+    "heroId": 3032,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131411,
+    "heroId": 3047,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131511,
+    "heroId": 3052,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141111,
+    "heroId": 3066,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141211,
+    "heroId": 3079,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141311,
+    "heroId": 3025,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141411,
+    "heroId": 3009,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141511,
+    "heroId": 3003,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141611,
+    "heroId": 3039,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141612,
+    "heroId": 3062,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 141613,
+    "heroId": 3007,
+    "skinId": 0,
+    "location": 3
+  },
+  {
+    "id": 141614,
+    "heroId": 3048,
+    "skinId": 0,
+    "location": 4
+  },
+  {
+    "id": 151111,
+    "heroId": 3073,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 151112,
+    "heroId": 3076,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 151211,
+    "heroId": 3074,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 151212,
+    "heroId": 3075,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 151311,
+    "heroId": 3053,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 151411,
+    "heroId": 3032,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 151511,
+    "heroId": 3007,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161111,
+    "heroId": 3083,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161112,
+    "heroId": 3082,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 161211,
+    "heroId": 3084,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161311,
+    "heroId": 3063,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161411,
+    "heroId": 3062,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161511,
+    "heroId": 3072,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 161611,
+    "heroId": 0,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 171111,
+    "heroId": 3081,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 171112,
+    "heroId": 3065,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 171113,
+    "heroId": 3066,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 171114,
+    "heroId": 3056,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 171115,
+    "heroId": 3079,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 181111,
+    "heroId": 3087,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 181211,
+    "heroId": 3077,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 181311,
+    "heroId": 3078,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 23,
+    "heroId": 3088,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 24,
+    "heroId": 3073,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 191111,
+    "heroId": 3086,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 191112,
+    "heroId": 3080,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 191113,
+    "heroId": 3053,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 191114,
+    "heroId": 3084,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 191115,
+    "heroId": 3048,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 201111,
+    "heroId": 3094,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 201211,
+    "heroId": 3095,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 211211,
+    "heroId": 3097,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 211111,
+    "heroId": 3098,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 211112,
+    "heroId": 3099,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 221111,
+    "heroId": 3100,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 221112,
+    "heroId": 3102,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 211811,
+    "heroId": 3065,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 211812,
+    "heroId": 3087,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 201611,
+    "heroId": 3081,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 201711,
+    "heroId": 3079,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 181911,
+    "heroId": 3073,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 181912,
+    "heroId": 3072,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 171211,
+    "heroId": 3056,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 171212,
+    "heroId": 3066,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 1514111,
+    "heroId": 3032,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 141711,
+    "heroId": 3063,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141811,
+    "heroId": 3009,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 141911,
+    "heroId": 3051,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 131212,
+    "heroId": 3071,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 131611,
+    "heroId": 3004,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 12161,
+    "heroId": 3032,
+    "skinId": 0,
+    "location": 1
+  }
+]

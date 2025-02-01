@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 1,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 1,
+    "instructionDesc": "language_10040327",
+    "episodeId": 1910201
+  },
+  {
+    "id": 2,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 2,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 2,
+    "instructionDesc": "language_10040328",
+    "episodeId": 1910202
+  },
+  {
+    "id": 3,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 3,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 3,
+    "instructionDesc": "language_10040329",
+    "episodeId": 1910203
+  },
+  {
+    "id": 4,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 4,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 4,
+    "instructionDesc": "language_10040330",
+    "episodeId": 1910204
+  },
+  {
+    "id": 5,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 5,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 5,
+    "instructionDesc": "language_10040331",
+    "episodeId": 1910205
+  },
+  {
+    "id": 6,
+    "activityId": 11905,
+    "difficulty": 1,
+    "sort": 1,
+    "stage": 2,
+    "unlockCondition": "1_3",
+    "heroId": 0,
+    "instructionDesc": "",
+    "episodeId": 1910206
+  },
+  {
+    "id": 7,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 1,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 1,
+    "instructionDesc": "language_10040327",
+    "episodeId": 1910211
+  },
+  {
+    "id": 8,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 2,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 2,
+    "instructionDesc": "language_10040328",
+    "episodeId": 1910212
+  },
+  {
+    "id": 9,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 3,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 3,
+    "instructionDesc": "language_10040329",
+    "episodeId": 1910213
+  },
+  {
+    "id": 10,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 4,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 4,
+    "instructionDesc": "language_10040330",
+    "episodeId": 1910214
+  },
+  {
+    "id": 11,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 5,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 5,
+    "instructionDesc": "language_10040331",
+    "episodeId": 1910215
+  },
+  {
+    "id": 12,
+    "activityId": 11905,
+    "difficulty": 2,
+    "sort": 1,
+    "stage": 2,
+    "unlockCondition": "1_3",
+    "heroId": 0,
+    "instructionDesc": "",
+    "episodeId": 1910216
+  },
+  {
+    "id": 13,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 1,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 1,
+    "instructionDesc": "language_10040327",
+    "episodeId": 1910221
+  },
+  {
+    "id": 14,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 2,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 2,
+    "instructionDesc": "language_10040328",
+    "episodeId": 1910222
+  },
+  {
+    "id": 15,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 3,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 3,
+    "instructionDesc": "language_10040329",
+    "episodeId": 1910223
+  },
+  {
+    "id": 16,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 4,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 4,
+    "instructionDesc": "language_10040330",
+    "episodeId": 1910224
+  },
+  {
+    "id": 17,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 5,
+    "stage": 1,
+    "unlockCondition": "",
+    "heroId": 5,
+    "instructionDesc": "language_10040331",
+    "episodeId": 1910225
+  },
+  {
+    "id": 18,
+    "activityId": 11905,
+    "difficulty": 3,
+    "sort": 1,
+    "stage": 2,
+    "unlockCondition": "1_3",
+    "heroId": 0,
+    "instructionDesc": "",
+    "episodeId": 1910226
+  }
+]

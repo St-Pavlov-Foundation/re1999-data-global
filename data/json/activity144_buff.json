@@ -1,0 +1,245 @@
+[
+  {
+    "activityId": 11509,
+    "buffId": 2001,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028532",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 2002,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "3",
+    "effectDesc": "language_10028533",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 1001,
+    "type": 1,
+    "effectType": 1,
+    "effectParam": "-10",
+    "effectDesc": "language_10028534",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 1002,
+    "type": 1,
+    "effectType": 1,
+    "effectParam": "-20",
+    "effectDesc": "language_10028535",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 1011,
+    "type": 0,
+    "effectType": 1,
+    "effectParam": "10",
+    "effectDesc": "language_10028522",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 1012,
+    "type": 0,
+    "effectType": 1,
+    "effectParam": "20",
+    "effectDesc": "language_10028523",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 4001,
+    "type": 0,
+    "effectType": 6,
+    "effectParam": "60",
+    "effectDesc": "language_10028536",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 4002,
+    "type": 0,
+    "effectType": 6,
+    "effectParam": "9999",
+    "effectDesc": "language_10028537",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 4011,
+    "type": 0,
+    "effectType": 4,
+    "effectParam": "60",
+    "effectDesc": "language_10028530",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 4012,
+    "type": 0,
+    "effectType": 4,
+    "effectParam": "9999",
+    "effectDesc": "language_10028531",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 2011,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 2012,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-3",
+    "effectDesc": "language_10028526",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 3011,
+    "type": 0,
+    "effectType": 3,
+    "effectParam": "1#-500",
+    "effectDesc": "language_10028538",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 3012,
+    "type": 0,
+    "effectType": 3,
+    "effectParam": "1#-1000",
+    "effectDesc": "language_10028539",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 91090201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 91150101,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028540",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 92090201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 92150101,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028540",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 93010101,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028540",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 93060201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 93090201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 93150101,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028540",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 94060201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 94090201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 94150101,
+    "type": 1,
+    "effectType": 2,
+    "effectParam": "2",
+    "effectDesc": "language_10028540",
+    "reduction": 1
+  },
+  {
+    "activityId": 11509,
+    "buffId": 10040201,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  },
+  {
+    "activityId": 11509,
+    "buffId": 10080301,
+    "type": 0,
+    "effectType": 2,
+    "effectParam": "-2",
+    "effectDesc": "language_10028525",
+    "reduction": 0
+  }
+]

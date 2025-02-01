@@ -1,0 +1,79 @@
+[
+  {
+    "activityId": 11419,
+    "id": 1,
+    "title": "language_10027752",
+    "desc": "language_10027753",
+    "icon": 1,
+    "bonus": "2#2#30|1#110303#2",
+    "needTokens": "2#1413#600",
+    "pos": "1164.3#-382",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 2,
+    "title": "language_10027754",
+    "desc": "language_10027755",
+    "icon": 6,
+    "bonus": "2#2#30|1#120011#3",
+    "needTokens": "2#1413#700",
+    "pos": "572.4#862.8",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 3,
+    "title": "language_10027756",
+    "desc": "language_10027757",
+    "icon": 4,
+    "bonus": "2#2#30|1#110403#2",
+    "needTokens": "2#1413#600",
+    "pos": "440#444.3",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 4,
+    "title": "language_10027758",
+    "desc": "language_10027759",
+    "icon": 5,
+    "bonus": "2#2#30|1#120011#3",
+    "needTokens": "2#1413#700",
+    "pos": "85.5#411.8",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 5,
+    "title": "language_10027760",
+    "desc": "language_10027761",
+    "icon": 3,
+    "bonus": "2#2#30|1#110303#2",
+    "needTokens": "2#1413#600",
+    "pos": "1486.5#320.7",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 6,
+    "title": "language_10027762",
+    "desc": "language_10027763",
+    "icon": 2,
+    "bonus": "2#2#30|1#120011#3",
+    "needTokens": "2#1413#700",
+    "pos": "852.7#425",
+    "finalBonus": 0
+  },
+  {
+    "activityId": 11419,
+    "id": 7,
+    "title": "",
+    "desc": "",
+    "icon": 0,
+    "bonus": "2#2#30|1#110504#1",
+    "needTokens": "",
+    "pos": "",
+    "finalBonus": 1
+  }
+]

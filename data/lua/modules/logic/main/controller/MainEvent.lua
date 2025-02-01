@@ -1,0 +1,26 @@
+module("modules.logic.main.controller.MainEvent", package.seeall)
+
+slot0 = _M
+slot0.OnFirstEnterMain = GameUtil.getEventId()
+slot0.OnMainPopupFlowFinish = GameUtil.getEventId()
+slot0.OnFuncUnlockRefresh = GameUtil.getEventId()
+slot0.OnReceiveAddFaithEvent = GameUtil.getEventId()
+slot0.OnClickSwitchRole = GameUtil.getEventId()
+slot0.OnSceneClose = GameUtil.getEventId()
+slot0.OnShowSceneNewbieOpen = GameUtil.getEventId()
+slot0.ShowMainView = GameUtil.getEventId()
+slot0.SetMainViewVisible = GameUtil.getEventId()
+slot0.NotifySetMainViewVisible = GameUtil.getEventId()
+slot0.ChangeMainHeroSkin = GameUtil.getEventId()
+slot0.ClickDown = GameUtil.getEventId()
+slot0.GuideSetDelayTime = GameUtil.getEventId()
+slot0.ForceStopVoice = GameUtil.getEventId()
+slot0.OnMainThumbnailGreetingFinish = GameUtil.getEventId()
+slot0.OnShowMainThumbnailView = GameUtil.getEventId()
+slot0.SetMainViewRootVisible = GameUtil.getEventId()
+slot0.HeroShowInScene = GameUtil.getEventId()
+slot0.OnChangeGMBtnStatus = GameUtil.getEventId()
+slot0.FocusBGMDevice = GameUtil.getEventId()
+slot0.FocusBGMDeviceReset = GameUtil.getEventId()
+
+return slot0

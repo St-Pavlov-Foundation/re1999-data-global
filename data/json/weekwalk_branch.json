@@ -1,0 +1,26 @@
+[
+  {
+    "id": 101,
+    "mapId": 1,
+    "finishNodeId": 10129,
+    "name": "GE-轮船",
+    "handbookPath": "1011#1012#1013#1014",
+    "nodePath": "10111#10118"
+  },
+  {
+    "id": 102,
+    "mapId": 1,
+    "finishNodeId": 10132,
+    "name": "TE-催眠装置",
+    "handbookPath": "1021#1022#1023#1024",
+    "nodePath": "10111#10132"
+  },
+  {
+    "id": 103,
+    "mapId": 1,
+    "finishNodeId": 10117,
+    "name": "NE-成绩单",
+    "handbookPath": "1031#1032#1033#1034",
+    "nodePath": "10111#101191#101192"
+  }
+]

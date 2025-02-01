@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "effectType": 1,
+    "piontName": "icon",
+    "avatar": "scenes/v1a3_m_s12_dfw_jlbn/prefab/icon_hero"
+  },
+  {
+    "id": 2,
+    "effectType": 2,
+    "piontName": "icon",
+    "avatar": "scenes/v1a3_m_s12_dfw_jlbn/prefab/icon_direction"
+  },
+  {
+    "id": 3,
+    "effectType": 3,
+    "piontName": "icon",
+    "avatar": "scenes/v1a3_m_s12_dfw_jlbn/prefab/icon_monster"
+  },
+  {
+    "id": 4,
+    "effectType": 4,
+    "piontName": "icon",
+    "avatar": "scenes/v1a3_m_s12_dfw_jlbn/prefab/icon_monster"
+  },
+  {
+    "id": 5,
+    "effectType": 5,
+    "piontName": "icon",
+    "avatar": "scenes/v1a3_m_s12_dfw_jlbn/prefab/icon_tanhao"
+  }
+]

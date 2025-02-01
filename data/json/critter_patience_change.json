@@ -1,0 +1,27 @@
+[
+  {
+    "buildingType": 1,
+    "stepTime": 3600,
+    "stepValue": -20
+  },
+  {
+    "buildingType": 2,
+    "stepTime": 3600,
+    "stepValue": -20
+  },
+  {
+    "buildingType": 3,
+    "stepTime": 3600,
+    "stepValue": -20
+  },
+  {
+    "buildingType": 4,
+    "stepTime": 3600,
+    "stepValue": 30
+  },
+  {
+    "buildingType": 6,
+    "stepTime": 3600,
+    "stepValue": -20
+  }
+]

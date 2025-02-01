@@ -1,0 +1,83 @@
+[
+  {
+    "activityId": 11203,
+    "id": 0,
+    "name": "language_10026725",
+    "desc": "language_10026726",
+    "story": 305301,
+    "icon": "bg_yachi_xuzhang",
+    "prefab": ""
+  },
+  {
+    "activityId": 11203,
+    "id": 1,
+    "name": "language_10026712",
+    "desc": "language_10026727",
+    "story": 305302,
+    "icon": "bg_yachi_2",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_dxrlry.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 2,
+    "name": "language_10026716",
+    "desc": "language_10026728",
+    "story": 305303,
+    "icon": "bg_yachi_6",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_qy.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 3,
+    "name": "language_10026718",
+    "desc": "language_10026729",
+    "story": 305304,
+    "icon": "bg_yachi_3",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_lpc_j.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 4,
+    "name": "language_10026719",
+    "desc": "language_10026730",
+    "story": 305305,
+    "icon": "bg_yachi",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_ry_zy.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 5,
+    "name": "language_10026720",
+    "desc": "language_10026731",
+    "story": 305306,
+    "icon": "bg_yachi_4",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_lpc_z.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 6,
+    "name": "language_10026721",
+    "desc": "language_10026732",
+    "story": 305307,
+    "icon": "bg_yachi_7",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_sydwdy.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 7,
+    "name": "language_10026722",
+    "desc": "language_10026733",
+    "story": 305308,
+    "icon": "bg_yachi_5",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_psdsy.prefab"
+  },
+  {
+    "activityId": 11203,
+    "id": 8,
+    "name": "language_10026724",
+    "desc": "language_10026734",
+    "story": 305309,
+    "icon": "bg_yachi_1",
+    "prefab": "m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_cnnxdyc.prefab"
+  }
+]

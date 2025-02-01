@@ -1,0 +1,23 @@
+[
+  {
+    "season": 1,
+    "id": 1,
+    "quality": 1,
+    "dropGroup": 1001,
+    "upDropGroup": 1001
+  },
+  {
+    "season": 1,
+    "id": 2,
+    "quality": 2,
+    "dropGroup": 1001,
+    "upDropGroup": 1001
+  },
+  {
+    "season": 1,
+    "id": 3,
+    "quality": 3,
+    "dropGroup": 1001,
+    "upDropGroup": 1001
+  }
+]

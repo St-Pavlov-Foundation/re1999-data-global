@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 11508,
+    "id": 1,
+    "tips": "嘶吼声将空气搅成一团",
+    "audioId": 25002509
+  },
+  {
+    "activityId": 11508,
+    "id": 2,
+    "tips": "寂静与寒意刻入脊背",
+    "audioId": 25002510
+  },
+  {
+    "activityId": 11508,
+    "id": 3,
+    "tips": "那片危险的阴影已经盯上了你",
+    "audioId": 0
+  },
+  {
+    "activityId": 11508,
+    "id": 4,
+    "tips": "前路明晰，一处封闭区域已为你打开",
+    "audioId": 0
+  },
+  {
+    "activityId": 11508,
+    "id": 5,
+    "tips": "远处响起闭合声，另一处区域已封闭。",
+    "audioId": 0
+  }
+]

@@ -1,0 +1,299 @@
+[
+  {
+    "id": 302201,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_fire/root",
+    "scale": 1.13,
+    "changeVisible": 1,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 302202,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_fire/root|Drawables/bone3/effect-Bone/roleeffect_fire_hei/root",
+    "scale": 1.13,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 306402,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_paishou/root|Drawables/bone/effect-Bone/roleeffect_paopao/root",
+    "scale": 1.13,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 305302,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_yaxian_daiji/roleeffect_yaxian_daiji|Drawables/bone2/effect-Bone/roleeffect_yaxian_daiji/roleeffect_yaxian_daiji|Drawables/bone3/effect-Bone/roleeffect_yaxian_aniyaxian1/roleeffect_yaxian_aniyaxian1/root|Drawables/bone3/effect-Bone/roleeffect_yaxian_aniyaxian2/roleeffect_yaxian_aniyaxian2/root",
+    "scale": 1.13,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 304802,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_star|Drawables/bone2/effect-Bone/roleeffect_star|Drawables/bone3/effect-Bone/roleeffect_star",
+    "scale": 1.13,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 306602,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_37_zhanshi",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 307902,
+    "effect": "Drawables/bone/roleeffect_effect_6/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 307502,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_zhegu",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 307402,
+    "effect": "Drawables/bone3/effect-Bone/roleeffect_mogu|Drawables/bone2/effect-Bone/roleeffect_sd_mogu",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 305303,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_yaxian_daiji|Drawables/bone2/effect-Bone/roleeffect_yaxian_daiji",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 302203,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_fire/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 308402,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_gt_zouyue",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 306603,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_37_zhanshi",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 306502,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_mks_jiegou",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": ""
+  },
+  {
+    "id": 304703,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_tmsd_dali/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307801,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_afxw_diaozhui/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307802,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_afxw_diaozhui/root|Drawables/bone/effect-Bone/roleeffect_afxw_fusu1/root|Drawables/bone2/effect-Bone/roleeffect_afxw_fusu2/root|Drawables/bone3/effect-Bone/roleeffect_afxw_fusu3/root|Drawables/bone4/effect-Bone/roleeffect_afxw_fusu4/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307701,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_bfsg_huaxian1/root|Drawables/bone/effect-Bone/roleeffect_bfsg_huaxian2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307702,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_bfsg_huaxian1/root|Drawables/bone/effect-Bone/roleeffect_bfsg_huaxian2/root|Drawables/bone1/effect-Bone/roleeffect_bfsg_miaohui1/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307503,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ssr_qiqiu/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 308002,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_kkny_shishu/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 309501,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_hzsx_dengqiu/root|Drawables/bone/effect-Bone/roleeffect_hzsx_ganzhi/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 0,
+    "realtime": "1|1"
+  },
+  {
+    "id": 309502,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_hzsx_dengqiu/root|Drawables/bone/effect-Bone/roleeffect_hzsx_ganzhi/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1|1"
+  },
+  {
+    "id": 307003,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_jlbn_shanfen/root|Drawables/bone/effect-Bone/roleeffect_jlbn_shanfen/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1|1"
+  },
+  {
+    "id": 309401,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_j_shuadao/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1"
+  },
+  {
+    "id": 309402,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_j_shuadao/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1"
+  },
+  {
+    "id": 307303,
+    "effect": "Drawables/bone3/effect-Bone/roleeffect_krd_shoupao/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 304101,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_mded_zhanbu2/root|Drawables/bone/effect-Bone/roleeffect_mded_zhanbu3/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310302,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_dk_mojing0/root|Drawables/bone1/effect-Bone/roleeffect_dk_mojing1/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310202,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_lpl_niao0/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 520101,
+    "effect": "Drawables/bone3/effect-Bone/roleeffect_tsnn_huizhua3/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 306604,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_37_ruchang1/root|Drawables/bone2/effect-Bone/roleeffect_37_ruchang2/root|Drawables/bone1/effect-Bone/roleeffect_37_zhanshi/root|Drawables/bone1/effect-Bone/roleeffect_37_shuzi/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 305304,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_yaxian_daiji/root|Drawables/bone2/effect-Bone/roleeffect_yaxian_daiji/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": ""
+  }
+]

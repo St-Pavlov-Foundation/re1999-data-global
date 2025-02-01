@@ -1,0 +1,368 @@
+[
+  {
+    "dialogueId": 1,
+    "id": 1,
+    "res": "dialogue_role2_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 1,
+    "id": 2,
+    "res": "dialogue_npc1_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 2,
+    "id": 1,
+    "res": "dialogue_npc5_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 2,
+    "id": 2,
+    "res": "dialogue_npc3_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3,
+    "id": 1,
+    "res": "dialogue_role1_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3,
+    "id": 2,
+    "res": "dialogue_npc2_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 4,
+    "id": 1,
+    "res": "dialogue_xingzhiyan_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 4,
+    "id": 2,
+    "res": "dialogue_kuanyanmao_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 4,
+    "id": 3,
+    "res": "dialogue_role2_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 5,
+    "id": 1,
+    "res": "dialogue_role2_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 5,
+    "id": 2,
+    "res": "dialogue_npc4_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 6,
+    "id": 1,
+    "res": "dialogue_role6_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 6,
+    "id": 2,
+    "res": "dialogue_role8_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 7,
+    "id": 1,
+    "res": "dialogue_role9_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 7,
+    "id": 2,
+    "res": "dialogue_npc6_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 8,
+    "id": 1,
+    "res": "dialogue_npc8_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 8,
+    "id": 2,
+    "res": "dialogue_npc9_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 9,
+    "id": 1,
+    "res": "dialogue_npc7_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 9,
+    "id": 2,
+    "res": "dialogue_role9_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10,
+    "id": 1,
+    "res": "dialogue_role6_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10,
+    "id": 2,
+    "res": "dialogue_role9_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 11,
+    "id": 1,
+    "res": "dialogue_role8_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 11,
+    "id": 2,
+    "res": "dialogue_role9_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 12,
+    "id": 1,
+    "res": "dialogue_role6_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 12,
+    "id": 2,
+    "res": "dialogue_role10_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 13,
+    "id": 1,
+    "res": "dialogue_role6_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 13,
+    "id": 2,
+    "res": "dialogue_role8_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 14,
+    "id": 1,
+    "res": "dialogue_npc10_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 14,
+    "id": 2,
+    "res": "dialogue_role7_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 15,
+    "id": 1,
+    "res": "dialogue_npc5_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 15,
+    "id": 2,
+    "res": "dialogue_npc2_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 16,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 16,
+    "id": 2,
+    "res": "dialogue_zhinuojingrui",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 17,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 18,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 18,
+    "id": 2,
+    "res": "dialogue_xiongdihuixintu",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 18,
+    "id": 3,
+    "res": "dialogue_zhinuojunguan",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 19,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 19,
+    "id": 2,
+    "res": "dialogue_luopeila",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 20,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 20,
+    "id": 2,
+    "res": "dialogue_luopeila",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 20,
+    "id": 3,
+    "res": "dialogue_yigeer",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 21,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 21,
+    "id": 2,
+    "res": "dialogue_dengken",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 22,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 22,
+    "id": 2,
+    "res": "dialogue_laorennan",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 22,
+    "id": 3,
+    "res": "dialogue_laorennv",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 23,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 23,
+    "id": 2,
+    "res": "dialogue_sufubi",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 24,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 24,
+    "id": 2,
+    "res": "dialogue_laorennan",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 24,
+    "id": 3,
+    "res": "dialogue_laorennv",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 25,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "0#0"
+  },
+  {
+    "dialogueId": 26,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 26,
+    "id": 2,
+    "res": "dialogue_dengken",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 26,
+    "id": 3,
+    "res": "dialogue_jialaiyanuo",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 27,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 27,
+    "id": 2,
+    "res": "dialogue_dengken",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 27,
+    "id": 3,
+    "res": "dialogue_jialaiyanuo",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 28,
+    "id": 1,
+    "res": "dialogue_bailangmu",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 28,
+    "id": 2,
+    "res": "dialogue_dengken",
+    "pos": "165#0"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "buildingId": 0,
+    "effectSequence": "3#2#3",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2024-05-30 05:00:00",
+    "durationDay": 10,
+    "triggerType": 1
+  },
+  {
+    "id": 2,
+    "buildingId": 0,
+    "effectSequence": "",
+    "residentEffect": 0,
+    "cyclesTimes": 0,
+    "openTime": "",
+    "durationDay": 0,
+    "triggerType": 0
+  },
+  {
+    "id": 3,
+    "buildingId": 0,
+    "effectSequence": "5#3#2",
+    "residentEffect": 1,
+    "cyclesTimes": 1,
+    "openTime": "2024-05-30 05:00:00",
+    "durationDay": 10,
+    "triggerType": 2
+  },
+  {
+    "id": 4,
+    "buildingId": 0,
+    "effectSequence": "",
+    "residentEffect": 0,
+    "cyclesTimes": 0,
+    "openTime": "",
+    "durationDay": 0,
+    "triggerType": 0
+  },
+  {
+    "id": 5,
+    "buildingId": 0,
+    "effectSequence": "1",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2024-05-30 05:00:00",
+    "durationDay": 10,
+    "triggerType": 1
+  }
+]

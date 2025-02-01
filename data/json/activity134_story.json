@@ -1,0 +1,79 @@
+[
+  {
+    "id": 101,
+    "storyType": 1,
+    "desc": "language_10027795",
+    "charaterIcon": "3004",
+    "formMan": ""
+  },
+  {
+    "id": 102,
+    "storyType": 1,
+    "desc": "language_10027796",
+    "charaterIcon": "3003",
+    "formMan": ""
+  },
+  {
+    "id": 103,
+    "storyType": 1,
+    "desc": "language_10027797",
+    "charaterIcon": "3009",
+    "formMan": ""
+  },
+  {
+    "id": 201,
+    "storyType": 2,
+    "desc": "language_10027798",
+    "charaterIcon": "",
+    "formMan": "language_10027799"
+  },
+  {
+    "id": 202,
+    "storyType": 2,
+    "desc": "language_10027800",
+    "charaterIcon": "",
+    "formMan": "language_10027799"
+  },
+  {
+    "id": 203,
+    "storyType": 2,
+    "desc": "language_10027801",
+    "charaterIcon": "",
+    "formMan": ""
+  },
+  {
+    "id": 204,
+    "storyType": 2,
+    "desc": "language_10027802",
+    "charaterIcon": "",
+    "formMan": ""
+  },
+  {
+    "id": 301,
+    "storyType": 3,
+    "desc": "language_10027803",
+    "charaterIcon": "",
+    "formMan": ""
+  },
+  {
+    "id": 302,
+    "storyType": 3,
+    "desc": "language_10027804",
+    "charaterIcon": "",
+    "formMan": ""
+  },
+  {
+    "id": 303,
+    "storyType": 3,
+    "desc": "language_10027805",
+    "charaterIcon": "",
+    "formMan": ""
+  },
+  {
+    "id": 401,
+    "storyType": 4,
+    "desc": "language_10027806",
+    "charaterIcon": "",
+    "formMan": ""
+  }
+]

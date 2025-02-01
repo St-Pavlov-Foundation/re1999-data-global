@@ -1,0 +1,242 @@
+[
+  {
+    "talentMould": 1,
+    "styleId": 0,
+    "level": 0,
+    "replaceCube": "",
+    "name": "language_10047514",
+    "tagicon": "15",
+    "tag": "998",
+    "color": ""
+  },
+  {
+    "talentMould": 1,
+    "styleId": 1,
+    "level": 10,
+    "replaceCube": "61#611|41#411",
+    "name": "language_10047515",
+    "tagicon": "5",
+    "tag": "211#205#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 1,
+    "styleId": 2,
+    "level": 10,
+    "replaceCube": "61#612|41#412",
+    "name": "language_10047516",
+    "tagicon": "4",
+    "tag": "214#205#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 1,
+    "styleId": 3,
+    "level": 10,
+    "replaceCube": "61#613|41#413",
+    "name": "language_10007709",
+    "tagicon": "11",
+    "tag": "209#206",
+    "color": "#516c59"
+  },
+  {
+    "talentMould": 1,
+    "styleId": 4,
+    "level": 10,
+    "replaceCube": "61#614|41#414",
+    "name": "language_10047517",
+    "tagicon": "12",
+    "tag": "101#103#104",
+    "color": "#516c59"
+  },
+  {
+    "talentMould": 1,
+    "styleId": 5,
+    "level": 10,
+    "replaceCube": "61#615|41#415",
+    "name": "language_10047518",
+    "tagicon": "13",
+    "tag": "999",
+    "color": "#45647a"
+  },
+  {
+    "talentMould": 2,
+    "styleId": 0,
+    "level": 0,
+    "replaceCube": "",
+    "name": "language_10047514",
+    "tagicon": "15",
+    "tag": "998",
+    "color": ""
+  },
+  {
+    "talentMould": 2,
+    "styleId": 1,
+    "level": 10,
+    "replaceCube": "62#621|42#421",
+    "name": "language_10047515",
+    "tagicon": "5",
+    "tag": "211#201#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 2,
+    "styleId": 2,
+    "level": 10,
+    "replaceCube": "62#622|42#422",
+    "name": "language_10047516",
+    "tagicon": "4",
+    "tag": "214#201#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 2,
+    "styleId": 3,
+    "level": 10,
+    "replaceCube": "62#623|42#423",
+    "name": "language_10047519",
+    "tagicon": "14",
+    "tag": "101#201#102",
+    "color": "#815d2f"
+  },
+  {
+    "talentMould": 2,
+    "styleId": 4,
+    "level": 10,
+    "replaceCube": "62#624|42#424",
+    "name": "language_10047520",
+    "tagicon": "2",
+    "tag": "203#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 2,
+    "styleId": 5,
+    "level": 10,
+    "replaceCube": "62#625|42#425",
+    "name": "language_10047521",
+    "tagicon": "6",
+    "tag": "999",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 3,
+    "styleId": 0,
+    "level": 0,
+    "replaceCube": "",
+    "name": "language_10047514",
+    "tagicon": "15",
+    "tag": "998",
+    "color": ""
+  },
+  {
+    "talentMould": 3,
+    "styleId": 1,
+    "level": 10,
+    "replaceCube": "63#631|43#431",
+    "name": "language_10047515",
+    "tagicon": "5",
+    "tag": "211#213#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 3,
+    "styleId": 2,
+    "level": 10,
+    "replaceCube": "63#632|43#432",
+    "name": "language_10047516",
+    "tagicon": "4",
+    "tag": "214#213#102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 3,
+    "styleId": 3,
+    "level": 10,
+    "replaceCube": "63#633|43#433",
+    "name": "language_10015662",
+    "tagicon": "1",
+    "tag": "102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 3,
+    "styleId": 4,
+    "level": 10,
+    "replaceCube": "63#634|43#434",
+    "name": "language_10015343",
+    "tagicon": "3",
+    "tag": "205",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 3,
+    "styleId": 5,
+    "level": 10,
+    "replaceCube": "63#635|43#435",
+    "name": "language_10047522",
+    "tagicon": "7",
+    "tag": "999",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 4,
+    "styleId": 0,
+    "level": 0,
+    "replaceCube": "",
+    "name": "language_10047514",
+    "tagicon": "15",
+    "tag": "998",
+    "color": ""
+  },
+  {
+    "talentMould": 4,
+    "styleId": 1,
+    "level": 10,
+    "replaceCube": "64#641|44#441",
+    "name": "language_10015662",
+    "tagicon": "1",
+    "tag": "102",
+    "color": "#be6135"
+  },
+  {
+    "talentMould": 4,
+    "styleId": 2,
+    "level": 10,
+    "replaceCube": "64#642|44#442",
+    "name": "language_10047523",
+    "tagicon": "8",
+    "tag": "101",
+    "color": "#516c59"
+  },
+  {
+    "talentMould": 4,
+    "styleId": 3,
+    "level": 10,
+    "replaceCube": "64#643|44#443",
+    "name": "language_10047524",
+    "tagicon": "9",
+    "tag": "103",
+    "color": "#516c59"
+  },
+  {
+    "talentMould": 4,
+    "styleId": 4,
+    "level": 10,
+    "replaceCube": "64#644|44#444",
+    "name": "language_10047525",
+    "tagicon": "10",
+    "tag": "104",
+    "color": "#516c59"
+  },
+  {
+    "talentMould": 4,
+    "styleId": 5,
+    "level": 10,
+    "replaceCube": "64#645|44#445",
+    "name": "language_10047517",
+    "tagicon": "12",
+    "tag": "999",
+    "color": "#516c59"
+  }
+]

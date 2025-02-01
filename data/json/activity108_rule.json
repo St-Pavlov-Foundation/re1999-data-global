@@ -1,0 +1,72 @@
+[
+  {
+    "id": 101,
+    "rules": "7004",
+    "threat": 2
+  },
+  {
+    "id": 102,
+    "rules": "7005",
+    "threat": 2
+  },
+  {
+    "id": 201,
+    "rules": "7006",
+    "threat": 1
+  },
+  {
+    "id": 202,
+    "rules": "7007",
+    "threat": 1
+  },
+  {
+    "id": 203,
+    "rules": "7008",
+    "threat": 1
+  },
+  {
+    "id": 204,
+    "rules": "7009",
+    "threat": 1
+  },
+  {
+    "id": 301,
+    "rules": "7010",
+    "threat": 1
+  },
+  {
+    "id": 302,
+    "rules": "7011",
+    "threat": 1
+  },
+  {
+    "id": 303,
+    "rules": "7012",
+    "threat": 1
+  },
+  {
+    "id": 401,
+    "rules": "7013",
+    "threat": 1
+  },
+  {
+    "id": 402,
+    "rules": "7014",
+    "threat": 1
+  },
+  {
+    "id": 403,
+    "rules": "7015",
+    "threat": 1
+  },
+  {
+    "id": 404,
+    "rules": "7016",
+    "threat": 1
+  },
+  {
+    "id": 405,
+    "rules": "7017",
+    "threat": 1
+  }
+]

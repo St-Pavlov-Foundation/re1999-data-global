@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "activityId": 11609,
+    "rewardPointNum": 500,
+    "reward": "1#110202#1|9#1003#2"
+  },
+  {
+    "id": 2,
+    "activityId": 11609,
+    "rewardPointNum": 1000,
+    "reward": "1#110402#1|2#3#5000"
+  },
+  {
+    "id": 3,
+    "activityId": 11609,
+    "rewardPointNum": 2000,
+    "reward": "1#110103#1|1#120011#2"
+  },
+  {
+    "id": 4,
+    "activityId": 11609,
+    "rewardPointNum": 3000,
+    "reward": "1#110502#1|2#5#5000"
+  },
+  {
+    "id": 5,
+    "activityId": 11609,
+    "rewardPointNum": 4000,
+    "reward": "1#110304#1|1#120012#1"
+  },
+  {
+    "id": 6,
+    "activityId": 11609,
+    "rewardPointNum": 5000,
+    "reward": "1#110702#1|9#1003#2"
+  },
+  {
+    "id": 7,
+    "activityId": 11609,
+    "rewardPointNum": 6000,
+    "reward": "1#110302#1|2#3#5000"
+  },
+  {
+    "id": 8,
+    "activityId": 11609,
+    "rewardPointNum": 7000,
+    "reward": "1#110203#1|1#120011#2"
+  },
+  {
+    "id": 9,
+    "activityId": 11609,
+    "rewardPointNum": 8000,
+    "reward": "1#110602#1|2#5#5000"
+  },
+  {
+    "id": 10,
+    "activityId": 11609,
+    "rewardPointNum": 9000,
+    "reward": "1#110204#1|1#120012#1"
+  },
+  {
+    "id": 11,
+    "activityId": 11609,
+    "rewardPointNum": 10000,
+    "reward": "1#110702#1|9#1003#2"
+  },
+  {
+    "id": 12,
+    "activityId": 11609,
+    "rewardPointNum": 12000,
+    "reward": "1#110202#1|2#3#5000"
+  },
+  {
+    "id": 13,
+    "activityId": 11609,
+    "rewardPointNum": 14000,
+    "reward": "1#110403#1|1#120011#2"
+  },
+  {
+    "id": 14,
+    "activityId": 11609,
+    "rewardPointNum": 16000,
+    "reward": "1#110402#1|2#5#5000"
+  },
+  {
+    "id": 15,
+    "activityId": 11609,
+    "rewardPointNum": 18000,
+    "reward": "1#111003#1|1#120012#1"
+  },
+  {
+    "id": 16,
+    "activityId": 11609,
+    "rewardPointNum": 20000,
+    "reward": "1#110302#1|9#1003#2"
+  },
+  {
+    "id": 17,
+    "activityId": 11609,
+    "rewardPointNum": 22000,
+    "reward": "1#110502#1|2#3#5000"
+  },
+  {
+    "id": 18,
+    "activityId": 11609,
+    "rewardPointNum": 24000,
+    "reward": "11#11608#1|1#120011#2"
+  },
+  {
+    "id": 19,
+    "activityId": 11609,
+    "rewardPointNum": 26000,
+    "reward": "1#110602#1|2#5#5000"
+  },
+  {
+    "id": 20,
+    "activityId": 11609,
+    "rewardPointNum": 28000,
+    "reward": "1#110603#1|2#3#5000"
+  },
+  {
+    "id": 21,
+    "activityId": 11609,
+    "rewardPointNum": 30000,
+    "reward": "1#110202#1|2#5#5000"
+  },
+  {
+    "id": 22,
+    "activityId": 11609,
+    "rewardPointNum": 32000,
+    "reward": "1#110103#1|2#3#5000"
+  }
+]

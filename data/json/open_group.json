@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "hero_number": 1,
+    "need_level": 0,
+    "need_episode": 0,
+    "need_enter_episode": 0,
+    "need_finish_guide": 0,
+    "showInEpisode": 0,
+    "lock_desc": 0
+  },
+  {
+    "id": 2,
+    "hero_number": 2,
+    "need_level": 0,
+    "need_episode": 0,
+    "need_enter_episode": 0,
+    "need_finish_guide": 0,
+    "showInEpisode": 0,
+    "lock_desc": 0
+  },
+  {
+    "id": 3,
+    "hero_number": 3,
+    "need_level": 0,
+    "need_episode": 10105,
+    "need_enter_episode": 10106,
+    "need_finish_guide": 109,
+    "showInEpisode": 1,
+    "lock_desc": 2003
+  },
+  {
+    "id": 4,
+    "hero_number": 4,
+    "need_level": 0,
+    "need_episode": 10111,
+    "need_enter_episode": 0,
+    "need_finish_guide": 0,
+    "showInEpisode": 1,
+    "lock_desc": 2003
+  }
+]

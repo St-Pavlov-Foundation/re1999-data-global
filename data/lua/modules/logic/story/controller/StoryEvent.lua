@@ -1,0 +1,51 @@
+module("modules.logic.story.controller.StoryEvent", package.seeall)
+
+slot0 = _M
+slot0.Start = 1
+slot0.StartFirstStep = 2
+slot0.Finish = 3
+slot0.EnterNextStep = 4
+slot0.AllStepFinished = 5
+slot0.FinishFromServer = 6
+slot0.OnBgmStop = 7
+slot0.Log = 1001
+slot0.Hide = 1002
+slot0.Auto = 1003
+slot0.Skip = 1004
+slot0.PlayDarkFadeUp = 2001
+slot0.PlayDarkFade = 2002
+slot0.PlayWhiteFade = 2003
+slot0.SetFullText = 2004
+slot0.PlayFullText = 2005
+slot0.PlayFullTextOut = 2006
+slot0.PlayFullBlurIn = 2007
+slot0.PlayFullTextLineShow = 2008
+slot0.FullTextLineShowFinished = 2009
+slot0.StoryFrontViewDestroy = 2010
+slot0.PlayIrregularShakeText = 2011
+slot0.RefreshStep = 3001
+slot0.RefreshBackground = 3002
+slot0.RefreshView = 3003
+slot0.RefreshConversation = 3004
+slot0.ShowBackground = 3005
+slot0.ReOpenStoryView = 3006
+slot0.ShowLeadRole = 3007
+slot0.ConversationShake = 3008
+slot0.LeadRoleViewShow = 3009
+slot0.RefreshHero = 3010
+slot0.RefreshNavigate = 3011
+slot0.LogSelected = 3012
+slot0.LogAudioFinished = 3013
+slot0.FrontItemFadeOut = 3014
+slot0.OnSelectOptionView = 3015
+slot0.FinishSelectOptionView = 3016
+slot0.HideTopBtns = 3017
+slot0.HideDialog = 3018
+slot0.DialogConFinished = 3019
+slot0.VideoStart = 3040
+slot0.VideoChange = 3041
+slot0.AutoChange = 3042
+slot0.OnSkipClick = 3031
+slot0.OnReplaceHero = 4001
+
+return slot0

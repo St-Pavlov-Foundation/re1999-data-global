@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "language_10042203",
+    "iconUrl": "rouge_collection_tag1"
+  },
+  {
+    "id": 2,
+    "name": "language_10042206",
+    "iconUrl": "rouge_collection_tag5"
+  },
+  {
+    "id": 3,
+    "name": "language_10029934",
+    "iconUrl": "rouge_collection_tag6"
+  },
+  {
+    "id": 4,
+    "name": "language_10042204",
+    "iconUrl": "rouge_collection_tag2"
+  },
+  {
+    "id": 5,
+    "name": "language_10005055",
+    "iconUrl": "rouge_collection_tag3"
+  },
+  {
+    "id": 6,
+    "name": "language_10042205",
+    "iconUrl": "rouge_collection_tag4"
+  },
+  {
+    "id": 7,
+    "name": "language_10018041",
+    "iconUrl": "rouge_collection_tag7"
+  },
+  {
+    "id": 8,
+    "name": "language_10042207",
+    "iconUrl": "rouge_collection_tag8"
+  },
+  {
+    "id": 9,
+    "name": "language_10052277",
+    "iconUrl": "rouge_collection_tag9"
+  },
+  {
+    "id": 10,
+    "name": "language_90001057",
+    "iconUrl": "rouge_collection_tag11"
+  },
+  {
+    "id": 101,
+    "name": "language_10030081",
+    "iconUrl": "rouge_collection_equiptag3"
+  },
+  {
+    "id": 102,
+    "name": "language_10030080",
+    "iconUrl": "rouge_collection_equiptag2"
+  },
+  {
+    "id": 103,
+    "name": "language_10030079",
+    "iconUrl": "rouge_collection_equiptag1"
+  },
+  {
+    "id": 104,
+    "name": "language_10042201",
+    "iconUrl": "rouge_collection_equiptag4"
+  },
+  {
+    "id": 105,
+    "name": "language_10042202",
+    "iconUrl": "rouge_collection_equiptag5"
+  },
+  {
+    "id": 106,
+    "name": "language_10052278",
+    "iconUrl": "rouge_collection_tag10"
+  }
+]

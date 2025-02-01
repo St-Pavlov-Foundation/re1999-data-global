@@ -1,0 +1,62 @@
+[
+  {
+    "activityId": 11202,
+    "id": 1,
+    "place": "language_10026441",
+    "placeEn": "CANTEEN",
+    "events": "20101#20102#20103#20104#20105#20106",
+    "residentEvent": 20107,
+    "condition": "3#1#2",
+    "specialEvents": 30601
+  },
+  {
+    "activityId": 11202,
+    "id": 2,
+    "place": "language_10026442",
+    "placeEn": "LIBRARY",
+    "events": "20201#20202#20203#20204#20205",
+    "residentEvent": 20206,
+    "condition": "1#30405",
+    "specialEvents": 0
+  },
+  {
+    "activityId": 11202,
+    "id": 3,
+    "place": "language_10026443",
+    "placeEn": "TOILET",
+    "events": "20301#20302#20303#20304",
+    "residentEvent": 0,
+    "condition": "1#30201",
+    "specialEvents": 0
+  },
+  {
+    "activityId": 11202,
+    "id": 4,
+    "place": "language_10026444",
+    "placeEn": "CLASSROOM",
+    "events": "20401#20402#20403#20404#20405#20406",
+    "residentEvent": 20407,
+    "condition": "3#1#2",
+    "specialEvents": 0
+  },
+  {
+    "activityId": 11202,
+    "id": 5,
+    "place": "language_10026445",
+    "placeEn": "OFFICE",
+    "events": "20501#20502#20503",
+    "residentEvent": 0,
+    "condition": "1#30501",
+    "specialEvents": 0
+  },
+  {
+    "activityId": 11202,
+    "id": 6,
+    "place": "language_10000174",
+    "placeEn": "GUARDHOUSE",
+    "events": "20601#20602#20603#20604",
+    "residentEvent": 0,
+    "condition": "1#30502",
+    "specialEvents": 0
+  }
+]

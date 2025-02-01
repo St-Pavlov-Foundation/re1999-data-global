@@ -1,0 +1,650 @@
+[
+  {
+    "stepId": 1101,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "101#102#103#104",
+    "answersKeywordIds": "1201#101#103|1202#101#102#103|1203#101#104|1203#101#102#104|1204#102#103|1203#102#104",
+    "nextStepConditionIds": "",
+    "text": "language_10053200",
+    "pic": "v2a1_strangetale_notepic1"
+  },
+  {
+    "stepId": 1201,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "105#106",
+    "answersKeywordIds": "1301#105|1304#106",
+    "nextStepConditionIds": "",
+    "text": "language_10053201",
+    "pic": ""
+  },
+  {
+    "stepId": 1202,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "105#106",
+    "answersKeywordIds": "1302#105|1303#106",
+    "nextStepConditionIds": "",
+    "text": "language_10053202",
+    "pic": ""
+  },
+  {
+    "stepId": 1203,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "108#109",
+    "answersKeywordIds": "1503#108|1502#109",
+    "nextStepConditionIds": "",
+    "text": "language_10053203",
+    "pic": ""
+  },
+  {
+    "stepId": 1204,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "102#108#109",
+    "answersKeywordIds": "1502#109|1503#108|1504#102#109",
+    "nextStepConditionIds": "",
+    "text": "language_10053204",
+    "pic": ""
+  },
+  {
+    "stepId": 1301,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "110#107",
+    "answersKeywordIds": "1401#110#107",
+    "nextStepConditionIds": "1401#1101#1201",
+    "text": "language_10053205",
+    "pic": ""
+  },
+  {
+    "stepId": 1302,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "110#107",
+    "answersKeywordIds": "1401#110#107|1401#107",
+    "nextStepConditionIds": "1401#1101#1202",
+    "text": "language_10053206",
+    "pic": ""
+  },
+  {
+    "stepId": 1303,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "102#107",
+    "answersKeywordIds": "1402#107|1403#102#107",
+    "nextStepConditionIds": "1402#1101#1201|1403#1101#1202|1402#1101#1202",
+    "text": "language_10053207",
+    "pic": ""
+  },
+  {
+    "stepId": 1304,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "107",
+    "answersKeywordIds": "1402#107",
+    "nextStepConditionIds": "1402#1101#1201",
+    "text": "language_10053207",
+    "pic": ""
+  },
+  {
+    "stepId": 1401,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "110#108",
+    "answersKeywordIds": "1501#110#108|1501#108",
+    "nextStepConditionIds": "1501#1101#1201#1301|1501#1101#1202#1302",
+    "text": "language_10053208",
+    "pic": ""
+  },
+  {
+    "stepId": 1402,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "108#109",
+    "answersKeywordIds": "1502#109|1503#108",
+    "nextStepConditionIds": "1502#1101#1201#1304|1503#1101#1202#1303|1503#1101#1201#1304|1502#1101#1202#1303",
+    "text": "language_10053209",
+    "pic": ""
+  },
+  {
+    "stepId": 1403,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "102#108#109",
+    "answersKeywordIds": "1502#109|1503#108|1504#102#109",
+    "nextStepConditionIds": "1502#1101#1202#1303|1503#1101#1202#1303|1504#1101#1202#1303",
+    "text": "language_10053210",
+    "pic": ""
+  },
+  {
+    "stepId": 1501,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1601",
+    "nextStepConditionIds": "1601#1101#1201#1301#1401|1601#1101#1202#1302#1401",
+    "text": "language_10053211",
+    "pic": ""
+  },
+  {
+    "stepId": 1502,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1601",
+    "nextStepConditionIds": "1601#1101#1203|1601#1101#1201#1304#1402|1601#1101#1202#1303#1402|1601#1101#1202#1303#1403|1601#1101#1204",
+    "text": "language_10053212",
+    "pic": ""
+  },
+  {
+    "stepId": 1503,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1601",
+    "nextStepConditionIds": "1601#1101#1203|1601#1101#1201#1304#1402|1601#1101#1202#1303#1402|1601#1101#1202#1303#1403|1601#1101#1204",
+    "text": "language_10053213",
+    "pic": ""
+  },
+  {
+    "stepId": 1504,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1601",
+    "nextStepConditionIds": "1601#1101#1202#1303#1403|1601#1101#1204",
+    "text": "language_10053214",
+    "pic": ""
+  },
+  {
+    "stepId": 1601,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "103#108",
+    "answersKeywordIds": "1801|1701#103|1702#108",
+    "nextStepConditionIds": "1801#1101#1202#1302#1401#1501|1801#1101#1201#1301#1401#1501|1801#1101#1202#1302#1401#1501|1701#1101#1203#1502|1701#1101#1201#1304#1402#1502|1701#1101#1202#1303#1402#1502|1701#1101#1203#1503|1701#1101#1201#1304#1402#1503|1701#1101#1202#1303#1402#1503|1701#1101#1202#1303#1403#1503|1702#1101#1203#1502|1702#1101#1201#1304#1402#1502|1702#1101#1202#1303#1402#1502|1702#1101#1203#1503|1702#1101#1201#1304#1402#1503|1702#1101#1202#1303#1402#1503|1702#1101#1202#1303#1403#1503|1702#1101#1202#1303#1403#1504|1701#1101#1202#1303#1403#1504|1701#1101#1202#1303#1403#1502|1702#1101#1202#1303#1403#1502|1701#1101#1204#1502|1701#1101#1204#1503|1701#1101#1204#1504|1702#1101#1204#1502|1702#1101#1204#1503|1702#1101#1204#1504",
+    "text": "language_10053215",
+    "pic": "v2a1_strangetale_notepic4"
+  },
+  {
+    "stepId": 1701,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1802|1803|1805",
+    "nextStepConditionIds": "1802#1101#1201#1304#1402#1502#1601|1802#1101#1201#1304#1402#1503#1601|1802#1101#1202#1303#1402#1502#1601|1802#1101#1202#1303#1402#1503#1601|1802#1101#1202#1303#1403#1502#1601|1802#1101#1202#1303#1403#1503#1601|1805#1101#1203#1502#1601|1805#1101#1203#1503#1601|1803#1101#1202#1303#1403#1504#1601|1803#1101#1204#1504#1601|1802#1101#1204#1502#1601|1802#1101#1204#1503#1601",
+    "text": "language_10053216",
+    "pic": ""
+  },
+  {
+    "stepId": 1702,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "1803|1804",
+    "nextStepConditionIds": "1804#1101#1201#1304#1402#1502#1601|1804#1101#1201#1304#1402#1503#1601|1804#1101#1202#1303#1402#1502#1601|1804#1101#1202#1303#1402#1503#1601|1804#1101#1202#1303#1403#1502#1601|1804#1101#1202#1303#1403#1503#1601|1804#1101#1203#1502#1601|1804#1101#1203#1503#1601|1803#1101#1202#1303#1403#1504#1601|1803#1101#1204#1504#1601|1804#1101#1204#1502#1601|1804#1101#1204#1503#1601",
+    "text": "language_10053217",
+    "pic": ""
+  },
+  {
+    "stepId": 1801,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053218",
+    "pic": "v2a1_strangetale_ending1_4"
+  },
+  {
+    "stepId": 1802,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053219",
+    "pic": "v2a1_strangetale_ending1_2"
+  },
+  {
+    "stepId": 1803,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053220",
+    "pic": "v2a1_strangetale_ending1_3"
+  },
+  {
+    "stepId": 1804,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053221",
+    "pic": "v2a1_strangetale_ending1_1"
+  },
+  {
+    "stepId": 1805,
+    "belongStoryId": 2,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053222",
+    "pic": "v2a1_strangetale_ending3_7"
+  },
+  {
+    "stepId": 2101,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "202#205#206",
+    "answersKeywordIds": "2201#205|2202#202#205|2203#202#206|2203#202|2204#206",
+    "nextStepConditionIds": "",
+    "text": "language_10053223",
+    "pic": "v2a1_strangetale_notepic2"
+  },
+  {
+    "stepId": 2201,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "207#208#209",
+    "answersKeywordIds": "2501#207|2502#208|2503#209",
+    "nextStepConditionIds": "",
+    "text": "language_10053224",
+    "pic": ""
+  },
+  {
+    "stepId": 2202,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "203#204",
+    "answersKeywordIds": "2301#203|2302#204",
+    "nextStepConditionIds": "",
+    "text": "language_10053225",
+    "pic": ""
+  },
+  {
+    "stepId": 2203,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "203#204",
+    "answersKeywordIds": "2301#203|2302#204",
+    "nextStepConditionIds": "",
+    "text": "language_10053226",
+    "pic": ""
+  },
+  {
+    "stepId": 2204,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "2803",
+    "nextStepConditionIds": "2803#2101",
+    "text": "language_10053227",
+    "pic": ""
+  },
+  {
+    "stepId": 2301,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "205#206",
+    "answersKeywordIds": "2401#205|2402#206",
+    "nextStepConditionIds": "2401#2101#2202|2401#2101#2203|2402#2101#2202|2402#2101#2203",
+    "text": "language_10053228",
+    "pic": ""
+  },
+  {
+    "stepId": 2302,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "205#206",
+    "answersKeywordIds": "2401#205|2402#206",
+    "nextStepConditionIds": "2401#2101#2202|2401#2101#2203|2402#2101#2202|2402#2101#2203",
+    "text": "language_10053229",
+    "pic": ""
+  },
+  {
+    "stepId": 2401,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "207#208#209",
+    "answersKeywordIds": "2501#207|2502#208|2503#209",
+    "nextStepConditionIds": "2501#2101#2202#2301|2501#2101#2203#2301|2501#2101#2202#2302|2501#2101#2203#2302|2502#2101#2202#2301|2502#2101#2203#2301|2502#2101#2202#2302|2502#2101#2203#2302|2503#2101#2202#2301|2503#2101#2203#2301|2503#2101#2202#2302|2503#2101#2203#2302",
+    "text": "language_10053230",
+    "pic": ""
+  },
+  {
+    "stepId": 2402,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "2803|2806",
+    "nextStepConditionIds": "2806#2101#2202#2302|2806#2101#2203#2302|2803#2101#2202#2301|2803#2101#2203#2301|",
+    "text": "language_10053231",
+    "pic": ""
+  },
+  {
+    "stepId": 2501,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "210#211",
+    "answersKeywordIds": "2601#210|2602#211",
+    "nextStepConditionIds": "2601#2101#2201|2601#2101#2202#2301#2401|2601#2101#2202#2302#2401|2601#2101#2203#2301#2401|2601#2101#2203#2302#2401|2602#2101#2201|2602#2101#2202#2301#2401|2602#2101#2202#2302#2401|2602#2101#2203#2301#2401|2602#2101#2203#2302#2401",
+    "text": "language_10053232",
+    "pic": ""
+  },
+  {
+    "stepId": 2502,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "210#211",
+    "answersKeywordIds": "2601#210|2602#211",
+    "nextStepConditionIds": "2601#2101#2201|2601#2101#2202#2301#2401|2601#2101#2202#2302#2401|2601#2101#2203#2301#2401|2601#2101#2203#2302#2401|2602#2101#2201|2602#2101#2202#2301#2401|2602#2101#2202#2302#2401|2602#2101#2203#2301#2401|2602#2101#2203#2302#2401",
+    "text": "language_10053233",
+    "pic": ""
+  },
+  {
+    "stepId": 2503,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "209",
+    "answersKeywordIds": "2603#209",
+    "nextStepConditionIds": "2601#2101#2201|2601#2101#2202#2301#2401|2601#2101#2202#2302#2401|2601#2101#2203#2301#2401|2601#2101#2203#2302#2401|2602#2101#2201|2602#2101#2202#2301#2401|2602#2101#2202#2302#2401|2602#2101#2203#2301#2401|2602#2101#2203#2302#2401|2603#2101#2201|2603#2101#2203#2301#2401|2603#2101#2203#2301#2401|2603#2101#2202#2302#2401|2603#2101#2203#2302#2401|2603#2101#2202#2301#2401",
+    "text": "language_10053234",
+    "pic": ""
+  },
+  {
+    "stepId": 2601,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "207#208",
+    "answersKeywordIds": "2701#207|2702#208",
+    "nextStepConditionIds": "2701#2101#2201#2501|2701#2101#2202#2301#2401#2501|2701#2101#2202#2302#2401#2501|2701#2101#2203#2301#2401#2501|2701#2101#2203#2302#2401#2501|2701#2101#2201#2502|2701#2101#2202#2301#2401#2502|2701#2101#2202#2302#2401#2502|2701#2101#2203#2301#2401#2502|2701#2101#2203#2302#2401#2502|2702#2101#2201#2501|2702#2101#2202#2301#2401#2501|2702#2101#2202#2302#2401#2501|2702#2101#2203#2301#2401#2501|2702#2101#2203#2302#2401#2501|2702#2101#2201#2502|2702#2101#2202#2301#2401#2502|2702#2101#2202#2302#2401#2502|2702#2101#2203#2301#2401#2502|2702#2101#2203#2302#2401#2502",
+    "text": "language_10053235",
+    "pic": ""
+  },
+  {
+    "stepId": 2602,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "207#208",
+    "answersKeywordIds": "2701#207|2702#208",
+    "nextStepConditionIds": "2701#2101#2201#2501|2701#2101#2202#2301#2401#2501|2701#2101#2202#2302#2401#2501|2701#2101#2203#2301#2401#2501|2701#2101#2203#2302#2401#2501|2701#2101#2201#2502|2701#2101#2202#2301#2401#2502|2701#2101#2202#2302#2401#2502|2701#2101#2203#2301#2401#2502|2701#2101#2203#2302#2401#2502|2702#2101#2201#2501|2702#2101#2202#2301#2401#2501|2702#2101#2202#2302#2401#2501|2702#2101#2203#2301#2401#2501|2702#2101#2203#2302#2401#2501|2702#2101#2201#2502|2702#2101#2202#2301#2401#2502|2702#2101#2202#2302#2401#2502|2702#2101#2203#2301#2401#2502|2702#2101#2203#2302#2401#2502",
+    "text": "language_10053236",
+    "pic": ""
+  },
+  {
+    "stepId": 2603,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "2804|2805",
+    "nextStepConditionIds": "2804#2101#2201#2503|2804#2101#2202#2301#2401#2503|2804#2101#2203#2301#2401#2503|2805#2101#2202#2302#2401#2503|2805#2101#2203#2302#2401#2503",
+    "text": "language_10053237",
+    "pic": ""
+  },
+  {
+    "stepId": 2701,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "2801|2802",
+    "nextStepConditionIds": "2801#2101#2201#2501#2601|2801#2101#2202#2302#2401#2501#2601|2801#2101#2203#2302#2401#2501#2601|2801#2101#2201#2502#2601|2801#2101#2202#2302#2401#2502#2601|2801#2101#2203#2302#2401#2502#2601|2801#2101#2201#2501#2602|2801#2101#2202#2302#2401#2501#2602|2801#2101#2203#2302#2401#2501#2602|2801#2101#2201#2502#2602|2801#2101#2202#2302#2401#2502#2602|2801#2101#2203#2302#2401#2502#2602|2802#2101#2202#2301#2401#2501#2601|2802#2101#2203#2301#2401#2501#2601|2802#2101#2202#2301#2401#2502#2601|2802#2101#2203#2301#2401#2502#2601|2802#2101#2202#2301#2401#2501#2602|2802#2101#2203#2301#2401#2501#2602|2802#2101#2202#2301#2401#2502#2602|2802#2101#2203#2301#2401#2502#2602",
+    "text": "language_10053238",
+    "pic": ""
+  },
+  {
+    "stepId": 2702,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "2803",
+    "nextStepConditionIds": "2803#2101#2201#2501#2601|2803#2101#2202#2302#2401#2501#2601|2803#2101#2203#2302#2401#2501#2601|2803#2101#2201#2502#2601|2803#2101#2202#2302#2401#2502#2601|2803#2101#2203#2302#2401#2502#2601|2803#2101#2201#2501#2602|2803#2101#2202#2302#2401#2501#2602|2803#2101#2203#2302#2401#2501#2602|2803#2101#2201#2502#2602|2803#2101#2202#2302#2401#2502#2602|2803#2101#2203#2302#2401#2502#2602|2803#2101#2202#2301#2401#2501#2601|2803#2101#2203#2301#2401#2501#2601|2803#2101#2202#2301#2401#2502#2601|2803#2101#2203#2301#2401#2502#2601|2803#2101#2202#2301#2401#2501#2602|2803#2101#2203#2301#2401#2501#2602|2803#2101#2202#2301#2401#2502#2602|2803#2101#2203#2301#2401#2502#2602",
+    "text": "language_10053239",
+    "pic": ""
+  },
+  {
+    "stepId": 2801,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053240",
+    "pic": "v2a1_strangetale_ending2_2"
+  },
+  {
+    "stepId": 2802,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053241",
+    "pic": "v2a1_strangetale_ending2_3"
+  },
+  {
+    "stepId": 2803,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053242",
+    "pic": "v2a1_strangetale_ending2_5"
+  },
+  {
+    "stepId": 2804,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053243",
+    "pic": "v2a1_strangetale_ending2_1"
+  },
+  {
+    "stepId": 2805,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053244",
+    "pic": "v2a1_strangetale_ending2_4"
+  },
+  {
+    "stepId": 2806,
+    "belongStoryId": 1,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053245",
+    "pic": "v2a1_strangetale_ending2_6"
+  },
+  {
+    "stepId": 3101,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "303#304",
+    "answersKeywordIds": "3201#303|3202#304",
+    "nextStepConditionIds": "",
+    "text": "language_10053246",
+    "pic": "v2a1_strangetale_notepic3"
+  },
+  {
+    "stepId": 3201,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "306#307",
+    "answersKeywordIds": "3301#307|3302#306",
+    "nextStepConditionIds": "",
+    "text": "language_10053247",
+    "pic": ""
+  },
+  {
+    "stepId": 3202,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "306#307",
+    "answersKeywordIds": "3301#307|3302#306",
+    "nextStepConditionIds": "",
+    "text": "language_10053248",
+    "pic": ""
+  },
+  {
+    "stepId": 3301,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "307#308",
+    "answersKeywordIds": "3401#307|3402#308",
+    "nextStepConditionIds": "3401#3101#3201|3401#3101#3202|3402#3101#3201|3402#3101#3202",
+    "text": "language_10053249",
+    "pic": ""
+  },
+  {
+    "stepId": 3302,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "310#312",
+    "answersKeywordIds": "3403#310|3506#312",
+    "nextStepConditionIds": "3403#3101#3202|3506#3101#3202|3403#3101#3201|3506#3101#3201",
+    "text": "language_10053250",
+    "pic": ""
+  },
+  {
+    "stepId": 3401,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3801",
+    "nextStepConditionIds": "3801#3101#3201#3301|3801#3101#3202#3301",
+    "text": "language_10053251",
+    "pic": ""
+  },
+  {
+    "stepId": 3402,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3802",
+    "nextStepConditionIds": "3802#3101#3201#3301|3802#3101#3202#3301",
+    "text": "language_10053252",
+    "pic": ""
+  },
+  {
+    "stepId": 3403,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "305#309#312#311",
+    "answersKeywordIds": "3501#305|3502#309#312#311|3503#309#311|3504#309#312|3505#309",
+    "nextStepConditionIds": "3501#3101#3202#3302|3502#3101#3202#3302|3503#3101#3202#3302|3504#3101#3202#3302|3505#3101#3202#3302|3501#3101#3201#3302|3502#3101#3201#3302|3503#3101#3201#3302|3504#3101#3201#3302|3505#3101#3201#3302",
+    "text": "language_10053253",
+    "pic": ""
+  },
+  {
+    "stepId": 3501,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3802",
+    "nextStepConditionIds": "3802#3101#3202#3302#3403|3802#3101#3201#3302#3403",
+    "text": "language_10053254",
+    "pic": ""
+  },
+  {
+    "stepId": 3502,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3601",
+    "nextStepConditionIds": "3601#3101#3202#3302#3403|3601#3101#3201#3302#3403",
+    "text": "language_10053255",
+    "pic": ""
+  },
+  {
+    "stepId": 3503,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3601",
+    "nextStepConditionIds": "3601#3101#3202#3302#3403|3601#3101#3201#3302#3403",
+    "text": "language_10053256",
+    "pic": ""
+  },
+  {
+    "stepId": 3504,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3602",
+    "nextStepConditionIds": "3602#3101#3202#3302#3403|3602#3101#3201#3302#3403",
+    "text": "language_10053257",
+    "pic": ""
+  },
+  {
+    "stepId": 3505,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3602",
+    "nextStepConditionIds": "3602#3101#3202#3302#3403|3602#3101#3201#3302#3403",
+    "text": "language_10053258",
+    "pic": ""
+  },
+  {
+    "stepId": 3506,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3602",
+    "nextStepConditionIds": "3602#3101#3202#3302|3602#3101#3201#3302",
+    "text": "language_10053259",
+    "pic": ""
+  },
+  {
+    "stepId": 3601,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "313#311#314",
+    "answersKeywordIds": "3701#313|3702#313#311|3703#314",
+    "nextStepConditionIds": "3701#3101#3202#3302#3403#3502|3701#3101#3202#3302#3403#3503|3703#3101#3202#3302#3403#3502|3703#3101#3202#3302#3403#3503|3702#3101#3202#3302#3403#3502|3702#3101#3202#3302#3403#3503|3701#3101#3201#3302#3403#3502|3701#3101#3201#3302#3403#3503|3703#3101#3201#3302#3403#3502|3703#3101#3201#3302#3403#3503|3702#3101#3201#3302#3403#3502|3702#3101#3201#3302#3403#3503|",
+    "text": "language_10053260",
+    "pic": "v2a1_strangetale_notepic5"
+  },
+  {
+    "stepId": 3602,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "313#314",
+    "answersKeywordIds": "3701#313|3703#314",
+    "nextStepConditionIds": "3701#3101#3202#3302#3403#3504|3701#3101#3202#3302#3403#3505|3701#3101#3202#3302#3506|3703#3101#3202#3302#3403#3504|3703#3101#3202#3302#3403#3505|3703#3101#3202#3302#3506|3701#3101#3201#3302#3403#3504|3701#3101#3201#3302#3403#3505|3701#3101#3201#3302#3506|3703#3101#3201#3302#3403#3504|3703#3101#3201#3302#3403#3505|3703#3101#3201#3302#3506",
+    "text": "language_10053261",
+    "pic": "v2a1_strangetale_notepic5"
+  },
+  {
+    "stepId": 3701,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3803",
+    "nextStepConditionIds": "3803#3101#3202#3302#3403#3502#3601|3803#3101#3202#3302#3403#3503#3601|3803#3101#3201#3302#3403#3502#3601|3803#3101#3201#3302#3403#3503#3601|3803#3101#3202#3302#3403#3504#3602|3803#3101#3202#3302#3403#3505#3602|3803#3101#3202#3302#3506#3602|3803#3101#3201#3302#3403#3504#3602|3803#3101#3201#3302#3403#3505#3602|3803#3101#3201#3302#3506#3602",
+    "text": "language_10053262",
+    "pic": ""
+  },
+  {
+    "stepId": 3702,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3804|3805",
+    "nextStepConditionIds": "3804#3101#3202#3302#3403#3502#3601|3805#3101#3202#3302#3403#3503#3601|3804#3101#3201#3302#3403#3502#3601|3805#3101#3201#3302#3403#3503#3601",
+    "text": "language_10053263",
+    "pic": ""
+  },
+  {
+    "stepId": 3703,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "3806",
+    "nextStepConditionIds": "3806#3101#3202#3302#3403#3502#3601|3806#3101#3202#3302#3403#3503#3601|3806#3101#3201#3302#3403#3502#3601|3806#3101#3201#3302#3403#3503#3601|3806#3101#3202#3302#3403#3504#3602|3806#3101#3202#3302#3403#3505#3602|3806#3101#3202#3302#3506#3602|3806#3101#3201#3302#3403#3504#3602|3806#3101#3201#3302#3403#3505#3602|3806#3101#3201#3302#3506#3602",
+    "text": "language_10053264",
+    "pic": ""
+  },
+  {
+    "stepId": 3801,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053265",
+    "pic": ""
+  },
+  {
+    "stepId": 3802,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053266",
+    "pic": ""
+  },
+  {
+    "stepId": 3803,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053267",
+    "pic": ""
+  },
+  {
+    "stepId": 3804,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053268",
+    "pic": ""
+  },
+  {
+    "stepId": 3805,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053269",
+    "pic": ""
+  },
+  {
+    "stepId": 3806,
+    "belongStoryId": 3,
+    "optionalKeywordIds": "",
+    "answersKeywordIds": "-1",
+    "nextStepConditionIds": "",
+    "text": "language_10053270",
+    "pic": ""
+  }
+]

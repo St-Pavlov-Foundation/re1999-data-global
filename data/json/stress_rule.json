@@ -1,0 +1,3944 @@
+[
+  {
+    "id": 1001,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050590"
+  },
+  {
+    "id": 1002,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050591"
+  },
+  {
+    "id": 1003,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050592"
+  },
+  {
+    "id": 1004,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050593"
+  },
+  {
+    "id": 1005,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050594"
+  },
+  {
+    "id": 1006,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050595"
+  },
+  {
+    "id": 1007,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 1,
+    "desc": "language_10050596"
+  },
+  {
+    "id": 1008,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 1,
+    "desc": "language_10050597"
+  },
+  {
+    "id": 200111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200111",
+    "isNoShow": 1,
+    "desc": "language_10049424"
+  },
+  {
+    "id": 200211,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200211",
+    "isNoShow": 1,
+    "desc": "language_10049425"
+  },
+  {
+    "id": 200311,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200311",
+    "isNoShow": 1,
+    "desc": "language_10049426"
+  },
+  {
+    "id": 200411,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200411",
+    "isNoShow": 1,
+    "desc": "language_10049427"
+  },
+  {
+    "id": 200511,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200511",
+    "isNoShow": 1,
+    "desc": "language_10049428"
+  },
+  {
+    "id": 200611,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200611",
+    "isNoShow": 1,
+    "desc": "language_10050598"
+  },
+  {
+    "id": 200121,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200121",
+    "isNoShow": 1,
+    "desc": "language_10049429"
+  },
+  {
+    "id": 200221,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200221",
+    "isNoShow": 1,
+    "desc": "language_10049430"
+  },
+  {
+    "id": 200321,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200321",
+    "isNoShow": 1,
+    "desc": "language_10049431"
+  },
+  {
+    "id": 200421,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200421",
+    "isNoShow": 1,
+    "desc": "language_10049432"
+  },
+  {
+    "id": 200521,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200521",
+    "isNoShow": 1,
+    "desc": "language_10049433"
+  },
+  {
+    "id": 200621,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200621",
+    "isNoShow": 1,
+    "desc": "language_10050599"
+  },
+  {
+    "id": 100131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38100131",
+    "isNoShow": 1,
+    "desc": "language_10049434"
+  },
+  {
+    "id": 200131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200131",
+    "isNoShow": 1,
+    "desc": "language_10049435"
+  },
+  {
+    "id": 200231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200231",
+    "isNoShow": 1,
+    "desc": "language_10049436"
+  },
+  {
+    "id": 200331,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200331",
+    "isNoShow": 1,
+    "desc": "language_10049437"
+  },
+  {
+    "id": 200431,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200431",
+    "isNoShow": 1,
+    "desc": "language_10050600"
+  },
+  {
+    "id": 200531,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200531",
+    "isNoShow": 1,
+    "desc": "language_10049439"
+  },
+  {
+    "id": 200631,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200631",
+    "isNoShow": 1,
+    "desc": "language_10049440"
+  },
+  {
+    "id": 400131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38400131",
+    "isNoShow": 1,
+    "desc": "language_10049441"
+  },
+  {
+    "id": 400231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38400231",
+    "isNoShow": 1,
+    "desc": "language_10049442"
+  },
+  {
+    "id": 410131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410131",
+    "isNoShow": 1,
+    "desc": "language_10049443"
+  },
+  {
+    "id": 410231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410231",
+    "isNoShow": 1,
+    "desc": "language_10049444"
+  },
+  {
+    "id": 410331,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410331",
+    "isNoShow": 1,
+    "desc": "language_10049445"
+  },
+  {
+    "id": 410431,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410431",
+    "isNoShow": 1,
+    "desc": "language_10049446"
+  },
+  {
+    "id": 410531,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410531",
+    "isNoShow": 1,
+    "desc": "language_10049447"
+  },
+  {
+    "id": 410631,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410631",
+    "isNoShow": 1,
+    "desc": "language_10049448"
+  },
+  {
+    "id": 410731,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410731",
+    "isNoShow": 1,
+    "desc": "language_10049449"
+  },
+  {
+    "id": 410831,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410831",
+    "isNoShow": 1,
+    "desc": "language_10049450"
+  },
+  {
+    "id": 410931,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410931",
+    "isNoShow": 1,
+    "desc": "language_10049451"
+  },
+  {
+    "id": 411031,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411031",
+    "isNoShow": 1,
+    "desc": "language_10049452"
+  },
+  {
+    "id": 411131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411131",
+    "isNoShow": 1,
+    "desc": "language_10049453"
+  },
+  {
+    "id": 411231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411231",
+    "isNoShow": 1,
+    "desc": "language_10049454"
+  },
+  {
+    "id": 411331,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411331",
+    "isNoShow": 1,
+    "desc": "language_10049455"
+  },
+  {
+    "id": 411431,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411431",
+    "isNoShow": 1,
+    "desc": "language_10049456"
+  },
+  {
+    "id": 411531,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411531",
+    "isNoShow": 1,
+    "desc": "language_10049456"
+  },
+  {
+    "id": 411631,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411631",
+    "isNoShow": 1,
+    "desc": "language_10049457"
+  },
+  {
+    "id": 411831,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411831",
+    "isNoShow": 1,
+    "desc": "language_10049458"
+  },
+  {
+    "id": 411931,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411931",
+    "isNoShow": 1,
+    "desc": "language_10049459"
+  },
+  {
+    "id": 412031,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412031",
+    "isNoShow": 1,
+    "desc": "language_10050601"
+  },
+  {
+    "id": 412131,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412131",
+    "isNoShow": 1,
+    "desc": "language_10049461"
+  },
+  {
+    "id": 412231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412231",
+    "isNoShow": 1,
+    "desc": "language_10049462"
+  },
+  {
+    "id": 412331,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412331",
+    "isNoShow": 1,
+    "desc": "language_10049463"
+  },
+  {
+    "id": 100141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38100141",
+    "isNoShow": 1,
+    "desc": "language_10049464"
+  },
+  {
+    "id": 200141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200141",
+    "isNoShow": 1,
+    "desc": "language_10049465"
+  },
+  {
+    "id": 200241,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200241",
+    "isNoShow": 1,
+    "desc": "language_10049466"
+  },
+  {
+    "id": 200341,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200341",
+    "isNoShow": 1,
+    "desc": "language_10049467"
+  },
+  {
+    "id": 200441,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200441",
+    "isNoShow": 1,
+    "desc": "language_10050602"
+  },
+  {
+    "id": 200541,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200541",
+    "isNoShow": 1,
+    "desc": "language_10049469"
+  },
+  {
+    "id": 200641,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38200641",
+    "isNoShow": 1,
+    "desc": "language_10049470"
+  },
+  {
+    "id": 400141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38400141",
+    "isNoShow": 1,
+    "desc": "language_10049471"
+  },
+  {
+    "id": 400241,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38400241",
+    "isNoShow": 1,
+    "desc": "language_10049472"
+  },
+  {
+    "id": 410141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410141",
+    "isNoShow": 1,
+    "desc": "language_10049473"
+  },
+  {
+    "id": 410241,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410241",
+    "isNoShow": 1,
+    "desc": "language_10049474"
+  },
+  {
+    "id": 410341,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410341",
+    "isNoShow": 1,
+    "desc": "language_10049475"
+  },
+  {
+    "id": 410441,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410441",
+    "isNoShow": 1,
+    "desc": "language_10049476"
+  },
+  {
+    "id": 410541,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410541",
+    "isNoShow": 1,
+    "desc": "language_10049477"
+  },
+  {
+    "id": 410641,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410641",
+    "isNoShow": 1,
+    "desc": "language_10049478"
+  },
+  {
+    "id": 410741,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410741",
+    "isNoShow": 1,
+    "desc": "language_10049479"
+  },
+  {
+    "id": 410841,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410841",
+    "isNoShow": 1,
+    "desc": "language_10049480"
+  },
+  {
+    "id": 410941,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38410941",
+    "isNoShow": 1,
+    "desc": "language_10049481"
+  },
+  {
+    "id": 411041,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411041",
+    "isNoShow": 1,
+    "desc": "language_10049482"
+  },
+  {
+    "id": 411141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411141",
+    "isNoShow": 1,
+    "desc": "language_10049483"
+  },
+  {
+    "id": 411241,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411241",
+    "isNoShow": 1,
+    "desc": "language_10049484"
+  },
+  {
+    "id": 411341,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411341",
+    "isNoShow": 1,
+    "desc": "language_10049485"
+  },
+  {
+    "id": 411441,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411441",
+    "isNoShow": 1,
+    "desc": "language_10049486"
+  },
+  {
+    "id": 411541,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411541",
+    "isNoShow": 1,
+    "desc": "language_10049487"
+  },
+  {
+    "id": 411641,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411641",
+    "isNoShow": 1,
+    "desc": "language_10049488"
+  },
+  {
+    "id": 411841,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411841",
+    "isNoShow": 1,
+    "desc": "language_10049489"
+  },
+  {
+    "id": 411941,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38411941",
+    "isNoShow": 1,
+    "desc": "language_10049490"
+  },
+  {
+    "id": 412041,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412041",
+    "isNoShow": 1,
+    "desc": "language_10049491"
+  },
+  {
+    "id": 412141,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412141",
+    "isNoShow": 1,
+    "desc": "language_10049492"
+  },
+  {
+    "id": 412241,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412241",
+    "isNoShow": 1,
+    "desc": "language_10049493"
+  },
+  {
+    "id": 412341,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38412341",
+    "isNoShow": 1,
+    "desc": "language_10049494"
+  },
+  {
+    "id": 530911,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530911",
+    "isNoShow": 1,
+    "desc": "language_10050603"
+  },
+  {
+    "id": 530812,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530812",
+    "isNoShow": 1,
+    "desc": "language_10050604"
+  },
+  {
+    "id": 530651,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530651",
+    "isNoShow": 1,
+    "desc": "language_10050605"
+  },
+  {
+    "id": 530862,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530862",
+    "isNoShow": 1,
+    "desc": "language_10050606"
+  },
+  {
+    "id": 530982,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530982",
+    "isNoShow": 1,
+    "desc": "language_10050607"
+  },
+  {
+    "id": 530972,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530972",
+    "isNoShow": 1,
+    "desc": "language_10050608"
+  },
+  {
+    "id": 530992,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530992",
+    "isNoShow": 1,
+    "desc": "language_10050609"
+  },
+  {
+    "id": 530271,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530271",
+    "isNoShow": 1,
+    "desc": "language_10050610"
+  },
+  {
+    "id": 530791,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530791",
+    "isNoShow": 1,
+    "desc": "language_10050611"
+  },
+  {
+    "id": 530041,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530041",
+    "isNoShow": 1,
+    "desc": "language_10050612"
+  },
+  {
+    "id": 530251,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530251",
+    "isNoShow": 1,
+    "desc": "language_10050613"
+  },
+  {
+    "id": 530281,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530281",
+    "isNoShow": 1,
+    "desc": "language_10050614"
+  },
+  {
+    "id": 530231,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530231",
+    "isNoShow": 1,
+    "desc": "language_10050615"
+  },
+  {
+    "id": 530412,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530412",
+    "isNoShow": 1,
+    "desc": "language_10050616"
+  },
+  {
+    "id": 530091,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530091",
+    "isNoShow": 1,
+    "desc": "language_10050617"
+  },
+  {
+    "id": 530032,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530032",
+    "isNoShow": 1,
+    "desc": "language_10050618"
+  },
+  {
+    "id": 530471,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530471",
+    "isNoShow": 1,
+    "desc": "language_10050619"
+  },
+  {
+    "id": 530572,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530572",
+    "isNoShow": 1,
+    "desc": "language_10050620"
+  },
+  {
+    "id": 530912,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530912",
+    "isNoShow": 1,
+    "desc": "language_10050621"
+  },
+  {
+    "id": 530802,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530802",
+    "isNoShow": 1,
+    "desc": "language_10050622"
+  },
+  {
+    "id": 530813,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530813",
+    "isNoShow": 1,
+    "desc": "language_10050623"
+  },
+  {
+    "id": 530652,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530652",
+    "isNoShow": 1,
+    "desc": "language_10050624"
+  },
+  {
+    "id": 530863,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530863",
+    "isNoShow": 1,
+    "desc": "language_10050625"
+  },
+  {
+    "id": 530983,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530983",
+    "isNoShow": 1,
+    "desc": "language_10050626"
+  },
+  {
+    "id": 530973,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530973",
+    "isNoShow": 1,
+    "desc": "language_10050627"
+  },
+  {
+    "id": 530993,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530993",
+    "isNoShow": 1,
+    "desc": "language_10050628"
+  },
+  {
+    "id": 530272,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530272",
+    "isNoShow": 1,
+    "desc": "language_10050629"
+  },
+  {
+    "id": 530792,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530792",
+    "isNoShow": 1,
+    "desc": "language_10050630"
+  },
+  {
+    "id": 530042,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530042",
+    "isNoShow": 1,
+    "desc": "language_10050631"
+  },
+  {
+    "id": 530252,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530252",
+    "isNoShow": 1,
+    "desc": "language_10050632"
+  },
+  {
+    "id": 530282,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530282",
+    "isNoShow": 1,
+    "desc": "language_10050633"
+  },
+  {
+    "id": 530232,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530232",
+    "isNoShow": 1,
+    "desc": "language_10050634"
+  },
+  {
+    "id": 530413,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530413",
+    "isNoShow": 1,
+    "desc": "language_10050635"
+  },
+  {
+    "id": 530092,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530092",
+    "isNoShow": 1,
+    "desc": "language_10050636"
+  },
+  {
+    "id": 530033,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530033",
+    "isNoShow": 1,
+    "desc": "language_10050637"
+  },
+  {
+    "id": 530472,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530472",
+    "isNoShow": 1,
+    "desc": "language_10050638"
+  },
+  {
+    "id": 530573,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "38530573",
+    "isNoShow": 1,
+    "desc": "language_10050639"
+  },
+  {
+    "id": 5210001,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050640"
+  },
+  {
+    "id": 5210002,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "521000241",
+    "isNoShow": 0,
+    "desc": "language_10050641"
+  },
+  {
+    "id": 5210003,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "521000341",
+    "isNoShow": 0,
+    "desc": "language_10050641"
+  },
+  {
+    "id": 5210011,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050642"
+  },
+  {
+    "id": 5210012,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521001231",
+    "isNoShow": 0,
+    "desc": "language_10050643"
+  },
+  {
+    "id": 5210013,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521001331",
+    "isNoShow": 0,
+    "desc": "language_10050644"
+  },
+  {
+    "id": 5210021,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10050645"
+  },
+  {
+    "id": 5210022,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521002221",
+    "isNoShow": 0,
+    "desc": "language_10050646"
+  },
+  {
+    "id": 1211001,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52100001",
+    "isNoShow": 0,
+    "desc": "language_10050647"
+  },
+  {
+    "id": 8011101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101002",
+    "isNoShow": 0,
+    "desc": "language_10050649"
+  },
+  {
+    "id": 2190002,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190003,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190004,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190005,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190006,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190007,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190008,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190009,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190010,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190011,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190012,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190013,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190014,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190015,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190016,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190017,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190018,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190019,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190020,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190021,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190022,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190023,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190024,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 2190025,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8018101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8018103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8018104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8018105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101051",
+    "isNoShow": 0,
+    "desc": "language_10050650"
+  },
+  {
+    "id": 8018106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101052",
+    "isNoShow": 0,
+    "desc": "language_10050651"
+  },
+  {
+    "id": 8018107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101048",
+    "isNoShow": 0,
+    "desc": "language_10050652"
+  },
+  {
+    "id": 8018108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101047",
+    "isNoShow": 0,
+    "desc": "language_10050653"
+  },
+  {
+    "id": 8018109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101049",
+    "isNoShow": 0,
+    "desc": "language_10050654"
+  },
+  {
+    "id": 8018110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101050",
+    "isNoShow": 0,
+    "desc": "language_10050655"
+  },
+  {
+    "id": 8018301,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101053",
+    "isNoShow": 0,
+    "desc": "language_10050656"
+  },
+  {
+    "id": 8018302,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101055",
+    "isNoShow": 0,
+    "desc": "language_10050657"
+  },
+  {
+    "id": 8018303,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101054",
+    "isNoShow": 0,
+    "desc": "language_10050658"
+  },
+  {
+    "id": 8011401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101073",
+    "isNoShow": 0,
+    "desc": "language_10050659"
+  },
+  {
+    "id": 8011402,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011403,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011404,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011405,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011406,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101056",
+    "isNoShow": 0,
+    "desc": "language_10050660"
+  },
+  {
+    "id": 8011407,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011408,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101059",
+    "isNoShow": 0,
+    "desc": "language_10050661"
+  },
+  {
+    "id": 8011409,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101058",
+    "isNoShow": 0,
+    "desc": "language_10050655"
+  },
+  {
+    "id": 8011410,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101057",
+    "isNoShow": 0,
+    "desc": "language_10050662"
+  },
+  {
+    "id": 8011411,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101061",
+    "isNoShow": 0,
+    "desc": "language_10050663"
+  },
+  {
+    "id": 8011412,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011413,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101062",
+    "isNoShow": 0,
+    "desc": "language_10050664"
+  },
+  {
+    "id": 8011414,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101063",
+    "isNoShow": 0,
+    "desc": "language_10050665"
+  },
+  {
+    "id": 8011415,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101060",
+    "isNoShow": 0,
+    "desc": "language_10050666"
+  },
+  {
+    "id": 8011701,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101065",
+    "isNoShow": 0,
+    "desc": "language_10050667"
+  },
+  {
+    "id": 8011702,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011703,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101066",
+    "isNoShow": 0,
+    "desc": "language_10050668"
+  },
+  {
+    "id": 8011704,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011705,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101067",
+    "isNoShow": 0,
+    "desc": "language_10050669"
+  },
+  {
+    "id": 8011706,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011707,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101068",
+    "isNoShow": 0,
+    "desc": "language_10050670"
+  },
+  {
+    "id": 8011708,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011709,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101069",
+    "isNoShow": 0,
+    "desc": "language_10050671"
+  },
+  {
+    "id": 8011710,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101070",
+    "isNoShow": 0,
+    "desc": "language_10050672"
+  },
+  {
+    "id": 8011711,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011712,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8011713,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101071",
+    "isNoShow": 0,
+    "desc": "language_10050673"
+  },
+  {
+    "id": 8011714,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8013501,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8013502,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8013503,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8013504,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8013505,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015501,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016501,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101079",
+    "isNoShow": 0,
+    "desc": "language_10050674"
+  },
+  {
+    "id": 8016502,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101075",
+    "isNoShow": 0,
+    "desc": "language_10050675"
+  },
+  {
+    "id": 8016503,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016504,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101072",
+    "isNoShow": 0,
+    "desc": "language_10050676"
+  },
+  {
+    "id": 8017501,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101076",
+    "isNoShow": 0,
+    "desc": "language_10050677"
+  },
+  {
+    "id": 8017502,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050678"
+  },
+  {
+    "id": 8017503,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101077",
+    "isNoShow": 0,
+    "desc": "language_10050658"
+  },
+  {
+    "id": 801120101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801120103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801120106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801120108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801120110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101005",
+    "isNoShow": 0,
+    "desc": "language_10050679"
+  },
+  {
+    "id": 801120111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101005",
+    "isNoShow": 0,
+    "desc": "language_10050679"
+  },
+  {
+    "id": 801120112,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101003",
+    "isNoShow": 0,
+    "desc": "language_10050680"
+  },
+  {
+    "id": 801120113,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101004",
+    "isNoShow": 0,
+    "desc": "language_10050681"
+  },
+  {
+    "id": 801130101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801130102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801130103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 801130104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101009",
+    "isNoShow": 0,
+    "desc": "language_10050682"
+  },
+  {
+    "id": 801130105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101006",
+    "isNoShow": 0,
+    "desc": "language_10050683"
+  },
+  {
+    "id": 801130106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101007",
+    "isNoShow": 0,
+    "desc": "language_10050684"
+  },
+  {
+    "id": 801130107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101008",
+    "isNoShow": 0,
+    "desc": "language_10050682"
+  },
+  {
+    "id": 801130108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101010",
+    "isNoShow": 0,
+    "desc": "language_10050685"
+  },
+  {
+    "id": 801130109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014112,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101015",
+    "isNoShow": 0,
+    "desc": "language_10050686"
+  },
+  {
+    "id": 8014202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101017",
+    "isNoShow": 0,
+    "desc": "language_10050686"
+  },
+  {
+    "id": 8014203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101018",
+    "isNoShow": 0,
+    "desc": "language_10050687"
+  },
+  {
+    "id": 8014204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101019",
+    "isNoShow": 0,
+    "desc": "language_10050688"
+  },
+  {
+    "id": 8014301,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101011",
+    "isNoShow": 0,
+    "desc": "language_10050689"
+  },
+  {
+    "id": 8014302,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101012",
+    "isNoShow": 0,
+    "desc": "language_10050690"
+  },
+  {
+    "id": 8014303,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101013",
+    "isNoShow": 0,
+    "desc": "language_10050690"
+  },
+  {
+    "id": 8014304,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101014",
+    "isNoShow": 0,
+    "desc": "language_10050691"
+  },
+  {
+    "id": 8014305,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101014",
+    "isNoShow": 0,
+    "desc": "language_10050691"
+  },
+  {
+    "id": 8014306,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101014",
+    "isNoShow": 0,
+    "desc": "language_10050691"
+  },
+  {
+    "id": 8015101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8015201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101025",
+    "isNoShow": 0,
+    "desc": "language_10050692"
+  },
+  {
+    "id": 8015202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101027",
+    "isNoShow": 0,
+    "desc": "language_10050692"
+  },
+  {
+    "id": 8015203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101028",
+    "isNoShow": 0,
+    "desc": "language_10050693"
+  },
+  {
+    "id": 8015301,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101021",
+    "isNoShow": 0,
+    "desc": "language_10050694"
+  },
+  {
+    "id": 8015302,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101022",
+    "isNoShow": 0,
+    "desc": "language_10050695"
+  },
+  {
+    "id": 8015303,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101023",
+    "isNoShow": 0,
+    "desc": "language_10050696"
+  },
+  {
+    "id": 8015304,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101024",
+    "isNoShow": 0,
+    "desc": "language_10050696"
+  },
+  {
+    "id": 8016106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016112,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016113,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016114,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016115,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101033",
+    "isNoShow": 0,
+    "desc": "language_10050697"
+  },
+  {
+    "id": 8016202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101034",
+    "isNoShow": 0,
+    "desc": "language_10050698"
+  },
+  {
+    "id": 8016203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101035",
+    "isNoShow": 0,
+    "desc": "language_10050699"
+  },
+  {
+    "id": 8016204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101035",
+    "isNoShow": 0,
+    "desc": "language_10050699"
+  },
+  {
+    "id": 8016205,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101101",
+    "isNoShow": 0,
+    "desc": "language_10050700"
+  },
+  {
+    "id": 8016206,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101036",
+    "isNoShow": 0,
+    "desc": "language_10050697"
+  },
+  {
+    "id": 8016207,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101037",
+    "isNoShow": 0,
+    "desc": "language_10050701"
+  },
+  {
+    "id": 8016301,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101029",
+    "isNoShow": 0,
+    "desc": "language_10050702"
+  },
+  {
+    "id": 8016302,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101030",
+    "isNoShow": 0,
+    "desc": "language_10050703"
+  },
+  {
+    "id": 8016303,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101031",
+    "isNoShow": 0,
+    "desc": "language_10050704"
+  },
+  {
+    "id": 8016304,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101032",
+    "isNoShow": 0,
+    "desc": "language_10050705"
+  },
+  {
+    "id": 8016305,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101030",
+    "isNoShow": 0,
+    "desc": "language_10050703"
+  },
+  {
+    "id": 8016306,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101030",
+    "isNoShow": 0,
+    "desc": "language_10050703"
+  },
+  {
+    "id": 8017101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101041",
+    "isNoShow": 0,
+    "desc": "language_10050706"
+  },
+  {
+    "id": 8017202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101042",
+    "isNoShow": 0,
+    "desc": "language_10050706"
+  },
+  {
+    "id": 8017203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101043",
+    "isNoShow": 0,
+    "desc": "language_10050707"
+  },
+  {
+    "id": 8017204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101044",
+    "isNoShow": 0,
+    "desc": "language_10050708"
+  },
+  {
+    "id": 8017205,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101045",
+    "isNoShow": 0,
+    "desc": "language_10050708"
+  },
+  {
+    "id": 8017206,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101046",
+    "isNoShow": 0,
+    "desc": "language_10050709"
+  },
+  {
+    "id": 8017301,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101038",
+    "isNoShow": 0,
+    "desc": "language_10050710"
+  },
+  {
+    "id": 8017302,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101039",
+    "isNoShow": 0,
+    "desc": "language_10050711"
+  },
+  {
+    "id": 8017303,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101040",
+    "isNoShow": 0,
+    "desc": "language_10050712"
+  },
+  {
+    "id": 8017304,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017305,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017306,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017307,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017308,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017311,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017312,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8016401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101064",
+    "isNoShow": 0,
+    "desc": "language_10050713"
+  },
+  {
+    "id": 8017401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101078",
+    "isNoShow": 0,
+    "desc": "language_10050714"
+  },
+  {
+    "id": 6210102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101079",
+    "isNoShow": 0,
+    "desc": "language_10050674"
+  },
+  {
+    "id": 6210103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101080",
+    "isNoShow": 0,
+    "desc": "language_10050715"
+  },
+  {
+    "id": 6210104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101081",
+    "isNoShow": 0,
+    "desc": "language_10050716"
+  },
+  {
+    "id": 6210105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101098",
+    "isNoShow": 0,
+    "desc": "language_10050717"
+  },
+  {
+    "id": 6210106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101082",
+    "isNoShow": 0,
+    "desc": "language_10050718"
+  },
+  {
+    "id": 6210111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8012401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101084",
+    "isNoShow": 0,
+    "desc": "language_10050719"
+  },
+  {
+    "id": 8012402,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101085",
+    "isNoShow": 0,
+    "desc": "language_10050720"
+  },
+  {
+    "id": 8015401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101086",
+    "isNoShow": 0,
+    "desc": "language_10050721"
+  },
+  {
+    "id": 8015402,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8014401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101087",
+    "isNoShow": 0,
+    "desc": "language_10050722"
+  },
+  {
+    "id": 8014402,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101089",
+    "isNoShow": 0,
+    "desc": "language_10050723"
+  },
+  {
+    "id": 8014403,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8017402,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101090",
+    "isNoShow": 0,
+    "desc": "language_10050724"
+  },
+  {
+    "id": 8018401,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101049",
+    "isNoShow": 0,
+    "desc": "language_10050654"
+  },
+  {
+    "id": 6210121,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210122,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210123,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210124,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210125,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101091",
+    "isNoShow": 0,
+    "desc": "language_10050725"
+  },
+  {
+    "id": 6210126,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101104",
+    "isNoShow": 0,
+    "desc": "language_10050726"
+  },
+  {
+    "id": 6210127,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101092",
+    "isNoShow": 0,
+    "desc": "language_10050727"
+  },
+  {
+    "id": 6210128,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 6210129,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101088",
+    "isNoShow": 0,
+    "desc": "language_10050722"
+  },
+  {
+    "id": 8026101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026106,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026107,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101093",
+    "isNoShow": 0,
+    "desc": "language_10050728"
+  },
+  {
+    "id": 8026108,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101094",
+    "isNoShow": 0,
+    "desc": "language_10050729"
+  },
+  {
+    "id": 8026109,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026110,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101105",
+    "isNoShow": 0,
+    "desc": "language_10050730"
+  },
+  {
+    "id": 8026111,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101095",
+    "isNoShow": 0,
+    "desc": "language_10050731"
+  },
+  {
+    "id": 8026112,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101071",
+    "isNoShow": 0,
+    "desc": "language_10050673"
+  },
+  {
+    "id": 8026113,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101095",
+    "isNoShow": 0,
+    "desc": "language_10050731"
+  },
+  {
+    "id": 8026114,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52100001",
+    "isNoShow": 0,
+    "desc": "language_10050647"
+  },
+  {
+    "id": 8026115,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101096",
+    "isNoShow": 0,
+    "desc": "language_10050732"
+  },
+  {
+    "id": 8026116,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101071",
+    "isNoShow": 0,
+    "desc": "language_10050673"
+  },
+  {
+    "id": 8026117,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101096",
+    "isNoShow": 0,
+    "desc": "language_10050732"
+  },
+  {
+    "id": 8026118,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52100001",
+    "isNoShow": 0,
+    "desc": "language_10050647"
+  },
+  {
+    "id": 8026119,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101097",
+    "isNoShow": 0,
+    "desc": "language_10050654"
+  },
+  {
+    "id": 8026120,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026121,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101106",
+    "isNoShow": 0,
+    "desc": "language_10050733"
+  },
+  {
+    "id": 8026122,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101050",
+    "isNoShow": 0,
+    "desc": "language_10050655"
+  },
+  {
+    "id": 8026123,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026124,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026125,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8026126,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101015",
+    "isNoShow": 0,
+    "desc": "language_10050686"
+  },
+  {
+    "id": 8024103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025101,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025102,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025103,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025104,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025105,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101085",
+    "isNoShow": 0,
+    "desc": "language_10050720"
+  },
+  {
+    "id": 8022202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8022203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101086",
+    "isNoShow": 0,
+    "desc": "language_10050721"
+  },
+  {
+    "id": 8022204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101084",
+    "isNoShow": 0,
+    "desc": "language_10050719"
+  },
+  {
+    "id": 8023202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8023203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101084",
+    "isNoShow": 0,
+    "desc": "language_10050719"
+  },
+  {
+    "id": 8023204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101085",
+    "isNoShow": 0,
+    "desc": "language_10050720"
+  },
+  {
+    "id": 8024201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101015",
+    "isNoShow": 0,
+    "desc": "language_10050686"
+  },
+  {
+    "id": 8024202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101099",
+    "isNoShow": 0,
+    "desc": "language_10050734"
+  },
+  {
+    "id": 8024205,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8024206,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025201,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101100",
+    "isNoShow": 0,
+    "desc": "language_10050735"
+  },
+  {
+    "id": 8025202,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 8025203,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101100",
+    "isNoShow": 0,
+    "desc": "language_10050735"
+  },
+  {
+    "id": 8025204,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "52101001",
+    "isNoShow": 0,
+    "desc": "language_10050648"
+  },
+  {
+    "id": 521200001,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200001",
+    "isNoShow": 0,
+    "desc": "language_10050736"
+  },
+  {
+    "id": 521300102,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "521300102",
+    "isNoShow": 0,
+    "desc": "language_10050108"
+  },
+  {
+    "id": 521300002,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300002",
+    "isNoShow": 0,
+    "desc": "language_10050110"
+  },
+  {
+    "id": 521300003,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300003",
+    "isNoShow": 0,
+    "desc": "language_10050111"
+  },
+  {
+    "id": 521300004,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300004",
+    "isNoShow": 0,
+    "desc": "language_10050112"
+  },
+  {
+    "id": 521300005,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300005",
+    "isNoShow": 0,
+    "desc": "language_10050113"
+  },
+  {
+    "id": 521300006,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300006",
+    "isNoShow": 0,
+    "desc": "language_10050114"
+  },
+  {
+    "id": 521300007,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300007",
+    "isNoShow": 0,
+    "desc": "language_10050115"
+  },
+  {
+    "id": 521300008,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300008",
+    "isNoShow": 0,
+    "desc": "language_10050116"
+  },
+  {
+    "id": 521300009,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300009",
+    "isNoShow": 0,
+    "desc": "language_10050114"
+  },
+  {
+    "id": 521300010,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300010",
+    "isNoShow": 0,
+    "desc": "language_10050117"
+  },
+  {
+    "id": 521300011,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300011",
+    "isNoShow": 0,
+    "desc": "language_10050118"
+  },
+  {
+    "id": 521300012,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300012",
+    "isNoShow": 0,
+    "desc": "language_10050119"
+  },
+  {
+    "id": 521300013,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300013",
+    "isNoShow": 0,
+    "desc": "language_10050120"
+  },
+  {
+    "id": 521300014,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300014",
+    "isNoShow": 0,
+    "desc": "language_10050121"
+  },
+  {
+    "id": 521300015,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300015",
+    "isNoShow": 0,
+    "desc": "language_10050122"
+  },
+  {
+    "id": 521300016,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300016",
+    "isNoShow": 0,
+    "desc": "language_10050123"
+  },
+  {
+    "id": 521300017,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300017",
+    "isNoShow": 0,
+    "desc": "language_10050124"
+  },
+  {
+    "id": 521300018,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300018",
+    "isNoShow": 0,
+    "desc": "language_10050125"
+  },
+  {
+    "id": 521300019,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300019",
+    "isNoShow": 0,
+    "desc": "language_10050126"
+  },
+  {
+    "id": 521300020,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300020",
+    "isNoShow": 0,
+    "desc": "language_10050127"
+  },
+  {
+    "id": 521300021,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521300021",
+    "isNoShow": 0,
+    "desc": "language_10050128"
+  },
+  {
+    "id": 521200022,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "521200022",
+    "isNoShow": 0,
+    "desc": "language_10050108"
+  },
+  {
+    "id": 621114,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "6210271",
+    "isNoShow": 0,
+    "desc": "language_10050737"
+  },
+  {
+    "id": 621125,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "6210272",
+    "isNoShow": 0,
+    "desc": "language_10050738"
+  },
+  {
+    "id": 621135,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "6210273",
+    "isNoShow": 0,
+    "desc": "language_10050739"
+  },
+  {
+    "id": 621146,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "6210274",
+    "isNoShow": 0,
+    "desc": "language_10050740"
+  },
+  {
+    "id": 5220001,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10055434"
+  },
+  {
+    "id": 5220002,
+    "type": "triggerSkill",
+    "target": 213,
+    "targetLimit": 0,
+    "param": "522001241",
+    "isNoShow": 0,
+    "desc": "language_10055435"
+  },
+  {
+    "id": 5220003,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "522001341",
+    "isNoShow": 0,
+    "desc": "language_10055436"
+  },
+  {
+    "id": 5220004,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522001441",
+    "isNoShow": 0,
+    "desc": "language_10055437"
+  },
+  {
+    "id": 5220011,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10055438"
+  },
+  {
+    "id": 5220012,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522002241",
+    "isNoShow": 0,
+    "desc": "language_10055439"
+  },
+  {
+    "id": 5220013,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522002341",
+    "isNoShow": 0,
+    "desc": "language_10055440"
+  },
+  {
+    "id": 5220021,
+    "type": "",
+    "target": 0,
+    "targetLimit": 0,
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10055441"
+  },
+  {
+    "id": 5220022,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522000241",
+    "isNoShow": 0,
+    "desc": "language_10055442"
+  },
+  {
+    "id": 5220023,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522000341",
+    "isNoShow": 0,
+    "desc": "language_10055443"
+  },
+  {
+    "id": 5220024,
+    "type": "triggerSkill",
+    "target": 208,
+    "targetLimit": 0,
+    "param": "522000441",
+    "isNoShow": 0,
+    "desc": "language_10055444"
+  }
+]

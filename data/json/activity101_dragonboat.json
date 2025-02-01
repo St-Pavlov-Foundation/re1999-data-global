@@ -1,0 +1,37 @@
+[
+  {
+    "activityId": 11917,
+    "day": 1,
+    "name": "language_10045124",
+    "desc": "language_10045125",
+    "dayicon": "v1a9_dragonboat_puzzlepic_1"
+  },
+  {
+    "activityId": 11917,
+    "day": 2,
+    "name": "language_10045126",
+    "desc": "language_10045127",
+    "dayicon": "v1a9_dragonboat_puzzlepic_2"
+  },
+  {
+    "activityId": 11917,
+    "day": 3,
+    "name": "language_10045128",
+    "desc": "language_10045129",
+    "dayicon": "v1a9_dragonboat_puzzlepic_3"
+  },
+  {
+    "activityId": 11917,
+    "day": 4,
+    "name": "language_10045130",
+    "desc": "language_10045131",
+    "dayicon": "v1a9_dragonboat_puzzlepic_4"
+  },
+  {
+    "activityId": 11917,
+    "day": 5,
+    "name": "language_10045132",
+    "desc": "language_10045133",
+    "dayicon": "v1a9_dragonboat_puzzlepic_5"
+  }
+]

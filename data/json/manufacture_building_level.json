@@ -1,0 +1,245 @@
+[
+  {
+    "groupId": 200201,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "1#2#37#38",
+    "needTradeLevel": 1,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200201,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#3000|1#250003#5",
+    "productions": "3#4#39#40",
+    "needTradeLevel": 5,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200201,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#8000|1#250007#5",
+    "productions": "5#6#41#42",
+    "needTradeLevel": 7,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200202,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "1#2#37#38",
+    "needTradeLevel": 2,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200202,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#4000|1#250003#5",
+    "productions": "3#4#39#40",
+    "needTradeLevel": 5,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200202,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#8000|1#250007#5",
+    "productions": "5#6#41#42",
+    "needTradeLevel": 7,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200203,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "1#2#37#38",
+    "needTradeLevel": 3,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200203,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#5000|1#250003#5",
+    "productions": "3#4#39#40",
+    "needTradeLevel": 6,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200203,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#8000|1#250007#5",
+    "productions": "5#6#41#42",
+    "needTradeLevel": 7,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200204,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "7#8#43#44",
+    "needTradeLevel": 2,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200204,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#8000|1#250014#2",
+    "productions": "9#45",
+    "needTradeLevel": 6,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200204,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#14000|1#250015#2",
+    "productions": "10#46",
+    "needTradeLevel": 12,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200205,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "11#12#47#48",
+    "needTradeLevel": 6,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200205,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#10000|1#250018#2",
+    "productions": "13#49",
+    "needTradeLevel": 8,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200205,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#16000|1#250019#2",
+    "productions": "14#50",
+    "needTradeLevel": 13,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200206,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "15#16#51#52",
+    "needTradeLevel": 10,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200206,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#12000|1#250022#2",
+    "productions": "17#53",
+    "needTradeLevel": 11,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200206,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#18000|1#250023#2",
+    "productions": "18#54",
+    "needTradeLevel": 14,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200207,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "19#20",
+    "needTradeLevel": 3,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200207,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#12000|1#250026#2",
+    "productions": "21#22",
+    "needTradeLevel": 9,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200207,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#20000|1#250027#2",
+    "productions": "23#24",
+    "needTradeLevel": 12,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200208,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "25#26",
+    "needTradeLevel": 7,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200208,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#15000|1#250031#2",
+    "productions": "27#28",
+    "needTradeLevel": 11,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200208,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#24000|1#250033#2",
+    "productions": "29#30",
+    "needTradeLevel": 13,
+    "slotCount": 8
+  },
+  {
+    "groupId": 200209,
+    "id": 1,
+    "effect": "",
+    "cost": "",
+    "productions": "31#32",
+    "needTradeLevel": 10,
+    "slotCount": 3
+  },
+  {
+    "groupId": 200209,
+    "id": 2,
+    "effect": "",
+    "cost": "2#2202#17000|1#250038#2",
+    "productions": "33#34",
+    "needTradeLevel": 11,
+    "slotCount": 6
+  },
+  {
+    "groupId": 200209,
+    "id": 3,
+    "effect": "",
+    "cost": "2#2202#30000|1#250039#2",
+    "productions": "35#36",
+    "needTradeLevel": 14,
+    "slotCount": 8
+  }
+]

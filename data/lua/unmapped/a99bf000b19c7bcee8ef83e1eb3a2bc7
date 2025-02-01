@@ -1,0 +1,465 @@
+module("framework.mvc.view.BaseViewContainer", package.seeall)
+
+slot0 = class("BaseViewContainer", UserDataDispose)
+slot0.Status_None = 0
+slot0.Status_ResLoading = 1
+slot0.Status_Opening = 2
+slot0.Status_Open = 3
+slot0.Status_Closing = 4
+slot0.Status_Close = 5
+slot0.Stage_onOpen = 1
+slot0.Stage_onOpenFinish = 2
+slot0.Stage_onClose = 3
+slot0.Stage_onCloseFinish = 4
+slot0.ViewLoadingCount = 0
+slot0.CloseTypeManual = 1
+
+function slot0.ctor(slot0)
+	LuaEventSystem.addEventMechanism(slot0)
+
+	slot0._views = nil
+	slot0._tabViews = nil
+	slot0._viewSetting = nil
+	slot0._isOpenImmediate = false
+	slot0._isCloseImmediate = false
+	slot0._viewStatus = uv0.Status_None
+	slot0._isVisible = true
+	slot0._abLoader = nil
+	slot0._canvasGroup = nil
+	slot0.viewName = nil
+	slot0.viewParam = nil
+	slot0.viewGO = nil
+	slot0._closeType = nil
+end
+
+function slot0.setCloseType(slot0, slot1)
+	slot0._closeType = slot1
+end
+
+function slot0.isManualClose(slot0)
+	return slot0._closeType == uv0.CloseTypeManual
+end
+
+function slot0.setSetting(slot0, slot1, slot2)
+	slot0.viewName = slot1
+	slot0._viewSetting = slot2
+end
+
+function slot0.getSetting(slot0)
+	return slot0._viewSetting
+end
+
+function slot0.openInternal(slot0, slot1, slot2)
+	slot0.viewParam = slot1
+	slot0._isOpenImmediate = slot2
+
+	if slot0._viewStatus == uv0.Status_ResLoading or slot0._viewStatus == uv0.Status_Opening or slot0._viewStatus == uv0.Status_Open then
+		return
+	end
+
+	ViewMgr.instance:dispatchEvent(ViewEvent.BeforeOpenView, slot0.viewName, slot0.viewParam)
+
+	if not slot0._abLoader then
+		slot0:_setVisible(true)
+
+		slot0._viewStatus = uv0.Status_ResLoading
+
+		slot0:_loadViewRes()
+
+		return
+	end
+
+	if slot0._viewStatus == uv0.Status_Closing then
+		slot0:onPlayCloseTransitionFinish()
+	end
+
+	slot0:_setVisible(true)
+	slot0:_reallyOpen()
+end
+
+function slot0.closeInternal(slot0, slot1)
+	slot0._isCloseImmediate = slot1
+
+	if slot0._viewStatus == uv0.Status_ResLoading then
+		if slot0._abLoader then
+			slot0._abLoader:dispose()
+
+			slot0._abLoader = nil
+			uv0.ViewLoadingCount = uv0.ViewLoadingCount - 1
+
+			if uv0.ViewLoadingCount <= 0 then
+				UIBlockMgr.instance:endBlock(UIBlockKey.ViewOpening)
+			end
+		end
+
+		slot0._viewStatus = uv0.Status_None
+	elseif slot0._viewStatus == uv0.Status_Closing then
+		if slot1 then
+			slot0:onPlayCloseTransitionFinish()
+		end
+	elseif slot0._viewStatus == uv0.Status_Opening then
+		slot0:onPlayOpenTransitionFinish()
+		slot0:_reallyClose()
+	elseif slot0._viewStatus == uv0.Status_Open then
+		slot0:_reallyClose()
+	end
+end
+
+function slot0.setVisibleInternal(slot0, slot1)
+	slot0:_setVisible(slot1)
+end
+
+function slot0.onUpdateParamInternal(slot0, slot1)
+	slot0:_setVisible(true)
+
+	slot0.viewParam = slot1
+
+	if slot0._views then
+		for slot5, slot6 in ipairs(slot0._views) do
+			slot6.viewParam = slot1
+
+			slot6:onUpdateParamInternal()
+		end
+	end
+
+	slot0:onContainerUpdateParam()
+end
+
+function slot0.onClickModalMaskInternal(slot0)
+	if slot0._views then
+		for slot4, slot5 in ipairs(slot0._views) do
+			slot5:onClickModalMaskInternal()
+		end
+	end
+
+	slot0:onContainerClickModalMask()
+end
+
+function slot0.isOpen(slot0)
+	return slot0:isOpening() or slot0:isOpenFinish()
+end
+
+function slot0.isOpening(slot0)
+	return slot0._viewStatus == uv0.Status_ResLoading or slot0._viewStatus == uv0.Status_Opening
+end
+
+function slot0.isOpenFinish(slot0)
+	return slot0._viewStatus == uv0.Status_Open
+end
+
+function slot0.isClosing(slot0)
+	return slot0._viewStatus == uv0.Status_Closing
+end
+
+function slot0.destroyView(slot0)
+	if slot0._views then
+		for slot4, slot5 in ipairs(slot0._views) do
+			slot5:removeEventsInternal()
+			slot5:onDestroyViewInternal()
+			slot5:__onDispose()
+		end
+	end
+
+	if slot0.viewGO then
+		gohelper.destroy(slot0.viewGO)
+
+		slot0.viewGO = nil
+	end
+
+	if slot0._abLoader then
+		slot0._abLoader:dispose()
+
+		slot0._abLoader = nil
+	end
+
+	slot0:onContainerDestroy()
+end
+
+function slot0.closeThis(slot0)
+	ViewMgr.instance:closeView(slot0.viewName)
+end
+
+function slot0.getRes(slot0, slot1)
+	if slot0._abLoader:getAssetItem(slot1) then
+		return slot2:GetResource(slot1)
+	end
+
+	return nil
+end
+
+function slot0.getResInst(slot0, slot1, slot2, slot3)
+	if slot0._abLoader:getAssetItem(slot1) then
+		if slot4:GetResource(slot1) then
+			return gohelper.clone(slot5, slot2, slot3)
+		else
+			logError(slot0.__cname .. " prefab not exist: " .. slot1)
+		end
+	else
+		logError(slot0.__cname .. " resource not load: " .. slot1)
+	end
+
+	return nil
+end
+
+function slot0._loadViewRes(slot0)
+	slot3 = {
+		slot0._viewSetting.mainRes
+	}
+
+	if slot0._viewSetting.otherRes then
+		for slot7, slot8 in pairs(slot2) do
+			table.insert(slot3, slot8)
+		end
+	end
+
+	if slot0._viewSetting.preloader and slot0._viewSetting.preloader[slot0.viewName] or nil then
+		slot4(slot3)
+	end
+
+	if slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.defaultTabIds and slot0._viewSetting.tabRes then
+		for slot8, slot9 in ipairs(slot0.viewParam.defaultTabIds) do
+			if slot0._viewSetting.tabRes[slot8] and slot10[slot9] then
+				for slot15, slot16 in pairs(slot11) do
+					table.insert(slot3, slot16)
+				end
+			end
+		end
+	end
+
+	if not string.nilorempty(slot0._viewSetting.anim) and string.find(slot0._viewSetting.anim, ".controller") then
+		table.insert(slot3, slot0._viewSetting.anim)
+	end
+
+	uv0.ViewLoadingCount = uv0.ViewLoadingCount + 1
+
+	UIBlockMgr.instance:startBlock(UIBlockKey.ViewOpening)
+
+	slot0._abLoader = MultiAbLoader.New()
+
+	slot0._abLoader:setPathList(slot3)
+	slot0._abLoader:startLoad(slot0._onResLoadFinish, slot0)
+end
+
+function slot0._onResLoadFinish(slot0, slot1)
+	slot0.viewGO = gohelper.clone(slot0._abLoader:getAssetItem(slot0._viewSetting.mainRes):GetResource(slot0._viewSetting.mainRes), ViewMgr.instance:getUILayer(slot0._viewSetting.layer), slot0.viewName)
+	slot0._views = slot0:buildViews()
+
+	if slot0._views then
+		for slot8, slot9 in ipairs(slot0._views) do
+			if isTypeOf(slot9, TabViewGroup) then
+				slot0._tabViews = slot0._tabViews or {}
+				slot0._tabViews[slot9:getTabContainerId()] = slot9
+			end
+
+			slot9:__onInit()
+
+			slot9.viewGO = slot0.viewGO
+			slot9.viewContainer = slot0
+			slot9.viewName = slot0.viewName
+
+			slot9:onInitViewInternal()
+			slot9:addEventsInternal()
+		end
+	end
+
+	slot0:onContainerInit()
+
+	uv0.ViewLoadingCount = uv0.ViewLoadingCount - 1
+
+	if uv0.ViewLoadingCount <= 0 then
+		UIBlockMgr.instance:endBlock(UIBlockKey.ViewOpening)
+	end
+
+	slot0:_reallyOpen()
+end
+
+function slot0._setVisible(slot0, slot1)
+	slot0._isVisible = slot1
+
+	if not slot0.viewGO then
+		return
+	end
+
+	if not slot0._canvasGroup then
+		slot0._canvasGroup = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup))
+	end
+
+	if slot1 then
+		slot0._canvasGroup.alpha = 1
+		slot0._canvasGroup.interactable = true
+		slot0._canvasGroup.blocksRaycasts = true
+
+		recthelper.setAnchorX(slot0.viewGO.transform, 0)
+	else
+		slot0._canvasGroup.alpha = 0
+		slot0._canvasGroup.interactable = false
+		slot0._canvasGroup.blocksRaycasts = false
+
+		recthelper.setAnchorX(slot0.viewGO.transform, 10000)
+	end
+end
+
+function slot0._reallyOpen(slot0)
+	slot0.viewGO.transform:SetAsLastSibling()
+	slot0:_setVisible(slot0._isVisible)
+
+	slot0._viewStatus = uv0.Status_Opening
+
+	slot0:_onViewStage(uv0.Stage_onOpen)
+
+	if slot0._viewStatus ~= uv0.Status_Opening then
+		if isDebugBuild then
+			logError(slot0.viewName .. " status change while opening " .. slot0._viewStatus)
+		end
+
+		return
+	end
+
+	if slot0._isOpenImmediate then
+		slot0:onPlayOpenTransitionFinish()
+	else
+		slot0:playOpenTransition()
+	end
+end
+
+function slot0._reallyClose(slot0)
+	slot0._viewStatus = uv0.Status_Closing
+
+	slot0:_onViewStage(uv0.Stage_onClose)
+
+	if slot0._viewStatus ~= uv0.Status_Closing then
+		if isDebugBuild then
+			logError(slot0.viewName .. " status change while closing " .. slot0._viewStatus)
+		end
+
+		return
+	end
+
+	if slot0._isCloseImmediate then
+		slot0:onPlayCloseTransitionFinish()
+	else
+		slot0:playCloseTransition()
+	end
+end
+
+function slot0._onViewStage(slot0, slot1)
+	if slot0._views then
+		for slot5, slot6 in ipairs(slot0._views) do
+			if slot1 == uv0.Stage_onOpen then
+				slot6.viewParam = slot0.viewParam
+
+				slot6:onOpenInternal()
+			elseif slot1 == uv0.Stage_onOpenFinish then
+				slot6:onOpenFinishInternal()
+			elseif slot1 == uv0.Stage_onClose then
+				slot6:onCloseInternal()
+			elseif slot1 == uv0.Stage_onCloseFinish then
+				slot6:onCloseFinishInternal()
+			end
+		end
+	end
+
+	if slot1 == uv0.Stage_onOpen then
+		ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenView, slot0.viewName, slot0.viewParam)
+
+		if slot0._viewSetting.viewType == ViewType.Full then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenFullView, slot0.viewName, slot0.viewParam)
+		elseif slot0._viewSetting.viewType == ViewType.Modal then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenModalView, slot0.viewName, slot0.viewParam)
+		end
+
+		slot0:onContainerOpen()
+	elseif slot1 == uv0.Stage_onOpenFinish then
+		ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenViewFinish, slot0.viewName, slot0.viewParam)
+
+		if slot0._viewSetting.viewType == ViewType.Full then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenFullViewFinish, slot0.viewName, slot0.viewParam)
+		elseif slot0._viewSetting.viewType == ViewType.Modal then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnOpenModalViewFinish, slot0.viewName, slot0.viewParam)
+		end
+
+		slot0:onContainerOpenFinish()
+	elseif slot1 == uv0.Stage_onClose then
+		ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseView, slot0.viewName, slot0.viewParam)
+
+		if slot0._viewSetting.viewType == ViewType.Full then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseFullView, slot0.viewName, slot0.viewParam)
+		elseif slot0._viewSetting.viewType == ViewType.Modal then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseModalView, slot0.viewName, slot0.viewParam)
+		end
+
+		slot0:onContainerClose()
+	elseif slot1 == uv0.Stage_onCloseFinish then
+		ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseViewFinish, slot0.viewName, slot0.viewParam)
+
+		if slot0._viewSetting.viewType == ViewType.Full then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseFullViewFinish, slot0.viewName, slot0.viewParam)
+		elseif slot0._viewSetting.viewType == ViewType.Modal then
+			ViewMgr.instance:dispatchEvent(ViewEvent.OnCloseModalViewFinish, slot0.viewName, slot0.viewParam)
+		end
+
+		slot0:onContainerCloseFinish()
+	end
+end
+
+function slot0.getTabContainer(slot0, slot1)
+	return slot0._tabViews and slot0._tabViews[slot1]
+end
+
+function slot0.playOpenTransition(slot0)
+	slot0:onPlayOpenTransitionFinish()
+end
+
+function slot0.onPlayOpenTransitionFinish(slot0)
+	slot0._viewStatus = uv0.Status_Open
+
+	slot0:_onViewStage(uv0.Stage_onOpenFinish)
+end
+
+function slot0.playCloseTransition(slot0)
+	slot0:onPlayCloseTransitionFinish()
+end
+
+function slot0.onPlayCloseTransitionFinish(slot0)
+	slot0:_setVisible(false)
+
+	slot0._viewStatus = uv0.Status_Close
+
+	slot0:_onViewStage(uv0.Stage_onCloseFinish)
+	slot0:setCloseType(nil)
+end
+
+function slot0.onAndroidBack(slot0)
+end
+
+function slot0.buildViews(slot0)
+end
+
+function slot0.buildTabViews(slot0, slot1)
+end
+
+function slot0.onContainerInit(slot0)
+end
+
+function slot0.onContainerDestroy(slot0)
+end
+
+function slot0.onContainerOpen(slot0)
+end
+
+function slot0.onContainerOpenFinish(slot0)
+end
+
+function slot0.onContainerClose(slot0)
+end
+
+function slot0.onContainerCloseFinish(slot0)
+end
+
+function slot0.onContainerUpdateParam(slot0)
+end
+
+function slot0.onContainerClickModalMask(slot0)
+end
+
+return slot0

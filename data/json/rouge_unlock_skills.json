@@ -1,0 +1,65 @@
+[
+  {
+    "skillId": 10101,
+    "style": 1,
+    "version": "101",
+    "type": "mapSkill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 800010003,
+    "style": 2,
+    "version": "101",
+    "type": "skill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 10901,
+    "style": 3,
+    "version": "101",
+    "type": "mapSkill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 11201,
+    "style": 4,
+    "version": "101",
+    "type": "mapSkill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 800080003,
+    "style": 9,
+    "version": "101",
+    "type": "skill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 12401,
+    "style": 8,
+    "version": "101",
+    "type": "mapSkill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 800040003,
+    "style": 5,
+    "version": "101",
+    "type": "skill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 800050003,
+    "style": 6,
+    "version": "101",
+    "type": "skill",
+    "unlockEmblem": 40
+  },
+  {
+    "skillId": 11011,
+    "style": 7,
+    "version": "101",
+    "type": "mapSkill",
+    "unlockEmblem": 40
+  }
+]

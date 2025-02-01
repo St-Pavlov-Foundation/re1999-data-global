@@ -1,0 +1,261 @@
+[
+  {
+    "id": 1,
+    "audioId": 610023043,
+    "groupId": 1,
+    "desc": "language_10043315",
+    "weight": 1000
+  },
+  {
+    "id": 2,
+    "audioId": 610023044,
+    "groupId": 2,
+    "desc": "language_10043316",
+    "weight": 1000
+  },
+  {
+    "id": 3,
+    "audioId": 610023045,
+    "groupId": 3,
+    "desc": "language_10043317",
+    "weight": 1000
+  },
+  {
+    "id": 4,
+    "audioId": 610023046,
+    "groupId": 4,
+    "desc": "language_10043318",
+    "weight": 1000
+  },
+  {
+    "id": 5,
+    "audioId": 610023047,
+    "groupId": 5,
+    "desc": "language_10043319",
+    "weight": 1000
+  },
+  {
+    "id": 6,
+    "audioId": 610023048,
+    "groupId": 6,
+    "desc": "language_10043320",
+    "weight": 1000
+  },
+  {
+    "id": 7,
+    "audioId": 610023049,
+    "groupId": 7,
+    "desc": "language_10043321",
+    "weight": 1000
+  },
+  {
+    "id": 8,
+    "audioId": 610023050,
+    "groupId": 8,
+    "desc": "language_10043322",
+    "weight": 1000
+  },
+  {
+    "id": 9,
+    "audioId": 610023050,
+    "groupId": 9,
+    "desc": "language_10043322",
+    "weight": 1000
+  },
+  {
+    "id": 10,
+    "audioId": 610023051,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 11,
+    "audioId": 610023052,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 12,
+    "audioId": 610023053,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 13,
+    "audioId": 610023054,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 14,
+    "audioId": 610023055,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 15,
+    "audioId": 610023056,
+    "groupId": 10,
+    "desc": "",
+    "weight": 200
+  },
+  {
+    "id": 16,
+    "audioId": 610023057,
+    "groupId": 11,
+    "desc": "language_10043323",
+    "weight": 500
+  },
+  {
+    "id": 17,
+    "audioId": 610023058,
+    "groupId": 12,
+    "desc": "language_10043324",
+    "weight": 500
+  },
+  {
+    "id": 18,
+    "audioId": 610023059,
+    "groupId": 13,
+    "desc": "language_10043325",
+    "weight": 500
+  },
+  {
+    "id": 19,
+    "audioId": 610023060,
+    "groupId": 14,
+    "desc": "language_10043326",
+    "weight": 500
+  },
+  {
+    "id": 20,
+    "audioId": 610023061,
+    "groupId": 15,
+    "desc": "language_10043327",
+    "weight": 0
+  },
+  {
+    "id": 21,
+    "audioId": 610023062,
+    "groupId": 16,
+    "desc": "language_10043328",
+    "weight": 500
+  },
+  {
+    "id": 22,
+    "audioId": 610023063,
+    "groupId": 17,
+    "desc": "language_10043329",
+    "weight": 500
+  },
+  {
+    "id": 23,
+    "audioId": 610023064,
+    "groupId": 18,
+    "desc": "language_10043330",
+    "weight": 1000
+  },
+  {
+    "id": 24,
+    "audioId": 610023065,
+    "groupId": 19,
+    "desc": "language_10043331",
+    "weight": 1000
+  },
+  {
+    "id": 25,
+    "audioId": 610023066,
+    "groupId": 20,
+    "desc": "language_10043332",
+    "weight": 1000
+  },
+  {
+    "id": 26,
+    "audioId": 610023067,
+    "groupId": 21,
+    "desc": "language_10043333",
+    "weight": 1000
+  },
+  {
+    "id": 27,
+    "audioId": 610023068,
+    "groupId": 22,
+    "desc": "language_10043334",
+    "weight": 1000
+  },
+  {
+    "id": 28,
+    "audioId": 610023069,
+    "groupId": 23,
+    "desc": "language_10020636",
+    "weight": 100
+  },
+  {
+    "id": 29,
+    "audioId": 610023070,
+    "groupId": 23,
+    "desc": "language_10043335",
+    "weight": 100
+  },
+  {
+    "id": 30,
+    "audioId": 610023071,
+    "groupId": 23,
+    "desc": "language_10043336",
+    "weight": 100
+  },
+  {
+    "id": 31,
+    "audioId": 610023072,
+    "groupId": 23,
+    "desc": "language_10043337",
+    "weight": 100
+  },
+  {
+    "id": 32,
+    "audioId": 610023073,
+    "groupId": 24,
+    "desc": "language_10043338",
+    "weight": 500
+  },
+  {
+    "id": 33,
+    "audioId": 610023074,
+    "groupId": 24,
+    "desc": "language_10043339",
+    "weight": 500
+  },
+  {
+    "id": 34,
+    "audioId": 610023068,
+    "groupId": 25,
+    "desc": "language_10043334",
+    "weight": 1000
+  },
+  {
+    "id": 35,
+    "audioId": 610023068,
+    "groupId": 26,
+    "desc": "language_10043334",
+    "weight": 1000
+  },
+  {
+    "id": 36,
+    "audioId": 610023068,
+    "groupId": 27,
+    "desc": "language_10043334",
+    "weight": 1000
+  },
+  {
+    "id": 37,
+    "audioId": 610023068,
+    "groupId": 28,
+    "desc": "language_10043334",
+    "weight": 1000
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "activityId": 15001,
+    "heroId": 3003,
+    "ringIds": "1#2#3#4",
+    "finalReward": "2#1#100"
+  },
+  {
+    "id": 2,
+    "activityId": 15001,
+    "heroId": 3004,
+    "ringIds": "1#2#3#4",
+    "finalReward": "2#1#100"
+  }
+]

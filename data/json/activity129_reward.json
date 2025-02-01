@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 11406,
+    "poolId": 1401,
+    "initWeight": "5#200|4#9800",
+    "changeWeight": "5#300"
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1402,
+    "initWeight": "5#200|4#9800",
+    "changeWeight": "5#300"
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1403,
+    "initWeight": "5#200|4#9800",
+    "changeWeight": "5#300"
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1404,
+    "initWeight": "5#200|4#9800",
+    "changeWeight": "5#300"
+  },
+  {
+    "activityId": 11406,
+    "poolId": 1405,
+    "initWeight": "5#200|4#9800",
+    "changeWeight": "5#0"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "groupId": 1,
+    "actId": 11703,
+    "resource": "v1a7_store_chess2",
+    "unlockCondition": 0
+  },
+  {
+    "groupId": 2,
+    "actId": 11703,
+    "resource": "v1a7_store_chess1",
+    "unlockCondition": 10624
+  },
+  {
+    "groupId": 3,
+    "actId": 11903,
+    "resource": "v1a9_store_chess",
+    "unlockCondition": 0
+  },
+  {
+    "groupId": 4,
+    "actId": 12205,
+    "resource": "v2a2_store_chess",
+    "unlockCondition": 0
+  }
+]

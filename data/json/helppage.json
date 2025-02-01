@@ -1,0 +1,3642 @@
+[
+  {
+    "id": 10001,
+    "title": "",
+    "type": 1,
+    "text": "通用界面说明文本",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10002,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "help1",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10101,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_1",
+    "iconText": "1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 10102,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_2",
+    "iconText": "2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 10201,
+    "title": "",
+    "type": 1,
+    "text": "？？？",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10202,
+    "title": "",
+    "type": 1,
+    "text": "？？？",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10203,
+    "title": "",
+    "type": 1,
+    "text": "？？？",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10301,
+    "title": "language_10000133",
+    "type": 1,
+    "text": "？？？",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10401,
+    "title": "language_10000134",
+    "type": 1,
+    "text": "【规则】\n1.活动期间，玩家每日5:00后登录即可获得签到机会\n2.签到后即可拿到奖励，登录当天未领取的奖励不会消失或无法领取，可隔天领取\n3.活动结束后，未满足登录天数的奖励将无法激活领取",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10501,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_3",
+    "iconText": "3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 10502,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_301",
+    "iconText": "301",
+    "unlockGuideId": 301,
+    "isCn": 0
+  },
+  {
+    "id": 10601,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_4",
+    "iconText": "4",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 10701,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_10",
+    "iconText": "10",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10801,
+    "title": "language_10000133",
+    "type": 1,
+    "text": "？？？",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 10901,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_12",
+    "iconText": "12",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 11001,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_11",
+    "iconText": "11",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 11101,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_14",
+    "iconText": "",
+    "unlockGuideId": 129,
+    "isCn": 1
+  },
+  {
+    "id": 11102,
+    "title": "",
+    "type": 1,
+    "text": "教学笔记开启临时指引图",
+    "icon": "bg_help_129",
+    "iconText": "",
+    "unlockGuideId": 129,
+    "isCn": 1
+  },
+  {
+    "id": 11201,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_15",
+    "iconText": "15",
+    "unlockGuideId": 130,
+    "isCn": 0
+  },
+  {
+    "id": 11202,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_16",
+    "iconText": "16",
+    "unlockGuideId": 130,
+    "isCn": 0
+  },
+  {
+    "id": 11301,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_zhiying_7",
+    "iconText": "29",
+    "unlockGuideId": 160,
+    "isCn": 0
+  },
+  {
+    "id": 11401,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_18",
+    "iconText": "",
+    "unlockGuideId": 131,
+    "isCn": 1
+  },
+  {
+    "id": 11402,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_19",
+    "iconText": "",
+    "unlockGuideId": 131,
+    "isCn": 1
+  },
+  {
+    "id": 11501,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_20",
+    "iconText": "20",
+    "unlockGuideId": 132,
+    "isCn": 0
+  },
+  {
+    "id": 11601,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_21",
+    "iconText": "21",
+    "unlockGuideId": 136,
+    "isCn": 0
+  },
+  {
+    "id": 11602,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_32",
+    "iconText": "32",
+    "unlockGuideId": 136,
+    "isCn": 0
+  },
+  {
+    "id": 11701,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_22",
+    "iconText": "22",
+    "unlockGuideId": 133,
+    "isCn": 0
+  },
+  {
+    "id": 11702,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_23",
+    "iconText": "23",
+    "unlockGuideId": 133,
+    "isCn": 0
+  },
+  {
+    "id": 11703,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "gongming_help_1",
+    "iconText": "gongming_help_1",
+    "unlockGuideId": 303,
+    "isCn": 0
+  },
+  {
+    "id": 11801,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_25",
+    "iconText": "25",
+    "unlockGuideId": 134,
+    "isCn": 1
+  },
+  {
+    "id": 11802,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_26",
+    "iconText": "26",
+    "unlockGuideId": 134,
+    "isCn": 1
+  },
+  {
+    "id": 11901,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_27",
+    "iconText": "27",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 11902,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_help_28",
+    "iconText": "28",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 12001,
+    "title": "",
+    "type": 1,
+    "text": "小屋临时指引图154指引",
+    "icon": "bg_help_29",
+    "iconText": "",
+    "unlockGuideId": 154,
+    "isCn": 1
+  },
+  {
+    "id": 12011,
+    "title": "",
+    "type": 1,
+    "text": "小屋临时指引图155指引",
+    "icon": "bg_help_30",
+    "iconText": "",
+    "unlockGuideId": 155,
+    "isCn": 1
+  },
+  {
+    "id": 12021,
+    "title": "",
+    "type": 1,
+    "text": "小屋临时指引图156指引",
+    "icon": "bg_help_31",
+    "iconText": "",
+    "unlockGuideId": 156,
+    "isCn": 1
+  },
+  {
+    "id": 13000,
+    "title": "",
+    "type": 1,
+    "text": "教学笔记主界面指引图1",
+    "icon": "bg_help_jiaoxue",
+    "iconText": "jiaoxue",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 13001,
+    "title": "",
+    "type": 1,
+    "text": "主动合成",
+    "icon": "bg_help_139",
+    "iconText": "139",
+    "unlockGuideId": 139,
+    "isCn": 0
+  },
+  {
+    "id": 13002,
+    "title": "",
+    "type": 1,
+    "text": "被动合成",
+    "icon": "bg_help_140",
+    "iconText": "140",
+    "unlockGuideId": 140,
+    "isCn": 0
+  },
+  {
+    "id": 13003,
+    "title": "",
+    "type": 1,
+    "text": "合成好处1",
+    "icon": "bg_help_141",
+    "iconText": "141",
+    "unlockGuideId": 141,
+    "isCn": 0
+  },
+  {
+    "id": 13004,
+    "title": "",
+    "type": 1,
+    "text": "合成好处2",
+    "icon": "bg_help_14101",
+    "iconText": "14101",
+    "unlockGuideId": 141,
+    "isCn": 0
+  },
+  {
+    "id": 13005,
+    "title": "",
+    "type": 1,
+    "text": "克制1",
+    "icon": "bg_help_142",
+    "iconText": "142",
+    "unlockGuideId": 142,
+    "isCn": 0
+  },
+  {
+    "id": 13006,
+    "title": "",
+    "type": 1,
+    "text": "克制2",
+    "icon": "bg_help_14201",
+    "iconText": "14201",
+    "unlockGuideId": 142,
+    "isCn": 0
+  },
+  {
+    "id": 13007,
+    "title": "",
+    "type": 1,
+    "text": "集火",
+    "icon": "bg_help_143",
+    "iconText": "143",
+    "unlockGuideId": 143,
+    "isCn": 0
+  },
+  {
+    "id": 13008,
+    "title": "",
+    "type": 1,
+    "text": "多元伤害1",
+    "icon": "bg_help_144",
+    "iconText": "144",
+    "unlockGuideId": 144,
+    "isCn": 0
+  },
+  {
+    "id": 13009,
+    "title": "",
+    "type": 1,
+    "text": "多元伤害2",
+    "icon": "bg_help_14401",
+    "iconText": "14401",
+    "unlockGuideId": 144,
+    "isCn": 0
+  },
+  {
+    "id": 13010,
+    "title": "",
+    "type": 1,
+    "text": "缴械1",
+    "icon": "bg_help_145",
+    "iconText": "145",
+    "unlockGuideId": 145,
+    "isCn": 0
+  },
+  {
+    "id": 13011,
+    "title": "",
+    "type": 1,
+    "text": "缴械2",
+    "icon": "bg_help_14501",
+    "iconText": "14501",
+    "unlockGuideId": 145,
+    "isCn": 0
+  },
+  {
+    "id": 13012,
+    "title": "",
+    "type": 1,
+    "text": "缄默1",
+    "icon": "bg_help_146",
+    "iconText": "146",
+    "unlockGuideId": 146,
+    "isCn": 0
+  },
+  {
+    "id": 13013,
+    "title": "",
+    "type": 1,
+    "text": "缄默2",
+    "icon": "bg_help_14601",
+    "iconText": "14601",
+    "unlockGuideId": 146,
+    "isCn": 0
+  },
+  {
+    "id": 13014,
+    "title": "",
+    "type": 1,
+    "text": "封印1",
+    "icon": "bg_help_147",
+    "iconText": "147",
+    "unlockGuideId": 147,
+    "isCn": 0
+  },
+  {
+    "id": 13015,
+    "title": "",
+    "type": 1,
+    "text": "封印2",
+    "icon": "bg_help_14701",
+    "iconText": "14701",
+    "unlockGuideId": 147,
+    "isCn": 0
+  },
+  {
+    "id": 13016,
+    "title": "",
+    "type": 1,
+    "text": "削减激情",
+    "icon": "bg_help_148",
+    "iconText": "148",
+    "unlockGuideId": 147,
+    "isCn": 0
+  },
+  {
+    "id": 13017,
+    "title": "",
+    "type": 1,
+    "text": "激情1",
+    "icon": "bg_help_151",
+    "iconText": "151",
+    "unlockGuideId": 151,
+    "isCn": 0
+  },
+  {
+    "id": 13018,
+    "title": "",
+    "type": 1,
+    "text": "激情2",
+    "icon": "bg_help_15101",
+    "iconText": "15101",
+    "unlockGuideId": 151,
+    "isCn": 0
+  },
+  {
+    "id": 13019,
+    "title": "",
+    "type": 1,
+    "text": "存量1",
+    "icon": "bg_help_162",
+    "iconText": "162",
+    "unlockGuideId": 162,
+    "isCn": 0
+  },
+  {
+    "id": 13020,
+    "title": "",
+    "type": 1,
+    "text": "存量2",
+    "icon": "bg_help_16201",
+    "iconText": "16201",
+    "unlockGuideId": 162,
+    "isCn": 0
+  },
+  {
+    "id": 13021,
+    "title": "",
+    "type": 1,
+    "text": "游移1",
+    "icon": "bg_help_184",
+    "iconText": "184",
+    "unlockGuideId": 184,
+    "isCn": 0
+  },
+  {
+    "id": 13022,
+    "title": "",
+    "type": 1,
+    "text": "游移2",
+    "icon": "bg_help_18401",
+    "iconText": "18401",
+    "unlockGuideId": 184,
+    "isCn": 0
+  },
+  {
+    "id": 13023,
+    "title": "",
+    "type": 1,
+    "text": "主角技能1",
+    "icon": "bg_help_150",
+    "iconText": "150",
+    "unlockGuideId": 150,
+    "isCn": 0
+  },
+  {
+    "id": 13024,
+    "title": "",
+    "type": 1,
+    "text": "主角技能2-1",
+    "icon": "bg_help_161",
+    "iconText": "161",
+    "unlockGuideId": 161,
+    "isCn": 0
+  },
+  {
+    "id": 13025,
+    "title": "",
+    "type": 1,
+    "text": "主角技能2-2",
+    "icon": "bg_help_16101",
+    "iconText": "16101",
+    "unlockGuideId": 161,
+    "isCn": 0
+  },
+  {
+    "id": 13026,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻1",
+    "icon": "bg_help_15201",
+    "iconText": "15201",
+    "unlockGuideId": 152,
+    "isCn": 0
+  },
+  {
+    "id": 13027,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻2",
+    "icon": "bg_help_15202",
+    "iconText": "15202",
+    "unlockGuideId": 152,
+    "isCn": 0
+  },
+  {
+    "id": 13028,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻3",
+    "icon": "bg_help_15203",
+    "iconText": "15203",
+    "unlockGuideId": 152,
+    "isCn": 0
+  },
+  {
+    "id": 13029,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻2-1",
+    "icon": "bg_help_204",
+    "iconText": "204",
+    "unlockGuideId": 204,
+    "isCn": 0
+  },
+  {
+    "id": 13030,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻2-2",
+    "icon": "bg_help_20401",
+    "iconText": "20401",
+    "unlockGuideId": 204,
+    "isCn": 0
+  },
+  {
+    "id": 13031,
+    "title": "",
+    "type": 1,
+    "text": "循序巧攻2-3",
+    "icon": "bg_help_20402",
+    "iconText": "20402",
+    "unlockGuideId": 204,
+    "isCn": 0
+  },
+  {
+    "id": 13032,
+    "title": "",
+    "type": 1,
+    "text": "教学笔记主界面指引图2",
+    "icon": "bg_help_jiaoxue2",
+    "iconText": "jiaoxue2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 12031,
+    "title": "",
+    "type": 1,
+    "text": "164小屋临时指引图",
+    "icon": "16401",
+    "iconText": "16401",
+    "unlockGuideId": 164,
+    "isCn": 1
+  },
+  {
+    "id": 12032,
+    "title": "",
+    "type": 1,
+    "text": "164小屋临时指引图",
+    "icon": "16402",
+    "iconText": "16402",
+    "unlockGuideId": 164,
+    "isCn": 1
+  },
+  {
+    "id": 12033,
+    "title": "",
+    "type": 1,
+    "text": "164小屋临时指引图",
+    "icon": "16403",
+    "iconText": "16403",
+    "unlockGuideId": 164,
+    "isCn": 1
+  },
+  {
+    "id": 12041,
+    "title": "",
+    "type": 1,
+    "text": "165小屋临时指引图",
+    "icon": "16501",
+    "iconText": "",
+    "unlockGuideId": 165,
+    "isCn": 1
+  },
+  {
+    "id": 12042,
+    "title": "",
+    "type": 1,
+    "text": "165小屋临时指引图",
+    "icon": "16502",
+    "iconText": "",
+    "unlockGuideId": 165,
+    "isCn": 1
+  },
+  {
+    "id": 12043,
+    "title": "",
+    "type": 1,
+    "text": "165小屋临时指引图",
+    "icon": "16503",
+    "iconText": "",
+    "unlockGuideId": 165,
+    "isCn": 1
+  },
+  {
+    "id": 12051,
+    "title": "",
+    "type": 1,
+    "text": "168小屋临时指引图",
+    "icon": "16801",
+    "iconText": "16801",
+    "unlockGuideId": 168,
+    "isCn": 1
+  },
+  {
+    "id": 12061,
+    "title": "",
+    "type": 1,
+    "text": "169小屋临时指引图",
+    "icon": "16901",
+    "iconText": "16901",
+    "unlockGuideId": 169,
+    "isCn": 1
+  },
+  {
+    "id": 12071,
+    "title": "",
+    "type": 1,
+    "text": "170小屋临时指引图",
+    "icon": "17001",
+    "iconText": "17001",
+    "unlockGuideId": 170,
+    "isCn": 1
+  },
+  {
+    "id": 12081,
+    "title": "",
+    "type": 1,
+    "text": "181小屋指引",
+    "icon": "18101",
+    "iconText": "18101",
+    "unlockGuideId": 181,
+    "isCn": 1
+  },
+  {
+    "id": 12082,
+    "title": "",
+    "type": 1,
+    "text": "181小屋指引",
+    "icon": "18102",
+    "iconText": "18102",
+    "unlockGuideId": 181,
+    "isCn": 1
+  },
+  {
+    "id": 12083,
+    "title": "",
+    "type": 1,
+    "text": "181小屋指引",
+    "icon": "18103",
+    "iconText": "18103",
+    "unlockGuideId": 181,
+    "isCn": 1
+  },
+  {
+    "id": 12084,
+    "title": "",
+    "type": 1,
+    "text": "181小屋指引",
+    "icon": "18104",
+    "iconText": "18104",
+    "unlockGuideId": 181,
+    "isCn": 1
+  },
+  {
+    "id": 12034,
+    "title": "",
+    "type": 1,
+    "text": "164小屋临时指引图",
+    "icon": "16404",
+    "iconText": "",
+    "unlockGuideId": 164,
+    "isCn": 1
+  },
+  {
+    "id": 14001,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50101",
+    "iconText": "50101",
+    "unlockGuideId": 501,
+    "isCn": 1
+  },
+  {
+    "id": 14002,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50102",
+    "iconText": "50102",
+    "unlockGuideId": 501,
+    "isCn": 1
+  },
+  {
+    "id": 14003,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50103",
+    "iconText": "50103",
+    "unlockGuideId": 501,
+    "isCn": 0
+  },
+  {
+    "id": 14005,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50104",
+    "iconText": "50104",
+    "unlockGuideId": 501,
+    "isCn": 0
+  },
+  {
+    "id": 14006,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50105",
+    "iconText": "50105",
+    "unlockGuideId": 501,
+    "isCn": 0
+  },
+  {
+    "id": 14007,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50106",
+    "iconText": "50106",
+    "unlockGuideId": 501,
+    "isCn": 0
+  },
+  {
+    "id": 14008,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50107",
+    "iconText": "50107",
+    "unlockGuideId": 501,
+    "isCn": 0
+  },
+  {
+    "id": 14004,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游开启指引图",
+    "icon": "bg_help_50501",
+    "iconText": "50501",
+    "unlockGuideId": 505,
+    "isCn": 1
+  },
+  {
+    "id": 14009,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游玩法指引",
+    "icon": "bg_help_50110",
+    "iconText": "50110",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 14010,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游玩法指引",
+    "icon": "bg_help_50111",
+    "iconText": "50111",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 14011,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游重置指引1",
+    "icon": "bg_help_50108",
+    "iconText": "50108",
+    "unlockGuideId": 511,
+    "isCn": 0
+  },
+  {
+    "id": 14012,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游重置指引2",
+    "icon": "bg_help_50109",
+    "iconText": "50109",
+    "unlockGuideId": 512,
+    "isCn": 0
+  },
+  {
+    "id": 14013,
+    "title": "",
+    "type": 1,
+    "text": "人工梦游第六层指引图提示苏醒",
+    "icon": "bg_help_50801",
+    "iconText": "50801",
+    "unlockGuideId": 508,
+    "isCn": 0
+  },
+  {
+    "id": 15001,
+    "title": "",
+    "type": 1,
+    "text": "小屋地块指引图",
+    "icon": "bg_help_40101",
+    "iconText": "40101",
+    "unlockGuideId": 401,
+    "isCn": 1
+  },
+  {
+    "id": 15002,
+    "title": "",
+    "type": 1,
+    "text": "小屋建筑指引图",
+    "icon": "bg_help_40201",
+    "iconText": "40201",
+    "unlockGuideId": 402,
+    "isCn": 0
+  },
+  {
+    "id": 15003,
+    "title": "",
+    "type": 1,
+    "text": "小屋建筑指引图",
+    "icon": "bg_help_40202",
+    "iconText": "40202",
+    "unlockGuideId": 402,
+    "isCn": 0
+  },
+  {
+    "id": 15004,
+    "title": "",
+    "type": 1,
+    "text": "小屋生产指引图",
+    "icon": "bg_help_40401",
+    "iconText": "40401",
+    "unlockGuideId": 402,
+    "isCn": 1
+  },
+  {
+    "id": 15005,
+    "title": "",
+    "type": 1,
+    "text": "小屋生产指引图",
+    "icon": "bg_help_40402",
+    "iconText": "40402",
+    "unlockGuideId": 404,
+    "isCn": 1
+  },
+  {
+    "id": 15006,
+    "title": "",
+    "type": 1,
+    "text": "强化建筑指引图",
+    "icon": "bg_help_40601",
+    "iconText": "40601",
+    "unlockGuideId": 411,
+    "isCn": 1
+  },
+  {
+    "id": 15007,
+    "title": "",
+    "type": 1,
+    "text": "强化建筑指引图",
+    "icon": "bg_help_40602",
+    "iconText": "40602",
+    "unlockGuideId": 411,
+    "isCn": 1
+  },
+  {
+    "id": 15008,
+    "title": "",
+    "type": 1,
+    "text": "小屋合成指引图",
+    "icon": "bg_help_40702",
+    "iconText": "40702",
+    "unlockGuideId": 412,
+    "isCn": 0
+  },
+  {
+    "id": 15011,
+    "title": "",
+    "type": 1,
+    "text": "小屋合成指引图",
+    "icon": "bg_help_40703",
+    "iconText": "40703",
+    "unlockGuideId": 412,
+    "isCn": 0
+  },
+  {
+    "id": 15012,
+    "title": "",
+    "type": 1,
+    "text": "小屋合成指引图",
+    "icon": "bg_help_40704",
+    "iconText": "40704",
+    "unlockGuideId": 412,
+    "isCn": 0
+  },
+  {
+    "id": 15009,
+    "title": "",
+    "type": 1,
+    "text": "小屋枢纽指引图",
+    "icon": "bg_help_40203",
+    "iconText": "40203",
+    "unlockGuideId": 413,
+    "isCn": 0
+  },
+  {
+    "id": 15010,
+    "title": "",
+    "type": 1,
+    "text": "小屋任务指引图",
+    "icon": "bg_help_40102",
+    "iconText": "40102",
+    "unlockGuideId": 401,
+    "isCn": 0
+  },
+  {
+    "id": 15013,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_wanfashengming_1",
+    "iconText": "roomagreeon",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 15014,
+    "title": "",
+    "type": 1,
+    "text": "小屋活力指引图",
+    "icon": "bg_help_40103",
+    "iconText": "40103",
+    "unlockGuideId": 401,
+    "isCn": 0
+  },
+  {
+    "id": 16001,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_warmup_1",
+    "iconText": "warmup1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 16002,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_warmup_2",
+    "iconText": "warmup2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 16003,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "bg_warmup_3",
+    "iconText": "warmup3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 16101,
+    "title": "",
+    "type": 2,
+    "text": "推箱子指引图",
+    "icon": "bg_vapushbox_1",
+    "iconText": "versionactivitypushbox1",
+    "unlockGuideId": 601,
+    "isCn": 0
+  },
+  {
+    "id": 16102,
+    "title": "",
+    "type": 2,
+    "text": "推箱子指引图",
+    "icon": "bg_vapushbox_2",
+    "iconText": "versionactivitypushbox2",
+    "unlockGuideId": 601,
+    "isCn": 1
+  },
+  {
+    "id": 16103,
+    "title": "",
+    "type": 2,
+    "text": "推箱子指引图",
+    "icon": "bg_vapushbox_3",
+    "iconText": "versionactivitypushbox3",
+    "unlockGuideId": 602,
+    "isCn": 1
+  },
+  {
+    "id": 16104,
+    "title": "",
+    "type": 2,
+    "text": "推箱子指引图",
+    "icon": "bg_vapushbox_4",
+    "iconText": "versionactivitypushbox4",
+    "unlockGuideId": 605,
+    "isCn": 1
+  },
+  {
+    "id": 16105,
+    "title": "",
+    "type": 2,
+    "text": "推箱子指引图",
+    "icon": "bg_vapushbox_5",
+    "iconText": "versionactivitypushbox5",
+    "unlockGuideId": 608,
+    "isCn": 0
+  },
+  {
+    "id": 16201,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_1",
+    "iconText": "va_1_1_chessgame1",
+    "unlockGuideId": 743,
+    "isCn": 1
+  },
+  {
+    "id": 16203,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_3",
+    "iconText": "va_1_1_chessgame3",
+    "unlockGuideId": 743,
+    "isCn": 1
+  },
+  {
+    "id": 16204,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_4",
+    "iconText": "va_1_1_chessgame4",
+    "unlockGuideId": 743,
+    "isCn": 0
+  },
+  {
+    "id": 16205,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_5",
+    "iconText": "va_1_1_chessgame5",
+    "unlockGuideId": 743,
+    "isCn": 1
+  },
+  {
+    "id": 16206,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_6",
+    "iconText": "va_1_1_chessgame6",
+    "unlockGuideId": 744,
+    "isCn": 0
+  },
+  {
+    "id": 16207,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_7",
+    "iconText": "va_1_1_chessgame7",
+    "unlockGuideId": 744,
+    "isCn": 0
+  },
+  {
+    "id": 16208,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_9",
+    "iconText": "va_1_1_chessgame9",
+    "unlockGuideId": 745,
+    "isCn": 1
+  },
+  {
+    "id": 16209,
+    "title": "",
+    "type": 2,
+    "text": "小狗与流浪汉玩法说明",
+    "icon": "va_1_1_chessgame_10",
+    "iconText": "va_1_1_chessgame10",
+    "unlockGuideId": 746,
+    "isCn": 0
+  },
+  {
+    "id": 16301,
+    "title": "",
+    "type": 2,
+    "text": "梅兰妮活动玩法说明",
+    "icon": "va_1_1_meilanni_1",
+    "iconText": "va_1_1_meilanni_1",
+    "unlockGuideId": 741,
+    "isCn": 1
+  },
+  {
+    "id": 16302,
+    "title": "",
+    "type": 2,
+    "text": "梅兰妮活动玩法说明",
+    "icon": "va_1_1_meilanni_2",
+    "iconText": "va_1_1_meilanni_2",
+    "unlockGuideId": 741,
+    "isCn": 1
+  },
+  {
+    "id": 16303,
+    "title": "",
+    "type": 2,
+    "text": "梅兰妮活动玩法说明",
+    "icon": "va_1_1_meilanni_3",
+    "iconText": "va_1_1_meilanni_3",
+    "unlockGuideId": 741,
+    "isCn": 1
+  },
+  {
+    "id": 16401,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 801,
+    "isCn": 1
+  },
+  {
+    "id": 16402,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 801,
+    "isCn": 1
+  },
+  {
+    "id": 16403,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 803,
+    "isCn": 1
+  },
+  {
+    "id": 16404,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 803,
+    "isCn": 1
+  },
+  {
+    "id": 16405,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 804,
+    "isCn": 0
+  },
+  {
+    "id": 16406,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 808,
+    "isCn": 1
+  },
+  {
+    "id": 16407,
+    "title": "",
+    "type": 2,
+    "text": "1.1赛季玩法说明",
+    "icon": "va_1_1_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 808,
+    "isCn": 1
+  },
+  {
+    "id": 17001,
+    "title": "language_10000134",
+    "type": 1,
+    "text": "搜寻散落的感声元件，协助Apple升级翻译器“Doggie”。\n纯粹的善意理应珍惜，Apple为此预备了丰厚的馈礼。\n【活动时间】\n任务开启时间：2023年1月1日维护后-2023年1月22日4:59\n奖励兑换时间：2023年1月1日维护后-2023年1月25日4:59\n【皮氏的意译规则说明】\n活动期间，可完成对应的每日任务及挑战任务，获取活动道具“感声元件”。利用感声元件升级翻译器“Doggie”，并完成皮克勒斯与朋友们的对话，即可获得对应奖励。",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 18001,
+    "title": "",
+    "type": 1,
+    "text": "心相偏好指引图",
+    "icon": "bg_help_xxph",
+    "iconText": "xxph",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 1210201,
+    "title": "",
+    "type": 2,
+    "text": "绿湖噩梦-建筑修复引导指引图",
+    "icon": "v1a2_lvhuemeng_1",
+    "iconText": "v1a2_lvhuemeng_1",
+    "unlockGuideId": 12102,
+    "isCn": 1
+  },
+  {
+    "id": 1211101,
+    "title": "",
+    "type": 2,
+    "text": "绿湖噩梦-日常关引导指引图",
+    "icon": "v1a2_lvhuemeng_2",
+    "iconText": "v1a2_lvhuemeng_2",
+    "unlockGuideId": 12111,
+    "isCn": 1
+  },
+  {
+    "id": 1210401,
+    "title": "",
+    "type": 2,
+    "text": "绿湖噩梦-建筑元件引导指引图",
+    "icon": "v1a2_lvhuemeng_3",
+    "iconText": "v1a2_lvhuemeng_3",
+    "unlockGuideId": 12104,
+    "isCn": 1
+  },
+  {
+    "id": 1210501,
+    "title": "",
+    "type": 2,
+    "text": "绿湖噩梦-陷阱元件引导指引图",
+    "icon": "v1a2_lvhuemeng_4",
+    "iconText": "v1a2_lvhuemeng_4",
+    "unlockGuideId": 12105,
+    "isCn": 1
+  },
+  {
+    "id": 1230201,
+    "title": "",
+    "type": 2,
+    "text": "牙仙活动第2关-认识怪物指引图",
+    "icon": "v1a2_yaxian_1",
+    "iconText": "v1a2_yaxian_1",
+    "unlockGuideId": 12302,
+    "isCn": 0
+  },
+  {
+    "id": 1230501,
+    "title": "",
+    "type": 2,
+    "text": "牙仙活动第6关-巡逻魔精指引图",
+    "icon": "v1a2_yaxian_2",
+    "iconText": "v1a2_yaxian_2",
+    "unlockGuideId": 12305,
+    "isCn": 0
+  },
+  {
+    "id": 1230601,
+    "title": "",
+    "type": 2,
+    "text": "牙仙活动第2章第1关-牙仙指引图",
+    "icon": "v1a2_yaxian_3",
+    "iconText": "v1a2_yaxian_3",
+    "unlockGuideId": 12306,
+    "isCn": 0
+  },
+  {
+    "id": 1220101,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季超级市场指引图1",
+    "icon": "v1a2_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 12201,
+    "isCn": 1
+  },
+  {
+    "id": 1220201,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 12201,
+    "isCn": 1
+  },
+  {
+    "id": 1220301,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 12202,
+    "isCn": 1
+  },
+  {
+    "id": 1220401,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 12202,
+    "isCn": 1
+  },
+  {
+    "id": 1220501,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 12203,
+    "isCn": 0
+  },
+  {
+    "id": 1220601,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 12204,
+    "isCn": 1
+  },
+  {
+    "id": 1220701,
+    "title": "",
+    "type": 2,
+    "text": "1.2赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 12204,
+    "isCn": 1
+  },
+  {
+    "id": 1240101,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动日程弹图",
+    "icon": "v1a2_whitehouse_1",
+    "iconText": "v1a2_whitehouse_1",
+    "unlockGuideId": 12401,
+    "isCn": 1
+  },
+  {
+    "id": 1240102,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动会面弹图",
+    "icon": "v1a2_whitehouse_4",
+    "iconText": "v1a2_whitehouse_4",
+    "unlockGuideId": 12402,
+    "isCn": 1
+  },
+  {
+    "id": 1240103,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动上课弹图",
+    "icon": "v1a2_whitehouse_2",
+    "iconText": "v1a2_whitehouse_2",
+    "unlockGuideId": 12403,
+    "isCn": 1
+  },
+  {
+    "id": 1240104,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动出行弹图",
+    "icon": "v1a2_whitehouse_3",
+    "iconText": "v1a2_whitehouse_3",
+    "unlockGuideId": 12404,
+    "isCn": 1
+  },
+  {
+    "id": 1240105,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动结局弹图",
+    "icon": "v1a2_whitehouse_6",
+    "iconText": "v1a2_whitehouse_6",
+    "unlockGuideId": 12406,
+    "isCn": 1
+  },
+  {
+    "id": 1240106,
+    "title": "",
+    "type": 2,
+    "text": "洁西卡角色活动检定弹图",
+    "icon": "v1a2_whitehouse_5",
+    "iconText": "v1a2_whitehouse_5",
+    "unlockGuideId": 12407,
+    "isCn": 1
+  },
+  {
+    "id": 1250101,
+    "title": "",
+    "type": 2,
+    "text": "以牙还牙活动指引图",
+    "icon": "v1a2_trade_1",
+    "iconText": "v1a2_trade_1",
+    "unlockGuideId": 12501,
+    "isCn": 1
+  },
+  {
+    "id": 1250102,
+    "title": "",
+    "type": 2,
+    "text": "以牙还牙活动指引图",
+    "icon": "v1a2_trade_2",
+    "iconText": "v1a2_trade_2",
+    "unlockGuideId": 12501,
+    "isCn": 1
+  },
+  {
+    "id": 1250103,
+    "title": "",
+    "type": 2,
+    "text": "以牙还牙活动指引图",
+    "icon": "v1a2_trade_3",
+    "iconText": "v1a2_trade_3",
+    "unlockGuideId": 12501,
+    "isCn": 1
+  },
+  {
+    "id": 1250104,
+    "title": "",
+    "type": 2,
+    "text": "以牙还牙活动指引图",
+    "icon": "v1a2_trade_4",
+    "iconText": "v1a2_trade_4",
+    "unlockGuideId": 12501,
+    "isCn": 1
+  },
+  {
+    "id": 1250105,
+    "title": "",
+    "type": 2,
+    "text": "以牙还牙活动指引图",
+    "icon": "v1a2_trade_5",
+    "iconText": "v1a2_trade_5",
+    "unlockGuideId": 12501,
+    "isCn": 1
+  },
+  {
+    "id": 1260101,
+    "title": "",
+    "type": 2,
+    "text": "营地安全手册活动指引图",
+    "icon": "v1a2_dreamtail_1",
+    "iconText": "v1a2_dreamtail_1",
+    "unlockGuideId": 12601,
+    "isCn": 1
+  },
+  {
+    "id": 1260102,
+    "title": "",
+    "type": 2,
+    "text": "营地安全手册活动指引图",
+    "icon": "v1a2_dreamtail_2",
+    "iconText": "v1a2_dreamtail_2",
+    "unlockGuideId": 12601,
+    "isCn": 1
+  },
+  {
+    "id": 1260103,
+    "title": "",
+    "type": 2,
+    "text": "营地安全手册活动指引图",
+    "icon": "v1a2_dreamtail_3",
+    "iconText": "v1a2_dreamtail_3",
+    "unlockGuideId": 12601,
+    "isCn": 1
+  },
+  {
+    "id": 1350101,
+    "title": "",
+    "type": 2,
+    "text": "1.3鬃毛的左手活动指引图",
+    "icon": "v1a3_zongmaozuoshou_help_1",
+    "iconText": "v1a3_zongmaozuoshou_help_1",
+    "unlockGuideId": 13501,
+    "isCn": 0
+  },
+  {
+    "id": 1350201,
+    "title": "",
+    "type": 2,
+    "text": "1.3鬃毛的左手活动指引图",
+    "icon": "v1a3_zongmaozuoshou_help_2",
+    "iconText": "v1a3_zongmaozuoshou_help_2",
+    "unlockGuideId": 13502,
+    "isCn": 0
+  },
+  {
+    "id": 1360101,
+    "title": "",
+    "type": 2,
+    "text": "1.3寒舍小试活动指引图",
+    "icon": "v1a3_hanshe_help_1",
+    "iconText": "v1a3_hanshe_help_1",
+    "unlockGuideId": 13601,
+    "isCn": 0
+  },
+  {
+    "id": 1360102,
+    "title": "",
+    "type": 2,
+    "text": "1.3寒舍小试活动指引图",
+    "icon": "v1a3_hanshe_help_2",
+    "iconText": "v1a3_hanshe_help_2",
+    "unlockGuideId": 13601,
+    "isCn": 0
+  },
+  {
+    "id": 1360103,
+    "title": "",
+    "type": 2,
+    "text": "1.3寒舍小试活动指引图",
+    "icon": "v1a3_hanshe_help_3",
+    "iconText": "v1a3_hanshe_help_3",
+    "unlockGuideId": 13601,
+    "isCn": 0
+  },
+  {
+    "id": 1360104,
+    "title": "",
+    "type": 2,
+    "text": "1.3寒舍小试活动指引图",
+    "icon": "v1a3_hanshe_help_4",
+    "iconText": "v1a3_hanshe_help_4",
+    "unlockGuideId": 13601,
+    "isCn": 0
+  },
+  {
+    "id": 1310201,
+    "title": "",
+    "type": 2,
+    "text": "天穹低语指引图",
+    "icon": "v1a3_buff_help_1",
+    "iconText": "v1a3_buff_help_1",
+    "unlockGuideId": 13102,
+    "isCn": 0
+  },
+  {
+    "id": 1310202,
+    "title": "",
+    "type": 2,
+    "text": "天穹低语指引图",
+    "icon": "v1a3_buff_help_2",
+    "iconText": "v1a3_buff_help_2",
+    "unlockGuideId": 13102,
+    "isCn": 0
+  },
+  {
+    "id": 1310501,
+    "title": "",
+    "type": 2,
+    "text": "占星指引图",
+    "icon": "v1a3_astrology_help_1",
+    "iconText": "v1a3_astrology_help_1",
+    "unlockGuideId": 13105,
+    "isCn": 0
+  },
+  {
+    "id": 1310502,
+    "title": "",
+    "type": 2,
+    "text": "占星指引图",
+    "icon": "v1a3_astrology_help_2",
+    "iconText": "v1a3_astrology_help_2",
+    "unlockGuideId": 13105,
+    "isCn": 0
+  },
+  {
+    "id": 1310701,
+    "title": "",
+    "type": 2,
+    "text": "1.3主活动14关引导图",
+    "icon": "v1a3_huodongzhandou_1",
+    "iconText": "v1a3_huodongzhandou_1",
+    "unlockGuideId": 13107,
+    "isCn": 0
+  },
+  {
+    "id": 1310801,
+    "title": "",
+    "type": 2,
+    "text": "每日占星战斗引导图1",
+    "icon": "v1a3_huodongzhandou_3",
+    "iconText": "v1a3_huodongzhandou_3",
+    "unlockGuideId": 13108,
+    "isCn": 0
+  },
+  {
+    "id": 1310802,
+    "title": "",
+    "type": 2,
+    "text": "每日占星战斗引导图2",
+    "icon": "v1a3_huodongzhandou_2",
+    "iconText": "v1a3_huodongzhandou_2",
+    "unlockGuideId": 13108,
+    "isCn": 0
+  },
+  {
+    "id": 1320101,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季超级市场指引图1",
+    "icon": "v1a3_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 13201,
+    "isCn": 1
+  },
+  {
+    "id": 1320102,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 13201,
+    "isCn": 1
+  },
+  {
+    "id": 1320103,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季试用角色",
+    "icon": "va_1_1_season_8",
+    "iconText": "va_1_1_season_8",
+    "unlockGuideId": 13201,
+    "isCn": 1
+  },
+  {
+    "id": 1320201,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 13202,
+    "isCn": 1
+  },
+  {
+    "id": 1320202,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 13202,
+    "isCn": 1
+  },
+  {
+    "id": 1320301,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 13203,
+    "isCn": 0
+  },
+  {
+    "id": 1320401,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 13204,
+    "isCn": 1
+  },
+  {
+    "id": 1320402,
+    "title": "",
+    "type": 2,
+    "text": "1.3赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 13204,
+    "isCn": 1
+  },
+  {
+    "id": 1330101,
+    "title": "",
+    "type": 2,
+    "text": "鬃毛角色活动指引图1",
+    "icon": "v1a3_zongmao_help_1",
+    "iconText": "v1a3_zongmao_help_1",
+    "unlockGuideId": 13301,
+    "isCn": 0
+  },
+  {
+    "id": 1330102,
+    "title": "",
+    "type": 2,
+    "text": "鬃毛角色活动指引图4",
+    "icon": "v1a3_zongmao_help_2",
+    "iconText": "v1a3_zongmao_help_2",
+    "unlockGuideId": 13301,
+    "isCn": 0
+  },
+  {
+    "id": 1330301,
+    "title": "",
+    "type": 2,
+    "text": "鬃毛角色活动指引图2",
+    "icon": "v1a3_zongmao_help_3",
+    "iconText": "v1a3_zongmao_help_3",
+    "unlockGuideId": 13303,
+    "isCn": 0
+  },
+  {
+    "id": 1330601,
+    "title": "",
+    "type": 2,
+    "text": "鬃毛角色活动指引图3",
+    "icon": "v1a3_zongmao_help_4",
+    "iconText": "v1a3_zongmao_help_4",
+    "unlockGuideId": 13306,
+    "isCn": 0
+  },
+  {
+    "id": 1340101,
+    "title": "",
+    "type": 2,
+    "text": "伽菈波那角色活动指引图1（第1关）",
+    "icon": "v1a3_jiala_help_1",
+    "iconText": "v1a3_jiala_help_1",
+    "unlockGuideId": 13401,
+    "isCn": 0
+  },
+  {
+    "id": 1340201,
+    "title": "",
+    "type": 2,
+    "text": "伽菈波那角色活动指引图2（第1关）",
+    "icon": "v1a3_jiala_help_2",
+    "iconText": "v1a3_jiala_help_2",
+    "unlockGuideId": 13402,
+    "isCn": 0
+  },
+  {
+    "id": 1340301,
+    "title": "",
+    "type": 2,
+    "text": "伽菈波那角色活动指引图3（第2关）",
+    "icon": "v1a3_jiala_help_3",
+    "iconText": "v1a3_jiala_help_3",
+    "unlockGuideId": 13403,
+    "isCn": 0
+  },
+  {
+    "id": 1340401,
+    "title": "",
+    "type": 2,
+    "text": "伽菈波那角色活动指引图4（第3关）",
+    "icon": "v1a3_jiala_help_4",
+    "iconText": "v1a3_jiala_help_4",
+    "unlockGuideId": 13404,
+    "isCn": 0
+  },
+  {
+    "id": 1340601,
+    "title": "",
+    "type": 2,
+    "text": "伽菈波那角色活动指引图5（第6关）",
+    "icon": "v1a3_jiala_help_5",
+    "iconText": "v1a3_jiala_help_5",
+    "unlockGuideId": 13406,
+    "isCn": 0
+  },
+  {
+    "id": 1370101,
+    "title": "",
+    "type": 1,
+    "text": "制衡模式引导图1",
+    "icon": "v1a3_balance_help_1",
+    "iconText": "v1a3_balance_help_1",
+    "unlockGuideId": 13701,
+    "isCn": 0
+  },
+  {
+    "id": 1370102,
+    "title": "",
+    "type": 1,
+    "text": "制衡模式引导图2",
+    "icon": "v1a3_balance_help_2",
+    "iconText": "v1a3_balance_help_2",
+    "unlockGuideId": 13701,
+    "isCn": 0
+  },
+  {
+    "id": 1450101,
+    "title": "",
+    "type": 1,
+    "text": "密室符文指引图",
+    "icon": "v1a4_explore_help_1",
+    "iconText": "v1a4_explore_help_1",
+    "unlockGuideId": 14507,
+    "isCn": 0
+  },
+  {
+    "id": 1450102,
+    "title": "",
+    "type": 1,
+    "text": "密室陷阱指引图",
+    "icon": "v1a4_explore_help_2",
+    "iconText": "v1a4_explore_help_2",
+    "unlockGuideId": 14509,
+    "isCn": 0
+  },
+  {
+    "id": 1450103,
+    "title": "",
+    "type": 1,
+    "text": "密室石碑指引图",
+    "icon": "v1a4_explore_help_3",
+    "iconText": "v1a4_explore_help_3",
+    "unlockGuideId": 14511,
+    "isCn": 0
+  },
+  {
+    "id": 1451501,
+    "title": "",
+    "type": 1,
+    "text": "密室战斗id 501103指引图1",
+    "icon": "v1a4_explore_help_4",
+    "iconText": "v1a4_explore_help_4",
+    "unlockGuideId": 14515,
+    "isCn": 0
+  },
+  {
+    "id": 1451502,
+    "title": "",
+    "type": 1,
+    "text": "密室战斗id 501103指引图2",
+    "icon": "v1a4_explore_help_5",
+    "iconText": "v1a4_explore_help_5",
+    "unlockGuideId": 14515,
+    "isCn": 0
+  },
+  {
+    "id": 1451601,
+    "title": "",
+    "type": 1,
+    "text": "密室战斗id 501105指引图1",
+    "icon": "v1a4_explore_help_4",
+    "iconText": "v1a4_explore_help_4",
+    "unlockGuideId": 14516,
+    "isCn": 0
+  },
+  {
+    "id": 1451602,
+    "title": "",
+    "type": 1,
+    "text": "密室战斗id 501105指引图2",
+    "icon": "v1a4_explore_help_5",
+    "iconText": "v1a4_explore_help_5",
+    "unlockGuideId": 14516,
+    "isCn": 0
+  },
+  {
+    "id": 1420101,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季超级市场指引图1",
+    "icon": "v1a4_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 14201,
+    "isCn": 1
+  },
+  {
+    "id": 1420102,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 14201,
+    "isCn": 1
+  },
+  {
+    "id": 1420103,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季试用角色",
+    "icon": "va_1_1_season_8",
+    "iconText": "va_1_1_season_8",
+    "unlockGuideId": 14201,
+    "isCn": 1
+  },
+  {
+    "id": 1420201,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 14202,
+    "isCn": 1
+  },
+  {
+    "id": 1420202,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 14202,
+    "isCn": 1
+  },
+  {
+    "id": 1420301,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 14203,
+    "isCn": 0
+  },
+  {
+    "id": 1420401,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 14204,
+    "isCn": 1
+  },
+  {
+    "id": 1420402,
+    "title": "",
+    "type": 2,
+    "text": "1.4赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 14204,
+    "isCn": 1
+  },
+  {
+    "id": 1430201,
+    "title": "",
+    "type": 2,
+    "text": "1.4【沙粒的记忆】解谜指引图",
+    "icon": "v1a4_role37_help_1",
+    "iconText": "v1a4_role37_help_1",
+    "unlockGuideId": 14302,
+    "isCn": 0
+  },
+  {
+    "id": 1460101,
+    "title": "",
+    "type": 2,
+    "text": "bossrush指引图1",
+    "icon": "v1a6_bossrush_help_3",
+    "iconText": "v1a6_bossrush_help_3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 1460102,
+    "title": "",
+    "type": 2,
+    "text": "bossrush指引图2",
+    "icon": "v1a6_bossrush_help_2",
+    "iconText": "v1a6_bossrush_help_2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 1460103,
+    "title": "",
+    "type": 2,
+    "text": "bossrush指引图3",
+    "icon": "v1a6_bossrush_help_1",
+    "iconText": "v1a6_bossrush_help_1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 1510101,
+    "title": "",
+    "type": 2,
+    "text": "1.5红土行迹录引入1",
+    "icon": "v1a5_revival_help_1",
+    "iconText": "v1a5_revival_help_1",
+    "unlockGuideId": 15101,
+    "isCn": 0
+  },
+  {
+    "id": 1510102,
+    "title": "",
+    "type": 2,
+    "text": "1.5红土行迹录引入2",
+    "icon": "v1a5_revival_help_2",
+    "iconText": "v1a5_revival_help_2",
+    "unlockGuideId": 15101,
+    "isCn": 0
+  },
+  {
+    "id": 1510201,
+    "title": "",
+    "type": 2,
+    "text": "1.5热地探索引入1",
+    "icon": "v1a5_revival_help_3",
+    "iconText": "v1a5_revival_help_3",
+    "unlockGuideId": 15102,
+    "isCn": 0
+  },
+  {
+    "id": 1510202,
+    "title": "",
+    "type": 2,
+    "text": "1.5热地探索引入2",
+    "icon": "v1a5_revival_help_4",
+    "iconText": "v1a5_revival_help_4",
+    "unlockGuideId": 15102,
+    "isCn": 0
+  },
+  {
+    "id": 1510301,
+    "title": "",
+    "type": 2,
+    "text": "1.5运动场引入1",
+    "icon": "v1a5_revival_help_5",
+    "iconText": "v1a5_revival_help_5",
+    "unlockGuideId": 15103,
+    "isCn": 0
+  },
+  {
+    "id": 1510302,
+    "title": "",
+    "type": 2,
+    "text": "1.5运动场引入2",
+    "icon": "v1a5_revival_help_6",
+    "iconText": "v1a5_revival_help_6",
+    "unlockGuideId": 15103,
+    "isCn": 0
+  },
+  {
+    "id": 1520101,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季超级市场指引图1",
+    "icon": "v1a5_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 15201,
+    "isCn": 1
+  },
+  {
+    "id": 1520102,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 15201,
+    "isCn": 1
+  },
+  {
+    "id": 1520103,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季试用角色",
+    "icon": "va_1_1_season_8",
+    "iconText": "va_1_1_season_8",
+    "unlockGuideId": 15201,
+    "isCn": 1
+  },
+  {
+    "id": 1520201,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 15202,
+    "isCn": 1
+  },
+  {
+    "id": 1520202,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 15202,
+    "isCn": 1
+  },
+  {
+    "id": 1520301,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 15203,
+    "isCn": 0
+  },
+  {
+    "id": 1520401,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 15204,
+    "isCn": 1
+  },
+  {
+    "id": 1520402,
+    "title": "",
+    "type": 2,
+    "text": "1.5赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 15204,
+    "isCn": 1
+  },
+  {
+    "id": 1530101,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图1-1",
+    "icon": "v1a5_kerandian_help_1",
+    "iconText": "v1a5_kerandian_help_1",
+    "unlockGuideId": 15301,
+    "isCn": 0
+  },
+  {
+    "id": 1530102,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图1-2",
+    "icon": "v1a5_kerandian_help_2",
+    "iconText": "v1a5_kerandian_help_2",
+    "unlockGuideId": 15301,
+    "isCn": 0
+  },
+  {
+    "id": 1530201,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图2-1",
+    "icon": "v1a5_kerandian_help_3",
+    "iconText": "v1a5_kerandian_help_3",
+    "unlockGuideId": 15302,
+    "isCn": 0
+  },
+  {
+    "id": 1530202,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图2-2",
+    "icon": "v1a5_kerandian_help_4",
+    "iconText": "v1a5_kerandian_help_4",
+    "unlockGuideId": 15302,
+    "isCn": 0
+  },
+  {
+    "id": 1530301,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图3",
+    "icon": "v1a5_kerandian_help_5",
+    "iconText": "v1a5_kerandian_help_5",
+    "unlockGuideId": 15303,
+    "isCn": 0
+  },
+  {
+    "id": 1530501,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图4",
+    "icon": "v1a5_kerandian_help_6",
+    "iconText": "v1a5_kerandian_help_6",
+    "unlockGuideId": 15305,
+    "isCn": 0
+  },
+  {
+    "id": 1530601,
+    "title": "",
+    "type": 2,
+    "text": "1.5可燃点活动FR2指引图5",
+    "icon": "v1a5_kerandian_help_7",
+    "iconText": "v1a5_kerandian_help_7",
+    "unlockGuideId": 15306,
+    "isCn": 0
+  },
+  {
+    "id": 1540101,
+    "title": "",
+    "type": 2,
+    "text": "1.5爱兹拉活动-首次进入关卡",
+    "icon": "v1a5_aizila_help_1",
+    "iconText": "v1a5_aizila_help_1",
+    "unlockGuideId": 15401,
+    "isCn": 0
+  },
+  {
+    "id": 1540201,
+    "title": "",
+    "type": 2,
+    "text": "1.5爱兹拉活动-随机事件",
+    "icon": "v1a5_aizila_help_2",
+    "iconText": "v1a5_aizila_help_2",
+    "unlockGuideId": 15402,
+    "isCn": 0
+  },
+  {
+    "id": 1540301,
+    "title": "",
+    "type": 2,
+    "text": "1.5爱兹拉活动-第8回合",
+    "icon": "v1a5_aizila_help_3",
+    "iconText": "v1a5_aizila_help_3",
+    "unlockGuideId": 15403,
+    "isCn": 0
+  },
+  {
+    "id": 1560101,
+    "title": "",
+    "type": 2,
+    "text": "机器人战斗指引图",
+    "icon": "v1a5_bossrush_help_1",
+    "iconText": "v1a5_bossrush_help_1",
+    "unlockGuideId": 15601,
+    "isCn": 0
+  },
+  {
+    "id": 1560201,
+    "title": "",
+    "type": 2,
+    "text": "重塑战斗指引图",
+    "icon": "v1a5_bossrush_help_3",
+    "iconText": "v1a5_bossrush_help_3",
+    "unlockGuideId": 15602,
+    "isCn": 0
+  },
+  {
+    "id": 1560301,
+    "title": "",
+    "type": 2,
+    "text": "海怪战斗指引图",
+    "icon": "v1a5_bossrush_help_2",
+    "iconText": "v1a5_bossrush_help_2",
+    "unlockGuideId": 15603,
+    "isCn": 0
+  },
+  {
+    "id": 1610103,
+    "title": "",
+    "type": 2,
+    "text": "1.6主活动Boss界面1",
+    "icon": "v1a6_activityboss_help_1",
+    "iconText": "v1a6_activityboss_help_1",
+    "unlockGuideId": 16103,
+    "isCn": 0
+  },
+  {
+    "id": 1610104,
+    "title": "",
+    "type": 2,
+    "text": "1.6主活动Boss界面2",
+    "icon": "v1a6_activityboss_help_2",
+    "iconText": "v1a6_activityboss_help_2",
+    "unlockGuideId": 16103,
+    "isCn": 0
+  },
+  {
+    "id": 1610105,
+    "title": "",
+    "type": 2,
+    "text": "1.6主活动Boss界面3,Lv5 boss",
+    "icon": "v1a6_activityboss_help_3",
+    "iconText": "v1a6_activityboss_help_3",
+    "unlockGuideId": 16104,
+    "isCn": 0
+  },
+  {
+    "id": 1620101,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季超级市场指引图1",
+    "icon": "v1a6_season_1",
+    "iconText": "va_1_1_season_1",
+    "unlockGuideId": 16201,
+    "isCn": 1
+  },
+  {
+    "id": 1620102,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 16201,
+    "isCn": 1
+  },
+  {
+    "id": 1620103,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季试用角色",
+    "icon": "va_1_1_season_8",
+    "iconText": "va_1_1_season_8",
+    "unlockGuideId": 16201,
+    "isCn": 1
+  },
+  {
+    "id": 1620201,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 16202,
+    "isCn": 1
+  },
+  {
+    "id": 1620202,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 16202,
+    "isCn": 1
+  },
+  {
+    "id": 1620301,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 16203,
+    "isCn": 0
+  },
+  {
+    "id": 1620401,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 16204,
+    "isCn": 1
+  },
+  {
+    "id": 1620402,
+    "title": "",
+    "type": 2,
+    "text": "1.6赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 16204,
+    "isCn": 1
+  },
+  {
+    "id": 1660201,
+    "title": "",
+    "type": 1,
+    "text": "棱镜引导",
+    "icon": "v1a6_explore_help_2",
+    "iconText": "v1a6_explore_help_2",
+    "unlockGuideId": 16602,
+    "isCn": 0
+  },
+  {
+    "id": 1660301,
+    "title": "",
+    "type": 1,
+    "text": "拖动棱镜引导",
+    "icon": "v1a6_explore_help_3",
+    "iconText": "v1a6_explore_help_3",
+    "unlockGuideId": 16603,
+    "isCn": 0
+  },
+  {
+    "id": 1660501,
+    "title": "",
+    "type": 1,
+    "text": "修复棱镜引导",
+    "icon": "v1a6_explore_help_4",
+    "iconText": "v1a6_explore_help_4",
+    "unlockGuideId": 16605,
+    "isCn": 0
+  },
+  {
+    "id": 1660601,
+    "title": "",
+    "type": 1,
+    "text": "穿孔接收器引导",
+    "icon": "v1a6_explore_help_5",
+    "iconText": "v1a6_explore_help_5",
+    "unlockGuideId": 16606,
+    "isCn": 0
+  },
+  {
+    "id": 1660701,
+    "title": "",
+    "type": 1,
+    "text": "放置光球引导",
+    "icon": "v1a6_explore_help_6",
+    "iconText": "v1a6_explore_help_6",
+    "unlockGuideId": 16607,
+    "isCn": 0
+  },
+  {
+    "id": 1660801,
+    "title": "",
+    "type": 1,
+    "text": "分光棱镜引导",
+    "icon": "v1a6_explore_help_7",
+    "iconText": "v1a6_explore_help_7",
+    "unlockGuideId": 16608,
+    "isCn": 0
+  },
+  {
+    "id": 1660901,
+    "title": "",
+    "type": 1,
+    "text": "密室战斗引导",
+    "icon": "v1a6_explore_help_1",
+    "iconText": "v1a6_explore_help_1",
+    "unlockGuideId": 16609,
+    "isCn": 0
+  },
+  {
+    "id": 1670101,
+    "title": "",
+    "type": 2,
+    "text": "梦境之主指引图",
+    "icon": "v1a6_bossrush_help_4",
+    "iconText": "v1a6_bossrush_help_4",
+    "unlockGuideId": 16701,
+    "isCn": 0
+  },
+  {
+    "id": 1680101,
+    "title": "",
+    "type": 2,
+    "text": "地牢-意志等级1",
+    "icon": "v1a6_cachot_help_1",
+    "iconText": "v1a6_cachot_help_1",
+    "unlockGuideId": 16503,
+    "isCn": 0
+  },
+  {
+    "id": 1680102,
+    "title": "",
+    "type": 2,
+    "text": "地牢-意志等级2",
+    "icon": "v1a6_cachot_help_2",
+    "iconText": "v1a6_cachot_help_2",
+    "unlockGuideId": 16503,
+    "isCn": 0
+  },
+  {
+    "id": 1680103,
+    "title": "",
+    "type": 2,
+    "text": "地牢-血量继承",
+    "icon": "v1a6_cachot_help_3",
+    "iconText": "v1a6_cachot_help_3",
+    "unlockGuideId": 16504,
+    "isCn": 0
+  },
+  {
+    "id": 1680104,
+    "title": "",
+    "type": 2,
+    "text": "地牢-房间界面说明",
+    "icon": "v1a6_cachot_help_4",
+    "iconText": "v1a6_cachot_help_4",
+    "unlockGuideId": 16507,
+    "isCn": 0
+  },
+  {
+    "id": 1680105,
+    "title": "",
+    "type": 2,
+    "text": "地牢-战斗事件说明",
+    "icon": "v1a6_cachot_help_5",
+    "iconText": "v1a6_cachot_help_5",
+    "unlockGuideId": 16507,
+    "isCn": 0
+  },
+  {
+    "id": 1680106,
+    "title": "",
+    "type": 2,
+    "text": "地牢-选项事件说明",
+    "icon": "v1a6_cachot_help_6",
+    "iconText": "v1a6_cachot_help_6",
+    "unlockGuideId": 16507,
+    "isCn": 0
+  },
+  {
+    "id": 1680107,
+    "title": "",
+    "type": 2,
+    "text": "地牢-商店事件说明",
+    "icon": "v1a6_cachot_help_7",
+    "iconText": "v1a6_cachot_help_7",
+    "unlockGuideId": 16507,
+    "isCn": 0
+  },
+  {
+    "id": 1680108,
+    "title": "",
+    "type": 2,
+    "text": "地牢-其他事件说明",
+    "icon": "v1a6_cachot_help_8",
+    "iconText": "v1a6_cachot_help_8",
+    "unlockGuideId": 16507,
+    "isCn": 0
+  },
+  {
+    "id": 1680109,
+    "title": "",
+    "type": 2,
+    "text": "地牢-入迷说明",
+    "icon": "v1a6_cachot_help_9",
+    "iconText": "v1a6_cachot_help_9",
+    "unlockGuideId": 16508,
+    "isCn": 0
+  },
+  {
+    "id": 1680110,
+    "title": "",
+    "type": 2,
+    "text": "地牢-藏品说明",
+    "icon": "v1a6_cachot_help_10",
+    "iconText": "v1a6_cachot_help_10",
+    "unlockGuideId": 16509,
+    "isCn": 0
+  },
+  {
+    "id": 1710001,
+    "title": "",
+    "type": 2,
+    "text": "1.7雷羊boss",
+    "icon": "v1a7_bossrush_help_1",
+    "iconText": "v1a7_bossrush_help_1",
+    "unlockGuideId": 17101,
+    "isCn": 0
+  },
+  {
+    "id": 1700201,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v1a7_season_help_1",
+    "iconText": "v1a7_season_help_1",
+    "unlockGuideId": 17002,
+    "isCn": 0
+  },
+  {
+    "id": 1700301,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 17003,
+    "isCn": 0
+  },
+  {
+    "id": 1700501,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 17005,
+    "isCn": 0
+  },
+  {
+    "id": 1700601,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 17006,
+    "isCn": 0
+  },
+  {
+    "id": 1700701,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图2",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 17007,
+    "isCn": 0
+  },
+  {
+    "id": 1700801,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 17008,
+    "isCn": 0
+  },
+  {
+    "id": 1700901,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 17009,
+    "isCn": 0
+  },
+  {
+    "id": 1810001,
+    "title": "",
+    "type": 2,
+    "text": "1.8身后灵boss",
+    "icon": "v1a8_bossrush_help_1",
+    "iconText": "v1a8_bossrush_help_1",
+    "unlockGuideId": 18101,
+    "isCn": 0
+  },
+  {
+    "id": 1820001,
+    "title": "",
+    "type": 2,
+    "text": "轶事追溯玩法说明",
+    "icon": "v1a8_rolestory_help_1",
+    "iconText": "v1a8_rolestory_help_1",
+    "unlockGuideId": 18102,
+    "isCn": 0
+  },
+  {
+    "id": 1820002,
+    "title": "",
+    "type": 2,
+    "text": "轶事追溯玩法说明",
+    "icon": "v1a8_rolestory_help_2",
+    "iconText": "v1a8_rolestory_help_2",
+    "unlockGuideId": 18102,
+    "isCn": 0
+  },
+  {
+    "id": 1820003,
+    "title": "",
+    "type": 2,
+    "text": "轶事追溯玩法说明",
+    "icon": "v1a8_rolestory_help_3",
+    "iconText": "v1a8_rolestory_help_3",
+    "unlockGuideId": 18102,
+    "isCn": 0
+  },
+  {
+    "id": 1820004,
+    "title": "",
+    "type": 2,
+    "text": "轶事追溯玩法说明",
+    "icon": "v1a8_rolestory_help_4",
+    "iconText": "v1a8_rolestory_help_4",
+    "unlockGuideId": 18102,
+    "isCn": 0
+  },
+  {
+    "id": 1800000,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v1a8_season_help_1",
+    "iconText": "v1a8_season_help_1",
+    "unlockGuideId": 18001,
+    "isCn": 0
+  },
+  {
+    "id": 1800001,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 18007,
+    "isCn": 0
+  },
+  {
+    "id": 1800002,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 18004,
+    "isCn": 0
+  },
+  {
+    "id": 1800003,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 18002,
+    "isCn": 0
+  },
+  {
+    "id": 1800004,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 18003,
+    "isCn": 0
+  },
+  {
+    "id": 1800005,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 18005,
+    "isCn": 0
+  },
+  {
+    "id": 1800006,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 18006,
+    "isCn": 0
+  },
+  {
+    "id": 1900000,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v1a9_season_help_1",
+    "iconText": "v1a9_season_help_1",
+    "unlockGuideId": 19001,
+    "isCn": 0
+  },
+  {
+    "id": 1900001,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 19007,
+    "isCn": 0
+  },
+  {
+    "id": 1900002,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 19004,
+    "isCn": 0
+  },
+  {
+    "id": 1900003,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 19002,
+    "isCn": 0
+  },
+  {
+    "id": 1900004,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 19003,
+    "isCn": 0
+  },
+  {
+    "id": 1900005,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 19005,
+    "isCn": 0
+  },
+  {
+    "id": 1900006,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 19006,
+    "isCn": 0
+  },
+  {
+    "id": 1900007,
+    "title": "",
+    "type": 1,
+    "text": "水体换色指引图1",
+    "icon": "roomwaterreform_help_1",
+    "iconText": "roomwaterreform_help_1",
+    "unlockGuideId": 19201,
+    "isCn": 0
+  },
+  {
+    "id": 1900008,
+    "title": "",
+    "type": 1,
+    "text": "水体换色指引图2",
+    "icon": "roomwaterreform_help_2",
+    "iconText": "roomwaterreform_help_2",
+    "unlockGuideId": 19201,
+    "isCn": 0
+  },
+  {
+    "id": 1931801,
+    "title": "",
+    "type": 1,
+    "text": "简单模式指引图",
+    "icon": "v1a9_help_1",
+    "iconText": "v1a9_help_1",
+    "unlockGuideId": 19318,
+    "isCn": 0
+  },
+  {
+    "id": 1950101,
+    "title": "",
+    "type": 1,
+    "text": "密室探索转水管引导",
+    "icon": "v1a9_explore_help_1",
+    "iconText": "v1a9_explore_help_1",
+    "unlockGuideId": 19502,
+    "isCn": 0
+  },
+  {
+    "id": 1950102,
+    "title": "",
+    "type": 1,
+    "text": "密室探索光幕门引导",
+    "icon": "v1a9_explore_help_2",
+    "iconText": "v1a9_explore_help_2",
+    "unlockGuideId": 19502,
+    "isCn": 0
+  },
+  {
+    "id": 1950103,
+    "title": "",
+    "type": 1,
+    "text": "密室探索搬药剂罐引导",
+    "icon": "v1a9_explore_help_3",
+    "iconText": "v1a9_explore_help_3",
+    "unlockGuideId": 19503,
+    "isCn": 0
+  },
+  {
+    "id": 1950104,
+    "title": "",
+    "type": 1,
+    "text": "密室探索合成管道引导",
+    "icon": "v1a9_explore_help_4",
+    "iconText": "v1a9_explore_help_4",
+    "unlockGuideId": 19504,
+    "isCn": 0
+  },
+  {
+    "id": 1950105,
+    "title": "",
+    "type": 1,
+    "text": "密室探索存储器引导",
+    "icon": "v1a9_explore_help_5",
+    "iconText": "v1a9_explore_help_5",
+    "unlockGuideId": 19505,
+    "isCn": 0
+  },
+  {
+    "id": 1940101,
+    "title": "",
+    "type": 1,
+    "text": "BGM切换指引",
+    "icon": "v1a9_bgm_help_1",
+    "iconText": "v1a9_bgm_help_1",
+    "unlockGuideId": 19401,
+    "isCn": 0
+  },
+  {
+    "id": 1960001,
+    "title": "",
+    "type": 1,
+    "text": "攻坚战指引图",
+    "icon": "toughbattle_help_1",
+    "iconText": "toughbattle_help_1",
+    "unlockGuideId": 19601,
+    "isCn": 0
+  },
+  {
+    "id": 1970201,
+    "title": "",
+    "type": 1,
+    "text": "主界面引导1",
+    "icon": "empty",
+    "iconText": "rouge_help_24",
+    "unlockGuideId": 19702,
+    "isCn": 1
+  },
+  {
+    "id": 1970202,
+    "title": "",
+    "type": 1,
+    "text": "主界面引导2",
+    "icon": "rouge_help_23",
+    "iconText": "rouge_help_23",
+    "unlockGuideId": 19702,
+    "isCn": 1
+  },
+  {
+    "id": 1970301,
+    "title": "",
+    "type": 1,
+    "text": "难度引导1",
+    "icon": "rouge_help_11",
+    "iconText": "rouge_help_11",
+    "unlockGuideId": 19703,
+    "isCn": 0
+  },
+  {
+    "id": 1970302,
+    "title": "",
+    "type": 1,
+    "text": "难度引导2",
+    "icon": "rouge_help_12",
+    "iconText": "rouge_help_12",
+    "unlockGuideId": 19703,
+    "isCn": 0
+  },
+  {
+    "id": 1970401,
+    "title": "",
+    "type": 1,
+    "text": "触媒引导1",
+    "icon": "rouge_help_6",
+    "iconText": "rouge_help_6",
+    "unlockGuideId": 19704,
+    "isCn": 0
+  },
+  {
+    "id": 1970402,
+    "title": "",
+    "type": 1,
+    "text": "触媒引导2",
+    "icon": "rouge_help_7",
+    "iconText": "rouge_help_7",
+    "unlockGuideId": 19704,
+    "isCn": 0
+  },
+  {
+    "id": 1970501,
+    "title": "",
+    "type": 1,
+    "text": "同行者召集引导1",
+    "icon": "rouge_help_14",
+    "iconText": "rouge_help_14",
+    "unlockGuideId": 19705,
+    "isCn": 0
+  },
+  {
+    "id": 1970502,
+    "title": "",
+    "type": 1,
+    "text": "同行者召集引导2",
+    "icon": "rouge_help_15",
+    "iconText": "rouge_help_15",
+    "unlockGuideId": 19705,
+    "isCn": 0
+  },
+  {
+    "id": 1970701,
+    "title": "",
+    "type": 1,
+    "text": "行进路线引导1",
+    "icon": "rouge_help_16",
+    "iconText": "rouge_help_16",
+    "unlockGuideId": 19707,
+    "isCn": 0
+  },
+  {
+    "id": 1970702,
+    "title": "",
+    "type": 1,
+    "text": "行进路线引导2",
+    "icon": "rouge_help_25",
+    "iconText": "rouge_help_25",
+    "unlockGuideId": 19707,
+    "isCn": 0
+  },
+  {
+    "id": 1970801,
+    "title": "",
+    "type": 1,
+    "text": "升级引导1",
+    "icon": "rouge_help_13",
+    "iconText": "rouge_help_13",
+    "unlockGuideId": 19708,
+    "isCn": 0
+  },
+  {
+    "id": 1971001,
+    "title": "",
+    "type": 1,
+    "text": "触媒激发引导1",
+    "icon": "rouge_help_5",
+    "iconText": "rouge_help_5",
+    "unlockGuideId": 19710,
+    "isCn": 0
+  },
+  {
+    "id": 1971101,
+    "title": "",
+    "type": 1,
+    "text": "黄昏的音序编队引导1",
+    "icon": "rouge_help_1",
+    "iconText": "rouge_help_1",
+    "unlockGuideId": 19711,
+    "isCn": 0
+  },
+  {
+    "id": 1971102,
+    "title": "",
+    "type": 1,
+    "text": "黄昏的音序编队引导2",
+    "icon": "rouge_help_2",
+    "iconText": "rouge_help_2",
+    "unlockGuideId": 19711,
+    "isCn": 0
+  },
+  {
+    "id": 1971103,
+    "title": "",
+    "type": 1,
+    "text": "黄昏的音序编队引导3",
+    "icon": "rouge_help_3",
+    "iconText": "rouge_help_3",
+    "unlockGuideId": 19711,
+    "isCn": 0
+  },
+  {
+    "id": 1971104,
+    "title": "",
+    "type": 1,
+    "text": "黄昏的音序编队引导4",
+    "icon": "rouge_help_4",
+    "iconText": "rouge_help_4",
+    "unlockGuideId": 19711,
+    "isCn": 0
+  },
+  {
+    "id": 1971201,
+    "title": "",
+    "type": 1,
+    "text": "触媒咒语",
+    "icon": "rouge_help_8",
+    "iconText": "rouge_help_8",
+    "unlockGuideId": 19712,
+    "isCn": 0
+  },
+  {
+    "id": 1971401,
+    "title": "",
+    "type": 1,
+    "text": "造物引导1",
+    "icon": "rouge_help_18",
+    "iconText": "rouge_help_18",
+    "unlockGuideId": 19714,
+    "isCn": 0
+  },
+  {
+    "id": 1971402,
+    "title": "",
+    "type": 1,
+    "text": "造物引导2",
+    "icon": "rouge_help_19",
+    "iconText": "rouge_help_19",
+    "unlockGuideId": 19714,
+    "isCn": 0
+  },
+  {
+    "id": 1971403,
+    "title": "",
+    "type": 1,
+    "text": "造物引导3",
+    "icon": "rouge_help_20",
+    "iconText": "rouge_help_20",
+    "unlockGuideId": 19714,
+    "isCn": 0
+  },
+  {
+    "id": 1971404,
+    "title": "",
+    "type": 1,
+    "text": "造物引导4",
+    "icon": "rouge_help_21",
+    "iconText": "rouge_help_21",
+    "unlockGuideId": 19714,
+    "isCn": 0
+  },
+  {
+    "id": 1971405,
+    "title": "",
+    "type": 1,
+    "text": "造物引导5",
+    "icon": "rouge_help_22",
+    "iconText": "rouge_help_22",
+    "unlockGuideId": 19714,
+    "isCn": 0
+  },
+  {
+    "id": 1971601,
+    "title": "",
+    "type": 1,
+    "text": "休整地域引导",
+    "icon": "rouge_help_17",
+    "iconText": "rouge_help_17",
+    "unlockGuideId": 19716,
+    "isCn": 0
+  },
+  {
+    "id": 2000000,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v2a0_season_help_1",
+    "iconText": "v2a0_season_help_1",
+    "unlockGuideId": 20001,
+    "isCn": 0
+  },
+  {
+    "id": 2000001,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 20007,
+    "isCn": 0
+  },
+  {
+    "id": 2000002,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 20004,
+    "isCn": 0
+  },
+  {
+    "id": 2000003,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 20002,
+    "isCn": 0
+  },
+  {
+    "id": 2000004,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 20003,
+    "isCn": 0
+  },
+  {
+    "id": 2000005,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 20005,
+    "isCn": 0
+  },
+  {
+    "id": 2000006,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 20006,
+    "isCn": 0
+  },
+  {
+    "id": 2010001,
+    "title": "",
+    "type": 2,
+    "text": "2.0矿脉boss",
+    "icon": "v2a0_bossrush_help_1",
+    "iconText": "v2a0_bossrush_help_1",
+    "unlockGuideId": 20101,
+    "isCn": 0
+  },
+  {
+    "id": 2011000,
+    "title": "",
+    "type": 1,
+    "text": "共鸣风格指引",
+    "icon": "gongming_help_3",
+    "iconText": "gongming_help_3",
+    "unlockGuideId": 20100,
+    "isCn": 0
+  },
+  {
+    "id": 2011001,
+    "title": "",
+    "type": 1,
+    "text": "共鸣风格指引",
+    "icon": "gongming_help_2",
+    "iconText": "gongming_help_2",
+    "unlockGuideId": 20100,
+    "isCn": 0
+  },
+  {
+    "id": 2100000,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v2a1_season_help_1",
+    "iconText": "v2a1_season_help_1",
+    "unlockGuideId": 21001,
+    "isCn": 0
+  },
+  {
+    "id": 2100001,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 21007,
+    "isCn": 0
+  },
+  {
+    "id": 2100002,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 21004,
+    "isCn": 0
+  },
+  {
+    "id": 2100003,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 21002,
+    "isCn": 0
+  },
+  {
+    "id": 2100004,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 21003,
+    "isCn": 0
+  },
+  {
+    "id": 2100005,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 21005,
+    "isCn": 0
+  },
+  {
+    "id": 2100006,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 21006,
+    "isCn": 0
+  },
+  {
+    "id": 2110001,
+    "title": "",
+    "type": 2,
+    "text": "2.1boss",
+    "icon": "v2a1_mainboss_help_1",
+    "iconText": "v2a1_mainboss_help_1",
+    "unlockGuideId": 21101,
+    "isCn": 0
+  },
+  {
+    "id": 2200001,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 据点关卡指引图",
+    "icon": "v2a2_season_help_1",
+    "iconText": "v2a2_season_help_1",
+    "unlockGuideId": 22008,
+    "isCn": 0
+  },
+  {
+    "id": 2200002,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 据点关卡指引图",
+    "icon": "v2a2_season_help_2",
+    "iconText": "v2a2_season_help_2",
+    "unlockGuideId": 22008,
+    "isCn": 0
+  },
+  {
+    "id": 2200101,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 试炼关卡指引图",
+    "icon": "v2a2_season_help_3",
+    "iconText": "v2a2_season_help_3",
+    "unlockGuideId": 22009,
+    "isCn": 0
+  },
+  {
+    "id": 2200102,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 试炼关卡指引图",
+    "icon": "v2a2_season_help_4",
+    "iconText": "v2a2_season_help_4",
+    "unlockGuideId": 22009,
+    "isCn": 0
+  },
+  {
+    "id": 2200201,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 天赋树指引图",
+    "icon": "v2a2_season_help_5",
+    "iconText": "v2a2_season_help_5",
+    "unlockGuideId": 22015,
+    "isCn": 0
+  },
+  {
+    "id": 2200202,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 天赋树指引图",
+    "icon": "v2a2_season_help_6",
+    "iconText": "v2a2_season_help_6",
+    "unlockGuideId": 22015,
+    "isCn": 0
+  },
+  {
+    "id": 2200301,
+    "title": "",
+    "type": 1,
+    "text": "2.2新赛季 情报指引图",
+    "icon": "v2a2_season_help_7",
+    "iconText": "v2a2_season_help_7",
+    "unlockGuideId": 22007,
+    "isCn": 0
+  },
+  {
+    "id": 2200401,
+    "title": "",
+    "type": 1,
+    "text": "模拟经营引导 摆放生产",
+    "icon": "roomcritter_help_1",
+    "iconText": "roomcritter_help_1",
+    "unlockGuideId": 414,
+    "isCn": 0
+  },
+  {
+    "id": 2200501,
+    "title": "",
+    "type": 1,
+    "text": "模拟经营引导 培训魔精",
+    "icon": "roomcritter_help_2",
+    "iconText": "roomcritter_help_2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2200502,
+    "title": "",
+    "type": 1,
+    "text": "模拟经营引导 培训魔精",
+    "icon": "roomcritter_help_3",
+    "iconText": "roomcritter_help_3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2200601,
+    "title": "",
+    "type": 1,
+    "text": "模拟经营引导 运输路线",
+    "icon": "roomcritter_help_4",
+    "iconText": "roomcritter_help_4",
+    "unlockGuideId": 425,
+    "isCn": 0
+  },
+  {
+    "id": 19001,
+    "title": "language_10000135",
+    "type": 1,
+    "text": "1.発行事業者の名称\nBLUEPOCH GAMES CO., LIMITED\n\n2.アプリ内通貨の名称\n純雨の雫\n\n3.支払可能金額等\n16歳未満:1ヶ月5000円まで　\n16歳～18歳:1ヶ月20000円まで　\n18歳以上:無制限\n\n4.有効期限\n有効期限はありません。\n\n5.お問合せ先\nお問合せは次のメールアドレスまでお願い致します。\nre1999_jp_cs@bluepoch.com\n\n6.販売価格\n購入ページに表示致します（表示価格は消費税を含みます）。\n\n7.使用場所\nアプリ「リバース: 1999」内でご利用いただけます。\n\n8.キャンセル\n購入後のお客様のご都合によるキャンセルは、お受けできません。\n\n9.未使用残高の確認方法\nアプリ内でご確認いただけます。\n\n10.利用者保護のための制度\n前払式支払手段の発行者は、利用者保護のための制度として、資金決済に関する法律の規定に基づき、前払式支払手段の未使用残高（毎年3月31日および9月30日時点）の半額以上の額を、発行保証金として法務局に供託する等の方法により資産保全することが義務づけられています。当社は、当該発行保証金を東京法務局に供託する方法により、当該義務を履行しています。ユーザーは、他の債権者に先立って、発行保証金から弁済を受けることができます。\n\n11.利用規約\n利用規約をご覧ください。",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 19002,
+    "title": "language_10000136",
+    "type": 1,
+    "text": "1.運営事業者の名称\nBLUEPOCH GAMES CO., LIMITED\n\n2.お問合せ先\nお問合せは次のメールアドレスまでお願い致します。\nre1999_jp_cs@bluepoch.com\n\n3.販売価格\n購入ページに表示致します（表示価格は消費税を含みます）。\nインターネットへの接続環境、通信料金等はお客様のご負担となります。\nインターネット上の商品のため、送料は発生しません。\n\n4.代金のお支払時期\n対象となるデジタルコンテンツのご提供前となります。\n\n5.お支払い方法\n詳細は、購入ページをご確認ください。\n\n6.ご提供時期\n購入ページに特に定めた場合を除き、購入取引完了後、直ちにご利用いただけます。\n\n7.特別条件\nご購入者様が未成年者の場合は、保護者の方の同意を得てからご購入ください。\n\n8.免責事項\n当社は、サーバトラブル、ネットワークトラブルその他不可抗力により生じたサービス・商品の提供不能、中断等について一切の責任を負わないものとします。\n\n9.キャンセル\n購入後のお客様のご都合によるキャンセルは、お受けできません。",
+    "icon": "",
+    "iconText": "",
+    "unlockGuideId": 0,
+    "isCn": 0
+  }
+]

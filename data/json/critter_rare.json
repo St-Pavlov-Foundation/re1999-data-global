@@ -1,0 +1,20 @@
+[
+  {
+    "rare": 3,
+    "cardRes": "room_cubate_card1",
+    "eggRes": "roomcritter_egg1",
+    "incubateCost": "2#300001#1"
+  },
+  {
+    "rare": 4,
+    "cardRes": "room_cubate_card2",
+    "eggRes": "roomcritter_egg2",
+    "incubateCost": "2#300001#2"
+  },
+  {
+    "rare": 5,
+    "cardRes": "room_cubate_card3",
+    "eggRes": "roomcritter_egg3",
+    "incubateCost": "2#300001#10"
+  }
+]

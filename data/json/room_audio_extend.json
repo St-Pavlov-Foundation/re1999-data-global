@@ -1,0 +1,210 @@
+[
+  {
+    "id": 1,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_01",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 1
+  },
+  {
+    "id": 2,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_02",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 2
+  },
+  {
+    "id": 3,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_03",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 3
+  },
+  {
+    "id": 4,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_04",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 4
+  },
+  {
+    "id": 5,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_05",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 5
+  },
+  {
+    "id": 6,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_06",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 6
+  },
+  {
+    "id": 7,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_07",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 7
+  },
+  {
+    "id": 8,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_08",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 8
+  },
+  {
+    "id": 9,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_09",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 9
+  },
+  {
+    "id": 10,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_10",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 10
+  },
+  {
+    "id": 11,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_11",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 11
+  },
+  {
+    "id": 12,
+    "audioId": 20009047,
+    "switchGroup": "home_12_hour",
+    "switchState": "hour_12",
+    "rtpc": "home_12_hour",
+    "rtpcValue": 12
+  },
+  {
+    "id": 13,
+    "audioId": 20009049,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "home_traffic_direction",
+    "rtpcValue": 3
+  },
+  {
+    "id": 14,
+    "audioId": 20009049,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "home_traffic_direction",
+    "rtpcValue": 2
+  },
+  {
+    "id": 15,
+    "audioId": 20009049,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "home_traffic_direction",
+    "rtpcValue": 1
+  },
+  {
+    "id": 1401,
+    "audioId": 20009058,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 1501,
+    "audioId": 20009059,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 1502,
+    "audioId": 20009060,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2201,
+    "audioId": 20220188,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2202,
+    "audioId": 20220189,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2203,
+    "audioId": 20220190,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2204,
+    "audioId": 20220191,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2205,
+    "audioId": 20220192,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2206,
+    "audioId": 20220193,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2207,
+    "audioId": 20220194,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  },
+  {
+    "id": 2208,
+    "audioId": 20220195,
+    "switchGroup": "",
+    "switchState": "",
+    "rtpc": "",
+    "rtpcValue": 0
+  }
+]

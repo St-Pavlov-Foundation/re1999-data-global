@@ -1,0 +1,542 @@
+[
+  {
+    "id": 9130102,
+    "activityId": 11310,
+    "desc": "language_10027223",
+    "cardSkill": "1#2130111",
+    "indicator": 2130111,
+    "num": 1,
+    "dreamCards": "2130101",
+    "battleIds": "9130102"
+  },
+  {
+    "id": 9130103,
+    "activityId": 11310,
+    "desc": "language_10006902",
+    "cardSkill": "1#2130116",
+    "indicator": 2130116,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130103"
+  },
+  {
+    "id": 9130104,
+    "activityId": 11310,
+    "desc": "language_10006898",
+    "cardSkill": "1#2130112",
+    "indicator": 2130112,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130104#9130404#9130504"
+  },
+  {
+    "id": 9130105,
+    "activityId": 11310,
+    "desc": "language_10006899",
+    "cardSkill": "1#2130113",
+    "indicator": 2130113,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130105"
+  },
+  {
+    "id": 9130106,
+    "activityId": 11310,
+    "desc": "language_10006900",
+    "cardSkill": "1#2130114",
+    "indicator": 2130114,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130106"
+  },
+  {
+    "id": 9130107,
+    "activityId": 11310,
+    "desc": "language_10013661",
+    "cardSkill": "1#2130115",
+    "indicator": 2130115,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130107"
+  },
+  {
+    "id": 9130108,
+    "activityId": 11310,
+    "desc": "language_10006905",
+    "cardSkill": "1#2130119",
+    "indicator": 2130119,
+    "num": 5,
+    "dreamCards": "",
+    "battleIds": "9130108#9130408#9130508"
+  },
+  {
+    "id": 9130109,
+    "activityId": 11310,
+    "desc": "language_10027224",
+    "cardSkill": "1#2130117",
+    "indicator": 2130117,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130109"
+  },
+  {
+    "id": 9130110,
+    "activityId": 11310,
+    "desc": "language_10006912",
+    "cardSkill": "1#2130118",
+    "indicator": 2130118,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130110#9130410#9130510#9130112"
+  },
+  {
+    "id": 9130601,
+    "activityId": 11310,
+    "desc": "language_10006906",
+    "cardSkill": "1#2130121",
+    "indicator": 2130121,
+    "num": 2,
+    "dreamCards": "",
+    "battleIds": "9130601"
+  },
+  {
+    "id": 9130602,
+    "activityId": 11310,
+    "desc": "language_10006897",
+    "cardSkill": "1#2130122",
+    "indicator": 2130122,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130602"
+  },
+  {
+    "id": 9130603,
+    "activityId": 11310,
+    "desc": "language_10006907",
+    "cardSkill": "1#2130123",
+    "indicator": 2130123,
+    "num": 4,
+    "dreamCards": "",
+    "battleIds": "9130603"
+  },
+  {
+    "id": 9130604,
+    "activityId": 11310,
+    "desc": "language_10006900",
+    "cardSkill": "1#2130124",
+    "indicator": 2130124,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130604"
+  },
+  {
+    "id": 9130605,
+    "activityId": 11310,
+    "desc": "language_10027225",
+    "cardSkill": "1#2130125",
+    "indicator": 2130125,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130605"
+  },
+  {
+    "id": 9130606,
+    "activityId": 11310,
+    "desc": "language_10006909",
+    "cardSkill": "1#2130126",
+    "indicator": 2130126,
+    "num": 4,
+    "dreamCards": "",
+    "battleIds": "9130606"
+  },
+  {
+    "id": 9130607,
+    "activityId": 11310,
+    "desc": "language_10006910",
+    "cardSkill": "1#2130127",
+    "indicator": 2130127,
+    "num": 3,
+    "dreamCards": "",
+    "battleIds": "9130607"
+  },
+  {
+    "id": 9130608,
+    "activityId": 11310,
+    "desc": "language_10006911",
+    "cardSkill": "1#2130128",
+    "indicator": 2130128,
+    "num": 6,
+    "dreamCards": "",
+    "battleIds": "9130608"
+  },
+  {
+    "id": 9130609,
+    "activityId": 11310,
+    "desc": "language_10027224",
+    "cardSkill": "1#2130129",
+    "indicator": 2130129,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130609"
+  },
+  {
+    "id": 9130610,
+    "activityId": 11310,
+    "desc": "language_10006912",
+    "cardSkill": "1#2130130",
+    "indicator": 2130130,
+    "num": 1,
+    "dreamCards": "",
+    "battleIds": "9130610"
+  },
+  {
+    "id": 9130301,
+    "activityId": 11310,
+    "desc": "language_10006900",
+    "cardSkill": "1#2130131",
+    "indicator": 2130131,
+    "num": 3,
+    "dreamCards": "2130104",
+    "battleIds": "9130301"
+  },
+  {
+    "id": 9130302,
+    "activityId": 11310,
+    "desc": "language_10006913",
+    "cardSkill": "1#2130132",
+    "indicator": 2130132,
+    "num": 6,
+    "dreamCards": "2130104",
+    "battleIds": "9130302"
+  },
+  {
+    "id": 9130303,
+    "activityId": 11310,
+    "desc": "language_10006914",
+    "cardSkill": "1#2130133",
+    "indicator": 2130133,
+    "num": 5,
+    "dreamCards": "2130104",
+    "battleIds": "9130303"
+  },
+  {
+    "id": 9130304,
+    "activityId": 11310,
+    "desc": "language_10006915",
+    "cardSkill": "1#2130134",
+    "indicator": 2130134,
+    "num": 6,
+    "dreamCards": "2130104",
+    "battleIds": "9130304"
+  },
+  {
+    "id": 9130305,
+    "activityId": 11310,
+    "desc": "language_10027226",
+    "cardSkill": "1#2130135",
+    "indicator": 2130135,
+    "num": 3,
+    "dreamCards": "2130104",
+    "battleIds": "9130305"
+  },
+  {
+    "id": 613101,
+    "activityId": 11300,
+    "desc": "language_10027227",
+    "cardSkill": "1#4130301",
+    "indicator": 4130301,
+    "num": 1,
+    "dreamCards": "2130104",
+    "battleIds": "613101"
+  },
+  {
+    "id": 613102,
+    "activityId": 11300,
+    "desc": "language_10006940",
+    "cardSkill": "1#4130302",
+    "indicator": 4130302,
+    "num": 1,
+    "dreamCards": "2130104",
+    "battleIds": "613102"
+  },
+  {
+    "id": 613103,
+    "activityId": 11300,
+    "desc": "language_10006940",
+    "cardSkill": "1#4130302",
+    "indicator": 4130302,
+    "num": 1,
+    "dreamCards": "2130104",
+    "battleIds": "613103"
+  },
+  {
+    "id": 613104,
+    "activityId": 11300,
+    "desc": "language_10006943",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 1,
+    "dreamCards": "4130102",
+    "battleIds": "613104"
+  },
+  {
+    "id": 613105,
+    "activityId": 11300,
+    "desc": "language_10006943",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 1,
+    "dreamCards": "4130102",
+    "battleIds": "613105"
+  },
+  {
+    "id": 613106,
+    "activityId": 11300,
+    "desc": "language_10006900",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 3,
+    "dreamCards": "4130102",
+    "battleIds": "613106"
+  },
+  {
+    "id": 613107,
+    "activityId": 11300,
+    "desc": "language_10027228",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 2,
+    "dreamCards": "4130103",
+    "battleIds": "613107"
+  },
+  {
+    "id": 613108,
+    "activityId": 11300,
+    "desc": "language_10006949",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 3,
+    "dreamCards": "4130103",
+    "battleIds": "613108"
+  },
+  {
+    "id": 613109,
+    "activityId": 11300,
+    "desc": "language_10006900",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 3,
+    "dreamCards": "4130103",
+    "battleIds": "613109"
+  },
+  {
+    "id": 613110,
+    "activityId": 11300,
+    "desc": "language_10006902",
+    "cardSkill": "1#4130309",
+    "indicator": 4130309,
+    "num": 3,
+    "dreamCards": "4130104",
+    "battleIds": "613110"
+  },
+  {
+    "id": 613111,
+    "activityId": 11300,
+    "desc": "language_10006902",
+    "cardSkill": "1#4130309",
+    "indicator": 4130309,
+    "num": 3,
+    "dreamCards": "4130104",
+    "battleIds": "613111"
+  },
+  {
+    "id": 613112,
+    "activityId": 11300,
+    "desc": "language_10006902",
+    "cardSkill": "1#4130309",
+    "indicator": 4130309,
+    "num": 3,
+    "dreamCards": "4130104",
+    "battleIds": "613112"
+  },
+  {
+    "id": 613113,
+    "activityId": 11300,
+    "desc": "language_10006949",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 3,
+    "dreamCards": "4130105",
+    "battleIds": "613113"
+  },
+  {
+    "id": 613114,
+    "activityId": 11300,
+    "desc": "language_10006949",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 3,
+    "dreamCards": "4130105",
+    "battleIds": "613114"
+  },
+  {
+    "id": 613115,
+    "activityId": 11300,
+    "desc": "language_10006903",
+    "cardSkill": "1#4130310",
+    "indicator": 4130310,
+    "num": 1,
+    "dreamCards": "4130105",
+    "battleIds": "613115"
+  },
+  {
+    "id": 613116,
+    "activityId": 11300,
+    "desc": "language_10013912",
+    "cardSkill": "1#4130304",
+    "indicator": 4130304,
+    "num": 1,
+    "dreamCards": "4130106",
+    "battleIds": "613116"
+  },
+  {
+    "id": 613117,
+    "activityId": 11300,
+    "desc": "language_10006910",
+    "cardSkill": "1#4130304",
+    "indicator": 4130304,
+    "num": 3,
+    "dreamCards": "4130106",
+    "battleIds": "613117"
+  },
+  {
+    "id": 613118,
+    "activityId": 11300,
+    "desc": "language_10006910",
+    "cardSkill": "1#4130304",
+    "indicator": 4130304,
+    "num": 3,
+    "dreamCards": "4130106",
+    "battleIds": "613118"
+  },
+  {
+    "id": 613119,
+    "activityId": 11300,
+    "desc": "language_10006910",
+    "cardSkill": "1#4130304",
+    "indicator": 4130304,
+    "num": 3,
+    "dreamCards": "4130106",
+    "battleIds": "613119"
+  },
+  {
+    "id": 613120,
+    "activityId": 11300,
+    "desc": "language_10013913",
+    "cardSkill": "1#4130311",
+    "indicator": 4130311,
+    "num": 1,
+    "dreamCards": "4130106",
+    "battleIds": "613120"
+  },
+  {
+    "id": 613121,
+    "activityId": 11300,
+    "desc": "language_10027228",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 2,
+    "dreamCards": "4130102",
+    "battleIds": "613121"
+  },
+  {
+    "id": 613122,
+    "activityId": 11300,
+    "desc": "language_10006940",
+    "cardSkill": "1#4130302",
+    "indicator": 4130302,
+    "num": 1,
+    "dreamCards": "4130102",
+    "battleIds": "613122"
+  },
+  {
+    "id": 613123,
+    "activityId": 11300,
+    "desc": "language_10006941",
+    "cardSkill": "1#4130302",
+    "indicator": 4130302,
+    "num": 2,
+    "dreamCards": "4130103",
+    "battleIds": "613123"
+  },
+  {
+    "id": 613124,
+    "activityId": 11300,
+    "desc": "language_10006949",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 3,
+    "dreamCards": "4130105",
+    "battleIds": "613124"
+  },
+  {
+    "id": 613125,
+    "activityId": 11300,
+    "desc": "language_10013914",
+    "cardSkill": "1#4130317",
+    "indicator": 4130317,
+    "num": 1,
+    "dreamCards": "4130102",
+    "battleIds": "613125"
+  },
+  {
+    "id": 613126,
+    "activityId": 11300,
+    "desc": "language_10006900",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 3,
+    "dreamCards": "4130105",
+    "battleIds": "613126"
+  },
+  {
+    "id": 613127,
+    "activityId": 11300,
+    "desc": "language_10006943",
+    "cardSkill": "1#4130307",
+    "indicator": 4130307,
+    "num": 1,
+    "dreamCards": "4130105",
+    "battleIds": "613127"
+  },
+  {
+    "id": 613128,
+    "activityId": 11300,
+    "desc": "language_10006942",
+    "cardSkill": "1#4130306",
+    "indicator": 4130306,
+    "num": 3,
+    "dreamCards": "4130102",
+    "battleIds": "613128"
+  },
+  {
+    "id": 613129,
+    "activityId": 11300,
+    "desc": "language_10006949",
+    "cardSkill": "1#4130318",
+    "indicator": 4130318,
+    "num": 3,
+    "dreamCards": "4130102",
+    "battleIds": "613129"
+  },
+  {
+    "id": 613130,
+    "activityId": 11300,
+    "desc": "language_10006950",
+    "cardSkill": "1#4130319",
+    "indicator": 4130319,
+    "num": 3,
+    "dreamCards": "4130104",
+    "battleIds": "613130"
+  }
+]

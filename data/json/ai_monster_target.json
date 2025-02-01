@@ -1,0 +1,326 @@
+[
+  {
+    "id": 0,
+    "targetNumber": 2
+  },
+  {
+    "id": 1,
+    "targetNumber": 1
+  },
+  {
+    "id": 2,
+    "targetNumber": 1
+  },
+  {
+    "id": 3,
+    "targetNumber": 1
+  },
+  {
+    "id": 4,
+    "targetNumber": 1
+  },
+  {
+    "id": 5,
+    "targetNumber": 1
+  },
+  {
+    "id": 101,
+    "targetNumber": 3
+  },
+  {
+    "id": 102,
+    "targetNumber": 2
+  },
+  {
+    "id": 103,
+    "targetNumber": 1
+  },
+  {
+    "id": 104,
+    "targetNumber": 2
+  },
+  {
+    "id": 105,
+    "targetNumber": 2
+  },
+  {
+    "id": 106,
+    "targetNumber": 1
+  },
+  {
+    "id": 107,
+    "targetNumber": 1
+  },
+  {
+    "id": 108,
+    "targetNumber": 1
+  },
+  {
+    "id": 109,
+    "targetNumber": 1
+  },
+  {
+    "id": 110,
+    "targetNumber": 1
+  },
+  {
+    "id": 111,
+    "targetNumber": 1
+  },
+  {
+    "id": 112,
+    "targetNumber": 1
+  },
+  {
+    "id": 113,
+    "targetNumber": 1
+  },
+  {
+    "id": 114,
+    "targetNumber": 1
+  },
+  {
+    "id": 115,
+    "targetNumber": 1
+  },
+  {
+    "id": 116,
+    "targetNumber": 1
+  },
+  {
+    "id": 117,
+    "targetNumber": 2
+  },
+  {
+    "id": 118,
+    "targetNumber": 1
+  },
+  {
+    "id": 119,
+    "targetNumber": 1
+  },
+  {
+    "id": 120,
+    "targetNumber": 2
+  },
+  {
+    "id": 121,
+    "targetNumber": 2
+  },
+  {
+    "id": 122,
+    "targetNumber": 2
+  },
+  {
+    "id": 123,
+    "targetNumber": 2
+  },
+  {
+    "id": 124,
+    "targetNumber": 1
+  },
+  {
+    "id": 125,
+    "targetNumber": 1
+  },
+  {
+    "id": 126,
+    "targetNumber": 1
+  },
+  {
+    "id": 127,
+    "targetNumber": 1
+  },
+  {
+    "id": 201,
+    "targetNumber": 2
+  },
+  {
+    "id": 202,
+    "targetNumber": 3
+  },
+  {
+    "id": 203,
+    "targetNumber": 1
+  },
+  {
+    "id": 204,
+    "targetNumber": 2
+  },
+  {
+    "id": 205,
+    "targetNumber": 1
+  },
+  {
+    "id": 206,
+    "targetNumber": 1
+  },
+  {
+    "id": 207,
+    "targetNumber": 1
+  },
+  {
+    "id": 208,
+    "targetNumber": 1
+  },
+  {
+    "id": 209,
+    "targetNumber": 1
+  },
+  {
+    "id": 210,
+    "targetNumber": 1
+  },
+  {
+    "id": 211,
+    "targetNumber": 1
+  },
+  {
+    "id": 212,
+    "targetNumber": 1
+  },
+  {
+    "id": 213,
+    "targetNumber": 2
+  },
+  {
+    "id": 214,
+    "targetNumber": 2
+  },
+  {
+    "id": 215,
+    "targetNumber": 2
+  },
+  {
+    "id": 216,
+    "targetNumber": 2
+  },
+  {
+    "id": 217,
+    "targetNumber": 1
+  },
+  {
+    "id": 218,
+    "targetNumber": 1
+  },
+  {
+    "id": 219,
+    "targetNumber": 2
+  },
+  {
+    "id": 220,
+    "targetNumber": 2
+  },
+  {
+    "id": 221,
+    "targetNumber": 1
+  },
+  {
+    "id": 222,
+    "targetNumber": 1
+  },
+  {
+    "id": 223,
+    "targetNumber": 1
+  },
+  {
+    "id": 224,
+    "targetNumber": 1
+  },
+  {
+    "id": 225,
+    "targetNumber": 1
+  },
+  {
+    "id": 226,
+    "targetNumber": 1
+  },
+  {
+    "id": 227,
+    "targetNumber": 1
+  },
+  {
+    "id": 228,
+    "targetNumber": 1
+  },
+  {
+    "id": 229,
+    "targetNumber": 1
+  },
+  {
+    "id": 231,
+    "targetNumber": 1
+  },
+  {
+    "id": 232,
+    "targetNumber": 1
+  },
+  {
+    "id": 301,
+    "targetNumber": 3
+  },
+  {
+    "id": 302,
+    "targetNumber": 2
+  },
+  {
+    "id": 303,
+    "targetNumber": 2
+  },
+  {
+    "id": 304,
+    "targetNumber": 1
+  },
+  {
+    "id": 305,
+    "targetNumber": 2
+  },
+  {
+    "id": 306,
+    "targetNumber": 2
+  },
+  {
+    "id": 307,
+    "targetNumber": 2
+  },
+  {
+    "id": 308,
+    "targetNumber": 2
+  },
+  {
+    "id": 309,
+    "targetNumber": 2
+  },
+  {
+    "id": 999,
+    "targetNumber": 2
+  },
+  {
+    "id": 1001,
+    "targetNumber": 2
+  },
+  {
+    "id": 1002,
+    "targetNumber": 2
+  },
+  {
+    "id": 1003,
+    "targetNumber": 2
+  },
+  {
+    "id": 1004,
+    "targetNumber": 2
+  },
+  {
+    "id": 2001,
+    "targetNumber": 2
+  },
+  {
+    "id": 3000,
+    "targetNumber": 2
+  },
+  {
+    "id": 4101,
+    "targetNumber": 2
+  }
+]

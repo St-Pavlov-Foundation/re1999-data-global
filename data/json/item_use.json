@@ -1,0 +1,98 @@
+[
+  {
+    "id": 11,
+    "name": "language_10003312",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 12,
+    "name": "language_10003313",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 13,
+    "name": "language_10003314",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 14,
+    "name": "language_10003315",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 15,
+    "name": "language_10003316",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 16,
+    "name": "language_10003317",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 17,
+    "name": "language_10003318",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 18,
+    "name": "language_10003319",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 48,
+    "name": "language_10003320",
+    "useType": 6,
+    "use_max": 99
+  },
+  {
+    "id": 49,
+    "name": "language_10003321",
+    "useType": 6,
+    "use_max": 99
+  },
+  {
+    "id": 50,
+    "name": "language_10003322",
+    "useType": 6,
+    "use_max": 99
+  },
+  {
+    "id": 52,
+    "name": "language_10039568",
+    "useType": 2,
+    "use_max": 1
+  },
+  {
+    "id": 53,
+    "name": "language_10036781",
+    "useType": 6,
+    "use_max": 99
+  },
+  {
+    "id": 60,
+    "name": "language_10036776",
+    "useType": 1,
+    "use_max": 1
+  },
+  {
+    "id": 61,
+    "name": "language_10054000",
+    "useType": 2,
+    "use_max": 1
+  },
+  {
+    "id": 54,
+    "name": "language_10054001",
+    "useType": 2,
+    "use_max": 1
+  }
+]

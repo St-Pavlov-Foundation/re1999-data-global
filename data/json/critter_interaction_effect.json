@@ -1,0 +1,706 @@
+[
+  {
+    "skinId": 50000101,
+    "id": 50101,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/tktl/tktl_sleep1",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50102,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50103,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_collect2",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50104,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/tktl/tktl_eat2",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50105,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_produce2",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50106,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming1_1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50107,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming1_2",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50108,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming3_1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000101,
+    "id": 50109,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming3_2",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50110,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/tktl/tktl_sleep1",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50111,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50112,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_collect2",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50113,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/tktl/tktl_eat2",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50114,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_produce2",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50115,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming1_1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50116,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming1_2",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50117,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming3_1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000102,
+    "id": 50118,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tktl/tktl_taming3_2",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50201,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50202,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming1_1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50203,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming1_2",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50204,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming2_1",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50205,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming2_2",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50206,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming2_3",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50207,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming3_1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000201,
+    "id": 50208,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_taming3_2",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50209,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50210,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50211,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50212,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50213,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50214,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50215,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000202,
+    "id": 50216,
+    "point": "special10",
+    "effectRes": "v2a2_mojing/abak/abak_collect10",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50301,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_sleep2",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50302,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50303,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_collect2",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50304,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_eat2",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50305,
+    "point": "special4",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_eat4",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50306,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_produce2_1",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50307,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_produce2_2",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50308,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming1_1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50309,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming1_2",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50310,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming2_2",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50311,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming3_1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000301,
+    "id": 50312,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming3_2",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50313,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_sleep2",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50314,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50315,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_collect2",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50316,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_eat2",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50317,
+    "point": "special4",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_eat4",
+    "animName": "eat",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50318,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_produce2_1",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50319,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_produce2_2",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50320,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming1_1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50321,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming1_2",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50322,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming2_2",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50323,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming3_1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000302,
+    "id": 50324,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/tlbdl/tlbdl_taming3_2",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000501,
+    "id": 50501,
+    "point": "mountbody",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000502,
+    "id": 50502,
+    "point": "mountbody",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000801,
+    "id": 50801,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000802,
+    "id": 50802,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50001501,
+    "id": 51501,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50001502,
+    "id": 51502,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/sskbklq/sskbklq_sleep",
+    "animName": "sleep",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50601,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50602,
+    "point": "special6",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect6",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50603,
+    "point": "special7",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_taming1_7",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50604,
+    "point": "special4",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_taming2_4",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50605,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect1",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50606,
+    "point": "special6",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect6",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50607,
+    "point": "special7",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_taming1_7",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50608,
+    "point": "special4",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_taming2_4",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50609,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect1",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000601,
+    "id": 50610,
+    "point": "special6",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect6",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50611,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect1",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000602,
+    "id": 50612,
+    "point": "special6",
+    "effectRes": "v2a2_mojing/xjdd/xjdd_collect6",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000401,
+    "id": 50401,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000401,
+    "id": 50402,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000401,
+    "id": 50403,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000402,
+    "id": 50404,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000402,
+    "id": 50405,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming2",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000402,
+    "id": 50406,
+    "point": "special2",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_taming1",
+    "animName": "taming3",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000401,
+    "id": 50407,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_produce",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000402,
+    "id": 50408,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_produce",
+    "animName": "produce",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000401,
+    "id": 50409,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_produce",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50000402,
+    "id": 50410,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/fbbm/fbbm_produce",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 10000101,
+    "id": 10001,
+    "point": "mounthead",
+    "effectRes": "v2a2_mojing/mojing_shengqi1",
+    "animName": "",
+    "effectKey": "critterAngryEffect"
+  },
+  {
+    "skinId": 10000201,
+    "id": 10002,
+    "point": "mountbottom",
+    "effectRes": "v2a2_mojing/mojing_manji",
+    "animName": "",
+    "effectKey": "critterHighQualityEffect"
+  }
+]

@@ -1,0 +1,134 @@
+module("framework.helper.gohelper", package.seeall)
+
+slot1 = UnityEngine.GameObject
+slot2 = SLFramework.GameObjectHelper
+slot3 = SLFramework.UGUI.ButtonWrap
+slot4 = SLFramework.UGUI.InputFieldWrap
+slot5 = SLFramework.UGUI.ScrollRectWrap
+slot6 = SLFramework.UGUI.SliderWrap
+slot7 = SLFramework.UGUI.ToggleWrap
+slot8 = SLFramework.UGUI.SingleImage
+slot9 = SLFramework.UGUI.UIClickListener
+slot10 = SLFramework.UGUI.TMPDropdownWrap
+
+return {
+	Type_Image = typeof(UnityEngine.UI.Image),
+	Type_Text = typeof(UnityEngine.UI.Text),
+	Type_TextMesh = typeof(TMPro.TextMeshProUGUI),
+	Type_RawImage = typeof(UnityEngine.UI.RawImage),
+	Type_Toggle = typeof(UnityEngine.UI.Toggle),
+	Type_ToggleGroup = typeof(UnityEngine.UI.ToggleGroup),
+	Type_ScrollRect = typeof(UnityEngine.UI.ScrollRect),
+	Type_Graphic = typeof(UnityEngine.UI.Graphic),
+	Type_CanvasRenderer = typeof(UnityEngine.CanvasRenderer),
+	Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup),
+	Type_HorizontalLayoutGroup = typeof(UnityEngine.UI.HorizontalLayoutGroup),
+	Type_VerticalLayoutGroup = typeof(UnityEngine.UI.VerticalLayoutGroup),
+	isNil = function (slot0)
+		return slot0 == nil or slot0:Equals(nil)
+	end,
+	destroy = function (slot0)
+		if not uv0.isNil(slot0) then
+			uv1.Destroy(slot0)
+		end
+	end,
+	addChild = function (slot0, slot1)
+		uv0.AddChild(slot0, slot1)
+	end,
+	destroyAllChildren = function (slot0)
+		uv0.DestroyAllChildren(slot0)
+	end,
+	setActive = function (slot0, slot1)
+		return uv0.SetActive(slot0, slot1 and true or false)
+	end,
+	setAsFirstSibling = function (slot0)
+		uv0.SetAsFirstSibling(slot0)
+	end,
+	setAsLastSibling = function (slot0)
+		uv0.SetAsLastSibling(slot0)
+	end,
+	setSibling = function (slot0, slot1)
+		uv0.SetSibling(slot0, slot1)
+	end,
+	getSibling = function (slot0)
+		return uv0.GetSibling(slot0)
+	end,
+	setSiblingBefore = function (slot0, slot1)
+		return uv0.SetSiblingBefore(slot0, slot1)
+	end,
+	setSiblingAfter = function (slot0, slot1)
+		return uv0.SetSiblingAfter(slot0, slot1)
+	end,
+	setLayer = function (slot0, slot1, slot2)
+		uv0.SetLayer(slot0, slot1, slot2)
+	end,
+	setTag = function (slot0, slot1, slot2)
+		uv0.SetTag(slot0, slot1, slot2)
+	end,
+	find = function (slot0)
+		return uv0.Find(slot0)
+	end,
+	findChild = function (slot0, slot1)
+		return uv0.FindChild(slot0, slot1)
+	end,
+	findChildComponent = function (slot0, slot1, slot2)
+		return uv0.FindChildComponent(slot0, slot1, slot2)
+	end,
+	onceAddComponent = function (slot0, slot1)
+		return uv0.OnceAddComponent(slot0, slot1)
+	end,
+	findChildText = function (slot0, slot1)
+		return uv0.findChildComponent(slot0, slot1, uv0.Type_TextMesh) or uv0.findChildComponent(slot0, slot1, uv0.Type_Text)
+	end,
+	findChildTextMesh = function (slot0, slot1)
+		return uv0.findChildComponent(slot0, slot1, uv0.Type_TextMesh)
+	end,
+	findChildImage = function (slot0, slot1)
+		return uv0.findChildComponent(slot0, slot1, uv0.Type_Image)
+	end,
+	create2d = function (slot0, slot1)
+		return uv0.Create(slot0, slot1, true)
+	end,
+	create3d = function (slot0, slot1)
+		return uv0.Create(slot0, slot1, false)
+	end,
+	clone = function (slot0, slot1, slot2)
+		return uv0.Clone(slot0, slot1, slot2)
+	end,
+	cloneInPlace = function (slot0, slot1)
+		return uv0.CloneInPlace(slot0, slot1)
+	end,
+	findChildButtonWithAudio = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildButton = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildInputField = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildScrollRect = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildSlider = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildToggle = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	findChildSingleImage = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	getSingleImage = function (slot0)
+		return uv0.Get(slot0)
+	end,
+	findChildClick = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end,
+	getClick = function (slot0)
+		return uv0.Get(slot0)
+	end,
+	findChildDropdown = function (slot0, slot1)
+		return uv0.GetWithPath(slot0, slot1)
+	end
+}

@@ -1,0 +1,80 @@
+module("framework.mvc.view.scroll.LuaMixScrollView", package.seeall)
+
+slot0 = class("LuaMixScrollView", BaseScrollView)
+
+function slot0.ctor(slot0, slot1, slot2)
+	uv0.super.ctor(slot0, slot1, slot2.emptyScrollParam)
+
+	slot0._csMixScroll = nil
+	slot0._model = slot1
+	slot0._param = slot2
+	slot0._cellCompDict = {}
+end
+
+function slot0.onInitView(slot0)
+	uv0.super.onInitView(slot0)
+
+	if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+		slot0._cellSourceGO = gohelper.findChild(slot0.viewGO, slot0._param.prefabUrl)
+
+		gohelper.setActive(slot0._cellSourceGO, false)
+	end
+
+	slot0._csMixScroll = SLFramework.UGUI.MixScrollView.Get(gohelper.findChild(slot0.viewGO, slot0._param.scrollGOPath))
+
+	slot0._csMixScroll:Init(slot0._param.scrollDir, slot0._param.startSpace or 0, slot0._param.endSpace or 0, slot0._model:getInfoList(), slot0._onUpdateCell, slot0)
+end
+
+function slot0.clear(slot0)
+	if slot0._csMixScroll then
+		slot0._csMixScroll:Clear()
+	end
+end
+
+function slot0.onDestroyView(slot0)
+	uv0.super.onDestroyView(slot0)
+	slot0._csMixScroll:Clear()
+
+	slot0._csMixScroll = nil
+	slot0._model = nil
+	slot0._param = nil
+	slot0._cellCompDict = nil
+end
+
+function slot0.getCsScroll(slot0)
+	return slot0._csMixScroll
+end
+
+function slot0.refreshScroll(slot0)
+	uv0.super.refreshScroll(slot0)
+	slot0._csMixScroll:UpdateInfo(slot0._model:getInfoList(slot0._csMixScroll.gameObject), true, false)
+	slot0:updateEmptyGO(slot0._model:getCount())
+end
+
+function slot0._onUpdateCell(slot0, slot1, slot2, slot3, slot4)
+	slot6 = nil
+
+	if gohelper.findChild(slot1, LuaListScrollView.PrefabInstName) then
+		slot6 = MonoHelper.getLuaComFromGo(slot5, slot0._param.cellClass)
+	else
+		if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			slot5 = slot0:getResInst(slot0._param.prefabUrl, slot1, LuaListScrollView.PrefabInstName)
+		elseif slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			gohelper.setActive(gohelper.clone(slot0._cellSourceGO, slot1, LuaListScrollView.PrefabInstName), true)
+		else
+			logError("LuaMixScrollView prefabType not support: " .. slot0._param.prefabType)
+		end
+
+		slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, slot0._param.cellClass)
+
+		slot6:initInternal(slot5, slot0)
+
+		slot0._cellCompDict[slot6] = true
+	end
+
+	slot6._index = slot2 + 1
+
+	slot6:onUpdateMO(slot0._model:getByIndex(slot2 + 1), slot3, slot4)
+end
+
+return slot0

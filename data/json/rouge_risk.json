@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "language_10051306",
+    "title_en": "",
+    "range": "1#10",
+    "desc": "language_10051307",
+    "content": "",
+    "buffNum": 1,
+    "scoreReward": 200,
+    "attr": "",
+    "viewDown": 5
+  },
+  {
+    "id": 2,
+    "title": "language_10051308",
+    "title_en": "",
+    "range": "11#20",
+    "desc": "language_10051309",
+    "content": "",
+    "buffNum": 1,
+    "scoreReward": 200,
+    "attr": "controlResilience#200",
+    "viewDown": 4
+  },
+  {
+    "id": 3,
+    "title": "language_10051310",
+    "title_en": "",
+    "range": "21#35",
+    "desc": "language_10051311",
+    "content": "",
+    "buffNum": 2,
+    "scoreReward": 500,
+    "attr": "controlResilience#300",
+    "viewDown": 3
+  },
+  {
+    "id": 4,
+    "title": "language_10051312",
+    "title_en": "",
+    "range": "36#50",
+    "desc": "language_10051313",
+    "content": "",
+    "buffNum": 2,
+    "scoreReward": 1000,
+    "attr": "controlResilience#500",
+    "viewDown": 2
+  },
+  {
+    "id": 5,
+    "title": "language_10051314",
+    "title_en": "",
+    "range": "51#999",
+    "desc": "language_10051315",
+    "content": "",
+    "buffNum": 3,
+    "scoreReward": 2000,
+    "attr": "controlResilience#1000",
+    "viewDown": 1
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "level": 1,
+    "minValue": 0,
+    "name": "B",
+    "icon": "critter_trainreport_level1"
+  },
+  {
+    "level": 2,
+    "minValue": 500,
+    "name": "A",
+    "icon": "critter_trainreport_level2"
+  },
+  {
+    "level": 3,
+    "minValue": 700,
+    "name": "S",
+    "icon": "critter_trainreport_level3"
+  },
+  {
+    "level": 4,
+    "minValue": 900,
+    "name": "SS",
+    "icon": "critter_trainreport_level4"
+  },
+  {
+    "level": 5,
+    "minValue": 1000,
+    "name": "SSS",
+    "icon": "critter_trainreport_level5"
+  }
+]

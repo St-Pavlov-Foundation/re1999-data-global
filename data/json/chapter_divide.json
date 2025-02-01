@@ -1,0 +1,30 @@
+[
+  {
+    "sectionId": 1,
+    "name": "language_10054300",
+    "nameEn": "THE LIVING AND THE REST",
+    "resPage": "singlebg/dungeon/pic_section_1.png",
+    "resPageClosed": "singlebg/dungeon/pic_section_1_1.png",
+    "chapterId": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      310,
+      311
+    ]
+  },
+  {
+    "sectionId": 2,
+    "name": "language_10054301",
+    "nameEn": "THE JOURNEY BACK",
+    "resPage": "singlebg/dungeon/pic_section_2.png",
+    "resPageClosed": "singlebg/dungeon/pic_section_2_1.png",
+    "chapterId": [
+      108
+    ]
+  }
+]

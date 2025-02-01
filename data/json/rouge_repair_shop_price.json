@@ -1,0 +1,74 @@
+[
+  {
+    "id": 2001,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043134"
+  },
+  {
+    "id": 2002,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043307"
+  },
+  {
+    "id": 2003,
+    "unlockType": 4,
+    "unlockParam": "20",
+    "desc": "language_10043308"
+  },
+  {
+    "id": 2101,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043136"
+  },
+  {
+    "id": 2102,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043309"
+  },
+  {
+    "id": 2103,
+    "unlockType": 4,
+    "unlockParam": "16",
+    "desc": "language_10043310"
+  },
+  {
+    "id": 3001,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043135"
+  },
+  {
+    "id": 3002,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043311"
+  },
+  {
+    "id": 3003,
+    "unlockType": 4,
+    "unlockParam": "40",
+    "desc": "language_10043312"
+  },
+  {
+    "id": 3101,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043138"
+  },
+  {
+    "id": 3102,
+    "unlockType": 0,
+    "unlockParam": "",
+    "desc": "language_10043313"
+  },
+  {
+    "id": 3103,
+    "unlockType": 4,
+    "unlockParam": "32",
+    "desc": "language_10043314"
+  }
+]

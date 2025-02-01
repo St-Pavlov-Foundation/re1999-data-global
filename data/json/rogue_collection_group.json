@@ -1,0 +1,292 @@
+[
+  {
+    "id": 1100,
+    "num": 1,
+    "dropGroupType": "language_10001414"
+  },
+  {
+    "id": 1200,
+    "num": 1,
+    "dropGroupType": "language_10001415"
+  },
+  {
+    "id": 1300,
+    "num": 1,
+    "dropGroupType": "language_10001416"
+  },
+  {
+    "id": 1400,
+    "num": 1,
+    "dropGroupType": "language_10001417"
+  },
+  {
+    "id": 1110,
+    "num": 1,
+    "dropGroupType": "language_10001418"
+  },
+  {
+    "id": 1111,
+    "num": 3,
+    "dropGroupType": "language_10001418"
+  },
+  {
+    "id": 1210,
+    "num": 1,
+    "dropGroupType": "language_10001419"
+  },
+  {
+    "id": 1211,
+    "num": 3,
+    "dropGroupType": "language_10001419"
+  },
+  {
+    "id": 1310,
+    "num": 1,
+    "dropGroupType": "language_10001420"
+  },
+  {
+    "id": 1311,
+    "num": 3,
+    "dropGroupType": "language_10001420"
+  },
+  {
+    "id": 1510,
+    "num": 1,
+    "dropGroupType": "language_10001421"
+  },
+  {
+    "id": 1511,
+    "num": 3,
+    "dropGroupType": "language_10001421"
+  },
+  {
+    "id": 1120,
+    "num": 1,
+    "dropGroupType": "language_10001422"
+  },
+  {
+    "id": 1121,
+    "num": 3,
+    "dropGroupType": "language_10001422"
+  },
+  {
+    "id": 1220,
+    "num": 1,
+    "dropGroupType": "language_10001423"
+  },
+  {
+    "id": 1221,
+    "num": 3,
+    "dropGroupType": "language_10001423"
+  },
+  {
+    "id": 1320,
+    "num": 1,
+    "dropGroupType": "language_10001424"
+  },
+  {
+    "id": 1321,
+    "num": 3,
+    "dropGroupType": "language_10001424"
+  },
+  {
+    "id": 1520,
+    "num": 1,
+    "dropGroupType": "language_10001421"
+  },
+  {
+    "id": 1521,
+    "num": 3,
+    "dropGroupType": "language_10001421"
+  },
+  {
+    "id": 1530,
+    "num": 1,
+    "dropGroupType": "language_10001425"
+  },
+  {
+    "id": 1330,
+    "num": 1,
+    "dropGroupType": "language_10001426"
+  },
+  {
+    "id": 1533,
+    "num": 3,
+    "dropGroupType": "language_10001425"
+  },
+  {
+    "id": 1333,
+    "num": 3,
+    "dropGroupType": "language_10001426"
+  },
+  {
+    "id": 1,
+    "num": 1,
+    "dropGroupType": "language_10001427"
+  },
+  {
+    "id": 2,
+    "num": 1,
+    "dropGroupType": "language_10001427"
+  },
+  {
+    "id": 3,
+    "num": 3,
+    "dropGroupType": "language_10001428"
+  },
+  {
+    "id": 5,
+    "num": 1,
+    "dropGroupType": "language_10001429"
+  },
+  {
+    "id": 6,
+    "num": 1,
+    "dropGroupType": "language_10001429"
+  },
+  {
+    "id": 11000,
+    "num": 1,
+    "dropGroupType": "language_10001430"
+  },
+  {
+    "id": 101402,
+    "num": 1,
+    "dropGroupType": ""
+  },
+  {
+    "id": 109005,
+    "num": 1,
+    "dropGroupType": ""
+  },
+  {
+    "id": 99999,
+    "num": 1,
+    "dropGroupType": ""
+  },
+  {
+    "id": 91320050,
+    "num": 1,
+    "dropGroupType": "language_10001431"
+  },
+  {
+    "id": 91120020,
+    "num": 1,
+    "dropGroupType": "language_10001432"
+  },
+  {
+    "id": 91320040,
+    "num": 1,
+    "dropGroupType": "language_10001433"
+  },
+  {
+    "id": 91320060,
+    "num": 1,
+    "dropGroupType": "language_10001434"
+  },
+  {
+    "id": 91120030,
+    "num": 1,
+    "dropGroupType": "language_10001435"
+  },
+  {
+    "id": 91320030,
+    "num": 1,
+    "dropGroupType": "language_10001436"
+  },
+  {
+    "id": 91220020,
+    "num": 1,
+    "dropGroupType": "language_10001437"
+  },
+  {
+    "id": 91330030,
+    "num": 1,
+    "dropGroupType": "language_10001438"
+  },
+  {
+    "id": 91320070,
+    "num": 1,
+    "dropGroupType": "language_10001439"
+  },
+  {
+    "id": 91220030,
+    "num": 1,
+    "dropGroupType": "language_10001440"
+  },
+  {
+    "id": 91210040,
+    "num": 1,
+    "dropGroupType": "language_10001441"
+  },
+  {
+    "id": 91110010,
+    "num": 1,
+    "dropGroupType": "language_10001442"
+  },
+  {
+    "id": 1600,
+    "num": 1,
+    "dropGroupType": "language_10001443"
+  },
+  {
+    "id": 1610,
+    "num": 1,
+    "dropGroupType": "language_10001443"
+  },
+  {
+    "id": 1620,
+    "num": 1,
+    "dropGroupType": "language_10001443"
+  },
+  {
+    "id": 1601,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 1611,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 1621,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 1602,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 1603,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 1604,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 101101,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 101102,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 101103,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  },
+  {
+    "id": 101104,
+    "num": 3,
+    "dropGroupType": "language_10001444"
+  }
+]

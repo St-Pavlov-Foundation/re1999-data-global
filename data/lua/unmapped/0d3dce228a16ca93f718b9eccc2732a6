@@ -1,0 +1,57 @@
+module("framework.network.socket.pre.AliveCheckPreSender", package.seeall)
+
+slot0 = class("AliveCheckPreSender", BasePreSender)
+
+function slot0.ctor(slot0)
+	uv0.super.ctor(slot0)
+
+	slot0._sendCmdInfoList = {}
+end
+
+function slot0.getFirstUnresponsiveMsg(slot0)
+	return slot0._sendCmdInfoList[1]
+end
+
+function slot0.getUnresponsiveMsgList(slot0)
+	return slot0._sendCmdInfoList
+end
+
+function slot0.clear(slot0)
+	slot0._sendCmdInfoList = {}
+end
+
+function slot0.preSendSysMsg(slot0, slot1, slot2, slot3)
+end
+
+function slot0.preSendProto(slot0, slot1, slot2, slot3)
+	table.insert(slot0._sendCmdInfoList, {
+		cmd = slot1,
+		msg = slot2,
+		socketId = slot3,
+		time = Time.realtimeSinceStartup
+	})
+end
+
+function slot0.onReceiveMsg(slot0, slot1)
+	for slot5, slot6 in ipairs(slot0._sendCmdInfoList) do
+		if slot6.cmd == slot1 then
+			table.remove(slot0._sendCmdInfoList, slot5)
+
+			if slot5 ~= 1 then
+				logError("打个log：消息不是按顺序收到的！跳跃了 " .. slot5 - 1 .. " 个包 期待的cmd = " .. (slot0._sendCmdInfoList[1] and slot0._sendCmdInfoList[1].cmd))
+			end
+
+			break
+		end
+	end
+end
+
+function slot0.ignoreUnimportantCmds(slot0, slot1)
+	for slot5 = #slot0._sendCmdInfoList, 1, -1 do
+		if GameMsgLockState.IgnoreCmds[slot0._sendCmdInfoList[slot5].cmd] then
+			table.remove(slot0._sendCmdInfoList, slot5)
+		end
+	end
+end
+
+return slot0

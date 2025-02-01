@@ -1,0 +1,176 @@
+module("modules.logic.activity.define.ActivityEnum", package.seeall)
+
+slot0 = _M
+slot0.ActivityType = {
+	Beginner = 2,
+	Welfare = 3,
+	Normal = 1
+}
+slot0.Activity = {
+	Activity1_9WarmUp = 11923,
+	V1a9_SemmelWeisGift = 11916,
+	NewWelfare = 11924,
+	Activity1_5WarmUp = 11511,
+	RoleSignViewPart1_1_6 = 11614,
+	Activity1_8WarmUp = 11810,
+	V2a2_DecalogPresent = 12240,
+	RoleSignViewPart2_1_8 = 11801,
+	V2a3_NewInsight = 12318,
+	RoleSignViewPart1_1_9 = 11913,
+	RoleSignViewPart1_1_7 = 11711,
+	RoleSignViewPart1_1_4 = 11425,
+	Activity1_6WarmUp = 11622,
+	DoubleFestivalSign_1_3 = 11311,
+	NewYearEve = 11621,
+	V2a3_Role_SignView_Part1 = 12308,
+	RoleSignViewPart2_1_5 = 11514,
+	NoviceInsight = 10004,
+	WeekWalkDeepShow = 10013,
+	Activity1_8Double = 11809,
+	SelfSelectCharacter = 12238,
+	V2a0_Role_SignView_Part1 = 12021,
+	NoviceTask = 10003,
+	StarLightSignPart1_1_3 = 11312,
+	NoviceSign = 10002,
+	V2a2_WarmUp = 12233,
+	GuestBind = 100001,
+	NorSign = 10001,
+	VersionActivity1_3Radio = 11309,
+	FurnaceTreasure = 11619,
+	SummerSignPart1_1_2 = 11211,
+	V2a2_Role_SignView_Part2 = 12231,
+	RoleSignViewPart2_1_7 = 11712,
+	V2a3_Role_SignView_Part2 = 12309,
+	V2a2_Role_SignView_Part1 = 12230,
+	V2a0_Role_SignView_Part2 = 12022,
+	Season = 11100,
+	V2a1_Role_SignView_Part2 = 12109,
+	RoleSignViewPart2_1_9 = 11914,
+	V2a2_SummonCustomPickNew = 12235,
+	StoryShow = 10010,
+	DragonBoatFestival = 11917,
+	RoleSignViewPart1_1_8 = 11800,
+	AnniversarySignView_1_9 = 11919,
+	Work_SignView_1_8 = 11808,
+	RoleSignViewPart2_1_6 = 11616,
+	V2a1_Role_SignView_Part1 = 12108,
+	V2a4_Blind_Box_Draw = 12434,
+	v2a2_RedLeafFestival = 12232,
+	RoomSign = 12239,
+	ActivityGiftForTheVoyage = 100002,
+	LanternFestival = 11710,
+	NewInsight = 12237,
+	Tower = 12320,
+	Explore3 = 11617,
+	RoleSignViewPart1 = 11213,
+	ClassShow = 10012,
+	DoubleFestivalSign_1_5 = 11515,
+	RoleSignViewPart2 = 11213,
+	HarvestSeasonView_1_5 = 11520,
+	V2a2_TurnBack_H5 = 12222,
+	Jessica = 11202,
+	V2a0_SummerSign = 12020,
+	V1a9_Matildagift = 11915,
+	SpringSign = 11618,
+	LinkageActivity_FullView = 12312,
+	V2a1_MoonFestival = 12110,
+	GoldenMilletPresent = 11615,
+	V1a9_DecalogPresent = 11918,
+	DecalogPresent = 11613,
+	DreamShow = 10011,
+	V2a3_NewCultivationGift = 12311,
+	V2a1_WarmUp = 12118,
+	RoleSignViewPart1_1_5 = 11513,
+	RoleSignViewPart2_1_4 = 11426,
+	RoomGift = 11921,
+	V2a0_WarmUp = 12029,
+	Activity1_7WarmUp = 11720,
+	V2a2_Calendar_Decoration = 12221,
+	V2a2_SpringFestival = 12244,
+	SummerSignPart2_1_2 = 11212,
+	DailyAllowance = 11423,
+	StarLightSignPart2_1_3 = 11313
+}
+slot0.MainActivityCenterViewClientId = {
+	Bp = -3,
+	BpSP = -4,
+	TestTask = -2,
+	TurnBack = -1
+}
+slot0.ActivitySortWeight = {
+	[slot0.MainActivityCenterViewClientId.Bp] = 0,
+	[slot0.MainActivityCenterViewClientId.BpSP] = 1.1e-07,
+	[slot0.Activity.GoldenMilletPresent] = 1,
+	[slot0.Activity.DecalogPresent] = 2,
+	[slot0.Activity.RoleSignViewPart1_1_6] = 3,
+	[slot0.Activity.RoleSignViewPart2_1_6] = 4,
+	[slot0.Activity.SpringSign] = 5,
+	[slot0.MainActivityCenterViewClientId.TestTask] = 6,
+	[slot0.MainActivityCenterViewClientId.TurnBack] = 7
+}
+slot0.ActivityTypeID = {
+	Act158 = 158,
+	DreamTail = 119,
+	JieXiKa = 114,
+	OpenTestWarmUp = 106,
+	DoubleDrop = 153
+}
+slot0.ActivityStatus = {
+	Expired = 2,
+	Normal = 0,
+	NotOnLine = 4,
+	NotUnlock = 3,
+	NotOpen = 1,
+	None = -1
+}
+slot0.PlaceholderActivityId = 0
+slot0.VersionActivityIdDict = {
+	Activity1_42 = 11420,
+	Activity1_41 = 11401,
+	Activity1_6 = 11601,
+	Activity1_52 = 11517,
+	Activity2_0 = 12002,
+	Activity1_3 = 11301,
+	Activity2_1 = 12101,
+	Activity1_51 = 11501,
+	Activity1_1 = 11101,
+	Activity1_9 = 11901,
+	Activity2_2 = 12201,
+	Activity1_2 = 11201,
+	Activity1_7 = 11701,
+	Activity1_8 = 11803
+}
+slot0.VersionActivityIdList = {
+	slot0.VersionActivityIdDict.Activity2_2
+}
+slot0.MainIcon = {
+	[slot0.VersionActivityIdDict.Activity1_1] = "rk1111",
+	[slot0.VersionActivityIdDict.Activity1_2] = "rk_1_2",
+	[slot0.VersionActivityIdDict.Activity1_3] = "rk_1_3",
+	[slot0.VersionActivityIdDict.Activity1_41] = "rk_1_4_1",
+	[slot0.VersionActivityIdDict.Activity1_42] = "rk_1_4_2",
+	[slot0.VersionActivityIdDict.Activity1_51] = "rk_1_5_1",
+	[slot0.VersionActivityIdDict.Activity1_52] = "rk_1_5_2",
+	[slot0.VersionActivityIdDict.Activity1_6] = "rk_1_6",
+	[slot0.VersionActivityIdDict.Activity1_7] = "rk_1_7",
+	[slot0.VersionActivityIdDict.Activity1_8] = "rk_1_8",
+	[slot0.VersionActivityIdDict.Activity1_9] = "rk_1_9",
+	[slot0.VersionActivityIdDict.Activity2_0] = "rk_2_0",
+	[slot0.VersionActivityIdDict.Activity2_1] = "rk_2_1",
+	[slot0.VersionActivityIdDict.Activity2_2] = "rk_2_2"
+}
+slot0.ShowVersionActivityEpisode = 10103
+slot0.MainViewActivityState = {
+	RoleStoryActivity = 1,
+	SeasonActivity = 3,
+	Rouge = 4,
+	Reactivity = 2,
+	None = 0
+}
+slot0.RetroType = {
+	Permanent = 2,
+	Retro = 1,
+	None = 0
+}
+
+return slot0

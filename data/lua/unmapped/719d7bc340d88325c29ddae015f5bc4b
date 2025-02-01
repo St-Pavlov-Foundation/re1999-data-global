@@ -1,0 +1,158 @@
+module("framework.mvc.view.scroll.LuaListScrollView", package.seeall)
+
+slot0 = class("LuaListScrollView", BaseScrollView)
+slot0.PrefabInstName = "prefabInst"
+
+function slot0.ctor(slot0, slot1, slot2)
+	uv0.super.ctor(slot0, slot1, slot2.emptyScrollParam)
+
+	slot0._csListScroll = nil
+	slot0._model = slot1
+	slot0._param = slot2
+	slot0._selectMOs = {}
+	slot0._cellCompDict = {}
+end
+
+function slot0.onInitView(slot0)
+	uv0.super.onInitView(slot0)
+
+	if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+		slot0._cellSourceGO = gohelper.findChild(slot0.viewGO, slot0._param.prefabUrl)
+
+		gohelper.setActive(slot0._cellSourceGO, false)
+	end
+
+	slot0._csListScroll = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(slot0.viewGO, slot0._param.scrollGOPath))
+
+	slot0._csListScroll:Init(slot0._param.scrollDir, slot0._param.lineCount, slot0._param.cellWidth, slot0._param.cellHeight, slot0._param.cellSpaceH, slot0._param.cellSpaceV, slot0._param.startSpace, slot0._param.endSpace, slot0._param.sortMode, slot0._param.frameUpdateMs, slot0._param.minUpdateCountInFrame, slot0._onUpdateCell, slot0.onUpdateFinish, slot0._onSelectCell, slot0)
+end
+
+function slot0.clear(slot0)
+	if slot0._csListScroll then
+		slot0._csListScroll:Clear()
+	end
+end
+
+function slot0.onDestroyView(slot0)
+	uv0.super.onDestroyView(slot0)
+	slot0._csListScroll:Clear()
+
+	slot0._csListScroll = nil
+	slot0._model = nil
+	slot0._param = nil
+	slot0._selectMOs = nil
+	slot0._cellCompDict = nil
+end
+
+function slot0.getCsListScroll(slot0)
+	return slot0._csListScroll
+end
+
+function slot0.refreshScroll(slot0)
+	uv0.super.refreshScroll(slot0)
+
+	slot1 = slot0._model:getCount()
+
+	slot0._csListScroll:UpdateTotalCount(slot1)
+	slot0:updateEmptyGO(slot1)
+end
+
+function slot0.selectCell(slot0, slot1, slot2)
+	if not slot0._model:getByIndex(slot1) then
+		return
+	end
+
+	if slot0._param.multiSelect then
+		if tabletool.indexOf(slot0._selectMOs, slot3) and not slot2 then
+			table.remove(slot0._selectMOs, slot4)
+		else
+			table.insert(slot0._selectMOs, slot3)
+		end
+	else
+		if slot0._selectMOs[1] and slot0._model:getIndex(slot4) then
+			slot0._csListScroll:SelectCell(slot5 - 1, false)
+		end
+
+		if slot2 then
+			slot0._selectMOs = {
+				slot3
+			}
+		else
+			slot0._selectMOs = {}
+		end
+	end
+
+	slot0._csListScroll:SelectCell(slot1 - 1, slot2)
+end
+
+function slot0.getFirstSelect(slot0)
+	return slot0._selectMOs[1]
+end
+
+function slot0.getSelectList(slot0)
+	return slot0._selectMOs
+end
+
+function slot0.setSelect(slot0, slot1)
+	slot0:setSelectList({
+		slot1
+	})
+end
+
+function slot0.setSelectList(slot0, slot1)
+	slot0._selectMOs = {}
+
+	if slot1 then
+		for slot5, slot6 in ipairs(slot1) do
+			table.insert(slot0._selectMOs, slot6)
+		end
+	end
+
+	if slot0._csListScroll then
+		slot0._csListScroll:UpdateVisualCells()
+	end
+end
+
+function slot0._onUpdateCell(slot0, slot1, slot2)
+	slot4 = nil
+
+	if gohelper.findChild(slot1, uv0.PrefabInstName) then
+		slot4 = MonoHelper.getLuaComFromGo(slot3, slot0._param.cellClass)
+	else
+		if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			slot3 = slot0:getResInst(slot0._param.prefabUrl, slot1, uv0.PrefabInstName)
+		elseif slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			gohelper.setActive(gohelper.clone(slot0._cellSourceGO, slot1, uv0.PrefabInstName), true)
+		else
+			logError("ListScrollView prefabType not support: " .. slot0._param.prefabType)
+		end
+
+		slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(slot3, slot0._param.cellClass)
+
+		slot4:initInternal(slot3, slot0)
+
+		slot0._cellCompDict[slot4] = true
+	end
+
+	slot5 = slot0._model:getByIndex(slot2 + 1)
+	slot4._index = slot2 + 1
+
+	slot4:onUpdateMO(slot5)
+
+	if tabletool.indexOf(slot0._selectMOs, slot5) then
+		slot4:onSelect(true)
+	else
+		slot4:onSelect(false)
+	end
+end
+
+function slot0.onUpdateFinish(slot0)
+end
+
+function slot0._onSelectCell(slot0, slot1, slot2)
+	if gohelper.findChild(slot1, uv0.PrefabInstName) and MonoHelper.getLuaComFromGo(slot3, slot0._param.cellClass) then
+		slot4:onSelect(slot2)
+	end
+end
+
+return slot0

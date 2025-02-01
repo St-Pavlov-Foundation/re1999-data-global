@@ -1,0 +1,14 @@
+module("framework.mvc.model.TreeScrollParam", package.seeall)
+
+slot0 = pureTable("TreeScrollParam")
+
+function slot0.ctor(slot0)
+	slot0.scrollGOPath = nil
+	slot0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	slot0.prefabUrls = nil
+	slot0.cellClass = nil
+	slot0.scrollDir = ScrollEnum.ScrollDirH
+	slot0.emptyScrollParam = nil
+end
+
+return slot0

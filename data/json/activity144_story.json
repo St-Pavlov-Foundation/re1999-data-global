@@ -1,0 +1,72 @@
+[
+  {
+    "activityId": 11509,
+    "id": 307301,
+    "name": "language_10028513",
+    "nameen": "CHAPTER",
+    "titleen": "The New Curator",
+    "episodeId": -1,
+    "icon": 0,
+    "order": "1"
+  },
+  {
+    "activityId": 11509,
+    "id": 307302,
+    "name": "language_10028514",
+    "nameen": "CHAPTER",
+    "titleen": "Change of the Coils",
+    "episodeId": 1,
+    "icon": 1,
+    "order": "2"
+  },
+  {
+    "activityId": 11509,
+    "id": 307303,
+    "name": "language_10028515",
+    "nameen": "CHAPTER",
+    "titleen": "Circe's Plant",
+    "episodeId": 1,
+    "icon": 2,
+    "order": "3"
+  },
+  {
+    "activityId": 11509,
+    "id": 307304,
+    "name": "language_10028516",
+    "nameen": "CHAPTER",
+    "titleen": "Sailor of the World",
+    "episodeId": 2,
+    "icon": 1,
+    "order": "4"
+  },
+  {
+    "activityId": 11509,
+    "id": 307305,
+    "name": "language_10028517",
+    "nameen": "CHAPTER",
+    "titleen": "Old Aquaintance",
+    "episodeId": 2,
+    "icon": 2,
+    "order": "5"
+  },
+  {
+    "activityId": 11509,
+    "id": 307306,
+    "name": "language_10028518",
+    "nameen": "CHAPTER",
+    "titleen": "One Who Stole Fire",
+    "episodeId": 3,
+    "icon": 1,
+    "order": "6"
+  },
+  {
+    "activityId": 11509,
+    "id": 307307,
+    "name": "language_10028519",
+    "nameen": "CHAPTER",
+    "titleen": "Above the Snow",
+    "episodeId": 4,
+    "icon": 2,
+    "order": "7"
+  }
+]

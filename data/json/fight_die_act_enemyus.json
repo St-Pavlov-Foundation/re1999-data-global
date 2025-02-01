@@ -1,0 +1,68 @@
+[
+  {
+    "id": 302901,
+    "enemyus": 1,
+    "act": "die",
+    "playEffect": 1
+  },
+  {
+    "id": 302901,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  },
+  {
+    "id": 3029011,
+    "enemyus": 1,
+    "act": "die",
+    "playEffect": 1
+  },
+  {
+    "id": 3029011,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  },
+  {
+    "id": 3029012,
+    "enemyus": 1,
+    "act": "die",
+    "playEffect": 1
+  },
+  {
+    "id": 3029012,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  },
+  {
+    "id": 302902,
+    "enemyus": 1,
+    "act": "die",
+    "playEffect": 1
+  },
+  {
+    "id": 302902,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  },
+  {
+    "id": 6502011,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  },
+  {
+    "id": 300703,
+    "enemyus": 1,
+    "act": "die",
+    "playEffect": 1
+  },
+  {
+    "id": 305101,
+    "enemyus": 2,
+    "act": "die2",
+    "playEffect": 0
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "activityId": 11815,
+    "componentId": 118151,
+    "unlockCondition": "2#1812#100",
+    "preComponentId": 0,
+    "nextComponentId": 118152,
+    "elementId": 0,
+    "bonus": "11#11831#1|1#110103#1",
+    "bonusForShow": "11#11831#1|1#110103#1",
+    "bonusBuildingLevel": "0"
+  },
+  {
+    "activityId": 11815,
+    "componentId": 118152,
+    "unlockCondition": "2#1812#120",
+    "preComponentId": 118151,
+    "nextComponentId": 118153,
+    "elementId": 0,
+    "bonus": "1#110603#1",
+    "bonusForShow": "11#11831#1|1#110603#1",
+    "bonusBuildingLevel": "1"
+  },
+  {
+    "activityId": 11815,
+    "componentId": 118153,
+    "unlockCondition": "2#1812#160",
+    "preComponentId": 118152,
+    "nextComponentId": 118154,
+    "elementId": 0,
+    "bonus": "1#110403#1",
+    "bonusForShow": "11#11831#1|1#110403#1",
+    "bonusBuildingLevel": "2"
+  },
+  {
+    "activityId": 11815,
+    "componentId": 118154,
+    "unlockCondition": "2#1812#200",
+    "preComponentId": 118153,
+    "nextComponentId": 0,
+    "elementId": 0,
+    "bonus": "1#110304#1|18#181001#1",
+    "bonusForShow": "11#11831#1|1#110304#1|18#181001#1",
+    "bonusBuildingLevel": "3"
+  }
+]

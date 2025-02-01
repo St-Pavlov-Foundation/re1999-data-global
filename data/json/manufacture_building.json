@@ -1,0 +1,145 @@
+[
+  {
+    "id": 22001,
+    "placeTradeLevel": 1,
+    "placeNoCost": 1,
+    "placeCost": "",
+    "upgradeGroupId": 200201,
+    "tradeGroupId": 11,
+    "cameraIds": "2220",
+    "buildIcon": "buildingtype13",
+    "taskIcon": ""
+  },
+  {
+    "id": 22002,
+    "placeTradeLevel": 2,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#1000",
+    "upgradeGroupId": 200202,
+    "tradeGroupId": 12,
+    "cameraIds": "2220",
+    "buildIcon": "buildingtype14",
+    "taskIcon": ""
+  },
+  {
+    "id": 22003,
+    "placeTradeLevel": 3,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#1000",
+    "upgradeGroupId": 200203,
+    "tradeGroupId": 13,
+    "cameraIds": "2220",
+    "buildIcon": "buildingtype15",
+    "taskIcon": ""
+  },
+  {
+    "id": 22004,
+    "placeTradeLevel": 2,
+    "placeNoCost": 1,
+    "placeCost": "",
+    "upgradeGroupId": 200204,
+    "tradeGroupId": 21,
+    "cameraIds": "2217",
+    "buildIcon": "buildingtype10",
+    "taskIcon": ""
+  },
+  {
+    "id": 22005,
+    "placeTradeLevel": 6,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#5000",
+    "upgradeGroupId": 200205,
+    "tradeGroupId": 22,
+    "cameraIds": "2218",
+    "buildIcon": "buildingtype11",
+    "taskIcon": ""
+  },
+  {
+    "id": 22006,
+    "placeTradeLevel": 10,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#6000",
+    "upgradeGroupId": 200206,
+    "tradeGroupId": 23,
+    "cameraIds": "2219",
+    "buildIcon": "buildingtype12",
+    "taskIcon": ""
+  },
+  {
+    "id": 22007,
+    "placeTradeLevel": 3,
+    "placeNoCost": 1,
+    "placeCost": "",
+    "upgradeGroupId": 200207,
+    "tradeGroupId": 31,
+    "cameraIds": "2214",
+    "buildIcon": "buildingtype16",
+    "taskIcon": ""
+  },
+  {
+    "id": 22008,
+    "placeTradeLevel": 7,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#8000",
+    "upgradeGroupId": 200208,
+    "tradeGroupId": 32,
+    "cameraIds": "2215",
+    "buildIcon": "buildingtype17",
+    "taskIcon": ""
+  },
+  {
+    "id": 22009,
+    "placeTradeLevel": 10,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#10000",
+    "upgradeGroupId": 200209,
+    "tradeGroupId": 33,
+    "cameraIds": "2216",
+    "buildIcon": "buildingtype18",
+    "taskIcon": ""
+  },
+  {
+    "id": 22101,
+    "placeTradeLevel": 1,
+    "placeNoCost": 1,
+    "placeCost": "",
+    "upgradeGroupId": 0,
+    "tradeGroupId": 0,
+    "cameraIds": "2210#2212#2211#2213",
+    "buildIcon": "buildingtype1",
+    "taskIcon": ""
+  },
+  {
+    "id": 22102,
+    "placeTradeLevel": 4,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#2000",
+    "upgradeGroupId": 0,
+    "tradeGroupId": 0,
+    "cameraIds": "2210#2212#2211#2213",
+    "buildIcon": "buildingtype1",
+    "taskIcon": ""
+  },
+  {
+    "id": 22103,
+    "placeTradeLevel": 8,
+    "placeNoCost": 0,
+    "placeCost": "2#2202#4000",
+    "upgradeGroupId": 0,
+    "tradeGroupId": 0,
+    "cameraIds": "2210#2212#2211#2213",
+    "buildIcon": "buildingtype1",
+    "taskIcon": ""
+  },
+  {
+    "id": 22104,
+    "placeTradeLevel": 2,
+    "placeNoCost": 1,
+    "placeCost": "",
+    "upgradeGroupId": 0,
+    "tradeGroupId": 0,
+    "cameraIds": "2233",
+    "buildIcon": "buildingtype5",
+    "taskIcon": ""
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1001,
+    "equipId": 1510,
+    "equipLv": 60,
+    "equipRefine": 1
+  },
+  {
+    "id": 1002,
+    "equipId": 1508,
+    "equipLv": 60,
+    "equipRefine": 1
+  },
+  {
+    "id": 1003,
+    "equipId": 1404,
+    "equipLv": 60,
+    "equipRefine": 1
+  },
+  {
+    "id": 1004,
+    "equipId": 4104,
+    "equipLv": 60,
+    "equipRefine": 1
+  }
+]

@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1,
+    "icon": "101",
+    "skillId": 75001,
+    "name": "(岩星)暴怒",
+    "desc": "岩星角色暴击率+15%，暴击创伤+20%",
+    "type": "3#1,2",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 2,
+    "icon": "101",
+    "skillId": 75002,
+    "name": "(木兽)暴怒",
+    "desc": "木兽角色暴击率+15%，暴击创伤+20%",
+    "type": "3#3,4",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 3,
+    "icon": "101",
+    "skillId": 75003,
+    "name": "(灵智)暴怒",
+    "desc": "灵智角色暴击率+15%，暴击创伤+20%",
+    "type": "3#5,6",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 4,
+    "icon": "102",
+    "skillId": 75004,
+    "name": "(岩星)坚韧",
+    "desc": "岩星角色现实防御+12%，精神防御+12%，抗暴率+12%",
+    "type": "3#1,2",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 5,
+    "icon": "102",
+    "skillId": 75005,
+    "name": "(木兽)坚韧",
+    "desc": "木兽角色现实防御+12%，精神防御+12%，抗暴率+12%",
+    "type": "3#3,4",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 6,
+    "icon": "102",
+    "skillId": 75006,
+    "name": "(灵智)坚韧",
+    "desc": "灵智角色现实防御+12%，精神防御+12%，抗暴率+12%",
+    "type": "3#5,6",
+    "rare": 3,
+    "maxCountInMap": 3
+  },
+  {
+    "id": 7,
+    "icon": "103",
+    "skillId": 75007,
+    "name": "(现实)抗性",
+    "desc": "现实创伤角色创伤减免+15%",
+    "type": "4#1",
+    "rare": 3,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 8,
+    "icon": "103",
+    "skillId": 75008,
+    "name": "(精神)抗性",
+    "desc": "精神创伤角色创伤减免+15%",
+    "type": "4#2",
+    "rare": 3,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 9,
+    "icon": "104",
+    "skillId": 75009,
+    "name": "(现实)终焉",
+    "desc": "现实创伤角色仪式威力+20%",
+    "type": "4#1",
+    "rare": 3,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 10,
+    "icon": "104",
+    "skillId": 75010,
+    "name": "(精神)终焉",
+    "desc": "精神创伤角色仪式威力+20%",
+    "type": "4#2",
+    "rare": 3,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 11,
+    "icon": "105",
+    "skillId": 75011,
+    "name": "魄力",
+    "desc": "我方全体现实防御+7%，精神防御+7%，暴击防御+7%",
+    "type": "1",
+    "rare": 3,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 12,
+    "icon": "106",
+    "skillId": 75012,
+    "name": "会心",
+    "desc": "我方全体暴击率+15%",
+    "type": "1",
+    "rare": 3,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 13,
+    "icon": "107",
+    "skillId": 75013,
+    "name": "诅咒铠甲",
+    "desc": "受到敌人攻击时，赋予敌人腐蚀，每回合损失15%的当前生命，持续2回合",
+    "type": "1",
+    "rare": 3,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 14,
+    "icon": "108",
+    "skillId": 75014,
+    "name": "(现实)穿透",
+    "desc": "现实创伤角色忽视防御提升20%",
+    "type": "4#1",
+    "rare": 5,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 15,
+    "icon": "108",
+    "skillId": 75015,
+    "name": "(精神)穿透",
+    "desc": "精神创伤角色忽视防御提升20%",
+    "type": "4#2",
+    "rare": 5,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 16,
+    "icon": "109",
+    "skillId": 75016,
+    "name": "(现实)强力",
+    "desc": "现实创伤角色攻击+10%",
+    "type": "4#1",
+    "rare": 5,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 17,
+    "icon": "109",
+    "skillId": 75017,
+    "name": "(精神)强力",
+    "desc": "精神创伤角色攻击+10%",
+    "type": "4#2",
+    "rare": 5,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 18,
+    "icon": "110",
+    "skillId": 75018,
+    "name": "攻守之道",
+    "desc": "我方全体攻击+5%，现实防御+5%，精神防御+5%",
+    "type": "1",
+    "rare": 4,
+    "maxCountInMap": 2
+  },
+  {
+    "id": 19,
+    "icon": "111",
+    "skillId": 75019,
+    "name": "正向领域",
+    "desc": "克制造成创伤时，创伤加成+12%",
+    "type": "1",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 20,
+    "icon": "112",
+    "skillId": 75020,
+    "name": "负向领域",
+    "desc": "受到非克制灵感创伤时，创伤减免+12%",
+    "type": "1",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 21,
+    "icon": "113",
+    "skillId": 75021,
+    "name": "生命护盾",
+    "desc": "进入战斗时，全体获得自身最大生命值*15%的护盾，持续2回合",
+    "type": "1",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 22,
+    "icon": "114",
+    "skillId": 75022,
+    "name": "应援",
+    "desc": "进入战斗的前2回合，全体攻击+12%",
+    "type": "1",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 23,
+    "icon": "115",
+    "skillId": 75101,
+    "name": "补给",
+    "desc": "每回合开始时，激情+1",
+    "type": "2",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 24,
+    "icon": "116",
+    "skillId": 75102,
+    "name": "神秘治疗",
+    "desc": "使用2星以上神秘术时，恢复我方全体释放者100%攻击的生命",
+    "type": "2",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 25,
+    "icon": "117",
+    "skillId": 75103,
+    "name": "潜力",
+    "desc": "生命低于80%，攻击时攻击提升15%；受到创伤时，减免提升15%",
+    "type": "2",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 26,
+    "icon": "118",
+    "skillId": 75104,
+    "name": "天时地利",
+    "desc": "身上有2个(含2)以上【增益】状态时，自身攻击+25%",
+    "type": "2",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 27,
+    "icon": "119",
+    "skillId": 75105,
+    "name": "燃烧",
+    "desc": "自身每有1点激情，创伤加成提高10%",
+    "type": "2",
+    "rare": 4,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 28,
+    "icon": "120",
+    "skillId": 75106,
+    "name": "激情",
+    "desc": "进入战斗时，初始激情+3",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 29,
+    "icon": "121",
+    "skillId": 75107,
+    "name": "同调",
+    "desc": "使用至终仪式后，恢复自身与同灵感角色1点激情",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 30,
+    "icon": "122",
+    "skillId": 75108,
+    "name": "嗜血狂攻",
+    "desc": "每损失1%的生命值，攻击时自身提升0.5%的攻击力",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 31,
+    "icon": "123",
+    "skillId": 75109,
+    "name": "气势",
+    "desc": "生命高于50%，攻击时攻击提升15%且造成创伤提升15%",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 32,
+    "icon": "124",
+    "skillId": 75110,
+    "name": "猛攻",
+    "desc": "对陷入【减益】、【控制】状态的目标创伤提升50%",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 33,
+    "icon": "125",
+    "skillId": 75111,
+    "name": "先机",
+    "desc": "每回合第一次行动的角色，本次造成创伤提高50%",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  },
+  {
+    "id": 34,
+    "icon": "126",
+    "skillId": 75112,
+    "name": "热身",
+    "desc": "每回合开始，攻击力和暴击创伤提升8%，最多叠加5次",
+    "type": "2",
+    "rare": 5,
+    "maxCountInMap": 1
+  }
+]

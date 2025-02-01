@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "lightMode": 1,
+    "roleMode": 1,
+    "effect": 1,
+    "roomMode": 2,
+    "audioLength": 72.0
+  },
+  {
+    "id": 2,
+    "lightMode": 1,
+    "roleMode": 1,
+    "effect": 2,
+    "roomMode": 2,
+    "audioLength": 72.0
+  },
+  {
+    "id": 3,
+    "lightMode": 1,
+    "roleMode": 1,
+    "effect": 3,
+    "roomMode": 2,
+    "audioLength": 72.0
+  },
+  {
+    "id": 4,
+    "lightMode": 1,
+    "roleMode": 1,
+    "effect": 4,
+    "roomMode": 2,
+    "audioLength": 72.0
+  },
+  {
+    "id": 5,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 1,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 6,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 3,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 7,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 4,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 8,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 5,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 9,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 8,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 10,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 6,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 11,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 7,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 12,
+    "lightMode": 3,
+    "roleMode": 3,
+    "effect": 1,
+    "roomMode": 3,
+    "audioLength": 68.0
+  },
+  {
+    "id": 13,
+    "lightMode": 3,
+    "roleMode": 3,
+    "effect": 2,
+    "roomMode": 3,
+    "audioLength": 68.0
+  },
+  {
+    "id": 14,
+    "lightMode": 3,
+    "roleMode": 3,
+    "effect": 3,
+    "roomMode": 3,
+    "audioLength": 68.0
+  },
+  {
+    "id": 15,
+    "lightMode": 4,
+    "roleMode": 4,
+    "effect": 1,
+    "roomMode": 4,
+    "audioLength": 66.0
+  },
+  {
+    "id": 16,
+    "lightMode": 4,
+    "roleMode": 4,
+    "effect": 3,
+    "roomMode": 4,
+    "audioLength": 66.0
+  },
+  {
+    "id": 17,
+    "lightMode": 4,
+    "roleMode": 4,
+    "effect": 4,
+    "roomMode": 4,
+    "audioLength": 66.0
+  },
+  {
+    "id": 18,
+    "lightMode": 4,
+    "roleMode": 4,
+    "effect": 5,
+    "roomMode": 4,
+    "audioLength": 66.0
+  }
+]

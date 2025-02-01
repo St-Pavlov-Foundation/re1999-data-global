@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "language_10000123",
+    "reddotid": 1009,
+    "icon": "icon1",
+    "sortPriority": 0
+  },
+  {
+    "id": 2,
+    "name": "language_10000124",
+    "reddotid": 1010,
+    "icon": "icon_2",
+    "sortPriority": 2
+  },
+  {
+    "id": 3,
+    "name": "language_10033764",
+    "reddotid": 1908,
+    "icon": "icon_5",
+    "sortPriority": 3
+  }
+]

@@ -1,0 +1,212 @@
+[
+  {
+    "season": 1,
+    "id": 1,
+    "name": "language_10043730",
+    "desc": "language_10043731",
+    "icon": "rouge_result_badgeicon_1",
+    "trigger": 1,
+    "triggerParam": "12",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 2,
+    "name": "language_10043732",
+    "desc": "language_10043733",
+    "icon": "rouge_result_badgeicon_2",
+    "trigger": 2,
+    "triggerParam": "40",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 3,
+    "name": "language_10043734",
+    "desc": "language_10043735",
+    "icon": "rouge_result_badgeicon_3",
+    "trigger": 3,
+    "triggerParam": "3",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 4,
+    "name": "language_10043736",
+    "desc": "language_10043737",
+    "icon": "rouge_result_badgeicon_4",
+    "trigger": 4,
+    "triggerParam": "120",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 5,
+    "name": "language_10043738",
+    "desc": "language_10043739",
+    "icon": "rouge_result_badgeicon_5",
+    "trigger": 5,
+    "triggerParam": "1000",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 6,
+    "name": "language_10016861",
+    "desc": "language_10043740",
+    "icon": "rouge_result_badgeicon_6",
+    "trigger": 6,
+    "triggerParam": "150000",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 7,
+    "name": "language_10043741",
+    "desc": "language_10043742",
+    "icon": "rouge_result_badgeicon_7",
+    "trigger": 7,
+    "triggerParam": "1",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 8,
+    "name": "language_10009029",
+    "desc": "language_10043743",
+    "icon": "rouge_result_badgeicon_8",
+    "trigger": 8,
+    "triggerParam": "3",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 9,
+    "name": "language_10043744",
+    "desc": "language_10043745",
+    "icon": "rouge_result_badgeicon_9",
+    "trigger": 9,
+    "triggerParam": "3",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 10,
+    "name": "language_10043746",
+    "desc": "language_10043747",
+    "icon": "rouge_result_badgeicon_10",
+    "trigger": 10,
+    "triggerParam": "20",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 11,
+    "name": "language_10043748",
+    "desc": "language_10043749",
+    "icon": "rouge_result_badgeicon_11",
+    "trigger": 11,
+    "triggerParam": "5",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 12,
+    "name": "language_10043750",
+    "desc": "language_10043751",
+    "icon": "rouge_result_badgeicon_12",
+    "trigger": 12,
+    "triggerParam": "15",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 13,
+    "name": "language_10043752",
+    "desc": "language_10043753",
+    "icon": "rouge_result_badgeicon_13",
+    "trigger": 13,
+    "triggerParam": "103206",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 14,
+    "name": "language_10043754",
+    "desc": "language_10043755",
+    "icon": "rouge_result_badgeicon_14",
+    "trigger": 14,
+    "triggerParam": "8330111",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 15,
+    "name": "language_10043756",
+    "desc": "language_10043757",
+    "icon": "rouge_result_badgeicon_15",
+    "trigger": 13,
+    "triggerParam": "101917",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 16,
+    "name": "language_10043758",
+    "desc": "language_10043759",
+    "icon": "rouge_result_badgeicon_16",
+    "trigger": 13,
+    "triggerParam": "103409",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 17,
+    "name": "language_10043760",
+    "desc": "language_10043761",
+    "icon": "rouge_result_badgeicon_17",
+    "trigger": 14,
+    "triggerParam": "8330311",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 18,
+    "name": "language_10043762",
+    "desc": "language_10043763",
+    "icon": "rouge_result_badgeicon_18",
+    "trigger": 14,
+    "triggerParam": "8330112",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 19,
+    "name": "language_10043764",
+    "desc": "language_10043765",
+    "icon": "rouge_result_badgeicon_19",
+    "trigger": 15,
+    "triggerParam": "10611301#10611311#10611321",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 20,
+    "name": "language_10043766",
+    "desc": "language_10043767",
+    "icon": "rouge_result_badgeicon_20",
+    "trigger": 14,
+    "triggerParam": "8320025",
+    "score": 150
+  },
+  {
+    "season": 1,
+    "id": 21,
+    "name": "language_10043768",
+    "desc": "language_10043769",
+    "icon": "rouge_result_badgeicon_21",
+    "trigger": 16,
+    "triggerParam": "5",
+    "score": 150
+  }
+]

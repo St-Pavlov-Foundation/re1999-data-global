@@ -1,0 +1,298 @@
+[
+  {
+    "id": 1,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053077"
+  },
+  {
+    "id": 2,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053078"
+  },
+  {
+    "id": 2,
+    "stepId": 2,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053079"
+  },
+  {
+    "id": 3,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053080"
+  },
+  {
+    "id": 4,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053081"
+  },
+  {
+    "id": 4,
+    "stepId": 2,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053082"
+  },
+  {
+    "id": 5,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053083"
+  },
+  {
+    "id": 5,
+    "stepId": 2,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053084"
+  },
+  {
+    "id": 6,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053085"
+  },
+  {
+    "id": 6,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053086"
+  },
+  {
+    "id": 6,
+    "stepId": 3,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053087"
+  },
+  {
+    "id": 7,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053088"
+  },
+  {
+    "id": 7,
+    "stepId": 2,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053089"
+  },
+  {
+    "id": 8,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053090"
+  },
+  {
+    "id": 8,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053091"
+  },
+  {
+    "id": 8,
+    "stepId": 3,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10001221"
+  },
+  {
+    "id": 9,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053092"
+  },
+  {
+    "id": 10,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053093"
+  },
+  {
+    "id": 11,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053094"
+  },
+  {
+    "id": 12,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053095"
+  },
+  {
+    "id": 13,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053096"
+  },
+  {
+    "id": 14,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10053097"
+  },
+  {
+    "id": 14,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053098"
+  },
+  {
+    "id": 14,
+    "stepId": 3,
+    "nextStep": 4,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053099"
+  },
+  {
+    "id": 14,
+    "stepId": 4,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053100"
+  },
+  {
+    "id": 15,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053101"
+  },
+  {
+    "id": 15,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053102"
+  },
+  {
+    "id": 15,
+    "stepId": 3,
+    "nextStep": 4,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053103"
+  },
+  {
+    "id": 15,
+    "stepId": 4,
+    "nextStep": 5,
+    "bubbleType": 1,
+    "direction": 2,
+    "content": "language_10001221"
+  },
+  {
+    "id": 15,
+    "stepId": 5,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053104"
+  },
+  {
+    "id": 16,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053105"
+  },
+  {
+    "id": 16,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053106"
+  },
+  {
+    "id": 16,
+    "stepId": 3,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053107"
+  },
+  {
+    "id": 17,
+    "stepId": 1,
+    "nextStep": 2,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053108"
+  },
+  {
+    "id": 17,
+    "stepId": 2,
+    "nextStep": 3,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053109"
+  },
+  {
+    "id": 17,
+    "stepId": 3,
+    "nextStep": 0,
+    "bubbleType": 1,
+    "direction": 1,
+    "content": "language_10053110"
+  },
+  {
+    "id": 18,
+    "stepId": 1,
+    "nextStep": 0,
+    "bubbleType": 2,
+    "direction": 2,
+    "content": "language_10053111"
+  }
+]

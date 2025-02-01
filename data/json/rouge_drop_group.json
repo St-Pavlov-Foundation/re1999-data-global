@@ -1,0 +1,8822 @@
+[
+  {
+    "id": 38,
+    "groupId": 1002,
+    "collectionId": 8140201,
+    "rate": 100
+  },
+  {
+    "id": 39,
+    "groupId": 1002,
+    "collectionId": 8140301,
+    "rate": 100
+  },
+  {
+    "id": 40,
+    "groupId": 1002,
+    "collectionId": 8240202,
+    "rate": 100
+  },
+  {
+    "id": 41,
+    "groupId": 1002,
+    "collectionId": 8240302,
+    "rate": 100
+  },
+  {
+    "id": 42,
+    "groupId": 1002,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 43,
+    "groupId": 1002,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 44,
+    "groupId": 1002,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 45,
+    "groupId": 1002,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 46,
+    "groupId": 1002,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 47,
+    "groupId": 1002,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 48,
+    "groupId": 1002,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 49,
+    "groupId": 1002,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 51,
+    "groupId": 1002,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 53,
+    "groupId": 1002,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 54,
+    "groupId": 1002,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 55,
+    "groupId": 1002,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 56,
+    "groupId": 1002,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 57,
+    "groupId": 1002,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 58,
+    "groupId": 1002,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 59,
+    "groupId": 1002,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 60,
+    "groupId": 1002,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 61,
+    "groupId": 1002,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 62,
+    "groupId": 1002,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 63,
+    "groupId": 1002,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 64,
+    "groupId": 1002,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 65,
+    "groupId": 1002,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 66,
+    "groupId": 1002,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 67,
+    "groupId": 1002,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 68,
+    "groupId": 1002,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 69,
+    "groupId": 1002,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 70,
+    "groupId": 1002,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 71,
+    "groupId": 1002,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 72,
+    "groupId": 1002,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 73,
+    "groupId": 1002,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 74,
+    "groupId": 1002,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 75,
+    "groupId": 1003,
+    "collectionId": 8140201,
+    "rate": 100
+  },
+  {
+    "id": 76,
+    "groupId": 1003,
+    "collectionId": 8140301,
+    "rate": 100
+  },
+  {
+    "id": 77,
+    "groupId": 1003,
+    "collectionId": 8240202,
+    "rate": 100
+  },
+  {
+    "id": 78,
+    "groupId": 1003,
+    "collectionId": 8240302,
+    "rate": 100
+  },
+  {
+    "id": 79,
+    "groupId": 1003,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 80,
+    "groupId": 1003,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 81,
+    "groupId": 1003,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 82,
+    "groupId": 1003,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 83,
+    "groupId": 1003,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 84,
+    "groupId": 1003,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 85,
+    "groupId": 1003,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 86,
+    "groupId": 1003,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 88,
+    "groupId": 1003,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 90,
+    "groupId": 1003,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 91,
+    "groupId": 1003,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 92,
+    "groupId": 1003,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 93,
+    "groupId": 1003,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 94,
+    "groupId": 1003,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 95,
+    "groupId": 1003,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 96,
+    "groupId": 1003,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 97,
+    "groupId": 1003,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 98,
+    "groupId": 1003,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 99,
+    "groupId": 1003,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 100,
+    "groupId": 1003,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 101,
+    "groupId": 1003,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 102,
+    "groupId": 1003,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 103,
+    "groupId": 1003,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 104,
+    "groupId": 1003,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 105,
+    "groupId": 1003,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 106,
+    "groupId": 1003,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 107,
+    "groupId": 1003,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 108,
+    "groupId": 1003,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 109,
+    "groupId": 1003,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 110,
+    "groupId": 1003,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 111,
+    "groupId": 1003,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 9999,
+    "groupId": 9999,
+    "collectionId": 999999,
+    "rate": 100
+  },
+  {
+    "id": 10610601,
+    "groupId": 10610601,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 10610602,
+    "groupId": 10610602,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 10610801,
+    "groupId": 10610801,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 10610802,
+    "groupId": 10610802,
+    "collectionId": 8330001,
+    "rate": 100
+  },
+  {
+    "id": 10612702,
+    "groupId": 10612702,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 10612811,
+    "groupId": 10612811,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 10612812,
+    "groupId": 10612812,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 10612813,
+    "groupId": 10612813,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 10612202,
+    "groupId": 10612202,
+    "collectionId": 8230037,
+    "rate": 100
+  },
+  {
+    "id": 10612203,
+    "groupId": 10612203,
+    "collectionId": 8230037,
+    "rate": 100
+  },
+  {
+    "id": 10612301,
+    "groupId": 10612301,
+    "collectionId": 8230038,
+    "rate": 100
+  },
+  {
+    "id": 10613002,
+    "groupId": 10613002,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 10613003,
+    "groupId": 10613003,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 10613101,
+    "groupId": 10613101,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 10613102,
+    "groupId": 10613102,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 10613511,
+    "groupId": 10613511,
+    "collectionId": 8230040,
+    "rate": 100
+  },
+  {
+    "id": 10613811,
+    "groupId": 10613811,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 10613812,
+    "groupId": 10613812,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 10614001,
+    "groupId": 10614001,
+    "collectionId": 8330615,
+    "rate": 100
+  },
+  {
+    "id": 10614002,
+    "groupId": 10614002,
+    "collectionId": 8330710,
+    "rate": 100
+  },
+  {
+    "id": 10614201,
+    "groupId": 10614201,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 10614202,
+    "groupId": 10614202,
+    "collectionId": 8220051,
+    "rate": 100
+  },
+  {
+    "id": 10614203,
+    "groupId": 10614203,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 10614401,
+    "groupId": 10614401,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 10610203,
+    "groupId": 10610203,
+    "collectionId": 9100109,
+    "rate": 100
+  },
+  {
+    "id": 10613113,
+    "groupId": 10613113,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 11110056,
+    "groupId": 11110056,
+    "collectionId": 9200203,
+    "rate": 100
+  },
+  {
+    "id": 11110057,
+    "groupId": 11110057,
+    "collectionId": 9200204,
+    "rate": 100
+  },
+  {
+    "id": 11110058,
+    "groupId": 11110058,
+    "collectionId": 9200205,
+    "rate": 100
+  },
+  {
+    "id": 11110059,
+    "groupId": 11110059,
+    "collectionId": 9200206,
+    "rate": 100
+  },
+  {
+    "id": 11110060,
+    "groupId": 11110060,
+    "collectionId": 9200207,
+    "rate": 100
+  },
+  {
+    "id": 11110061,
+    "groupId": 11110061,
+    "collectionId": 9200208,
+    "rate": 100
+  },
+  {
+    "id": 11110062,
+    "groupId": 11110062,
+    "collectionId": 9200209,
+    "rate": 100
+  },
+  {
+    "id": 11110063,
+    "groupId": 11110063,
+    "collectionId": 9200210,
+    "rate": 100
+  },
+  {
+    "id": 11110064,
+    "groupId": 11110064,
+    "collectionId": 9200211,
+    "rate": 100
+  },
+  {
+    "id": 11110065,
+    "groupId": 11110065,
+    "collectionId": 9200212,
+    "rate": 100
+  },
+  {
+    "id": 11110066,
+    "groupId": 11110066,
+    "collectionId": 9200213,
+    "rate": 100
+  },
+  {
+    "id": 11110067,
+    "groupId": 11110067,
+    "collectionId": 9200214,
+    "rate": 100
+  },
+  {
+    "id": 11110068,
+    "groupId": 11110068,
+    "collectionId": 9200215,
+    "rate": 100
+  },
+  {
+    "id": 11110043,
+    "groupId": 11110043,
+    "collectionId": 9400801,
+    "rate": 100
+  },
+  {
+    "id": 11110044,
+    "groupId": 11110044,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 11110045,
+    "groupId": 11110045,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 11110046,
+    "groupId": 11110046,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 11110047,
+    "groupId": 11110047,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 11110048,
+    "groupId": 11110048,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 112,
+    "groupId": 1,
+    "collectionId": 8140101,
+    "rate": 100
+  },
+  {
+    "id": 113,
+    "groupId": 1,
+    "collectionId": 8140401,
+    "rate": 100
+  },
+  {
+    "id": 114,
+    "groupId": 1,
+    "collectionId": 8140501,
+    "rate": 100
+  },
+  {
+    "id": 115,
+    "groupId": 1,
+    "collectionId": 8140601,
+    "rate": 100
+  },
+  {
+    "id": 116,
+    "groupId": 1,
+    "collectionId": 8140201,
+    "rate": 100
+  },
+  {
+    "id": 117,
+    "groupId": 1,
+    "collectionId": 8140301,
+    "rate": 100
+  },
+  {
+    "id": 118,
+    "groupId": 1,
+    "collectionId": 8140701,
+    "rate": 100
+  },
+  {
+    "id": 119,
+    "groupId": 1,
+    "collectionId": 8140801,
+    "rate": 100
+  },
+  {
+    "id": 120,
+    "groupId": 2,
+    "collectionId": 8240102,
+    "rate": 100
+  },
+  {
+    "id": 121,
+    "groupId": 2,
+    "collectionId": 8240402,
+    "rate": 100
+  },
+  {
+    "id": 122,
+    "groupId": 2,
+    "collectionId": 8240502,
+    "rate": 100
+  },
+  {
+    "id": 123,
+    "groupId": 2,
+    "collectionId": 8240602,
+    "rate": 100
+  },
+  {
+    "id": 124,
+    "groupId": 2,
+    "collectionId": 8240202,
+    "rate": 100
+  },
+  {
+    "id": 125,
+    "groupId": 2,
+    "collectionId": 8240302,
+    "rate": 100
+  },
+  {
+    "id": 126,
+    "groupId": 2,
+    "collectionId": 8240702,
+    "rate": 100
+  },
+  {
+    "id": 127,
+    "groupId": 2,
+    "collectionId": 8240802,
+    "rate": 100
+  },
+  {
+    "id": 128,
+    "groupId": 3,
+    "collectionId": 8130103,
+    "rate": 100
+  },
+  {
+    "id": 129,
+    "groupId": 3,
+    "collectionId": 8130403,
+    "rate": 100
+  },
+  {
+    "id": 130,
+    "groupId": 3,
+    "collectionId": 8130503,
+    "rate": 100
+  },
+  {
+    "id": 131,
+    "groupId": 3,
+    "collectionId": 8130603,
+    "rate": 100
+  },
+  {
+    "id": 132,
+    "groupId": 3,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 133,
+    "groupId": 3,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 134,
+    "groupId": 3,
+    "collectionId": 8120703,
+    "rate": 100
+  },
+  {
+    "id": 135,
+    "groupId": 3,
+    "collectionId": 8130803,
+    "rate": 100
+  },
+  {
+    "id": 136,
+    "groupId": 3,
+    "collectionId": 8120104,
+    "rate": 100
+  },
+  {
+    "id": 137,
+    "groupId": 3,
+    "collectionId": 8130404,
+    "rate": 100
+  },
+  {
+    "id": 138,
+    "groupId": 3,
+    "collectionId": 8130504,
+    "rate": 100
+  },
+  {
+    "id": 139,
+    "groupId": 3,
+    "collectionId": 8130604,
+    "rate": 100
+  },
+  {
+    "id": 140,
+    "groupId": 3,
+    "collectionId": 8120704,
+    "rate": 100
+  },
+  {
+    "id": 141,
+    "groupId": 3,
+    "collectionId": 8130804,
+    "rate": 100
+  },
+  {
+    "id": 143,
+    "groupId": 3,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 144,
+    "groupId": 3,
+    "collectionId": 8150006,
+    "rate": 100
+  },
+  {
+    "id": 145,
+    "groupId": 3,
+    "collectionId": 8150008,
+    "rate": 100
+  },
+  {
+    "id": 146,
+    "groupId": 3,
+    "collectionId": 8150010,
+    "rate": 100
+  },
+  {
+    "id": 147,
+    "groupId": 3,
+    "collectionId": 8150012,
+    "rate": 100
+  },
+  {
+    "id": 148,
+    "groupId": 3,
+    "collectionId": 8150014,
+    "rate": 100
+  },
+  {
+    "id": 149,
+    "groupId": 3,
+    "collectionId": 8150016,
+    "rate": 100
+  },
+  {
+    "id": 150,
+    "groupId": 3,
+    "collectionId": 8110021,
+    "rate": 100
+  },
+  {
+    "id": 151,
+    "groupId": 3,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 152,
+    "groupId": 3,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 153,
+    "groupId": 3,
+    "collectionId": 8110805,
+    "rate": 100
+  },
+  {
+    "id": 154,
+    "groupId": 3,
+    "collectionId": 8130107,
+    "rate": 100
+  },
+  {
+    "id": 155,
+    "groupId": 3,
+    "collectionId": 8120406,
+    "rate": 100
+  },
+  {
+    "id": 156,
+    "groupId": 3,
+    "collectionId": 8120610,
+    "rate": 100
+  },
+  {
+    "id": 157,
+    "groupId": 3,
+    "collectionId": 8120705,
+    "rate": 100
+  },
+  {
+    "id": 158,
+    "groupId": 3,
+    "collectionId": 8120808,
+    "rate": 100
+  },
+  {
+    "id": 159,
+    "groupId": 3,
+    "collectionId": 8120110,
+    "rate": 100
+  },
+  {
+    "id": 160,
+    "groupId": 3,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 161,
+    "groupId": 3,
+    "collectionId": 8110410,
+    "rate": 100
+  },
+  {
+    "id": 162,
+    "groupId": 3,
+    "collectionId": 8120512,
+    "rate": 100
+  },
+  {
+    "id": 163,
+    "groupId": 3,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 164,
+    "groupId": 3,
+    "collectionId": 8110029,
+    "rate": 100
+  },
+  {
+    "id": 165,
+    "groupId": 3,
+    "collectionId": 8110030,
+    "rate": 100
+  },
+  {
+    "id": 166,
+    "groupId": 3,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 167,
+    "groupId": 3,
+    "collectionId": 8120034,
+    "rate": 100
+  },
+  {
+    "id": 168,
+    "groupId": 3,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 169,
+    "groupId": 3,
+    "collectionId": 8130041,
+    "rate": 100
+  },
+  {
+    "id": 170,
+    "groupId": 3,
+    "collectionId": 8130115,
+    "rate": 100
+  },
+  {
+    "id": 171,
+    "groupId": 3,
+    "collectionId": 8230042,
+    "rate": 100
+  },
+  {
+    "id": 172,
+    "groupId": 3,
+    "collectionId": 8110616,
+    "rate": 100
+  },
+  {
+    "id": 173,
+    "groupId": 3,
+    "collectionId": 8120416,
+    "rate": 100
+  },
+  {
+    "id": 174,
+    "groupId": 3,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 175,
+    "groupId": 3,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 176,
+    "groupId": 3,
+    "collectionId": 8110048,
+    "rate": 100
+  },
+  {
+    "id": 177,
+    "groupId": 3,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 178,
+    "groupId": 3,
+    "collectionId": 8110716,
+    "rate": 100
+  },
+  {
+    "id": 179,
+    "groupId": 3,
+    "collectionId": 8120821,
+    "rate": 100
+  },
+  {
+    "id": 180,
+    "groupId": 4,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 181,
+    "groupId": 4,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 182,
+    "groupId": 4,
+    "collectionId": 8230004,
+    "rate": 100
+  },
+  {
+    "id": 183,
+    "groupId": 4,
+    "collectionId": 8250007,
+    "rate": 100
+  },
+  {
+    "id": 184,
+    "groupId": 4,
+    "collectionId": 8250009,
+    "rate": 100
+  },
+  {
+    "id": 185,
+    "groupId": 4,
+    "collectionId": 8250011,
+    "rate": 100
+  },
+  {
+    "id": 186,
+    "groupId": 4,
+    "collectionId": 8250013,
+    "rate": 100
+  },
+  {
+    "id": 187,
+    "groupId": 4,
+    "collectionId": 8250015,
+    "rate": 100
+  },
+  {
+    "id": 188,
+    "groupId": 4,
+    "collectionId": 8250017,
+    "rate": 100
+  },
+  {
+    "id": 189,
+    "groupId": 4,
+    "collectionId": 8130018,
+    "rate": 100
+  },
+  {
+    "id": 190,
+    "groupId": 4,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 191,
+    "groupId": 4,
+    "collectionId": 8230019,
+    "rate": 100
+  },
+  {
+    "id": 192,
+    "groupId": 4,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 193,
+    "groupId": 4,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 194,
+    "groupId": 4,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 195,
+    "groupId": 4,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 196,
+    "groupId": 4,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 197,
+    "groupId": 4,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 198,
+    "groupId": 4,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 199,
+    "groupId": 4,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 200,
+    "groupId": 4,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 201,
+    "groupId": 4,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 202,
+    "groupId": 4,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 203,
+    "groupId": 4,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 204,
+    "groupId": 4,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 205,
+    "groupId": 4,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 206,
+    "groupId": 4,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 207,
+    "groupId": 4,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 209,
+    "groupId": 4,
+    "collectionId": 8230027,
+    "rate": 100
+  },
+  {
+    "id": 210,
+    "groupId": 4,
+    "collectionId": 8230028,
+    "rate": 100
+  },
+  {
+    "id": 211,
+    "groupId": 4,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 212,
+    "groupId": 4,
+    "collectionId": 8210031,
+    "rate": 100
+  },
+  {
+    "id": 213,
+    "groupId": 4,
+    "collectionId": 8210032,
+    "rate": 100
+  },
+  {
+    "id": 214,
+    "groupId": 4,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 215,
+    "groupId": 4,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 216,
+    "groupId": 4,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 217,
+    "groupId": 4,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 218,
+    "groupId": 4,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 219,
+    "groupId": 4,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 220,
+    "groupId": 4,
+    "collectionId": 8220033,
+    "rate": 100
+  },
+  {
+    "id": 221,
+    "groupId": 4,
+    "collectionId": 8120035,
+    "rate": 100
+  },
+  {
+    "id": 222,
+    "groupId": 4,
+    "collectionId": 8220036,
+    "rate": 100
+  },
+  {
+    "id": 224,
+    "groupId": 4,
+    "collectionId": 8230038,
+    "rate": 100
+  },
+  {
+    "id": 225,
+    "groupId": 4,
+    "collectionId": 8230039,
+    "rate": 100
+  },
+  {
+    "id": 226,
+    "groupId": 4,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 227,
+    "groupId": 4,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 228,
+    "groupId": 4,
+    "collectionId": 8230040,
+    "rate": 100
+  },
+  {
+    "id": 229,
+    "groupId": 4,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 230,
+    "groupId": 4,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 231,
+    "groupId": 4,
+    "collectionId": 8220044,
+    "rate": 100
+  },
+  {
+    "id": 232,
+    "groupId": 4,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 233,
+    "groupId": 4,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 234,
+    "groupId": 4,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 235,
+    "groupId": 4,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 236,
+    "groupId": 4,
+    "collectionId": 8230050,
+    "rate": 100
+  },
+  {
+    "id": 237,
+    "groupId": 4,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 238,
+    "groupId": 4,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 239,
+    "groupId": 4,
+    "collectionId": 8220051,
+    "rate": 100
+  },
+  {
+    "id": 240,
+    "groupId": 4,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 241,
+    "groupId": 4,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 242,
+    "groupId": 4,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 243,
+    "groupId": 5,
+    "collectionId": 8330001,
+    "rate": 100
+  },
+  {
+    "id": 244,
+    "groupId": 5,
+    "collectionId": 8330002,
+    "rate": 100
+  },
+  {
+    "id": 246,
+    "groupId": 5,
+    "collectionId": 8330005,
+    "rate": 100
+  },
+  {
+    "id": 247,
+    "groupId": 5,
+    "collectionId": 8330607,
+    "rate": 100
+  },
+  {
+    "id": 249,
+    "groupId": 5,
+    "collectionId": 8330020,
+    "rate": 100
+  },
+  {
+    "id": 251,
+    "groupId": 5,
+    "collectionId": 8310608,
+    "rate": 100
+  },
+  {
+    "id": 253,
+    "groupId": 5,
+    "collectionId": 8310609,
+    "rate": 100
+  },
+  {
+    "id": 254,
+    "groupId": 5,
+    "collectionId": 8320809,
+    "rate": 100
+  },
+  {
+    "id": 256,
+    "groupId": 5,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 257,
+    "groupId": 5,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 259,
+    "groupId": 5,
+    "collectionId": 8310022,
+    "rate": 100
+  },
+  {
+    "id": 260,
+    "groupId": 5,
+    "collectionId": 8310706,
+    "rate": 100
+  },
+  {
+    "id": 261,
+    "groupId": 5,
+    "collectionId": 8310810,
+    "rate": 100
+  },
+  {
+    "id": 262,
+    "groupId": 5,
+    "collectionId": 8320109,
+    "rate": 100
+  },
+  {
+    "id": 263,
+    "groupId": 5,
+    "collectionId": 8320408,
+    "rate": 100
+  },
+  {
+    "id": 264,
+    "groupId": 5,
+    "collectionId": 8320511,
+    "rate": 100
+  },
+  {
+    "id": 265,
+    "groupId": 5,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 266,
+    "groupId": 5,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 267,
+    "groupId": 5,
+    "collectionId": 8320707,
+    "rate": 100
+  },
+  {
+    "id": 268,
+    "groupId": 5,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 269,
+    "groupId": 5,
+    "collectionId": 8320812,
+    "rate": 100
+  },
+  {
+    "id": 270,
+    "groupId": 5,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 271,
+    "groupId": 5,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 272,
+    "groupId": 5,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 273,
+    "groupId": 5,
+    "collectionId": 8330023,
+    "rate": 100
+  },
+  {
+    "id": 274,
+    "groupId": 5,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 275,
+    "groupId": 5,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 278,
+    "groupId": 5,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 279,
+    "groupId": 5,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 280,
+    "groupId": 5,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 281,
+    "groupId": 5,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 282,
+    "groupId": 5,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 283,
+    "groupId": 5,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 285,
+    "groupId": 5,
+    "collectionId": 8330026,
+    "rate": 100
+  },
+  {
+    "id": 286,
+    "groupId": 5,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 287,
+    "groupId": 5,
+    "collectionId": 8310114,
+    "rate": 100
+  },
+  {
+    "id": 288,
+    "groupId": 5,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 289,
+    "groupId": 5,
+    "collectionId": 8320514,
+    "rate": 100
+  },
+  {
+    "id": 290,
+    "groupId": 5,
+    "collectionId": 8330715,
+    "rate": 100
+  },
+  {
+    "id": 291,
+    "groupId": 5,
+    "collectionId": 8350043,
+    "rate": 100
+  },
+  {
+    "id": 292,
+    "groupId": 5,
+    "collectionId": 8320617,
+    "rate": 100
+  },
+  {
+    "id": 293,
+    "groupId": 5,
+    "collectionId": 8320046,
+    "rate": 100
+  },
+  {
+    "id": 294,
+    "groupId": 5,
+    "collectionId": 8320618,
+    "rate": 100
+  },
+  {
+    "id": 295,
+    "groupId": 5,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 296,
+    "groupId": 5,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 297,
+    "groupId": 5,
+    "collectionId": 8320049,
+    "rate": 100
+  },
+  {
+    "id": 298,
+    "groupId": 5,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 299,
+    "groupId": 5,
+    "collectionId": 8330418,
+    "rate": 100
+  },
+  {
+    "id": 316,
+    "groupId": 1001,
+    "collectionId": 8130103,
+    "rate": 100
+  },
+  {
+    "id": 317,
+    "groupId": 1001,
+    "collectionId": 8130403,
+    "rate": 100
+  },
+  {
+    "id": 318,
+    "groupId": 1001,
+    "collectionId": 8130503,
+    "rate": 100
+  },
+  {
+    "id": 319,
+    "groupId": 1001,
+    "collectionId": 8130603,
+    "rate": 100
+  },
+  {
+    "id": 320,
+    "groupId": 1001,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 321,
+    "groupId": 1001,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 322,
+    "groupId": 1001,
+    "collectionId": 8120703,
+    "rate": 100
+  },
+  {
+    "id": 323,
+    "groupId": 1001,
+    "collectionId": 8130803,
+    "rate": 100
+  },
+  {
+    "id": 324,
+    "groupId": 1001,
+    "collectionId": 8120104,
+    "rate": 100
+  },
+  {
+    "id": 325,
+    "groupId": 1001,
+    "collectionId": 8130404,
+    "rate": 100
+  },
+  {
+    "id": 326,
+    "groupId": 1001,
+    "collectionId": 8130504,
+    "rate": 100
+  },
+  {
+    "id": 327,
+    "groupId": 1001,
+    "collectionId": 8130604,
+    "rate": 100
+  },
+  {
+    "id": 328,
+    "groupId": 1001,
+    "collectionId": 8120704,
+    "rate": 100
+  },
+  {
+    "id": 329,
+    "groupId": 1001,
+    "collectionId": 8130804,
+    "rate": 100
+  },
+  {
+    "id": 331,
+    "groupId": 1001,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 332,
+    "groupId": 1001,
+    "collectionId": 8150006,
+    "rate": 100
+  },
+  {
+    "id": 333,
+    "groupId": 1001,
+    "collectionId": 8150008,
+    "rate": 100
+  },
+  {
+    "id": 334,
+    "groupId": 1001,
+    "collectionId": 8150010,
+    "rate": 100
+  },
+  {
+    "id": 335,
+    "groupId": 1001,
+    "collectionId": 8150012,
+    "rate": 100
+  },
+  {
+    "id": 336,
+    "groupId": 1001,
+    "collectionId": 8150014,
+    "rate": 100
+  },
+  {
+    "id": 337,
+    "groupId": 1001,
+    "collectionId": 8150016,
+    "rate": 100
+  },
+  {
+    "id": 338,
+    "groupId": 1001,
+    "collectionId": 8110021,
+    "rate": 100
+  },
+  {
+    "id": 339,
+    "groupId": 1001,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 340,
+    "groupId": 1001,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 341,
+    "groupId": 1001,
+    "collectionId": 8110805,
+    "rate": 100
+  },
+  {
+    "id": 342,
+    "groupId": 1001,
+    "collectionId": 8130107,
+    "rate": 100
+  },
+  {
+    "id": 343,
+    "groupId": 1001,
+    "collectionId": 8120406,
+    "rate": 100
+  },
+  {
+    "id": 344,
+    "groupId": 1001,
+    "collectionId": 8120610,
+    "rate": 100
+  },
+  {
+    "id": 345,
+    "groupId": 1001,
+    "collectionId": 8120705,
+    "rate": 100
+  },
+  {
+    "id": 346,
+    "groupId": 1001,
+    "collectionId": 8120808,
+    "rate": 100
+  },
+  {
+    "id": 347,
+    "groupId": 1001,
+    "collectionId": 8120110,
+    "rate": 100
+  },
+  {
+    "id": 348,
+    "groupId": 1001,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 349,
+    "groupId": 1001,
+    "collectionId": 8110410,
+    "rate": 100
+  },
+  {
+    "id": 350,
+    "groupId": 1001,
+    "collectionId": 8120512,
+    "rate": 100
+  },
+  {
+    "id": 351,
+    "groupId": 1001,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 352,
+    "groupId": 1001,
+    "collectionId": 8110029,
+    "rate": 100
+  },
+  {
+    "id": 353,
+    "groupId": 1001,
+    "collectionId": 8110030,
+    "rate": 100
+  },
+  {
+    "id": 354,
+    "groupId": 1001,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 355,
+    "groupId": 1001,
+    "collectionId": 8120034,
+    "rate": 100
+  },
+  {
+    "id": 356,
+    "groupId": 1001,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 357,
+    "groupId": 1001,
+    "collectionId": 8130041,
+    "rate": 100
+  },
+  {
+    "id": 358,
+    "groupId": 1001,
+    "collectionId": 8130115,
+    "rate": 100
+  },
+  {
+    "id": 359,
+    "groupId": 1001,
+    "collectionId": 8230042,
+    "rate": 100
+  },
+  {
+    "id": 360,
+    "groupId": 1001,
+    "collectionId": 8110616,
+    "rate": 100
+  },
+  {
+    "id": 361,
+    "groupId": 1001,
+    "collectionId": 8120416,
+    "rate": 100
+  },
+  {
+    "id": 362,
+    "groupId": 1001,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 363,
+    "groupId": 1001,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 364,
+    "groupId": 1001,
+    "collectionId": 8110048,
+    "rate": 100
+  },
+  {
+    "id": 365,
+    "groupId": 1001,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 366,
+    "groupId": 1001,
+    "collectionId": 8110716,
+    "rate": 100
+  },
+  {
+    "id": 367,
+    "groupId": 1001,
+    "collectionId": 8120821,
+    "rate": 100
+  },
+  {
+    "id": 368,
+    "groupId": 1001,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 369,
+    "groupId": 1001,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 370,
+    "groupId": 1001,
+    "collectionId": 8230004,
+    "rate": 100
+  },
+  {
+    "id": 371,
+    "groupId": 1001,
+    "collectionId": 8250007,
+    "rate": 100
+  },
+  {
+    "id": 372,
+    "groupId": 1001,
+    "collectionId": 8250009,
+    "rate": 100
+  },
+  {
+    "id": 373,
+    "groupId": 1001,
+    "collectionId": 8250011,
+    "rate": 100
+  },
+  {
+    "id": 374,
+    "groupId": 1001,
+    "collectionId": 8250013,
+    "rate": 100
+  },
+  {
+    "id": 375,
+    "groupId": 1001,
+    "collectionId": 8250015,
+    "rate": 100
+  },
+  {
+    "id": 376,
+    "groupId": 1001,
+    "collectionId": 8250017,
+    "rate": 100
+  },
+  {
+    "id": 377,
+    "groupId": 1001,
+    "collectionId": 8130018,
+    "rate": 100
+  },
+  {
+    "id": 378,
+    "groupId": 1001,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 379,
+    "groupId": 1001,
+    "collectionId": 8230019,
+    "rate": 100
+  },
+  {
+    "id": 380,
+    "groupId": 1001,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 381,
+    "groupId": 1001,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 382,
+    "groupId": 1001,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 383,
+    "groupId": 1001,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 384,
+    "groupId": 1001,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 385,
+    "groupId": 1001,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 386,
+    "groupId": 1001,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 387,
+    "groupId": 1001,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 388,
+    "groupId": 1001,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 389,
+    "groupId": 1001,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 390,
+    "groupId": 1001,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 391,
+    "groupId": 1001,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 392,
+    "groupId": 1001,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 393,
+    "groupId": 1001,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 394,
+    "groupId": 1001,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 395,
+    "groupId": 1001,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 397,
+    "groupId": 1001,
+    "collectionId": 8230027,
+    "rate": 100
+  },
+  {
+    "id": 398,
+    "groupId": 1001,
+    "collectionId": 8230028,
+    "rate": 100
+  },
+  {
+    "id": 399,
+    "groupId": 1001,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 400,
+    "groupId": 1001,
+    "collectionId": 8210031,
+    "rate": 100
+  },
+  {
+    "id": 401,
+    "groupId": 1001,
+    "collectionId": 8210032,
+    "rate": 100
+  },
+  {
+    "id": 402,
+    "groupId": 1001,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 403,
+    "groupId": 1001,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 404,
+    "groupId": 1001,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 405,
+    "groupId": 1001,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 406,
+    "groupId": 1001,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 407,
+    "groupId": 1001,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 408,
+    "groupId": 1001,
+    "collectionId": 8220033,
+    "rate": 100
+  },
+  {
+    "id": 409,
+    "groupId": 1001,
+    "collectionId": 8120035,
+    "rate": 100
+  },
+  {
+    "id": 410,
+    "groupId": 1001,
+    "collectionId": 8220036,
+    "rate": 100
+  },
+  {
+    "id": 412,
+    "groupId": 1001,
+    "collectionId": 8230038,
+    "rate": 100
+  },
+  {
+    "id": 413,
+    "groupId": 1001,
+    "collectionId": 8230039,
+    "rate": 100
+  },
+  {
+    "id": 414,
+    "groupId": 1001,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 415,
+    "groupId": 1001,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 416,
+    "groupId": 1001,
+    "collectionId": 8230040,
+    "rate": 100
+  },
+  {
+    "id": 417,
+    "groupId": 1001,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 418,
+    "groupId": 1001,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 419,
+    "groupId": 1001,
+    "collectionId": 8220044,
+    "rate": 100
+  },
+  {
+    "id": 420,
+    "groupId": 1001,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 421,
+    "groupId": 1001,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 422,
+    "groupId": 1001,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 423,
+    "groupId": 1001,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 424,
+    "groupId": 1001,
+    "collectionId": 8230050,
+    "rate": 100
+  },
+  {
+    "id": 425,
+    "groupId": 1001,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 426,
+    "groupId": 1001,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 427,
+    "groupId": 1001,
+    "collectionId": 8220051,
+    "rate": 100
+  },
+  {
+    "id": 428,
+    "groupId": 1001,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 429,
+    "groupId": 1001,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 430,
+    "groupId": 1001,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 431,
+    "groupId": 1001,
+    "collectionId": 8330001,
+    "rate": 100
+  },
+  {
+    "id": 432,
+    "groupId": 1001,
+    "collectionId": 8330002,
+    "rate": 100
+  },
+  {
+    "id": 434,
+    "groupId": 1001,
+    "collectionId": 8330005,
+    "rate": 100
+  },
+  {
+    "id": 435,
+    "groupId": 1001,
+    "collectionId": 8330607,
+    "rate": 100
+  },
+  {
+    "id": 437,
+    "groupId": 1001,
+    "collectionId": 8330020,
+    "rate": 100
+  },
+  {
+    "id": 439,
+    "groupId": 1001,
+    "collectionId": 8310608,
+    "rate": 100
+  },
+  {
+    "id": 441,
+    "groupId": 1001,
+    "collectionId": 8310609,
+    "rate": 100
+  },
+  {
+    "id": 442,
+    "groupId": 1001,
+    "collectionId": 8320809,
+    "rate": 100
+  },
+  {
+    "id": 444,
+    "groupId": 1001,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 445,
+    "groupId": 1001,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 447,
+    "groupId": 1001,
+    "collectionId": 8310022,
+    "rate": 100
+  },
+  {
+    "id": 448,
+    "groupId": 1001,
+    "collectionId": 8310706,
+    "rate": 100
+  },
+  {
+    "id": 449,
+    "groupId": 1001,
+    "collectionId": 8310810,
+    "rate": 100
+  },
+  {
+    "id": 450,
+    "groupId": 1001,
+    "collectionId": 8320109,
+    "rate": 100
+  },
+  {
+    "id": 451,
+    "groupId": 1001,
+    "collectionId": 8320408,
+    "rate": 100
+  },
+  {
+    "id": 452,
+    "groupId": 1001,
+    "collectionId": 8320511,
+    "rate": 100
+  },
+  {
+    "id": 453,
+    "groupId": 1001,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 454,
+    "groupId": 1001,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 455,
+    "groupId": 1001,
+    "collectionId": 8320707,
+    "rate": 100
+  },
+  {
+    "id": 456,
+    "groupId": 1001,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 457,
+    "groupId": 1001,
+    "collectionId": 8320812,
+    "rate": 100
+  },
+  {
+    "id": 458,
+    "groupId": 1001,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 459,
+    "groupId": 1001,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 460,
+    "groupId": 1001,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 461,
+    "groupId": 1001,
+    "collectionId": 8330023,
+    "rate": 100
+  },
+  {
+    "id": 462,
+    "groupId": 1001,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 463,
+    "groupId": 1001,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 466,
+    "groupId": 1001,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 467,
+    "groupId": 1001,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 468,
+    "groupId": 1001,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 469,
+    "groupId": 1001,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 470,
+    "groupId": 1001,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 471,
+    "groupId": 1001,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 473,
+    "groupId": 1001,
+    "collectionId": 8330026,
+    "rate": 100
+  },
+  {
+    "id": 474,
+    "groupId": 1001,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 475,
+    "groupId": 1001,
+    "collectionId": 8310114,
+    "rate": 100
+  },
+  {
+    "id": 476,
+    "groupId": 1001,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 477,
+    "groupId": 1001,
+    "collectionId": 8320514,
+    "rate": 100
+  },
+  {
+    "id": 478,
+    "groupId": 1001,
+    "collectionId": 8330715,
+    "rate": 100
+  },
+  {
+    "id": 479,
+    "groupId": 1001,
+    "collectionId": 8350043,
+    "rate": 100
+  },
+  {
+    "id": 480,
+    "groupId": 1001,
+    "collectionId": 8320617,
+    "rate": 100
+  },
+  {
+    "id": 481,
+    "groupId": 1001,
+    "collectionId": 8320046,
+    "rate": 100
+  },
+  {
+    "id": 482,
+    "groupId": 1001,
+    "collectionId": 8320618,
+    "rate": 100
+  },
+  {
+    "id": 483,
+    "groupId": 1001,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 484,
+    "groupId": 1001,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 485,
+    "groupId": 1001,
+    "collectionId": 8320049,
+    "rate": 100
+  },
+  {
+    "id": 486,
+    "groupId": 1001,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 487,
+    "groupId": 1001,
+    "collectionId": 8330418,
+    "rate": 100
+  },
+  {
+    "id": 488,
+    "groupId": 1002,
+    "collectionId": 8130103,
+    "rate": 232
+  },
+  {
+    "id": 489,
+    "groupId": 1002,
+    "collectionId": 8130403,
+    "rate": 232
+  },
+  {
+    "id": 490,
+    "groupId": 1002,
+    "collectionId": 8130503,
+    "rate": 232
+  },
+  {
+    "id": 491,
+    "groupId": 1002,
+    "collectionId": 8130603,
+    "rate": 232
+  },
+  {
+    "id": 492,
+    "groupId": 1002,
+    "collectionId": 8130203,
+    "rate": 232
+  },
+  {
+    "id": 493,
+    "groupId": 1002,
+    "collectionId": 8130303,
+    "rate": 232
+  },
+  {
+    "id": 494,
+    "groupId": 1002,
+    "collectionId": 8120703,
+    "rate": 232
+  },
+  {
+    "id": 495,
+    "groupId": 1002,
+    "collectionId": 8130803,
+    "rate": 232
+  },
+  {
+    "id": 496,
+    "groupId": 1002,
+    "collectionId": 8120104,
+    "rate": 232
+  },
+  {
+    "id": 497,
+    "groupId": 1002,
+    "collectionId": 8130404,
+    "rate": 232
+  },
+  {
+    "id": 498,
+    "groupId": 1002,
+    "collectionId": 8130504,
+    "rate": 232
+  },
+  {
+    "id": 499,
+    "groupId": 1002,
+    "collectionId": 8130604,
+    "rate": 232
+  },
+  {
+    "id": 500,
+    "groupId": 1002,
+    "collectionId": 8120704,
+    "rate": 232
+  },
+  {
+    "id": 501,
+    "groupId": 1002,
+    "collectionId": 8130804,
+    "rate": 232
+  },
+  {
+    "id": 503,
+    "groupId": 1002,
+    "collectionId": 8130505,
+    "rate": 232
+  },
+  {
+    "id": 504,
+    "groupId": 1002,
+    "collectionId": 8150006,
+    "rate": 232
+  },
+  {
+    "id": 505,
+    "groupId": 1002,
+    "collectionId": 8150008,
+    "rate": 232
+  },
+  {
+    "id": 506,
+    "groupId": 1002,
+    "collectionId": 8150010,
+    "rate": 232
+  },
+  {
+    "id": 507,
+    "groupId": 1002,
+    "collectionId": 8150012,
+    "rate": 232
+  },
+  {
+    "id": 508,
+    "groupId": 1002,
+    "collectionId": 8150014,
+    "rate": 232
+  },
+  {
+    "id": 509,
+    "groupId": 1002,
+    "collectionId": 8150016,
+    "rate": 232
+  },
+  {
+    "id": 510,
+    "groupId": 1002,
+    "collectionId": 8110021,
+    "rate": 232
+  },
+  {
+    "id": 511,
+    "groupId": 1002,
+    "collectionId": 8110507,
+    "rate": 232
+  },
+  {
+    "id": 512,
+    "groupId": 1002,
+    "collectionId": 8110307,
+    "rate": 232
+  },
+  {
+    "id": 513,
+    "groupId": 1002,
+    "collectionId": 8110805,
+    "rate": 232
+  },
+  {
+    "id": 514,
+    "groupId": 1002,
+    "collectionId": 8130107,
+    "rate": 232
+  },
+  {
+    "id": 515,
+    "groupId": 1002,
+    "collectionId": 8120406,
+    "rate": 232
+  },
+  {
+    "id": 516,
+    "groupId": 1002,
+    "collectionId": 8120610,
+    "rate": 232
+  },
+  {
+    "id": 517,
+    "groupId": 1002,
+    "collectionId": 8120705,
+    "rate": 232
+  },
+  {
+    "id": 518,
+    "groupId": 1002,
+    "collectionId": 8120808,
+    "rate": 232
+  },
+  {
+    "id": 519,
+    "groupId": 1002,
+    "collectionId": 8120110,
+    "rate": 232
+  },
+  {
+    "id": 520,
+    "groupId": 1002,
+    "collectionId": 8120208,
+    "rate": 232
+  },
+  {
+    "id": 521,
+    "groupId": 1002,
+    "collectionId": 8110410,
+    "rate": 232
+  },
+  {
+    "id": 522,
+    "groupId": 1002,
+    "collectionId": 8120512,
+    "rate": 232
+  },
+  {
+    "id": 523,
+    "groupId": 1002,
+    "collectionId": 8110312,
+    "rate": 232
+  },
+  {
+    "id": 524,
+    "groupId": 1002,
+    "collectionId": 8110029,
+    "rate": 232
+  },
+  {
+    "id": 525,
+    "groupId": 1002,
+    "collectionId": 8110030,
+    "rate": 232
+  },
+  {
+    "id": 526,
+    "groupId": 1002,
+    "collectionId": 8110213,
+    "rate": 232
+  },
+  {
+    "id": 527,
+    "groupId": 1002,
+    "collectionId": 8120034,
+    "rate": 232
+  },
+  {
+    "id": 528,
+    "groupId": 1002,
+    "collectionId": 8130315,
+    "rate": 232
+  },
+  {
+    "id": 529,
+    "groupId": 1002,
+    "collectionId": 8130041,
+    "rate": 232
+  },
+  {
+    "id": 530,
+    "groupId": 1002,
+    "collectionId": 8130115,
+    "rate": 232
+  },
+  {
+    "id": 531,
+    "groupId": 1002,
+    "collectionId": 8230042,
+    "rate": 232
+  },
+  {
+    "id": 532,
+    "groupId": 1002,
+    "collectionId": 8110616,
+    "rate": 232
+  },
+  {
+    "id": 533,
+    "groupId": 1002,
+    "collectionId": 8120416,
+    "rate": 232
+  },
+  {
+    "id": 534,
+    "groupId": 1002,
+    "collectionId": 8120317,
+    "rate": 232
+  },
+  {
+    "id": 535,
+    "groupId": 1002,
+    "collectionId": 8120216,
+    "rate": 232
+  },
+  {
+    "id": 536,
+    "groupId": 1002,
+    "collectionId": 8110048,
+    "rate": 232
+  },
+  {
+    "id": 537,
+    "groupId": 1002,
+    "collectionId": 8130217,
+    "rate": 232
+  },
+  {
+    "id": 538,
+    "groupId": 1002,
+    "collectionId": 8110716,
+    "rate": 232
+  },
+  {
+    "id": 539,
+    "groupId": 1002,
+    "collectionId": 8120821,
+    "rate": 232
+  },
+  {
+    "id": 540,
+    "groupId": 1002,
+    "collectionId": 8230204,
+    "rate": 55
+  },
+  {
+    "id": 541,
+    "groupId": 1002,
+    "collectionId": 8230305,
+    "rate": 55
+  },
+  {
+    "id": 542,
+    "groupId": 1002,
+    "collectionId": 8230004,
+    "rate": 55
+  },
+  {
+    "id": 543,
+    "groupId": 1002,
+    "collectionId": 8250007,
+    "rate": 55
+  },
+  {
+    "id": 544,
+    "groupId": 1002,
+    "collectionId": 8250009,
+    "rate": 55
+  },
+  {
+    "id": 545,
+    "groupId": 1002,
+    "collectionId": 8250011,
+    "rate": 55
+  },
+  {
+    "id": 546,
+    "groupId": 1002,
+    "collectionId": 8250013,
+    "rate": 55
+  },
+  {
+    "id": 547,
+    "groupId": 1002,
+    "collectionId": 8250015,
+    "rate": 55
+  },
+  {
+    "id": 548,
+    "groupId": 1002,
+    "collectionId": 8250017,
+    "rate": 55
+  },
+  {
+    "id": 549,
+    "groupId": 1002,
+    "collectionId": 8130018,
+    "rate": 55
+  },
+  {
+    "id": 550,
+    "groupId": 1002,
+    "collectionId": 8230606,
+    "rate": 55
+  },
+  {
+    "id": 551,
+    "groupId": 1002,
+    "collectionId": 8230019,
+    "rate": 55
+  },
+  {
+    "id": 552,
+    "groupId": 1002,
+    "collectionId": 8210105,
+    "rate": 55
+  },
+  {
+    "id": 553,
+    "groupId": 1002,
+    "collectionId": 8210508,
+    "rate": 55
+  },
+  {
+    "id": 554,
+    "groupId": 1002,
+    "collectionId": 8210205,
+    "rate": 55
+  },
+  {
+    "id": 555,
+    "groupId": 1002,
+    "collectionId": 8220106,
+    "rate": 55
+  },
+  {
+    "id": 556,
+    "groupId": 1002,
+    "collectionId": 8230509,
+    "rate": 55
+  },
+  {
+    "id": 557,
+    "groupId": 1002,
+    "collectionId": 8220806,
+    "rate": 55
+  },
+  {
+    "id": 558,
+    "groupId": 1002,
+    "collectionId": 8220807,
+    "rate": 55
+  },
+  {
+    "id": 559,
+    "groupId": 1002,
+    "collectionId": 8210611,
+    "rate": 55
+  },
+  {
+    "id": 560,
+    "groupId": 1002,
+    "collectionId": 8220612,
+    "rate": 55
+  },
+  {
+    "id": 561,
+    "groupId": 1002,
+    "collectionId": 8220409,
+    "rate": 55
+  },
+  {
+    "id": 562,
+    "groupId": 1002,
+    "collectionId": 8220613,
+    "rate": 55
+  },
+  {
+    "id": 563,
+    "groupId": 1002,
+    "collectionId": 8220813,
+    "rate": 55
+  },
+  {
+    "id": 564,
+    "groupId": 1002,
+    "collectionId": 8220814,
+    "rate": 55
+  },
+  {
+    "id": 565,
+    "groupId": 1002,
+    "collectionId": 8210411,
+    "rate": 55
+  },
+  {
+    "id": 566,
+    "groupId": 1002,
+    "collectionId": 8230614,
+    "rate": 55
+  },
+  {
+    "id": 567,
+    "groupId": 1002,
+    "collectionId": 8210209,
+    "rate": 55
+  },
+  {
+    "id": 569,
+    "groupId": 1002,
+    "collectionId": 8230027,
+    "rate": 55
+  },
+  {
+    "id": 570,
+    "groupId": 1002,
+    "collectionId": 8230028,
+    "rate": 55
+  },
+  {
+    "id": 571,
+    "groupId": 1002,
+    "collectionId": 8210711,
+    "rate": 55
+  },
+  {
+    "id": 572,
+    "groupId": 1002,
+    "collectionId": 8210031,
+    "rate": 55
+  },
+  {
+    "id": 573,
+    "groupId": 1002,
+    "collectionId": 8210032,
+    "rate": 55
+  },
+  {
+    "id": 574,
+    "groupId": 1002,
+    "collectionId": 8210712,
+    "rate": 55
+  },
+  {
+    "id": 575,
+    "groupId": 1002,
+    "collectionId": 8210713,
+    "rate": 55
+  },
+  {
+    "id": 576,
+    "groupId": 1002,
+    "collectionId": 8210314,
+    "rate": 55
+  },
+  {
+    "id": 577,
+    "groupId": 1002,
+    "collectionId": 8210113,
+    "rate": 55
+  },
+  {
+    "id": 578,
+    "groupId": 1002,
+    "collectionId": 8220214,
+    "rate": 55
+  },
+  {
+    "id": 579,
+    "groupId": 1002,
+    "collectionId": 8220215,
+    "rate": 55
+  },
+  {
+    "id": 580,
+    "groupId": 1002,
+    "collectionId": 8220033,
+    "rate": 55
+  },
+  {
+    "id": 581,
+    "groupId": 1002,
+    "collectionId": 8120035,
+    "rate": 55
+  },
+  {
+    "id": 582,
+    "groupId": 1002,
+    "collectionId": 8220036,
+    "rate": 55
+  },
+  {
+    "id": 584,
+    "groupId": 1002,
+    "collectionId": 8230038,
+    "rate": 55
+  },
+  {
+    "id": 585,
+    "groupId": 1002,
+    "collectionId": 8230039,
+    "rate": 55
+  },
+  {
+    "id": 586,
+    "groupId": 1002,
+    "collectionId": 8230414,
+    "rate": 55
+  },
+  {
+    "id": 587,
+    "groupId": 1002,
+    "collectionId": 8230714,
+    "rate": 55
+  },
+  {
+    "id": 588,
+    "groupId": 1002,
+    "collectionId": 8230040,
+    "rate": 55
+  },
+  {
+    "id": 589,
+    "groupId": 1002,
+    "collectionId": 8220415,
+    "rate": 55
+  },
+  {
+    "id": 590,
+    "groupId": 1002,
+    "collectionId": 8230316,
+    "rate": 55
+  },
+  {
+    "id": 591,
+    "groupId": 1002,
+    "collectionId": 8220044,
+    "rate": 55
+  },
+  {
+    "id": 592,
+    "groupId": 1002,
+    "collectionId": 8210045,
+    "rate": 55
+  },
+  {
+    "id": 593,
+    "groupId": 1002,
+    "collectionId": 8220515,
+    "rate": 55
+  },
+  {
+    "id": 594,
+    "groupId": 1002,
+    "collectionId": 8120047,
+    "rate": 55
+  },
+  {
+    "id": 595,
+    "groupId": 1002,
+    "collectionId": 8220318,
+    "rate": 55
+  },
+  {
+    "id": 596,
+    "groupId": 1002,
+    "collectionId": 8230050,
+    "rate": 55
+  },
+  {
+    "id": 597,
+    "groupId": 1002,
+    "collectionId": 8210818,
+    "rate": 55
+  },
+  {
+    "id": 598,
+    "groupId": 1002,
+    "collectionId": 8210819,
+    "rate": 55
+  },
+  {
+    "id": 599,
+    "groupId": 1002,
+    "collectionId": 8220051,
+    "rate": 55
+  },
+  {
+    "id": 600,
+    "groupId": 1002,
+    "collectionId": 8220516,
+    "rate": 55
+  },
+  {
+    "id": 601,
+    "groupId": 1002,
+    "collectionId": 8220820,
+    "rate": 55
+  },
+  {
+    "id": 602,
+    "groupId": 1002,
+    "collectionId": 8220052,
+    "rate": 55
+  },
+  {
+    "id": 603,
+    "groupId": 1002,
+    "collectionId": 8330001,
+    "rate": 30
+  },
+  {
+    "id": 604,
+    "groupId": 1002,
+    "collectionId": 8330002,
+    "rate": 30
+  },
+  {
+    "id": 606,
+    "groupId": 1002,
+    "collectionId": 8330005,
+    "rate": 30
+  },
+  {
+    "id": 607,
+    "groupId": 1002,
+    "collectionId": 8330607,
+    "rate": 30
+  },
+  {
+    "id": 609,
+    "groupId": 1002,
+    "collectionId": 8330020,
+    "rate": 30
+  },
+  {
+    "id": 611,
+    "groupId": 1002,
+    "collectionId": 8310608,
+    "rate": 30
+  },
+  {
+    "id": 613,
+    "groupId": 1002,
+    "collectionId": 8310609,
+    "rate": 30
+  },
+  {
+    "id": 614,
+    "groupId": 1002,
+    "collectionId": 8320809,
+    "rate": 30
+  },
+  {
+    "id": 616,
+    "groupId": 1002,
+    "collectionId": 8310407,
+    "rate": 30
+  },
+  {
+    "id": 617,
+    "groupId": 1002,
+    "collectionId": 8310510,
+    "rate": 30
+  },
+  {
+    "id": 619,
+    "groupId": 1002,
+    "collectionId": 8310022,
+    "rate": 30
+  },
+  {
+    "id": 620,
+    "groupId": 1002,
+    "collectionId": 8310706,
+    "rate": 30
+  },
+  {
+    "id": 621,
+    "groupId": 1002,
+    "collectionId": 8310810,
+    "rate": 30
+  },
+  {
+    "id": 622,
+    "groupId": 1002,
+    "collectionId": 8320109,
+    "rate": 30
+  },
+  {
+    "id": 623,
+    "groupId": 1002,
+    "collectionId": 8320408,
+    "rate": 30
+  },
+  {
+    "id": 624,
+    "groupId": 1002,
+    "collectionId": 8320511,
+    "rate": 30
+  },
+  {
+    "id": 625,
+    "groupId": 1002,
+    "collectionId": 8320207,
+    "rate": 30
+  },
+  {
+    "id": 626,
+    "groupId": 1002,
+    "collectionId": 8320310,
+    "rate": 30
+  },
+  {
+    "id": 627,
+    "groupId": 1002,
+    "collectionId": 8320707,
+    "rate": 30
+  },
+  {
+    "id": 628,
+    "groupId": 1002,
+    "collectionId": 8320811,
+    "rate": 30
+  },
+  {
+    "id": 629,
+    "groupId": 1002,
+    "collectionId": 8320812,
+    "rate": 30
+  },
+  {
+    "id": 630,
+    "groupId": 1002,
+    "collectionId": 8330708,
+    "rate": 30
+  },
+  {
+    "id": 631,
+    "groupId": 1002,
+    "collectionId": 8320709,
+    "rate": 30
+  },
+  {
+    "id": 632,
+    "groupId": 1002,
+    "collectionId": 8310815,
+    "rate": 30
+  },
+  {
+    "id": 633,
+    "groupId": 1002,
+    "collectionId": 8330023,
+    "rate": 30
+  },
+  {
+    "id": 634,
+    "groupId": 1002,
+    "collectionId": 8330111,
+    "rate": 30
+  },
+  {
+    "id": 635,
+    "groupId": 1002,
+    "collectionId": 8320210,
+    "rate": 30
+  },
+  {
+    "id": 638,
+    "groupId": 1002,
+    "collectionId": 8330211,
+    "rate": 30
+  },
+  {
+    "id": 639,
+    "groupId": 1002,
+    "collectionId": 8330112,
+    "rate": 30
+  },
+  {
+    "id": 640,
+    "groupId": 1002,
+    "collectionId": 8330412,
+    "rate": 30
+  },
+  {
+    "id": 641,
+    "groupId": 1002,
+    "collectionId": 8330513,
+    "rate": 30
+  },
+  {
+    "id": 642,
+    "groupId": 1002,
+    "collectionId": 8330311,
+    "rate": 30
+  },
+  {
+    "id": 643,
+    "groupId": 1002,
+    "collectionId": 8330816,
+    "rate": 30
+  },
+  {
+    "id": 645,
+    "groupId": 1002,
+    "collectionId": 8330026,
+    "rate": 30
+  },
+  {
+    "id": 646,
+    "groupId": 1002,
+    "collectionId": 8310212,
+    "rate": 30
+  },
+  {
+    "id": 647,
+    "groupId": 1002,
+    "collectionId": 8310114,
+    "rate": 30
+  },
+  {
+    "id": 648,
+    "groupId": 1002,
+    "collectionId": 8330413,
+    "rate": 30
+  },
+  {
+    "id": 649,
+    "groupId": 1002,
+    "collectionId": 8320514,
+    "rate": 30
+  },
+  {
+    "id": 650,
+    "groupId": 1002,
+    "collectionId": 8330715,
+    "rate": 30
+  },
+  {
+    "id": 651,
+    "groupId": 1002,
+    "collectionId": 8350043,
+    "rate": 30
+  },
+  {
+    "id": 652,
+    "groupId": 1002,
+    "collectionId": 8320617,
+    "rate": 30
+  },
+  {
+    "id": 653,
+    "groupId": 1002,
+    "collectionId": 8320046,
+    "rate": 30
+  },
+  {
+    "id": 654,
+    "groupId": 1002,
+    "collectionId": 8320618,
+    "rate": 30
+  },
+  {
+    "id": 655,
+    "groupId": 1002,
+    "collectionId": 8330817,
+    "rate": 30
+  },
+  {
+    "id": 656,
+    "groupId": 1002,
+    "collectionId": 8330417,
+    "rate": 30
+  },
+  {
+    "id": 657,
+    "groupId": 1002,
+    "collectionId": 8320049,
+    "rate": 30
+  },
+  {
+    "id": 658,
+    "groupId": 1002,
+    "collectionId": 8330218,
+    "rate": 30
+  },
+  {
+    "id": 659,
+    "groupId": 1002,
+    "collectionId": 8330418,
+    "rate": 30
+  },
+  {
+    "id": 660,
+    "groupId": 1003,
+    "collectionId": 8130103,
+    "rate": 165
+  },
+  {
+    "id": 661,
+    "groupId": 1003,
+    "collectionId": 8130403,
+    "rate": 165
+  },
+  {
+    "id": 662,
+    "groupId": 1003,
+    "collectionId": 8130503,
+    "rate": 165
+  },
+  {
+    "id": 663,
+    "groupId": 1003,
+    "collectionId": 8130603,
+    "rate": 165
+  },
+  {
+    "id": 664,
+    "groupId": 1003,
+    "collectionId": 8130203,
+    "rate": 165
+  },
+  {
+    "id": 665,
+    "groupId": 1003,
+    "collectionId": 8130303,
+    "rate": 165
+  },
+  {
+    "id": 666,
+    "groupId": 1003,
+    "collectionId": 8120703,
+    "rate": 165
+  },
+  {
+    "id": 667,
+    "groupId": 1003,
+    "collectionId": 8130803,
+    "rate": 165
+  },
+  {
+    "id": 668,
+    "groupId": 1003,
+    "collectionId": 8120104,
+    "rate": 165
+  },
+  {
+    "id": 669,
+    "groupId": 1003,
+    "collectionId": 8130404,
+    "rate": 165
+  },
+  {
+    "id": 670,
+    "groupId": 1003,
+    "collectionId": 8130504,
+    "rate": 165
+  },
+  {
+    "id": 671,
+    "groupId": 1003,
+    "collectionId": 8130604,
+    "rate": 165
+  },
+  {
+    "id": 672,
+    "groupId": 1003,
+    "collectionId": 8120704,
+    "rate": 165
+  },
+  {
+    "id": 673,
+    "groupId": 1003,
+    "collectionId": 8130804,
+    "rate": 165
+  },
+  {
+    "id": 675,
+    "groupId": 1003,
+    "collectionId": 8130505,
+    "rate": 165
+  },
+  {
+    "id": 676,
+    "groupId": 1003,
+    "collectionId": 8150006,
+    "rate": 165
+  },
+  {
+    "id": 677,
+    "groupId": 1003,
+    "collectionId": 8150008,
+    "rate": 165
+  },
+  {
+    "id": 678,
+    "groupId": 1003,
+    "collectionId": 8150010,
+    "rate": 165
+  },
+  {
+    "id": 679,
+    "groupId": 1003,
+    "collectionId": 8150012,
+    "rate": 165
+  },
+  {
+    "id": 680,
+    "groupId": 1003,
+    "collectionId": 8150014,
+    "rate": 165
+  },
+  {
+    "id": 681,
+    "groupId": 1003,
+    "collectionId": 8150016,
+    "rate": 165
+  },
+  {
+    "id": 682,
+    "groupId": 1003,
+    "collectionId": 8110021,
+    "rate": 165
+  },
+  {
+    "id": 683,
+    "groupId": 1003,
+    "collectionId": 8110507,
+    "rate": 165
+  },
+  {
+    "id": 684,
+    "groupId": 1003,
+    "collectionId": 8110307,
+    "rate": 165
+  },
+  {
+    "id": 685,
+    "groupId": 1003,
+    "collectionId": 8110805,
+    "rate": 165
+  },
+  {
+    "id": 686,
+    "groupId": 1003,
+    "collectionId": 8130107,
+    "rate": 165
+  },
+  {
+    "id": 687,
+    "groupId": 1003,
+    "collectionId": 8120406,
+    "rate": 165
+  },
+  {
+    "id": 688,
+    "groupId": 1003,
+    "collectionId": 8120610,
+    "rate": 165
+  },
+  {
+    "id": 689,
+    "groupId": 1003,
+    "collectionId": 8120705,
+    "rate": 165
+  },
+  {
+    "id": 690,
+    "groupId": 1003,
+    "collectionId": 8120808,
+    "rate": 165
+  },
+  {
+    "id": 691,
+    "groupId": 1003,
+    "collectionId": 8120110,
+    "rate": 165
+  },
+  {
+    "id": 692,
+    "groupId": 1003,
+    "collectionId": 8120208,
+    "rate": 165
+  },
+  {
+    "id": 693,
+    "groupId": 1003,
+    "collectionId": 8110410,
+    "rate": 165
+  },
+  {
+    "id": 694,
+    "groupId": 1003,
+    "collectionId": 8120512,
+    "rate": 165
+  },
+  {
+    "id": 695,
+    "groupId": 1003,
+    "collectionId": 8110312,
+    "rate": 165
+  },
+  {
+    "id": 696,
+    "groupId": 1003,
+    "collectionId": 8110029,
+    "rate": 165
+  },
+  {
+    "id": 697,
+    "groupId": 1003,
+    "collectionId": 8110030,
+    "rate": 165
+  },
+  {
+    "id": 698,
+    "groupId": 1003,
+    "collectionId": 8110213,
+    "rate": 165
+  },
+  {
+    "id": 699,
+    "groupId": 1003,
+    "collectionId": 8120034,
+    "rate": 165
+  },
+  {
+    "id": 700,
+    "groupId": 1003,
+    "collectionId": 8130315,
+    "rate": 165
+  },
+  {
+    "id": 701,
+    "groupId": 1003,
+    "collectionId": 8130041,
+    "rate": 165
+  },
+  {
+    "id": 702,
+    "groupId": 1003,
+    "collectionId": 8130115,
+    "rate": 165
+  },
+  {
+    "id": 703,
+    "groupId": 1003,
+    "collectionId": 8230042,
+    "rate": 165
+  },
+  {
+    "id": 704,
+    "groupId": 1003,
+    "collectionId": 8110616,
+    "rate": 165
+  },
+  {
+    "id": 705,
+    "groupId": 1003,
+    "collectionId": 8120416,
+    "rate": 165
+  },
+  {
+    "id": 706,
+    "groupId": 1003,
+    "collectionId": 8120317,
+    "rate": 165
+  },
+  {
+    "id": 707,
+    "groupId": 1003,
+    "collectionId": 8120216,
+    "rate": 165
+  },
+  {
+    "id": 708,
+    "groupId": 1003,
+    "collectionId": 8110048,
+    "rate": 165
+  },
+  {
+    "id": 709,
+    "groupId": 1003,
+    "collectionId": 8130217,
+    "rate": 165
+  },
+  {
+    "id": 710,
+    "groupId": 1003,
+    "collectionId": 8110716,
+    "rate": 165
+  },
+  {
+    "id": 711,
+    "groupId": 1003,
+    "collectionId": 8120821,
+    "rate": 165
+  },
+  {
+    "id": 712,
+    "groupId": 1003,
+    "collectionId": 8230204,
+    "rate": 82
+  },
+  {
+    "id": 713,
+    "groupId": 1003,
+    "collectionId": 8230305,
+    "rate": 82
+  },
+  {
+    "id": 714,
+    "groupId": 1003,
+    "collectionId": 8230004,
+    "rate": 82
+  },
+  {
+    "id": 715,
+    "groupId": 1003,
+    "collectionId": 8250007,
+    "rate": 82
+  },
+  {
+    "id": 716,
+    "groupId": 1003,
+    "collectionId": 8250009,
+    "rate": 82
+  },
+  {
+    "id": 717,
+    "groupId": 1003,
+    "collectionId": 8250011,
+    "rate": 82
+  },
+  {
+    "id": 718,
+    "groupId": 1003,
+    "collectionId": 8250013,
+    "rate": 82
+  },
+  {
+    "id": 719,
+    "groupId": 1003,
+    "collectionId": 8250015,
+    "rate": 82
+  },
+  {
+    "id": 720,
+    "groupId": 1003,
+    "collectionId": 8250017,
+    "rate": 82
+  },
+  {
+    "id": 721,
+    "groupId": 1003,
+    "collectionId": 8130018,
+    "rate": 82
+  },
+  {
+    "id": 722,
+    "groupId": 1003,
+    "collectionId": 8230606,
+    "rate": 82
+  },
+  {
+    "id": 723,
+    "groupId": 1003,
+    "collectionId": 8230019,
+    "rate": 82
+  },
+  {
+    "id": 724,
+    "groupId": 1003,
+    "collectionId": 8210105,
+    "rate": 82
+  },
+  {
+    "id": 725,
+    "groupId": 1003,
+    "collectionId": 8210508,
+    "rate": 82
+  },
+  {
+    "id": 726,
+    "groupId": 1003,
+    "collectionId": 8210205,
+    "rate": 82
+  },
+  {
+    "id": 727,
+    "groupId": 1003,
+    "collectionId": 8220106,
+    "rate": 82
+  },
+  {
+    "id": 728,
+    "groupId": 1003,
+    "collectionId": 8230509,
+    "rate": 82
+  },
+  {
+    "id": 729,
+    "groupId": 1003,
+    "collectionId": 8220806,
+    "rate": 82
+  },
+  {
+    "id": 730,
+    "groupId": 1003,
+    "collectionId": 8220807,
+    "rate": 82
+  },
+  {
+    "id": 731,
+    "groupId": 1003,
+    "collectionId": 8210611,
+    "rate": 82
+  },
+  {
+    "id": 732,
+    "groupId": 1003,
+    "collectionId": 8220612,
+    "rate": 82
+  },
+  {
+    "id": 733,
+    "groupId": 1003,
+    "collectionId": 8220409,
+    "rate": 82
+  },
+  {
+    "id": 734,
+    "groupId": 1003,
+    "collectionId": 8220613,
+    "rate": 82
+  },
+  {
+    "id": 735,
+    "groupId": 1003,
+    "collectionId": 8220813,
+    "rate": 82
+  },
+  {
+    "id": 736,
+    "groupId": 1003,
+    "collectionId": 8220814,
+    "rate": 82
+  },
+  {
+    "id": 737,
+    "groupId": 1003,
+    "collectionId": 8210411,
+    "rate": 82
+  },
+  {
+    "id": 738,
+    "groupId": 1003,
+    "collectionId": 8230614,
+    "rate": 82
+  },
+  {
+    "id": 739,
+    "groupId": 1003,
+    "collectionId": 8210209,
+    "rate": 82
+  },
+  {
+    "id": 741,
+    "groupId": 1003,
+    "collectionId": 8230027,
+    "rate": 82
+  },
+  {
+    "id": 742,
+    "groupId": 1003,
+    "collectionId": 8230028,
+    "rate": 82
+  },
+  {
+    "id": 743,
+    "groupId": 1003,
+    "collectionId": 8210711,
+    "rate": 82
+  },
+  {
+    "id": 744,
+    "groupId": 1003,
+    "collectionId": 8210031,
+    "rate": 82
+  },
+  {
+    "id": 745,
+    "groupId": 1003,
+    "collectionId": 8210032,
+    "rate": 82
+  },
+  {
+    "id": 746,
+    "groupId": 1003,
+    "collectionId": 8210712,
+    "rate": 82
+  },
+  {
+    "id": 747,
+    "groupId": 1003,
+    "collectionId": 8210713,
+    "rate": 82
+  },
+  {
+    "id": 748,
+    "groupId": 1003,
+    "collectionId": 8210314,
+    "rate": 82
+  },
+  {
+    "id": 749,
+    "groupId": 1003,
+    "collectionId": 8210113,
+    "rate": 82
+  },
+  {
+    "id": 750,
+    "groupId": 1003,
+    "collectionId": 8220214,
+    "rate": 82
+  },
+  {
+    "id": 751,
+    "groupId": 1003,
+    "collectionId": 8220215,
+    "rate": 82
+  },
+  {
+    "id": 752,
+    "groupId": 1003,
+    "collectionId": 8220033,
+    "rate": 82
+  },
+  {
+    "id": 753,
+    "groupId": 1003,
+    "collectionId": 8120035,
+    "rate": 82
+  },
+  {
+    "id": 754,
+    "groupId": 1003,
+    "collectionId": 8220036,
+    "rate": 82
+  },
+  {
+    "id": 756,
+    "groupId": 1003,
+    "collectionId": 8230038,
+    "rate": 82
+  },
+  {
+    "id": 757,
+    "groupId": 1003,
+    "collectionId": 8230039,
+    "rate": 82
+  },
+  {
+    "id": 758,
+    "groupId": 1003,
+    "collectionId": 8230414,
+    "rate": 82
+  },
+  {
+    "id": 759,
+    "groupId": 1003,
+    "collectionId": 8230714,
+    "rate": 82
+  },
+  {
+    "id": 760,
+    "groupId": 1003,
+    "collectionId": 8230040,
+    "rate": 82
+  },
+  {
+    "id": 761,
+    "groupId": 1003,
+    "collectionId": 8220415,
+    "rate": 82
+  },
+  {
+    "id": 762,
+    "groupId": 1003,
+    "collectionId": 8230316,
+    "rate": 82
+  },
+  {
+    "id": 763,
+    "groupId": 1003,
+    "collectionId": 8220044,
+    "rate": 82
+  },
+  {
+    "id": 764,
+    "groupId": 1003,
+    "collectionId": 8210045,
+    "rate": 82
+  },
+  {
+    "id": 765,
+    "groupId": 1003,
+    "collectionId": 8220515,
+    "rate": 82
+  },
+  {
+    "id": 766,
+    "groupId": 1003,
+    "collectionId": 8120047,
+    "rate": 82
+  },
+  {
+    "id": 767,
+    "groupId": 1003,
+    "collectionId": 8220318,
+    "rate": 82
+  },
+  {
+    "id": 768,
+    "groupId": 1003,
+    "collectionId": 8230050,
+    "rate": 82
+  },
+  {
+    "id": 769,
+    "groupId": 1003,
+    "collectionId": 8210818,
+    "rate": 82
+  },
+  {
+    "id": 770,
+    "groupId": 1003,
+    "collectionId": 8210819,
+    "rate": 82
+  },
+  {
+    "id": 771,
+    "groupId": 1003,
+    "collectionId": 8220051,
+    "rate": 82
+  },
+  {
+    "id": 772,
+    "groupId": 1003,
+    "collectionId": 8220516,
+    "rate": 82
+  },
+  {
+    "id": 773,
+    "groupId": 1003,
+    "collectionId": 8220820,
+    "rate": 82
+  },
+  {
+    "id": 774,
+    "groupId": 1003,
+    "collectionId": 8220052,
+    "rate": 82
+  },
+  {
+    "id": 775,
+    "groupId": 1003,
+    "collectionId": 8330001,
+    "rate": 60
+  },
+  {
+    "id": 776,
+    "groupId": 1003,
+    "collectionId": 8330002,
+    "rate": 60
+  },
+  {
+    "id": 778,
+    "groupId": 1003,
+    "collectionId": 8330005,
+    "rate": 60
+  },
+  {
+    "id": 779,
+    "groupId": 1003,
+    "collectionId": 8330607,
+    "rate": 60
+  },
+  {
+    "id": 781,
+    "groupId": 1003,
+    "collectionId": 8330020,
+    "rate": 60
+  },
+  {
+    "id": 783,
+    "groupId": 1003,
+    "collectionId": 8310608,
+    "rate": 60
+  },
+  {
+    "id": 785,
+    "groupId": 1003,
+    "collectionId": 8310609,
+    "rate": 60
+  },
+  {
+    "id": 786,
+    "groupId": 1003,
+    "collectionId": 8320809,
+    "rate": 60
+  },
+  {
+    "id": 788,
+    "groupId": 1003,
+    "collectionId": 8310407,
+    "rate": 60
+  },
+  {
+    "id": 789,
+    "groupId": 1003,
+    "collectionId": 8310510,
+    "rate": 60
+  },
+  {
+    "id": 791,
+    "groupId": 1003,
+    "collectionId": 8310022,
+    "rate": 60
+  },
+  {
+    "id": 792,
+    "groupId": 1003,
+    "collectionId": 8310706,
+    "rate": 60
+  },
+  {
+    "id": 793,
+    "groupId": 1003,
+    "collectionId": 8310810,
+    "rate": 60
+  },
+  {
+    "id": 794,
+    "groupId": 1003,
+    "collectionId": 8320109,
+    "rate": 60
+  },
+  {
+    "id": 795,
+    "groupId": 1003,
+    "collectionId": 8320408,
+    "rate": 60
+  },
+  {
+    "id": 796,
+    "groupId": 1003,
+    "collectionId": 8320511,
+    "rate": 60
+  },
+  {
+    "id": 797,
+    "groupId": 1003,
+    "collectionId": 8320207,
+    "rate": 60
+  },
+  {
+    "id": 798,
+    "groupId": 1003,
+    "collectionId": 8320310,
+    "rate": 60
+  },
+  {
+    "id": 799,
+    "groupId": 1003,
+    "collectionId": 8320707,
+    "rate": 60
+  },
+  {
+    "id": 800,
+    "groupId": 1003,
+    "collectionId": 8320811,
+    "rate": 60
+  },
+  {
+    "id": 801,
+    "groupId": 1003,
+    "collectionId": 8320812,
+    "rate": 60
+  },
+  {
+    "id": 802,
+    "groupId": 1003,
+    "collectionId": 8330708,
+    "rate": 60
+  },
+  {
+    "id": 803,
+    "groupId": 1003,
+    "collectionId": 8320709,
+    "rate": 60
+  },
+  {
+    "id": 804,
+    "groupId": 1003,
+    "collectionId": 8310815,
+    "rate": 60
+  },
+  {
+    "id": 805,
+    "groupId": 1003,
+    "collectionId": 8330023,
+    "rate": 60
+  },
+  {
+    "id": 806,
+    "groupId": 1003,
+    "collectionId": 8330111,
+    "rate": 60
+  },
+  {
+    "id": 807,
+    "groupId": 1003,
+    "collectionId": 8320210,
+    "rate": 60
+  },
+  {
+    "id": 810,
+    "groupId": 1003,
+    "collectionId": 8330211,
+    "rate": 60
+  },
+  {
+    "id": 811,
+    "groupId": 1003,
+    "collectionId": 8330112,
+    "rate": 60
+  },
+  {
+    "id": 812,
+    "groupId": 1003,
+    "collectionId": 8330412,
+    "rate": 60
+  },
+  {
+    "id": 813,
+    "groupId": 1003,
+    "collectionId": 8330513,
+    "rate": 60
+  },
+  {
+    "id": 814,
+    "groupId": 1003,
+    "collectionId": 8330311,
+    "rate": 60
+  },
+  {
+    "id": 815,
+    "groupId": 1003,
+    "collectionId": 8330816,
+    "rate": 60
+  },
+  {
+    "id": 817,
+    "groupId": 1003,
+    "collectionId": 8330026,
+    "rate": 60
+  },
+  {
+    "id": 818,
+    "groupId": 1003,
+    "collectionId": 8310212,
+    "rate": 60
+  },
+  {
+    "id": 819,
+    "groupId": 1003,
+    "collectionId": 8310114,
+    "rate": 60
+  },
+  {
+    "id": 820,
+    "groupId": 1003,
+    "collectionId": 8330413,
+    "rate": 60
+  },
+  {
+    "id": 821,
+    "groupId": 1003,
+    "collectionId": 8320514,
+    "rate": 60
+  },
+  {
+    "id": 822,
+    "groupId": 1003,
+    "collectionId": 8330715,
+    "rate": 60
+  },
+  {
+    "id": 823,
+    "groupId": 1003,
+    "collectionId": 8350043,
+    "rate": 60
+  },
+  {
+    "id": 824,
+    "groupId": 1003,
+    "collectionId": 8320617,
+    "rate": 60
+  },
+  {
+    "id": 825,
+    "groupId": 1003,
+    "collectionId": 8320046,
+    "rate": 60
+  },
+  {
+    "id": 826,
+    "groupId": 1003,
+    "collectionId": 8320618,
+    "rate": 60
+  },
+  {
+    "id": 827,
+    "groupId": 1003,
+    "collectionId": 8330817,
+    "rate": 60
+  },
+  {
+    "id": 828,
+    "groupId": 1003,
+    "collectionId": 8330417,
+    "rate": 60
+  },
+  {
+    "id": 829,
+    "groupId": 1003,
+    "collectionId": 8320049,
+    "rate": 60
+  },
+  {
+    "id": 830,
+    "groupId": 1003,
+    "collectionId": 8330218,
+    "rate": 60
+  },
+  {
+    "id": 831,
+    "groupId": 1003,
+    "collectionId": 8330418,
+    "rate": 60
+  },
+  {
+    "id": 832,
+    "groupId": 1004,
+    "collectionId": 8130103,
+    "rate": 132
+  },
+  {
+    "id": 833,
+    "groupId": 1004,
+    "collectionId": 8130403,
+    "rate": 132
+  },
+  {
+    "id": 834,
+    "groupId": 1004,
+    "collectionId": 8130503,
+    "rate": 132
+  },
+  {
+    "id": 835,
+    "groupId": 1004,
+    "collectionId": 8130603,
+    "rate": 132
+  },
+  {
+    "id": 836,
+    "groupId": 1004,
+    "collectionId": 8130203,
+    "rate": 132
+  },
+  {
+    "id": 837,
+    "groupId": 1004,
+    "collectionId": 8130303,
+    "rate": 132
+  },
+  {
+    "id": 838,
+    "groupId": 1004,
+    "collectionId": 8120703,
+    "rate": 132
+  },
+  {
+    "id": 839,
+    "groupId": 1004,
+    "collectionId": 8130803,
+    "rate": 132
+  },
+  {
+    "id": 840,
+    "groupId": 1004,
+    "collectionId": 8120104,
+    "rate": 132
+  },
+  {
+    "id": 841,
+    "groupId": 1004,
+    "collectionId": 8130404,
+    "rate": 132
+  },
+  {
+    "id": 842,
+    "groupId": 1004,
+    "collectionId": 8130504,
+    "rate": 132
+  },
+  {
+    "id": 843,
+    "groupId": 1004,
+    "collectionId": 8130604,
+    "rate": 132
+  },
+  {
+    "id": 844,
+    "groupId": 1004,
+    "collectionId": 8120704,
+    "rate": 132
+  },
+  {
+    "id": 845,
+    "groupId": 1004,
+    "collectionId": 8130804,
+    "rate": 132
+  },
+  {
+    "id": 847,
+    "groupId": 1004,
+    "collectionId": 8130505,
+    "rate": 132
+  },
+  {
+    "id": 848,
+    "groupId": 1004,
+    "collectionId": 8150006,
+    "rate": 132
+  },
+  {
+    "id": 849,
+    "groupId": 1004,
+    "collectionId": 8150008,
+    "rate": 132
+  },
+  {
+    "id": 850,
+    "groupId": 1004,
+    "collectionId": 8150010,
+    "rate": 132
+  },
+  {
+    "id": 851,
+    "groupId": 1004,
+    "collectionId": 8150012,
+    "rate": 132
+  },
+  {
+    "id": 852,
+    "groupId": 1004,
+    "collectionId": 8150014,
+    "rate": 132
+  },
+  {
+    "id": 853,
+    "groupId": 1004,
+    "collectionId": 8150016,
+    "rate": 132
+  },
+  {
+    "id": 854,
+    "groupId": 1004,
+    "collectionId": 8110021,
+    "rate": 132
+  },
+  {
+    "id": 855,
+    "groupId": 1004,
+    "collectionId": 8110507,
+    "rate": 132
+  },
+  {
+    "id": 856,
+    "groupId": 1004,
+    "collectionId": 8110307,
+    "rate": 132
+  },
+  {
+    "id": 857,
+    "groupId": 1004,
+    "collectionId": 8110805,
+    "rate": 132
+  },
+  {
+    "id": 858,
+    "groupId": 1004,
+    "collectionId": 8130107,
+    "rate": 132
+  },
+  {
+    "id": 859,
+    "groupId": 1004,
+    "collectionId": 8120406,
+    "rate": 132
+  },
+  {
+    "id": 860,
+    "groupId": 1004,
+    "collectionId": 8120610,
+    "rate": 132
+  },
+  {
+    "id": 861,
+    "groupId": 1004,
+    "collectionId": 8120705,
+    "rate": 132
+  },
+  {
+    "id": 862,
+    "groupId": 1004,
+    "collectionId": 8120808,
+    "rate": 132
+  },
+  {
+    "id": 863,
+    "groupId": 1004,
+    "collectionId": 8120110,
+    "rate": 132
+  },
+  {
+    "id": 864,
+    "groupId": 1004,
+    "collectionId": 8120208,
+    "rate": 132
+  },
+  {
+    "id": 865,
+    "groupId": 1004,
+    "collectionId": 8110410,
+    "rate": 132
+  },
+  {
+    "id": 866,
+    "groupId": 1004,
+    "collectionId": 8120512,
+    "rate": 132
+  },
+  {
+    "id": 867,
+    "groupId": 1004,
+    "collectionId": 8110312,
+    "rate": 132
+  },
+  {
+    "id": 868,
+    "groupId": 1004,
+    "collectionId": 8110029,
+    "rate": 132
+  },
+  {
+    "id": 869,
+    "groupId": 1004,
+    "collectionId": 8110030,
+    "rate": 132
+  },
+  {
+    "id": 870,
+    "groupId": 1004,
+    "collectionId": 8110213,
+    "rate": 132
+  },
+  {
+    "id": 871,
+    "groupId": 1004,
+    "collectionId": 8120034,
+    "rate": 132
+  },
+  {
+    "id": 872,
+    "groupId": 1004,
+    "collectionId": 8130315,
+    "rate": 132
+  },
+  {
+    "id": 873,
+    "groupId": 1004,
+    "collectionId": 8130041,
+    "rate": 132
+  },
+  {
+    "id": 874,
+    "groupId": 1004,
+    "collectionId": 8130115,
+    "rate": 132
+  },
+  {
+    "id": 875,
+    "groupId": 1004,
+    "collectionId": 8230042,
+    "rate": 132
+  },
+  {
+    "id": 876,
+    "groupId": 1004,
+    "collectionId": 8110616,
+    "rate": 132
+  },
+  {
+    "id": 877,
+    "groupId": 1004,
+    "collectionId": 8120416,
+    "rate": 132
+  },
+  {
+    "id": 878,
+    "groupId": 1004,
+    "collectionId": 8120317,
+    "rate": 132
+  },
+  {
+    "id": 879,
+    "groupId": 1004,
+    "collectionId": 8120216,
+    "rate": 132
+  },
+  {
+    "id": 880,
+    "groupId": 1004,
+    "collectionId": 8110048,
+    "rate": 132
+  },
+  {
+    "id": 881,
+    "groupId": 1004,
+    "collectionId": 8130217,
+    "rate": 132
+  },
+  {
+    "id": 882,
+    "groupId": 1004,
+    "collectionId": 8110716,
+    "rate": 132
+  },
+  {
+    "id": 883,
+    "groupId": 1004,
+    "collectionId": 8120821,
+    "rate": 132
+  },
+  {
+    "id": 884,
+    "groupId": 1004,
+    "collectionId": 8230204,
+    "rate": 82
+  },
+  {
+    "id": 885,
+    "groupId": 1004,
+    "collectionId": 8230305,
+    "rate": 82
+  },
+  {
+    "id": 886,
+    "groupId": 1004,
+    "collectionId": 8230004,
+    "rate": 82
+  },
+  {
+    "id": 887,
+    "groupId": 1004,
+    "collectionId": 8250007,
+    "rate": 82
+  },
+  {
+    "id": 888,
+    "groupId": 1004,
+    "collectionId": 8250009,
+    "rate": 82
+  },
+  {
+    "id": 889,
+    "groupId": 1004,
+    "collectionId": 8250011,
+    "rate": 82
+  },
+  {
+    "id": 890,
+    "groupId": 1004,
+    "collectionId": 8250013,
+    "rate": 82
+  },
+  {
+    "id": 891,
+    "groupId": 1004,
+    "collectionId": 8250015,
+    "rate": 82
+  },
+  {
+    "id": 892,
+    "groupId": 1004,
+    "collectionId": 8250017,
+    "rate": 82
+  },
+  {
+    "id": 893,
+    "groupId": 1004,
+    "collectionId": 8130018,
+    "rate": 82
+  },
+  {
+    "id": 894,
+    "groupId": 1004,
+    "collectionId": 8230606,
+    "rate": 82
+  },
+  {
+    "id": 895,
+    "groupId": 1004,
+    "collectionId": 8230019,
+    "rate": 82
+  },
+  {
+    "id": 896,
+    "groupId": 1004,
+    "collectionId": 8210105,
+    "rate": 82
+  },
+  {
+    "id": 897,
+    "groupId": 1004,
+    "collectionId": 8210508,
+    "rate": 82
+  },
+  {
+    "id": 898,
+    "groupId": 1004,
+    "collectionId": 8210205,
+    "rate": 82
+  },
+  {
+    "id": 899,
+    "groupId": 1004,
+    "collectionId": 8220106,
+    "rate": 82
+  },
+  {
+    "id": 900,
+    "groupId": 1004,
+    "collectionId": 8230509,
+    "rate": 82
+  },
+  {
+    "id": 901,
+    "groupId": 1004,
+    "collectionId": 8220806,
+    "rate": 82
+  },
+  {
+    "id": 902,
+    "groupId": 1004,
+    "collectionId": 8220807,
+    "rate": 82
+  },
+  {
+    "id": 903,
+    "groupId": 1004,
+    "collectionId": 8210611,
+    "rate": 82
+  },
+  {
+    "id": 904,
+    "groupId": 1004,
+    "collectionId": 8220612,
+    "rate": 82
+  },
+  {
+    "id": 905,
+    "groupId": 1004,
+    "collectionId": 8220409,
+    "rate": 82
+  },
+  {
+    "id": 906,
+    "groupId": 1004,
+    "collectionId": 8220613,
+    "rate": 82
+  },
+  {
+    "id": 907,
+    "groupId": 1004,
+    "collectionId": 8220813,
+    "rate": 82
+  },
+  {
+    "id": 908,
+    "groupId": 1004,
+    "collectionId": 8220814,
+    "rate": 82
+  },
+  {
+    "id": 909,
+    "groupId": 1004,
+    "collectionId": 8210411,
+    "rate": 82
+  },
+  {
+    "id": 910,
+    "groupId": 1004,
+    "collectionId": 8230614,
+    "rate": 82
+  },
+  {
+    "id": 911,
+    "groupId": 1004,
+    "collectionId": 8210209,
+    "rate": 82
+  },
+  {
+    "id": 913,
+    "groupId": 1004,
+    "collectionId": 8230027,
+    "rate": 82
+  },
+  {
+    "id": 914,
+    "groupId": 1004,
+    "collectionId": 8230028,
+    "rate": 82
+  },
+  {
+    "id": 915,
+    "groupId": 1004,
+    "collectionId": 8210711,
+    "rate": 82
+  },
+  {
+    "id": 916,
+    "groupId": 1004,
+    "collectionId": 8210031,
+    "rate": 82
+  },
+  {
+    "id": 917,
+    "groupId": 1004,
+    "collectionId": 8210032,
+    "rate": 82
+  },
+  {
+    "id": 918,
+    "groupId": 1004,
+    "collectionId": 8210712,
+    "rate": 82
+  },
+  {
+    "id": 919,
+    "groupId": 1004,
+    "collectionId": 8210713,
+    "rate": 82
+  },
+  {
+    "id": 920,
+    "groupId": 1004,
+    "collectionId": 8210314,
+    "rate": 82
+  },
+  {
+    "id": 921,
+    "groupId": 1004,
+    "collectionId": 8210113,
+    "rate": 82
+  },
+  {
+    "id": 922,
+    "groupId": 1004,
+    "collectionId": 8220214,
+    "rate": 82
+  },
+  {
+    "id": 923,
+    "groupId": 1004,
+    "collectionId": 8220215,
+    "rate": 82
+  },
+  {
+    "id": 924,
+    "groupId": 1004,
+    "collectionId": 8220033,
+    "rate": 82
+  },
+  {
+    "id": 925,
+    "groupId": 1004,
+    "collectionId": 8120035,
+    "rate": 82
+  },
+  {
+    "id": 926,
+    "groupId": 1004,
+    "collectionId": 8220036,
+    "rate": 82
+  },
+  {
+    "id": 928,
+    "groupId": 1004,
+    "collectionId": 8230038,
+    "rate": 82
+  },
+  {
+    "id": 929,
+    "groupId": 1004,
+    "collectionId": 8230039,
+    "rate": 82
+  },
+  {
+    "id": 930,
+    "groupId": 1004,
+    "collectionId": 8230414,
+    "rate": 82
+  },
+  {
+    "id": 931,
+    "groupId": 1004,
+    "collectionId": 8230714,
+    "rate": 82
+  },
+  {
+    "id": 932,
+    "groupId": 1004,
+    "collectionId": 8230040,
+    "rate": 82
+  },
+  {
+    "id": 933,
+    "groupId": 1004,
+    "collectionId": 8220415,
+    "rate": 82
+  },
+  {
+    "id": 934,
+    "groupId": 1004,
+    "collectionId": 8230316,
+    "rate": 82
+  },
+  {
+    "id": 935,
+    "groupId": 1004,
+    "collectionId": 8220044,
+    "rate": 82
+  },
+  {
+    "id": 936,
+    "groupId": 1004,
+    "collectionId": 8210045,
+    "rate": 82
+  },
+  {
+    "id": 937,
+    "groupId": 1004,
+    "collectionId": 8220515,
+    "rate": 82
+  },
+  {
+    "id": 938,
+    "groupId": 1004,
+    "collectionId": 8120047,
+    "rate": 82
+  },
+  {
+    "id": 939,
+    "groupId": 1004,
+    "collectionId": 8220318,
+    "rate": 82
+  },
+  {
+    "id": 940,
+    "groupId": 1004,
+    "collectionId": 8230050,
+    "rate": 82
+  },
+  {
+    "id": 941,
+    "groupId": 1004,
+    "collectionId": 8210818,
+    "rate": 82
+  },
+  {
+    "id": 942,
+    "groupId": 1004,
+    "collectionId": 8210819,
+    "rate": 82
+  },
+  {
+    "id": 943,
+    "groupId": 1004,
+    "collectionId": 8220051,
+    "rate": 82
+  },
+  {
+    "id": 944,
+    "groupId": 1004,
+    "collectionId": 8220516,
+    "rate": 82
+  },
+  {
+    "id": 945,
+    "groupId": 1004,
+    "collectionId": 8220820,
+    "rate": 82
+  },
+  {
+    "id": 946,
+    "groupId": 1004,
+    "collectionId": 8220052,
+    "rate": 82
+  },
+  {
+    "id": 947,
+    "groupId": 1004,
+    "collectionId": 8330001,
+    "rate": 91
+  },
+  {
+    "id": 948,
+    "groupId": 1004,
+    "collectionId": 8330002,
+    "rate": 91
+  },
+  {
+    "id": 950,
+    "groupId": 1004,
+    "collectionId": 8330005,
+    "rate": 91
+  },
+  {
+    "id": 951,
+    "groupId": 1004,
+    "collectionId": 8330607,
+    "rate": 91
+  },
+  {
+    "id": 953,
+    "groupId": 1004,
+    "collectionId": 8330020,
+    "rate": 91
+  },
+  {
+    "id": 955,
+    "groupId": 1004,
+    "collectionId": 8310608,
+    "rate": 91
+  },
+  {
+    "id": 957,
+    "groupId": 1004,
+    "collectionId": 8310609,
+    "rate": 91
+  },
+  {
+    "id": 958,
+    "groupId": 1004,
+    "collectionId": 8320809,
+    "rate": 91
+  },
+  {
+    "id": 960,
+    "groupId": 1004,
+    "collectionId": 8310407,
+    "rate": 91
+  },
+  {
+    "id": 961,
+    "groupId": 1004,
+    "collectionId": 8310510,
+    "rate": 91
+  },
+  {
+    "id": 963,
+    "groupId": 1004,
+    "collectionId": 8310022,
+    "rate": 91
+  },
+  {
+    "id": 964,
+    "groupId": 1004,
+    "collectionId": 8310706,
+    "rate": 91
+  },
+  {
+    "id": 965,
+    "groupId": 1004,
+    "collectionId": 8310810,
+    "rate": 91
+  },
+  {
+    "id": 966,
+    "groupId": 1004,
+    "collectionId": 8320109,
+    "rate": 91
+  },
+  {
+    "id": 967,
+    "groupId": 1004,
+    "collectionId": 8320408,
+    "rate": 91
+  },
+  {
+    "id": 968,
+    "groupId": 1004,
+    "collectionId": 8320511,
+    "rate": 91
+  },
+  {
+    "id": 969,
+    "groupId": 1004,
+    "collectionId": 8320207,
+    "rate": 91
+  },
+  {
+    "id": 970,
+    "groupId": 1004,
+    "collectionId": 8320310,
+    "rate": 91
+  },
+  {
+    "id": 971,
+    "groupId": 1004,
+    "collectionId": 8320707,
+    "rate": 91
+  },
+  {
+    "id": 972,
+    "groupId": 1004,
+    "collectionId": 8320811,
+    "rate": 91
+  },
+  {
+    "id": 973,
+    "groupId": 1004,
+    "collectionId": 8320812,
+    "rate": 91
+  },
+  {
+    "id": 974,
+    "groupId": 1004,
+    "collectionId": 8330708,
+    "rate": 91
+  },
+  {
+    "id": 975,
+    "groupId": 1004,
+    "collectionId": 8320709,
+    "rate": 91
+  },
+  {
+    "id": 976,
+    "groupId": 1004,
+    "collectionId": 8310815,
+    "rate": 91
+  },
+  {
+    "id": 977,
+    "groupId": 1004,
+    "collectionId": 8330023,
+    "rate": 91
+  },
+  {
+    "id": 978,
+    "groupId": 1004,
+    "collectionId": 8330111,
+    "rate": 91
+  },
+  {
+    "id": 979,
+    "groupId": 1004,
+    "collectionId": 8320210,
+    "rate": 91
+  },
+  {
+    "id": 982,
+    "groupId": 1004,
+    "collectionId": 8330211,
+    "rate": 91
+  },
+  {
+    "id": 983,
+    "groupId": 1004,
+    "collectionId": 8330112,
+    "rate": 91
+  },
+  {
+    "id": 984,
+    "groupId": 1004,
+    "collectionId": 8330412,
+    "rate": 91
+  },
+  {
+    "id": 985,
+    "groupId": 1004,
+    "collectionId": 8330513,
+    "rate": 91
+  },
+  {
+    "id": 986,
+    "groupId": 1004,
+    "collectionId": 8330311,
+    "rate": 91
+  },
+  {
+    "id": 987,
+    "groupId": 1004,
+    "collectionId": 8330816,
+    "rate": 91
+  },
+  {
+    "id": 989,
+    "groupId": 1004,
+    "collectionId": 8330026,
+    "rate": 91
+  },
+  {
+    "id": 990,
+    "groupId": 1004,
+    "collectionId": 8310212,
+    "rate": 91
+  },
+  {
+    "id": 991,
+    "groupId": 1004,
+    "collectionId": 8310114,
+    "rate": 91
+  },
+  {
+    "id": 992,
+    "groupId": 1004,
+    "collectionId": 8330413,
+    "rate": 91
+  },
+  {
+    "id": 993,
+    "groupId": 1004,
+    "collectionId": 8320514,
+    "rate": 91
+  },
+  {
+    "id": 994,
+    "groupId": 1004,
+    "collectionId": 8330715,
+    "rate": 91
+  },
+  {
+    "id": 995,
+    "groupId": 1004,
+    "collectionId": 8350043,
+    "rate": 91
+  },
+  {
+    "id": 996,
+    "groupId": 1004,
+    "collectionId": 8320617,
+    "rate": 91
+  },
+  {
+    "id": 997,
+    "groupId": 1004,
+    "collectionId": 8320046,
+    "rate": 91
+  },
+  {
+    "id": 998,
+    "groupId": 1004,
+    "collectionId": 8320618,
+    "rate": 91
+  },
+  {
+    "id": 999,
+    "groupId": 1004,
+    "collectionId": 8330817,
+    "rate": 91
+  },
+  {
+    "id": 1000,
+    "groupId": 1004,
+    "collectionId": 8330417,
+    "rate": 91
+  },
+  {
+    "id": 1001,
+    "groupId": 1004,
+    "collectionId": 8320049,
+    "rate": 91
+  },
+  {
+    "id": 1002,
+    "groupId": 1004,
+    "collectionId": 8330218,
+    "rate": 91
+  },
+  {
+    "id": 1003,
+    "groupId": 1004,
+    "collectionId": 8330418,
+    "rate": 91
+  },
+  {
+    "id": 1004,
+    "groupId": 1000,
+    "collectionId": 8140101,
+    "rate": 100
+  },
+  {
+    "id": 1005,
+    "groupId": 1000,
+    "collectionId": 8140401,
+    "rate": 100
+  },
+  {
+    "id": 1006,
+    "groupId": 1000,
+    "collectionId": 8140501,
+    "rate": 100
+  },
+  {
+    "id": 1007,
+    "groupId": 1000,
+    "collectionId": 8140601,
+    "rate": 100
+  },
+  {
+    "id": 1008,
+    "groupId": 1000,
+    "collectionId": 8140201,
+    "rate": 100
+  },
+  {
+    "id": 1009,
+    "groupId": 1000,
+    "collectionId": 8140301,
+    "rate": 100
+  },
+  {
+    "id": 1010,
+    "groupId": 1000,
+    "collectionId": 8140701,
+    "rate": 100
+  },
+  {
+    "id": 1011,
+    "groupId": 1000,
+    "collectionId": 8140801,
+    "rate": 100
+  },
+  {
+    "id": 1012,
+    "groupId": 1000,
+    "collectionId": 8240102,
+    "rate": 100
+  },
+  {
+    "id": 1013,
+    "groupId": 1000,
+    "collectionId": 8240402,
+    "rate": 100
+  },
+  {
+    "id": 1014,
+    "groupId": 1000,
+    "collectionId": 8240502,
+    "rate": 100
+  },
+  {
+    "id": 1015,
+    "groupId": 1000,
+    "collectionId": 8240602,
+    "rate": 100
+  },
+  {
+    "id": 1016,
+    "groupId": 1000,
+    "collectionId": 8240202,
+    "rate": 100
+  },
+  {
+    "id": 1017,
+    "groupId": 1000,
+    "collectionId": 8240302,
+    "rate": 100
+  },
+  {
+    "id": 1018,
+    "groupId": 1000,
+    "collectionId": 8240702,
+    "rate": 100
+  },
+  {
+    "id": 1019,
+    "groupId": 1000,
+    "collectionId": 8240802,
+    "rate": 100
+  },
+  {
+    "id": 1020,
+    "groupId": 1000,
+    "collectionId": 8130103,
+    "rate": 100
+  },
+  {
+    "id": 1021,
+    "groupId": 1000,
+    "collectionId": 8130403,
+    "rate": 100
+  },
+  {
+    "id": 1022,
+    "groupId": 1000,
+    "collectionId": 8130503,
+    "rate": 100
+  },
+  {
+    "id": 1023,
+    "groupId": 1000,
+    "collectionId": 8130603,
+    "rate": 100
+  },
+  {
+    "id": 1024,
+    "groupId": 1000,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 1025,
+    "groupId": 1000,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 1026,
+    "groupId": 1000,
+    "collectionId": 8120703,
+    "rate": 100
+  },
+  {
+    "id": 1027,
+    "groupId": 1000,
+    "collectionId": 8130803,
+    "rate": 100
+  },
+  {
+    "id": 1028,
+    "groupId": 1000,
+    "collectionId": 8120104,
+    "rate": 100
+  },
+  {
+    "id": 1029,
+    "groupId": 1000,
+    "collectionId": 8130404,
+    "rate": 100
+  },
+  {
+    "id": 1030,
+    "groupId": 1000,
+    "collectionId": 8130504,
+    "rate": 100
+  },
+  {
+    "id": 1031,
+    "groupId": 1000,
+    "collectionId": 8130604,
+    "rate": 100
+  },
+  {
+    "id": 1032,
+    "groupId": 1000,
+    "collectionId": 8120704,
+    "rate": 100
+  },
+  {
+    "id": 1033,
+    "groupId": 1000,
+    "collectionId": 8130804,
+    "rate": 100
+  },
+  {
+    "id": 1035,
+    "groupId": 1000,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 1036,
+    "groupId": 1000,
+    "collectionId": 8150006,
+    "rate": 100
+  },
+  {
+    "id": 1037,
+    "groupId": 1000,
+    "collectionId": 8150008,
+    "rate": 100
+  },
+  {
+    "id": 1038,
+    "groupId": 1000,
+    "collectionId": 8150010,
+    "rate": 100
+  },
+  {
+    "id": 1039,
+    "groupId": 1000,
+    "collectionId": 8150012,
+    "rate": 100
+  },
+  {
+    "id": 1040,
+    "groupId": 1000,
+    "collectionId": 8150014,
+    "rate": 100
+  },
+  {
+    "id": 1041,
+    "groupId": 1000,
+    "collectionId": 8150016,
+    "rate": 100
+  },
+  {
+    "id": 1042,
+    "groupId": 1000,
+    "collectionId": 8110021,
+    "rate": 100
+  },
+  {
+    "id": 1043,
+    "groupId": 1000,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 1044,
+    "groupId": 1000,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 1045,
+    "groupId": 1000,
+    "collectionId": 8110805,
+    "rate": 100
+  },
+  {
+    "id": 1046,
+    "groupId": 1000,
+    "collectionId": 8130107,
+    "rate": 100
+  },
+  {
+    "id": 1047,
+    "groupId": 1000,
+    "collectionId": 8120406,
+    "rate": 100
+  },
+  {
+    "id": 1048,
+    "groupId": 1000,
+    "collectionId": 8120610,
+    "rate": 100
+  },
+  {
+    "id": 1049,
+    "groupId": 1000,
+    "collectionId": 8120705,
+    "rate": 100
+  },
+  {
+    "id": 1050,
+    "groupId": 1000,
+    "collectionId": 8120808,
+    "rate": 100
+  },
+  {
+    "id": 1051,
+    "groupId": 1000,
+    "collectionId": 8120110,
+    "rate": 100
+  },
+  {
+    "id": 1052,
+    "groupId": 1000,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 1053,
+    "groupId": 1000,
+    "collectionId": 8110410,
+    "rate": 100
+  },
+  {
+    "id": 1054,
+    "groupId": 1000,
+    "collectionId": 8120512,
+    "rate": 100
+  },
+  {
+    "id": 1055,
+    "groupId": 1000,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 1056,
+    "groupId": 1000,
+    "collectionId": 8110029,
+    "rate": 100
+  },
+  {
+    "id": 1057,
+    "groupId": 1000,
+    "collectionId": 8110030,
+    "rate": 100
+  },
+  {
+    "id": 1058,
+    "groupId": 1000,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 1059,
+    "groupId": 1000,
+    "collectionId": 8120034,
+    "rate": 100
+  },
+  {
+    "id": 1060,
+    "groupId": 1000,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 1061,
+    "groupId": 1000,
+    "collectionId": 8130041,
+    "rate": 100
+  },
+  {
+    "id": 1062,
+    "groupId": 1000,
+    "collectionId": 8130115,
+    "rate": 100
+  },
+  {
+    "id": 1063,
+    "groupId": 1000,
+    "collectionId": 8230042,
+    "rate": 100
+  },
+  {
+    "id": 1064,
+    "groupId": 1000,
+    "collectionId": 8110616,
+    "rate": 100
+  },
+  {
+    "id": 1065,
+    "groupId": 1000,
+    "collectionId": 8120416,
+    "rate": 100
+  },
+  {
+    "id": 1066,
+    "groupId": 1000,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 1067,
+    "groupId": 1000,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 1068,
+    "groupId": 1000,
+    "collectionId": 8110048,
+    "rate": 100
+  },
+  {
+    "id": 1069,
+    "groupId": 1000,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 1070,
+    "groupId": 1000,
+    "collectionId": 8110716,
+    "rate": 100
+  },
+  {
+    "id": 1071,
+    "groupId": 1000,
+    "collectionId": 8120821,
+    "rate": 100
+  },
+  {
+    "id": 1072,
+    "groupId": 1000,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 1073,
+    "groupId": 1000,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 1074,
+    "groupId": 1000,
+    "collectionId": 8230004,
+    "rate": 100
+  },
+  {
+    "id": 1075,
+    "groupId": 1000,
+    "collectionId": 8250007,
+    "rate": 100
+  },
+  {
+    "id": 1076,
+    "groupId": 1000,
+    "collectionId": 8250009,
+    "rate": 100
+  },
+  {
+    "id": 1077,
+    "groupId": 1000,
+    "collectionId": 8250011,
+    "rate": 100
+  },
+  {
+    "id": 1078,
+    "groupId": 1000,
+    "collectionId": 8250013,
+    "rate": 100
+  },
+  {
+    "id": 1079,
+    "groupId": 1000,
+    "collectionId": 8250015,
+    "rate": 100
+  },
+  {
+    "id": 1080,
+    "groupId": 1000,
+    "collectionId": 8250017,
+    "rate": 100
+  },
+  {
+    "id": 1081,
+    "groupId": 1000,
+    "collectionId": 8130018,
+    "rate": 100
+  },
+  {
+    "id": 1082,
+    "groupId": 1000,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 1083,
+    "groupId": 1000,
+    "collectionId": 8230019,
+    "rate": 100
+  },
+  {
+    "id": 1084,
+    "groupId": 1000,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1085,
+    "groupId": 1000,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1086,
+    "groupId": 1000,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 1087,
+    "groupId": 1000,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1088,
+    "groupId": 1000,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 1089,
+    "groupId": 1000,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 1090,
+    "groupId": 1000,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1091,
+    "groupId": 1000,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 1092,
+    "groupId": 1000,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 1093,
+    "groupId": 1000,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1094,
+    "groupId": 1000,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 1095,
+    "groupId": 1000,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 1096,
+    "groupId": 1000,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 1097,
+    "groupId": 1000,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 1098,
+    "groupId": 1000,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1099,
+    "groupId": 1000,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 1101,
+    "groupId": 1000,
+    "collectionId": 8230027,
+    "rate": 100
+  },
+  {
+    "id": 1102,
+    "groupId": 1000,
+    "collectionId": 8230028,
+    "rate": 100
+  },
+  {
+    "id": 1103,
+    "groupId": 1000,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 1104,
+    "groupId": 1000,
+    "collectionId": 8210031,
+    "rate": 100
+  },
+  {
+    "id": 1105,
+    "groupId": 1000,
+    "collectionId": 8210032,
+    "rate": 100
+  },
+  {
+    "id": 1106,
+    "groupId": 1000,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 1107,
+    "groupId": 1000,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 1108,
+    "groupId": 1000,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 1109,
+    "groupId": 1000,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 1110,
+    "groupId": 1000,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 1111,
+    "groupId": 1000,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1112,
+    "groupId": 1000,
+    "collectionId": 8220033,
+    "rate": 100
+  },
+  {
+    "id": 1113,
+    "groupId": 1000,
+    "collectionId": 8120035,
+    "rate": 100
+  },
+  {
+    "id": 1114,
+    "groupId": 1000,
+    "collectionId": 8220036,
+    "rate": 100
+  },
+  {
+    "id": 1116,
+    "groupId": 1000,
+    "collectionId": 8230038,
+    "rate": 100
+  },
+  {
+    "id": 1117,
+    "groupId": 1000,
+    "collectionId": 8230039,
+    "rate": 100
+  },
+  {
+    "id": 1118,
+    "groupId": 1000,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 1119,
+    "groupId": 1000,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 1120,
+    "groupId": 1000,
+    "collectionId": 8230040,
+    "rate": 100
+  },
+  {
+    "id": 1121,
+    "groupId": 1000,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 1122,
+    "groupId": 1000,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 1123,
+    "groupId": 1000,
+    "collectionId": 8220044,
+    "rate": 100
+  },
+  {
+    "id": 1124,
+    "groupId": 1000,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 1125,
+    "groupId": 1000,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 1126,
+    "groupId": 1000,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 1127,
+    "groupId": 1000,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 1128,
+    "groupId": 1000,
+    "collectionId": 8230050,
+    "rate": 100
+  },
+  {
+    "id": 1129,
+    "groupId": 1000,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1130,
+    "groupId": 1000,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 1131,
+    "groupId": 1000,
+    "collectionId": 8220051,
+    "rate": 100
+  },
+  {
+    "id": 1132,
+    "groupId": 1000,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 1133,
+    "groupId": 1000,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 1134,
+    "groupId": 1000,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 1135,
+    "groupId": 1000,
+    "collectionId": 8330001,
+    "rate": 100
+  },
+  {
+    "id": 1136,
+    "groupId": 1000,
+    "collectionId": 8330002,
+    "rate": 100
+  },
+  {
+    "id": 1138,
+    "groupId": 1000,
+    "collectionId": 8330005,
+    "rate": 100
+  },
+  {
+    "id": 1139,
+    "groupId": 1000,
+    "collectionId": 8330607,
+    "rate": 100
+  },
+  {
+    "id": 1141,
+    "groupId": 1000,
+    "collectionId": 8330020,
+    "rate": 100
+  },
+  {
+    "id": 1143,
+    "groupId": 1000,
+    "collectionId": 8310608,
+    "rate": 100
+  },
+  {
+    "id": 1145,
+    "groupId": 1000,
+    "collectionId": 8310609,
+    "rate": 100
+  },
+  {
+    "id": 1146,
+    "groupId": 1000,
+    "collectionId": 8320809,
+    "rate": 100
+  },
+  {
+    "id": 1148,
+    "groupId": 1000,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 1149,
+    "groupId": 1000,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 1151,
+    "groupId": 1000,
+    "collectionId": 8310022,
+    "rate": 100
+  },
+  {
+    "id": 1152,
+    "groupId": 1000,
+    "collectionId": 8310706,
+    "rate": 100
+  },
+  {
+    "id": 1153,
+    "groupId": 1000,
+    "collectionId": 8310810,
+    "rate": 100
+  },
+  {
+    "id": 1154,
+    "groupId": 1000,
+    "collectionId": 8320109,
+    "rate": 100
+  },
+  {
+    "id": 1155,
+    "groupId": 1000,
+    "collectionId": 8320408,
+    "rate": 100
+  },
+  {
+    "id": 1156,
+    "groupId": 1000,
+    "collectionId": 8320511,
+    "rate": 100
+  },
+  {
+    "id": 1157,
+    "groupId": 1000,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 1158,
+    "groupId": 1000,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 1159,
+    "groupId": 1000,
+    "collectionId": 8320707,
+    "rate": 100
+  },
+  {
+    "id": 1160,
+    "groupId": 1000,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 1161,
+    "groupId": 1000,
+    "collectionId": 8320812,
+    "rate": 100
+  },
+  {
+    "id": 1162,
+    "groupId": 1000,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 1163,
+    "groupId": 1000,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 1164,
+    "groupId": 1000,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 1165,
+    "groupId": 1000,
+    "collectionId": 8330023,
+    "rate": 100
+  },
+  {
+    "id": 1166,
+    "groupId": 1000,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 1167,
+    "groupId": 1000,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 1170,
+    "groupId": 1000,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 1171,
+    "groupId": 1000,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 1172,
+    "groupId": 1000,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 1173,
+    "groupId": 1000,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 1174,
+    "groupId": 1000,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 1175,
+    "groupId": 1000,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 1177,
+    "groupId": 1000,
+    "collectionId": 8330026,
+    "rate": 100
+  },
+  {
+    "id": 1178,
+    "groupId": 1000,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 1179,
+    "groupId": 1000,
+    "collectionId": 8310114,
+    "rate": 100
+  },
+  {
+    "id": 1180,
+    "groupId": 1000,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 1181,
+    "groupId": 1000,
+    "collectionId": 8320514,
+    "rate": 100
+  },
+  {
+    "id": 1182,
+    "groupId": 1000,
+    "collectionId": 8330715,
+    "rate": 100
+  },
+  {
+    "id": 1183,
+    "groupId": 1000,
+    "collectionId": 8350043,
+    "rate": 100
+  },
+  {
+    "id": 1184,
+    "groupId": 1000,
+    "collectionId": 8320617,
+    "rate": 100
+  },
+  {
+    "id": 1185,
+    "groupId": 1000,
+    "collectionId": 8320046,
+    "rate": 100
+  },
+  {
+    "id": 1186,
+    "groupId": 1000,
+    "collectionId": 8320618,
+    "rate": 100
+  },
+  {
+    "id": 1187,
+    "groupId": 1000,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 1188,
+    "groupId": 1000,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 1189,
+    "groupId": 1000,
+    "collectionId": 8320049,
+    "rate": 100
+  },
+  {
+    "id": 1190,
+    "groupId": 1000,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 1191,
+    "groupId": 1000,
+    "collectionId": 8330418,
+    "rate": 100
+  },
+  {
+    "id": 1192,
+    "groupId": 6,
+    "collectionId": 8130103,
+    "rate": 100
+  },
+  {
+    "id": 1193,
+    "groupId": 6,
+    "collectionId": 8120104,
+    "rate": 100
+  },
+  {
+    "id": 1194,
+    "groupId": 6,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1195,
+    "groupId": 6,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1196,
+    "groupId": 6,
+    "collectionId": 8130107,
+    "rate": 100
+  },
+  {
+    "id": 1198,
+    "groupId": 6,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 1199,
+    "groupId": 6,
+    "collectionId": 8320109,
+    "rate": 100
+  },
+  {
+    "id": 1200,
+    "groupId": 6,
+    "collectionId": 8120110,
+    "rate": 100
+  },
+  {
+    "id": 1201,
+    "groupId": 6,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1202,
+    "groupId": 6,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 1203,
+    "groupId": 6,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 1204,
+    "groupId": 6,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 1205,
+    "groupId": 6,
+    "collectionId": 8310114,
+    "rate": 100
+  },
+  {
+    "id": 1206,
+    "groupId": 6,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1207,
+    "groupId": 6,
+    "collectionId": 8130115,
+    "rate": 100
+  },
+  {
+    "id": 1208,
+    "groupId": 6,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 1209,
+    "groupId": 7,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1210,
+    "groupId": 7,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1211,
+    "groupId": 7,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1212,
+    "groupId": 7,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 1213,
+    "groupId": 7,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1214,
+    "groupId": 7,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 1215,
+    "groupId": 8,
+    "collectionId": 8130403,
+    "rate": 100
+  },
+  {
+    "id": 1216,
+    "groupId": 8,
+    "collectionId": 8130404,
+    "rate": 100
+  },
+  {
+    "id": 1218,
+    "groupId": 8,
+    "collectionId": 8120406,
+    "rate": 100
+  },
+  {
+    "id": 1219,
+    "groupId": 8,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 1220,
+    "groupId": 8,
+    "collectionId": 8320408,
+    "rate": 100
+  },
+  {
+    "id": 1221,
+    "groupId": 8,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1222,
+    "groupId": 8,
+    "collectionId": 8110410,
+    "rate": 100
+  },
+  {
+    "id": 1223,
+    "groupId": 8,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 1224,
+    "groupId": 8,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1225,
+    "groupId": 8,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 1226,
+    "groupId": 8,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 1227,
+    "groupId": 8,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 1228,
+    "groupId": 8,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 1229,
+    "groupId": 8,
+    "collectionId": 8120416,
+    "rate": 100
+  },
+  {
+    "id": 1230,
+    "groupId": 8,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 1231,
+    "groupId": 8,
+    "collectionId": 8330418,
+    "rate": 100
+  },
+  {
+    "id": 1232,
+    "groupId": 9,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1233,
+    "groupId": 9,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 1234,
+    "groupId": 9,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1235,
+    "groupId": 9,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 1236,
+    "groupId": 9,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 1237,
+    "groupId": 10,
+    "collectionId": 8130503,
+    "rate": 100
+  },
+  {
+    "id": 1238,
+    "groupId": 10,
+    "collectionId": 8130504,
+    "rate": 100
+  },
+  {
+    "id": 1239,
+    "groupId": 10,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 1241,
+    "groupId": 10,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1242,
+    "groupId": 10,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1243,
+    "groupId": 10,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 1244,
+    "groupId": 10,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 1245,
+    "groupId": 10,
+    "collectionId": 8320511,
+    "rate": 100
+  },
+  {
+    "id": 1246,
+    "groupId": 10,
+    "collectionId": 8120512,
+    "rate": 100
+  },
+  {
+    "id": 1247,
+    "groupId": 10,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1248,
+    "groupId": 10,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 1249,
+    "groupId": 10,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 1250,
+    "groupId": 10,
+    "collectionId": 8320514,
+    "rate": 100
+  },
+  {
+    "id": 1251,
+    "groupId": 10,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 1252,
+    "groupId": 10,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 1253,
+    "groupId": 10,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 1254,
+    "groupId": 11,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1255,
+    "groupId": 11,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1256,
+    "groupId": 11,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 1257,
+    "groupId": 11,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1258,
+    "groupId": 11,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 1259,
+    "groupId": 11,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 1260,
+    "groupId": 12,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 1261,
+    "groupId": 12,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 1262,
+    "groupId": 12,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 1263,
+    "groupId": 12,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 1265,
+    "groupId": 12,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 1266,
+    "groupId": 12,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 1267,
+    "groupId": 12,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 1268,
+    "groupId": 12,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 1269,
+    "groupId": 12,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 1270,
+    "groupId": 12,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 1271,
+    "groupId": 12,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 1272,
+    "groupId": 12,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 1273,
+    "groupId": 12,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1274,
+    "groupId": 12,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 1275,
+    "groupId": 12,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 1276,
+    "groupId": 12,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 1277,
+    "groupId": 13,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 1278,
+    "groupId": 13,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 1279,
+    "groupId": 13,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 1280,
+    "groupId": 13,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 1281,
+    "groupId": 13,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1282,
+    "groupId": 14,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 1283,
+    "groupId": 14,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 1284,
+    "groupId": 14,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 1286,
+    "groupId": 14,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1287,
+    "groupId": 14,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 1288,
+    "groupId": 14,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 1289,
+    "groupId": 14,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 1290,
+    "groupId": 14,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 1291,
+    "groupId": 14,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 1292,
+    "groupId": 14,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 1293,
+    "groupId": 14,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 1294,
+    "groupId": 14,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 1295,
+    "groupId": 14,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 1296,
+    "groupId": 14,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 1297,
+    "groupId": 14,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 1298,
+    "groupId": 14,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 1299,
+    "groupId": 15,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 1300,
+    "groupId": 15,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1301,
+    "groupId": 15,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 1302,
+    "groupId": 15,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 1303,
+    "groupId": 15,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 1304,
+    "groupId": 15,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 1305,
+    "groupId": 16,
+    "collectionId": 8130603,
+    "rate": 100
+  },
+  {
+    "id": 1306,
+    "groupId": 16,
+    "collectionId": 8130604,
+    "rate": 100
+  },
+  {
+    "id": 1308,
+    "groupId": 16,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 1309,
+    "groupId": 16,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1310,
+    "groupId": 16,
+    "collectionId": 8310608,
+    "rate": 100
+  },
+  {
+    "id": 1311,
+    "groupId": 16,
+    "collectionId": 8310609,
+    "rate": 100
+  },
+  {
+    "id": 1312,
+    "groupId": 16,
+    "collectionId": 8120610,
+    "rate": 100
+  },
+  {
+    "id": 1313,
+    "groupId": 16,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 1314,
+    "groupId": 16,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 1315,
+    "groupId": 16,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 1316,
+    "groupId": 16,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 1317,
+    "groupId": 16,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1319,
+    "groupId": 16,
+    "collectionId": 8110616,
+    "rate": 100
+  },
+  {
+    "id": 1320,
+    "groupId": 16,
+    "collectionId": 8320617,
+    "rate": 100
+  },
+  {
+    "id": 1321,
+    "groupId": 16,
+    "collectionId": 8320618,
+    "rate": 100
+  },
+  {
+    "id": 1322,
+    "groupId": 17,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 1323,
+    "groupId": 17,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1324,
+    "groupId": 17,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 1325,
+    "groupId": 17,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 1326,
+    "groupId": 17,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 1327,
+    "groupId": 17,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1328,
+    "groupId": 18,
+    "collectionId": 8120703,
+    "rate": 100
+  },
+  {
+    "id": 1329,
+    "groupId": 18,
+    "collectionId": 8120704,
+    "rate": 100
+  },
+  {
+    "id": 1330,
+    "groupId": 18,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1331,
+    "groupId": 18,
+    "collectionId": 8120705,
+    "rate": 100
+  },
+  {
+    "id": 1332,
+    "groupId": 18,
+    "collectionId": 8310706,
+    "rate": 100
+  },
+  {
+    "id": 1333,
+    "groupId": 18,
+    "collectionId": 8320707,
+    "rate": 100
+  },
+  {
+    "id": 1334,
+    "groupId": 18,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 1335,
+    "groupId": 18,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 1336,
+    "groupId": 18,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 1338,
+    "groupId": 18,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 1339,
+    "groupId": 18,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 1340,
+    "groupId": 18,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 1341,
+    "groupId": 18,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 1342,
+    "groupId": 18,
+    "collectionId": 8330715,
+    "rate": 100
+  },
+  {
+    "id": 1343,
+    "groupId": 18,
+    "collectionId": 8110048,
+    "rate": 100
+  },
+  {
+    "id": 1344,
+    "groupId": 18,
+    "collectionId": 8110716,
+    "rate": 100
+  },
+  {
+    "id": 1345,
+    "groupId": 18,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1346,
+    "groupId": 19,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1347,
+    "groupId": 19,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 1348,
+    "groupId": 19,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 1349,
+    "groupId": 19,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 1350,
+    "groupId": 19,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 1351,
+    "groupId": 19,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1352,
+    "groupId": 20,
+    "collectionId": 8130803,
+    "rate": 100
+  },
+  {
+    "id": 1353,
+    "groupId": 20,
+    "collectionId": 8130804,
+    "rate": 100
+  },
+  {
+    "id": 1354,
+    "groupId": 20,
+    "collectionId": 8110805,
+    "rate": 100
+  },
+  {
+    "id": 1355,
+    "groupId": 20,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 1356,
+    "groupId": 20,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1357,
+    "groupId": 20,
+    "collectionId": 8120808,
+    "rate": 100
+  },
+  {
+    "id": 1358,
+    "groupId": 20,
+    "collectionId": 8320809,
+    "rate": 100
+  },
+  {
+    "id": 1359,
+    "groupId": 20,
+    "collectionId": 8310810,
+    "rate": 100
+  },
+  {
+    "id": 1360,
+    "groupId": 20,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 1361,
+    "groupId": 20,
+    "collectionId": 8320812,
+    "rate": 100
+  },
+  {
+    "id": 1362,
+    "groupId": 20,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 1363,
+    "groupId": 20,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 1364,
+    "groupId": 20,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 1365,
+    "groupId": 20,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 1366,
+    "groupId": 20,
+    "collectionId": 8330817,
+    "rate": 100
+  },
+  {
+    "id": 1367,
+    "groupId": 20,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1368,
+    "groupId": 20,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 1369,
+    "groupId": 20,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 1370,
+    "groupId": 20,
+    "collectionId": 8120821,
+    "rate": 100
+  },
+  {
+    "id": 1371,
+    "groupId": 21,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 1372,
+    "groupId": 21,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1373,
+    "groupId": 21,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 1374,
+    "groupId": 21,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 1375,
+    "groupId": 21,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1376,
+    "groupId": 21,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 1377,
+    "groupId": 21,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 1378,
+    "groupId": 11110069,
+    "collectionId": 8250007,
+    "rate": 100
+  },
+  {
+    "id": 1379,
+    "groupId": 11110069,
+    "collectionId": 8250009,
+    "rate": 100
+  },
+  {
+    "id": 1380,
+    "groupId": 11110069,
+    "collectionId": 8250011,
+    "rate": 100
+  },
+  {
+    "id": 1381,
+    "groupId": 11110069,
+    "collectionId": 8250013,
+    "rate": 100
+  },
+  {
+    "id": 1382,
+    "groupId": 11110069,
+    "collectionId": 8250015,
+    "rate": 100
+  },
+  {
+    "id": 1383,
+    "groupId": 11110069,
+    "collectionId": 8250017,
+    "rate": 100
+  },
+  {
+    "id": 1384,
+    "groupId": 22,
+    "collectionId": 8110021,
+    "rate": 100
+  },
+  {
+    "id": 1385,
+    "groupId": 22,
+    "collectionId": 8110029,
+    "rate": 100
+  },
+  {
+    "id": 1386,
+    "groupId": 22,
+    "collectionId": 8110030,
+    "rate": 100
+  },
+  {
+    "id": 1387,
+    "groupId": 22,
+    "collectionId": 8110213,
+    "rate": 100
+  },
+  {
+    "id": 1388,
+    "groupId": 22,
+    "collectionId": 8110307,
+    "rate": 100
+  },
+  {
+    "id": 1389,
+    "groupId": 22,
+    "collectionId": 8110312,
+    "rate": 100
+  },
+  {
+    "id": 1390,
+    "groupId": 22,
+    "collectionId": 8110410,
+    "rate": 100
+  },
+  {
+    "id": 1391,
+    "groupId": 22,
+    "collectionId": 8110507,
+    "rate": 100
+  },
+  {
+    "id": 1392,
+    "groupId": 22,
+    "collectionId": 8110616,
+    "rate": 100
+  },
+  {
+    "id": 1393,
+    "groupId": 22,
+    "collectionId": 8110716,
+    "rate": 100
+  },
+  {
+    "id": 1394,
+    "groupId": 22,
+    "collectionId": 8110805,
+    "rate": 100
+  },
+  {
+    "id": 1395,
+    "groupId": 22,
+    "collectionId": 8210031,
+    "rate": 100
+  },
+  {
+    "id": 1396,
+    "groupId": 22,
+    "collectionId": 8210032,
+    "rate": 100
+  },
+  {
+    "id": 1397,
+    "groupId": 22,
+    "collectionId": 8210045,
+    "rate": 100
+  },
+  {
+    "id": 1398,
+    "groupId": 22,
+    "collectionId": 8210105,
+    "rate": 100
+  },
+  {
+    "id": 1399,
+    "groupId": 22,
+    "collectionId": 8210113,
+    "rate": 100
+  },
+  {
+    "id": 1400,
+    "groupId": 22,
+    "collectionId": 8210205,
+    "rate": 100
+  },
+  {
+    "id": 1401,
+    "groupId": 22,
+    "collectionId": 8210209,
+    "rate": 100
+  },
+  {
+    "id": 1402,
+    "groupId": 22,
+    "collectionId": 8210308,
+    "rate": 100
+  },
+  {
+    "id": 1403,
+    "groupId": 22,
+    "collectionId": 8210313,
+    "rate": 100
+  },
+  {
+    "id": 1404,
+    "groupId": 22,
+    "collectionId": 8210314,
+    "rate": 100
+  },
+  {
+    "id": 1405,
+    "groupId": 22,
+    "collectionId": 8210411,
+    "rate": 100
+  },
+  {
+    "id": 1406,
+    "groupId": 22,
+    "collectionId": 8210508,
+    "rate": 100
+  },
+  {
+    "id": 1407,
+    "groupId": 22,
+    "collectionId": 8210611,
+    "rate": 100
+  },
+  {
+    "id": 1408,
+    "groupId": 22,
+    "collectionId": 8210711,
+    "rate": 100
+  },
+  {
+    "id": 1409,
+    "groupId": 22,
+    "collectionId": 8210712,
+    "rate": 100
+  },
+  {
+    "id": 1410,
+    "groupId": 22,
+    "collectionId": 8210713,
+    "rate": 100
+  },
+  {
+    "id": 1411,
+    "groupId": 22,
+    "collectionId": 8210818,
+    "rate": 100
+  },
+  {
+    "id": 1412,
+    "groupId": 22,
+    "collectionId": 8210819,
+    "rate": 100
+  },
+  {
+    "id": 1413,
+    "groupId": 22,
+    "collectionId": 8310022,
+    "rate": 100
+  },
+  {
+    "id": 1414,
+    "groupId": 22,
+    "collectionId": 8310108,
+    "rate": 100
+  },
+  {
+    "id": 1415,
+    "groupId": 22,
+    "collectionId": 8310114,
+    "rate": 100
+  },
+  {
+    "id": 1416,
+    "groupId": 22,
+    "collectionId": 8310206,
+    "rate": 100
+  },
+  {
+    "id": 1417,
+    "groupId": 22,
+    "collectionId": 8310212,
+    "rate": 100
+  },
+  {
+    "id": 1418,
+    "groupId": 22,
+    "collectionId": 8310309,
+    "rate": 100
+  },
+  {
+    "id": 1419,
+    "groupId": 22,
+    "collectionId": 8310315,
+    "rate": 100
+  },
+  {
+    "id": 1420,
+    "groupId": 22,
+    "collectionId": 8310405,
+    "rate": 100
+  },
+  {
+    "id": 1421,
+    "groupId": 22,
+    "collectionId": 8310407,
+    "rate": 100
+  },
+  {
+    "id": 1422,
+    "groupId": 22,
+    "collectionId": 8310510,
+    "rate": 100
+  },
+  {
+    "id": 1423,
+    "groupId": 22,
+    "collectionId": 8310608,
+    "rate": 100
+  },
+  {
+    "id": 1424,
+    "groupId": 22,
+    "collectionId": 8310609,
+    "rate": 100
+  },
+  {
+    "id": 1425,
+    "groupId": 22,
+    "collectionId": 8310706,
+    "rate": 100
+  },
+  {
+    "id": 1426,
+    "groupId": 22,
+    "collectionId": 8310810,
+    "rate": 100
+  },
+  {
+    "id": 1427,
+    "groupId": 22,
+    "collectionId": 8310815,
+    "rate": 100
+  },
+  {
+    "id": 1428,
+    "groupId": 23,
+    "collectionId": 8150006,
+    "rate": 100
+  },
+  {
+    "id": 1429,
+    "groupId": 23,
+    "collectionId": 8150008,
+    "rate": 100
+  },
+  {
+    "id": 1430,
+    "groupId": 23,
+    "collectionId": 8150010,
+    "rate": 100
+  },
+  {
+    "id": 1431,
+    "groupId": 23,
+    "collectionId": 8150012,
+    "rate": 100
+  },
+  {
+    "id": 1432,
+    "groupId": 23,
+    "collectionId": 8150014,
+    "rate": 100
+  },
+  {
+    "id": 1433,
+    "groupId": 23,
+    "collectionId": 8150016,
+    "rate": 100
+  },
+  {
+    "id": 1434,
+    "groupId": 23,
+    "collectionId": 8250007,
+    "rate": 100
+  },
+  {
+    "id": 1435,
+    "groupId": 23,
+    "collectionId": 8250009,
+    "rate": 100
+  },
+  {
+    "id": 1436,
+    "groupId": 23,
+    "collectionId": 8250011,
+    "rate": 100
+  },
+  {
+    "id": 1437,
+    "groupId": 23,
+    "collectionId": 8250013,
+    "rate": 100
+  },
+  {
+    "id": 1438,
+    "groupId": 23,
+    "collectionId": 8250015,
+    "rate": 100
+  },
+  {
+    "id": 1439,
+    "groupId": 23,
+    "collectionId": 8250017,
+    "rate": 100
+  },
+  {
+    "id": 1440,
+    "groupId": 23,
+    "collectionId": 8350043,
+    "rate": 100
+  },
+  {
+    "id": 1441,
+    "groupId": 24,
+    "collectionId": 8120034,
+    "rate": 100
+  },
+  {
+    "id": 1442,
+    "groupId": 24,
+    "collectionId": 8120035,
+    "rate": 100
+  },
+  {
+    "id": 1443,
+    "groupId": 24,
+    "collectionId": 8120047,
+    "rate": 100
+  },
+  {
+    "id": 1444,
+    "groupId": 24,
+    "collectionId": 8120104,
+    "rate": 100
+  },
+  {
+    "id": 1445,
+    "groupId": 24,
+    "collectionId": 8120110,
+    "rate": 100
+  },
+  {
+    "id": 1446,
+    "groupId": 24,
+    "collectionId": 8120208,
+    "rate": 100
+  },
+  {
+    "id": 1447,
+    "groupId": 24,
+    "collectionId": 8120216,
+    "rate": 100
+  },
+  {
+    "id": 1448,
+    "groupId": 24,
+    "collectionId": 8120317,
+    "rate": 100
+  },
+  {
+    "id": 1449,
+    "groupId": 24,
+    "collectionId": 8120406,
+    "rate": 100
+  },
+  {
+    "id": 1450,
+    "groupId": 24,
+    "collectionId": 8120416,
+    "rate": 100
+  },
+  {
+    "id": 1451,
+    "groupId": 24,
+    "collectionId": 8120512,
+    "rate": 100
+  },
+  {
+    "id": 1452,
+    "groupId": 24,
+    "collectionId": 8120610,
+    "rate": 100
+  },
+  {
+    "id": 1453,
+    "groupId": 24,
+    "collectionId": 8120703,
+    "rate": 100
+  },
+  {
+    "id": 1454,
+    "groupId": 24,
+    "collectionId": 8120704,
+    "rate": 100
+  },
+  {
+    "id": 1455,
+    "groupId": 24,
+    "collectionId": 8120705,
+    "rate": 100
+  },
+  {
+    "id": 1456,
+    "groupId": 24,
+    "collectionId": 8120808,
+    "rate": 100
+  },
+  {
+    "id": 1457,
+    "groupId": 24,
+    "collectionId": 8120821,
+    "rate": 100
+  },
+  {
+    "id": 1458,
+    "groupId": 24,
+    "collectionId": 8220033,
+    "rate": 100
+  },
+  {
+    "id": 1459,
+    "groupId": 24,
+    "collectionId": 8220036,
+    "rate": 100
+  },
+  {
+    "id": 1460,
+    "groupId": 24,
+    "collectionId": 8220044,
+    "rate": 100
+  },
+  {
+    "id": 1461,
+    "groupId": 24,
+    "collectionId": 8220051,
+    "rate": 100
+  },
+  {
+    "id": 1462,
+    "groupId": 24,
+    "collectionId": 8220052,
+    "rate": 100
+  },
+  {
+    "id": 1463,
+    "groupId": 24,
+    "collectionId": 8220106,
+    "rate": 100
+  },
+  {
+    "id": 1464,
+    "groupId": 24,
+    "collectionId": 8220214,
+    "rate": 100
+  },
+  {
+    "id": 1465,
+    "groupId": 24,
+    "collectionId": 8220215,
+    "rate": 100
+  },
+  {
+    "id": 1466,
+    "groupId": 24,
+    "collectionId": 8220318,
+    "rate": 100
+  },
+  {
+    "id": 1467,
+    "groupId": 24,
+    "collectionId": 8220409,
+    "rate": 100
+  },
+  {
+    "id": 1468,
+    "groupId": 24,
+    "collectionId": 8220415,
+    "rate": 100
+  },
+  {
+    "id": 1469,
+    "groupId": 24,
+    "collectionId": 8220515,
+    "rate": 100
+  },
+  {
+    "id": 1470,
+    "groupId": 24,
+    "collectionId": 8220516,
+    "rate": 100
+  },
+  {
+    "id": 1471,
+    "groupId": 24,
+    "collectionId": 8220612,
+    "rate": 100
+  },
+  {
+    "id": 1472,
+    "groupId": 24,
+    "collectionId": 8220613,
+    "rate": 100
+  },
+  {
+    "id": 1473,
+    "groupId": 24,
+    "collectionId": 8220806,
+    "rate": 100
+  },
+  {
+    "id": 1474,
+    "groupId": 24,
+    "collectionId": 8220813,
+    "rate": 100
+  },
+  {
+    "id": 1475,
+    "groupId": 24,
+    "collectionId": 8220820,
+    "rate": 100
+  },
+  {
+    "id": 1476,
+    "groupId": 24,
+    "collectionId": 8320025,
+    "rate": 100
+  },
+  {
+    "id": 1477,
+    "groupId": 24,
+    "collectionId": 8320046,
+    "rate": 100
+  },
+  {
+    "id": 1478,
+    "groupId": 24,
+    "collectionId": 8320049,
+    "rate": 100
+  },
+  {
+    "id": 1479,
+    "groupId": 24,
+    "collectionId": 8320109,
+    "rate": 100
+  },
+  {
+    "id": 1480,
+    "groupId": 24,
+    "collectionId": 8320207,
+    "rate": 100
+  },
+  {
+    "id": 1481,
+    "groupId": 24,
+    "collectionId": 8320210,
+    "rate": 100
+  },
+  {
+    "id": 1482,
+    "groupId": 24,
+    "collectionId": 8320310,
+    "rate": 100
+  },
+  {
+    "id": 1483,
+    "groupId": 24,
+    "collectionId": 8320320,
+    "rate": 100
+  },
+  {
+    "id": 1484,
+    "groupId": 24,
+    "collectionId": 8320408,
+    "rate": 100
+  },
+  {
+    "id": 1485,
+    "groupId": 24,
+    "collectionId": 8320506,
+    "rate": 100
+  },
+  {
+    "id": 1486,
+    "groupId": 24,
+    "collectionId": 8320511,
+    "rate": 100
+  },
+  {
+    "id": 1487,
+    "groupId": 24,
+    "collectionId": 8320514,
+    "rate": 100
+  },
+  {
+    "id": 1488,
+    "groupId": 24,
+    "collectionId": 8320617,
+    "rate": 100
+  },
+  {
+    "id": 1489,
+    "groupId": 24,
+    "collectionId": 8320618,
+    "rate": 100
+  },
+  {
+    "id": 1490,
+    "groupId": 24,
+    "collectionId": 8320707,
+    "rate": 100
+  },
+  {
+    "id": 1491,
+    "groupId": 24,
+    "collectionId": 8320709,
+    "rate": 100
+  },
+  {
+    "id": 1492,
+    "groupId": 24,
+    "collectionId": 8320809,
+    "rate": 100
+  },
+  {
+    "id": 1493,
+    "groupId": 24,
+    "collectionId": 8320812,
+    "rate": 100
+  },
+  {
+    "id": 1494,
+    "groupId": 24,
+    "collectionId": 8130303,
+    "rate": 100
+  },
+  {
+    "id": 1495,
+    "groupId": 24,
+    "collectionId": 8230304,
+    "rate": 100
+  },
+  {
+    "id": 1496,
+    "groupId": 24,
+    "collectionId": 8230305,
+    "rate": 100
+  },
+  {
+    "id": 1497,
+    "groupId": 24,
+    "collectionId": 8330306,
+    "rate": 100
+  },
+  {
+    "id": 1498,
+    "groupId": 25,
+    "collectionId": 8110048,
+    "rate": 100
+  },
+  {
+    "id": 1499,
+    "groupId": 25,
+    "collectionId": 8220807,
+    "rate": 100
+  },
+  {
+    "id": 1500,
+    "groupId": 25,
+    "collectionId": 8220814,
+    "rate": 100
+  },
+  {
+    "id": 1501,
+    "groupId": 25,
+    "collectionId": 8320811,
+    "rate": 100
+  },
+  {
+    "id": 1502,
+    "groupId": 25,
+    "collectionId": 8130018,
+    "rate": 100
+  },
+  {
+    "id": 1503,
+    "groupId": 25,
+    "collectionId": 8130041,
+    "rate": 100
+  },
+  {
+    "id": 1504,
+    "groupId": 25,
+    "collectionId": 8130103,
+    "rate": 100
+  },
+  {
+    "id": 1505,
+    "groupId": 25,
+    "collectionId": 8130107,
+    "rate": 100
+  },
+  {
+    "id": 1506,
+    "groupId": 25,
+    "collectionId": 8130115,
+    "rate": 100
+  },
+  {
+    "id": 1507,
+    "groupId": 25,
+    "collectionId": 8130203,
+    "rate": 100
+  },
+  {
+    "id": 1508,
+    "groupId": 25,
+    "collectionId": 8130217,
+    "rate": 100
+  },
+  {
+    "id": 1509,
+    "groupId": 25,
+    "collectionId": 8130315,
+    "rate": 100
+  },
+  {
+    "id": 1510,
+    "groupId": 25,
+    "collectionId": 8130403,
+    "rate": 100
+  },
+  {
+    "id": 1511,
+    "groupId": 25,
+    "collectionId": 8130404,
+    "rate": 100
+  },
+  {
+    "id": 1512,
+    "groupId": 25,
+    "collectionId": 8130503,
+    "rate": 100
+  },
+  {
+    "id": 1513,
+    "groupId": 25,
+    "collectionId": 8130504,
+    "rate": 100
+  },
+  {
+    "id": 1514,
+    "groupId": 25,
+    "collectionId": 8130505,
+    "rate": 100
+  },
+  {
+    "id": 1515,
+    "groupId": 25,
+    "collectionId": 8130603,
+    "rate": 100
+  },
+  {
+    "id": 1516,
+    "groupId": 25,
+    "collectionId": 8130604,
+    "rate": 100
+  },
+  {
+    "id": 1517,
+    "groupId": 25,
+    "collectionId": 8130605,
+    "rate": 100
+  },
+  {
+    "id": 1518,
+    "groupId": 25,
+    "collectionId": 8130803,
+    "rate": 100
+  },
+  {
+    "id": 1519,
+    "groupId": 25,
+    "collectionId": 8130804,
+    "rate": 100
+  },
+  {
+    "id": 1520,
+    "groupId": 25,
+    "collectionId": 8230004,
+    "rate": 100
+  },
+  {
+    "id": 1521,
+    "groupId": 25,
+    "collectionId": 8230019,
+    "rate": 100
+  },
+  {
+    "id": 1522,
+    "groupId": 25,
+    "collectionId": 8230024,
+    "rate": 100
+  },
+  {
+    "id": 1523,
+    "groupId": 25,
+    "collectionId": 8230027,
+    "rate": 100
+  },
+  {
+    "id": 1524,
+    "groupId": 25,
+    "collectionId": 8230028,
+    "rate": 100
+  },
+  {
+    "id": 1525,
+    "groupId": 25,
+    "collectionId": 8230037,
+    "rate": 100
+  },
+  {
+    "id": 1526,
+    "groupId": 25,
+    "collectionId": 8230038,
+    "rate": 100
+  },
+  {
+    "id": 1527,
+    "groupId": 25,
+    "collectionId": 8230039,
+    "rate": 100
+  },
+  {
+    "id": 1528,
+    "groupId": 25,
+    "collectionId": 8230040,
+    "rate": 100
+  },
+  {
+    "id": 1529,
+    "groupId": 25,
+    "collectionId": 8230042,
+    "rate": 100
+  },
+  {
+    "id": 1530,
+    "groupId": 25,
+    "collectionId": 8230050,
+    "rate": 100
+  },
+  {
+    "id": 1531,
+    "groupId": 25,
+    "collectionId": 8230204,
+    "rate": 100
+  },
+  {
+    "id": 1532,
+    "groupId": 25,
+    "collectionId": 8230316,
+    "rate": 100
+  },
+  {
+    "id": 1533,
+    "groupId": 25,
+    "collectionId": 8230414,
+    "rate": 100
+  },
+  {
+    "id": 1534,
+    "groupId": 25,
+    "collectionId": 8230509,
+    "rate": 100
+  },
+  {
+    "id": 1535,
+    "groupId": 25,
+    "collectionId": 8230606,
+    "rate": 100
+  },
+  {
+    "id": 1536,
+    "groupId": 25,
+    "collectionId": 8230614,
+    "rate": 100
+  },
+  {
+    "id": 1537,
+    "groupId": 25,
+    "collectionId": 8230714,
+    "rate": 100
+  },
+  {
+    "id": 1538,
+    "groupId": 25,
+    "collectionId": 8330001,
+    "rate": 100
+  },
+  {
+    "id": 1539,
+    "groupId": 25,
+    "collectionId": 8330002,
+    "rate": 100
+  },
+  {
+    "id": 1540,
+    "groupId": 25,
+    "collectionId": 8330003,
+    "rate": 100
+  },
+  {
+    "id": 1541,
+    "groupId": 25,
+    "collectionId": 8330005,
+    "rate": 100
+  },
+  {
+    "id": 1542,
+    "groupId": 25,
+    "collectionId": 8330020,
+    "rate": 100
+  },
+  {
+    "id": 1543,
+    "groupId": 25,
+    "collectionId": 8330023,
+    "rate": 100
+  },
+  {
+    "id": 1544,
+    "groupId": 25,
+    "collectionId": 8330026,
+    "rate": 100
+  },
+  {
+    "id": 1545,
+    "groupId": 25,
+    "collectionId": 8330111,
+    "rate": 100
+  },
+  {
+    "id": 1546,
+    "groupId": 25,
+    "collectionId": 8330112,
+    "rate": 100
+  },
+  {
+    "id": 1547,
+    "groupId": 25,
+    "collectionId": 8330211,
+    "rate": 100
+  },
+  {
+    "id": 1548,
+    "groupId": 25,
+    "collectionId": 8330218,
+    "rate": 100
+  },
+  {
+    "id": 1549,
+    "groupId": 25,
+    "collectionId": 8330311,
+    "rate": 100
+  },
+  {
+    "id": 1550,
+    "groupId": 25,
+    "collectionId": 8330412,
+    "rate": 100
+  },
+  {
+    "id": 1551,
+    "groupId": 25,
+    "collectionId": 8330413,
+    "rate": 100
+  },
+  {
+    "id": 1552,
+    "groupId": 25,
+    "collectionId": 8330417,
+    "rate": 100
+  },
+  {
+    "id": 1553,
+    "groupId": 25,
+    "collectionId": 8330418,
+    "rate": 100
+  },
+  {
+    "id": 1554,
+    "groupId": 25,
+    "collectionId": 8330513,
+    "rate": 100
+  },
+  {
+    "id": 1555,
+    "groupId": 25,
+    "collectionId": 8330607,
+    "rate": 100
+  },
+  {
+    "id": 1556,
+    "groupId": 25,
+    "collectionId": 8330615,
+    "rate": 100
+  },
+  {
+    "id": 1557,
+    "groupId": 25,
+    "collectionId": 8330708,
+    "rate": 100
+  },
+  {
+    "id": 1558,
+    "groupId": 25,
+    "collectionId": 8330710,
+    "rate": 100
+  },
+  {
+    "id": 1559,
+    "groupId": 25,
+    "collectionId": 8330715,
+    "rate": 100
+  },
+  {
+    "id": 1560,
+    "groupId": 25,
+    "collectionId": 8330816,
+    "rate": 100
+  },
+  {
+    "id": 1561,
+    "groupId": 25,
+    "collectionId": 8330817,
+    "rate": 100
+  }
+]

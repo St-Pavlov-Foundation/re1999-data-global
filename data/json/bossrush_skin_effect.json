@@ -1,0 +1,191 @@
+[
+  {
+    "id": 620304,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mounthead",
+    "scales": "0.9,0.9,0.9"
+  },
+  {
+    "id": 620304,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mounthead",
+    "scales": "0.9,0.9,0.9"
+  },
+  {
+    "id": 620304,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mounthead",
+    "scales": "0.8,0.8,0.8"
+  },
+  {
+    "id": 413401,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 413401,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 413401,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610401,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2#buff/buff_rush_rank2#buff/buff_rush_rank2",
+    "hangpoints": "mountweapon#mountbottom#BodyStatic",
+    "scales": "1,1,1#1,1,1#2,2,2"
+  },
+  {
+    "id": 610401,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3#buff/buff_rush_rank3#buff/buff_rush_rank3",
+    "hangpoints": "mountweapon#mountbottom#BodyStatic",
+    "scales": "1,1,1#1,1,1#2,2,2"
+  },
+  {
+    "id": 610401,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4#buff/buff_rush_rank4#buff/buff_rush_rank4",
+    "hangpoints": "mountweapon#mountbottom#BodyStatic",
+    "scales": "1,1,1#1,1,1#2,2,2"
+  },
+  {
+    "id": 690102,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountweapon",
+    "scales": "0.3,0.3,0.3"
+  },
+  {
+    "id": 690102,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountweapon",
+    "scales": "0.3,0.3,0.3"
+  },
+  {
+    "id": 690102,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountweapon",
+    "scales": "0.3,0.3,0.3"
+  },
+  {
+    "id": 680404,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 680404,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 680404,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountbody",
+    "scales": "0.8,0.8,0.8"
+  },
+  {
+    "id": 670404,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountmiddle",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 670404,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountmiddle",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 670404,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountmiddle",
+    "scales": "-0.8,0.8,0.8"
+  },
+  {
+    "id": 630409,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "special1",
+    "scales": "0.6,0.6,0.6"
+  },
+  {
+    "id": 630409,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "special1",
+    "scales": "0.4,0.4,0.4"
+  },
+  {
+    "id": 630409,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "special1",
+    "scales": "0.3,0.3,0.3"
+  },
+  {
+    "id": 670214,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 670214,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 670214,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610302,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610302,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610302,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountweapon",
+    "scales": "0.8,0.8,0.8"
+  }
+]

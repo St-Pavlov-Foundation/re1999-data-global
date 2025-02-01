@@ -1,0 +1,242 @@
+[
+  {
+    "id": 800000001,
+    "version": "",
+    "powerCost": 3,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10010836",
+    "icon": "rouge_faction_smallicon_1"
+  },
+  {
+    "id": 800000002,
+    "version": "",
+    "powerCost": 5,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10010834",
+    "icon": "rouge_faction_smallicon_2"
+  },
+  {
+    "id": 800010001,
+    "version": "",
+    "powerCost": 5,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10041275",
+    "icon": "rouge_faction_smallicon_3"
+  },
+  {
+    "id": 800010002,
+    "version": "",
+    "powerCost": 10,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10043637",
+    "icon": "rouge_faction_smallicon_7"
+  },
+  {
+    "id": 800020001,
+    "version": "",
+    "powerCost": 4,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10041277",
+    "icon": "rouge_faction_smallicon_1"
+  },
+  {
+    "id": 800020002,
+    "version": "",
+    "powerCost": 30,
+    "coinCost": 0,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10041278",
+    "icon": "rouge_faction_smallicon_14"
+  },
+  {
+    "id": 800030001,
+    "version": "",
+    "powerCost": 5,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10010834",
+    "icon": "rouge_faction_smallicon_6"
+  },
+  {
+    "id": 800030002,
+    "version": "",
+    "powerCost": 16,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10041279",
+    "icon": "rouge_faction_smallicon_15"
+  },
+  {
+    "id": 800040001,
+    "version": "",
+    "powerCost": 5,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10040891",
+    "icon": "rouge_faction_smallicon_8"
+  },
+  {
+    "id": 800040002,
+    "version": "",
+    "powerCost": 9,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10043638",
+    "icon": "rouge_faction_smallicon_9"
+  },
+  {
+    "id": 800050001,
+    "version": "",
+    "powerCost": 5,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10040891",
+    "icon": "rouge_faction_smallicon_8"
+  },
+  {
+    "id": 800050002,
+    "version": "",
+    "powerCost": 6,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10043639",
+    "icon": "rouge_faction_smallicon_1"
+  },
+  {
+    "id": 800060001,
+    "version": "",
+    "powerCost": 0,
+    "coinCost": 100,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10041282",
+    "icon": "rouge_faction_smallicon_10"
+  },
+  {
+    "id": 800060002,
+    "version": "",
+    "powerCost": 0,
+    "coinCost": 200,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10043640",
+    "icon": "rouge_faction_smallicon_13"
+  },
+  {
+    "id": 800070001,
+    "version": "",
+    "powerCost": 6,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10043641",
+    "icon": "rouge_faction_smallicon_4"
+  },
+  {
+    "id": 800070002,
+    "version": "",
+    "powerCost": 40,
+    "coinCost": 0,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10043642",
+    "icon": "rouge_faction_smallicon_11"
+  },
+  {
+    "id": 800080001,
+    "version": "",
+    "powerCost": 8,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10041286",
+    "icon": "rouge_faction_smallicon_5"
+  },
+  {
+    "id": 800080002,
+    "version": "",
+    "powerCost": 25,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10041287",
+    "icon": "rouge_faction_smallicon_12"
+  },
+  {
+    "id": 800010003,
+    "version": "101",
+    "powerCost": 10,
+    "coinCost": 0,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10051760",
+    "icon": "rouge_faction_smallicon_16"
+  },
+  {
+    "id": 800080003,
+    "version": "101",
+    "powerCost": 15,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10049579",
+    "icon": "rouge_faction_smallicon_22"
+  },
+  {
+    "id": 800040003,
+    "version": "101",
+    "powerCost": 30,
+    "coinCost": 0,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10051761",
+    "icon": "rouge_faction_smallicon_21"
+  },
+  {
+    "id": 800050003,
+    "version": "101",
+    "powerCost": 20,
+    "coinCost": 0,
+    "roundLimit": 1,
+    "allLimit": 0,
+    "desc": "language_10051762",
+    "icon": "rouge_faction_smallicon_20"
+  },
+  {
+    "id": 800110001,
+    "version": "101",
+    "powerCost": 10,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10049584",
+    "icon": "rouge_faction_smallicon_17"
+  },
+  {
+    "id": 800110002,
+    "version": "101",
+    "powerCost": 20,
+    "coinCost": 0,
+    "roundLimit": 0,
+    "allLimit": 0,
+    "desc": "language_10051763",
+    "icon": "rouge_faction_smallicon_18"
+  }
+]

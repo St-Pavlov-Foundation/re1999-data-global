@@ -1,0 +1,108 @@
+module("framework.network.socket.system_cmd", package.seeall)
+
+slot1 = 256
+
+return {
+	{
+		"Login",
+		"LoginRequest",
+		"LoginResponse"
+	},
+	[3] = {
+		"Login",
+		"GetLostCmdRespRequest",
+		"GetLostCmdRespResponse"
+	},
+	[4] = {
+		"Login",
+		"",
+		"ForceLogoutResponse"
+	},
+	[5] = {
+		"Login",
+		"",
+		"GetLostCmdRespResponseStartTag"
+	},
+	GetSendMsg = function (slot0, slot1)
+		if uv0.GetRequestName(slot0) then
+			return uv0[slot2](slot1)
+		else
+			logError("request handler not exist, cmd = " .. slot0)
+		end
+	end,
+	GetReceiveMsg = function (slot0, slot1)
+		if uv0.GetResponseName(slot0) then
+			return uv0[slot2](slot1)
+		else
+			logError("response handler not exist, cmd = " .. slot0)
+		end
+	end,
+	GetRequestName = function (slot0)
+		return uv0[slot0][2]
+	end,
+	GetResponseName = function (slot0)
+		return uv0[slot0][3]
+	end,
+	LoginRequest = function (slot0)
+		return uv0.WriteString(slot0.account) .. uv0.WriteString(slot0.password) .. uv0.WriteByte(slot0.connectWay)
+	end,
+	GetLostCmdRespRequest = function (slot0)
+		return uv0.WriteByte(slot0.downTag)
+	end,
+	LoginResponse = function (slot0)
+		slot3, slot4 = uv0.ReadString(slot0, 1)
+		slot5, slot6 = uv0.ReadLong(slot0, slot3)
+
+		return {
+			reason = slot4,
+			userId = slot6
+		}
+	end,
+	LeaveResponse = function (slot0)
+		slot3, slot4 = uv0.ReadString(slot0, 1)
+
+		return {
+			reason = slot4
+		}
+	end,
+	GetLostCmdRespResponse = function (slot0)
+		slot3, slot4 = uv0.ReadBoolean(slot0, 1)
+
+		return {
+			canGet = slot4
+		}
+	end,
+	ForceLogoutResponse = function (slot0)
+		slot3, slot4 = uv0.ReadString(slot0, 1)
+
+		return {
+			reason = slot4
+		}
+	end,
+	GetLostCmdRespResponseStartTag = function (slot0)
+		return {}
+	end,
+	ReadString = function (slot0, slot1)
+		slot4 = string.byte(slot0, slot1) * uv0 + string.byte(slot0, slot1 + 1)
+
+		return slot1 + 2 + slot4, string.sub(slot0, slot1 + 2, slot1 + 2 + slot4 - 1)
+	end,
+	ReadLong = function (slot0, slot1)
+		for slot6 = slot1, slot1 + 8 - 1 do
+			slot2 = 0 * uv0 + string.byte(slot0, slot6)
+		end
+
+		return slot1 + 8, slot2
+	end,
+	ReadBoolean = function (slot0, slot1)
+		return slot1 + 1, string.byte(slot0, slot1) ~= 0
+	end,
+	WriteString = function (slot0)
+		slot1 = #slot0
+
+		return string.char(math.floor(slot1 / uv0)) .. string.char(math.floor(slot1 % uv0)) .. slot0
+	end,
+	WriteByte = function (slot0)
+		return string.char(slot0)
+	end
+}
