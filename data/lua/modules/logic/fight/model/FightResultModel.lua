@@ -114,8 +114,9 @@ function slot0._initNormalBonus(slot0, slot1)
 	uv0._addMaterialDatasToList(slot1.normalBonus, slot2, FightEnum.FightBonusTag.NormalBonus)
 
 	slot3 = {}
+	slot7 = uv0._sortMaterial
 
-	table.sort(slot2, uv0._sortMaterial)
+	table.sort(slot2, slot7)
 
 	for slot7, slot8 in pairs(slot2) do
 		if #slot3 < 3 and (slot8.materilType == MaterialEnum.MaterialType.Currency or slot8.materilType == MaterialEnum.MaterialType.Equip) then

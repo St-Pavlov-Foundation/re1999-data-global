@@ -77,9 +77,9 @@ function slot0._setEntityMOList(slot0, slot1, slot2, slot3)
 
 	slot1:setList(slot4)
 
-	slot8 = slot1
+	slot8 = slot1.getList
 
-	slot0:addList(slot1.getList(slot8))
+	slot0:addList(slot8(slot1))
 
 	for slot8, slot9 in ipairs(slot2) do
 		if slot9.currentHp <= 0 then
@@ -254,5 +254,14 @@ function slot0.sortSubEntityList(slot0, slot1)
 end
 
 slot0.instance = slot0.New()
+
+slot0.instance:onInit()
+setmetatable(slot0.instance, {
+	__index = function (slot0, slot1)
+		logError("FightEntityModel 已废弃。新的entity数据管理为 FightEntityDataMgr ,访问数据请用 FightDataHelper.entityMgr ,如果疑问或需要支持联系左皓文")
+
+		return uv0[slot1]
+	end
+})
 
 return slot0

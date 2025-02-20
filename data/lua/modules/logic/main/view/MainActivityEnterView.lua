@@ -16,6 +16,7 @@ function slot0.onInitView(slot0)
 	slot0.simageActivityIcon = gohelper.findChildSingleImage(slot0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/icon")
 	slot0.imageActivityIcon = slot0.simageActivityIcon:GetComponent(gohelper.Type_Image)
 	slot0.goActivityRedDot = gohelper.findChild(slot0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/#go_activityreddot")
+	slot0.pckeyNormalFight = gohelper.findChild(slot0.btnNormalFight.gameObject, "#go_pcbtn")
 	slot0.pckeyActivityFight = gohelper.findChild(slot0.btnEnterActivity.gameObject, "#go_pcbtn")
 	slot0.pckeyEnterFight = gohelper.findChild(slot0.btnActivityFight.gameObject, "#go_pcbtn")
 
@@ -256,7 +257,8 @@ function slot0.getActivityHandleFunc(slot0, slot1)
 			[ActivityEnum.VersionActivityIdDict.Activity1_9] = slot0.commonEnterVersionActivity,
 			[ActivityEnum.VersionActivityIdDict.Activity2_0] = slot0.commonEnterVersionActivity,
 			[ActivityEnum.VersionActivityIdDict.Activity2_1] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity2_2] = slot0.commonEnterVersionActivity
+			[ActivityEnum.VersionActivityIdDict.Activity2_2] = slot0.commonEnterVersionActivity,
+			[ActivityEnum.VersionActivityIdDict.Activity2_3] = slot0.commonEnterVersionActivity
 		}
 	end
 
@@ -270,7 +272,8 @@ function slot0.getActivityEnterHandleFunc(slot0, slot1)
 			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_0] = VersionActivity2_0EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_1] = VersionActivity2_1EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance
 		}
 	end
 
@@ -332,6 +335,7 @@ function slot0.showKeyTips(slot0)
 	if PlayerPrefsHelper.getNumber("keyTips", 0) == 1 then
 		PCInputController.instance:showkeyTips(slot0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
 		PCInputController.instance:showkeyTips(slot0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+		PCInputController.instance:showkeyTips(slot0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
 	end
 end
 

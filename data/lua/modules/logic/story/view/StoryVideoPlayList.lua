@@ -26,11 +26,11 @@ function slot0.init(slot0, slot1, slot2)
 	end
 
 	slot0._uguiPlayList:SetEventListener(slot0._onVideoEvent, slot0)
+	recthelper.setSize(slot0.viewGO.transform, 2592, 1080)
 
-	slot6 = 1080
+	slot6 = false
 
-	recthelper.setSize(slot0.viewGO.transform, 2592, slot6)
-	gohelper.setActive(slot0.viewGO, false)
+	gohelper.setActive(slot0.viewGO, slot6)
 
 	slot0._path2StartCallback = {}
 	slot0._path2StartCallbackObj = {}

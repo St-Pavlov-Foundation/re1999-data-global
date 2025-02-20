@@ -35,9 +35,9 @@ function slot0._editableInitView(slot0)
 	slot0._simagebg3:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang3"))
 	slot0._simagebg5:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang5"))
 
-	slot4 = "bg_qianbi"
+	slot4 = ResUrl.getVersionActivityTrip_1_2
 
-	slot0._simageqianbi:LoadImage(ResUrl.getVersionActivityTrip_1_2(slot4))
+	slot0._simageqianbi:LoadImage(slot4("bg_qianbi"))
 
 	slot0.entrances = {}
 

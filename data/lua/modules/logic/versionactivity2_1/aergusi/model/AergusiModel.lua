@@ -37,8 +37,9 @@ end
 function slot0.getEpisodeInfos(slot0)
 	function (slot0)
 		slot1 = AergusiConfig.instance:getEpisodeConfigs()
+		slot5 = slot1[slot0]
 
-		table.insert(uv0, slot1[slot0])
+		table.insert(uv0, slot5)
 
 		for slot5, slot6 in pairs(slot1) do
 			if slot6.preEpisodeId == slot0 then
@@ -166,7 +167,9 @@ function slot0.isClueReaded(slot0, slot1)
 	end
 
 	if slot0._evidenceDicts[slot0._curEpisodeId] then
-		for slot5, slot6 in pairs(slot0._evidenceDicts[slot0._curEpisodeId].clueInfos) do
+		slot5 = slot0._curEpisodeId
+
+		for slot5, slot6 in pairs(slot0._evidenceDicts[slot5].clueInfos) do
 			if slot6.clueId == slot1 then
 				return slot6.status == 1
 			end

@@ -411,9 +411,9 @@ function slot0.refreshCompareContainerUI(slot0)
 		slot0.container1_goattr = gohelper.findChild(slot0._gocontainer1, "#go_equipinfo/#go_attr").transform
 	end
 
-	slot7, slot4 = transformhelper.getLocalPos(slot0.container1_goattr)
+	slot8, slot4 = transformhelper.getLocalPos(slot0.container1_goattr)
 
-	transformhelper.setLocalPosXY(slot0.container1_goattr, slot7, slot2 and -28 or 17.3)
+	transformhelper.setLocalPosXY(slot0.container1_goattr, slot8, slot2 and -28 or 17.3)
 
 	if slot2 then
 		slot0.container1_txtlevel.text = string.format("LV.<color=#8fb1cc>%d</color>/<color=#8fb1cc>%d</color>", slot1.level, EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot1))
@@ -620,9 +620,9 @@ function slot0.refreshLeftUI(slot0)
 	gohelper.setActive(slot0._goequipinfoempty, not slot0.selectedEquipMo)
 	gohelper.setActive(slot0._gobalance, slot2)
 
-	slot7, slot4 = transformhelper.getLocalPos(slot0._goAttr.transform)
+	slot8, slot4 = transformhelper.getLocalPos(slot0._goAttr.transform)
 
-	transformhelper.setLocalPosXY(slot0._goAttr.transform, slot7, slot2 and -172.2 or -127)
+	transformhelper.setLocalPosXY(slot0._goAttr.transform, slot8, slot2 and -172.2 or -127)
 
 	slot0.layoutElement.minHeight = slot2 and 149.5 or 192.19
 

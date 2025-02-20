@@ -38,10 +38,10 @@ function slot0.onOpen(slot0)
 	end
 
 	slot0._recordMOList = {}
-	slot3 = AiZiLaModel.instance
-	slot4 = slot3
+	slot4 = AiZiLaModel.instance
+	slot4 = slot4.getRecordMOList
 
-	tabletool.addValues(slot0._recordMOList, slot3.getRecordMOList(slot4))
+	tabletool.addValues(slot0._recordMOList, slot4(slot4))
 
 	slot0._selectRecordMO = slot0._recordMOList[1]
 

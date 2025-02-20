@@ -132,9 +132,10 @@ function slot0.getHeroBalanceInfo(slot0)
 	if (slot1.talent < slot9 or slot1.rank < CharacterEnum.TalentRank) and CharacterEnum.TalentRank <= slot8 then
 		slot11 = {}
 		slot12 = lua_character_talent.configDict[slot0][slot9]
-		slot20 = ","
+		slot20 = "#"
+		slot21 = ","
 
-		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot9][slot12.talentMould][string.splitToNumber(slot12.exclusive, "#")[1]].talenScheme, true, "#", slot20)) do
+		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot9][slot12.talentMould][string.splitToNumber(slot12.exclusive, "#")[1]].talenScheme, true, slot20, slot21)) do
 			HeroDef_pb.TalentCubeInfo().cubeId = slot21[1]
 			slot22.direction = slot21[2] or 0
 			slot22.posX = slot21[3] or 0

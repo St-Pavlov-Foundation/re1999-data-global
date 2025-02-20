@@ -61,6 +61,10 @@ end
 function slot0._refreshView(slot0)
 	slot1 = string.gsub(slot0.viewParam.tipsContent, " ", " ")
 
+	if LangSettings.instance:isEn() then
+		slot1 = slot0.viewParam.tipsContent
+	end
+
 	if not slot0._hasIconDialogItem then
 		slot0._hasIconDialogItem = MonoHelper.addLuaComOnceToGo(slot0.viewGO, TMPFadeIn)
 

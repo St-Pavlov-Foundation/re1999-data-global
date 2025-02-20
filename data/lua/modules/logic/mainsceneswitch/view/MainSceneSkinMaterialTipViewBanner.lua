@@ -261,7 +261,9 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onSwitch, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._onSwitch, slot4)
 
 	for slot4, slot5 in ipairs(slot0._infoItemTbList) do
 		slot5._simageinfobg:UnLoadImage()

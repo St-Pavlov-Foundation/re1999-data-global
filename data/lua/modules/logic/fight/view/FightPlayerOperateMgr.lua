@@ -30,6 +30,10 @@ function slot0._onStartSequenceFinish(slot0)
 end
 
 function slot0.checkNeedPlayerOperate(slot0)
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		return
+	end
+
 	if slot0:_checkChangeHeroNeedUseSkill() then
 		return
 	end
@@ -103,8 +107,9 @@ function slot0.detectUpgrade()
 
 	slot0 = {}
 	slot1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+	slot5 = uv0.sortEntity
 
-	table.sort(slot1, uv0.sortEntity)
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if slot6:getMO() and slot7.canUpgradeIds and tabletool.len(slot7.canUpgradeIds) > 0 then
@@ -162,7 +167,7 @@ function slot0._checkChangeHeroNeedUseSkill(slot0)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot1.lastChangeHeroUid) then
+	if not FightDataHelper.entityMgr:getById(slot1.lastChangeHeroUid) then
 		return
 	end
 
@@ -170,7 +175,7 @@ function slot0._checkChangeHeroNeedUseSkill(slot0)
 		return
 	end
 
-	if FightEnum.ShowLogicTargetView[slot3.logicTarget] and slot3.targetLimit == FightEnum.TargetLimit.MySide and #FightEntityModel.instance:getMySideList() + #FightEntityModel.instance:getSpModel(FightEnum.EntitySide.MySide):getList() == 0 then
+	if FightEnum.ShowLogicTargetView[slot3.logicTarget] and slot3.targetLimit == FightEnum.TargetLimit.MySide and #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide) == 0 then
 		return
 	end
 

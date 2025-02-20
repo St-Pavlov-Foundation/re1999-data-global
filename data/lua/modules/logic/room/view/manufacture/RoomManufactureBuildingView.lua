@@ -399,7 +399,10 @@ function slot0.refreshTitle(slot0)
 	slot7 = ""
 	slot0._txtlv.text = (ManufactureConfig.instance:getBuildingMaxLevel(slot3) > slot2 or luaLang("lv_max")) and formatLuaLang("v1a5_aizila_level", slot2)
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuildingIcon, slot4)
+	if slot4 then
+		UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuildingIcon, slot4)
+	end
+
 	gohelper.setActive(slot0._btnupgrade.gameObject, not ManufactureModel.instance:isMaxLevel(slot5))
 end
 

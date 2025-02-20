@@ -28,7 +28,7 @@ function slot0.autoContract(slot0, slot1, slot2)
 
 	for slot8, slot9 in ipairs(slot1) do
 		if slot9 ~= slot2 then
-			slot11 = FightEntityModel.instance:getById(slot9) and slot10.attrMO
+			slot11 = FightDataHelper.entityMgr:getById(slot9) and slot10.attrMO
 
 			if slot11 and slot11.attack and 0 < slot12 then
 				slot3 = slot9

@@ -162,9 +162,9 @@ function slot0.refreshView(slot0)
 end
 
 function slot0.refreshDispatchList(slot0, slot1, slot2, slot3)
-	slot7 = #slot0.itemList
+	slot7 = #slot1
 
-	for slot7 = 1, math.max(#slot1, slot7) do
+	for slot7 = 1, math.max(slot7, #slot0.itemList) do
 		slot0:refreshDispatchItem(slot0.itemList[slot7], slot1[slot7], slot7, {
 			canPlayUnlockAnim = slot2,
 			waitUnlock = slot3

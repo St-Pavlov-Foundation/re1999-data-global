@@ -110,5 +110,10 @@ slot0.RoomSkinSwitchTime = 1905
 slot0.RoomBirthdayDurationDay = 1906
 slot0.SceneSwitchPageTime = 2201
 slot0.MonthCardLevelUpTime = 2203
+slot0.StorePackageNewMatTime = 2301
+slot0.StorePackageNewMatChargeGoodIds = 2302
+slot0.UnlockDestinyHeroLevel5 = 401
+slot0.UnlockDestinyHeroLevel6 = 402
+slot0.StorePackageShowCoBradedTagGoodIds = 2303
 
 return slot0

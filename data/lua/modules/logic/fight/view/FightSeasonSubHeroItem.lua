@@ -1,6 +1,6 @@
 module("modules.logic.fight.view.FightSeasonSubHeroItem", package.seeall)
 
-slot0 = class("FightSeasonSubHeroItem", BaseViewExtended)
+slot0 = class("FightSeasonSubHeroItem", FightBaseView)
 
 function slot0.onInitView(slot0)
 	slot0._headIcon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Head")
@@ -22,14 +22,14 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btn, slot0._onBtnClick, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnExPointChange, slot0._onExPointChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.UpdateExPoint, slot0._onUpdateExPoint, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ReplaceEntityMO, slot0._onReplaceEntityMO, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeChangeSubHero, slot0._onBeforeChangeSubHero, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeSubEntityHp, slot0._onChangeSubEntityHp, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.EntitySync, slot0._onEntitySync, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeEntitySubCd, slot0._onChangeEntitySubCd, slot0)
+	slot0:com_registClick(slot0._btn, slot0._onBtnClick)
+	slot0:com_registFightEvent(FightEvent.OnExPointChange, slot0._onExPointChange)
+	slot0:com_registFightEvent(FightEvent.UpdateExPoint, slot0._onUpdateExPoint)
+	slot0:com_registFightEvent(FightEvent.ReplaceEntityMO, slot0._onReplaceEntityMO)
+	slot0:com_registFightEvent(FightEvent.BeforeChangeSubHero, slot0._onBeforeChangeSubHero)
+	slot0:com_registFightEvent(FightEvent.ChangeSubEntityHp, slot0._onChangeSubEntityHp)
+	slot0:com_registFightEvent(FightEvent.EntitySync, slot0._onEntitySync)
+	slot0:com_registFightEvent(FightEvent.ChangeEntitySubCd, slot0._onChangeEntitySubCd)
 end
 
 function slot0.removeEvents(slot0)
@@ -37,8 +37,8 @@ end
 
 function slot0._onExPointChange(slot0, slot1, slot2, slot3)
 	if slot1 == slot0._entityId then
-		TaskDispatcher.cancelTask(slot0._delayHideInfo, slot0)
-		TaskDispatcher.runDelay(slot0._delayHideInfo, slot0, 0.6)
+		slot0._hideInfoTimer = slot0:com_registSingleTimer(slot0._hideInfoTimer, slot0._delayHideInfo, 0.6)
+
 		slot0:_refreshExpoint(true, slot2, slot3)
 
 		if slot0:_canUse() then
@@ -85,8 +85,8 @@ function slot0._onChangeSubEntityHp(slot0, slot1, slot2)
 		slot0:_refreshHp(true)
 
 		if slot2 > 0 then
-			TaskDispatcher.cancelTask(slot0._delayHideInfo, slot0)
-			TaskDispatcher.runDelay(slot0._delayHideInfo, slot0, 0.6)
+			slot0._hideInfoTimer = slot0:com_registSingleTimer(slot0._hideInfoTimer, slot0._delayHideInfo, 0.6)
+
 			gohelper.setActive(slot0._effectHeal, true)
 		end
 	end
@@ -97,7 +97,7 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._canUse(slot0)
-	slot1 = FightEntityModel.instance:getById(slot0._entityId)
+	slot1 = FightDataHelper.entityMgr:getById(slot0._entityId)
 
 	if slot1:getUniqueSkillPoint() <= slot1:getExPoint() then
 		return true
@@ -117,7 +117,7 @@ function slot0._onBtnClick(slot0)
 		return
 	end
 
-	if FightEntityModel.instance:getById(slot0._entityId).subCd ~= 0 then
+	if FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
 		GameFacade.showToast(ToastEnum.CanNotUseSeasonChangeHeroCd)
 
 		return
@@ -151,7 +151,7 @@ function slot0._onChangeEntitySubCd(slot0, slot1)
 end
 
 function slot0._onEntitySync(slot0, slot1)
-	if slot1 == slot0._entityId and FightEntityModel.instance:getById(slot0._entityId).subCd ~= 0 then
+	if slot1 == slot0._entityId and FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
 		slot0:playAni("cd_in", true)
 	end
 end
@@ -161,7 +161,7 @@ function slot0.refreshAni(slot0)
 		return
 	end
 
-	if FightEntityModel.instance:getById(slot0._entityId).subCd ~= 0 then
+	if FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
 		slot0:playAni("cd_idle", nil, true)
 	elseif slot0:_canUse() then
 		slot0:playAni("max_idle", nil, true)
@@ -191,7 +191,7 @@ end
 function slot0.refreshData(slot0, slot1)
 	slot0._entityId = slot1
 
-	slot0._headIcon:LoadImage(ResUrl.roomHeadIcon(SkinConfig.instance:getSkinCo(FightEntityModel.instance:getById(slot0._entityId).skin).headIcon))
+	slot0._headIcon:LoadImage(ResUrl.roomHeadIcon(SkinConfig.instance:getSkinCo(FightDataHelper.entityMgr:getById(slot0._entityId).skin).headIcon))
 	slot0:_refreshExpoint()
 	slot0:_refreshHp()
 	slot0:refreshAni()
@@ -200,7 +200,7 @@ function slot0.refreshData(slot0, slot1)
 end
 
 function slot0._refreshExpoint(slot0, slot1, slot2, slot3)
-	slot4 = FightEntityModel.instance:getById(slot0._entityId)
+	slot4 = FightDataHelper.entityMgr:getById(slot0._entityId)
 	slot0._expointObj = {}
 	slot0._expointMax = slot4:getMaxExPoint()
 	slot0._curExpoint = slot4:getExPoint()
@@ -208,13 +208,13 @@ function slot0._refreshExpoint(slot0, slot1, slot2, slot3)
 	gohelper.setActive(slot0._point2Root, false)
 
 	if slot0._expointMax <= 6 then
-		slot0:com_createObjList(slot0._onPointItemShow, math.min(slot0._expointMax, 6), slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, math.min(slot0._expointMax, 6), slot0._pointRoot, slot0._pointItem)
 	elseif slot0._expointMax <= 12 then
 		gohelper.setActive(slot0._point2Root, true)
-		slot0:com_createObjList(slot0._onPointItemShow, 6, slot0._pointRoot, slot0._pointItem)
-		slot0:com_createObjList(slot0._onPoint2ItemShow, 6, slot0._point2Root, slot0._point2Item)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, 6, slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPoint2ItemShow, 6, slot0._point2Root, slot0._point2Item)
 	else
-		slot0:com_createObjList(slot0._onPointItemShow, slot0._expointMax, slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0._expointMax, slot0._pointRoot, slot0._pointItem)
 	end
 
 	for slot8, slot9 in ipairs(slot0._expointObj) do
@@ -254,7 +254,7 @@ end
 
 function slot0._onPointItemShow(slot0, slot1, slot2, slot3)
 	if not slot0._expointObj[slot3] then
-		slot0._expointObj[slot3] = slot0:getUserDataTb_()
+		slot0._expointObj[slot3] = slot0:registTable()
 		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
 		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
 		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)
@@ -263,7 +263,7 @@ end
 
 function slot0._onPoint2ItemShow(slot0, slot1, slot2, slot3)
 	if not slot0._expointObj[slot3 + 6] then
-		slot0._expointObj[slot3] = slot0:getUserDataTb_()
+		slot0._expointObj[slot3] = slot0:registTable()
 		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
 		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
 		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)
@@ -271,7 +271,7 @@ function slot0._onPoint2ItemShow(slot0, slot1, slot2, slot3)
 end
 
 function slot0._refreshHp(slot0, slot1)
-	slot2 = FightEntityModel.instance:getById(slot0._entityId)
+	slot2 = FightDataHelper.entityMgr:getById(slot0._entityId)
 
 	if slot1 then
 		slot0:_releaseHpTween()
@@ -293,8 +293,6 @@ end
 function slot0.onClose(slot0)
 	slot0:_releaseTween()
 	slot0:_releaseHpTween()
-	TaskDispatcher.cancelTask(slot0._delayHideHealEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._delayHideInfo, slot0)
 end
 
 function slot0.onDestroyView(slot0)

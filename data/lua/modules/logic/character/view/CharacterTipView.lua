@@ -101,10 +101,10 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0.goTotalTitle, false)
 	slot0:_setTitleText(slot0.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
 
-	slot4 = "descitem"
-	slot0.goDescTitle = gohelper.clone(slot0.godescitem, slot0.gocontent, slot4)
+	slot0.goDescTitle = gohelper.clone(slot0.godescitem, slot0.gocontent, "descitem")
+	slot4 = false
 
-	gohelper.setActive(slot0.goDescTitle, false)
+	gohelper.setActive(slot0.goDescTitle, slot4)
 
 	slot0._attnormalitems = {}
 
@@ -125,8 +125,7 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot1 = slot0:getUserDataTb_()
-	slot5 = "attrnormal" .. #slot0._attnormalitems + 1
-	slot1.go = gohelper.clone(slot0.goattrnormalwithdescitem, slot0.gocontent, slot5)
+	slot1.go = gohelper.clone(slot0.goattrnormalwithdescitem, slot0.gocontent, "attrnormal" .. #slot0._attnormalitems + 1)
 
 	gohelper.setActive(slot1.go, true)
 
@@ -135,23 +134,14 @@ function slot0._editableInitView(slot0)
 	slot1.name = gohelper.findChildText(slot1.go, "attr/namelayout/name")
 	slot1.icon = gohelper.findChildImage(slot1.go, "attr/icon")
 	slot1.detail = gohelper.findChild(slot1.go, "attr/btndetail")
-	slot1.desc = gohelper.findChildText(slot1.go, "desc/#txt_desc")
+	slot5 = "desc/#txt_desc"
+	slot1.desc = gohelper.findChildText(slot1.go, slot5)
 	slot1.withDesc = true
 	slot0._attnormalitems[#slot0._attnormalitems + 1] = slot1
 	slot0._attrupperitems = {}
 
 	for slot5 = 1, 12 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.clone(slot0.goattrupperitem, slot0.gocontent, "attrupper" .. slot5)
-
-		gohelper.setActive(slot6.go, true)
-
-		slot6.value = gohelper.findChildText(slot6.go, "value")
-		slot6.addValue = gohelper.findChildText(slot6.go, "addvalue")
-		slot6.name = gohelper.findChildText(slot6.go, "name")
-		slot6.icon = gohelper.findChildImage(slot6.go, "icon")
-		slot6.detail = gohelper.findChild(slot6.go, "btndetail")
-		slot0._attrupperitems[slot5] = slot6
+		slot0:_getAttrUpperItem(slot5)
 	end
 
 	slot0._passiveskillitems = {}
@@ -175,6 +165,24 @@ function slot0._editableInitView(slot0)
 	slot0._skillEffectDescItems = slot0:getUserDataTb_()
 
 	slot0._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
+end
+
+function slot0._getAttrUpperItem(slot0, slot1)
+	if not slot0._attrupperitems[slot1] then
+		slot2 = slot0:getUserDataTb_()
+		slot2.go = gohelper.clone(slot0.goattrupperitem, slot0.gocontent, "attrupper" .. slot1)
+
+		gohelper.setActive(slot2.go, true)
+
+		slot2.value = gohelper.findChildText(slot2.go, "value")
+		slot2.addValue = gohelper.findChildText(slot2.go, "addvalue")
+		slot2.name = gohelper.findChildText(slot2.go, "name")
+		slot2.icon = gohelper.findChildImage(slot2.go, "icon")
+		slot2.detail = gohelper.findChild(slot2.go, "btndetail")
+		slot0._attrupperitems[slot1] = slot2
+	end
+
+	return slot2
 end
 
 function slot0._setTitleText(slot0, slot1, slot2, slot3)
@@ -231,72 +239,110 @@ end
 
 function slot0.refreshBaseAttrItem(slot0, slot1, slot2)
 	slot5 = slot0:getTalentValues(slot2)
+	slot6 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
+	slot7 = slot6 and slot6.destinyStoneMo
 
-	for slot9, slot10 in ipairs(CharacterEnum.BaseAttrIdList) do
-		slot11 = HeroConfig.instance:getHeroAttributeCO(slot10)
-		slot0._attnormalitems[slot9].value.text = slot3[slot10]
-		slot0._attnormalitems[slot9].addValue.text = slot0:getEquipAddBaseValues(slot1, slot0:getBaseAttrValueList(slot2))[slot10] + (slot5[slot10] and slot5[slot10].value or 0) == 0 and "" or "+" .. slot12
-		slot0._attnormalitems[slot9].name.text = slot11.name
+	for slot12, slot13 in ipairs(CharacterEnum.BaseAttrIdList) do
+		slot14 = HeroConfig.instance:getHeroAttributeCO(slot13)
+		slot0._attnormalitems[slot12].value.text = slot3[slot13]
+		slot0._attnormalitems[slot12].addValue.text = slot0:getEquipAddBaseValues(slot1, slot0:getBaseAttrValueList(slot2))[slot13] + (slot5[slot13] and slot5[slot13].value or 0) + (slot7 and slot7:getAddValueByAttrId(slot7 and slot7:getAddAttrValues(), slot13) or 0) == 0 and "" or "+" .. slot16
+		slot0._attnormalitems[slot12].name.text = slot14.name
 
-		CharacterController.instance:SetAttriIcon(slot0._attnormalitems[slot9].icon, slot10, GameUtil.parseColor("#323c34"))
+		CharacterController.instance:SetAttriIcon(slot0._attnormalitems[slot12].icon, slot13, GameUtil.parseColor("#323c34"))
 
-		if slot11.isShowTips == 1 then
-			slot14 = gohelper.getClick(slot0._attnormalitems[slot9].detail)
+		if slot14.isShowTips == 1 then
+			slot18 = gohelper.getClick(slot0._attnormalitems[slot12].detail)
 
-			slot14:AddClickListener(slot0.showDetail, slot0, {
-				attributeId = slot11.id,
-				icon = slot10,
-				go = slot0._attnormalitems[slot9].go
+			slot18:AddClickListener(slot0.showDetail, slot0, {
+				attributeId = slot14.id,
+				icon = slot13,
+				go = slot0._attnormalitems[slot12].go
 			})
-			table.insert(slot0._detailClickItems, slot14)
-			gohelper.setActive(slot0._attnormalitems[slot9].detail, true)
+			table.insert(slot0._detailClickItems, slot18)
+			gohelper.setActive(slot0._attnormalitems[slot12].detail, true)
 		else
-			gohelper.setActive(slot0._attnormalitems[slot9].detail, false)
+			gohelper.setActive(slot0._attnormalitems[slot12].detail, false)
 		end
 
-		if slot0._attnormalitems[slot9].withDesc then
-			slot13, slot14 = slot0:calculateTechnic(slot3[CharacterEnum.AttrId.Technic], slot2)
-			slot0._attnormalitems[slot9].desc.text = string.gsub(string.gsub(CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc), "▩1%%s", slot13), "▩2%%s", slot14)
+		if slot0._attnormalitems[slot12].withDesc then
+			slot17, slot18 = slot0:calculateTechnic(slot3[CharacterEnum.AttrId.Technic], slot2)
+			slot0._attnormalitems[slot12].desc.text = string.gsub(string.gsub(CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc), "▩1%%s", slot17), "▩2%%s", slot18)
 		end
 	end
 end
 
 function slot0.refreshUpAttrItem(slot0, slot1, slot2)
 	slot6 = slot0:getTalentValues(slot2)
-	slot7, slot8 = slot0:calculateTechnic(slot0:getBaseAttrValueList(slot2)[CharacterEnum.AttrId.Technic], slot2)
+	slot7 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
+	slot8 = slot7 and slot7.destinyStoneMo
+	slot10, slot11 = slot0:calculateTechnic(slot0:getBaseAttrValueList(slot2)[CharacterEnum.AttrId.Technic], slot2)
+	slot12 = 1
 
-	for slot12, slot13 in ipairs(CharacterEnum.UpAttrIdList) do
-		gohelper.setActive(slot0._attrupperitems[slot12].go, true)
+	for slot16, slot17 in ipairs(CharacterEnum.UpAttrIdList) do
+		gohelper.setActive(slot0._attrupperitems[slot16].go, true)
 
-		slot14 = HeroConfig.instance:getHeroAttributeCO(slot13)
-		slot15 = slot0:getEquipBreakAddAttrValues(slot1)[slot13] + (slot6[slot13] and slot6[slot13].value or 0)
+		slot18 = HeroConfig.instance:getHeroAttributeCO(slot17)
+		slot20 = slot0:getEquipBreakAddAttrValues(slot1)[slot17] + (slot6[slot17] and slot6[slot17].value or 0) + (slot8 and slot8:getAddValueByAttrId(slot8 and slot8:getAddAttrValues(), slot17) or 0)
 
-		if slot13 == CharacterEnum.AttrId.Cri then
-			slot16 = (slot0:_getTotalUpAttributes(slot2)[slot13] or 0) / 10 + slot7
+		if slot17 == CharacterEnum.AttrId.Cri then
+			slot21 = (slot0:_getTotalUpAttributes(slot2)[slot17] or 0) / 10 + slot10
 		end
 
-		if slot13 == CharacterEnum.AttrId.CriDmg then
-			slot16 = slot16 + slot8
+		if slot17 == CharacterEnum.AttrId.CriDmg then
+			slot21 = slot21 + slot11
 		end
 
-		slot0._attrupperitems[slot12].value.text = tostring(GameUtil.noMoreThanOneDecimalPlace(slot16)) .. "%"
-		slot0._attrupperitems[slot12].addValue.text = slot15 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(slot15)) .. "%"
-		slot0._attrupperitems[slot12].name.text = slot14.name
+		slot0._attrupperitems[slot16].value.text = tostring(GameUtil.noMoreThanOneDecimalPlace(slot21)) .. "%"
+		slot0._attrupperitems[slot16].addValue.text = slot20 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(slot20)) .. "%"
+		slot0._attrupperitems[slot16].name.text = slot18.name
 
-		CharacterController.instance:SetAttriIcon(slot0._attrupperitems[slot12].icon, slot13, uv0.AttrColor)
+		CharacterController.instance:SetAttriIcon(slot0._attrupperitems[slot16].icon, slot17, uv0.AttrColor)
 
-		if slot14.isShowTips == 1 then
-			slot18 = gohelper.getClick(slot0._attrupperitems[slot12].detail)
+		if slot18.isShowTips == 1 then
+			slot23 = gohelper.getClick(slot0._attrupperitems[slot16].detail)
 
-			slot18:AddClickListener(slot0.showDetail, slot0, {
-				attributeId = slot14.id,
-				icon = slot13,
-				go = slot0._attrupperitems[slot12].go
+			slot23:AddClickListener(slot0.showDetail, slot0, {
+				attributeId = slot18.id,
+				icon = slot17,
+				go = slot0._attrupperitems[slot16].go
 			})
-			table.insert(slot0._detailClickItems, slot18)
-			gohelper.setActive(slot0._attrupperitems[slot12].detail, true)
+			table.insert(slot0._detailClickItems, slot23)
+			gohelper.setActive(slot0._attrupperitems[slot16].detail, true)
 		else
-			gohelper.setActive(slot0._attrupperitems[slot12].detail, false)
+			gohelper.setActive(slot0._attrupperitems[slot16].detail, false)
+		end
+
+		slot12 = slot12 + 1
+	end
+
+	for slot16, slot17 in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
+		if (slot8 and slot8:getAddValueByAttrId(slot9, slot17) or 0) ~= 0 then
+			slot19 = slot0:_getAttrUpperItem(slot12)
+
+			gohelper.setActive(slot19.go, true)
+
+			slot20 = HeroConfig.instance:getHeroAttributeCO(slot17)
+			slot19.value.text = 0
+			slot19.addValue.text = slot18 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(slot18)) .. "%"
+			slot19.name.text = slot20.name
+
+			CharacterController.instance:SetAttriIcon(slot19.icon, slot17, uv0.AttrColor)
+
+			if slot20.isShowTips == 1 then
+				slot23 = gohelper.getClick(slot19.detail)
+
+				slot23:AddClickListener(slot0.showDetail, slot0, {
+					attributeId = slot20.id,
+					icon = slot17,
+					go = slot19.go
+				})
+				table.insert(slot0._detailClickItems, slot23)
+				gohelper.setActive(slot19.detail, true)
+			else
+				gohelper.setActive(slot19.detail, false)
+			end
+
+			slot12 = slot12 + 1
 		end
 	end
 end
@@ -384,7 +430,9 @@ function slot0.getTalentValues(slot0, slot1)
 			slot2 = slot3:getTalentGain(slot0._level or slot3.level, slot0._rank, nil, slot0._talentCubeInfos)
 		end
 
-		for slot7, slot8 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot2)) do
+		slot7 = slot2
+
+		for slot7, slot8 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot7)) do
 			if HeroConfig.instance:getHeroAttributeCO(slot7).type ~= 1 then
 				slot2[slot7].value = slot2[slot7].value / 10
 			else
@@ -394,6 +442,12 @@ function slot0.getTalentValues(slot0, slot1)
 	end
 
 	return slot2
+end
+
+function slot0.getDestinyStoneAddValues(slot0, slot1)
+	if (slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)) and slot2.destinyStoneMo then
+		return slot3:getAddAttrValues()
+	end
 end
 
 function slot0.getEquipBreakAddAttrValues(slot0, slot1)
@@ -515,75 +569,93 @@ function slot0._setPassiveSkill(slot0, slot1, slot2, slot3, slot4)
 	end
 
 	slot0._txtpassivename.text = lua_skill.configDict[slot6[1].skillPassive].name
-	slot9 = {}
+	slot10 = {}
 
-	for slot13 = 1, #slot6 do
-		table.insert(slot9, FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot6[slot13].skillPassive]))
+	for slot14 = 1, #slot0:_checkDestinyEffect(slot6, slot0.viewParam.heroMo) do
+		table.insert(slot10, FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot7[slot14]]))
 	end
 
-	slot10 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(slot9)
-	slot11 = {}
+	slot11 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(slot10)
 	slot12 = {}
-	slot13 = 0
+	slot13 = {}
+	slot14 = 0
 
 	if slot0.viewParam.isBalance then
-		slot13 = SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.viewParam.heroMo.heroId, math.max(slot0._level or slot0.viewParam.heroMo.level, slot0._balanceHelper.getHeroBalanceLv(slot0.viewParam.heroMo.heroId)))
+		slot14 = SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.viewParam.heroMo.heroId, math.max(slot0._level or slot0.viewParam.heroMo.level, slot0._balanceHelper.getHeroBalanceLv(slot0.viewParam.heroMo.heroId)))
 	end
 
-	for slot17 = 1, #slot6 do
-		slot18 = slot6[slot17].skillPassive
-		slot19 = slot0:_getPassiveUnlock(slot2, slot1, slot17, slot0.viewParam.heroMo)
+	for slot18 = 1, #slot7 do
+		slot19 = slot7[slot18]
+		slot20 = slot0:_getPassiveUnlock(slot2, slot1, slot18, slot0.viewParam.heroMo)
 
 		if slot0.viewParam.isBalance then
-			slot19 = slot17 <= slot13
+			slot20 = slot18 <= slot14
 		end
 
-		for slot26, slot27 in ipairs(slot10[slot17]) do
-			if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot27).name, true) and not slot11[slot29] then
-				slot11[slot29] = true
+		slot27 = lua_skill.configDict[slot19]
 
-				if slot28.isSpecialCharacter == 1 then
-					slot22 = string.format("%s", FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot18]))
+		for slot27, slot28 in ipairs(slot11[slot18]) do
+			if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot28).name, true) and not slot12[slot30] then
+				slot12[slot30] = true
 
-					table.insert(slot12, {
-						desc = SkillHelper.buildDesc(slot28.desc),
-						title = slot28.name
+				if slot29.isSpecialCharacter == 1 then
+					slot23 = string.format("%s", FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, slot27))
+
+					table.insert(slot13, {
+						desc = SkillHelper.buildDesc(slot29.desc),
+						title = slot29.name
 					})
 				end
 			end
 		end
 
-		slot23 = SkillHelper.buildDesc(slot22)
+		slot24 = SkillHelper.buildDesc(slot23)
 
-		if not slot19 then
-			slot0._passiveskillitems[slot17].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(slot0:_getTargetRankByEffect(slot1, slot17)))
+		if not slot20 then
+			slot0._passiveskillitems[slot18].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(slot0:_getTargetRankByEffect(slot1, slot18)))
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot17].unlocktxt, "#3A3A3A")
+			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].unlocktxt, "#3A3A3A")
 		else
-			slot0._passiveskillitems[slot17].unlocktxt.text = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(slot24))
+			slot0._passiveskillitems[slot18].unlocktxt.text = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(slot25))
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot17].unlocktxt, "#313B33")
+			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].unlocktxt, "#313B33")
 		end
 
-		slot0._passiveskillitems[slot17].canvasgroup.alpha = slot19 and 1 or 0.83
+		slot0._passiveskillitems[slot18].canvasgroup.alpha = slot20 and 1 or 0.83
 
-		gohelper.setActive(slot0._passiveskillitems[slot17].on, slot19)
+		gohelper.setActive(slot0._passiveskillitems[slot18].on, slot20)
 
-		slot0._passiveskillitems[slot17].desc.text = slot23
+		slot0._passiveskillitems[slot18].desc.text = slot24
 
-		slot0._passiveskillitems[slot17].fixTmpBreakLine:refreshTmpContent(slot0._passiveskillitems[slot17].desc)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot17].desc, slot19 and "#272525" or "#3A3A3A")
-		gohelper.setActive(slot0._passiveskillitems[slot17].go, true)
-		gohelper.setActive(slot0._passiveskillitems[slot17].connectline, slot17 ~= #slot6)
+		slot0._passiveskillitems[slot18].fixTmpBreakLine:refreshTmpContent(slot0._passiveskillitems[slot18].desc)
+		SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].desc, slot20 and "#272525" or "#3A3A3A")
+		gohelper.setActive(slot0._passiveskillitems[slot18].go, true)
+		gohelper.setActive(slot0._passiveskillitems[slot18].connectline, slot18 ~= #slot6)
 	end
 
-	for slot17 = #slot6 + 1, #slot0._passiveskillitems do
-		gohelper.setActive(slot0._passiveskillitems[slot17].go, false)
+	for slot18 = #slot6 + 1, #slot0._passiveskillitems do
+		gohelper.setActive(slot0._passiveskillitems[slot18].go, false)
 	end
 
-	slot0:_showSkillEffectDesc(slot12)
+	slot0:_showSkillEffectDesc(slot13)
 	slot0:_refreshPassiveSkillScroll()
 	slot0:_setTipPos(slot0._gopassiveskilltip.transform, slot4, slot3)
+end
+
+function slot0._checkDestinyEffect(slot0, slot1, slot2)
+	slot3 = {}
+
+	if slot1 then
+		for slot7 = 1, #slot1 do
+			table.insert(slot3, slot1[slot7].skillPassive)
+		end
+
+		if slot2 and slot2.destinyStoneMo then
+			slot3 = slot2.destinyStoneMo:_replaceSkill(slot3)
+		end
+	end
+
+	return slot3
 end
 
 function slot0._setTipPos(slot0, slot1, slot2, slot3)
@@ -716,10 +788,10 @@ function slot0.showDetail(slot0, slot1)
 
 	slot3 = HeroConfig.instance:getHeroAttributeCO(slot1.attributeId)
 	slot0._txtDetailItemName.text = slot3.name
-	slot8 = GameUtil.parseColor
-	slot9 = "#975129"
+	slot8 = slot1.icon
+	slot9 = GameUtil.parseColor
 
-	CharacterController.instance:SetAttriIcon(slot0._txtDetailItemIcon, slot1.icon, slot8(slot9))
+	CharacterController.instance:SetAttriIcon(slot0._txtDetailItemIcon, slot8, slot9("#975129"))
 
 	for slot8, slot9 in ipairs(string.split(slot3.desc, "|")) do
 		if not slot0._detailDescTab[slot8] then

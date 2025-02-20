@@ -35,8 +35,12 @@ function slot0._onRemoveEntityBuff(slot0, slot1, slot2)
 	slot0:onBuffEnd()
 end
 
-function slot0._onLoaded(slot0, slot1)
-	slot0._entityMat:SetTexture("_NoiseMap4", slot1:GetResource(slot0._path))
+function slot0._onLoaded(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot0._entityMat:SetTexture("_NoiseMap4", slot2:GetResource(slot0._path))
 	slot0:_playOpenTween()
 end
 
@@ -91,7 +95,7 @@ function slot0._delayDone(slot0)
 	if slot0._entity:getMO() and slot0._entity.spineRenderer then
 		slot3 = false
 
-		for slot7, slot8 in ipairs(slot1:getBuffList()) do
+		for slot7, slot8 in pairs(slot1:getBuffDic()) do
 			if slot8.buffId == 4150022 or slot8.buffId == 4150023 then
 				slot3 = true
 			end

@@ -52,6 +52,12 @@ function slot0._onCallback(slot0)
 	end
 end
 
+function slot0.Show(slot0, slot1)
+	if slot0._instGO then
+		slot0._instGO:SetActive(slot1 and not ViewMgr.instance:isOpen(ViewName.GuideView))
+	end
+end
+
 function slot0.selectType(slot0, slot1)
 	if string.len(slot1) > 1 then
 		return 2
@@ -63,6 +69,17 @@ end
 function slot0.Refresh(slot0, slot1, slot2)
 	slot0._activityid = slot1
 	slot0._keyid = slot2
+	slot0._keyName = nil
+
+	if slot0._instGO then
+		slot0:_onCallback()
+	end
+end
+
+function slot0.RefreshByKeyName(slot0, slot1)
+	slot0._keyName = slot1
+	slot0._activityid = nil
+	slot0._keyid = nil
 
 	if slot0._instGO then
 		slot0:_onCallback()

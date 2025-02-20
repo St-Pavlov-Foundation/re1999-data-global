@@ -10,7 +10,11 @@ end
 
 function slot0.refreshDot(slot0)
 	if slot0.overrideFunc then
-		slot0.overrideFunc(slot0.overrideFuncObj, slot0)
+		slot1, slot2 = pcall(slot0.overrideFunc, slot0.overrideFuncObj, slot0)
+
+		if not slot1 then
+			logError(string.format("CommonRedDotTag:overrideFunc dotId:%s error:%s", slot0.dotId, slot2))
+		end
 
 		return
 	end

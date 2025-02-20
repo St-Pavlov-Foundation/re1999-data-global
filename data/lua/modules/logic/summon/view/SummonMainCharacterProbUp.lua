@@ -22,7 +22,8 @@ function slot0.onInitView(slot0)
 	slot0._txtdeadline = gohelper.findChildText(slot0.viewGO, "#go_ui/current/#txt_deadline")
 	slot0._simageline = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
 	slot0._txtpreferential = gohelper.findChildText(slot0.viewGO, "#go_ui/current/first/#txt_times")
-	slot0._gopreferential = gohelper.findChild(slot0.viewGO, "#go_ui/current/first")
+	slot4 = "#go_ui/current/first"
+	slot0._gopreferential = gohelper.findChild(slot0.viewGO, slot4)
 
 	for slot4 = 1, 3 do
 		slot0["_simagead" .. slot4] = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_ad" .. slot4)
@@ -45,8 +46,9 @@ end
 
 slot0.DETAIL_COUNT = 1
 slot0.SIMAGE_COUNT = 3
+slot4 = "full/bg111"
 slot0.preloadList = {
-	ResUrl.getSummonHeroIcon("full/bg111")
+	ResUrl.getSummonHeroIcon(slot4)
 }
 
 for slot4 = 1, slot0.SIMAGE_COUNT do
@@ -67,8 +69,8 @@ function slot0._editableInitView(slot0)
 		slot5.go = gohelper.findChild(slot0.viewGO, "#go_ui/current/right/#go_characteritem" .. slot4)
 		slot5.imagecareer = gohelper.findChildImage(slot5.go, "image_career")
 		slot5.txtnamecn = gohelper.findChildText(slot5.go, "txt_namecn")
-		slot9 = AudioEnum.UI.play_ui_action_explore
-		slot5.btndetail = gohelper.findChildButtonWithAudio(slot5.go, "btn_detail", slot9)
+		slot9 = "btn_detail"
+		slot5.btndetail = gohelper.findChildButtonWithAudio(slot5.go, slot9, AudioEnum.UI.play_ui_action_explore)
 		slot5.rares = {}
 
 		for slot9 = 1, 6 do
@@ -106,9 +108,9 @@ function slot0.refreshSingleImage(slot0)
 	slot0._simagebg:LoadImage(ResUrl.getSummonHeroIcon("full/bg111"))
 	slot0._simagefrontbg:LoadImage(ResUrl.getSummonHeroIcon("bg_role_3"))
 
-	slot4 = "title_img_deco"
+	slot4 = ResUrl.getSummonHeroIcon
 
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon(slot4))
+	slot0._simageline:LoadImage(slot4("title_img_deco"))
 
 	for slot4 = 1, uv0.SIMAGE_COUNT do
 		slot0["_simagead" .. slot4]:LoadImage(ResUrl.getSummonHeroIcon("role" .. slot4), slot0._adLoaded, slot0)
@@ -357,9 +359,9 @@ function slot0.showCharacter(slot0, slot1)
 		for slot7 = 1, #slot2 do
 			if slot0._characteritems[SummonConfig.instance:getCharacterDetailConfig(tonumber(slot2[slot7])).location] then
 				slot13 = HeroConfig.instance:getHeroCO(slot9.heroId)
-				slot17 = "lssx_" .. tostring(slot13.career)
+				slot17 = slot11.imagecareer
 
-				UISpriteSetMgr.instance:setCommonSprite(slot11.imagecareer, slot17)
+				UISpriteSetMgr.instance:setCommonSprite(slot17, "lssx_" .. tostring(slot13.career))
 
 				slot11.txtnamecn.text = slot13.name
 

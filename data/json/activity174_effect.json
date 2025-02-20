@@ -1,0 +1,404 @@
+[
+  {
+    "id": 101,
+    "season": "1,2,3",
+    "type": 1,
+    "typeParam": "15"
+  },
+  {
+    "id": 102,
+    "season": "1,2,3",
+    "type": 2,
+    "typeParam": "2#20"
+  },
+  {
+    "id": 103,
+    "season": "1,2,3",
+    "type": 3,
+    "typeParam": "3#collection#20"
+  },
+  {
+    "id": 104,
+    "season": "1,2,3",
+    "type": 3,
+    "typeParam": "3#hero#20"
+  },
+  {
+    "id": 105,
+    "season": "1,2,3",
+    "type": 4,
+    "typeParam": "12"
+  },
+  {
+    "id": 106,
+    "season": "1,2,3",
+    "type": 5,
+    "typeParam": "1"
+  },
+  {
+    "id": 107,
+    "season": "1,2,3",
+    "type": 6,
+    "typeParam": "collection#3#rare#1"
+  },
+  {
+    "id": 108,
+    "season": "1,2,3",
+    "type": 7,
+    "typeParam": "2#-1000"
+  },
+  {
+    "id": 109,
+    "season": "1,2,3",
+    "type": 20,
+    "typeParam": "300#-1000"
+  },
+  {
+    "id": 110,
+    "season": "1,2,3",
+    "type": 7,
+    "typeParam": "99#-400"
+  },
+  {
+    "id": 111,
+    "season": "1,2,3",
+    "type": 8,
+    "typeParam": "99#200"
+  },
+  {
+    "id": 112,
+    "season": "1,2,3",
+    "type": 18,
+    "typeParam": "700#12|200#20|100#30"
+  },
+  {
+    "id": 113,
+    "season": "1,2,3",
+    "type": 19,
+    "typeParam": "600#2#1|400#3#1"
+  },
+  {
+    "id": 114,
+    "season": "1,2,3",
+    "type": 15,
+    "typeParam": "2#enhance#2#10000"
+  },
+  {
+    "id": 115,
+    "season": "1,2,3",
+    "type": 16,
+    "typeParam": "1"
+  },
+  {
+    "id": 116,
+    "season": "1,2,3",
+    "type": 18,
+    "typeParam": "700#25|200#40|100#50"
+  },
+  {
+    "id": 117,
+    "season": "1,2,3",
+    "type": 19,
+    "typeParam": "600#2#2|400#3#2"
+  },
+  {
+    "id": 118,
+    "season": "1,2,3",
+    "type": 21,
+    "typeParam": "1#1#999"
+  },
+  {
+    "id": 119,
+    "season": "1,2,3",
+    "type": 21,
+    "typeParam": "2#2#999"
+  },
+  {
+    "id": 120,
+    "season": "1,2,3",
+    "type": 17,
+    "typeParam": "1#30#30#endless#2#10000"
+  },
+  {
+    "id": 201,
+    "season": "1,2,3",
+    "type": 9,
+    "typeParam": "1,2,3,4#3"
+  },
+  {
+    "id": 202,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10004#12"
+  },
+  {
+    "id": 203,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10004"
+  },
+  {
+    "id": 204,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10014#12"
+  },
+  {
+    "id": 205,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10014"
+  },
+  {
+    "id": 206,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10016#12"
+  },
+  {
+    "id": 207,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10016"
+  },
+  {
+    "id": 208,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10075#12"
+  },
+  {
+    "id": 209,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10047#12"
+  },
+  {
+    "id": 210,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "11001#10"
+  },
+  {
+    "id": 211,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "11002#10"
+  },
+  {
+    "id": 212,
+    "season": "1,2,3",
+    "type": 9,
+    "typeParam": "5#2"
+  },
+  {
+    "id": 213,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10066#25"
+  },
+  {
+    "id": 214,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10066"
+  },
+  {
+    "id": 215,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10006#25"
+  },
+  {
+    "id": 216,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10006"
+  },
+  {
+    "id": 217,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10045#25"
+  },
+  {
+    "id": 218,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10045"
+  },
+  {
+    "id": 219,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10041#25"
+  },
+  {
+    "id": 220,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10041"
+  },
+  {
+    "id": 221,
+    "season": "1,2,3",
+    "type": 10,
+    "typeParam": "10033#25"
+  },
+  {
+    "id": 222,
+    "season": "1,2,3",
+    "type": 11,
+    "typeParam": "10033"
+  },
+  {
+    "id": 301,
+    "season": "1,2,3",
+    "type": 12,
+    "typeParam": "1#3"
+  },
+  {
+    "id": 302,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20010#1"
+  },
+  {
+    "id": 303,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20010"
+  },
+  {
+    "id": 304,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20023#1"
+  },
+  {
+    "id": 305,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20023"
+  },
+  {
+    "id": 306,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20053#1"
+  },
+  {
+    "id": 307,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20053"
+  },
+  {
+    "id": 308,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20025#1"
+  },
+  {
+    "id": 309,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20025"
+  },
+  {
+    "id": 310,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20023#1"
+  },
+  {
+    "id": 311,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20023"
+  },
+  {
+    "id": 312,
+    "season": "1,2,3",
+    "type": 12,
+    "typeParam": "2#2"
+  },
+  {
+    "id": 313,
+    "season": "1,2,3",
+    "type": 12,
+    "typeParam": "3#1"
+  },
+  {
+    "id": 314,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20019#1"
+  },
+  {
+    "id": 315,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20019"
+  },
+  {
+    "id": 316,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20018#1"
+  },
+  {
+    "id": 317,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20018"
+  },
+  {
+    "id": 318,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20036#1"
+  },
+  {
+    "id": 319,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20036"
+  },
+  {
+    "id": 320,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20039#1"
+  },
+  {
+    "id": 321,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20039"
+  },
+  {
+    "id": 322,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20041#1"
+  },
+  {
+    "id": 323,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20041"
+  },
+  {
+    "id": 324,
+    "season": "1,2,3",
+    "type": 13,
+    "typeParam": "20061#1"
+  },
+  {
+    "id": 325,
+    "season": "1,2,3",
+    "type": 14,
+    "typeParam": "20061"
+  }
+]

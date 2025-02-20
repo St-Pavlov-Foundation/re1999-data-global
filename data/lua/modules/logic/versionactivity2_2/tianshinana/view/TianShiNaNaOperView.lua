@@ -75,11 +75,10 @@ function slot0.onSceneReset(slot0)
 	else
 		slot0:clearCubes()
 
-		slot5 = TianShiNaNaModel.instance
-		slot6 = slot5
-		slot0.cube = slot0:_placeCubes(slot1[1], slot5.getNextCubeType(slot6))
+		slot0.cube = slot0:_placeCubes(slot1[1], TianShiNaNaModel.instance:getNextCubeType())
+		slot6 = slot0.cube
 
-		slot0:setCurOperCube(slot1[1], slot0.cube)
+		slot0:setCurOperCube(slot1[1], slot6)
 
 		for slot6 = 2, #slot1 do
 			slot7 = slot1[slot6]

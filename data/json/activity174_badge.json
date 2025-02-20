@@ -1,0 +1,82 @@
+[
+  {
+    "activityId": 12304,
+    "id": 1,
+    "name": "language_10058452",
+    "desc": "language_10058453",
+    "icon": "act174_badgeicon1",
+    "trigger": "PassCount",
+    "actParam": 6,
+    "spParam": 12
+  },
+  {
+    "activityId": 12304,
+    "id": 2,
+    "name": "language_10058454",
+    "desc": "language_10058455",
+    "icon": "act174_badgeicon4",
+    "trigger": "GainScore",
+    "actParam": 900,
+    "spParam": 1999
+  },
+  {
+    "activityId": 12304,
+    "id": 3,
+    "name": "language_10058456",
+    "desc": "language_10058457",
+    "icon": "act174_badgeicon2",
+    "trigger": "WinNum",
+    "actParam": 12,
+    "spParam": 30
+  },
+  {
+    "activityId": 12304,
+    "id": 4,
+    "name": "language_10058458",
+    "desc": "language_10058459",
+    "icon": "act174_badgeicon3",
+    "trigger": "BetWinNum",
+    "actParam": 10,
+    "spParam": 25
+  },
+  {
+    "activityId": 12304,
+    "id": 5,
+    "name": "language_10058460",
+    "desc": "language_10058461",
+    "icon": "act174_badgeicon5",
+    "trigger": "Win5Num",
+    "actParam": 3,
+    "spParam": 7
+  },
+  {
+    "activityId": 12304,
+    "id": 6,
+    "name": "language_10058462",
+    "desc": "language_10058463",
+    "icon": "act174_badgeicon6",
+    "trigger": "BuyHeroNUM",
+    "actParam": 15,
+    "spParam": 40
+  },
+  {
+    "activityId": 12304,
+    "id": 7,
+    "name": "language_10058464",
+    "desc": "language_10058465",
+    "icon": "act174_badgeicon7",
+    "trigger": "GainCoin",
+    "actParam": 666,
+    "spParam": 1500
+  },
+  {
+    "activityId": 12304,
+    "id": 8,
+    "name": "language_10058466",
+    "desc": "language_10058467",
+    "icon": "act174_badgeicon8",
+    "trigger": "FullHpPass9",
+    "actParam": 2,
+    "spParam": 5
+  }
+]

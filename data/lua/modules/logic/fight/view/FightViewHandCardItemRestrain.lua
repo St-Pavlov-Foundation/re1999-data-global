@@ -103,7 +103,7 @@ function slot0.getNewRestrainStatus(slot0, slot1)
 			return uv0.RestrainMvStatus.Restrain
 		end
 
-		slot13 = FightEntityModel.instance:getById(slot0) and slot12:getCO()
+		slot13 = FightDataHelper.entityMgr:getById(slot0) and slot12:getCO()
 		slot16 = slot4:getMO() and slot15:getCO()
 		slot17 = slot16 and slot16.career or 0
 

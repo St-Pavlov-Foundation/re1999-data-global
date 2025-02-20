@@ -36,8 +36,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._scrollbigType = gohelper.findChildScrollRect(slot0.viewGO, "scroll_bigType")
 	slot0._tabsContainer = {}
+	slot5 = true
 
-	for slot5 = 1, #StoreModel.instance:getFirstTabs(true, true) do
+	for slot5 = 1, #StoreModel.instance:getFirstTabs(true, slot5) do
 		slot6 = slot0:getUserDataTb_()
 		slot6.go = gohelper.cloneInPlace(slot0._gobigTypeItem, "bigTypeItem" .. slot5)
 		slot6.reddot = gohelper.findChild(slot6.go, "go_tabreddot")
@@ -123,9 +124,9 @@ function slot0._refreshTabs(slot0, slot1, slot2)
 
 	if slot3 and #slot3 > 0 then
 		slot0._needCountdown = false
-		slot10 = #slot0._tabsContainer
+		slot10 = #slot3
 
-		for slot10 = 1, math.min(#slot3, slot10) do
+		for slot10 = 1, math.min(slot10, #slot0._tabsContainer) do
 			slot12 = slot0._tabsContainer[slot10]
 
 			if slot3[slot10].id == StoreEnum.DefaultTabId then

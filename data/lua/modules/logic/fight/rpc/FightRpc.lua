@@ -18,7 +18,7 @@ end
 
 function slot0.onReceiveBeginFightReply(slot0, slot1, slot2)
 	if slot1 == 0 then
-		FightDataHelper.startFight(slot2)
+		FightMgr.instance:startFight(slot2.fight)
 		FightModel.instance:updateFight(slot2.fight)
 		FightModel.instance:updateFightRound(slot2.round)
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
@@ -29,7 +29,9 @@ function slot0.onReceiveBeginFightReply(slot0, slot1, slot2)
 end
 
 function slot0.sendTestFightRequest(slot0, slot1, slot2, slot3)
-	slot1:setReqFightGroup(FightModule_pb.TestFightRequest())
+	slot8 = FightModule_pb.TestFightRequest()
+
+	slot1:setReqFightGroup(slot8)
 
 	for slot8, slot9 in ipairs(slot2) do
 		table.insert(slot4.groupIds, slot9)
@@ -42,7 +44,7 @@ end
 
 function slot0.onReceiveTestFightReply(slot0, slot1, slot2)
 	if slot1 == 0 then
-		FightDataHelper.startFight(slot2)
+		FightMgr.instance:startFight(slot2.fight)
 		FightModel.instance:updateFight(slot2.fight)
 		FightModel.instance:refreshBattleId(slot2.fight)
 		FightModel.instance:updateFightRound(slot2.round)
@@ -65,7 +67,7 @@ end
 
 function slot0.onReceiveTestFightIdReply(slot0, slot1, slot2)
 	if slot1 == 0 then
-		FightDataHelper.startFight(slot2)
+		FightMgr.instance:startFight(slot2.fight)
 		FightModel.instance:updateFight(slot2.fight)
 		FightModel.instance:updateFightRound(slot2.round)
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
@@ -134,6 +136,7 @@ end
 
 function slot0.onReceiveBeginRoundReply(slot0, slot1, slot2)
 	FightCardModel.instance:clearCardOps()
+	FightDataHelper.paTaMgr:resetOp()
 
 	if slot1 == 0 then
 		if slot2:HasField("round") then
@@ -204,7 +207,7 @@ function slot0.onReceiveReconnectFightReply(slot0, slot1, slot2)
 		FightModel.instance.needFightReconnect = slot2:HasField("fight")
 
 		if FightModel.instance.needFightReconnect then
-			FightDataHelper.startFight(slot2)
+			FightMgr.instance:startFight(slot2.fight)
 			FightModel.instance:updateFight(slot2.fight)
 			FightModel.instance:updateFightRound(slot2.lastRound)
 			FightModel.instance:updateFightReason(slot2.fightReason)
@@ -216,6 +219,8 @@ function slot0.onReceiveReconnectFightReply(slot0, slot1, slot2)
 end
 
 function slot0.onReceiveCardInfoPush(slot0, slot1, slot2)
+	FightLocalDataMgr.instance.handCardMgr:updateHandCardByProto(slot2.cardGroup)
+
 	slot0._lastCardInfoPushMsg = slot2
 
 	if slot2.isGm then
@@ -225,6 +230,7 @@ end
 
 function slot0.dealCardInfoPushData(slot0)
 	if slot0._lastCardInfoPushMsg then
+		FightDataMgr.instance.handCardMgr:updateHandCardByProto(slot0._lastCardInfoPushMsg.cardGroup)
 		FightCardModel.instance:updateCard(slot0._lastCardInfoPushMsg)
 		FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
@@ -233,8 +239,8 @@ function slot0.dealCardInfoPushData(slot0)
 end
 
 function slot0.onReceiveTeamInfoPush(slot0, slot1, slot2)
+	FightLocalDataMgr.instance:updateFightData(slot2.fight)
 	FightDataMgr.instance:updateFightData(slot2.fight)
-	FightPerformanceDataMgr.instance:updateFightData(slot2.fight)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:compareUpdate(slot2.fight)
@@ -267,6 +273,12 @@ function slot0.onReceiveEndFightReply(slot0, slot1, slot2)
 end
 
 function slot0.onReceiveEndFightPush(slot0, slot1, slot2)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
+	FightDataHelper.lastFightResult = slot2.record.fightResult
+
 	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.End)
 
 	FightModel.instance.needFightReconnect = false
@@ -357,8 +369,8 @@ end
 
 function slot0.onReceiveRedealCardInfoPush(slot0, slot1, slot2)
 	if slot1 == 0 then
-		FightDataMgr.instance:getHandCardDataMgr():cacheRedealProto(slot2)
-		FightPerformanceDataMgr.instance:getHandCardDataMgr():cacheRedealProto(slot2)
+		FightLocalDataMgr.instance.handCardMgr:cacheRedealProto(slot2)
+		FightDataMgr.instance.handCardMgr:cacheRedealProto(slot2)
 		FightCardModel.instance:clearDistributeQueue()
 
 		FightCardModel.instance.redealCardInfoList = FightHelper.buildInfoMOs(slot2.dealCardGroup, FightCardInfoMO)
@@ -412,7 +424,7 @@ function slot0.onReceiveEntityInfoReply(slot0, slot1, slot2)
 end
 
 function slot0.refreshEntityMO(slot0, slot1)
-	if slot1.entityInfo and FightEntityModel.instance:getById(slot2.uid) then
+	if slot1.entityInfo and FightDataHelper.entityMgr:getById(slot2.uid) then
 		slot3:init(slot2, slot3.side)
 	end
 end
@@ -478,6 +490,10 @@ function slot0.onReceiveGetFightCardDeckDetailInfoReply(slot0, slot1, slot2)
 	if slot1 == 0 then
 		ViewMgr.instance:openView(ViewName.FightCardDeckGMView, slot2)
 	end
+end
+
+function slot0.onReceiveAct174FightRoundInfo(slot0, slot1, slot2)
+	FightMgr.instance:playGMDouQuQu(slot2)
 end
 
 slot0.instance = slot0.New()

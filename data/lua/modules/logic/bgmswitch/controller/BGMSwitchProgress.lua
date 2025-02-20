@@ -2,21 +2,6 @@ module("modules.logic.bgmswitch.controller.BGMSwitchProgress", package.seeall)
 
 slot0 = class("BGMSwitchProgress")
 slot1 = 0.03
-slot2 = {
-	[1010602.0] = 0.5,
-	[1001.0] = -3.2
-}
-slot3 = {
-	[1001.0] = 3.2
-}
-
-function slot0._getOffset1(slot0, slot1)
-	return uv0[slot1] or -1.6
-end
-
-function slot0._getOffset2(slot0, slot1)
-	return uv0[slot1] or 2.05
-end
 
 function slot0.playMainBgm(slot0, slot1)
 	slot0._bgmCO = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot1)
@@ -36,8 +21,7 @@ function slot0.playMainBgm(slot0, slot1)
 	TaskDispatcher.runRepeat(slot0._onTick, slot0, uv0)
 
 	slot0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(slot0._bgmCO)
-	slot0._progressTimeSec = slot0:_getOffset1(slot0._bgmCO.id)
-	slot0._lastTickTime = Time.realtimeSinceStartup
+	slot0._progressTimeSec = 0
 
 	slot0:_updateGMProgress()
 end
@@ -47,8 +31,7 @@ function slot0.stopMainBgm(slot0)
 	AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, slot0._onTriggerEvent, slot0)
 	TaskDispatcher.cancelTask(slot0._onTick, slot0)
 
-	slot0._progressTimeSec = nil
-	slot0._lastTickTime = nil
+	slot0._progressTimeSec = 0
 
 	slot0:_updateGMProgress()
 end
@@ -63,8 +46,7 @@ function slot0._onWeatherChange(slot0)
 
 		if WeatherController.instance:getPrevLightMode() and slot2 and slot1 ~= slot2 then
 			slot0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(slot0._bgmCO)
-			slot0._progressTimeSec = slot0:_getOffset1(slot0._bgmCO.id)
-			slot0._lastTickTime = Time.realtimeSinceStartup
+			slot0._progressTimeSec = 0
 		end
 	end
 end
@@ -72,40 +54,33 @@ end
 function slot0._onTriggerEvent(slot0, slot1)
 	if slot1 == AudioEnum.UI.Pause_MainMusic then
 		TaskDispatcher.cancelTask(slot0._onTick, slot0)
-
-		if slot0._progressTimeSec and slot0._lastTickTime then
-			slot0._progressTimeSec = slot0._progressTimeSec + Time.realtimeSinceStartup - slot0._lastTickTime + slot0:_getOffset2(slot0._bgmCO and slot0._bgmCO.id)
-			slot0._lastTickTime = nil
-		end
-
 		slot0:_updateGMProgress()
 	elseif slot1 == AudioEnum.UI.Resume_MainMusic then
 		TaskDispatcher.runRepeat(slot0._onTick, slot0, uv0)
-
-		slot0._lastTickTime = Time.realtimeSinceStartup
-
 		slot0:_updateGMProgress()
 	end
 end
 
 function slot0._onTick(slot0)
-	slot0._progressTimeSec = slot0._progressTimeSec + Time.realtimeSinceStartup - slot0._lastTickTime
+	if not BGMSwitchController.instance:getPlayingId() then
+		return
+	end
 
-	if slot0._bgmAudioLength <= slot0._progressTimeSec then
+	if AudioMgr.instance:getSourcePlayPosition(slot1) / 1000 < 0 then
+		return
+	end
+
+	if slot2 < slot0._progressTimeSec and slot0._progressTimeSec - slot2 > (slot0._bgmAudioLength and slot0._bgmAudioLength > 0 and slot0._bgmAudioLength or 10) * 0.5 then
 		if BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId and not ViewMgr.instance:isOpen(ViewName.BGMSwitchView) then
 			slot0._progressTimeSec = 0
-			slot0._lastTickTime = slot1
 
 			BGMSwitchController.instance:checkStartMainBGM()
-		else
-			slot0._progressTimeSec = slot0._progressTimeSec - slot0._bgmAudioLength
-			slot0._lastTickTime = slot1
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmProgressEnd)
-	else
-		slot0._lastTickTime = slot1
 	end
+
+	slot0._progressTimeSec = slot2
 
 	slot0:_updateGMProgress()
 end
@@ -153,7 +128,7 @@ function slot0._updateGMProgress(slot0)
 		end
 	end
 
-	slot1 = slot0._progressTimeSec ~= nil and slot0._lastTickTime ~= nil
+	slot1 = slot0._progressTimeSec ~= nil
 
 	gohelper.setActive(slot0._progressGO, slot1)
 

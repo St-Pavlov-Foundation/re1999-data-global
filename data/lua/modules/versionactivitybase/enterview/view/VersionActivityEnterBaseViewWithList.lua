@@ -400,7 +400,9 @@ function slot0.refreshItemSiblingAndActive(slot0)
 		end
 	end
 
-	table.sort(slot2, slot0.openActItemSortFunc)
+	slot8 = slot0.openActItemSortFunc
+
+	table.sort(slot2, slot8)
 
 	for slot8 = 1, #slot2 do
 		slot10 = slot0.activityItemDict[slot2[slot8]]

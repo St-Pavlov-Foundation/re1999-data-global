@@ -15,7 +15,7 @@ function slot0.setAtkStatInfo(slot0, slot1)
 	slot2 = {}
 
 	for slot6, slot7 in ipairs(slot1) do
-		if slot7.entityMO or FightEntityModel.instance:getById(slot7.heroUid) or FightEntityModel.instance:getDeadById(slot7.heroUid) then
+		if slot7.entityMO or FightDataHelper.entityMgr:getById(slot7.heroUid) then
 			slot9 = FightStatMO.New()
 
 			slot9:init(slot7)

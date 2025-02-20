@@ -78,44 +78,42 @@ function slot0._clacEditor(slot0)
 	slot0.context.timelineUrlDict = {}
 	slot0.context.timelineSkinDict = {}
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot0:_gatherModelSkillIds(FightEnum.EntitySide.MySide, slot6.modelId, slot6.skin)
 	end
 
-	for slot6, slot7 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 		slot0:_gatherModelSkillIds(FightEnum.EntitySide.EnemySide, slot7.modelId, slot7.skin)
 	end
 end
 
 function slot0._calcFightCards(slot0)
-	slot1 = FightEntityModel.instance:getModel(FightEnum.EntitySide.EnemySide)
-	slot2 = FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide)
-	slot5 = FightCardModel.instance:getHandCards()
+	slot3 = FightCardModel.instance:getHandCards()
 
-	if FightModel.instance:getCurRoundMO() and slot3:getAIUseCardMOList() then
-		for slot9, slot10 in ipairs(slot4) do
-			if slot1:getById(slot10.uid) then
-				slot0:_gatherSkill(FightEnum.EntitySide.EnemySide, slot11.skin, slot10.skillId)
+	if FightModel.instance:getCurRoundMO() and slot1:getAIUseCardMOList() then
+		for slot7, slot8 in ipairs(slot2) do
+			if FightDataHelper.entityMgr:getById(slot8.uid) then
+				slot0:_gatherSkill(FightEnum.EntitySide.EnemySide, slot9.skin, slot8.skillId)
 			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		if slot2:getById(slot10.uid) then
-			slot0:_gatherSkill(FightEnum.EntitySide.MySide, FightHelper.processSkinId(slot11, slot10), slot10.skillId)
+	for slot7, slot8 in ipairs(slot3) do
+		if FightDataHelper.entityMgr:getById(slot8.uid) then
+			slot0:_gatherSkill(FightEnum.EntitySide.MySide, FightHelper.processSkinId(slot9, slot8), slot8.skillId)
 		end
 	end
 
-	slot0:_checkBattleRuleSkill(lua_battle.configDict[FightModel.instance:getFightParam().battleId] and slot7.additionRule)
-	slot0:_checkBattleRuleSkill(slot7 and slot7.hiddenRule)
+	slot0:_checkBattleRuleSkill(lua_battle.configDict[FightModel.instance:getFightParam().battleId] and slot5.additionRule)
+	slot0:_checkBattleRuleSkill(slot5 and slot5.hiddenRule)
 end
 
 function slot0._checkBattleRuleSkill(slot0, slot1)
 	if not string.nilorempty(slot1) then
-		slot6 = "|"
-		slot7 = "#"
+		slot6 = true
+		slot7 = "|"
 
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, true, slot6, slot7)) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, slot6, slot7, "#")) do
 			slot8 = slot7[1]
 
 			if lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.FightSkill then

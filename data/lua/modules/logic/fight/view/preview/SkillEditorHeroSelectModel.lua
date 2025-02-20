@@ -40,11 +40,23 @@ function slot0._getCOList(slot0)
 
 		for slot6, slot7 in ipairs(lua_monster.configList) do
 			if not slot1[slot7.skinId] then
-				slot1[slot7.skinId] = true
+				slot1[slot7.skinId] = {}
+			end
 
-				table.insert(slot2, slot7)
+			if not string.nilorempty(slot7.activeSkill) then
+				table.insert(slot1[slot7.skinId], 1, slot7)
+			else
+				table.insert(slot1[slot7.skinId], slot7)
 			end
 		end
+
+		for slot6, slot7 in pairs(slot1) do
+			table.insert(slot2, slot7[1])
+		end
+
+		table.sort(slot2, function (slot0, slot1)
+			return slot0.skinId < slot1.skinId
+		end)
 
 		return slot2
 	elseif slot0.selectType == SkillEditorMgr.SelectType.Group then

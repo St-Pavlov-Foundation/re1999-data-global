@@ -38,9 +38,9 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(Activity129Controller.instance, Activity129Event.OnLotterySuccess, slot0.onLotterySuccess, slot0)
 	slot0:addEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, slot0.onLotteryEnd, slot0)
 
-	slot5 = slot0._onCurrencyChange
+	slot5 = CurrencyEvent.CurrencyChange
 
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot5, slot0)
+	slot0:addEventCb(CurrencyController.instance, slot5, slot0._onCurrencyChange, slot0)
 
 	slot1 = {
 		0.5

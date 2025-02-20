@@ -28,6 +28,7 @@ function slot0.onSceneClose(slot0, slot1, slot2)
 	ViewMgr.instance:closeView(ViewName.FightSeasonChangeHeroSelectView, true)
 	ViewMgr.instance:closeView(ViewName.FightChangeHeroSelectSkillTargetView, true)
 	ViewMgr.instance:closeView(ViewName.FightNaNaTargetView, true)
+	ViewMgr.instance:closeView(ViewName.FightCardDeckView, true)
 end
 
 return slot0

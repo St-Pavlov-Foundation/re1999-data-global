@@ -1,12 +1,14 @@
 module("modules.configs.excel2json.lua_room_theme", package.seeall)
 
 slot1 = {
-	desc = 4,
-	name = 2,
-	building = 6,
-	packages = 7,
-	id = 1,
 	collectionBonus = 8,
+	name = 2,
+	desc = 4,
+	packages = 7,
+	building = 6,
+	sourcesType = 10,
+	id = 1,
+	extraShowBuilding = 9,
 	rewardIcon = 5,
 	nameEn = 3
 }

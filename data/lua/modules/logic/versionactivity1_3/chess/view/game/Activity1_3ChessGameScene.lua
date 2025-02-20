@@ -84,8 +84,9 @@ function slot0.createAllInteractObjs(slot0)
 	end
 
 	slot1 = Va3ChessGameController.instance.interacts:getList()
+	slot5 = Va3ChessInteractMgr.sortRenderOrder
 
-	table.sort(slot1, Va3ChessInteractMgr.sortRenderOrder)
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if slot6:GetIgnoreSight() then

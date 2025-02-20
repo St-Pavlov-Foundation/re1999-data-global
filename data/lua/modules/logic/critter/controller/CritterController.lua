@@ -260,30 +260,6 @@ function slot0.buySeatSlotCb(slot0, slot1, slot2)
 	slot0:dispatchEvent(CritterEvent.CritterUnlockSeatSlot)
 end
 
-function slot0.pressCritterUp(slot0, slot1, slot2, slot3)
-	if slot2 then
-		slot0._pressCritterUid = slot2
-	end
-
-	if not slot0._pressCritterUid then
-		return
-	end
-
-	slot4 = GameSceneMgr.instance:getCurScene()
-	slot5 = nil
-
-	if not ((not slot3 or slot4.buildingcrittermgr:getCritterEntity(slot0._pressCritterUid, SceneTag.RoomCharacter)) and slot4.buildingcrittermgr:getCritterEntity(slot0._pressCritterUid, SceneTag.RoomCharacter)) then
-		return
-	end
-
-	if RoomBendingHelper.screenToWorld(slot1) then
-		slot7 = slot6.x
-		slot8 = slot6.y
-
-		slot5:setLocalPos(slot7, RoomCharacterHelper.getLandHeightByRaycast(Vector3(slot7, 0, slot8)), slot8, true)
-	end
-end
-
 function slot0.openCritterFilterView(slot0, slot1, slot2)
 	ViewMgr.instance:openView(ViewName.RoomCritterFilterView, {
 		filterTypeList = slot1,

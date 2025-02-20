@@ -152,8 +152,9 @@ function slot0.onClickBtnEnterFightByBattleId(slot0)
 		slot6, slot7 = slot5:getMainList()
 		slot8, slot9 = slot5:getSubList()
 		slot10 = slot5:getAllHeroEquips()
+		slot14 = slot1
 
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
+		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot14)
 		slot0:closeThis()
 
 		for slot14, slot15 in ipairs(lua_episode.configList) do

@@ -30,7 +30,10 @@ function slot0.onUpdateMO(slot0, slot1)
 end
 
 function slot0._onClickItem(slot0)
-	for slot5, slot6 in ipairs(GMResetCardsModel.instance:getModel1():getList()) do
+	slot1 = GMResetCardsModel.instance:getModel1()
+	slot6 = slot1
+
+	for slot5, slot6 in ipairs(slot1.getList(slot6)) do
 		if not slot6.newSkillId then
 			slot6.newEntityId = slot0._mo.entityId
 			slot6.newSkillId = slot0._mo.skillId

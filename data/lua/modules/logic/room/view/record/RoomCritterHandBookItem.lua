@@ -128,6 +128,10 @@ function slot0.refreshBack(slot0)
 end
 
 function slot0.refreshMutate(slot0, slot1)
+	if slot1.id ~= slot0._mo.id then
+		return
+	end
+
 	if slot0._mo:checkShowMutate() then
 		if slot1.UseSpecialSkin then
 			if lua_critter_skin.configDict[slot0._mo:getConfig().mutateSkin] then

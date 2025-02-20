@@ -128,8 +128,9 @@ function slot0.showAllLevel(slot0)
 
 	slot2 = slot0._txtmeshalllevel.preferredHeight
 	slot3 = ""
-	slot7 = slot0._refineLv
-	slot0._curSkillCfg = EquipConfig.instance:getEquipSkillCfg(slot1, slot7)
+	slot7 = slot1
+	slot8 = slot0._refineLv
+	slot0._curSkillCfg = EquipConfig.instance:getEquipSkillCfg(slot7, slot8)
 
 	for slot7, slot8 in pairs(lua_equip_skill.configDict[slot1]) do
 		if slot7 > 0 then

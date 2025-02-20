@@ -25,16 +25,16 @@ end
 
 function slot0.buildTabViews(slot0, slot1)
 	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+		slot0.navigateView = CharacterTalentStyleNavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.TalentStyleViewHelp)
 
-		slot2:setOverrideClose(slot0.overrideCloseFunc, slot0)
+		slot0.navigateView:setOverrideClose(slot0.overrideCloseFunc, slot0)
 
 		return {
-			slot2
+			slot0.navigateView
 		}
 	elseif slot1 == 2 then
 		slot3 = CurrencyView.New({
@@ -54,6 +54,10 @@ function slot0.overrideCloseFunc(slot0)
 	else
 		slot0:closeThis()
 	end
+end
+
+function slot0.getNavigateView(slot0)
+	return slot0.navigateView
 end
 
 return slot0

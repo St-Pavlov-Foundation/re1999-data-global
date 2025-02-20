@@ -81,7 +81,9 @@ function slot0._getUIUrlList(slot0)
 		table.insert(slot1, slot6)
 	end
 
-	table.insert(slot1, RoomScenePreloader.ResFogParticle)
+	slot5 = RoomScenePreloader.ResFogParticle
+
+	table.insert(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0.context.poolGODict[slot6] = 6

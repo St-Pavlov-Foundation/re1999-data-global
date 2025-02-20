@@ -246,9 +246,10 @@ end
 
 function slot0._setPathMaterialsValue(slot0, slot1, slot2)
 	slot7 = 0
+	slot8 = 0
 
 	for slot7, slot8 in ipairs(slot1) do
-		slot8:SetVector("_DissolveControl", Vector4.New(slot2, 0.01, 0, slot7))
+		slot8:SetVector("_DissolveControl", Vector4.New(slot2, 0.01, slot7, slot8))
 	end
 end
 

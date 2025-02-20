@@ -29,6 +29,15 @@ end
 
 function slot0.yesCallback()
 	ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		FightSystem.instance:dispose()
+		FightModel.instance:clearRecordMO()
+		FightController.instance:exitFightScene()
+
+		return
+	end
+
 	FightRpc.instance:sendEndFightRequest(true)
 end
 

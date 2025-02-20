@@ -187,7 +187,8 @@ function slot0.onOpenFinish(slot0)
 end
 
 function slot0.refreshView(slot0)
-	slot0.skinCo = SkinConfig.instance:getSkinCo(slot0.viewParam.skin)
+	slot4 = slot0.viewParam.skin
+	slot0.skinCo = SkinConfig.instance:getSkinCo(slot4)
 	slot0._hadSkinDict[slot0.viewParam.config.skinId] = true
 
 	for slot4, slot5 in ipairs(slot0.viewParam.skinInfoList) do
@@ -533,8 +534,9 @@ function slot0._onItemClick(slot0, slot1)
 	slot0._preSelectSkinIndex = slot0._currentSelectSkinIndex
 	slot0._currentSelectSkinIndex = slot2
 	slot0.skinCo = slot0._itemObjects[slot0._currentSelectSkinIndex].skinCo
+	slot7 = AudioEnum.UI.play_ui_character_skin_switch
 
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
+	AudioMgr.instance:trigger(slot7)
 
 	for slot7, slot8 in ipairs(slot0._itemObjects) do
 		slot9 = slot0._currentSelectSkinIndex == slot7 and 1 or 0.9

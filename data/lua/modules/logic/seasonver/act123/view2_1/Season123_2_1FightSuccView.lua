@@ -167,11 +167,13 @@ function slot0._addItem(slot0, slot1)
 		end
 
 		slot11 = Season123_2_1CelebrityCardItem.New()
-		slot15 = slot1.materilId
 
-		slot11:init(gohelper.findChild(slot2, "container/cardicon"), slot15)
+		slot11:init(gohelper.findChild(slot2, "container/cardicon"), slot1.materilId)
 		slot11:showNewFlag(slot10)
-		table.insert(slot0._equipCards, slot11)
+
+		slot15 = slot11
+
+		table.insert(slot0._equipCards, slot15)
 
 		for slot15 = 1, 5 do
 			gohelper.setActive(gohelper.findChild(slot2, "container/cardicon/#vx_glow/" .. slot15), slot15 == Season123Config.instance:getSeasonEquipCo(slot1.materilId).rare)

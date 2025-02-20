@@ -61,7 +61,9 @@ return {
 			end
 		end
 
-		tabletool.addValues(slot3, slot2)
+		slot9 = slot2
+
+		tabletool.addValues(slot3, slot9)
 
 		for slot9 = 1, #slot3 do
 			slot1[slot9] = slot3[slot9]

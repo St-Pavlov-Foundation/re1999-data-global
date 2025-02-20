@@ -10,7 +10,9 @@ function slot0.onStart(slot0, slot1)
 	if #slot0._playerWalkPaths == 0 then
 		slot0:onDone(true)
 	else
-		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_paving_succeed)
+		slot6 = AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_paving_succeed
+
+		AudioMgr.instance:trigger(slot6)
 
 		for slot6 = 1, slot2 do
 			slot7 = slot0._playerWalkPaths[slot6]

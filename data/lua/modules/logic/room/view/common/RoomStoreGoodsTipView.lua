@@ -8,6 +8,7 @@ function slot0.onInitView(slot0)
 	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg2")
 	slot0._btntheme = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_theme")
 	slot0._txttheme = gohelper.findChildText(slot0.viewGO, "left/#btn_theme/txt")
+	slot0._gocobrand = gohelper.findChild(slot0.viewGO, "left/#go_cobrand")
 	slot0._gobuyContent = gohelper.findChild(slot0.viewGO, "right/#go_buyContent")
 	slot0._goblockInfoItem = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_blockInfoItem")
 	slot0._golineitemContent = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content")
@@ -148,6 +149,9 @@ function slot0._editableInitView(slot0)
 	slot0:_createPayItemUserDataTb_(slot0._gopayitem)
 	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
 	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+
+	slot0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocobrand, RoomSourcesCobrandLogoItem, slot0)
+
 	gohelper.removeUIClickAudio(slot0._btnclose.gameObject)
 	gohelper.addUIClickAudio(slot0._btninsight.gameObject, AudioEnum.HeroGroupUI.Play_UI_Action_Mainstart)
 	RoomStoreItemListModel.instance:setIsSelectCurrency(false)
@@ -241,10 +245,9 @@ function slot0._setSelectCostId(slot0, slot1)
 end
 
 function slot0._refreshUI(slot0)
-	gohelper.setActive(slot0._btntheme.gameObject, RoomStoreItemListModel.instance:getRoomStoreItemMOHasTheme() ~= nil)
-	gohelper.setActive(slot0._gochange.gameObject, slot1:checkShowTicket())
+	gohelper.setActive(slot0._gochange.gameObject, RoomStoreItemListModel.instance:getRoomStoreItemMOHasTheme() and slot1:checkShowTicket())
 
-	if slot1:getTicketId() then
+	if slot1 and slot1:getTicketId() then
 		slot0._txtchange.text = ItemConfig.instance:getItemCo(slot3).name
 	end
 
@@ -252,51 +255,62 @@ function slot0._refreshUI(slot0)
 		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagechangeicon, string.format("%s_1", slot1:getTicketId()))
 	end
 
+	slot4 = nil
+
 	if slot1 then
-		slot5 = RoomConfig.instance:getThemeIdByItem(slot1.id, slot1.materialType) and lua_room_theme.configDict[slot4]
-		slot0._txttheme.text = slot5 and slot5.name or ""
+		slot6 = RoomConfig.instance:getThemeIdByItem(slot1.id, slot1.materialType) and lua_room_theme.configDict[slot5]
+		slot0._txttheme.text = slot6 and slot6.name or ""
+		slot4 = slot6.sourcesType
 	end
 
-	slot6, slot7 = slot0.viewParam.storeGoodsMO:getAllCostInfo()
-	slot9 = ({
-		slot6,
-		slot7
+	if RoomStoreItemListModel.instance:getCount() == 1 then
+		slot6 = RoomStoreItemListModel.instance:getByIndex(1) and slot5:getItemConfig()
+		slot4 = slot6 and slot6.sourcesType or nil
+	end
+
+	slot0.cobrandLogoItem:setSourcesTypeStr(slot4)
+	gohelper.setActive(slot0._btntheme, slot1 ~= nil and not slot0.cobrandLogoItem:getIsShow())
+
+	slot7, slot8 = slot0.viewParam.storeGoodsMO:getAllCostInfo()
+	slot10 = ({
+		slot7,
+		slot8
 	})[slot0:_getSelectCostId()][1]
-	slot12, slot13 = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2])
-	slot14 = not RoomStoreItemListModel.instance:getIsSelectCurrency() and slot2
+	slot13, slot14 = ItemModel.instance:getItemConfigAndIcon(slot10[1], slot10[2])
+	slot15 = not RoomStoreItemListModel.instance:getIsSelectCurrency() and slot2
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecosticon, string.format("%s_1", slot14 and slot1:getTicketId() or slot12.icon))
+	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecosticon, string.format("%s_1", slot15 and slot1:getTicketId() or slot13.icon))
 
-	slot17, slot18 = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2], true)
-	slot19 = ItemModel.instance:getItemQuantity(slot9[1], slot9[2])
-	slot0._txtcostnum.text = slot14 and 1 or RoomStoreItemListModel.instance:getTotalPriceByCostId()
+	slot18, slot19 = ItemModel.instance:getItemConfigAndIcon(slot10[1], slot10[2], true)
+	slot20 = ItemModel.instance:getItemQuantity(slot10[1], slot10[2])
+	slot0._txtcostnum.text = slot15 and 1 or RoomStoreItemListModel.instance:getTotalPriceByCostId()
 
-	if slot14 then
+	if slot15 then
 		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcostnum, "#595959")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcostnum, slot19 and slot4 <= slot19 and "#595959" or "#BF2E11")
+		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcostnum, slot20 and slot5 <= slot20 and "#595959" or "#BF2E11")
 	end
 
-	slot20 = 0
+	slot21 = 0
 
-	for slot24 = 1, #slot8 do
-		if slot8[slot24] then
-			slot25 = slot25[1]
-			slot26 = slot0._payItemTbList[slot20 + 1] or slot0:_createPayItemUserDataTb_(gohelper.cloneInPlace(slot0._gopayitem, "go_payitem" .. slot20))
+	for slot25 = 1, #slot9 do
+		if slot9[slot25] then
+			slot26 = slot26[1]
+			slot27 = slot0._payItemTbList[slot21 + 1] or slot0:_createPayItemUserDataTb_(gohelper.cloneInPlace(slot0._gopayitem, "go_payitem" .. slot21))
 
-			gohelper.setActive(slot26._go, true)
-			slot0:_refreshPayItemUI(slot26, slot24, slot25[1], slot25[2])
+			gohelper.setActive(slot27._go, true)
+			slot0:_refreshPayItemUI(slot27, slot25, slot26[1], slot26[2])
 
 			if slot2 and not RoomStoreItemListModel.instance:getIsSelectCurrency() then
-				slot0:_onSelectPayItemUI(slot26, false)
+				slot0:_onSelectPayItemUI(slot27, false)
 			else
-				slot0:_onSelectPayItemUI(slot26, slot24 == slot5)
+				slot0:_onSelectPayItemUI(slot27, slot25 == slot6)
 			end
 		end
 	end
 
-	for slot24 = slot20 + 1, #slot0._payItemTbList do
-		gohelper.setActive(slot0._payItemTbList[slot24], false)
+	for slot25 = slot21 + 1, #slot0._payItemTbList do
+		gohelper.setActive(slot0._payItemTbList[slot25], false)
 	end
 end
 
@@ -362,6 +376,7 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._simagebg1:UnLoadImage()
 	slot0._simagebg2:UnLoadImage()
+	slot0.cobrandLogoItem:onDestroy()
 end
 
 function slot0._refreshLineItem(slot0)

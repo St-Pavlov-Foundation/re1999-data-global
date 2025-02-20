@@ -97,9 +97,10 @@ function slot0.stop(slot0)
 	slot0:beforeStop()
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0.onOpenView, slot0)
 
-	slot5 = slot0
+	slot5 = slot0.onCloseView
+	slot6 = slot0
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot5)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot5, slot6)
 
 	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
 		slot0:recycleMaskGoByViewName(slot6)

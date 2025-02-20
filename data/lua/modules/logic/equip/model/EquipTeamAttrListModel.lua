@@ -16,10 +16,10 @@ function slot0.SetAttrList(slot0)
 			slot0:setAttr(slot1, 102, 0, slot10)
 			slot0:setAttr(slot1, 103, 0, slot11)
 
-			slot17 = 104
-			slot18 = 0
+			slot17 = slot1
+			slot18 = 104
 
-			slot0:setAttr(slot1, slot17, slot18, slot12)
+			slot0:setAttr(slot17, slot18, 0, slot12)
 
 			for slot17, slot18 in pairs(lua_character_attribute.configDict) do
 				if slot18.type == 2 or slot18.type == 3 then

@@ -1,0 +1,52 @@
+[
+  {
+    "skinId": 6304062,
+    "sceneId": 0,
+    "position": [
+      6.7,
+      -0.16,
+      0
+    ],
+    "scale": "1"
+  },
+  {
+    "skinId": 6304072,
+    "sceneId": 0,
+    "position": [
+      6.7,
+      -0.16,
+      0
+    ],
+    "scale": "1"
+  },
+  {
+    "skinId": 630409,
+    "sceneId": 0,
+    "position": [
+      6.7,
+      -0.16,
+      0
+    ],
+    "scale": "1"
+  },
+  {
+    "skinId": 670404,
+    "sceneId": 0,
+    "position": [
+      6.94,
+      0,
+      0
+    ],
+    "scale": "1"
+  },
+  {
+    "skinId": 670306,
+    "sceneId": 0,
+    "position": [
+      7.54,
+      0,
+      0
+    ],
+    "scale": "1"
+  }
+]

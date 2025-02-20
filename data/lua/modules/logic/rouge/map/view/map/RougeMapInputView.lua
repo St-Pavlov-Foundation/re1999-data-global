@@ -43,8 +43,10 @@ function slot0.onClickMap(slot0, slot1, slot2)
 	end
 
 	slot3, slot4 = recthelper.screenPosToAnchorPos2(slot2, slot0.trFullScreen)
+	slot7 = slot0.mapComp
+	slot9 = slot7
 
-	for slot8, slot9 in ipairs(slot0.mapComp:getMapItemList()) do
+	for slot8, slot9 in ipairs(slot7.getMapItemList(slot9)) do
 		if slot9:checkInClickArea(slot3, slot4, slot0.trFullScreen) then
 			slot9:onClick()
 

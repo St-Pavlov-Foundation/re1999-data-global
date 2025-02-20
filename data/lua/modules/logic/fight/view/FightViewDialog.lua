@@ -14,6 +14,7 @@ slot0.Type = {
 	RoundEndAndCheckBuff = 22,
 	BuffRoundAfter = 19,
 	MonsterWaveEnd = 12,
+	Success = 36,
 	Trigger = 999,
 	MonsterWaveEndAndCheckBuffId = 17,
 	BuffAdd = 13,
@@ -224,15 +225,7 @@ function slot0._onClickThis(slot0)
 
 		slot0._showingType = nil
 
-		if tabletool.copy(slot0._showingType)[uv0.Type.MonsterChangeBefore] then
-			FightController.instance:dispatchEvent(FightEvent.ContinueMonsterChange)
-		end
-
-		if slot1[uv0.Type.MonsterChangeAfter] then
-			FightController.instance:dispatchEvent(FightEvent.ContinueMonsterChange)
-		end
-
-		if slot1[uv0.Type.BeforeSkill] then
+		if tabletool.copy(slot0._showingType)[uv0.Type.BeforeSkill] then
 			FightController.instance:dispatchEvent(FightEvent.DialogContinueSkill)
 		end
 
@@ -254,8 +247,6 @@ function slot0.onOpen(slot0)
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
 	FightController.instance:registerCallback(FightEvent.OnInvokeSkill, slot0._onInvokeSkill, slot0)
 	FightController.instance:registerCallback(FightEvent.BeforeSkillDialog, slot0._beforeSkill, slot0)
-	FightController.instance:registerCallback(FightEvent.BeforeMonsterChange, slot0._beforeMonsterChange, slot0)
-	FightController.instance:registerCallback(FightEvent.AfterMonsterChange, slot0._afterMonsterChange, slot0)
 	FightController.instance:registerCallback(FightEvent.FightDialog, slot0._onFightDialogCheck, slot0)
 	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
 end
@@ -272,8 +263,6 @@ function slot0.onClose(slot0)
 	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
 	FightController.instance:unregisterCallback(FightEvent.OnInvokeSkill, slot0._onInvokeSkill, slot0)
 	FightController.instance:unregisterCallback(FightEvent.BeforeSkillDialog, slot0._beforeSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeMonsterChange, slot0._beforeMonsterChange, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AfterMonsterChange, slot0._afterMonsterChange, slot0)
 	FightController.instance:unregisterCallback(FightEvent.FightDialog, slot0._onFightDialogCheck, slot0)
 	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseSpecialView, slot0)
@@ -337,7 +326,7 @@ function slot0._onStartChangeEntity(slot0, slot1)
 end
 
 function slot0._beforeDeadEffect1(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		return
 	end
 
@@ -346,14 +335,18 @@ function slot0._beforeDeadEffect1(slot0, slot1)
 			break
 		end
 
-		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot10].monster, "#")) do
+		slot16 = "#"
+
+		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot10].monster, slot16)) do
 			if slot17 == tonumber(slot2.modelId) then
 				return
 			end
 		end
 
 		if not string.nilorempty(slot11.spMonster) then
-			for slot17, slot18 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot11.spMonster, "#")) do
+			slot17 = "#"
+
+			for slot17, slot18 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot11.spMonster, slot17)) do
 				if slot18 == tonumber(slot2.modelId) then
 					return
 				end
@@ -361,20 +354,30 @@ function slot0._beforeDeadEffect1(slot0, slot1)
 		end
 	end
 
-	for slot12, slot13 in ipairs(FightEntityModel.instance:getDeadModel(FightEnum.EntitySide.EnemySide):getList()) do
-		table.insert({}, slot13)
+	slot6 = {}
+	slot9 = FightDataHelper.entityMgr
+	slot11 = slot9
+
+	for slot10, slot11 in ipairs(slot9.getEnemyNormalList(slot11)) do
+		if slot11:isStatusDead() then
+			table.insert(slot6, slot11)
+		end
 	end
 
-	for slot12, slot13 in ipairs(slot0._playedDeadEnemyMOList) do
-		table.insert(slot8, slot13)
+	for slot11, slot12 in ipairs(slot6) do
+		table.insert({}, slot12)
 	end
 
-	for slot12, slot13 in ipairs(slot8) do
-		if slot13.uid ~= slot2.uid and slot13.modelId == slot2.modelId then
+	for slot11, slot12 in ipairs(slot0._playedDeadEnemyMOList) do
+		table.insert(slot7, slot12)
+	end
+
+	for slot11, slot12 in ipairs(slot7) do
+		if slot12.uid ~= slot2.uid and slot12.modelId == slot2.modelId then
 			return
 		end
 
-		if slot13.uid == slot2.uid then
+		if slot12.uid == slot2.uid then
 			break
 		end
 	end
@@ -384,7 +387,7 @@ function slot0._beforeDeadEffect1(slot0, slot1)
 end
 
 function slot0._beforeDeadEffect2(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		return
 	end
 
@@ -396,51 +399,57 @@ function slot0._beforeDeadEffect2(slot0, slot1)
 end
 
 function slot0._onStartFightPlayBornNormal(slot0, slot1)
-	if not FightEntityModel.instance:getModel(FightEnum.EntitySide.EnemySide):getById(slot1) then
+	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
 
-	for slot10, slot11 in ipairs(FightModel.instance:getFightParam().monsterGroupIds) do
-		if slot11 == FightModel.instance:getCurMonsterGroupId() then
+	if not FightDataHelper.entityMgr:getById(slot1) then
+		return
+	end
+
+	for slot9, slot10 in ipairs(FightModel.instance:getFightParam().monsterGroupIds) do
+		if slot10 == FightModel.instance:getCurMonsterGroupId() then
 			break
 		end
 
-		for slot17, slot18 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot11].monster, "#")) do
-			if slot18 == tonumber(slot3.modelId) then
+		slot16 = "#"
+
+		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot10].monster, slot16)) do
+			if slot17 == tonumber(slot2.modelId) then
 				return
 			end
 		end
 
-		if not string.nilorempty(slot12.spMonster) then
-			for slot18, slot19 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot12.spMonster, "#")) do
-				if slot19 == tonumber(slot3.modelId) then
+		if not string.nilorempty(slot11.spMonster) then
+			slot17 = "#"
+
+			for slot17, slot18 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot11.spMonster, slot17)) do
+				if slot18 == tonumber(slot2.modelId) then
 					return
 				end
 			end
 		end
 	end
 
-	slot10 = slot2:getList()
+	slot6 = {}
+	slot11 = nil
+	slot12 = true
 
-	for slot14, slot15 in ipairs(FightEntityModel.instance:getDeadModel(FightEnum.EntitySide.EnemySide):getList()) do
-		table.insert({}, slot15)
+	for slot11, slot12 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, slot11, slot12)) do
+		table.insert(slot6, slot12)
 	end
 
-	for slot14, slot15 in ipairs(slot10) do
-		table.insert(slot8, slot15)
-	end
-
-	for slot14, slot15 in ipairs(slot8) do
-		if slot15.uid ~= slot3.uid and slot15.modelId == slot3.modelId then
+	for slot11, slot12 in ipairs(slot6) do
+		if slot12.uid ~= slot2.uid and slot12.modelId == slot2.modelId then
 			return
 		end
 
-		if slot15.uid == slot3.uid then
+		if slot12.uid == slot2.uid then
 			break
 		end
 	end
 
-	slot0:_checkShowDialog(uv0.Type.MonsterSpawn, tonumber(slot3.modelId))
+	slot0:_checkShowDialog(uv0.Type.MonsterSpawn, tonumber(slot2.modelId))
 end
 
 function slot0.onDestroyView(slot0)
@@ -466,18 +475,6 @@ end
 function slot0._beforeSkill(slot0, slot1)
 	if slot0:_checkShowDialog(uv0.Type.BeforeSkill, slot1) then
 		FightWorkStepSkill.needWaitBeforeSkill = true
-	end
-end
-
-function slot0._beforeMonsterChange(slot0, slot1)
-	if slot0:_checkShowDialog(uv0.Type.MonsterChangeBefore, slot1) then
-		FightWorkEffectMonsterChange.needWaitBeforeChange = true
-	end
-end
-
-function slot0._afterMonsterChange(slot0, slot1)
-	if slot0:_checkShowDialog(uv0.Type.MonsterChangeAfter, slot1) then
-		FightWorkEffectMonsterChange.needWaitBeforeChange = true
 	end
 end
 
@@ -540,7 +537,7 @@ function slot0._onFightDialogCheck(slot0, slot1, slot2, slot3, slot4)
 			FightWorkShowBuffDialog.needStopWork = slot0._tempDialogConfig
 		end
 	elseif slot1 == uv0.Type.CheckDeadEntityCount then
-		slot0:_checkShowDialog(slot1, FightEntityModel.instance:getMySideDeadListLength())
+		slot0:_checkShowDialog(slot1, #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide))
 	elseif slot1 == uv0.Type.FightFail then
 		slot0:_checkShowDialog(slot1)
 	elseif slot1 == uv0.Type.BeforeStartFight then
@@ -548,6 +545,10 @@ function slot0._onFightDialogCheck(slot0, slot1, slot2, slot3, slot4)
 	elseif slot1 == uv0.Type.BeforeMonsterA2B then
 		slot0:_checkShowDialog(slot1, slot2)
 	elseif slot1 == uv0.Type.AfterMonsterA2B then
+		slot0:_checkShowDialog(slot1, slot2)
+	elseif slot1 == uv0.Type.MonsterChangeBefore then
+		slot0:_checkShowDialog(slot1, slot2)
+	elseif slot1 == uv0.Type.MonsterChangeAfter then
 		slot0:_checkShowDialog(slot1, slot2)
 	elseif slot1 == uv0.Type.AfterAppearTimeline then
 		slot0:_checkShowDialog(slot1, slot2)
@@ -562,6 +563,8 @@ function slot0._onFightDialogCheck(slot0, slot1, slot2, slot3, slot4)
 	elseif slot1 == uv0.Type.DetectHaveCardAfterEndOperation then
 		slot0:_onDetectHaveCardAfterEndOperation(slot2)
 	elseif slot1 == uv0.Type.AfterSummon then
+		slot0:_checkShowDialog(slot1, slot2)
+	elseif slot1 == uv0.Type.Success then
 		slot0:_checkShowDialog(slot1, slot2)
 	end
 end
@@ -582,9 +585,9 @@ function slot0._onDetectHaveCardAfterEndOperation(slot0)
 			slot9 = slot5.param1
 			slot10 = slot5.param2
 
-			for slot15, slot16 in ipairs(FightEntityModel.instance:getList()) do
+			for slot15, slot16 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)) do
 				if slot16.side == FightEnum.EntitySide.EnemySide then
-					for slot22, slot23 in ipairs(slot16:getBuffList()) do
+					for slot22, slot23 in pairs(slot16:getBuffDic()) do
 						if slot23.buffId == slot9 then
 							if slot0:_haveSkillCard(slot10) then
 								slot0:_checkShowDialog(slot5.type, slot9, slot10)
@@ -636,9 +639,9 @@ function slot0._onHaveBuffAndHaveDamageSkill_onlyCheckOnce(slot0)
 		if slot5.type == uv0.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce and (slot6.insideRepeat or not slot0._showedDialogIdDict[slot6.id]) then
 			slot9 = slot5.param1
 
-			for slot14, slot15 in ipairs(FightEntityModel.instance:getList()) do
+			for slot14, slot15 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)) do
 				if slot15.side == FightEnum.EntitySide.EnemySide then
-					for slot21, slot22 in ipairs(slot15:getBuffList()) do
+					for slot21, slot22 in pairs(slot15:getBuffDic()) do
 						if slot22.buffId == slot9 then
 							if slot0:_haveDamageSkill(FightModel.instance:getCurRoundMO().fightStepMOs) then
 								slot0:_checkShowDialog(slot5.type, slot9)
@@ -709,7 +712,7 @@ end
 
 function slot0._hasBuff(slot0)
 	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
-		for slot11, slot12 in ipairs(slot6:getMO().buffModel:getList()) do
+		for slot11, slot12 in pairs(slot6:getMO():getBuffDic()) do
 			if slot12.buffId == slot0 then
 				return true
 			end
@@ -758,8 +761,8 @@ function slot0._checkMonsterWaveEndAndCheckBuffId(slot0)
 	slot2 = slot0.param2
 
 	for slot7, slot8 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
-		if slot8:getMO() and slot9:getBuffList() then
-			for slot14, slot15 in ipairs(slot10) do
+		if slot8:getMO() and slot9:getBuffDic() then
+			for slot14, slot15 in pairs(slot10) do
 				if slot15.buffId == slot2 then
 					return true
 				end
@@ -769,7 +772,9 @@ function slot0._checkMonsterWaveEndAndCheckBuffId(slot0)
 end
 
 function slot0._detectMonsterDie(slot0)
-	for slot5 = 2, #FightStrUtil.instance:getSplitToNumberCache(slot0.dialogConfig.param, "#") do
+	slot5 = "#"
+
+	for slot5 = 2, #FightStrUtil.instance:getSplitToNumberCache(slot0.dialogConfig.param, slot5) do
 		if uv0 == slot1[slot5] then
 			return true
 		end

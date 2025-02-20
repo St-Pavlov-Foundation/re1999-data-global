@@ -32,6 +32,7 @@ slot0.ChargeRefreshTime = {
 	Level = 7,
 	None = 0
 }
+slot0.LittleMonthCardGoodsId = 811512
 slot0.WeekWalkTabId = 160
 slot0.SummonExchange = 110
 slot0.SummonEquipExchange = 150
@@ -75,7 +76,14 @@ slot0.RecommendRelationType = {
 }
 slot0.AdjustOrderType = {
 	MonthCard = 1,
-	BattlePass = 2
+	BattlePass = 2,
+	Normal = 0
+}
+slot0.GroupOrderType = {
+	GroupC = 3,
+	GroupA = 1,
+	GroupD = 4,
+	GroupB = 2
 }
 slot0.MonthCardGoodsId = 610001
 slot0.NewbiePackId = 811461

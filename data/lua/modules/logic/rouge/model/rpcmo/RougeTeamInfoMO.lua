@@ -130,8 +130,9 @@ end
 
 function slot0.getGroupInfos(slot0)
 	slot2 = {}
+	slot7 = RougeEnum.FightTeamHeroNum
 
-	RougeHeroGroupMO.New():setMaxHeroCount(RougeEnum.FightTeamHeroNum)
+	RougeHeroGroupMO.New():setMaxHeroCount(slot7)
 
 	for slot7 = 1, RougeEnum.FightTeamHeroNum do
 		slot8 = slot0.battleHeroMap[slot7] or slot0._supportBattleHeroMap[slot7]

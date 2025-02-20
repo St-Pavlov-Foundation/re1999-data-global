@@ -61,6 +61,7 @@ function slot0.init(slot0, slot1)
 	slot0._goSeasonMask = gohelper.findChild(slot1, "seasonmask")
 	slot0._goCenterTxt = gohelper.findChild(slot1, "centerTxt")
 	slot0._txtCenterTxt = gohelper.findChildTextMesh(slot1, "centerTxt/txtcn")
+	slot0.goLost = gohelper.findChild(slot1, "lost")
 end
 
 function slot0._initObj(slot0)
@@ -88,7 +89,10 @@ function slot0._initObj(slot0)
 
 	table.insert(slot0._rareEffectGOs, slot0._gorareEffect1)
 	table.insert(slot0._rareEffectGOs, slot0._gorareEffect2)
-	table.insert(slot0._rareEffectGOs, slot0._gorareEffect3)
+
+	slot4 = slot0._gorareEffect3
+
+	table.insert(slot0._rareEffectGOs, slot4)
 
 	for slot4, slot5 in ipairs(slot0._rareEffectGOs) do
 		gohelper.setActive(slot5, false)
@@ -548,6 +552,11 @@ function slot0.setCenterTxt(slot0, slot1)
 	else
 		gohelper.setActive(slot0._goCenterTxt, false)
 	end
+end
+
+function slot0.setLost(slot0, slot1)
+	gohelper.setActive(slot0.goLost, slot1)
+	slot0:setDamage(slot1)
 end
 
 function slot0.onDestroy(slot0)

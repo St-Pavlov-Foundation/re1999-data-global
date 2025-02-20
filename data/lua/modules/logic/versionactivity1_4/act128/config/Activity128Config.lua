@@ -376,7 +376,11 @@ function slot0._initActLayer4rewards(slot0)
 end
 
 function slot0.getActLayer4rewards(slot0, slot1)
-	return slot0.layer4Rewards[slot0.__activityId][slot1]
+	if slot0.layer4Rewards[slot0.__activityId] then
+		return slot0.layer4Rewards[slot0.__activityId][slot1]
+	end
+
+	return {}
 end
 
 return slot0

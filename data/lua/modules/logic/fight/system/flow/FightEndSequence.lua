@@ -9,6 +9,7 @@ function slot0.buildFlow(slot0, slot1)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_fightingsfx)
 
 	if FightModel.instance:getRecordMO().fightResult == FightEnum.FightResult.Succ then
+		slot0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.Success, FightDataHelper.fieldMgr.battleId))
 		slot0:_addDialogView()
 		slot0:_addCloseFightView()
 		slot0:addWork(FightWorkEndVictory.New())

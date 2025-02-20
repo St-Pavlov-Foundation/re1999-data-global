@@ -87,9 +87,8 @@ function slot0.onIconLoadCallback(slot0)
 	slot0.statusGoDict[YaXianGameEnum.IconStatus.Fight] = gohelper.findChild(slot0.iconGo, "zhandou")
 	slot0.statusGoDict[YaXianGameEnum.IconStatus.InVisible] = gohelper.findChild(slot0.iconGo, "yingsheng")
 	slot0.statusGoDict[YaXianGameEnum.IconStatus.ThroughWall] = gohelper.findChild(slot0.iconGo, "chuanqiang")
-	slot4 = slot0.iconGo
-	slot5 = "dead"
-	slot0.statusGoDict[YaXianGameEnum.IconStatus.PlayerAssassinate] = gohelper.findChild(slot4, slot5)
+	slot5 = slot0.iconGo
+	slot0.statusGoDict[YaXianGameEnum.IconStatus.PlayerAssassinate] = gohelper.findChild(slot5, "dead")
 	slot0.statusAnimatorDict = slot0:getUserDataTb_()
 	slot0.statusDirectionDict = {}
 
@@ -97,7 +96,8 @@ function slot0.onIconLoadCallback(slot0)
 		slot0.statusAnimatorDict[slot4] = slot5:GetComponent(typeof(UnityEngine.Animator))
 
 		if YaXianGameEnum.DirectionIcon[slot4] then
-			slot0.statusDirectionDict[slot4] = slot0:getUserDataTb_()
+			slot9 = slot0
+			slot0.statusDirectionDict[slot4] = slot0.getUserDataTb_(slot9)
 
 			for slot9, slot10 in pairs(YaXianGameEnum.MoveDirection) do
 				slot0.statusDirectionDict[slot4][slot10] = gohelper.findChild(slot5, YaXianGameEnum.DirectionName[slot10])

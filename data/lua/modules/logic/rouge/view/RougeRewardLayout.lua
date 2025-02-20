@@ -4,8 +4,9 @@ slot0 = class("RougeRewardLayout", LuaCompBase)
 
 function slot0.initcomp(slot0, slot1, slot2, slot3)
 	slot0._go = slot1
+	slot7 = false
 
-	gohelper.setActive(slot0._go, false)
+	gohelper.setActive(slot0._go, slot7)
 
 	slot0._config = slot2
 
@@ -392,11 +393,13 @@ function slot0.onDestroy(slot0)
 	slot0:removeEventCb(RougeController.instance, RougeEvent.OnClickReward, slot0.refreshLayout, slot0)
 	slot0:removeEventCb(RougeController.instance, RougeEvent.OnGetRougeReward, slot0.OnGetRougeReward, slot0)
 
-	slot4 = ViewEvent.OnCloseView
-	slot5 = slot0._onCloseViewFinish
+	slot5 = ViewEvent.OnCloseView
 
-	slot0:removeEventCb(ViewMgr.instance, slot4, slot5, slot0)
-	TaskDispatcher.cancelTask(slot0._onEnterAnim, slot0)
+	slot0:removeEventCb(ViewMgr.instance, slot5, slot0._onCloseViewFinish, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._onEnterAnim, slot4)
 
 	for slot4, slot5 in pairs(slot0._rewardList) do
 		slot5._btn:RemoveClickListener()

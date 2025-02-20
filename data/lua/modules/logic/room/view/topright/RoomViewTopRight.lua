@@ -29,12 +29,12 @@ function slot0._editableInitView(slot0)
 		return
 	end
 
-	slot5 = gohelper.findChild(slot0.viewGO, slot0._path)
-	slot0._topRight = slot0.viewContainer:getResInst(slot0._resPath, slot5, "topright")
+	slot0._topRight = slot0.viewContainer:getResInst(slot0._resPath, gohelper.findChild(slot0.viewGO, slot0._path), "topright")
 	slot0._goflyitem = gohelper.findChild(slot0._topRight, "go_flyitem")
 	slot0._goresource = gohelper.findChild(slot0._topRight, "container/resource")
+	slot5 = false
 
-	gohelper.setActive(slot0._goflyitem, false)
+	gohelper.setActive(slot0._goflyitem, slot5)
 
 	for slot5 = 1, 6 do
 		gohelper.setActive(gohelper.cloneInPlace(slot0._goresource, "resource" .. slot5), false)

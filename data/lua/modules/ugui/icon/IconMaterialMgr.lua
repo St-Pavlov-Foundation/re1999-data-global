@@ -10,7 +10,8 @@ function slot0.init(slot0)
 		"ui/materials/dynamic/ui_headicon_stylization_3.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_4.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_5.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_6.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_6.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_assist.mat"
 	}
 	slot0.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",
@@ -19,7 +20,8 @@ function slot0.init(slot0)
 		"ui/materials/dynamic/ui_headicon_stylization_3_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_4_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_5_round.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_6_round.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_6_round.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_assist_round.mat"
 	}
 	slot0.needSetMaterialIconImages = {}
 	slot0.loadedMaterials = {}

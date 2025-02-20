@@ -45,8 +45,9 @@ function slot0.updateInfo(slot0, slot1)
 	slot0.getReward = slot1.getReward
 	slot0.hasUnlock = slot1.unlock
 	slot0.getScoreBonus = {}
+	slot5 = slot1.getScoreBonus
 
-	slot0:addScoreBonus(slot1.getScoreBonus)
+	slot0:addScoreBonus(slot5)
 
 	slot0.score = slot1.score
 	slot0.wave = slot1.challengeWave
@@ -77,7 +78,9 @@ function slot0.updateDispatchTime(slot0, slot1)
 		return
 	end
 
-	slot0:getDispatchMo(slot1.dispatchId):updateTime(slot1)
+	slot7 = slot1
+
+	slot0:getDispatchMo(slot1.dispatchId):updateTime(slot7)
 
 	for slot7 = 1, #slot1.dispatchInfos do
 		slot0:updateDispatch(slot1.dispatchInfos[slot7])

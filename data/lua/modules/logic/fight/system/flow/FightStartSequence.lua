@@ -11,7 +11,6 @@ function slot0.buildFlow(slot0, slot1)
 end
 
 function slot0._buildStartRoundSteps(slot0)
-	FightEntityModel.instance:clearDeadUids()
 	slot0:addWork(FightWorkDialogBeforeStartFight.New())
 	slot0:addWork(FightWorkAppearPerformance.New())
 	slot0:addWork(FightWorkDetectReplayEnterSceneActive.New())

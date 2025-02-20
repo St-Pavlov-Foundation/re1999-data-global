@@ -67,9 +67,10 @@ function slot0._refreshView(slot0)
 	end
 
 	slot0._descItems = {}
+	slot8 = slot2.id
 	slot4 = nil
 
-	for slot8 = 1, #string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot2.id).desc, "#") do
+	for slot8 = 1, #string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot8).desc, "#") do
 		slot9 = gohelper.cloneInPlace(slot0._godescitem)
 
 		gohelper.setActive(slot9, true)

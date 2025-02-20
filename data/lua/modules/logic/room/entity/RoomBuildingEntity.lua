@@ -77,6 +77,10 @@ function slot0.initComponents(slot0)
 		if slot3.buildingType == RoomBuildingEnum.BuildingType.Rest then
 			slot0:addComp("summonComp", RoomBuildingSummonComp)
 		end
+
+		if slot3.buildingType == RoomBuildingEnum.BuildingType.Interact then
+			slot0:addComp("interactComp", RoomBuildingInteractComp)
+		end
 	end
 
 	slot0:addComp("nightlight", RoomNightLightComp)
@@ -414,9 +418,9 @@ function slot0.getOccupyDict(slot0)
 	if slot0._lastHexPoint ~= slot1.hexPoint or slot0._lastRotate ~= slot1.rotate then
 		slot0._lastHexPoint = HexPoint(slot1.hexPoint.x, slot1.hexPoint.y)
 		slot0._lastRotate = slot1.rotate
-		slot5 = slot1.rotate
-		slot6 = slot1.buildingUid
-		slot0._lastOccupyDict = RoomBuildingHelper.getOccupyDict(slot1.buildingId, slot1.hexPoint, slot5, slot6)
+		slot5 = slot1.hexPoint
+		slot6 = slot1.rotate
+		slot0._lastOccupyDict = RoomBuildingHelper.getOccupyDict(slot1.buildingId, slot5, slot6, slot1.buildingUid)
 		slot0._lastHexPointList = {}
 
 		for slot5, slot6 in pairs(slot0._lastOccupyDict) do

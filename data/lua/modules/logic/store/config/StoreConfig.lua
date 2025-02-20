@@ -10,6 +10,7 @@ function slot0.ctor(slot0)
 	slot0._storeChargeConfig = nil
 	slot0._storeChargeGoodsConfig = nil
 	slot0._dailyReleasePackageCfg = nil
+	slot0._storeMonthAddCfg = nil
 	slot0._preGoodsIdDict = nil
 	slot0._roomProduct2GoodsId = {}
 	slot0._configPriceKey = "price"
@@ -40,7 +41,8 @@ function slot0.reqConfigNames(slot0)
 		"store_charge_goods",
 		"month_card",
 		"slow_release_gift",
-		"store_charge_optional"
+		"store_charge_optional",
+		"month_card_added"
 	}
 end
 
@@ -65,6 +67,8 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 		slot0._dailyReleasePackageCfg = slot2
 	elseif slot1 == "store_charge_optional" then
 		slot0._chargeOptionalConfig = slot2
+	elseif slot1 == "month_card_added" then
+		slot0._storeMonthAddCfg = slot2
 	end
 end
 
@@ -266,6 +270,10 @@ function slot0.getTabHierarchy(slot0, slot1)
 end
 
 function slot0.getMonthCardConfig(slot0, slot1)
+	if slot1 == StoreEnum.LittleMonthCardGoodsId and slot0._storeMonthAddCfg.configDict[slot1] ~= nil then
+		return slot0._monthCardConfig.configDict[slot2.month_id]
+	end
+
 	return slot0._monthCardConfig.configDict[slot1]
 end
 
@@ -393,6 +401,10 @@ function slot0.getChargeOptionalGroup(slot0, slot1)
 	end
 
 	return slot2
+end
+
+function slot0.getMonthCardAddConfig(slot0, slot1)
+	return slot0._storeMonthAddCfg.configDict[slot1]
 end
 
 slot0.instance = slot0.New()

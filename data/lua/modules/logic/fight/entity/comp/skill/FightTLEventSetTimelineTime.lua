@@ -5,12 +5,12 @@ slot0 = class("FightTLEventSetTimelineTime")
 function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	slot5 = tonumber(slot3[1])
 
-	if FightEntityModel.instance:getById(slot1.fromId) and #string.splitToNumber(slot3[2], "#") > 0 then
-		slot8 = slot6.buffModel
+	if FightDataHelper.entityMgr:getById(slot1.fromId) and #string.splitToNumber(slot3[2], "#") > 0 then
+		for slot11, slot12 in ipairs(slot7) do
+			slot17 = slot6
 
-		for slot12, slot13 in ipairs(slot7) do
-			for slot17, slot18 in ipairs(slot8:getList()) do
-				if slot18.buffId == slot13 then
+			for slot16, slot17 in pairs(slot6.getBuffDic(slot17)) do
+				if slot17.buffId == slot12 then
 					slot5 = false
 
 					break

@@ -21,11 +21,13 @@ end
 function slot0.addEvents(slot0)
 	NavigateMgr.instance:addSpace(ViewName.ExploreInteractView, slot0.onClickFull, slot0)
 	slot0._btnfullscreen:AddClickListener(slot0.onClickFull, slot0)
+	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	NavigateMgr.instance:removeSpace(ViewName.ExploreInteractView)
 	slot0._btnfullscreen:RemoveClickListener()
+	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0.onClickFull(slot0)
@@ -79,6 +81,10 @@ function slot0.onStep(slot0)
 	end
 
 	slot2 = string.gsub(slot1.desc, " ", " ")
+
+	if LangSettings.instance:isEn() then
+		slot2 = slot1.desc
+	end
 
 	if not slot0._hasIconDialogItem then
 		slot0._hasIconDialogItem = MonoHelper.addLuaComOnceToGo(slot0.viewGO, TMPFadeIn)
@@ -143,6 +149,16 @@ function slot0._createItem(slot0, slot1, slot2, slot3)
 
 	slot0:removeClickCb(slot6)
 	slot0:addClickCb(slot6, slot0.onBtnClick, slot0, slot2)
+
+	if gohelper.findChild(slot1, "#go_pcbtn") then
+		PCInputController.instance:showkeyTips(slot7, nil, , slot3)
+	end
+end
+
+function slot0.OnStoryDialogSelect(slot0, slot1)
+	if slot1 <= #slot0._btnDatas and slot1 > 0 then
+		slot0:onBtnClick(slot0._btnDatas[slot1])
+	end
 end
 
 function slot0.onBtnClick(slot0, slot1)

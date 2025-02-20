@@ -93,9 +93,10 @@ function slot0._refreshView(slot0)
 		return
 	end
 
-	slot10 = "#"
+	slot10 = "|"
+	slot11 = "#"
 
-	for slot10, slot11 in ipairs(GameUtil.splitString2(slot5, true, "|", slot10)) do
+	for slot10, slot11 in ipairs(GameUtil.splitString2(slot5, true, slot10, slot11)) do
 		if lua_rule.configDict[slot11[2]] then
 			slot0:_setRuleDescItem(slot14, slot11[1])
 		end

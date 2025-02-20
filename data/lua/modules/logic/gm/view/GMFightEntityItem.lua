@@ -27,20 +27,22 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	slot0._icon:UnLoadImage()
 
+	slot2 = slot0._mo:isMonster() and lua_monster.configDict[slot0._mo.modelId] or lua_character.configDict[slot0._mo.modelId]
+
 	if slot0._mo:isCharacter() then
-		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO((slot0._mo:isMonster() and lua_monster.configDict[slot0._mo.modelId] or lua_character.configDict[slot0._mo.modelId]).skinId).retangleIcon))
+		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot1.originSkin).retangleIcon))
 	elseif slot0._mo:isMonster() then
 		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot3.headIcon))
 
 		slot0._imgIcon.enabled = true
 	end
 
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot2.career))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot1.career))
 
 	slot4 = slot0._mo:isCharacter()
-	slot7 = FightEntityModel.instance:getDeadModel(slot0._mo.side):getById(slot0._mo.id) ~= nil
+	slot7 = FightDataHelper.entityMgr:isDeadUid(slot0._mo.id)
 	slot8 = slot0._mo.side == FightEnum.EntitySide.MySide
-	slot0._txtName.text = string.format("%s--%s", FightEntityModel.instance:getSpModel(slot0._mo.side):getById(slot0._mo.id) ~= nil and "特殊怪" or (FightEntityModel.instance:getSubModel(slot0._mo.side):getById(slot0._mo.id) ~= nil and "<color=#FFA500>替补</color>" or "") .. (slot4 and "角色" or "怪物"), slot0._mo:getEntityName())
+	slot0._txtName.text = string.format("%s--%s", FightDataHelper.entityMgr:isSp(slot0._mo.id) and "特殊怪" or (FightDataHelper.entityMgr:isSub(slot0._mo.id) and "<color=#FFA500>替补</color>" or "") .. (slot4 and "角色" or "怪物"), slot0._mo:getEntityName())
 	slot0._txtId.text = "ID" .. tostring(slot0._mo.id)
 	slot0._txtUid.text = "UID" .. tostring(slot0._mo.modelId)
 	slot10 = slot7 and "#AAAAAA" or slot4 and "#539450" or "#9C4F30"

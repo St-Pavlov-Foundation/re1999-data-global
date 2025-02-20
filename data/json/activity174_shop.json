@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "activityId": 12304,
+    "season": 1,
+    "level": 1,
+    "name": "language_10058321"
+  },
+  {
+    "id": 2,
+    "activityId": 12304,
+    "season": 1,
+    "level": 2,
+    "name": "language_10058322"
+  },
+  {
+    "id": 3,
+    "activityId": 12304,
+    "season": 1,
+    "level": 3,
+    "name": "language_10058323"
+  },
+  {
+    "id": 4,
+    "activityId": 12304,
+    "season": 2,
+    "level": 1,
+    "name": "language_10058321"
+  },
+  {
+    "id": 5,
+    "activityId": 12304,
+    "season": 2,
+    "level": 2,
+    "name": "language_10058322"
+  },
+  {
+    "id": 6,
+    "activityId": 12304,
+    "season": 2,
+    "level": 3,
+    "name": "language_10058323"
+  },
+  {
+    "id": 7,
+    "activityId": 12304,
+    "season": 3,
+    "level": 1,
+    "name": "language_10058321"
+  },
+  {
+    "id": 8,
+    "activityId": 12304,
+    "season": 3,
+    "level": 2,
+    "name": "language_10058322"
+  },
+  {
+    "id": 9,
+    "activityId": 12304,
+    "season": 3,
+    "level": 3,
+    "name": "language_10058323"
+  }
+]

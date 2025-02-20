@@ -140,7 +140,6 @@ function slot0.getChessItemGo(slot0, slot1, slot2, slot3)
 		end, function (slot0)
 			if not gohelper.isNil(slot0) then
 				gohelper.setActiveCanvasGroup(slot0, false)
-				gohelper.destroy(slot0)
 			end
 		end, function (slot0)
 			if not gohelper.isNil(slot0) then
@@ -209,8 +208,9 @@ function slot0.clear(slot0)
 	slot0._gochessBoard = nil
 	slot0._gochessBg = nil
 	slot0._gochessBoardBg = nil
-	slot0._chessboard = {}
-	slot0._chess = {}
+
+	tabletool.clear(slot0._chess)
+	tabletool.clear(slot0._chessboard)
 end
 
 slot0.instance = slot0.New()

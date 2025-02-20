@@ -7185,6 +7185,321 @@
     "bankName": "ui_activity_2_2_youyu_yure"
   },
   {
+    "id": 20230001,
+    "eventName": "play_activitymusic_theme_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 20230002,
+    "eventName": "play_activitymusic_seasonmain_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 20230003,
+    "eventName": "play_ui_tower_music_main",
+    "bankName": "tower_2_3_music"
+  },
+  {
+    "id": 20230004,
+    "eventName": "play_activitymusic_rally_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 20230005,
+    "eventName": "play_plot_music_dailyemotion",
+    "bankName": "plot_music_dailyemotion"
+  },
+  {
+    "id": 20230006,
+    "eventName": "play_battle_shenghuo_2_3_normalfight",
+    "bankName": "activtiy_shenghuo_combataudio"
+  },
+  {
+    "id": 20230007,
+    "eventName": "play_replay_music_theme_2_3",
+    "bankName": "ui_replay_mainmusic2_3"
+  },
+  {
+    "id": 20230008,
+    "eventName": "play_replay_music_seasonmain_2_3",
+    "bankName": "ui_replay_mainmusic2_3"
+  },
+  {
+    "id": 20230009,
+    "eventName": "play_replay_music_towermain_2_3",
+    "bankName": "ui_replay_mainmusic2_3"
+  },
+  {
+    "id": 20230010,
+    "eventName": "play_home_build_dudugu",
+    "bankName": "home_build_dudugu_2_3"
+  },
+  {
+    "id": 20230011,
+    "eventName": "play_ui_shenghuo_open_1",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20230012,
+    "eventName": "play_ui_shenghuo_open_2",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20231001,
+    "eventName": "play_ui_fate_slots_unlock",
+    "bankName": "ui_fate_2_3"
+  },
+  {
+    "id": 20231002,
+    "eventName": "play_ui_molu_sky_open",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 20231003,
+    "eventName": "play_ui_leimi_smalluncharted_refresh",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20231004,
+    "eventName": "play_ui_inking_preference_open",
+    "bankName": "ui_inking"
+  },
+  {
+    "id": 20231005,
+    "eventName": "play_ui_fate_slots_charged",
+    "bankName": "ui_fate_2_3"
+  },
+  {
+    "id": 20231006,
+    "eventName": "play_ui_fate_slots_full",
+    "bankName": "ui_fate_2_3"
+  },
+  {
+    "id": 20231007,
+    "eventName": "play_ui_fate_lifestone_unlock",
+    "bankName": "ui_fate_2_3"
+  },
+  {
+    "id": 20231008,
+    "eventName": "play_ui_resonate_property_click",
+    "bankName": "ui_resonate"
+  },
+  {
+    "id": 20231009,
+    "eventName": "play_ui_fate_runes_put",
+    "bankName": "ui_fate_2_3"
+  },
+  {
+    "id": 20231010,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20232001,
+    "eventName": "play_ui_fight_starlight",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232002,
+    "eventName": "play_ui_fight_chant",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232003,
+    "eventName": "play_ui_fight_task_entry",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232004,
+    "eventName": "play_ui_fight_bubbles",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232005,
+    "eventName": "play_ui_fight_tab_switch",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232006,
+    "eventName": "play_ui_fight_ripple",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232007,
+    "eventName": "play_ui_fight_ripple_entry",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232008,
+    "eventName": "play_ui_fight_complete",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232009,
+    "eventName": "play_ui_fight_award",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232010,
+    "eventName": "play_ui_fight_single_star",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232011,
+    "eventName": "play_ui_fight_boss_swtich",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232012,
+    "eventName": "play_ui_fight_explore",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232013,
+    "eventName": "play_ui_fight_level_up",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232014,
+    "eventName": "play_ui_fight_ui_appear",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232015,
+    "eventName": "play_ui_fight_card_flip",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232016,
+    "eventName": "play_ui_fight_enter_talent_tree",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20232017,
+    "eventName": "play_ui_fight_talent_light",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 20233001,
+    "eventName": "play_ui_shenghuo_dqq_fight_end",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233002,
+    "eventName": "play_ui_shenghuo_dqq_lose",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233003,
+    "eventName": "play_ui_shenghuo_dqq_draw",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233004,
+    "eventName": "play_ui_shenghuo_dqq_win",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233005,
+    "eventName": "play_ui_shenghuo_dqq_fight_result",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233006,
+    "eventName": "play_ui_shenghuo_dqq_match_start",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233007,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20233008,
+    "eventName": "play_ui_shuori_qiyuan_reset",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 20233009,
+    "eventName": "play_artificial_ui_carddisappear",
+    "bankName": "artificial_ui"
+  },
+  {
+    "id": 20233010,
+    "eventName": "play_ui_shenghuo_dqq_match_success",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233011,
+    "eventName": "play_ui_shenghuo_dqq_dice",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233012,
+    "eventName": "play_ui_shuori_qiyuan_down",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 20233013,
+    "eventName": "play_artificial_buff_curses_up",
+    "bankName": "artificial_buff"
+  },
+  {
+    "id": 20233014,
+    "eventName": "play_ui_home_door_effect_put",
+    "bankName": "home"
+  },
+  {
+    "id": 20233015,
+    "eventName": "play_ui_home_door_effect_move",
+    "bankName": "home"
+  },
+  {
+    "id": 20233016,
+    "eventName": "stop_ui_shenghuo_dqq_match_success",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20233017,
+    "eventName": "play_ui_shenghuo_dqq_move",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 20234001,
+    "eventName": "play_ui_shenghuo_discovery_amb",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20234002,
+    "eventName": "play_ui_shenghuo_building_collect",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20234003,
+    "eventName": "play_ui_shenghuo_preheat_amb",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20234004,
+    "eventName": "play_ui_shenghuo_rudder_turn_loop",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20234005,
+    "eventName": "stop_ui_shenghuo_rudder_turn_loop",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20234006,
+    "eventName": "play_ui_shenghuo_rudder_reset",
+    "bankName": "ui_activity_2_3_shenghuo"
+  },
+  {
+    "id": 20260901,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
     "id": 20240052,
     "eventName": "play_ui_diqiu_xueye_open",
     "bankName": "ui_activity_2_4_diqiu"
@@ -7203,15 +7518,5 @@
     "id": 20240055,
     "eventName": "play_ui_common_click",
     "bankName": "uiclick"
-  },
-  {
-    "id": 20234001,
-    "eventName": "play_ui_shenghuo_discovery_amb",
-    "bankName": "ui_activity_2_3_shenghuo"
-  },
-  {
-    "id": 20234002,
-    "eventName": "play_ui_shenghuo_building_collect",
-    "bankName": "ui_activity_2_3_shenghuo"
   }
 ]

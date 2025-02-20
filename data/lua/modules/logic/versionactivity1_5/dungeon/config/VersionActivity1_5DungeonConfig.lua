@@ -57,8 +57,9 @@ function slot0.initSubHeroTaskCo(slot0)
 		slot8.elementList = string.splitToNumber(slot6.elementIds, "#")
 		slot8.srcCo = slot6
 		slot8.id = slot6.id
+		slot12 = slot8
 
-		table.insert(slot7, slot8)
+		table.insert(slot7, slot12)
 
 		for slot12, slot13 in ipairs(slot8.elementList) do
 			slot0.subHeroTaskElementIdDict[slot13] = slot8
@@ -100,8 +101,9 @@ function slot0.initExploreTaskCo(slot0)
 		slot8 = string.splitToNumber(slot6.areaPos, "#")
 		slot7.areaPosX = slot8[1]
 		slot7.areaPosY = slot8[2]
+		slot12 = slot7
 
-		table.insert(slot0.exploreTaskCoList, slot7)
+		table.insert(slot0.exploreTaskCoList, slot12)
 
 		slot0.exploreTaskCoDict[slot6.id] = slot7
 

@@ -45,9 +45,10 @@ function slot0._OnRemoveElement(slot0, slot1)
 	slot0._rewardPoint = nil
 
 	if not string.nilorempty(DungeonModel.instance:getMapElementReward(slot1)) then
+		slot9 = "#"
 		slot5 = {}
 
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot3, false, "|", "#")) do
+		for slot9, slot10 in ipairs(GameUtil.splitString2(slot3, false, "|", slot9)) do
 			slot11 = MaterialDataMO.New()
 
 			slot11:initValue(slot10[1], slot10[2], slot10[3])

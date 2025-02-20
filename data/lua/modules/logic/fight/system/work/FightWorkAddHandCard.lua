@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkAddHandCard", package.seeall)
 slot0 = class("FightWorkAddHandCard", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return
@@ -17,7 +17,7 @@ function slot0.onStart(slot0)
 	if slot0._actEffectMO.cardInfo.skillId == 0 then
 		slot2 = ""
 
-		if FightDataMgr.instance:getEntityMO(slot0._actEffectMO.cardInfo.uid) then
+		if FightLocalDataMgr.instance:getEntityById(slot0._actEffectMO.cardInfo.uid) then
 			slot2 = slot3:getEntityName() or ""
 		end
 

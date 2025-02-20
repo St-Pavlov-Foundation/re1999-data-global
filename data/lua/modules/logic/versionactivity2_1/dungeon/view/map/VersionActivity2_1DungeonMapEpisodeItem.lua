@@ -277,9 +277,9 @@ function slot0.refreshUnlockContent(slot0)
 end
 
 function slot0.refreshHardModeStar(slot0)
-	slot4 = slot0._config.id
+	slot4 = slot0.starItemList[1]
 
-	slot0:refreshEpisodeStar(slot0.starItemList[1], slot4)
+	slot0:refreshEpisodeStar(slot4, slot0._config.id)
 
 	for slot4 = 2, #slot0.starItemList do
 		gohelper.setActive(slot0.starItemList[slot4].goStar, false)

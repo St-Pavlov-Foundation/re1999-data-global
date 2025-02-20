@@ -245,8 +245,11 @@ function slot0._refreshUI(slot0)
 	slot0.hero_id = slot0.viewParam.heroid
 	slot0.hero_mo_data = HeroModel.instance:getByHeroId(slot0.hero_id)
 	slot0._mainCubeId = slot0.hero_mo_data.talentCubeInfos.own_main_cube_id
+	slot4 = CharacterModel.instance
+	slot6 = slot4
+	slot7 = slot0.hero_id
 
-	gohelper.setActive(slot0._gotalentreddot, CharacterModel.instance:heroTalentRedPoint(slot0.hero_id))
+	gohelper.setActive(slot0._gotalentreddot, slot4.heroTalentRedPoint(slot6, slot7))
 
 	slot2 = {}
 
@@ -347,10 +350,10 @@ function slot0._setChessboardData(slot0)
 		slot6.is_filled = false
 	end
 
-	slot5 = slot0.cube_data
-	slot6 = slot0._gochessContainer
+	slot5 = slot0._onCubeItemShow
+	slot6 = slot0.cube_data
 
-	gohelper.CreateObjList(slot0, slot0._onCubeItemShow, slot5, slot6, slot0._gochessitem)
+	gohelper.CreateObjList(slot0, slot5, slot6, slot0._gochessContainer, slot0._gochessitem)
 
 	for slot5, slot6 in ipairs(slot0._rabbet_cell_list) do
 		slot6:SetNormal()

@@ -7,15 +7,17 @@ function slot0.onStart(slot0)
 		slot2 = {
 			[ResUrl.getSpineFightPrefabBySkin(FightConfig.instance:getSkinCO(slot7.skin))] = true
 		}
-		slot6 = FightEnum.EntitySide.MySide
+		slot5 = FightDataHelper.entityMgr
+		slot7 = slot5
 
-		for slot6, slot7 in ipairs(FightEntityModel.instance:getModel(slot6):getList()) do
+		for slot6, slot7 in ipairs(slot5.getNormalList(slot7, FightEnum.EntitySide.MySide)) do
 			-- Nothing
 		end
 
-		slot6 = FightEnum.EntitySide.MySide
+		slot5 = FightDataHelper.entityMgr
+		slot7 = slot5
 
-		for slot6, slot7 in ipairs(FightEntityModel.instance:getSubModel(slot6):getList()) do
+		for slot6, slot7 in ipairs(slot5.getMySubList(slot7)) do
 			slot2[ResUrl.getSpineFightPrefabBySkin(FightConfig.instance:getSkinCO(slot7.skin))] = true
 		end
 

@@ -430,5 +430,53 @@
     "skinIds": "610401",
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
+  },
+  {
+    "activityId": 12313,
+    "stage": 1,
+    "name": "language_10006087",
+    "name_en": "Darkness of the Abyss",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a4_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a4_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a4_bossrush_bossname_1",
+    "skinIds": "620207#620304#620208",
+    "skinScales": "0.7#0.8#1",
+    "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
+  },
+  {
+    "activityId": 12313,
+    "stage": 2,
+    "name": "language_10054354",
+    "name_en": "Fog of War",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v2a2_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v2a2_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v2a2_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v2a2_bossrush_bossname_1",
+    "skinIds": "610302",
+    "skinScales": "0.85#0.85",
+    "skinOffsetXYs": "-420#-330"
+  },
+  {
+    "activityId": 12313,
+    "stage": 3,
+    "name": "language_10027236",
+    "name_en": "Projection of Nightmare",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a6_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a6_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a6_bossrush_bossname_1",
+    "skinIds": "680403#680404#680401#680402",
+    "skinScales": "1#1#1#1",
+    "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   }
 ]

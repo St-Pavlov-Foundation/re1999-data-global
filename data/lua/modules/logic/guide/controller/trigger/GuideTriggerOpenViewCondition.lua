@@ -27,4 +27,20 @@ function slot0.checkInEliminateEpisode(slot0)
 	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(slot0)
 end
 
+function slot0.checkTowerMopUpOpen()
+	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)) <= TowerPermanentModel.instance:getCurPermanentPassLayer()
+end
+
+function slot0.checkTowerBossOpen()
+	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)) <= TowerPermanentModel.instance:getCurPermanentPassLayer()
+end
+
+function slot0.checkTowerLimitOpen()
+	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)) <= TowerPermanentModel.instance:getCurPermanentPassLayer() and TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() ~= nil
+end
+
+function slot0.checkTowerPermanentElite()
+	return TowerPermanentModel.instance:checkNewLayerIsElite()
+end
+
 return slot0

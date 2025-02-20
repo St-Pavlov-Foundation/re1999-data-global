@@ -73,6 +73,7 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 end
 
 function slot0._onLongClick(slot0)
+	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessView, slot0._soliderId, nil, , EliminateTeamChessEnum.ChessTipType.showDesc, slot0, {
 		soliderTipOffsetX = EliminateTeamChessEnum.soliderItemTipOffsetX,
 		soliderTipOffsetY = EliminateTeamChessEnum.soliderItemTipOffsetY

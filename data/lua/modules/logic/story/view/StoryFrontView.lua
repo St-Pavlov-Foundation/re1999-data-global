@@ -298,7 +298,7 @@ function slot0.onOpen(slot0)
 	else
 		gohelper.setActive(slot0._gobtnleft, true)
 		gohelper.setActive(slot0._btnauto, true)
-		gohelper.setActive(slot0._objskip, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.StorySkip) or StoryController.instance:isReplay() or isDebugBuild)
+		gohelper.setActive(slot0._objskip, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.StorySkip) or StoryController.instance:isReplay() or isDebugBuild or StoryModel.instance:isDirectSkipStory(StoryController.instance._curStoryId))
 	end
 
 	slot0:refreshExitBtn()

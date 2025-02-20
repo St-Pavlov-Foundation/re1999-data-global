@@ -660,7 +660,8 @@ function slot0._initPlanetsAngles(slot0)
 end
 
 function slot0._initModel(slot0)
-	slot0._modelCamera = gohelper.findChild(slot0._gomodel, "cam"):GetComponent("Camera")
+	slot5 = "Camera"
+	slot0._modelCamera = gohelper.findChild(slot0._gomodel, "cam"):GetComponent(slot5)
 	slot0._modelPlanetList = slot0:getUserDataTb_()
 	slot0._modelPlanetPosList = slot0:getUserDataTb_()
 	slot0._modelPlanetRotationList = slot0:getUserDataTb_()
@@ -684,7 +685,10 @@ end
 
 function slot0.onClose(slot0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	UIBlockMgr.instance:endBlock("AstrologyDelayShowReply")
+
+	slot4 = "AstrologyDelayShowReply"
+
+	UIBlockMgr.instance:endBlock(slot4)
 
 	for slot4, slot5 in pairs(slot0._tweenList) do
 		if slot5.tweenId then

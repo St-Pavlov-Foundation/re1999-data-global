@@ -119,7 +119,7 @@ function slot0._delayStartAll(slot0)
 	if slot0._hasStopMainBgm and GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 		slot0._hasStopMainBgm = nil
 
-		slot0:checkStartMainBGM()
+		slot0:checkStartMainBGM(true)
 		WeatherController.instance:playWeatherAudio()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Replay_Noise_Daytime)
 	end
@@ -127,26 +127,32 @@ end
 
 function slot0.startAllOnLogin(slot0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
-		slot0:checkStartMainBGM()
+		slot0:checkStartMainBGM(true)
 		WeatherController.instance:playWeatherAudio()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Replay_Noise_Daytime)
 	end
 end
 
-function slot0.checkStartMainBGM(slot0)
+function slot0.checkStartMainBGM(slot0, slot1)
 	TaskDispatcher.cancelTask(slot0._delayStartAll, slot0)
 
-	if slot0:getBgmAudioId() then
-		slot0:playMainBgm(slot1)
+	slot2 = slot0:getBgmAudioId()
+
+	if not slot1 and slot2 == slot0._mainAudioId then
+		return
+	end
+
+	if slot2 then
+		slot0:playMainBgm(slot2, slot1)
 	end
 
 	if isDebugBuild then
-		slot5 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot0._preAudioId)
+		slot6 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot0._preAudioId)
 
 		logNormal("track checkStartMainBGM: " .. cjson.encode({
-			[StatEnum.EventProperties.AudioId] = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot1) and tostring(slot4.id) or nil,
-			[StatEnum.EventProperties.AudioName] = slot4 and slot4.audioName or nil,
-			[StatEnum.EventProperties.BeforeSwitchAudio] = slot5 and slot5.audioName or nil,
+			[StatEnum.EventProperties.AudioId] = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot2) and tostring(slot5.id) or nil,
+			[StatEnum.EventProperties.AudioName] = slot5 and slot5.audioName or nil,
+			[StatEnum.EventProperties.BeforeSwitchAudio] = slot6 and slot6.audioName or nil,
 			[StatEnum.EventProperties.OperationType] = "background bgm auto next",
 			[StatEnum.EventProperties.PlayMode] = BGMSwitchModel.instance:getBGMPlayMode() == BGMSwitchEnum.PlayMode.Random and "Random" or "LoopOne",
 			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(BGMSwitchModel.instance:getCurrentServerUsingBgmList())
@@ -154,7 +160,11 @@ function slot0.checkStartMainBGM(slot0)
 	end
 end
 
-function slot0.playMainBgm(slot0, slot1)
+function slot0.playMainBgm(slot0, slot1, slot2)
+	if not slot2 and slot1 == slot0._mainAudioId then
+		return
+	end
+
 	slot0._mainAudioId = slot1
 
 	if not BGMSwitchModel.instance:machineGearIsNeedPlayBgm() then
@@ -164,7 +174,7 @@ function slot0.playMainBgm(slot0, slot1)
 	slot0:stopMainBgm()
 	uv0.instance:resumeMainBgm()
 
-	slot0._playingId = AudioMgr.instance:trigger(slot1)
+	slot0._playingId = AudioMgr.instance:triggerEx(slot1, 1048576)
 	slot0._preAudioId = slot1
 
 	slot0._bgmProgress:playMainBgm(slot1)
@@ -198,7 +208,7 @@ function slot0.backMainBgm(slot0)
 	end
 
 	if slot0:getBgmAudioId() and slot0._preAudioId ~= slot1 then
-		slot0:playMainBgm(slot1)
+		slot0:playMainBgm(slot1, true)
 	end
 end
 

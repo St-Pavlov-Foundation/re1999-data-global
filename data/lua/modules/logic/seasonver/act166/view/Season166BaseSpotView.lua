@@ -110,9 +110,10 @@ end
 
 function slot0.refreshScoreInfo(slot0)
 	slot0._txtscore.text = Season166BaseSpotModel.instance:getBaseSpotMaxScore(slot0.actId, slot0.baseId)
+	slot7 = slot0.baseId
 
 	for slot7, slot8 in ipairs(slot0.starTab) do
-		gohelper.setActive(slot8.go, slot7 <= #Season166Config.instance:getSeasonBaseLevelCos(slot0.actId, slot0.baseId))
+		gohelper.setActive(slot8.go, slot7 <= #Season166Config.instance:getSeasonBaseLevelCos(slot0.actId, slot7))
 		gohelper.setActive(slot8.imageStar.gameObject, slot7 <= Season166BaseSpotModel.instance:getStarCount(slot0.actId, slot0.baseId))
 		UISpriteSetMgr.instance:setSeason166Sprite(slot8.imageStar, slot0.finalLevelScore <= slot1 and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2")
 	end

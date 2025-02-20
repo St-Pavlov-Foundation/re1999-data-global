@@ -148,7 +148,7 @@ function slot0._setOutlineWidth(slot0, slot1)
 	end
 
 	if slot2 then
-		slot4 = FightEntityModel.instance:getById(slot1) and slot3.skin and lua_monster_skin.configDict[slot3.skin]
+		slot4 = FightDataHelper.entityMgr:getById(slot1) and slot3.skin and lua_monster_skin.configDict[slot3.skin]
 
 		if slot4 and slot4.outlineWidth and slot5 > 0 then
 			slot2:SetFloat(uv0, slot5)

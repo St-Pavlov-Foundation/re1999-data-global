@@ -90,7 +90,10 @@ end
 
 function slot0.isUnlock(slot0, slot1)
 	if slot0._all then
-		for slot5, slot6 in ipairs(slot0._all:getList()) do
+		slot4 = slot0._all
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getList(slot6)) do
 			if slot6.id == slot1 then
 				return true
 			end

@@ -15,6 +15,7 @@ function slot0.onBuffStart(slot0, slot1, slot2)
 
 	if lua_buff_act.configDict[FightStrUtil.instance:getSplitToNumberCache(slot3, "#")[1]] and slot6.type == FightEnum.BuffType_ExPointOverflowBank and slot1:getMO() then
 		slot7:setStoredExPoint(slot4[2])
+		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, slot7.id, slot7:getStoredExPoint())
 	end
 end
 
@@ -25,6 +26,7 @@ function slot0.onBuffEnd(slot0)
 
 	if slot0.entity:getMO() then
 		slot1:setStoredExPoint(0)
+		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, slot1.id, slot1:getStoredExPoint())
 	end
 end
 

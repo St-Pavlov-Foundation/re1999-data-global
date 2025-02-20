@@ -53,6 +53,8 @@ function slot0.init(slot0, slot1)
 
 	slot0._txtcontentmagic = gohelper.findChildText(slot0._magicDiaGO, "txt_contentmagic")
 	slot0._gofirework = gohelper.findChild(slot0._magicDiaGO, "txt_contentmagic/go_firework")
+	slot0._txtcontentreshapemagic = gohelper.findChildText(slot0._magicDiaGO, "txt_contentreshapemagic")
+	slot0._goreshapefirework = gohelper.findChild(slot0._magicDiaGO, "txt_contentreshapemagic/go_reshapefirework")
 
 	slot0:_showMagicItem(false)
 
@@ -73,12 +75,26 @@ function slot0.init(slot0, slot1)
 end
 
 function slot0._loadRes(slot0)
-	slot0._effLoader = PrefabInstantiate.Create(slot0._gofirework)
+	slot0._magicFirePath = ResUrl.getEffect("story/story_magicfont_particle")
+	slot0._reshapeMagicFirePath = ResUrl.getEffect("story/story_magicfont_particle_dark")
+	slot0._effLoader = MultiAbLoader.New()
 
-	slot0._effLoader:startLoad(ResUrl.getEffect("story/story_magicfont_particle"), function ()
-		uv0._fireworkGo = uv0._effLoader:getInstGO()
-		uv0._fireworkAnimator = uv0._fireworkGo:GetComponent(typeof(UnityEngine.Animator))
-	end)
+	slot0._effLoader:addPath(slot0._magicFirePath)
+	slot0._effLoader:addPath(slot0._reshapeMagicFirePath)
+	slot0._effLoader:startLoad(slot0._magicFireEffectLoaded, slot0)
+end
+
+function slot0._magicFireEffectLoaded(slot0, slot1)
+	slot0._magicFireGo = gohelper.clone(slot1:getAssetItem(slot0._magicFirePath):GetResource(slot0._magicFirePath), slot0._gofirework)
+
+	gohelper.setActive(slot0._magicFireGo, false)
+
+	slot0._magicFireAnim = slot0._magicFireGo:GetComponent(typeof(UnityEngine.Animator))
+	slot0._reshapeMagicFireGo = gohelper.clone(slot1:getAssetItem(slot0._reshapeMagicFirePath):GetResource(slot0._reshapeMagicFirePath), slot0._goreshapefirework)
+
+	gohelper.setActive(slot0._reshapeMagicFireGo, false)
+
+	slot0._reshapeMagicFireAnim = slot0._reshapeMagicFireGo:GetComponent(typeof(UnityEngine.Animator))
 end
 
 function slot0._addEvent(slot0)
@@ -142,8 +158,10 @@ function slot0.hideDialog(slot0)
 	slot4, slot5, slot6 = transformhelper.getLocalPos(slot0._txtcontentmagic.transform)
 
 	transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot4, slot5, 1)
+	transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot4, slot5, 1)
 
 	slot0._txtcontentmagic.text = ""
+	slot0._txtcontentreshapemagic.text = ""
 end
 
 function slot0.playDialog(slot0, slot1, slot2, slot3, slot4)
@@ -161,7 +179,7 @@ function slot0.playDialog(slot0, slot1, slot2, slot3, slot4)
 	gohelper.setActive(slot0._goconversation, true)
 	gohelper.setActive(slot0._gonexticon, true)
 
-	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic then
+	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 		slot0:playMagicText(slot6, slot3, slot4)
 	else
 		slot0:playNormalText(slot6, slot3, slot4)
@@ -202,14 +220,20 @@ function slot0.playMagicText(slot0, slot1, slot2, slot3)
 	slot0._finishCallback = slot2
 	slot0._finishCallbackObj = slot3
 	slot0._txtcontentmagic.text = slot0._txt
+	slot0._txtcontentreshapemagic.text = slot0._txt
 	slot4, slot5, slot6 = transformhelper.getLocalPos(slot0._txtcontentmagic.transform)
 
 	transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot4, slot5, 1)
+	transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot4, slot5, 1)
 
 	slot0._magicConTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, slot0:_getMagicWordShowTime(slot1), slot0._magicConUpdate, slot0._onMagicTextFinished, slot0, nil, EaseType.Linear)
 
-	slot0._fireworkAnimator:Play("story_magicfont_particle")
-	gohelper.setActive(slot0._fireworkGo, true)
+	slot0._magicFireAnim:Play("story_magicfont_particle")
+	slot0._reshapeMagicFireAnim:Play("story_magicfont_particle")
+	gohelper.setActive(slot0._magicFireGo, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
+	gohelper.setActive(slot0._reshapeMagicFireGo, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+	gohelper.setActive(slot0._txtcontentmagic.gameObject, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
+	gohelper.setActive(slot0._txtcontentreshapemagic, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 
 	if slot0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
 		slot0:_playConAudio()
@@ -218,7 +242,8 @@ function slot0.playMagicText(slot0, slot1, slot2, slot3)
 	end
 
 	if slot7 > 0 then
-		slot0._fireworkAnimator.speed = 1 / slot7
+		slot0._magicFireAnim.speed = 1 / slot7
+		slot0._reshapeMagicFireAnim.speed = 1 / slot7
 	end
 end
 
@@ -241,7 +266,7 @@ function slot0._getMagicWordShowTime(slot0, slot1)
 end
 
 function slot0._magicConUpdate(slot0, slot1)
-	if slot1 > (recthelper.getWidth(slot0._txtcontentmagic.gameObject.transform) + 100) / 2215 and slot2 > 1 then
+	if slot1 > ((slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.getWidth(slot0._txtcontentmagic.gameObject.transform) or recthelper.getWidth(slot0._txtcontentreshapemagic.gameObject.transform)) + 100) / 2215 and slot2 > 1 then
 		if slot0._magicConTweenId then
 			ZProj.TweenHelper.KillById(slot0._magicConTweenId)
 
@@ -253,28 +278,41 @@ function slot0._magicConUpdate(slot0, slot1)
 		return
 	end
 
+	slot3 = 1107.5
 	slot4, slot5, slot6 = transformhelper.getLocalPos(slot0._txtcontentmagic.transform)
+
+	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+		slot4, slot5, slot6 = transformhelper.getLocalPos(slot0._txtcontentreshapemagic.transform)
+	end
+
 	slot7 = UnityEngine.Screen.width
 	slot8 = UnityEngine.Screen.height
 	slot9 = 0
 	slot10 = 1920
 	slot11 = transformhelper.getLocalPos(slot0._contentGO.transform)
-	slot12 = ((slot7 / slot8 >= 1.7777777777777777 and 0.5 * (1080 * slot7 / slot8 - 1920) + 960 + slot11 or 960 - 0.5 * (1920 - 1080 * slot7 / slot8) + slot11) + slot1 * (1107.5 + 10)) / (1920 * 1080 * slot7 / (1920 * slot8))
+	slot12 = ((slot7 / slot8 >= 1.7777777777777777 and 0.5 * (1080 * slot7 / slot8 - 1920) + 960 + slot11 or 960 - 0.5 * (1920 - 1080 * slot7 / slot8) + slot11) + slot1 * (slot3 + 10)) / (1920 * 1080 * slot7 / (1920 * slot8))
+	slot13 = slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.uiPosToScreenPos(slot0._txtcontentmagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y or recthelper.uiPosToScreenPos(slot0._txtcontentreshapemagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y
+	slot14 = slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.screenPosToAnchorPos(Vector2(slot12 * slot7, slot13), slot0._gofirework.transform) or recthelper.screenPosToAnchorPos(Vector2(slot12 * slot7, slot13), slot0._goreshapefirework.transform)
 
-	transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot4, slot5, 1 - slot12)
-
-	slot14 = recthelper.screenPosToAnchorPos(Vector2(slot12 * slot7, recthelper.uiPosToScreenPos(slot0._txtcontentmagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y), slot0._gofirework.transform)
-
-	transformhelper.setLocalPos(slot0._fireworkGo.transform, slot14.x, slot14.y, 0)
+	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic then
+		transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot4, slot5, 1 - slot12)
+		transformhelper.setLocalPos(slot0._magicFireGo.transform, slot14.x, slot14.y, 0)
+	else
+		transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot4, slot5, 1 - slot12)
+		transformhelper.setLocalPos(slot0._reshapeMagicFireGo.transform, slot14.x, slot14.y, 0)
+	end
 end
 
 function slot0._magicConFinished(slot0)
 	slot1, slot2, slot3 = transformhelper.getLocalPos(slot0._txtcontentmagic.transform)
 
 	transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot1, slot2, 0)
-	gohelper.setActive(slot0._fireworkGo, false)
+	transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot1, slot2, 0)
+	gohelper.setActive(slot0._magicFireGo, false)
+	gohelper.setActive(slot0._reshapeMagicFireGo, false)
 
-	slot0._fireworkAnimator.speed = 1
+	slot0._magicFireAnim.speed = 1
+	slot0._reshapeMagicFireAnim.speed = 1
 
 	if slot0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or slot0._stepCo.conversation.type == StoryEnum.ConversationType.None then
 		return
@@ -311,6 +349,7 @@ function slot0.playNormalText(slot0, slot1, slot2, slot3)
 	slot0._subemtext = StoryTool.filterMarkTop(slot0._subemtext)
 	slot0._txtcontentcn.text = string.gsub(slot0._subemtext, "(<sprite=%d>)", "")
 	slot0._txtcontentmagic.text = ""
+	slot0._txtcontentreshapemagic.text = ""
 	slot0._txtcontentTmp = slot0._txtcontentcn:GetComponent(typeof(TMPro.TextMeshProUGUI))
 
 	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
@@ -414,14 +453,21 @@ end
 
 function slot0._showMagicItem(slot0, slot1)
 	if slot1 then
-		if slot0._fireworkGo then
+		if slot0._magicFireGo then
 			StoryTool.enablePostProcess(true)
-			gohelper.setActive(slot0._fireworkGo, true)
+			gohelper.setActive(slot0._reshapeMagicFireGo, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+		end
+
+		if slot0._reshapeMagicFireGo then
+			StoryTool.enablePostProcess(true)
+			gohelper.setActive(slot0._reshapeMagicFireGo, slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 		end
 	else
 		slot0._txtcontentmagic.text = ""
+		slot0._txtcontentreshapemagic.text = ""
 
-		gohelper.setActive(slot0._fireworkGo, false)
+		gohelper.setActive(slot0._magicFireGo, false)
+		gohelper.setActive(slot0._reshapeMagicFireGo, false)
 	end
 end
 
@@ -555,9 +601,11 @@ function slot0._onTextFinished(slot0)
 
 	if slot0._magicConTweenId then
 		ZProj.TweenHelper.KillById(slot0._magicConTweenId)
-		gohelper.setActive(slot0._fireworkGo, false)
+		gohelper.setActive(slot0._magicFireGo, false)
+		gohelper.setActive(slot0._reshapeMagicFireGo, false)
 
-		slot0._fireworkAnimator.speed = 1
+		slot0._magicFireAnim.speed = 1
+		slot0._reshapeMagicFireAnim.speed = 1
 		slot0._magicConTweenId = nil
 	end
 
@@ -574,6 +622,7 @@ function slot0._onTextFinished(slot0)
 	slot4, slot5, slot6 = transformhelper.getLocalPos(slot0._txtcontentmagic.transform)
 
 	transformhelper.setLocalPos(slot0._txtcontentmagic.transform, slot4, slot5, 0)
+	transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot4, slot5, 0)
 	slot0._conMat:DisableKeyword("_GRADUAL_ON")
 	slot0._conMat:SetFloat(slot0._LineMinYId, 0)
 	slot0._conMat:SetFloat(slot0._LineMaxYId, 0)
@@ -615,7 +664,7 @@ end
 
 function slot0._onConAudioFinished(slot0, slot1)
 	if slot0._textShowFinished then
-		if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic then
+		if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 			slot0:_magicConFinished()
 		else
 			slot0:conFinished()
@@ -664,7 +713,8 @@ function slot0._conUpdate(slot0, slot1)
 		if slot10[2] <= slot1 and slot1 <= slot13 then
 			slot14 = slot0._textInfo.characterInfo
 			slot16 = slot14[slot11.lastVisibleCharacterIndex]
-			slot17 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot14[slot11.firstVisibleCharacterIndex].bottomLeft))
+			slot23 = slot14[slot11.firstVisibleCharacterIndex].bottomLeft
+			slot17 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot23))
 			slot18 = slot17
 
 			for slot23 = slot11.firstVisibleCharacterIndex, slot11.lastVisibleCharacterIndex do
@@ -674,7 +724,8 @@ function slot0._conUpdate(slot0, slot1)
 			end
 
 			slot18.y = slot19
-			slot20 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot15.topLeft))
+			slot26 = slot15.topLeft
+			slot20 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot26))
 			slot21 = slot20
 
 			for slot26 = slot11.firstVisibleCharacterIndex, slot11.lastVisibleCharacterIndex do
@@ -684,8 +735,8 @@ function slot0._conUpdate(slot0, slot1)
 			end
 
 			slot21.y = slot22
-			slot27 = slot16.bottomRight
-			slot23 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot27))
+			slot28 = slot3
+			slot23 = slot4:WorldToScreenPoint(slot3.TransformPoint(slot28, slot16.bottomRight))
 
 			for slot27, slot28 in pairs(slot0._subMeshs) do
 				if slot28.sharedMaterial then
@@ -748,9 +799,11 @@ function slot0.conFinished(slot0)
 
 	if slot0._magicConTweenId then
 		ZProj.TweenHelper.KillById(slot0._magicConTweenId)
-		gohelper.setActive(slot0._fireworkGo, false)
+		gohelper.setActive(slot0._magicFireGo, false)
+		gohelper.setActive(slot0._reshapeMagicFireGo, false)
 
-		slot0._fireworkAnimator.speed = 1
+		slot0._magicFireAnim.speed = 1
+		slot0._reshapeMagicFireAnim.speed = 1
 		slot0._magicConTweenId = nil
 	end
 
@@ -787,6 +840,7 @@ function slot0.conFinished(slot0)
 		end
 	end
 
+	transformhelper.setLocalPos(slot0._txtcontentreshapemagic.transform, slot4, slot5, 0)
 	slot0._conMat:DisableKeyword("_GRADUAL_ON")
 
 	if slot0._finishCallback then
@@ -814,7 +868,7 @@ end
 
 function slot0.startAutoEnterNext(slot0)
 	if slot0._playingAudioId == 0 and slot0._textShowFinished then
-		if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic then
+		if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 			slot0:_magicConFinished()
 		else
 			slot0:conFinished()

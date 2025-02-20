@@ -16,7 +16,7 @@ function slot0.onStart(slot0)
 		if not slot0.context.oldEntityIdDict or not slot0.context.oldEntityIdDict[slot6.id] then
 			slot7 = true
 
-			if GameSceneMgr.instance:getScene(SceneType.Fight).bossEntityEvolutionMgr and slot9.bossEntityEvolutionMgr:isEvolutionSkin(slot6:getMO().skin) then
+			if FightMsgMgr.sendMsg(FightMsgId.IsEvolutionSkin, slot6:getMO().skin) then
 				slot7 = false
 			end
 

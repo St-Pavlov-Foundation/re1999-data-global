@@ -16,24 +16,16 @@ if SLFramework.FrameworkSettings.IsEditor then
 	end
 end
 
-slot1 = -9999
-
 function slot0.ctor(slot0)
-	slot0.buffModel = BaseModel.New()
+	slot0.buffDic = {}
 	slot0.playCardExPoint = 0
 	slot0.moveCardExPoint = 0
-	slot0._afterUniqueMoveCount = uv0
-	slot0._afterUniqueCombineCount = uv0
 	slot0.skillList = {}
 	slot0.skillId2Lv = {}
 	slot0.skillNextLvId = {}
 	slot0.skillPrevLvId = {}
 	slot0.skillGroup1 = {}
 	slot0.skillGroup2 = {}
-end
-
-function slot0.setIsOnlyData(slot0)
-	slot0.isOnlyData = true
 end
 
 function slot0.init(slot0, slot1, slot2)
@@ -94,6 +86,7 @@ function slot0.init(slot0, slot1, slot2)
 
 	slot0:updateStoredExPoint()
 
+	slot0.status = slot1.status
 	slot0.guard = slot1.guard
 	slot0.subCd = slot1.subCd
 end
@@ -107,29 +100,15 @@ function slot0._buildAttr(slot0, slot1)
 end
 
 function slot0._buildBuffs(slot0, slot1)
-	slot2 = slot0.buffModel:getList()
-	slot3 = {}
+	for slot5, slot6 in ipairs(slot1) do
+		slot7 = FightBuffMO.New()
 
-	tabletool.addValues(slot3, slot1)
+		slot7:init(slot6, slot0.id)
 
-	for slot7, slot8 in ipairs(slot3) do
-		if not slot2[slot7] then
-			table.insert(slot2, FightBuffMO.New())
-		end
-
-		slot9:init(slot8, slot0.id)
+		slot0.buffDic[slot7.uid] = slot7
 	end
 
-	for slot7 = #slot2, #slot3 + 1, -1 do
-		slot2[slot7] = nil
-	end
-
-	slot0.buffModel:setList(slot2)
 	slot0:_dealBuffFeature()
-end
-
-function slot0.getBuffList(slot0)
-	return slot0.buffModel:getList()
 end
 
 function slot0._buildSkills(slot0, slot1)
@@ -219,37 +198,54 @@ function slot0.isActiveSkill(slot0, slot1)
 	return slot0.skillId2Lv[slot1] ~= nil or FightConfig.instance:isActiveSkill(slot1)
 end
 
+function slot0.getBuffList(slot0, slot1)
+	slot2 = slot1 or {}
+
+	for slot6, slot7 in pairs(slot0.buffDic) do
+		table.insert(slot2, slot7)
+	end
+
+	return slot2
+end
+
+function slot0.getBuffDic(slot0)
+	return slot0.buffDic
+end
+
 function slot0.addBuff(slot0, slot1)
-	if not slot0.buffModel:getById(slot1.uid) then
+	if not slot0.buffDic[slot1.uid] then
 		slot2 = FightBuffMO.New()
 
 		slot2:init(slot1, slot0.id)
-		slot0.buffModel:addAtLast(slot2)
+
+		slot0.buffDic[slot1.uid] = slot2
+
 		slot0:_dealBuffFeature()
 
 		return true
-	else
-		return false
 	end
 end
 
 function slot0.delBuff(slot0, slot1)
-	if slot1 then
-		slot0.buffModel:remove(slot1)
+	if slot0.buffDic[slot1] then
+		slot0.buffDic[slot1] = nil
+
 		slot0:_dealBuffFeature()
 	end
 end
 
 function slot0.updateBuff(slot0, slot1)
-	if slot0.buffModel:getById(slot1.uid) then
-		slot2:init(slot1, slot0.id)
-	else
-		logNormal(string.format("%s: BuffError not exist, update fail, buff.uid = %s buffId = %d", slot0:getEntityName(), slot1.uid, slot1.buffId))
+	if slot0.buffDic[slot1.uid] then
+		slot0.buffDic[slot1.uid]:init(slot1, slot0.id)
 	end
 end
 
 function slot0.getBuffMO(slot0, slot1)
-	return slot0.buffModel:getById(slot1)
+	return slot0.buffDic[slot1]
+end
+
+function slot0.clearAllBuff(slot0)
+	tabletool.clear(slot0.buffDic)
 end
 
 function slot0.getEntityName(slot0)
@@ -265,6 +261,8 @@ function slot0.getCO(slot0)
 		return lua_character.configDict[slot0.modelId]
 	elseif slot0:isMonster() then
 		return lua_monster.configDict[slot0.modelId]
+	elseif slot0:isAssistBoss() then
+		return lua_tower_assist_boss.configDict[slot0.modelId]
 	end
 
 	logError("实体配置表找不到,实体类型:" .. slot0.entityType .. "  modelId:" .. slot0.modelId)
@@ -273,11 +271,15 @@ function slot0.getCO(slot0)
 end
 
 function slot0.isCharacter(slot0)
-	return slot0.entityType == 1
+	return slot0.entityType == FightEnum.EntityType.Character
 end
 
 function slot0.isMonster(slot0)
-	return slot0.entityType == 2 or slot0.entityType == 3
+	return slot0.entityType == FightEnum.EntityType.Monster or slot0.entityType == FightEnum.EntityType.Special
+end
+
+function slot0.isAssistBoss(slot0)
+	return slot0.entityType == FightEnum.EntityType.AssistBoss
 end
 
 function slot0.getSpineSkinCO(slot0)
@@ -293,8 +295,6 @@ end
 function slot0.resetSimulateExPoint(slot0)
 	slot0.playCardExPoint = 0
 	slot0.moveCardExPoint = 0
-	slot0._afterUniqueMoveCount = uv0
-	slot0._afterUniqueCombineCount = uv0
 end
 
 function slot0.applyMoveCardExPoint(slot0)
@@ -328,10 +328,10 @@ function slot0.changeServerUniqueCost(slot0, slot1)
 end
 
 function slot0.getUniqueSkillPoint(slot0)
-	for slot5, slot6 in ipairs(slot0.buffModel:getList()) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
-			for slot12, slot13 in ipairs(slot8) do
-				if slot13[1] == FightEnum.BuffActId.ExSkillNoConsumption then
+	for slot4, slot5 in pairs(slot0.buffDic) do
+		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
+			for slot11, slot12 in ipairs(slot7) do
+				if slot12[1] == FightEnum.BuffActId.ExSkillNoConsumption then
 					return 0
 				end
 			end
@@ -350,17 +350,12 @@ function slot0.getPreviewExPoint(slot0)
 end
 
 function slot0.onPlayCardExPoint(slot0, slot1)
-	if not slot0:isUniqueSkill(slot1) then
-		if slot0:getPreviewExPoint() < slot0:getMaxExPoint() then
-			slot0.playCardExPoint = slot0.playCardExPoint + slot0._playCardAddExpoint
+	if not slot0:isUniqueSkill(slot1) and slot0:getPreviewExPoint() < slot0:getMaxExPoint() then
+		slot0.playCardExPoint = slot0.playCardExPoint + slot0._playCardAddExpoint
 
-			if slot2 < slot0:getPreviewExPoint() then
-				slot0.playCardExPoint = slot0.playCardExPoint - (slot0:getPreviewExPoint() - slot2)
-			end
+		if slot2 < slot0:getPreviewExPoint() then
+			slot0.playCardExPoint = slot0.playCardExPoint - (slot0:getPreviewExPoint() - slot2)
 		end
-	else
-		slot0._afterUniqueMoveCount = 0
-		slot0._afterUniqueCombineCount = 0
 	end
 end
 
@@ -372,14 +367,6 @@ function slot0.onMoveCardExPoint(slot0, slot1)
 			slot0.moveCardExPoint = slot0.moveCardExPoint - (slot0:getPreviewExPoint() - slot3)
 		end
 	end
-
-	if slot1 and slot0._afterUniqueMoveCount ~= uv0 then
-		slot0._afterUniqueMoveCount = slot0._afterUniqueMoveCount + 1
-	end
-
-	if not slot1 and slot0._afterUniqueCombineCount ~= uv0 then
-		slot0._afterUniqueCombineCount = slot0._afterUniqueCombineCount + 1
-	end
 end
 
 function slot0._dealBuffFeature(slot0)
@@ -387,23 +374,37 @@ function slot0._dealBuffFeature(slot0)
 	slot0._moveCardAddExpoint = 1
 	slot0._combineCardAddExpoint = 1
 
-	for slot5, slot6 in ipairs(slot0.buffModel:getList()) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
-			for slot12, slot13 in ipairs(slot8) do
-				if slot13[1] == 606 then
-					slot0._combineCardAddExpoint = slot0._combineCardAddExpoint + slot13[2]
-				elseif slot13[1] == 607 then
-					slot0._moveCardAddExpoint = slot0._moveCardAddExpoint + slot13[2]
-				elseif slot13[1] == 603 then
+	for slot4, slot5 in pairs(slot0.buffDic) do
+		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
+			for slot11, slot12 in ipairs(slot7) do
+				if slot12[1] == 606 then
+					slot0._combineCardAddExpoint = slot0._combineCardAddExpoint + slot12[2]
+				elseif slot12[1] == 607 then
+					slot0._moveCardAddExpoint = slot0._moveCardAddExpoint + slot12[2]
+				elseif slot12[1] == 603 then
 					slot0._playCardAddExpoint = 0
 					slot0._combineCardAddExpoint = 0
 					slot0._moveCardAddExpoint = 0
 
 					return
+				elseif slot12[1] == 845 then
+					slot0._playCardAddExpoint = slot0._playCardAddExpoint + slot12[2]
 				end
 			end
 		end
 	end
+end
+
+function slot0.getCombineCardAddExPoint(slot0)
+	return slot0._combineCardAddExpoint
+end
+
+function slot0.getMoveCardAddExPoint(slot0)
+	return slot0._moveCardAddExpoint
+end
+
+function slot0.getPlayCardAddExPoint(slot0)
+	return slot0._playCardAddExpoint
 end
 
 function slot0.getFeaturesSplitInfoByBuffId(slot0, slot1)
@@ -419,13 +420,29 @@ function slot0.getFeaturesSplitInfoByBuffId(slot0, slot1)
 end
 
 function slot0.hasBuffFeature(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0.buffModel:getList()) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot7.buffId) then
-			for slot13, slot14 in ipairs(slot9) do
-				if lua_buff_act.configDict[slot14[1]] and slot15.type == slot1 then
+	for slot5, slot6 in pairs(slot0.buffDic) do
+		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
+			for slot12, slot13 in ipairs(slot8) do
+				if lua_buff_act.configDict[slot13[1]] and slot14.type == slot1 then
 					return true
 				end
 			end
+		end
+	end
+end
+
+function slot0.hasBuffTypeId(slot0, slot1)
+	for slot5, slot6 in pairs(slot0.buffDic) do
+		if slot6:getCO() and slot7.typeId == slot1 then
+			return true
+		end
+	end
+end
+
+function slot0.hasBuffId(slot0, slot1)
+	for slot5, slot6 in pairs(slot0.buffDic) do
+		if slot6.buffId == slot1 then
+			return true
 		end
 	end
 end
@@ -447,7 +464,7 @@ function slot0.setShield(slot0, slot1)
 end
 
 function slot0.onChangeHero(slot0)
-	slot0.buffModel:clear()
+	tabletool.clear(slot0.buffDic)
 	slot0:_dealBuffFeature()
 	slot0:setShield(0)
 end
@@ -531,8 +548,9 @@ end
 
 function slot0.updateStoredExPoint(slot0)
 	slot0.storedExPoint = 0
+	slot5 = slot0
 
-	for slot4, slot5 in ipairs(slot0:getBuffList()) do
+	for slot4, slot5 in ipairs(slot0.getBuffList(slot5)) do
 		if not string.nilorempty(slot5.actCommonParams) and (lua_buff_act.configDict[FightStrUtil.instance:getSplitToNumberCache(slot6, "#")[1]] and slot9.type) == FightEnum.BuffType_ExPointOverflowBank then
 			slot0.storedExPoint = slot0.storedExPoint + slot7[2]
 		end
@@ -540,25 +558,11 @@ function slot0.updateStoredExPoint(slot0)
 end
 
 function slot0.setStoredExPoint(slot0, slot1)
-	slot2 = slot0.storedExPoint
 	slot0.storedExPoint = slot1
-
-	if slot0.isOnlyData then
-		return
-	end
-
-	FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, slot0.id, slot2)
 end
 
 function slot0.changeStoredExPoint(slot0, slot1)
-	slot2 = slot0.storedExPoint
 	slot0.storedExPoint = slot0.storedExPoint + slot1
-
-	if slot0.isOnlyData then
-		return
-	end
-
-	FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, slot0.id, slot2)
 end
 
 function slot0.getStoredExPoint(slot0)
@@ -605,6 +609,14 @@ end
 
 function slot0.clearNotifyBindContract(slot0)
 	slot0.notifyBindContract = nil
+end
+
+function slot0.isStatusDead(slot0)
+	return slot0.status == FightEnum.EntityStatus.Dead
+end
+
+function slot0.setDead(slot0)
+	slot0.status = FightEnum.EntityStatus.Dead
 end
 
 return slot0

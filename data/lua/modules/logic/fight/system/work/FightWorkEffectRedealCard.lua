@@ -7,7 +7,6 @@ function slot0.onStart(slot0)
 	FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
 	if FightCardModel.instance.redealCardInfoList then
-		slot0:cancelFightWorkSafeTimer()
 		slot0:_playRedealCardEffect()
 	else
 		slot0:onDone(true)

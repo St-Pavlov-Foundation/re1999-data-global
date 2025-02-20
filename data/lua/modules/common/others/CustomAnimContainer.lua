@@ -18,7 +18,7 @@ function slot0.initForceAnimViewList()
 		ViewName.RougeHeroGroupEditView,
 		ViewName.V1a6_CachotHeroGroupEditView,
 		ViewName.Season123HeroGroupEditView,
-		ViewName.Season123_2_1HeroGroupEditView,
+		ViewName.Season123_2_3HeroGroupEditView,
 		ViewName.VersionActivity_1_2_HeroGroupEditView,
 		ViewName.DungeonView,
 		ViewName.DungeonStoryEntranceView,

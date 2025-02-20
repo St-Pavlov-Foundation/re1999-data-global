@@ -112,11 +112,11 @@ function slot0._onBtnUseSub(slot0)
 	end
 
 	if GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitPlayer, uv0.selectPosId[FightEnum.EntitySide.MySide]):getMO().uid == SkillEditorMgr.instance.select_sub_hero_model.uid then
-		slot1 = FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide):getList()[1]
+		slot1 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)[1]
 	end
 
 	GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(SceneTag.UnitPlayer, slot1.id)
-	FightEntityModel.instance:onDead(slot1.id)
+	FightDataHelper.entityMgr:getById(slot1.id):setDead()
 	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, slot1.id)
 	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, slot1.id)
 
@@ -211,20 +211,21 @@ function slot0._onSetSkillEditorViewVisible(slot0, slot1)
 end
 
 function slot0._onBuffClick(slot0, slot1, slot2, slot3, slot4)
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		logError("get EntityMo fail, entityId : " .. tostring(slot1))
 
 		return
 	end
 
 	if isDebugBuild then
-		slot7 = {}
+		slot6 = {}
+		slot11 = slot5
 
-		for slot11, slot12 in ipairs(slot5.buffModel and slot5.buffModel:getList()) do
-			table.insert(slot7, string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", slot12.buffId, slot12.count, slot12.duration, slot13.name, slot13.desc, slot13.isGoodBuff == 1 and "good" or "bad", lua_skill_buff.configDict[slot12.buffId].isNoShow == 0 and "show" or "noShow"))
+		for slot10, slot11 in pairs(slot5.getBuffDic(slot11)) do
+			table.insert(slot6, string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", slot11.buffId, slot11.count, slot11.duration, slot12.name, slot12.desc, slot12.isGoodBuff == 1 and "good" or "bad", lua_skill_buff.configDict[slot11.buffId].isNoShow == 0 and "show" or "noShow"))
 		end
 
-		logNormal(string.format("buff list %d :\n%s", #slot7, table.concat(slot7, "\n")))
+		logNormal(string.format("buff list %d :\n%s", #slot6, table.concat(slot6, "\n")))
 	end
 end
 

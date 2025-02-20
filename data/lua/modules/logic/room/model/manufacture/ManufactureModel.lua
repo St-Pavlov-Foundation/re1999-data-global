@@ -269,7 +269,11 @@ function slot0.getManufactureItemCountInSlotQueue(slot0, slot1, slot2, slot3)
 end
 
 function slot0.isManufactureUnlock(slot0, slot1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomManufacture) and slot1 then
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomManufacture) and GuideModel.instance:isGuideFinish(CritterEnum.OppenFuncGuide.RoomManufacture) then
+		slot2 = true
+	end
+
+	if not slot2 and slot1 then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.RoomManufacture))
 	end
 
@@ -388,8 +392,9 @@ function slot0.getManufactureLevelUpParam(slot0, slot1)
 
 	slot11 = {}
 	slot12 = {}
+	slot17 = slot7
 
-	for slot17, slot18 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot5, slot7)) do
+	for slot17, slot18 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot5, slot17)) do
 		if not slot12[ManufactureConfig.instance:getItemId(slot18)] then
 			slot11[#slot11 + 1] = {
 				type = MaterialEnum.MaterialType.Item,

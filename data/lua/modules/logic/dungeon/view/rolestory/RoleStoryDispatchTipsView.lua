@@ -370,9 +370,9 @@ function slot0.refreshTalkList(slot0, slot1, slot2)
 		end
 	end
 
-	slot7 = #slot0.talkList
+	slot7 = #slot3
 
-	for slot7 = 1, math.max(#slot3, slot7) do
+	for slot7 = 1, math.max(slot7, #slot0.talkList) do
 		slot0:refreshTalkItem(slot0.talkList[slot7], slot3[slot7], slot7)
 	end
 end

@@ -62,7 +62,8 @@ function slot0._editableInitView(slot0)
 	slot0.entranceAnim = gohelper.findChildComponent(slot0.viewGO, "entrance", gohelper.Type_Animator)
 	slot0.goArrowRedDot = gohelper.findChild(slot0.viewGO, "#go_tabcontainer/#scroll_tab/arrow/#go_arrowreddot")
 	slot0.rectTrContent = gohelper.findChildComponent(slot0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content", gohelper.Type_RectTransform)
-	slot0.viewPortHeight = recthelper.getHeight(gohelper.findChildComponent(slot0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport", gohelper.Type_RectTransform))
+	slot5 = gohelper.Type_RectTransform
+	slot0.viewPortHeight = recthelper.getHeight(gohelper.findChildComponent(slot0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport", slot5))
 	slot0._btnAchievementDict = slot0:getUserDataTb_()
 
 	for slot5, slot6 in pairs(VersionActivity1_9Enum.AchievementBtnType) do
@@ -123,7 +124,10 @@ end
 
 function slot0.refreshBtnVisible(slot0)
 	gohelper.setActive(slot0.goReplayBtn, VersionActivity1_9Enum.ActId2ShowReplayBtnDict[slot0.curActId])
-	gohelper.setActive(slot0.goAchievementBtn, VersionActivity1_9Enum.ActId2ShowAchievementBtnDict[slot0.curActId])
+
+	slot6 = VersionActivity1_9Enum.ActId2ShowAchievementBtnDict[slot0.curActId]
+
+	gohelper.setActive(slot0.goAchievementBtn, slot6)
 
 	for slot6, slot7 in pairs(VersionActivity1_9Enum.AchievementBtnType) do
 		gohelper.setActive(slot0._btnAchievementDict[slot7], slot7 == slot2)

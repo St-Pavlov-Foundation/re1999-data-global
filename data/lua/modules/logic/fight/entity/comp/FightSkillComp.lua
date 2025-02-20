@@ -275,6 +275,7 @@ function slot0._playTimeline(slot0)
 	end
 
 	slot1:play(slot0._tlAssetItem)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkill, slot0.entity, slot0._curSkillId, slot0._fightStepMO, slot0._timelineName)
 	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayStart, slot0.entity, slot0._curSkillId, slot0._fightStepMO, slot0._timelineName)
 end
 
@@ -364,10 +365,13 @@ function slot0._delayEndSkill(slot0)
 		slot0._timeline_list = nil
 	end
 
+	slot1 = slot0._curSkillId
+	slot2 = slot0._fightStepMO
 	slot0._curSkillId = nil
 	slot0._fightStepMO = nil
 
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, slot0.entity, slot0._curSkillId, slot0._fightStepMO, slot0._timelineName)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, slot0.entity, slot1, slot2, slot0._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, slot0.entity, slot1, slot2, slot0._timelineName)
 end
 
 function slot0._loadSkillAsset(slot0, slot1, slot2)
@@ -409,9 +413,9 @@ function slot0._beforePlayTimeline(slot0)
 		slot0.entity.buff:hideLoopEffects("before_skill_timeline")
 	end
 
-	slot4 = "before_skill_timeline"
+	slot5 = slot0._fightStepMO
 
-	for slot4, slot5 in pairs(FightHelper.hideDefenderBuffEffect(slot0._fightStepMO, slot4)) do
+	for slot4, slot5 in pairs(FightHelper.hideDefenderBuffEffect(slot5, "before_skill_timeline")) do
 		slot0._hide_defenders_buff_effect = slot0._hide_defenders_buff_effect or {}
 
 		table.insert(slot0._hide_defenders_buff_effect, slot5)
@@ -493,7 +497,10 @@ function slot0._setSideRenderOrder(slot0)
 end
 
 function slot0._cancelSideRenderOrder(slot0)
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys(slot0.entity:getSide())) do
+	slot3 = slot0.entity
+	slot5 = slot3
+
+	for slot5, slot6 in ipairs(FightHelper.getAllEntitys(slot3.getSide(slot5))) do
 		FightRenderOrderMgr.instance:cancelOrder(slot6.id)
 	end
 

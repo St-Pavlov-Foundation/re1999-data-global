@@ -100,6 +100,7 @@ end
 function slot0._onTempSpineLoaded(slot0, slot1, slot2)
 	if slot1 then
 		GameSceneMgr.instance:getCurScene().bloom:addEntity(slot2)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, slot1)
 		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, slot1)
 	end
 end

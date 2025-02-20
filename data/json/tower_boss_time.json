@@ -1,0 +1,29 @@
+[
+  {
+    "towerId": 1,
+    "round": 1,
+    "isPermanent": 0,
+    "startTime": "2025-02-20",
+    "endTime": "2025-04-07",
+    "taskGroupId": 0,
+    "isOnline": 1
+  },
+  {
+    "towerId": 2,
+    "round": 1,
+    "isPermanent": 0,
+    "startTime": "2025-02-20",
+    "endTime": "2025-04-21",
+    "taskGroupId": 0,
+    "isOnline": 1
+  },
+  {
+    "towerId": 3,
+    "round": 1,
+    "isPermanent": 0,
+    "startTime": "2025-02-20",
+    "endTime": "2025-05-04",
+    "taskGroupId": 0,
+    "isOnline": 1
+  }
+]

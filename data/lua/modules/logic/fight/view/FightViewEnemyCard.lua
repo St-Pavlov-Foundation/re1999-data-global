@@ -138,7 +138,7 @@ end
 function slot0._onEntityDead(slot0, slot1)
 	slot0._minusCount = slot0._minusCount or 0
 
-	if (FightEntityModel.instance:getById(slot1) or FightEntityModel.instance:getDeadById(slot1)).side == FightEnum.EntitySide.MySide then
+	if FightDataHelper.entityMgr:getById(slot1).side == FightEnum.EntitySide.MySide then
 		slot0._mySideDead = true
 	elseif slot2.side == FightEnum.EntitySide.EnemySide then
 		slot0._enemySideDead = true
@@ -203,7 +203,7 @@ function slot0._onDeadPlayActPointEffect(slot0)
 end
 
 function slot0._calcMinusCount(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot1) or slot2.side ~= FightEnum.EntitySide.EnemySide then
+	if not FightDataHelper.entityMgr:getById(slot1) or slot2.side ~= FightEnum.EntitySide.EnemySide then
 		return 0
 	end
 

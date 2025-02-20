@@ -78,7 +78,7 @@ function slot0.updateFightRound(slot0, slot1)
 	slot0._serverSkillOpList = {}
 
 	for slot5, slot6 in ipairs(slot1.fightStepMOs) do
-		if FightEntityModel.instance:getById(slot6.fromId) and slot7.side == FightEnum.EntitySide.MySide and slot9 and (slot6.actType == FightEnum.ActType.SKILL and FightCardModel.instance:isActiveSkill(slot6.fromId, slot6.actId) or false) then
+		if FightDataHelper.entityMgr:getById(slot6.fromId) and slot7.side == FightEnum.EntitySide.MySide and slot9 and (slot6.actType == FightEnum.ActType.SKILL and FightCardModel.instance:isActiveSkill(slot6.fromId, slot6.actId) or false) then
 			slot11 = FightSkillDisplayMO.New()
 			slot11.entityId = slot6.fromId
 			slot11.skillId = slot6.actId

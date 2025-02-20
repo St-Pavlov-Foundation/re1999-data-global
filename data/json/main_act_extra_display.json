@@ -26,5 +26,12 @@
     "icon": "singlebg_lang/txt_rouge/enter/rk_rouge.png",
     "sortId": 4,
     "show": 1
+  },
+  {
+    "id": 6,
+    "name": "",
+    "icon": "singlebg/dungeon/rolestory_singlebg/act174_img_01.png",
+    "sortId": 3,
+    "show": 1
   }
 ]

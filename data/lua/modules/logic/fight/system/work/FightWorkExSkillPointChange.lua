@@ -2,27 +2,31 @@ module("modules.logic.fight.system.work.FightWorkExSkillPointChange", package.se
 
 slot0 = class("FightWorkExSkillPointChange", FightEffectBase)
 
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO:getUniqueSkillPoint()
+end
+
 function slot0.onStart(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		logError("EXSKILLPOINTCHANGE fail, entity not exist: " .. slot1)
-		slot0:_onDone()
+	if not FightHelper.getEntity(slot0._entityId) then
+		slot0:onDone(true)
 
 		return
 	end
 
-	if slot2:getMO() then
-		slot3:changeServerUniqueCost(slot0._actEffectMO.effectNum)
+	if not slot0._entityMO then
+		slot0:onDone(true)
 
-		if slot3:getUniqueSkillPoint() ~= slot3:getUniqueSkillPoint() then
-			FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, slot0._actEffectMO.targetId, slot4, slot5)
-		end
+		return
 	end
 
-	slot0:_onDone()
-end
+	slot0._newValue = slot0._entityMO and slot0._entityMO:getUniqueSkillPoint()
 
-function slot0._onDone(slot0)
-	slot0:clearWork()
+	if slot0._oldValue ~= slot0._newValue then
+		FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, slot0._actEffectMO.targetId, slot0._oldValue, slot0._newValue)
+	end
+
 	slot0:onDone(true)
 end
 

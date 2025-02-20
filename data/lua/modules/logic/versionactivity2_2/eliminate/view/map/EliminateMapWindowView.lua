@@ -41,8 +41,8 @@ function slot0._editableInitView(slot0)
 	EliminateTaskListModel.instance:sortTaskMoList()
 
 	slot0.goRedDot = gohelper.findChild(slot0.viewGO, "window/righttop/reward/reddot")
-	slot5 = slot0._isShowRedDot
-	slot0._redDotComp = RedDotController.instance:addNotEventRedDot(slot0.goRedDot, slot5, slot0)
+	slot5 = slot0.goRedDot
+	slot0._redDotComp = RedDotController.instance:addNotEventRedDot(slot5, slot0._isShowRedDot, slot0)
 	slot0.chapterNodeList = {}
 	slot0.chapterAnimatorList = slot0:getUserDataTb_()
 

@@ -192,8 +192,9 @@ function slot0.getUsePower(slot0, slot1, slot2)
 	end
 
 	slot5 = 0
+	slot10 = uv0.sortPowerMoFunc
 
-	table.sort(slot4, uv0.sortPowerMoFunc)
+	table.sort(slot4, slot10)
 
 	for slot10, slot11 in pairs(slot4) do
 		slot12 = slot11.quantity

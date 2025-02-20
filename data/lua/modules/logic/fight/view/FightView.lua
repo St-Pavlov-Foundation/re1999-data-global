@@ -7,6 +7,7 @@ function slot0.onInitView(slot0)
 	slot0._topRightBtnRoot = gohelper.findChild(slot0.viewGO, "root/btns")
 	slot0._btnBack = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btns/btnBack")
 	slot0._btnAuto = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btns/btnAuto")
+	slot0._btnAutoLockObj = gohelper.findChild(slot0.viewGO, "root/btns/btnAuto/lock")
 	slot0._btnSpecialTip = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btns/btnSpecialTip")
 	slot0._imageAuto = gohelper.findChildImage(slot0.viewGO, "root/btns/btnAuto/image")
 	slot0._btnSpeed = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btns/btnSpeed")
@@ -55,6 +56,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.FightDialogEnd, slot0._checkContinueAuto, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, slot0._onSetStateForDialogBeforeStartFight, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnStageChange, slot0.onStageChange, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.RefreshUIRound, slot0._onRefreshUIRound, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeRound, slot0._onChangeRound, slot0)
@@ -110,6 +112,8 @@ function slot0.onOpen(slot0)
 		FightModel.instance:setAuto(false)
 	elseif not slot5 then
 		FightModel.instance:setAuto(false)
+	elseif FightDataHelper.fieldMgr:isDouQuQu() then
+		FightModel.instance:setAuto(false)
 	else
 		FightModel.instance:setAuto(FightController.instance:getPlayerPrefKeyAuto(0))
 	end
@@ -129,6 +133,7 @@ function slot0.onOpen(slot0)
 		gohelper.setActive(slot0._btnAuto.gameObject, false)
 	else
 		gohelper.setActive(slot0._btnAuto.gameObject, DungeonModel.instance:hasPassLevelAndStory(10101))
+		gohelper.setActive(slot0._btnAutoLockObj, FightDataHelper.fieldMgr:isDouQuQu())
 	end
 
 	gohelper.setActive(slot0._btnSpecialTip.gameObject, uv0.canShowSpecialBtn())
@@ -161,6 +166,20 @@ function slot0.onOpen(slot0)
 	NavigateMgr.instance:addEscape(ViewName.FightView, slot0._onEscapeBtnClick, slot0)
 	slot0:_showEnemySubCount()
 	slot0:initEnemyActionStatus()
+	slot0:_refreshDouQuQu()
+end
+
+function slot0._refreshDouQuQu(slot0)
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		gohelper.setActive(slot0._enemyinfoRoot, false)
+
+		if FightDataModel.instance.douQuQuMgr and FightDataModel.instance.douQuQuMgr.isRecord then
+			return
+		end
+
+		gohelper.setActive(slot0._btnBack.gameObject, false)
+		NavigateMgr.instance:removeEscape(ViewName.FightView)
+	end
 end
 
 function slot0.initEnemyActionStatus(slot0)
@@ -319,11 +338,21 @@ function slot0._updateAutoAnim(slot0)
 	end
 end
 
+function slot0._onRefreshUIRound(slot0)
+	slot0:_updateRound()
+end
+
 function slot0._updateRound(slot0)
-	slot1 = FightModel.instance.maxWave
-	slot2 = FightModel.instance.maxRound
-	slot0._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), math.min(FightModel.instance:getCurWaveId(), slot1), slot1)
-	slot0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), math.min(FightModel.instance:getCurRoundId(), slot2), slot2)
+	slot4 = math.min(FightModel.instance:getCurWaveId(), FightModel.instance.maxWave)
+	slot3 = math.min(FightModel.instance:getCurRoundId(), FightModel.instance.maxRound)
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		slot4 = FightDataModel.instance.douQuQuMgr.index or 1
+		slot1 = slot5.maxIndex or 1
+	end
+
+	slot0._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), slot4, slot1)
+	slot0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), slot3, slot2)
 
 	slot0:_showEnemySubHeroCount()
 end
@@ -333,17 +362,16 @@ function slot0._onChangeRound(slot0)
 end
 
 function slot0._showEnemySubHeroCount(slot0)
-	if FightEntityModel.instance:getSubModel(FightEnum.EntitySide.EnemySide) then
-		slot0._txtEnemyNum.text = #slot1:getList()
-	end
+	slot1 = FightDataHelper.entityMgr:getEnemySubList()
+	slot0._txtEnemyNum.text = #slot1
 
-	if slot1 and #slot1:getList() > 0 then
+	if #slot1 > 0 then
 		FightController.instance:dispatchEvent(FightEvent.OnGuideShowEnemyNum)
 	end
 end
 
 function slot0._showEnemySubCount(slot0)
-	gohelper.setActive(slot0._goEnemyNum, FightEntityModel.instance:getSubModel(FightEnum.EntitySide.EnemySide) and #slot1:getList() > 0 and GMFightShowState.leftMonster)
+	gohelper.setActive(slot0._goEnemyNum, #FightDataHelper.entityMgr:getEnemySubList() > 0 and GMFightShowState.leftMonster)
 end
 
 function slot0._onBeginWave(slot0)
@@ -391,6 +419,10 @@ end
 
 function slot0._onClickAuto(slot0)
 	if not FightDataHelper.stageMgr:isEmptyOperateState() then
+		return
+	end
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
 
@@ -536,6 +568,7 @@ end
 
 function slot0._resetCamera(slot0)
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, true)
+	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, false)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, false)
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight or GameSceneMgr.instance:isClosing() then
@@ -564,7 +597,13 @@ end
 function slot0._onSetStateForDialogBeforeStartFight(slot0, slot1)
 	gohelper.setActive(slot0._topRightBtnRoot, not slot1)
 	gohelper.setActive(slot0._roundGO, not slot1)
-	gohelper.setActive(slot0._enemyinfoRoot, not slot1)
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		gohelper.setActive(slot0._enemyinfoRoot, false)
+	else
+		gohelper.setActive(slot0._enemyinfoRoot, not slot1)
+	end
+
 	slot0:refreshEnemyAction(not slot1)
 end
 
@@ -616,7 +655,7 @@ end
 function slot0.checkMonsterCardIsEmpty(slot0)
 	if FightModel.instance:getCurRoundMO() and slot1:getAIUseCardMOList() then
 		for slot6, slot7 in ipairs(slot2) do
-			if FightEntityModel.instance:getById(slot7.uid) then
+			if FightDataHelper.entityMgr:getById(slot7.uid) then
 				return false
 			end
 		end

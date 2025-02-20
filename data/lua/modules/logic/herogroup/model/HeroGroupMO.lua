@@ -15,6 +15,7 @@ function slot0.ctor(slot0)
 	slot0.equips = {}
 	slot0.activity104Equips = {}
 	slot0.exInfos = {}
+	slot0.assistBossId = nil
 end
 
 function slot0.init(slot0, slot1)
@@ -22,6 +23,7 @@ function slot0.init(slot0, slot1)
 	slot0.groupId = slot1.groupId
 	slot0.name = slot1.name
 	slot0.clothId = slot1.clothId
+	slot0.assistBossId = slot1.assistBossId
 	slot0.heroList = {}
 	slot2 = slot1.heroList and #slot1.heroList or 0
 
@@ -68,6 +70,7 @@ function slot0.initByFightGroup(slot0, slot1)
 	slot0.exInfos = {}
 	slot0.replayAssistHeroUid = slot1.assistHeroUid
 	slot0.replayAssistUserId = slot1.assistUserId
+	slot0.assistBossId = slot1.assistBossId
 	slot4 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot3]
 	slot5 = slot4 and slot4.playerMax or ModuleEnum.HeroCountInGroup
 	slot6 = string.splitToNumber(slot4.aid, "#") or {}
@@ -233,6 +236,7 @@ function slot0.initByLocalData(slot0, slot1)
 	slot0.aidDict = nil
 	slot0.trialDict = {}
 	slot0.clothId = slot1.clothId
+	slot0.assistBossId = slot1.assistBossId
 	slot0.temp = true
 	slot0.isReplay = false
 	slot0.equips = {}
@@ -338,9 +342,9 @@ function slot0.setTrials(slot0, slot1)
 	end
 
 	if not slot1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(slot3.trialEquips) then
-		slot10 = ModuleEnum.MaxHeroCountInGroup
+		slot10 = #string.splitToNumber(slot3.trialEquips, "|")
 
-		for slot10 = 1, math.min(#string.splitToNumber(slot3.trialEquips, "|"), slot10) do
+		for slot10 = 1, math.min(slot10, ModuleEnum.MaxHeroCountInGroup) do
 			slot0:updatePosEquips({
 				index = slot10 - 1,
 				equipUid = {
@@ -366,7 +370,8 @@ function slot0.saveData(slot0)
 		clothId = slot0.clothId,
 		heroList = {},
 		equips = {},
-		activity104Equips = {}
+		activity104Equips = {},
+		assistBossId = slot0.assistBossId
 	}
 
 	for slot6 = 1, ModuleEnum.MaxHeroCountInGroup do
@@ -800,6 +805,55 @@ end
 
 function slot0.getSeasonCardLimit(slot0)
 	return slot0._seasonCardMainNum, slot0._seasonCardNormalNum
+end
+
+function slot0.getAssistBossId(slot0)
+	return slot0.assistBossId
+end
+
+function slot0.setAssistBossId(slot0, slot1)
+	slot0.assistBossId = slot1
+end
+
+function slot0.replaceTowerHeroList(slot0, slot1)
+	slot2 = {
+		[slot1[slot9]] = slot9
+	}
+
+	for slot9 = 1, slot1 and #slot1 or 0 do
+		if slot1[slot9] ~= tostring(0) then
+			table.insert({}, slot1[slot9])
+		end
+	end
+
+	if not slot0.heroList then
+		slot0.heroList = {}
+	end
+
+	slot6 = {}
+
+	for slot10 = 1, ModuleEnum.MaxHeroCountInGroup do
+		if slot2[slot0.heroList[slot10] or slot4] then
+			tabletool.removeValue(slot3, slot11)
+		else
+			slot0.heroList[slot10] = slot4
+			slot6[slot10] = 1
+		end
+	end
+
+	slot7 = {}
+
+	for slot11, slot12 in pairs(slot6) do
+		table.insert(slot7, slot11)
+	end
+
+	if #slot7 > 1 then
+		table.sort(slot7)
+	end
+
+	for slot11, slot12 in ipairs(slot3) do
+		slot0.heroList[slot7[slot11]] = slot12
+	end
 end
 
 return slot0

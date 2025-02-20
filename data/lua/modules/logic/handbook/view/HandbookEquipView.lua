@@ -284,9 +284,9 @@ function slot0.handleItem(slot0, slot1, slot2)
 	gohelper.setActive(slot0.goEquipList[slot1], true)
 	ZProj.UGUIHelper.SetGrayscale(slot0.simageList[slot1].gameObject, not HandbookModel.instance:haveEquip(slot2.id))
 
-	slot6 = slot2.icon .. slot1
+	slot6 = ResUrl.getHandbookEquipImage
 
-	slot0.simageList[slot1]:LoadImage(ResUrl.getHandbookEquipImage(slot6))
+	slot0.simageList[slot1]:LoadImage(slot6(slot2.icon .. slot1))
 
 	slot0.txtNameList[slot1].text = slot2.name
 	slot0.txtNameEnList[slot1].text = slot2.name_en
@@ -320,7 +320,9 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	EquipFilterModel.instance:clear(slot0.viewName)
+	slot4 = slot0.viewName
+
+	EquipFilterModel.instance:clear(slot4)
 
 	for slot4, slot5 in ipairs(slot0.equipClickList) do
 		slot5:RemoveClickListener()

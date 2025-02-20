@@ -54,7 +54,10 @@ end
 function slot0._editableInitView(slot0)
 	slot0._simageFullBG:LoadImage(ResUrl.getV1a3ArmSinglebg("v1a3_arm_fullbg"))
 	slot0._simageCircleDec:LoadImage(ResUrl.getV1a3ArmSinglebg("v1a3_arm_bgcircledec3"))
-	slot0._simageArmUnFixed:LoadImage(ResUrl.getV1a3ArmSinglebg("v1a3_arm_unfixedarm"))
+
+	slot6 = "v1a3_arm_unfixedarm"
+
+	slot0._simageArmUnFixed:LoadImage(ResUrl.getV1a3ArmSinglebg(slot6))
 	gohelper.setActive(slot0._btnshowAllUI, false)
 
 	slot0._isTouchInVisibleBtn = false

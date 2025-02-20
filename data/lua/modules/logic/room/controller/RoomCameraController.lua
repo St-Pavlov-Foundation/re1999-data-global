@@ -16,10 +16,12 @@ function slot0.resetCameraStateByKey(slot0, slot1)
 		slot2 = slot0._viewNameCameraStateDict[slot1]
 		slot0._viewNameCameraStateDict[slot1] = nil
 
-		if slot0:getRoomCamera() then
-			slot3:switchCameraState(slot2.cameraState, {
+		if slot0:getRoomScene() then
+			slot3.cameraFollow:setFollowTarget(nil)
+			slot3.camera:switchCameraState(slot2.cameraState, {
 				zoom = slot2.zoom
 			})
+			slot3.fovblock:clearLookParam()
 		end
 	end
 end
@@ -60,20 +62,25 @@ function slot0.getRoomCamera(slot0)
 end
 
 function slot0.tweenCameraFocusBuildingUseCameraId(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot0:getRoomScene()
-	slot7 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(slot2) and string.splitToNumber(slot6.focusXYZ, "#")
-	slot12 = slot5.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding)
-	slot13 = slot12:transformPoint(slot7 and slot7[1] or 0, slot7 and slot7[2] or 0, slot7 and slot7[3] or 0)
-	slot15 = RoomEnum.CameraState.Manufacture
+	slot0:tweenCameraByBuildingUid(slot1, RoomEnum.CameraState.Manufacture, slot2, slot3, slot4)
+	slot0:getRoomScene().fovblock:setLookBuildingUid(RoomEnum.CameraState.Manufacture, slot1)
+end
 
-	slot5.cameraFollow:setFollowTarget(nil)
-	slot5.camera:setChangeCameraParamsById(slot15, slot2)
-	slot5.camera:switchCameraState(slot15, {
-		focusX = slot13.x,
-		focusY = slot13.z,
-		zoom = slot5.camera:getZoomInitValue(slot15),
-		rotate = RoomRotateHelper.getMod(tonumber(slot6 and slot6.rotate or 0) + slot12:getMO().rotate * 60, 360) * Mathf.Deg2Rad
-	}, nil, slot3, slot4)
+function slot0.tweenCameraByBuildingUid(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = slot0:getRoomScene()
+	slot8 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(slot3) and string.splitToNumber(slot7.focusXYZ, "#")
+	slot13 = slot6.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding)
+	slot14 = slot13:transformPoint(slot8 and slot8[1] or 0, slot8 and slot8[2] or 0, slot8 and slot8[3] or 0)
+	slot16 = slot2
+
+	slot6.cameraFollow:setFollowTarget(nil)
+	slot6.camera:setChangeCameraParamsById(slot16, slot3)
+	slot6.camera:switchCameraState(slot16, {
+		focusX = slot14.x,
+		focusY = slot14.z,
+		zoom = slot6.camera:getZoomInitValue(slot16),
+		rotate = RoomRotateHelper.getMod(tonumber(slot7 and slot7.rotate or 0) + slot13:getMO().rotate * 60, 360) * Mathf.Deg2Rad
+	}, nil, slot4, slot5)
 end
 
 slot0.instance = slot0.New()

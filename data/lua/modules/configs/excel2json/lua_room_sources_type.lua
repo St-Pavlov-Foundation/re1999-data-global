@@ -1,11 +1,12 @@
 module("modules.configs.excel2json.lua_room_sources_type", package.seeall)
 
 slot1 = {
-	bgIcon = 4,
+	showType = 7,
 	name = 2,
 	bgColor = 6,
 	nameColor = 5,
 	id = 1,
+	bgIcon = 4,
 	order = 3
 }
 slot2 = {

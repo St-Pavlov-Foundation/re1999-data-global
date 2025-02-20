@@ -63,9 +63,10 @@ function slot0.shapeTriggerForeachCollectionCells(slot0, slot1)
 end
 
 function slot0.playCellEffect(slot0, slot1, slot2, slot3, slot4)
-	slot8 = slot4
+	slot8 = slot1
+	slot9 = slot4
 
-	slot0:recycleEffectGOs(slot1, slot8)
+	slot0:recycleEffectGOs(slot8, slot9)
 
 	for slot8, slot9 in ipairs(slot2) do
 		slot0:playSlotCellEffect(slot1, RougeCollectionHelper.getCollectionCellSlotPos(slot3, slot9), slot4)
@@ -97,7 +98,10 @@ function slot0.init(slot0)
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock("RougeCollectionEffectTriggerComp_PlayEffect")
+
+	slot5 = "RougeCollectionEffectTriggerComp_PlayEffect"
+
+	UIBlockMgr.instance:startBlock(slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0:excuteActiveEffect(slot6)

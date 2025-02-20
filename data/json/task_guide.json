@@ -1663,7 +1663,7 @@
     "name": "",
     "desc": "language_10021811",
     "listenerType": "BuyStoreGoodsTotal",
-    "listenerParam": "171#172",
+    "listenerParam": "171#172#173",
     "maxProgress": 1,
     "maxFinishCount": 1,
     "activity": 1,

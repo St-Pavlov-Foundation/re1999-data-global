@@ -3,6 +3,8 @@ module("modules.logic.fight.view.indicator.FightIndicatorBaseView", package.seea
 slot0 = class("FightIndicatorBaseView", UserDataDispose)
 
 function slot0.initView(slot0, slot1, slot2, slot3)
+	slot0:__onInit()
+
 	slot0._indicatorMgrView = slot1
 	slot0.indicatorId = slot2
 	slot0.totalIndicatorNum = slot3 or 0
@@ -17,6 +19,7 @@ function slot0.onIndicatorChange(slot0)
 end
 
 function slot0.onDestroy(slot0)
+	slot0:__onDispose()
 end
 
 return slot0

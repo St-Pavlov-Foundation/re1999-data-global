@@ -6,7 +6,8 @@ function slot0.init(slot0, slot1)
 	slot0.id = slot1[1]
 	slot0._unitData = slot1[2]
 	slot0.isCanReset = slot1[3]
-	slot0.visible = ExploreModel.instance:isAreaShow(slot0.id)
+	slot5 = slot0.id
+	slot0.visible = ExploreModel.instance:isAreaShow(slot5)
 	slot0.unitList = {}
 
 	for slot5, slot6 in ipairs(slot0._unitData) do

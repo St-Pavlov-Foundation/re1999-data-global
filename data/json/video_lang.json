@@ -433,5 +433,26 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "2_3_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "2_3_activity_02",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "2_3_activity_03",
+    "supportLang": [
+      "zh"
+    ]
   }
 ]

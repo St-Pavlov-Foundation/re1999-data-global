@@ -33,20 +33,22 @@ slot0.GameMode = {
 	Visit = 3
 }
 slot0.CameraState = {
-	Manufacture = 9,
-	FirstPerson = 6,
 	Character = 3,
-	Overlook = 1,
-	ThirdPerson = 7,
+	FirstPerson = 6,
 	InteractionCharacterBuilding = 4,
 	OverlookAll = 5,
+	Manufacture = 9,
+	InteractBuilding = 8,
+	ThirdPerson = 7,
+	Overlook = 1,
 	Normal = 2
 }
 slot0.ChangeCameraParamDict = {
 	[slot0.CameraState.InteractionCharacterBuilding] = true,
 	[slot0.CameraState.FirstPerson] = true,
 	[slot0.CameraState.ThirdPerson] = true,
-	[slot0.CameraState.Manufacture] = true
+	[slot0.CameraState.Manufacture] = true,
+	[slot0.CameraState.InteractBuilding] = true
 }
 slot0.CameraOverlooks = {
 	slot0.CameraState.Overlook,
@@ -64,7 +66,8 @@ slot0.CameraShowSpineMap = {
 	[slot0.CameraState.InteractionCharacterBuilding] = true,
 	[slot0.CameraState.FirstPerson] = true,
 	[slot0.CameraState.ThirdPerson] = true,
-	[slot0.CameraState.Manufacture] = true
+	[slot0.CameraState.Manufacture] = true,
+	[slot0.CameraState.InteractBuilding] = true
 }
 slot0.CameraFollowType = {
 	FirstPerson = 2,
@@ -293,7 +296,23 @@ slot0.EntityChildKey = {
 	PositionZeroKey = "positionzero",
 	ThirdPersonCameraGOKey = "third_person_camera",
 	StaticContainerGOKey = "staticContainer",
-	FirstPersonCameraGOKey = "first_person_camera"
+	FirstPersonCameraGOKey = "first_person_camera",
+	CritterPointList = {
+		"cititer_point_1",
+		"cititer_point_2",
+		"cititer_point_3",
+		"cititer_point_4",
+		"cititer_point_5",
+		"cititer_point_6"
+	},
+	InteractStartPointList = {
+		"interact_start_1",
+		"interact_start_2",
+		"interact_start_3",
+		"interact_start_4",
+		"interact_start_5",
+		"interact_start_6"
+	}
 }
 slot0.InteractSpineAnimName = "interact"
 slot0.EffectRebuildCompNames = {
@@ -369,6 +388,10 @@ slot0.WorldPosToAStarMeshWidth = 20
 slot0.WorldPosToAStarMeshDepth = 19.5
 slot0.CameraParamId = {
 	CritterTrainHeroFollow = 2251
+}
+slot0.SourcesShowType = {
+	Cobrand = 1,
+	Normal = 0
 }
 
 return slot0

@@ -148,16 +148,29 @@ function slot0.onReceiveChangeHeroGroupSelectReply(slot0, slot1, slot2)
 	end
 end
 
-function slot0.sendUpdateHeroGroupNameRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
-	slot5.id = ModuleEnum.HeroGroupSnapshotType.Common
-	slot5.currentSelect = slot1
-	slot5.name = slot2
+function slot0.sendUpdateHeroGroupNameRequest(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
+	slot6.id = slot1
+	slot6.currentSelect = slot2
+	slot6.name = slot3
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	slot0:sendMsg(slot6, slot4, slot5)
 end
 
 function slot0.onReceiveUpdateHeroGroupNameReply(slot0, slot1, slot2)
+end
+
+function slot0.sendGetHeroGroupSnapshotListRequest(slot0, slot1, slot2, slot3)
+	slot4 = HeroGroupModule_pb.GetHeroGroupSnapshotListRequest()
+	slot4.snapshotId = slot1
+
+	slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveGetHeroGroupSnapshotListReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		HeroGroupSnapshotModel.instance:onReceiveGetHeroGroupSnapshotListReply(slot2)
+	end
 end
 
 slot0.instance = slot0.New()

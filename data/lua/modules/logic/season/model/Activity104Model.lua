@@ -442,7 +442,9 @@ function slot0.isSeasonLayerSlotUnlock(slot0, slot1, slot2, slot3, slot4)
 
 	if slot3 > 1 then
 		for slot9 = 2, slot3 do
-			for slot15, slot16 in pairs(string.splitToNumber(SeasonConfig.instance:getSeasonEpisodeCo(slot0:getCurSeasonId(), slot9 - 1).unlockEquipIndex, "#")) do
+			slot15 = slot0
+
+			for slot15, slot16 in pairs(string.splitToNumber(SeasonConfig.instance:getSeasonEpisodeCo(slot0.getCurSeasonId(slot15), slot9 - 1).unlockEquipIndex, "#")) do
 				table.insert(slot5, slot16)
 			end
 		end
@@ -463,7 +465,9 @@ function slot0.isSeasonLayerPosUnlock(slot0, slot1, slot2, slot3, slot4, slot5)
 
 	if slot3 > 1 then
 		for slot10 = 2, slot3 do
-			for slot16, slot17 in pairs(string.splitToNumber(SeasonConfig.instance:getSeasonEpisodeCo(slot0:getCurSeasonId(), slot10 - 1).unlockEquipIndex, "#")) do
+			slot16 = slot0
+
+			for slot16, slot17 in pairs(string.splitToNumber(SeasonConfig.instance:getSeasonEpisodeCo(slot0.getCurSeasonId(slot16), slot10 - 1).unlockEquipIndex, "#")) do
 				table.insert(slot6, slot17)
 			end
 		end
@@ -587,7 +591,9 @@ function slot0.getAct104SpecialInitLayer(slot0)
 end
 
 function slot0.getMaxSpecialLayer(slot0)
-	for slot6, slot7 in pairs(SeasonConfig.instance:getSeasonSpecialCos(slot0:getCurSeasonId())) do
+	slot6 = slot0
+
+	for slot6, slot7 in pairs(SeasonConfig.instance:getSeasonSpecialCos(slot0.getCurSeasonId(slot6))) do
 		if 0 < slot7.layer then
 			slot2 = slot7.layer
 		end
@@ -740,8 +746,10 @@ end
 
 function slot0.addCardGetData(slot0, slot1)
 	slot3 = SeasonViewHelper.getViewName(slot0:getCurSeasonId(), Activity104Enum.ViewName.CelebrityCardGetlView)
+	slot5 = PopupController.instance._popupList
+	slot7 = slot5
 
-	for slot7 = 1, PopupController.instance._popupList:getSize() do
+	for slot7 = 1, slot5.getSize(slot7) do
 		if PopupController.instance._popupList._dataList[slot7][2] == slot3 then
 			slot8 = PopupController.instance._popupList._dataList[slot7][3].data
 
@@ -792,7 +800,9 @@ function slot0.isCanPlayMakertLayerAnim(slot0, slot1, slot2)
 		return
 	end
 
-	for slot8, slot9 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnterSeasonMakertLayer), ""), "|")) do
+	slot8 = PlayerPrefsKey.EnterSeasonMakertLayer
+
+	for slot8, slot9 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(slot8), ""), "|")) do
 		if string.splitToNumber(slot9, "#") and slot10[1] == slot1 then
 			return slot10[2] < slot2
 		end
@@ -847,7 +857,9 @@ function slot0.isContainGroupCardUnlockTweenPos(slot0, slot1, slot2, slot3)
 		return true
 	end
 
-	for slot11, slot12 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SeasonGroupCardUnlockTweenPos), ""), "|")) do
+	slot11 = PlayerPrefsKey.SeasonGroupCardUnlockTweenPos
+
+	for slot11, slot12 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(slot11), ""), "|")) do
 		if string.splitToNumber(slot12, "#") and slot13[1] == slot1 then
 			if #slot13 > 1 then
 				for slot17 = 2, #slot13 do

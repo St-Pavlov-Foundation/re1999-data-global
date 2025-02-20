@@ -32,7 +32,10 @@ function slot0.initEquipList(slot0, slot1)
 	slot2 = slot1:isFiltering()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		for slot6, slot7 in ipairs(EquipModel.instance:getEquips()) do
+		slot5 = EquipModel.instance
+		slot7 = slot5
+
+		for slot6, slot7 in ipairs(slot5.getEquips(slot7)) do
 			if EquipHelper.isNormalEquip(slot7.config) then
 				if slot2 then
 					if slot1:checkIsIncludeTag(slot7.config) then
@@ -45,7 +48,10 @@ function slot0.initEquipList(slot0, slot1)
 		end
 	end
 
-	for slot6, slot7 in ipairs(HeroGroupTrialModel.instance:getTrialEquipList()) do
+	slot5 = HeroGroupTrialModel.instance
+	slot7 = slot5
+
+	for slot6, slot7 in ipairs(slot5.getTrialEquipList(slot7)) do
 		if slot2 then
 			if slot1:checkIsIncludeTag(slot7.config) then
 				table.insert(slot0.equipMoList, slot7)

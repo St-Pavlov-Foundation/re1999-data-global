@@ -108,8 +108,9 @@ function slot0._runWaitRefreshBuildingNearBlock(slot0)
 	if slot0._waitMapBlockMOList and #slot1 > 0 then
 		slot0._waitMapBlockMOList = nil
 		slot0._waitMapBlockMODict = nil
+		slot5 = slot1
 
-		RoomMapController.instance:updateBlockReplaceDefineId(slot1)
+		RoomMapController.instance:updateBlockReplaceDefineId(slot5)
 
 		for slot5, slot6 in ipairs(slot1) do
 			slot6:refreshRiver()

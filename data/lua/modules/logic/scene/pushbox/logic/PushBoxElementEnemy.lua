@@ -114,7 +114,8 @@ function slot0._startAct(slot0)
 		slot0._act_cell_x = slot0._act_cell_x + 1
 	end
 
-	slot0._act_cell = slot0._game_mgr:getCell(slot0._act_cell_x, slot0._act_cell_y)
+	slot6 = slot0._act_cell_y
+	slot0._act_cell = slot0._game_mgr:getCell(slot0._act_cell_x, slot6)
 
 	for slot6 = 0, 3 do
 		slot7 = slot0._gameObject.transform:GetChild(slot6)

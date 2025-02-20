@@ -122,7 +122,7 @@ function slot0._isFightBossId(slot0, slot1)
 end
 
 function slot0.getBossEntityMO(slot0)
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 		if slot0:_isFightBossId(slot6.modelId) then
 			return slot6
 		end
@@ -140,7 +140,7 @@ function slot0.getBossEntityMOByCurBloodCount(slot0)
 		return slot0:getBossEntityMO()
 	end
 
-	for slot9, slot10 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+	for slot9, slot10 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 		if slot4 == slot10.modelId then
 			return slot10
 		end

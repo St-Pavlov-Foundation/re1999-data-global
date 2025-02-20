@@ -93,7 +93,9 @@ function slot0.removeOneDispatchInfo(slot0, slot1)
 		slot0.dispatchedHeroDict[slot7] = nil
 	end
 
-	tabletool.removeValue(slot0.needCheckDispatchInfoList, slot2)
+	slot6 = slot2
+
+	tabletool.removeValue(slot0.needCheckDispatchInfoList, slot6)
 
 	for slot6, slot7 in pairs(slot0.elementId2DispatchMoDict) do
 		if slot7.id == slot1 then

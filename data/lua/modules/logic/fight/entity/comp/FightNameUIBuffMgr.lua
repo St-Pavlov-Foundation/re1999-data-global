@@ -24,6 +24,7 @@ function slot0.init(slot0, slot1, slot2, slot3)
 	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0.updateBuff, slot0)
 	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateBuff, slot0)
 	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
+	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, slot0._onAfterForceUpdatePerformanceData, slot0)
 end
 
 function slot0.beforeDestroy(slot0)
@@ -39,6 +40,7 @@ function slot0.beforeDestroy(slot0)
 	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0.updateBuff, slot0)
 	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateBuff, slot0)
 	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
+	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, slot0._onAfterForceUpdatePerformanceData, slot0)
 end
 
 function slot0.updateBuff(slot0, slot1, slot2, slot3, slot4, slot5)
@@ -111,7 +113,7 @@ function slot0.refreshBuffList(slot0)
 		return
 	end
 
-	slot2 = FightBuffHelper.filterBuffType(tabletool.copy(slot1.buffModel and slot1.buffModel:getList()), FightBuffTipsView.filterTypeKey)
+	slot2 = FightBuffHelper.filterBuffType(slot1:getBuffList(), FightBuffTipsView.filterTypeKey)
 
 	FightSkillBuffMgr.instance:dealStackerBuff(slot2)
 	table.sort(slot2, uv0.sortBuffMo)
@@ -170,6 +172,10 @@ function slot0._onGMForceRefreshNameUIBuff(slot0, slot1)
 	if slot0.entity and slot0.entity.id == slot1 then
 		slot0:refreshBuffList()
 	end
+end
+
+function slot0._onAfterForceUpdatePerformanceData(slot0)
+	slot0:refreshBuffList()
 end
 
 return slot0

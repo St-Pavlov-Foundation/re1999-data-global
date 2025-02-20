@@ -182,8 +182,9 @@ function slot0.getUCharArrIncludeSpace(slot0)
 	end
 
 	slot1 = {}
+	slot5 = "[%z-\\xc2-\\xf4][\\x80-\\xbf ]*"
 
-	for slot5 in string.gmatch(slot0, "[%z-\\xc2-\\xf4][\\x80-\\xbf ]*") do
+	for slot5 in string.gmatch(slot0, slot5) do
 		if not LuaUtil.isEmptyStr(slot5) then
 			table.insert(slot1, slot5)
 		end

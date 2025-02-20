@@ -52,6 +52,7 @@ function slot0.reqConfigNames(slot0)
 		"formula",
 		"room_building_level",
 		"room_building_skin",
+		"room_interact_building",
 		"formula_showtype",
 		"block_random_event",
 		"room_level",
@@ -107,6 +108,8 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 		slot0._levelGroupConfig = slot2
 	elseif slot1 == "room_building_skin" then
 		slot0:_initBuildingSkinConfig(slot2)
+	elseif slot1 == "room_interact_building" then
+		slot0._roomInteractBuildingConfig = slot2
 	elseif slot1 == "formula_showtype" then
 		slot0._formulaShowTypeConfig = slot2
 	elseif slot1 == "block_random_event" then
@@ -239,7 +242,8 @@ function slot0._initTheme(slot0, slot1)
 
 	for slot6, slot7 in pairs({
 		building = MaterialEnum.MaterialType.Building,
-		package = MaterialEnum.MaterialType.BlockPackage
+		package = MaterialEnum.MaterialType.BlockPackage,
+		extraShowBuilding = MaterialEnum.MaterialType.Building
 	}) do
 		slot0._itemIdToRoomThemeId[slot7] = {}
 	end
@@ -249,7 +253,8 @@ function slot0._initTheme(slot0, slot1)
 	for slot7, slot8 in pairs(slot1.configDict) do
 		slot0._roomThemeToItemList[slot7] = {
 			building = GameUtil.splitString2(slot8.building, true) or {},
-			package = GameUtil.splitString2(slot8.packages, true) or {}
+			package = GameUtil.splitString2(slot8.packages, true) or {},
+			extraShowBuilding = GameUtil.splitString2(slot8.extraShowBuilding, true) or {}
 		}
 		slot3[slot7] = slot7
 
@@ -518,6 +523,10 @@ end
 
 function slot0.getBuildingSkinList(slot0, slot1)
 	return slot0._buildingSkinListDict and slot0._buildingSkinListDict[slot1]
+end
+
+function slot0.getInteractBuildingConfig(slot0, slot1)
+	return slot0._roomInteractBuildingConfig and slot0._roomInteractBuildingConfig.configDict[slot1]
 end
 
 function slot0.getBuildingSkinCoByItemId(slot0, slot1)

@@ -486,7 +486,11 @@ function slot0.filterCardListByDmgAndCareer(slot0, slot1, slot2, slot3)
 								table.insert(slot0._curCardList, slot11)
 							end
 						else
-							for slot32, slot33 in pairs(string.splitToNumber(HeroConfig.instance:getHeroCO(slot11.heroId).battleTag, "#")) do
+							slot30 = HeroConfig.instance
+							slot32 = slot30
+							slot33 = slot11.heroId
+
+							for slot32, slot33 in pairs(string.splitToNumber(slot30.getHeroCO(slot32, slot33).battleTag, "#")) do
 								if slot33 == slot4[slot27] and not slot0:_isHeroInCardList(slot11.heroId) then
 									table.insert(slot0._curCardList, slot11)
 								end
@@ -686,9 +690,9 @@ function slot0.getrankEffects(slot0, slot1, slot2)
 		}
 	end
 
-	slot8 = "|"
+	slot9 = slot3.effect
 
-	for slot8, slot9 in pairs(string.split(slot3.effect, slot8)) do
+	for slot8, slot9 in pairs(string.split(slot9, "|")) do
 		if string.split(slot9, "#")[1] == "1" then
 			slot4[1] = tonumber(slot10[2])
 		elseif slot10[1] == "2" then
@@ -1110,8 +1114,9 @@ end
 function slot0.hasRoleCouldUp(slot0)
 	slot1 = false
 	slot2 = tabletool.copy(slot0:_getHeroList())
+	slot6 = slot2
 
-	slot0:checkAppendHeroMOs(slot2)
+	slot0:checkAppendHeroMOs(slot6)
 
 	for slot6, slot7 in pairs(slot2) do
 		if slot0:isHeroCouldExskillUp(slot7.heroId) and not HeroModel.instance:getByHeroId(slot7.heroId).isNew then
@@ -1124,8 +1129,9 @@ end
 
 function slot0.hasRewardGet(slot0)
 	slot1 = tabletool.copy(slot0:_getHeroList())
+	slot5 = slot1
 
-	slot0:checkAppendHeroMOs(slot1)
+	slot0:checkAppendHeroMOs(slot5)
 
 	for slot5, slot6 in pairs(slot1) do
 		if slot0:hasCultureRewardGet(slot6.heroId) or slot0:hasItemRewardGet(slot6.heroId) then
@@ -1201,8 +1207,9 @@ function slot0.heroTalentRedPoint(slot0, slot1)
 		end
 
 		slot9 = true
+		slot10 = true
 
-		for slot9, slot10 in ipairs(ItemModel.instance:getItemDataListByConfigStr(slot4.consume, true, slot9)) do
+		for slot9, slot10 in ipairs(ItemModel.instance:getItemDataListByConfigStr(slot4.consume, slot9, slot10)) do
 			if not ItemModel.instance:goodsIsEnough(slot10.materilType, slot10.materilId, slot10.quantity) then
 				return false
 			end

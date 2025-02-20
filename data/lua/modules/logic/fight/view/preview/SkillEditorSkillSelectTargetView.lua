@@ -67,7 +67,7 @@ function slot0._onSpineLoaded(slot0)
 end
 
 function slot0._updateSelectUI(slot0)
-	gohelper.setActive(slot0._imgSelectGO, FightHelper.getEntity(FightEntityModel.instance:getByPosId(slot0._side, SkillEditorView.selectPosId[slot0._side]) and slot2.id or 0) ~= nil)
+	gohelper.setActive(slot0._imgSelectGO, FightHelper.getEntity(FightDataHelper.entityMgr:getByPosId(slot0._side, SkillEditorView.selectPosId[slot0._side]) and slot2.id or 0) ~= nil)
 
 	if slot3 then
 		slot4, slot5 = slot0:_getEntityMiddlePos(slot3)
@@ -76,7 +76,7 @@ function slot0._updateSelectUI(slot0)
 	else
 		SkillEditorView.selectPosId[slot0._side] = 1
 
-		gohelper.setActive(slot0._imgSelectGO, FightHelper.getEntity(FightEntityModel.instance:getByPosId(slot0._side, 1) and slot2.id or 0) ~= nil)
+		gohelper.setActive(slot0._imgSelectGO, FightHelper.getEntity(FightDataHelper.entityMgr:getByPosId(slot0._side, 1) and slot2.id or 0) ~= nil)
 
 		if slot3 then
 			slot4, slot5 = slot0:_getEntityMiddlePos(slot3)
@@ -114,17 +114,13 @@ function slot0._hideSelectGO(slot0)
 end
 
 function slot0._updateClickPos(slot0)
-	slot5 = slot0._side
+	slot1 = {}
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getModel(slot5):getList()) do
-		table.insert({}, slot6)
-	end
+	FightDataHelper.entityMgr:getNormalList(slot0._side, slot1)
 
-	slot5 = slot0._side
+	slot6 = slot1
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getSubModel(slot5):getList()) do
-		table.insert(slot1, slot6)
-	end
+	FightDataHelper.entityMgr:getSubList(slot0._side, slot6)
 
 	slot2 = {}
 
@@ -175,7 +171,9 @@ function slot0.sortAssembledMonster(slot0, slot1)
 end
 
 function slot0._dealAssembledMonsterClick(slot0, slot1)
-	table.sort(slot1, uv0.sortAssembledMonster)
+	slot5 = uv0.sortAssembledMonster
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		gohelper.setAsLastSibling(slot6.clickGO)
@@ -205,11 +203,11 @@ function slot0._calcRect(slot0, slot1)
 end
 
 function slot0._getHangPointObj(slot0, slot1, slot2)
-	return FightEntityModel.instance:isSub(slot1:getMO().uid) and slot1.go or slot1:getHangPoint(slot2)
+	return FightDataHelper.entityMgr:isSub(slot1:getMO().uid) and slot1.go or slot1:getHangPoint(slot2)
 end
 
 function slot0._onClick(slot0, slot1)
-	slot3 = FightEntityModel.instance:getById(slot1)
+	slot3 = FightDataHelper.entityMgr:getById(slot1)
 
 	SkillEditorView.setSelectPosId(slot0._side, slot3.position)
 
@@ -227,7 +225,7 @@ function slot0._onClick(slot0, slot1)
 end
 
 function slot0._onLongPress(slot0, slot1)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			entityId = slot2.id
 		})

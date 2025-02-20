@@ -31,9 +31,9 @@ function slot0.initRedDot(slot0)
 	slot0.redDotDict = {}
 
 	if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.NoticeRedDotKey, nil)) then
-		slot5 = ";"
+		slot6 = slot1
 
-		for slot5, slot6 in ipairs(string.split(slot1, slot5)) do
+		for slot5, slot6 in ipairs(string.split(slot6, ";")) do
 			slot0.redDotDict[slot6] = true
 		end
 	end
@@ -114,7 +114,9 @@ function slot0.onGetInfo(slot0, slot1)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if slot6.noticePositionTypes and next(slot6.noticePositionTypes) then
-			NoticeMO.New():init(slot6)
+			slot11 = slot6
+
+			NoticeMO.New():init(slot11)
 
 			for slot11, slot12 in pairs(slot6.noticePositionTypes) do
 				if slot12 == NoticeEnum.NoticePositionType.BeforeLogin then
@@ -141,7 +143,7 @@ end
 
 function slot0.hadNewNotice(slot0)
 	for slot5, slot6 in ipairs(slot0._norNotices) do
-		if not slot0._hasOpenNoticeIdDict[slot6.id] and not slot0:checkNoticeOnlyIncludeType(slot6, NoticeType.Information) then
+		if not slot0._hasOpenNoticeIdDict[slot6.id] then
 			return true
 		end
 	end
@@ -364,7 +366,10 @@ end
 function slot0.onCloseNoticeView(slot0)
 	slot0:clear()
 	NoticeContentListModel.instance:clear()
-	slot0:setSelectType(nil)
+
+	slot4 = nil
+
+	slot0:setSelectType(slot4)
 
 	for slot4, slot5 in ipairs(slot0._loadTaskList) do
 		TaskDispatcher.cancelTask(slot5[1], slot5[2])

@@ -77,12 +77,14 @@ function slot0.refreshPropUpAD(slot0)
 	slot0:applyRareStar(slot2, SummonEnum.CustomPickRare)
 	slot0:refreshProbIcons(slot2, slot0._resultIds)
 
-	slot3, slot4 = SummonMainModel.instance:getCustomPickProbability(slot0._poolId)
+	slot3, slot4, slot5 = SummonMainModel.instance:getCustomPickProbability(slot0._poolId)
 
-	gohelper.setActive(slot2.txtProbability, slot4 == nil)
+	gohelper.setActive(slot2.txtProbability, slot4 ~= 0 or not slot5)
 
 	if slot4 ~= 0 then
-		slot2.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang(slot4 and "summonpooldetail_up_probability_total" or "p_summonpooldetail_up_probability"), SummonEnum.CustomPickRare + 1, slot3, slot4 / 10)
+		slot2.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang(slot4 ~= 0 and "summonpooldetail_up_probability_total" or "p_summonpooldetail_up_probability"), SummonEnum.CustomPickRare + 1, slot3, slot4 / 10)
+	elseif slot5 then
+		slot2.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("summonpooldetail_up_probability_StrongCustomOnePick"), slot6, slot3)
 	else
 		slot2.txtProbability.text = ""
 		slot2.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
@@ -97,15 +99,15 @@ function slot0.getProbUpItem(slot0, slot1)
 		slot2 = slot0:getUserDataTb_()
 		slot2.heroIcons = {}
 		slot2.equipIcons = {}
-		slot7 = tostring(slot1)
-		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. slot7)
+		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. tostring(slot1))
 		slot2.go = slot3
 		slot2.starList = slot0:getUserDataTb_()
 		slot2.iconContainerGo = gohelper.findChild(slot3, "heroshowlist")
 		slot2.iconEquipContainerGo = gohelper.findChild(slot3, "equipshowlist")
 		slot2.iconTemplateGo = gohelper.findChild(slot3, "heroshowlist/summonpooldetailheroitem")
 		slot2.iconEquipTemplateGo = gohelper.findChild(slot3, "equipshowlist/summonpooldetailequipitem")
-		slot2.starContainerGo = gohelper.findChild(slot3, "#go_starList")
+		slot7 = "#go_starList"
+		slot2.starContainerGo = gohelper.findChild(slot3, slot7)
 
 		for slot7 = 1, uv0 + 1 do
 			slot2.starList[slot7] = gohelper.findChild(slot2.starContainerGo, "star" .. tostring(slot7))
@@ -135,9 +137,10 @@ function slot0.refreshProbIcons(slot0, slot1, slot2)
 end
 
 function slot0.refreshHeroProbIcons(slot0, slot1, slot2)
-	slot6 = slot0._poolId
+	slot4 = SummonCustomPickModel.instance
+	slot6 = slot4
 
-	for slot6 = 1, SummonCustomPickModel.instance:getMaxSelectCount(slot6) do
+	for slot6 = 1, slot4.getMaxSelectCount(slot6, slot0._poolId) do
 		slot8 = slot0:getProbUpHeroIconItem(slot1, slot6)
 
 		gohelper.setActive(slot8.go, true)

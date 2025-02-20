@@ -18,10 +18,12 @@ end
 
 function slot0.addEvents(slot0)
 	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnnext:RemoveClickListener()
+	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0._btnnextOnClick(slot0)
@@ -30,6 +32,12 @@ end
 
 function slot0._btnclickOnClick(slot0, slot1)
 	RoomCharacterController.instance:nextDialogInteraction(slot1)
+end
+
+function slot0.OnStoryDialogSelect(slot0, slot1)
+	if slot1 > 0 and slot1 <= #slot0._selectItemList then
+		RoomCharacterController.instance:nextDialogInteraction(slot1)
+	end
 end
 
 function slot0._editableInitView(slot0)
@@ -94,6 +102,7 @@ function slot0._refreshSelect(slot0)
 			slot7.btnclick = gohelper.findChildButtonWithAudio(slot7.go, "btnselect")
 
 			slot7.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot7.index)
+			PCInputController.instance:showkeyTips(slot7.go, nil, , slot4)
 			table.insert(slot0._selectItemList, slot7)
 		end
 

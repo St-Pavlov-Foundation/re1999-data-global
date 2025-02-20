@@ -62,11 +62,15 @@ end
 
 function slot0.onOpen(slot0)
 	slot0._simagebgimag:LoadImage(ResUrl.getVersionActivityDungeon_1_2("tanchaung_di"))
-	gohelper.setActive(slot0._contenttitle, false)
 
-	slot4 = slot0._config.id
+	slot4 = false
 
-	for slot4, slot5 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot4)) do
+	gohelper.setActive(slot0._contenttitle, slot4)
+
+	slot3 = VersionActivity1_2DungeonConfig.instance
+	slot5 = slot3
+
+	for slot4, slot5 in pairs(slot3.getBuildingConfigsByElementID(slot5, slot0._config.id)) do
 		slot0._buildingConfig = slot5
 	end
 

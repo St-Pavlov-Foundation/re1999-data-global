@@ -124,11 +124,10 @@ end
 function slot0._startFadeIn(slot0)
 	slot0._entity:setAlpha(1, uv0 / FightModel.instance:getSpeed())
 
-	slot5 = FightModel.instance
-	slot6 = slot5
-	slot5 = slot5.getSpeed(slot6)
+	slot6 = FightModel.instance:getSpeed()
+	slot5 = uv0 / slot6
 
-	TaskDispatcher.runDelay(slot0._playBornAnim, slot0, uv0 / slot5)
+	TaskDispatcher.runDelay(slot0._playBornAnim, slot0, slot5)
 
 	slot0._startTime = Time.time
 	slot1 = slot0._entity.spine:getPPEffectMask()

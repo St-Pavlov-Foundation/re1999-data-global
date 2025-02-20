@@ -64,9 +64,9 @@ end
 
 function slot0._clearBuff(slot0)
 	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(SkillEditorMgr.instance.cur_select_side, false)) do
-		for slot11, slot12 in ipairs(tabletool.copy(slot6:getMO().buffModel:getList())) do
-			slot6:getMO():delBuff(slot12)
-			slot6.buff:delBuff(slot12)
+		for slot11, slot12 in pairs(slot6:getMO():getBuffDic()) do
+			slot6:getMO():delBuff(slot12.uid)
+			slot6.buff:delBuff(slot12.uid)
 		end
 	end
 

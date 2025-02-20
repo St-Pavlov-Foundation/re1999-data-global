@@ -15,39 +15,45 @@ function slot0.onInitialization(slot0)
 end
 
 function slot0.onDestructor(slot0)
-	for slot4 = #slot0.USERDATA, 1, -1 do
-		if type(slot0.USERDATA[slot4]) == "table" then
-			for slot9 in pairs(slot5) do
-				rawset(slot5, slot9, nil)
+	slot1 = slot0.keyword_gameObject
+
+	for slot5 = #slot0.USERDATA, 1, -1 do
+		if type(slot0.USERDATA[slot5]) == "table" then
+			for slot10 in pairs(slot6) do
+				rawset(slot6, slot10, nil)
 			end
 		else
-			rawset(slot0, slot5, nil)
+			rawset(slot0, slot6, nil)
 		end
 	end
 
 	if slot0.REGISTAFTERDISPOSE then
-		for slot4 = #slot0._instantiateClass, 1, -1 do
-			if not slot0._instantiateClass[slot4].INVOKEDDISPOSE then
-				slot5:disposeSelf()
+		for slot5 = #slot0._instantiateClass, 1, -1 do
+			if not slot0._instantiateClass[slot5].INVOKEDDISPOSE then
+				slot6:disposeSelf()
 			end
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0.components_internal) do
-		if not slot5.INVOKEDDISPOSE then
-			slot5:disposeSelf()
+	for slot5, slot6 in pairs(slot0.components_internal) do
+		if not slot6.INVOKEDDISPOSE then
+			slot6:disposeSelf()
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0) do
-		if type(slot5) == "userdata" then
-			rawset(slot0, slot4, nil)
+	for slot5, slot6 in pairs(slot0) do
+		if type(slot6) == "userdata" then
+			rawset(slot0, slot5, nil)
 		end
 	end
 
 	slot0._instantiateClass = nil
 	slot0.components_internal = nil
 	slot0.USERDATA = nil
+
+	if slot1 then
+		gohelper.destroy(slot1)
+	end
 end
 
 function slot0.onDestructorFinish(slot0)
@@ -216,6 +222,18 @@ function slot0.registComponent(slot0, slot1)
 	slot0.components_internal[slot1.__cname] = slot2
 
 	return slot2
+end
+
+function slot0.releaseComponent(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	if slot0.components_internal[slot1.__cname] then
+		slot0.components_internal[slot2]:disposeSelf()
+
+		slot0.components_internal[slot2] = nil
+	end
 end
 
 return slot0

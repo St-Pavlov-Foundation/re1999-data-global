@@ -173,9 +173,9 @@ function slot0.initItems(slot0)
 		slot5.goprogress = gohelper.findChild(slot5.go, "#go_progress")
 		slot5.txtpassround = gohelper.findChildText(slot5.go, "#image_finish/#txt_time")
 		slot5.btnclick = gohelper.findChildButton(slot5.go, "btn_click")
-		slot9 = slot0
+		slot9 = slot0.onClickIndex
 
-		slot5.btnclick:AddClickListener(slot0.onClickIndex, slot9, slot4)
+		slot5.btnclick:AddClickListener(slot9, slot0, slot4)
 
 		slot5.progressActives = slot0:getUserDataTb_()
 		slot5.progressDeactives = slot0:getUserDataTb_()

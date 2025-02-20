@@ -43,6 +43,7 @@ function slot0._editableInitView(slot0)
 	slot0:initCareerBindBuff()
 	NavigateMgr.instance:addEscape(slot0.viewName, slot0.blockEsc)
 	slot0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, slot0.onStartPlayClothSkill, slot0, LuaEventSystem.High)
+	slot0:addEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, slot0.closeThis, slot0, LuaEventSystem.High)
 end
 
 function slot0.blockEsc()
@@ -58,7 +59,7 @@ function slot0.onOpen(slot0)
 	slot0.curSelectEntity = 0
 	slot0.entityIdList = FightModel.instance.canContractList
 	slot0.nanaEntityId = FightModel.instance.notifyEntityId
-	slot0.nanaExSkillLv = FightEntityModel.instance:getById(slot0.nanaEntityId) and slot1.exSkillLevel or 0
+	slot0.nanaExSkillLv = FightDataHelper.entityMgr:getById(slot0.nanaEntityId) and slot1.exSkillLevel or 0
 
 	table.sort(slot0.entityIdList, uv0.sortEntityId)
 
@@ -71,11 +72,11 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.sortEntityId(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot0) then
+	if not FightDataHelper.entityMgr:getById(slot0) then
 		return false
 	end
 
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		return false
 	end
 
@@ -83,14 +84,15 @@ function slot0.sortEntityId(slot0, slot1)
 end
 
 function slot0.initCareerBindBuff(slot0)
+	slot6 = "|"
 	slot0.careerDict = {}
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(lua_fight_const.configDict[31].value, "|")) do
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(lua_fight_const.configDict[31].value, slot6)) do
 		slot8 = string.split(slot7, "%")
 		slot9 = tonumber(slot8[1])
-		slot13 = ","
+		slot14 = slot8[2]
 
-		for slot13, slot14 in ipairs(string.split(slot8[2], slot13)) do
+		for slot13, slot14 in ipairs(string.split(slot14, ",")) do
 			slot15 = string.splitToNumber(slot14, ":")
 			slot17 = slot15[2]
 
@@ -110,7 +112,7 @@ function slot0.addItem(slot0, slot1)
 	slot2.simageIcon = gohelper.findChildSingleImage(slot2.go, "icon")
 	slot2.imageCareer = gohelper.findChildImage(slot2.go, "#image_Attr")
 
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		slot2.simageIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot3.skin) and slot4.retangleIcon))
 	end
 
@@ -159,7 +161,7 @@ function slot0.refreshSelectText(slot0)
 end
 
 function slot0.refreshBuffText(slot0)
-	if not FightEntityModel.instance:getById(slot0.curSelectEntity) then
+	if not FightDataHelper.entityMgr:getById(slot0.curSelectEntity) then
 		logError("没找到entityMo : " .. tostring(slot0.curSelectEntity))
 
 		return

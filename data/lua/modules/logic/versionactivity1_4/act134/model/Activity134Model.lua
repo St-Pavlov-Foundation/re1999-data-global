@@ -23,8 +23,10 @@ function slot0.initStory(slot0, slot1)
 	slot0.storyMoList = {}
 	slot0.finishStoryCount = #slot1
 	slot0.maxNeedClueCount = 0
+	slot4 = Activity134Config.instance
+	slot6 = slot4
 
-	for slot5, slot6 in ipairs(Activity134Config.instance:getBonusAllConfig()) do
+	for slot5, slot6 in ipairs(slot4.getBonusAllConfig(slot6)) do
 		Activity134StoryMo.New():init(slot5, slot6)
 
 		slot7.status = slot1[slot6.id] and Activity134Enum.StroyStatus.Finish or Activity134Enum.StroyStatus.Orgin

@@ -1,0 +1,602 @@
+[
+  {
+    "id": 20001,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10001515",
+    "desc": "language_10058337",
+    "icon": "8110213",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20002,
+    "season": "2,3",
+    "rare": 2,
+    "title": "language_10043863",
+    "desc": "language_10058338",
+    "icon": "8210308",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20003,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10001542",
+    "desc": "language_10058339",
+    "icon": "8210313",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20004,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10001432",
+    "desc": "language_10058340",
+    "icon": "8310114",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20005,
+    "season": "3",
+    "rare": 1,
+    "title": "language_10001431",
+    "desc": "language_10058341",
+    "icon": "8120034",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20006,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10043888",
+    "desc": "language_10058342",
+    "icon": "8120703",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20007,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10001862",
+    "desc": "language_10043881",
+    "icon": "8120317",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20008,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10043878",
+    "desc": "language_10007434",
+    "icon": "8120208",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20009,
+    "season": "2,3",
+    "rare": 1,
+    "title": "language_10002035",
+    "desc": "language_10058343",
+    "icon": "8320049",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20010,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10001433",
+    "desc": "language_10058344",
+    "icon": "8220036",
+    "unique": 1,
+    "coinValue": 15
+  },
+  {
+    "id": 20011,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044125",
+    "desc": "language_10058345",
+    "icon": "8320207",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20012,
+    "season": "3",
+    "rare": 1,
+    "title": "language_10002123",
+    "desc": "language_10058346",
+    "icon": "8130041",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20013,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10043904",
+    "desc": "language_10058347",
+    "icon": "8130203",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20014,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10001797",
+    "desc": "language_10058348",
+    "icon": "8230027",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20015,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10001799",
+    "desc": "language_10007373",
+    "icon": "8230028",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20016,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10001805",
+    "desc": "language_10058349",
+    "icon": "8330715",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20018,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10001803",
+    "desc": "language_10058350",
+    "icon": "8210711",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20019,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10001435",
+    "desc": "language_10058351",
+    "icon": "8310212",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20020,
+    "season": "2,3",
+    "rare": 1,
+    "title": "language_10043892",
+    "desc": "language_10058352",
+    "icon": "8120705",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20021,
+    "season": "2,3",
+    "rare": 1,
+    "title": "language_10043876",
+    "desc": "language_10058353",
+    "icon": "8120110",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20022,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10001818",
+    "desc": "language_10058354",
+    "icon": "8120047",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20023,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10001853",
+    "desc": "language_10058355",
+    "icon": "8120216",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20024,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10001440",
+    "desc": "language_10058356",
+    "icon": "8230042",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20025,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10002072",
+    "desc": "language_10058357",
+    "icon": "8130315",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20026,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10002026",
+    "desc": "language_10044046",
+    "icon": "8230316",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20027,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10044183",
+    "desc": "language_10058358",
+    "icon": "8330311",
+    "unique": 1,
+    "coinValue": 29
+  },
+  {
+    "id": 20028,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10044185",
+    "desc": "language_10058359",
+    "icon": "8330412",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20029,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044085",
+    "desc": "language_10058360",
+    "icon": "8310022",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20030,
+    "season": "2,3",
+    "rare": 1,
+    "title": "language_10001809",
+    "desc": "language_10058361",
+    "icon": "8120416",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20031,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044118",
+    "desc": "language_10058362",
+    "icon": "8320025",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20032,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10002134",
+    "desc": "language_10058363",
+    "icon": "8320046",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20033,
+    "season": "2,3",
+    "rare": 2,
+    "title": "language_10044035",
+    "desc": "language_10058364",
+    "icon": "8230037",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20034,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10044042",
+    "desc": "language_10058365",
+    "icon": "8230304",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20035,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10044041",
+    "desc": "language_10037473",
+    "icon": "8230204",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20036,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044178",
+    "desc": "language_10058366",
+    "icon": "8330211",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20037,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10002140",
+    "desc": "language_10058367",
+    "icon": "8230038",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20038,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10052100",
+    "desc": "language_10058368",
+    "icon": "8350060",
+    "unique": 1,
+    "coinValue": 29
+  },
+  {
+    "id": 20039,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10052103",
+    "desc": "language_10058369",
+    "icon": "8350061",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20040,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10052119",
+    "desc": "language_10058370",
+    "icon": "8330063",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20041,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10043886",
+    "desc": "language_10058371",
+    "icon": "8120610",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20042,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044167",
+    "desc": "language_10058372",
+    "icon": "8330020",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20043,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10040469",
+    "desc": "language_10058373",
+    "icon": "8150010",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20044,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10040471",
+    "desc": "language_10058374",
+    "icon": "8250011",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20045,
+    "season": "2,3",
+    "rare": 2,
+    "title": "language_10002074",
+    "desc": "language_10058375",
+    "icon": "8320514",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20046,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10044176",
+    "desc": "language_10058376",
+    "icon": "8330112",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20047,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10044001",
+    "desc": "language_10058377",
+    "icon": "8220106",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20048,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10043918",
+    "desc": "language_10058378",
+    "icon": "8130505",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20049,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10044048",
+    "desc": "language_10058379",
+    "icon": "8230509",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20050,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10001438",
+    "desc": "language_10058380",
+    "icon": "8230040",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20051,
+    "season": "1,2,3",
+    "rare": 3,
+    "title": "language_10002117",
+    "desc": "language_10058381",
+    "icon": "8330413",
+    "unique": 0,
+    "coinValue": 29
+  },
+  {
+    "id": 20052,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10044131",
+    "desc": "language_10058382",
+    "icon": "8320310",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20053,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10043969",
+    "desc": "language_10058383",
+    "icon": "8210105",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20054,
+    "season": "1,2,3",
+    "rare": 1,
+    "title": "language_10002089",
+    "desc": "language_10058384",
+    "icon": "8130115",
+    "unique": 0,
+    "coinValue": 8
+  },
+  {
+    "id": 20055,
+    "season": "3",
+    "rare": 2,
+    "title": "language_10044203",
+    "desc": "language_10058385",
+    "icon": "8330816",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20056,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10002107",
+    "desc": "language_10058386",
+    "icon": "8220044",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20057,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10001560",
+    "desc": "language_10058387",
+    "icon": "8210031",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20058,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10044139",
+    "desc": "language_10058388",
+    "icon": "8320506",
+    "unique": 1,
+    "coinValue": 29
+  },
+  {
+    "id": 20059,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10002109",
+    "desc": "language_10058389",
+    "icon": "8220215",
+    "unique": 0,
+    "coinValue": 15
+  },
+  {
+    "id": 20060,
+    "season": "1,2,3",
+    "rare": 2,
+    "title": "language_10052006",
+    "desc": "language_10058390",
+    "icon": "8330219",
+    "unique": 1,
+    "coinValue": 15
+  },
+  {
+    "id": 20061,
+    "season": "2,3",
+    "rare": 3,
+    "title": "language_10044189",
+    "desc": "language_10058391",
+    "icon": "8330418",
+    "unique": 1,
+    "coinValue": 29
+  }
+]

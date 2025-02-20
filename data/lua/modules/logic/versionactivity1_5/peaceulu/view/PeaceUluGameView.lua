@@ -143,7 +143,9 @@ function slot0._onClickDraw(slot0)
 end
 
 function slot0._showResultFinish(slot0)
-	TaskDispatcher.cancelTask(slot0._showResultFinish, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._showResultFinish, slot4)
 
 	for slot4, slot5 in ipairs(slot0._stateList) do
 		gohelper.setActive(slot5, false)

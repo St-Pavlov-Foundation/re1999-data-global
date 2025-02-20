@@ -38,7 +38,7 @@ function slot0.sendTestFightId(slot0, slot1)
 	logNormal("Enter Test FightId, param = \n" .. cjson.encode(slot1))
 	FightModel.instance:setFightParam(slot1)
 
-	slot1.fightActType = slot1.fightActType or 1
+	slot1.fightActType = slot1.fightActType or FightEnum.FightActType.Normal
 
 	FightRpc.instance:sendTestFightIdRequest(slot1)
 end
@@ -240,8 +240,7 @@ function slot0.handleJump(slot0)
 				[ViewName.VersionActivity_1_2_HeroGroupEditView] = true,
 				[ViewName.Season123HeroGroupEditView] = true,
 				[ViewName.Season166HeroGroupEditView] = true,
-				[ViewName.RougeHeroGroupEditView] = true,
-				[ViewName.Season123_2_1HeroGroupEditView] = true
+				[ViewName.RougeHeroGroupEditView] = true
 			}
 		end
 
@@ -270,7 +269,9 @@ function slot0.handleJump(slot0)
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, uv0.openedViewNameList[#uv0.openedViewNameList].viewName)
 
 			if RoomController.instance:isRoomScene() then
-				RoomController.instance:popUpSourceView(uv0.openedViewNameList)
+				slot4 = uv0.openedViewNameList
+
+				RoomController.instance:popUpSourceView(slot4)
 
 				for slot4, slot5 in ipairs(uv0.openedViewNameList) do
 					if slot5.viewName ~= ViewName.RoomInitBuildingView and slot5.viewName ~= ViewName.RoomFormulaView then
@@ -304,6 +305,10 @@ end
 
 function slot0._onFightSceneStart(slot0, slot1, slot2)
 	if slot2 == 1 then
+		if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+			return
+		end
+
 		if FightModel.instance.needFightReconnect then
 			FightSystem.instance:reconnectFight()
 		else
@@ -330,6 +335,11 @@ end
 function slot0._onRoundSequenceFinish(slot0)
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
+
+		if FightDataHelper.fieldMgr:isDouQuQu() then
+			return
+		end
+
 		FightRpc.instance:sendEndFightRequest(false)
 	end
 end
@@ -455,7 +465,7 @@ function slot0.setFightHeroGroup(slot0)
 
 	slot8 = slot1.battleId and lua_battle.configDict[slot7]
 
-	slot1:setMySide(slot8 and slot8.noClothSkill == 0 and slot2.clothId or 0, slot3, slot2:getSubList(), slot2:getAllHeroEquips(), SeasonFightHandler.getSeasonEquips(slot2, slot1))
+	slot1:setMySide(slot8 and slot8.noClothSkill == 0 and slot2.clothId or 0, slot3, slot2:getSubList(), slot2:getAllHeroEquips(), SeasonFightHandler.getSeasonEquips(slot2, slot1), nil, , slot2:getAssistBossId())
 
 	return true
 end
@@ -475,27 +485,28 @@ function slot0.setFightHeroSingleGroup(slot0)
 	slot5, slot6 = slot2:getSubList()
 	slot7 = HeroSingleGroupModel.instance:getList()
 	slot8 = slot2:getAllHeroEquips()
+	slot9 = slot2:getAssistBossId()
 
-	for slot12 = 1, #slot3 do
-		if slot3[slot12] ~= slot7[slot12].heroUid then
-			slot3[slot12] = "0"
+	for slot13 = 1, #slot3 do
+		if slot3[slot13] ~= slot7[slot13].heroUid then
+			slot3[slot13] = "0"
 			slot4 = slot4 - 1
 
-			if slot8[slot12] then
-				slot8[slot12].heroUid = "0"
+			if slot8[slot13] then
+				slot8[slot13].heroUid = "0"
 			end
 		end
 	end
 
-	slot12 = #slot7
+	slot13 = #slot3 + #slot5
 
-	for slot12 = #slot3 + 1, math.min(#slot3 + #slot5, slot12) do
-		if slot5[slot12 - #slot3] ~= slot7[slot12].heroUid then
-			slot5[slot12 - #slot3] = "0"
+	for slot13 = #slot3 + 1, math.min(slot13, #slot7) do
+		if slot5[slot13 - #slot3] ~= slot7[slot13].heroUid then
+			slot5[slot13 - #slot3] = "0"
 			slot6 = slot6 - 1
 
-			if slot8[slot12] then
-				slot8[slot12].heroUid = "0"
+			if slot8[slot13] then
+				slot8[slot13].heroUid = "0"
 			end
 		end
 	end
@@ -506,9 +517,9 @@ function slot0.setFightHeroSingleGroup(slot0)
 		return false
 	end
 
-	slot11 = slot1.battleId and lua_battle.configDict[slot10]
+	slot12 = slot1.battleId and lua_battle.configDict[slot11]
 
-	slot1:setMySide(slot11 and slot11.noClothSkill == 0 and slot2.clothId or 0, slot3, slot5, slot8, SeasonFightHandler.getSeasonEquips(slot2, slot1))
+	slot1:setMySide(slot12 and slot12.noClothSkill == 0 and slot2.clothId or 0, slot3, slot5, slot8, SeasonFightHandler.getSeasonEquips(slot2, slot1), nil, , slot9)
 
 	return true
 end
@@ -520,6 +531,10 @@ function slot0.openRoundView(slot0)
 end
 
 function slot0.canOpenRoundView(slot0)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
 		return false
 	end

@@ -130,7 +130,9 @@ function slot0._delayDispatchResizeEvent(slot0)
 end
 
 function slot0._setSoftMaskEnable(slot0, slot1)
-	for slot7 = 0, ViewMgr.instance:getUIRoot():GetComponentsInChildren(typeof(Coffee.UISoftMask.SoftMask), false).Length - 1 do
+	slot7 = false
+
+	for slot7 = 0, ViewMgr.instance:getUIRoot():GetComponentsInChildren(typeof(Coffee.UISoftMask.SoftMask), slot7).Length - 1 do
 		slot3[slot7].enabled = slot1
 	end
 end

@@ -406,6 +406,10 @@ function slot0.getPlayerPrefsKey(slot0, slot1)
 	return slot1 .. slot0._userId
 end
 
+function slot0.getPlayerRegisterTime(slot0)
+	return slot0._registerTime
+end
+
 slot0.instance = slot0.New()
 
 return slot0

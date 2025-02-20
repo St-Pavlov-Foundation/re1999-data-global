@@ -4,8 +4,8 @@ slot0 = class("RougeMapFogEffect", LuaCompBase)
 
 function slot0.init(slot0, slot1)
 	slot0.effectGO = slot1
-	slot5 = typeof
-	slot0.fogMeshRenderer = gohelper.findChildComponent(slot0.effectGO, "mask_smoke", slot5(UnityEngine.MeshRenderer))
+	slot5 = "mask_smoke"
+	slot0.fogMeshRenderer = gohelper.findChildComponent(slot0.effectGO, slot5, typeof(UnityEngine.MeshRenderer))
 	slot0.fogMat = slot0.fogMeshRenderer.sharedMaterial
 	slot0.tempVector4 = Vector4.zero
 	slot0.shaderParamList = slot0:getUserDataTb_()

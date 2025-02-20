@@ -70,9 +70,10 @@ function slot0.refreshUI(slot0)
 	slot0:_clear()
 	gohelper.setActive(slot0._goadditionRule, true)
 
-	slot7 = "#"
+	slot7 = "|"
+	slot8 = "#"
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, true, "|", slot7)) do
+	for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, true, slot7, slot8)) do
 		slot9 = slot8[1]
 
 		if lua_rule.configDict[slot8[2]] then

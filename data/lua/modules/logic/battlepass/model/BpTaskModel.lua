@@ -52,8 +52,10 @@ end
 function slot0._checkRedDot(slot0)
 	slot1 = BpModel.instance:isWeeklyScoreFull()
 	slot2 = 0
+	slot5 = slot0.serverTaskModel
+	slot7 = slot5
 
-	for slot6, slot7 in ipairs(slot0.serverTaskModel:getList()) do
+	for slot6, slot7 in ipairs(slot5.getList(slot7)) do
 		if slot7.config.bpId == BpModel.instance.id then
 			if slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 then
 				if slot7.config.loopType == 5 then

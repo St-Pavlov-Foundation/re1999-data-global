@@ -52,6 +52,9 @@ function slot0._editableInitView(slot0)
 	slot0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
 
 	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
+
+	slot0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
+
 	slot0.showStatusDraw = false
 
 	gohelper.setActive(slot0._gohasskin, false)
@@ -131,11 +134,11 @@ function slot0._initHandbookInfo(slot0)
 		slot0._signatureClick = gohelper.getClickWithAudio(slot0._simagesignature.gameObject, AudioEnum.UI.play_ui_moor_open)
 
 		slot0._signatureClick:AddClickListener(slot0.onSignatureOnClick, slot0)
+		slot0._btnskinswitch:AddClickListener(slot0.onSkinSwitchBtnOnClick, slot0)
 
-		slot4 = slot0
+		slot4 = AudioEnum.UI.Play_UI_General_shutdown
 
-		slot0._btnskinswitch:AddClickListener(slot0.onSkinSwitchBtnOnClick, slot4)
-		gohelper.addUIClickAudio(slot0._btnskinswitch.gameObject, AudioEnum.UI.Play_UI_General_shutdown)
+		gohelper.addUIClickAudio(slot0._btnskinswitch.gameObject, slot4)
 
 		slot0.starList = {}
 
@@ -143,9 +146,9 @@ function slot0._initHandbookInfo(slot0)
 			table.insert(slot0.starList, gohelper.findChild(slot0._gostarlist, "star" .. slot4))
 		end
 
-		slot4 = "charactercareer" .. slot0.heroInfo.config.career
+		slot4 = slot0._careericon
 
-		UISpriteSetMgr.instance:setCharactergetSprite(slot0._careericon, slot4)
+		UISpriteSetMgr.instance:setCharactergetSprite(slot4, "charactercareer" .. slot0.heroInfo.config.career)
 
 		for slot4 = 1, 6 do
 			gohelper.setActive(slot0.starList[slot4], slot4 <= slot0.heroInfo.config.rare + 1)
@@ -154,13 +157,16 @@ function slot0._initHandbookInfo(slot0)
 		slot0.haveSkinList = {}
 		slot0.haveSkinDict = {}
 		slot1 = SkinInfoMO.New()
-		slot5 = slot0.heroInfo.config.skinId
+		slot6 = slot0.heroInfo.config.skinId
 
 		slot1:init({
 			expireSec = 0,
-			skin = slot5
+			skin = slot6
 		})
-		table.insert(slot0.haveSkinList, slot1)
+
+		slot5 = slot1
+
+		table.insert(slot0.haveSkinList, slot5)
 
 		slot0.haveSkinDict[slot0.heroInfo.config.skinId] = true
 

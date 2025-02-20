@@ -194,13 +194,11 @@ function slot0._editableInitView(slot0)
 	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 	slot0._simagetips1:LoadImage(ResUrl.getSummonHeroIcon("title_bg_black"))
 	slot0._simagetips2:LoadImage(ResUrl.getSummonHeroIcon("title"))
-
-	slot4 = "title_bg_orange"
-
-	slot0._simagetips3:LoadImage(ResUrl.getSummonHeroIcon(slot4))
+	slot0._simagetips3:LoadImage(ResUrl.getSummonHeroIcon("title_bg_orange"))
 
 	slot0._goSummon1 = gohelper.findChild(slot0.viewGO, "#go_ui/summonbtns/summon1")
-	slot0._txtGacha10 = gohelper.findChildText(slot0.viewGO, "#go_ui/summonbtns/summon10/text")
+	slot4 = "#go_ui/summonbtns/summon10/text"
+	slot0._txtGacha10 = gohelper.findChildText(slot0.viewGO, slot4)
 
 	for slot4 = 1, uv0.showHeroNum do
 		slot0["_simagead" .. slot4] = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/simage_ad" .. slot4)
@@ -208,8 +206,8 @@ function slot0._editableInitView(slot0)
 		slot5.go = gohelper.findChild(slot0.viewGO, "#go_ui/current/right/#go_characteritem" .. slot4)
 		slot5.imagecareer = gohelper.findChildImage(slot5.go, "image_career")
 		slot5.txtnamecn = gohelper.findChildText(slot5.go, "txt_namecn")
-		slot9 = AudioEnum.UI.play_ui_action_explore
-		slot5.btndetail = gohelper.findChildButtonWithAudio(slot5.go, "btn_detail", slot9)
+		slot9 = "btn_detail"
+		slot5.btndetail = gohelper.findChildButtonWithAudio(slot5.go, slot9, AudioEnum.UI.play_ui_action_explore)
 		slot5.rares = {}
 
 		for slot9 = 1, 6 do
@@ -310,9 +308,9 @@ function slot0.showCharacter(slot0, slot1)
 		for slot7 = 1, #slot2 do
 			if slot0._characteritems[SummonConfig.instance:getCharacterDetailConfig(tonumber(slot2[slot7])).location] then
 				slot13 = HeroConfig.instance:getHeroCO(slot9.heroId)
-				slot17 = "lssx_" .. tostring(slot13.career)
+				slot17 = slot11.imagecareer
 
-				UISpriteSetMgr.instance:setCommonSprite(slot11.imagecareer, slot17)
+				UISpriteSetMgr.instance:setCommonSprite(slot17, "lssx_" .. tostring(slot13.career))
 
 				slot11.txtnamecn.text = slot13.name
 

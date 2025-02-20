@@ -9,20 +9,25 @@ function slot0.initCharge(slot0, slot1, slot2)
 	slot0.id = slot0.goodsId
 	slot0.buyCount = slot2.buyCount
 	slot0.config = StoreConfig.instance:getChargeGoodsConfig(slot0.goodsId)
-	slot4 = GameUtil.splitString2(slot0.config.limit, true)[1]
-	slot0.refreshTime = slot4[1]
-
-	if slot4[1] == StoreEnum.ChargeRefreshTime.None then
-		slot0.maxBuyCount = 0
-	else
-		slot0.maxBuyCount = slot4[2]
-	end
-
 	slot0.buyLevel = 0
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot9[1] == StoreEnum.ChargeRefreshTime.Level then
-			slot0.buyLevel = slot9[2]
+	if slot0.id == StoreEnum.LittleMonthCardGoodsId then
+		slot0.refreshTime = StoreEnum.ChargeRefreshTime.None
+		slot0.maxBuyCount = StoreConfig.instance:getMonthCardAddConfig(slot0.id).limit
+	else
+		slot4 = GameUtil.splitString2(slot0.config.limit, true)[1]
+		slot0.refreshTime = slot4[1]
+
+		if slot4[1] == StoreEnum.ChargeRefreshTime.None then
+			slot0.maxBuyCount = 0
+		else
+			slot0.maxBuyCount = slot4[2]
+		end
+
+		for slot8, slot9 in ipairs(slot3) do
+			if slot9[1] == StoreEnum.ChargeRefreshTime.Level then
+				slot0.buyLevel = slot9[2]
+			end
 		end
 	end
 

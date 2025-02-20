@@ -144,7 +144,7 @@ function slot0._refreshUI(slot0)
 end
 
 function slot0.sortCardBox(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot0.entityId) and FightEntityModel.instance:getById(slot1.entityId) then
+	if not FightDataHelper.entityMgr:getById(slot0.entityId) and FightDataHelper.entityMgr:getById(slot1.entityId) then
 		return true
 	elseif slot2 and not slot3 then
 		return false

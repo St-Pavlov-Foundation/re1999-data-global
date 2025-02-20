@@ -35,6 +35,7 @@ function slot0.ctor(slot0)
 	slot0._ActionType2Impl[129] = GuideActionExploreUseItem
 	slot0._ActionType2Impl[130] = GuideActionRoomFocusBlockBuildingPut
 	slot0._ActionType2Impl[131] = GuideActionCondition
+	slot0._ActionType2Impl[132] = GuideActionAdditionCondition
 	slot0._ActionType2Impl[201] = WaitGuideActionClickMask
 	slot0._ActionType2Impl[202] = WaitGuideActionClickAnywhere
 	slot0._ActionType2Impl[203] = WaitGuideActionStoryStart

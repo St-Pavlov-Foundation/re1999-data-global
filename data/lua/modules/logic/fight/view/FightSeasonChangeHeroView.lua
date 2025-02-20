@@ -1,6 +1,6 @@
 module("modules.logic.fight.view.FightSeasonChangeHeroView", package.seeall)
 
-slot0 = class("FightSeasonChangeHeroView", BaseViewExtended)
+slot0 = class("FightSeasonChangeHeroView", FightBaseView)
 
 function slot0.onInitView(slot0)
 	slot0._block = gohelper.findChildClick(slot0.viewGO, "block")
@@ -20,9 +20,9 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._block, slot0._onBlock, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ReceiveChangeSubHeroReply, slot0._onReceiveChangeSubHeroReply, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GuideSeasonChangeHeroClickEntity, slot0._onGuideSeasonChangeHeroClickEntity, slot0)
+	slot0:com_registClick(slot0._block, slot0._onBlock)
+	slot0:com_registFightEvent(FightEvent.ReceiveChangeSubHeroReply, slot0._onReceiveChangeSubHeroReply)
+	slot0:com_registFightEvent(FightEvent.GuideSeasonChangeHeroClickEntity, slot0._onGuideSeasonChangeHeroClickEntity)
 end
 
 function slot0.removeEvents(slot0)
@@ -39,7 +39,7 @@ end
 function slot0._onGuideSeasonChangeHeroClickEntity(slot0, slot1)
 	slot2 = nil
 
-	for slot7, slot8 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		if slot8.skin == tonumber(slot1) then
 			slot9 = FightHelper.getEntity(slot8.id)
 			slot10, slot11, slot12, slot13 = FightHelper.calcRect(slot9, slot0._blockTransform)
@@ -70,7 +70,7 @@ function slot0._onBlock(slot0, slot1, slot2)
 	slot4, slot5, slot6 = FightHelper.getClickEntity(slot0:_getEntityList(), slot0._blockTransform, slot2)
 
 	if slot4 then
-		if not FightEntityModel.instance:getById(slot4) then
+		if not FightDataHelper.entityMgr:getById(slot4) then
 			return
 		end
 
@@ -92,12 +92,16 @@ function slot0._clickEntity(slot0, slot1, slot2, slot3)
 		gohelper.setActive(slot0._selectIcon, false)
 		gohelper.setActive(slot0._selectIcon, true)
 		recthelper.setAnchor(slot0._selectIcon, slot2, slot3)
-		FightController.instance:dispatchEvent(FightEvent.SeasonSelectChangeHeroTarget, slot0._curSelectEntityId)
+		slot0:com_sendFightEvent(FightEvent.SeasonSelectChangeHeroTarget, slot0._curSelectEntityId)
 	end
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	slot0._skillItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot1:GetResource(), slot0._skillRoot), FightViewCardItem)
+function slot0._onLoadFinish(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot0._skillItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot2:GetResource(), slot0._skillRoot), FightViewCardItem)
 
 	slot0:_refreshSkill()
 end
@@ -108,7 +112,7 @@ function slot0._refreshSkill(slot0)
 	end
 
 	if slot0._selectItem then
-		slot1 = FightEntityModel.instance:getById(slot0._selectItem._entityId)
+		slot1 = FightDataHelper.entityMgr:getById(slot0._selectItem._entityId)
 
 		slot0._skillItem:updateItem(slot1.id, slot1.exSkill)
 
@@ -187,8 +191,12 @@ function slot0._enterOperate(slot0)
 	NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onBtnEsc, slot0)
 end
 
-function slot0._onFightdardLoadFinish(slot0, slot1)
-	slot0._fightdardObj = gohelper.clone(slot1:GetResource())
+function slot0._onFightdardLoadFinish(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot0._fightdardObj = gohelper.clone(slot2:GetResource())
 	gohelper.findChild(slot0._fightdardObj, "fightdark"):GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = 20000
 
 	if FightDataHelper.stageMgr:getCurOperateState() ~= FightStageMgr.OperateStateType.SeasonChangeHero then
@@ -206,7 +214,7 @@ function slot0.onOpen(slot0)
 	gohelper.setActive(slot0._block, false)
 	gohelper.setActive(slot0._selectIcon, false)
 
-	slot0._heroListView = slot0:openSubView(FightSeasonSubHeroList, "ui/viewres/fight/fightseasonsubherolist.prefab", slot0._goHeroListRoot)
+	slot0._heroListView = slot0:com_openSubView(FightSeasonSubHeroList, "ui/viewres/fight/fightseasonsubherolist.prefab", slot0._goHeroListRoot)
 end
 
 function slot0.onClose(slot0)

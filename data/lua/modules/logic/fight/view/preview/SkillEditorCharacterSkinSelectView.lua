@@ -80,7 +80,7 @@ function slot0.OnItemClick(slot0, slot1)
 
 	slot0.entity_mo.skin = slot1.id
 
-	if FightEntityModel.instance:isSub(slot0.entity_mo.id) then
+	if FightDataHelper.entityMgr:isSub(slot0.entity_mo.id) then
 		slot6:buildSubSpine(slot0.entity_mo)
 	else
 		slot6:buildSpine(slot0.entity_mo)

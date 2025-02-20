@@ -21,11 +21,26 @@ return {
 
 		return slot3
 	end,
+	sortByCritterId = function (slot0, slot1)
+		if slot0:getDefineId() ~= slot1:getDefineId() then
+			return slot2 < slot3
+		end
+
+		return slot0:getId() < slot1:getId()
+	end,
 	sortByRareDescend = function (slot0, slot1)
-		return slot1:getDefineCfg().rare < slot0:getDefineCfg().rare
+		if slot0:getDefineCfg().rare ~= slot1:getDefineCfg().rare then
+			return slot5 < slot4
+		end
+
+		return uv0.sortByCritterId(slot0, slot1)
 	end,
 	sortByRareAscend = function (slot0, slot1)
-		return slot0:getDefineCfg().rare < slot1:getDefineCfg().rare
+		if slot0:getDefineCfg().rare ~= slot1:getDefineCfg().rare then
+			return slot4 < slot5
+		end
+
+		return uv0.sortByCritterId(slot0, slot1)
 	end,
 	getCritterAttrSortFunc = function (slot0, slot1)
 		if not uv0._descendFuncMap then
@@ -43,35 +58,102 @@ return {
 
 		return (slot1 and uv0._ascendSortFuncMap or uv0._descendFuncMap)[slot0]
 	end,
-	sortByEfficiencyDescend = function (slot0, slot1)
-		if slot0.efficiency ~= slot1.efficiency then
-			return slot0.efficiency < slot1.efficiency
+	sortByTotalAttrValue = function (slot0, slot1)
+		if slot0:getTotalAttrValue() ~= slot1:getTotalAttrValue() then
+			return slot3 < slot2
 		end
+
+		return uv0.sortByRareDescend(slot0, slot1)
 	end,
-	sortByEfficiencyAscend = function (slot0, slot1)
+	sortByEfficiencyDescend = function (slot0, slot1)
+		if slot0.efficiencyIncrRate ~= slot1.efficiencyIncrRate then
+			return slot3 < slot2
+		end
+
+		if slot0:isAddition(CritterEnum.AttributeType.Efficiency) ~= slot1:isAddition(CritterEnum.AttributeType.Efficiency) then
+			return slot4
+		end
+
 		if slot0.efficiency ~= slot1.efficiency then
 			return slot1.efficiency < slot0.efficiency
 		end
+
+		return uv0.sortByTotalAttrValue(slot0, slot1)
+	end,
+	sortByEfficiencyAscend = function (slot0, slot1)
+		if slot0.efficiencyIncrRate ~= slot1.efficiencyIncrRate then
+			return slot2 < slot3
+		end
+
+		if slot0:isAddition(CritterEnum.AttributeType.Efficiency) ~= slot1:isAddition(CritterEnum.AttributeType.Efficiency) then
+			return slot4
+		end
+
+		if slot0.efficiency ~= slot1.efficiency then
+			return slot0.efficiency < slot1.efficiency
+		end
+
+		return uv0.sortByTotalAttrValue(slot0, slot1)
 	end,
 	sortByPatienceDescend = function (slot0, slot1)
-		if slot0.patience ~= slot1.patience then
-			return slot0.patience < slot1.patience
+		if slot0.patienceIncrRate ~= slot1.patienceIncrRate then
+			return slot3 < slot2
 		end
-	end,
-	sortByPatienceAscend = function (slot0, slot1)
+
+		if slot0:isAddition(CritterEnum.AttributeType.Patience) ~= slot1:isAddition(CritterEnum.AttributeType.Patience) then
+			return slot4
+		end
+
 		if slot0.patience ~= slot1.patience then
 			return slot1.patience < slot0.patience
 		end
+
+		return uv0.sortByTotalAttrValue(slot0, slot1)
+	end,
+	sortByPatienceAscend = function (slot0, slot1)
+		if slot0.patienceIncrRate ~= slot1.patienceIncrRate then
+			return slot2 < slot3
+		end
+
+		if slot0:isAddition(CritterEnum.AttributeType.Patience) ~= slot1:isAddition(CritterEnum.AttributeType.Patience) then
+			return slot4
+		end
+
+		if slot0.patience ~= slot1.patience then
+			return slot0.patience < slot1.patience
+		end
+
+		return uv0.sortByTotalAttrValue(slot0, slot1)
 	end,
 	sortByLuckyDescend = function (slot0, slot1)
-		if slot0.lucky ~= slot1.lucky then
-			return slot0.lucky < slot1.lucky
+		if slot0.luckyIncrRate ~= slot1.luckyIncrRate then
+			return slot3 < slot2
 		end
-	end,
-	sortByLuckyAscend = function (slot0, slot1)
+
+		if slot0:isAddition(CritterEnum.AttributeType.Lucky) ~= slot1:isAddition(CritterEnum.AttributeType.Lucky) then
+			return slot4
+		end
+
 		if slot0.lucky ~= slot1.lucky then
 			return slot1.lucky < slot0.lucky
 		end
+
+		return uv0.sortByRareDescend(slot0, slot1)
+	end,
+	sortByLuckyAscend = function (slot0, slot1)
+		if slot0.luckyIncrRate ~= slot1.luckyIncrRate then
+			return slot2 < slot3
+		end
+
+		if slot0:isAddition(CritterEnum.AttributeType.Lucky) ~= slot1:isAddition(CritterEnum.AttributeType.Lucky) then
+			return slot4
+		end
+
+		if slot0.lucky ~= slot1.lucky then
+			return slot0.lucky < slot1.lucky
+		end
+
+		return uv0.sortByRareDescend(slot0, slot1)
 	end,
 	sortEvent = function (slot0, slot1)
 		if uv0._getEventSortIndex(slot0) ~= uv0._getEventSortIndex(slot1) then

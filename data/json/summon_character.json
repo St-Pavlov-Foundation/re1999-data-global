@@ -426,6 +426,36 @@
     "location": 1
   },
   {
+    "id": 231111,
+    "heroId": 3104,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 231211,
+    "heroId": 3105,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 231212,
+    "heroId": 3106,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 231011,
+    "heroId": 3095,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 231012,
+    "heroId": 3080,
+    "skinId": 0,
+    "location": 2
+  },
+  {
     "id": 211811,
     "heroId": 3065,
     "skinId": 0,

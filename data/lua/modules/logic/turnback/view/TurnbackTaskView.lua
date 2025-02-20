@@ -110,7 +110,10 @@ function slot0._initComp(slot0)
 end
 
 function slot0._createTaskBonusItem(slot0)
-	for slot5 = 1, GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
+	slot3 = TurnbackConfig.instance
+	slot5 = slot3
+
+	for slot5 = 1, GameUtil.getTabLen(slot3.getAllTurnbackTaskBonusCo(slot5, slot0.curTurnbackId)) do
 		if not slot0._rewardItemTab[slot5] then
 			slot7 = slot0:getUserDataTb_()
 			slot7.go = gohelper.clone(slot0._gorewardItem, slot0._gorewardContent, "rewardItem" .. slot5)

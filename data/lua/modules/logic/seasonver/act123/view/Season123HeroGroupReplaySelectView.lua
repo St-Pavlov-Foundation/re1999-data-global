@@ -120,9 +120,9 @@ end
 
 function slot0.refreshSelection(slot0)
 	slot1 = Season123HeroGroupModel.instance.multiplication
-	slot0._txtmultispeed.text = luaLang("multiple") .. slot1
-	slot5 = slot1
-	slot0._txtcostNum.text = "-" .. tostring(slot5)
+	slot5 = "multiple"
+	slot0._txtmultispeed.text = luaLang(slot5) .. slot1
+	slot0._txtcostNum.text = "-" .. tostring(slot1)
 
 	for slot5 = 1, slot0.maxMultiplicationTimes do
 		if slot0._multSpeedItems[slot5] then

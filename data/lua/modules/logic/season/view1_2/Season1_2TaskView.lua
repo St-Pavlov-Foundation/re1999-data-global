@@ -72,9 +72,9 @@ function slot0.refreshTask(slot0, slot1)
 
 		TaskDispatcher.runRepeat(slot0.showByLine, slot0, 0.04, #slot0._dataList)
 	else
-		slot8 = #slot0._items
+		slot8 = #slot0._dataList
 
-		for slot8 = 1, math.max(#slot0._dataList, slot8) do
+		for slot8 = 1, math.max(slot8, #slot0._items) do
 			slot0:getItem(slot8):onUpdateMO(slot0._dataList[slot8])
 		end
 	end
@@ -104,7 +104,10 @@ end
 
 function slot0.onDestroyView(slot0)
 	TaskDispatcher.cancelTask(slot0.refreshTask, slot0)
-	TaskDispatcher.cancelTask(slot0.showByLine, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0.showByLine, slot4)
 	slot0._simagebg:UnLoadImage()
 	slot0._simagehouse:UnLoadImage()
 

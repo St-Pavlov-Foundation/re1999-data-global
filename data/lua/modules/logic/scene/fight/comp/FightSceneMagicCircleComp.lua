@@ -55,10 +55,12 @@ function slot0._onBeforeEnterStepBehaviour(slot0)
 end
 
 function slot0._getConfig(slot0, slot1)
-	return lua_fight_skin_replace_magic_effect.configDict[slot1] and lua_fight_skin_replace_magic_effect.configDict[slot1][FightEntityModel.instance:getById(FightModel.instance:getMagicCircleInfo().createUid) and slot3.skin] or lua_magic_circle.configDict[slot1]
+	return lua_fight_skin_replace_magic_effect.configDict[slot1] and lua_fight_skin_replace_magic_effect.configDict[slot1][FightDataHelper.entityMgr:getById(FightModel.instance:getMagicCircleInfo().createUid) and slot3.skin] or lua_magic_circle.configDict[slot1]
 end
 
 function slot0._onAddMagicCircile(slot0, slot1)
+	slot0:clearLastLoopEffect()
+
 	slot0._config = slot0:_getConfig(slot1)
 
 	slot0:createEffect(slot0._config.enterEffect, slot0._config.enterTime)
@@ -66,6 +68,23 @@ function slot0._onAddMagicCircile(slot0, slot1)
 	slot0._loopEffect = slot0:createEffect(slot0._config.loopEffect, nil)
 
 	slot0:_playAudio(slot0._config.enterAudio)
+end
+
+function slot0.clearLastLoopEffect(slot0)
+	if slot0._loopEffect then
+		slot0:_releaseEffect(slot0._loopEffect)
+
+		slot0._loopEffect = nil
+	end
+
+	if slot0._removeEffectWrap then
+		slot0:_releaseEffect(slot0._removeEffectWrap)
+
+		slot0._removeEffectWrap = nil
+	end
+
+	TaskDispatcher.cancelTask(slot0._releaseLoopAfterCloseAni, slot0)
+	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, slot0._onRemoveEffectLoaded, slot0)
 end
 
 function slot0._playAudio(slot0, slot1)

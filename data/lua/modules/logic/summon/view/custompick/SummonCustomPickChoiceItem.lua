@@ -51,6 +51,7 @@ function slot0._onLongClickItem(slot0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_action_explore)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
+		showHome = false,
 		heroId = slot0._mo.id
 	})
 end

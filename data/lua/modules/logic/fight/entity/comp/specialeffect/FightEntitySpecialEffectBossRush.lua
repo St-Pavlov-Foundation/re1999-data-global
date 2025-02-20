@@ -78,7 +78,7 @@ function slot0._delayCheckMat(slot0)
 	slot2 = 0
 	slot4 = false
 
-	for slot8, slot9 in ipairs(slot0._entity:getMO():getBuffList()) do
+	for slot8, slot9 in pairs(slot0._entity:getMO():getBuffDic()) do
 		if uv0[slot9.buffId] then
 			slot4 = true
 			slot2 = 1
@@ -90,17 +90,9 @@ function slot0._delayCheckMat(slot0)
 	slot5 = nil
 	slot6 = false
 
-	if not slot4 then
-		slot5 = Mathf.Clamp((BossRushModel.instance:getMultiHpInfo() and slot7.multiHpIdx or 0) + 1, 1, 4)
-
-		if BossRushModel.instance:inUnlimit() then
-			slot5 = 4
-		end
-
-		if slot5 ~= 1 then
-			slot6 = true
-			slot2 = uv1[slot5]
-		end
+	if not slot4 and Mathf.Clamp((BossRushModel.instance:getMultiHpInfo() and slot7.multiHpIdx or 0) + 1, 1, 4) ~= 1 then
+		slot6 = true
+		slot2 = uv1[slot5]
 	end
 
 	slot0:_dealHangPointEffect(slot5, slot4)
@@ -145,7 +137,10 @@ end
 function slot0._setTexture(slot0)
 	slot0._entity.spineRenderer:getReplaceMat():SetTexture(uv0, slot0._texture)
 
-	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(slot0._entity:getSide())) do
+	slot4 = slot0._entity
+	slot6 = slot4
+
+	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(slot4.getSide(slot6))) do
 		if slot7 ~= slot0._entity then
 			slot0:_setOtherPartMat(slot7)
 		end

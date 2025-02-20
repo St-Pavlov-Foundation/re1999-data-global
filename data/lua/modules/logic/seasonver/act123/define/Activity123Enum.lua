@@ -71,6 +71,7 @@ slot0.StageSceneAnim = {
 slot0.SeasonID = {
 	Season5 = 12115,
 	Season2 = 11811,
+	Season6 = 12315,
 	Season1 = 11700,
 	Season4 = 12006,
 	Season3 = 11906
@@ -80,7 +81,8 @@ slot0.SeasonIconFolder = {
 	[slot0.SeasonID.Season2] = "v1a8_season_singlebg",
 	[slot0.SeasonID.Season3] = "v1a9_season_singlebg",
 	[slot0.SeasonID.Season4] = "v2a0_season_singlebg",
-	[slot0.SeasonID.Season5] = "v2a1_season_singlebg"
+	[slot0.SeasonID.Season5] = "v2a1_season_singlebg",
+	[slot0.SeasonID.Season6] = "v2a3_season_singlebg"
 }
 slot0.RuleTab = {
 	Card = 2,
@@ -95,21 +97,24 @@ slot0.SeasonViewPrefix = {
 	[slot0.SeasonID.Season2] = "_1_8",
 	[slot0.SeasonID.Season3] = "_1_9",
 	[slot0.SeasonID.Season4] = "_2_0",
-	[slot0.SeasonID.Season5] = "_2_1"
+	[slot0.SeasonID.Season5] = "_2_1",
+	[slot0.SeasonID.Season6] = "_2_3"
 }
 slot0.SeasonVersionPrefix = {
 	[slot0.SeasonID.Season1] = "1_7",
 	[slot0.SeasonID.Season2] = "1_8",
 	[slot0.SeasonID.Season3] = "1_9",
 	[slot0.SeasonID.Season4] = "2_0",
-	[slot0.SeasonID.Season5] = "2_1"
+	[slot0.SeasonID.Season5] = "2_1",
+	[slot0.SeasonID.Season6] = "2_3"
 }
 slot0.SeasonResourcePrefix = {
 	[slot0.SeasonID.Season1] = "v1a7",
 	[slot0.SeasonID.Season2] = "v1a8",
 	[slot0.SeasonID.Season3] = "v1a9",
 	[slot0.SeasonID.Season4] = "v2a0",
-	[slot0.SeasonID.Season5] = "v2a1"
+	[slot0.SeasonID.Season5] = "v2a1",
+	[slot0.SeasonID.Season6] = "v2a3"
 }
 slot0.EquipCardEffect = {
 	AddHeroGroupCardSlot = 104,

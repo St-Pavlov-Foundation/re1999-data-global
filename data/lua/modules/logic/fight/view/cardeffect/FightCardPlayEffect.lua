@@ -65,7 +65,7 @@ function slot0.onStart(slot0, slot1)
 		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, uv0._cardInfoMO, uv0._clonePlayCardGO, uv0.context.fightBeginRoundOp)
 	end))
 
-	if FightCardMOHelper.isNoCostSpecialCard(slot0._cardInfoMO) then
+	if FightCardDataHelper.isNoCostSpecialCard(slot0._cardInfoMO) then
 		slot11:addWork(slot0:_buildNoActCostMoveFlow())
 	end
 
@@ -177,7 +177,9 @@ function slot0._playShrinkFlow(slot0)
 end
 
 function slot0._startShrinkFlow(slot0)
-	FlowSequence.New():addWork(WorkWaitSeconds.New(slot0._dt * 2))
+	slot7 = slot0._dt * 2
+
+	FlowSequence.New():addWork(WorkWaitSeconds.New(slot7))
 
 	slot2 = FlowParallel.New()
 	slot0._tweenParamList = {}

@@ -98,10 +98,10 @@ function slot0.initResolutionRationDataList(slot0)
 		return
 	end
 
-	slot7 = math.floor(slot2 / slot0._curRate)
-	slot8 = true
+	slot7 = slot2
+	slot8 = math.floor(slot2 / slot0._curRate)
 
-	slot0:_appendResolutionData(slot2, slot7, slot8)
+	slot0:_appendResolutionData(slot7, slot8, true)
 
 	for slot7, slot8 in ipairs(uv0.ResolutionRatioWidthList) do
 		if slot8 <= slot0._systemScreenWidth and slot8 <= slot2 then
@@ -610,6 +610,91 @@ end
 
 function slot0.isTypeOn(slot0, slot1)
 	return slot0._pushStates[slot1] and slot0._pushStates[slot1].param == "1"
+end
+
+function slot0._resolutionStr(slot0, slot1, slot2)
+	return string.format("%s * %s", slot1, slot2)
+end
+
+function slot0.getResolutionRatioStrList(slot0)
+	slot0:initResolutionRationDataList()
+
+	slot1 = {}
+
+	for slot5, slot6 in ipairs(slot0._resolutionRatioDataList) do
+		slot7 = slot0:_resolutionStr(slot6.width, slot6.height)
+
+		if slot6.isFullscreen then
+			slot7 = luaLang("settings_fullscreen")
+		end
+
+		table.insert(slot1, slot7)
+	end
+
+	return slot1
+end
+
+function slot0._appendResolutionData(slot0, slot1, slot2, slot3)
+	table.insert(slot0._resolutionRatioDataList, {
+		width = slot1,
+		height = slot2,
+		isFullscreen = slot3
+	})
+end
+
+function slot0.setScreenResolutionByIndex(slot0, slot1)
+	if not BootNativeUtil.isWindows() then
+		return false
+	end
+
+	if not slot0._resolutionRatioDataList then
+		return false
+	end
+
+	if not slot0._resolutionRatioDataList[slot1] then
+		GameFacade.showToastString("error index:" .. slot1)
+
+		return false
+	end
+
+	slot0._screenWidth = slot2.width
+	slot0._screenHeight = slot2.height
+
+	slot0:_setIsFullScreen(slot2.isFullscreen)
+
+	slot0._resolutionRatio = slot0:_resolutionStr(slot0._screenWidth, slot0._screenHeight)
+
+	slot0:setResolutionRatio()
+
+	return true
+end
+
+function slot0.getCurrentResolutionWHAndIsFull(slot0)
+	if not slot0._resolutionRatio then
+		slot0:initWindowsResolution()
+	end
+
+	if not string.splitToNumber(slot0._resolutionRatio, "*") then
+		return 0, 0, false
+	end
+
+	return slot1[1], slot1[2], slot0:isFullScreen()
+end
+
+function slot0.getCurrentDropDownIndex(slot0)
+	slot1, slot2, slot3 = slot0:getCurrentResolutionWHAndIsFull()
+
+	if slot3 then
+		return 0
+	end
+
+	for slot7, slot8 in ipairs(slot0._resolutionRatioDataList or {}) do
+		if not slot8.isFullscreen and slot1 == slot8.width and slot2 == slot8.height then
+			return slot7 - 1
+		end
+	end
+
+	return 0, true
 end
 
 slot0.instance = slot0.New()

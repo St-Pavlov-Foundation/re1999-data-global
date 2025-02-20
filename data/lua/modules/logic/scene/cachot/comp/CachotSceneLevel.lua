@@ -38,7 +38,8 @@ function slot0._onLoadCallback(slot0, slot1)
 
 		slot0._assetItem:Retain()
 
-		slot0._instGO = gohelper.clone(slot0._assetItem:GetResource(slot0._resPath), slot0:getCurScene():getSceneContainerGO(), "CachotLevel")
+		slot7 = "CachotLevel"
+		slot0._instGO = gohelper.clone(slot0._assetItem:GetResource(slot0._resPath), slot0:getCurScene():getSceneContainerGO(), slot7)
 		slot3 = slot0._instGO
 
 		for slot7 = 1, 3 do

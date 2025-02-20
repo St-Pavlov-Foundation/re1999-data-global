@@ -65,13 +65,20 @@ end
 function slot0._checkCustomShowRedDotData(slot0, slot1, slot2)
 	slot1:defaultRefreshDot()
 
-	slot5 = tonumber(RedDotConfig.instance:getRedDotCO(TurnbackConfig.instance:getTurnbackSubModuleCo(slot2).reddotId).parent)
+	if not slot1.show then
+		slot3 = TurnbackConfig.instance:getTurnbackSubModuleCo(slot2).reddotId
+		slot1.show = slot0:checkIsShowCustomRedDot(slot2)
 
-	if not slot1.show and slot4.canLoad == 0 then
-		slot1.show = TimeUtil.getDayFirstLoginRed(TurnbackModel.instance:getCurTurnbackId() .. "_" .. slot2)
-
-		slot1:showRedDot(slot3 ~= 0 and slot4.style or RedDotEnum.Style.Normal)
+		slot1:showRedDot(slot3 ~= 0 and RedDotConfig.instance:getRedDotCO(slot3).style or RedDotEnum.Style.Normal)
 	end
+end
+
+function slot0.checkIsShowCustomRedDot(slot0, slot1)
+	if RedDotConfig.instance:getRedDotCO(TurnbackConfig.instance:getTurnbackSubModuleCo(slot1).reddotId).canLoad == 0 then
+		return TimeUtil.getDayFirstLoginRed(TurnbackModel.instance:getCurTurnbackId() .. "_" .. slot1)
+	end
+
+	return false
 end
 
 function slot0.refreshRemainTime(slot0, slot1)

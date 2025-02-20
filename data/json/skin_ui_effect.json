@@ -288,11 +288,65 @@
     "realtime": ""
   },
   {
+    "id": 310501,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_zxqe_taitou/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
     "id": 305304,
     "effect": "Drawables/bone/effect-Bone/roleeffect_yaxian_daiji/root|Drawables/bone2/effect-Bone/roleeffect_yaxian_daiji/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 304304,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_tnt_xuanshi/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310601,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_kzm_feizou/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310602,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_kzm_feizou/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310402,
+    "effect": "Drawables/bone8/effect-Bone/roleeffect_ddg_js8_2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310502,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_zxqe_fzz/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
   }

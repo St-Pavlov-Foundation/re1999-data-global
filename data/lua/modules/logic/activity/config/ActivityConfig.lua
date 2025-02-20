@@ -211,6 +211,38 @@ function slot0.isPermanent(slot0, slot1)
 	return slot0:getActivityCo(slot1).isRetroAcitivity == ActivityEnum.RetroType.Permanent
 end
 
+function slot0.getPermanentChildActList(slot0, slot1)
+	slot2 = {}
+
+	if not slot0._belongPermanentActDict then
+		slot0:_initBelongPermanentActDict()
+	end
+
+	return slot0._belongPermanentActDict[slot1] or slot2
+end
+
+function slot0._initBelongPermanentActDict(slot0)
+	slot0._belongPermanentActDict = {}
+
+	for slot4, slot5 in pairs(slot0._activityConfig.configDict) do
+		if slot0:isPermanent(slot4) and slot5.permanentParentAcitivityId ~= 0 then
+			if not slot0._belongPermanentActDict[slot6] then
+				slot0._belongPermanentActDict[slot6] = {}
+			end
+
+			table.insert(slot7, slot4)
+		end
+	end
+end
+
+function slot0.getActivityRedDotId(slot0, slot1)
+	return slot0:getActivityCo(slot1) and slot2.redDotId or 0
+end
+
+function slot0.getActivityCenterRedDotId(slot0, slot1)
+	return slot0:getActivityCenterCo(slot1) and slot2.reddotid or 0
+end
+
 slot0.instance = slot0.New()
 
 return slot0

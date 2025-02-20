@@ -134,7 +134,9 @@ return {
 			return slot2
 		end
 
-		for slot8, slot9 in ipairs(string.split(slot4, "#")) do
+		slot8 = "#"
+
+		for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
 			table.insert(slot2, ResUrl.getRoomRes(string.format("jianzhu/%s", slot9)))
 		end
 

@@ -180,7 +180,9 @@ function slot0._onFocusFinished(slot0, slot1)
 	end
 
 	if slot0._taskItemTab then
-		for slot8, slot9 in ipairs(slot0._mo:getFilterTaskList(AchievementMainCommonModel.instance:getCurrentSortType(), AchievementMainCommonModel.instance:getCurrentFilterType())) do
+		slot8 = AchievementMainCommonModel.instance:getCurrentFilterType()
+
+		for slot8, slot9 in ipairs(slot0._mo:getFilterTaskList(AchievementMainCommonModel.instance:getCurrentSortType(), slot8)) do
 			slot0:tryPlayUpgradeEffect(AchievementModel.instance:getById(slot9.id), slot0:getOrCreateTaskItem(slot8))
 		end
 

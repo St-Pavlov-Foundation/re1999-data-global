@@ -33,8 +33,9 @@ function slot0.initCfg(slot0)
 	slot0.operGroupId = slot0.puzzleCfg.operGroupId
 	slot0.operGroupCfg = Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, slot0.operGroupId)
 	slot0.operGroupList = {}
+	slot5 = slot0.operGroupId
 
-	for slot5, slot6 in pairs(Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, slot0.operGroupId)) do
+	for slot5, slot6 in pairs(Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, slot5)) do
 		table.insert(slot0.operGroupList, slot6)
 	end
 

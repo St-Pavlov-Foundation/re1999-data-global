@@ -13,8 +13,9 @@ end
 function slot0.onStart(slot0, slot1)
 	slot0._param = slot1
 	slot0._animDone = false
+	slot8 = true
 
-	for slot8, slot9 in ipairs(slot0._param.tempBlockMO.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)) do
+	for slot8, slot9 in ipairs(slot0._param.tempBlockMO.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, slot8)) do
 		if RoomMapBlockModel.instance:getBlockMO(slot9.x, slot9.y) and slot10.blockState == RoomBlockEnum.BlockState.Water then
 			slot11 = slot0._scene.mapmgr:getBlockEntity(slot10.id, SceneTag.RoomEmptyBlock) or slot0._scene.mapmgr:spawnMapBlock(slot10)
 		end

@@ -69,6 +69,18 @@ function slot0._setImgAlpha(slot0, slot1, slot2)
 end
 
 function slot0.setSprite(slot0, slot1, slot2, slot3, slot4)
+	if gohelper.isNil(slot1) then
+		logError("set SpriteSet fail, image = null, spriteName = " .. (slot2 or "nil"))
+
+		return
+	end
+
+	if string.nilorempty(slot2) then
+		logError("set SpriteSet fail, spriteName = null, image = " .. (slot1 and slot1.name or "nil"))
+
+		return
+	end
+
 	slot0:_checkLoadAsset()
 
 	if not slot0._spriteSetAsset then

@@ -33,7 +33,7 @@ function slot0.sendSysMsg(slot0, slot1, slot2, slot3, slot4, slot5)
 end
 
 function slot0.sendMsg(slot0, slot1, slot2, slot3, slot4)
-	if LuaSocketMgr.instance:isConnected(slot4) then
+	if LuaSocketMgr.instance:isConnected(slot4) and ConnectAliveMgr.instance:isConnected() then
 		LuaSocketMgr.instance:sendMsg(slot1, slot4)
 
 		return slot0:addCallback(LuaSocketMgr.instance:getCmdByPbStructName(slot1.__cname), slot2, slot3)

@@ -2,6 +2,12 @@ module("modules.logic.fight.system.work.FightWorkEffectSpExpointMaxAdd", package
 
 slot0 = class("FightWorkEffectSpExpointMaxAdd", FightEffectBase)
 
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO:getUniqueSkillPoint()
+end
+
 function slot0.onStart(slot0)
 	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
 		slot0:onDone(true)
@@ -21,12 +27,11 @@ function slot0.onStart(slot0)
 		return
 	end
 
-	slot4 = string.splitToNumber(slot0._actEffectMO.reserveStr, "#")
-
-	slot3:changeExpointMaxAdd(slot4[1] - slot3:getExpointMaxAddNum())
 	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, slot1, slot0._actEffectMO.effectNum)
-	slot3:changeServerUniqueCost(slot4[2] - slot3:getExpointCostOffsetNum())
-	FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, slot1, slot3:getUniqueSkillPoint(), slot3:getUniqueSkillPoint())
+
+	slot0._newValue = slot3:getUniqueSkillPoint()
+
+	FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, slot1, slot0._oldValue, slot0._newValue)
 	slot0:onDone(true)
 end
 

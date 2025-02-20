@@ -55,7 +55,9 @@ function slot0.updateEpisodeInfo(slot0, slot1)
 		end
 	end
 
-	table.sort(slot0.episodeList, uv0.sortEpisodeMoFunc)
+	slot5 = uv0.sortEpisodeMoFunc
+
+	table.sort(slot0.episodeList, slot5)
 
 	for slot5, slot6 in pairs(slot0.chapterId2EpisodeListDict) do
 		table.sort(slot6, uv0.sortEpisodeMoFunc)

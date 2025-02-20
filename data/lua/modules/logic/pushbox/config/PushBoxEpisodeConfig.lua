@@ -29,16 +29,17 @@ function slot0.getEpisodeList(slot0)
 	end
 
 	slot1 = {}
-	slot4 = PushBoxModel.instance
-	slot5 = slot4
+	slot5 = PushBoxModel.instance:getCurActivityID()
 
-	for slot5, slot6 in pairs(lua_push_box_activity.configDict[slot4.getCurActivityID(slot5)]) do
+	for slot5, slot6 in pairs(lua_push_box_activity.configDict[slot5]) do
 		table.insert(slot1, slot6)
 	end
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return slot0.stageId < slot1.stageId
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	slot0._episode_list = {}
 	slot0._episode2stageID = {}
@@ -68,10 +69,9 @@ function slot0.getTaskList(slot0)
 	end
 
 	slot0._task_list = {}
-	slot3 = PushBoxModel.instance
-	slot4 = slot3
+	slot4 = PushBoxModel.instance:getCurActivityID()
 
-	for slot4, slot5 in pairs(lua_push_box_task.configDict[slot3.getCurActivityID(slot4)]) do
+	for slot4, slot5 in pairs(lua_push_box_task.configDict[slot4]) do
 		table.insert(slot0._task_list, slot5)
 	end
 

@@ -118,6 +118,10 @@ function slot0.openCharacterTalentStyleView(slot0, slot1)
 	ViewMgr.instance:openView(ViewName.CharacterTalentStyleView, slot1)
 end
 
+function slot0.openCharacterTalentStatView(slot0, slot1)
+	ViewMgr.instance:openView(ViewName.CharacterTalentStatView, slot1)
+end
+
 function slot0.enterCharacterBackpack(slot0, slot1)
 	ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, 1.533)
 	ViewMgr.instance:openView(ViewName.CharacterBackpackView, {

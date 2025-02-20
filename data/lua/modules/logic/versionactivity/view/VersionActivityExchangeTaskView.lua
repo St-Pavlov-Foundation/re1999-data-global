@@ -111,7 +111,9 @@ function slot0._refreshTop(slot0)
 end
 
 function slot0._refreshTask(slot0, slot1)
-	VersionActivity112TaskListModel.instance:updateTaksList(slot0.actId, slot0._isDailyTaskType)
+	slot6 = slot0._isDailyTaskType
+
+	VersionActivity112TaskListModel.instance:updateTaksList(slot0.actId, slot6)
 
 	for slot6, slot7 in ipairs(VersionActivity112TaskListModel.instance:getList()) do
 		if slot0.taskItemList[slot6] == nil then

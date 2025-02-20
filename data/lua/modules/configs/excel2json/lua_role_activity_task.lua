@@ -3,6 +3,7 @@ module("modules.configs.excel2json.lua_role_activity_task", package.seeall)
 slot1 = {
 	taskDesc = 5,
 	name = 4,
+	jumpid = 10,
 	listenerType = 6,
 	listenerParam = 7,
 	minType = 3,

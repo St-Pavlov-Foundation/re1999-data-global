@@ -104,19 +104,39 @@ function slot0.getTaskConfig(slot0, slot1, slot2)
 end
 
 function slot0.isTaskFinish(slot0, slot1, slot2)
-	return slot0._taskMODict[slot1][slot2] and slot3.config.maxFinishCount <= slot3.finishCount
+	if not slot0._taskMODict[slot1] then
+		return false
+	end
+
+	if not slot3[slot2] then
+		return false
+	end
+
+	return slot4:isClaimed()
 end
 
 function slot0.taskHasFinished(slot0, slot1, slot2)
-	if not slot0._taskMODict[slot1][slot2] then
-		return
+	if not slot0._taskMODict[slot1] then
+		return false
 	end
 
-	return slot3.hasFinished or slot3.config.maxFinishCount <= slot3.finishCount
+	if not slot3[slot2] then
+		return false
+	end
+
+	return slot4:isFinished()
 end
 
 function slot0.isTaskUnlock(slot0, slot1, slot2)
-	return slot0._taskMODict[slot1][slot2] and slot3.id == slot2
+	if not slot0._taskMODict[slot1] then
+		return false
+	end
+
+	if not slot3[slot2] then
+		return false
+	end
+
+	return slot4.id == slot2
 end
 
 function slot0.getAllUnlockTasks(slot0, slot1)
@@ -211,7 +231,9 @@ function slot0.getNoviceTaskMaxUnlockStage(slot0)
 	slot1 = 0
 
 	if slot0._taskMODict[TaskEnum.TaskType.Novice] then
-		for slot5, slot6 in pairs(slot0._taskMODict[TaskEnum.TaskType.Novice]) do
+		slot5 = TaskEnum.TaskType.Novice
+
+		for slot5, slot6 in pairs(slot0._taskMODict[slot5]) do
 			if slot6.config.minTypeId == TaskEnum.TaskMinType.Novice and slot1 < TaskConfig.instance:gettaskNoviceConfig(slot6.id).stage and slot6.config.chapter == 0 then
 				slot1 = slot7
 			end
@@ -287,7 +309,7 @@ function slot0.getAllRewardUnreceivedTasks(slot0, slot1)
 	slot2 = {}
 
 	for slot6, slot7 in pairs(slot0._taskMODict[slot1]) do
-		if slot7.finishCount < slot7.config.maxFinishCount and slot7.hasFinished then
+		if slot7:isClaimable() then
 			table.insert(slot2, slot7)
 		end
 	end

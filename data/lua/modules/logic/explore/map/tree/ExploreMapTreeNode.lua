@@ -5,9 +5,9 @@ slot0 = class("ExploreMapTreeNode")
 function slot0.ctor(slot0, slot1, slot2)
 	slot0.preloadComp = slot2
 	slot0.bound = Bounds.New(Vector3.New(slot1.bound.center[1], slot1.bound.center[2], slot1.bound.center[3]), Vector3.New(slot1.bound.size[1], 4, slot1.bound.size[3]))
-	slot6 = slot1.bound.size[1]
-	slot7 = 2
-	slot0._drawBound = Bounds.New(Vector3.New(slot1.bound.center[1], slot1.bound.center[2], slot1.bound.center[3]), Vector3.New(slot6, slot7, slot1.bound.size[3]))
+	slot7 = slot1.bound.center[1]
+	slot6 = Vector3.New
+	slot0._drawBound = Bounds.New(Vector3.New(slot7, slot1.bound.center[2], slot1.bound.center[3]), slot6(slot1.bound.size[1], 2, slot1.bound.size[3]))
 	slot0.centerX = slot0.bound.center.x
 	slot0.centerZ = slot0.bound.center.z
 	slot0.extentsX = slot0.bound.extents.x

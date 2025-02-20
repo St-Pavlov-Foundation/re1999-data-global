@@ -36,7 +36,7 @@ function slot0.getMainEntityId(slot0)
 
 	slot1 = nil
 
-	for slot6, slot7 in ipairs(FightEntityModel.instance:getEnemySideModel():getList()) do
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 		if lua_fight_assembled_monster.configDict[slot7.skin] and slot8.part == 1 then
 			slot1 = slot7.id
 

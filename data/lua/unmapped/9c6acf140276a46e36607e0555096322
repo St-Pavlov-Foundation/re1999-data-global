@@ -93,13 +93,17 @@ function slot0._loadNext(slot0)
 		return
 	end
 
-	for slot4 = 1, slot0._concurrentCount do
+	for slot5 = 1, slot0._concurrentCount do
 		slot0._loadIndex = slot0._loadIndex + 1
 
 		if slot0._pathList and slot0._pathList[slot0._loadIndex] then
 			slot0._loadingCount = slot0._loadingCount + 1
 
-			loadAbAsset(slot5, false, slot0._onLoadCallback, slot0)
+			loadAbAsset(slot6, false, slot0._onLoadCallback, slot0)
+
+			if SLFramework.FrameworkSettings.IsEditor and string.find(slot6, "\\") then
+				logError(string.format("SequenceAbLoader loadAbAsset path:%s error,can not contain \\", slot6))
+			end
 		end
 	end
 end

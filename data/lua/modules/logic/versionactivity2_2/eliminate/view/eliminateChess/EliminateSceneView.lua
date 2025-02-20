@@ -102,17 +102,6 @@ function slot0.addEvents(slot0)
 end
 
 function slot0.removeEvents(slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginDrag, slot0.soliderItemDragBegin, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDrag, slot0.soliderItemDrag, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEnd, slot0.soliderItemDragEnd, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RefreshStronghold3DChess, slot0.refreshStronghold3DChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStronghold3DChess, slot0.removeStronghold3DChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.HideAllStronghold3DChess, slot0.hideAllStronghold3DChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessEffect, slot0.showEffect, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, slot0.updateViewState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateSceneState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, slot0.updateTeamChessViewWatchState, slot0)
 end
 
 function slot0.updateSceneState(slot0)
@@ -194,6 +183,7 @@ function slot0.refreshStronghold3DChess(slot0, slot1, slot2, slot3, slot4, slot5
 		slot8:setCanClick(true)
 		slot8:setCanDrag(true)
 		slot8:setActive(true)
+		slot8:refreshMeshOrder()
 	end
 
 	slot0.teamChessUnitMoList[slot1.uid] = slot7

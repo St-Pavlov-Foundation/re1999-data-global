@@ -20,15 +20,13 @@ function slot0.loadAsset(slot0, slot1, slot2, slot3, slot4)
 	end
 
 	if slot0._failedDic[slot1] then
-		if slot4 then
-			slot4(slot3, slot1)
-		end
+		slot2(slot3, false, nil, slot4)
 
 		return
 	end
 
 	if slot0._assetDic[slot1] then
-		slot2(slot3, slot0._assetDic[slot1])
+		slot2(slot3, true, slot0._assetDic[slot1], slot4)
 
 		return
 	end
@@ -40,7 +38,7 @@ function slot0.loadAsset(slot0, slot1, slot2, slot3, slot4)
 	table.insert(slot0._callback[slot1], {
 		call_back = slot2,
 		handler = slot3,
-		failedCallback = slot4
+		param = slot4
 	})
 
 	if not slot0._urlDic[slot1] then
@@ -50,7 +48,7 @@ function slot0.loadAsset(slot0, slot1, slot2, slot3, slot4)
 	end
 end
 
-function slot0.loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+function slot0.loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5)
 	if slot0.component_dead then
 		return
 	end
@@ -58,13 +56,12 @@ function slot0.loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	if slot3 then
 		slot0._listLoadCallback[slot1] = {
 			finishCallback = slot3,
-			handler = slot4,
-			listFailedCallback = slot6
+			handler = slot4
 		}
 	end
 
-	for slot10, slot11 in ipairs(slot1) do
-		slot0:loadAsset(slot11, slot2, slot4, slot5)
+	for slot9, slot10 in ipairs(slot1) do
+		slot0:loadAsset(slot10, slot2, slot4, slot5[slot9])
 	end
 
 	slot0:_invokeUrlListCallback()
@@ -95,11 +92,9 @@ function slot0._invokeUrlListCallback(slot0)
 
 		if slot6 == #slot4 then
 			if slot7 then
-				if slot5.listFailedCallback then
-					slot5.listFailedCallback(slot5.handler)
-				end
+				slot5.finishCallback(slot5.handler, false)
 			else
-				slot5.finishCallback(slot5.handler)
+				slot5.finishCallback(slot5.handler, true)
 			end
 
 			slot0._listLoadCallback[slot4] = nil
@@ -128,11 +123,7 @@ function slot0._onLoadCallback(slot0, slot1)
 
 	if slot0._callback[slot2] then
 		for slot7, slot8 in ipairs(slot0._callback[slot2]) do
-			if slot3 then
-				slot8.call_back(slot8.handler, slot1)
-			elseif slot8.failedCallback then
-				slot8.failedCallback(slot8.handler, slot2)
-			end
+			slot8.call_back(slot8.handler, slot3, slot1, slot8.param)
 
 			if slot0.component_dead then
 				return

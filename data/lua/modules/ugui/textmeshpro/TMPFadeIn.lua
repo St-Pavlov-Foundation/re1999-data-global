@@ -106,7 +106,8 @@ function slot0._delayShow(slot0)
 		slot11 = slot0._textInfo.characterInfo
 		slot12 = slot11[slot9.firstVisibleCharacterIndex]
 		slot13 = slot11[slot9.lastVisibleCharacterIndex]
-		slot17 = slot1:WorldToScreenPoint(slot4:TransformPoint(slot12.topLeft)).y
+		slot21 = slot12.topLeft
+		slot17 = slot1:WorldToScreenPoint(slot4:TransformPoint(slot21)).y
 
 		for slot21 = slot9.firstVisibleCharacterIndex, slot9.lastVisibleCharacterIndex do
 			if slot1:WorldToScreenPoint(slot4:TransformPoint(slot11[slot21].bottomLeft)).y < slot1:WorldToScreenPoint(slot4:TransformPoint(slot12.bottomLeft)).y then

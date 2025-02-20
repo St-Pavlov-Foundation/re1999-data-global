@@ -28,7 +28,9 @@ function slot1(slot0, slot1)
 			table.insert(slot3.passiveSkillLevel, slot0.passiveSkillLevel[slot11])
 		end
 	else
-		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot4) do
+		slot12 = slot4
+
+		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot12) do
 			table.insert(slot3.passiveSkillLevel, slot12)
 		end
 	end
@@ -55,6 +57,13 @@ function slot1(slot0, slot1)
 	slot9:setIsBalance(slot7)
 	slot9:setOtherPlayerIsOpenTalent(slot0.isOpenTalent)
 	slot9:setOtherPlayerTalentStyle(slot0.style)
+
+	slot9.destinyRank = slot0.destinyRank
+	slot9.destinyLevel = slot0.destinyLevel
+	slot9.destinyStone = slot0.destinyStone
+	slot9.destinyStoneMo = slot9.destinyStoneMo or HeroDestinyStoneMO.New(slot3.heroId)
+
+	slot9.destinyStoneMo:refreshMo(slot0.destinyRank, slot0.destinyLevel, slot0.destinyStone, slot0.destinyStoneUnlock)
 
 	return slot9
 end
@@ -90,6 +99,9 @@ function slot0.setHeroInfo(slot0, slot1)
 	slot0.talentCubeInfos:init(slot1.talentCubeInfos)
 	slot0.talentCubeInfos:setOwnData(slot0.heroId, slot0.talent)
 
+	slot0.destinyRank = slot1.destinyRank
+	slot0.destinyLevel = slot1.destinyLevel
+	slot0.destinyStone = slot1.destinyStone
 	slot0.style = slot1.style
 end
 

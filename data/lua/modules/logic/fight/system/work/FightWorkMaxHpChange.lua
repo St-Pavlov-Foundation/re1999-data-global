@@ -6,19 +6,28 @@ function slot0.onStart(slot0)
 	slot0:_startChangeMaxHp()
 end
 
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO.attrMO.hp
+end
+
 function slot0._startChangeMaxHp(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
+	if not FightHelper.getEntity(slot0._entityId) then
 		slot0:onDone(true)
 
 		return
 	end
 
-	if slot2:getMO() then
-		slot3.attrMO.hp = slot0._actEffectMO.effectNum
+	if not slot0._entityMO then
+		slot0:onDone(true)
 
-		FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, slot0._actEffectMO.targetId, slot3.attrMO.hp, slot3.attrMO.hp)
+		return
 	end
 
+	slot0._newValue = slot0._entityMO and slot0._entityMO.attrMO.hp
+
+	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, slot0._actEffectMO.targetId, slot0._oldValue, slot0._newValue)
 	slot0:_onDone()
 end
 

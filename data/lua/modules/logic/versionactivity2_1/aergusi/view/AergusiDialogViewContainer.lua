@@ -33,8 +33,9 @@ end
 
 function slot0._startClose(slot0)
 	slot1 = {}
+	slot6 = true
 
-	for slot6, slot7 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, true)) do
+	for slot6, slot7 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, slot6)) do
 		table.insert(slot1, slot7.clueName)
 	end
 

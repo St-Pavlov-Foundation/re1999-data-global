@@ -109,8 +109,9 @@ function slot0.handleEliminate(slot0, slot1)
 		end
 
 		slot12 = #slot7
+		slot16 = slot12
 
-		EliminateChessModel.instance:addTotalEliminateCount(slot12)
+		EliminateChessModel.instance:addTotalEliminateCount(slot16)
 
 		for slot16 = 1, slot12 do
 			slot17 = slot7[slot16]

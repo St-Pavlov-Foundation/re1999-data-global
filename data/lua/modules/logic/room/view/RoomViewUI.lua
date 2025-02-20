@@ -19,6 +19,9 @@ function slot0._editableInitView(slot0)
 		[RoomEnum.CameraState.Overlook] = true,
 		[RoomEnum.CameraState.OverlookAll] = true
 	}
+	slot0._showBuildingItemTypeMap = {
+		[RoomBuildingEnum.BuildingType.Interact] = true
+	}
 	slot0._gopart = gohelper.findChild(slot0.viewGO, "go_normalroot/go_ui/go_part")
 	slot0._canvasGroup = gohelper.onceAddComponent(slot0._gopart, typeof(UnityEngine.CanvasGroup))
 	slot0._scene = GameSceneMgr.instance:getCurScene()
@@ -39,6 +42,7 @@ function slot0._onDelayInit(slot0)
 	slot0:_refreshCritterBuildingItem()
 	slot0:_refreshTradeBuildingItem()
 	slot0:_refreshCritterItem()
+	slot0:_refreshBuildingItem()
 	slot0:_sort()
 end
 
@@ -58,14 +62,17 @@ function slot0._sort(slot0)
 	table.insert(slot0._uiItemList, slot0._critterBuildingItem)
 	table.insert(slot0._uiItemList, slot0._tradeBuildingItem)
 	LuaUtil.insertDict(slot0._uiItemList, slot0._critterItemDict)
+	LuaUtil.insertDict(slot0._uiItemList, slot0._buildingItemDict)
 
 	for slot5, slot6 in ipairs(slot0._uiItemList) do
 		slot6.__distance = Vector3.Distance(slot0._scene.camera:getCameraPosition(), slot6:getUI3DPos())
 	end
 
-	table.sort(slot0._uiItemList, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return slot1.__distance < slot0.__distance
-	end)
+	end
+
+	table.sort(slot0._uiItemList, slot5)
 
 	for slot5, slot6 in ipairs(slot0._uiItemList) do
 		gohelper.setAsLastSibling(slot6.go)
@@ -320,6 +327,34 @@ function slot0._refreshTradeBuildingItem(slot0)
 		gohelper.destroy(slot0._tradeBuildingItem.go)
 
 		slot0._tradeBuildingItem = nil
+	end
+end
+
+function slot0._refreshBuildingItem(slot0)
+	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
+		return
+	end
+
+	slot0._buildingItemDict = slot0._buildingItemDict or {}
+
+	for slot5 = 1, #RoomMapBuildingModel.instance:getBuildingMOList() do
+		slot6 = slot1[slot5]
+		slot7 = slot6.id
+
+		if slot6.config and slot6.config.buildingType and slot0._showBuildingItemTypeMap[slot8] and not slot0._buildingItemDict[slot7] then
+			slot0._buildingItemDict[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[12], slot0._gopart, "building_" .. slot7), RoomViewUIBuildingItem, slot7)
+		end
+	end
+
+	for slot5, slot6 in pairs(slot0._buildingItemDict) do
+		if not RoomMapBuildingModel.instance:getBuildingMOById(slot5) then
+			if slot6 then
+				slot6:removeEventListeners()
+				gohelper.destroy(slot6.go)
+			end
+
+			slot0._buildingItemDict[slot5] = nil
+		end
 	end
 end
 

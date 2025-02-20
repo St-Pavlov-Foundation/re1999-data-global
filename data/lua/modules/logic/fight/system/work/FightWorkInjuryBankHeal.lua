@@ -32,7 +32,7 @@ function slot0.onStart(slot0)
 		slot4:setLocalPos(0, 0, 0)
 		FightAudioMgr.instance:playAudio(410000015)
 
-		if not FightEntityModel.instance:getById(slot2.id) then
+		if not FightDataHelper.entityMgr:getById(slot2.id) then
 			slot0:onDone(true)
 
 			return
@@ -40,7 +40,7 @@ function slot0.onStart(slot0)
 
 		slot7 = false
 
-		for slot11, slot12 in ipairs(slot5:getBuffList() or {}) do
+		for slot11, slot12 in pairs(slot5:getBuffDic()) do
 			if FightConfig.instance:hasBuffFeature(slot12.buffId, FightEnum.BuffFeature.InjuryBank) then
 				slot7 = true
 

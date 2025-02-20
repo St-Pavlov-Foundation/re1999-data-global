@@ -52,4 +52,16 @@ function slot0.onCloseAnimDone(slot0)
 	slot0:_stopOpenCloseAnim()
 end
 
+function slot0.setIsOwnHero(slot0, slot1)
+	if slot1 then
+		slot0._isOwnHero = slot1.isOwnHero
+	else
+		slot0._isOwnHero = true
+	end
+end
+
+function slot0.isOwnHero(slot0)
+	return slot0._isOwnHero
+end
+
 return slot0

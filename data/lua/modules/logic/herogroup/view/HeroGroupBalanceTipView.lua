@@ -22,7 +22,8 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot0._rankGo = gohelper.findChild(slot0.viewGO, "lv/rankobj")
+	slot4 = "lv/rankobj"
+	slot0._rankGo = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._ranks = slot0:getUserDataTb_()
 
 	for slot4 = 1, 3 do

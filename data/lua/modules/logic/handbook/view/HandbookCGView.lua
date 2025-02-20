@@ -97,8 +97,9 @@ function slot0._btnclickOnClick(slot0, slot1)
 
 	slot3.cgList = slot4
 	slot3.cgType = slot2
+	slot8 = slot3
 
-	HandbookCGTripleListModel.instance:setCGList(slot3)
+	HandbookCGTripleListModel.instance:setCGList(slot8)
 
 	for slot8, slot9 in ipairs(slot0._selectItemList) do
 		gohelper.setActive(slot9.gobeselected, slot2 == slot9.selectId)

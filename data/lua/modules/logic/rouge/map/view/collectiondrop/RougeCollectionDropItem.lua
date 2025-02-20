@@ -114,11 +114,11 @@ function slot0.refreshEffectDesc(slot0)
 	end
 
 	slot0._clickLen = 0
-	slot5 = slot0._godescitem
 
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0.collectionId, nil, slot0._godescContent, slot5)
+	RougeCollectionHelper.refreshCollectionEffectInfos(slot0.collectionId, nil, slot0._godescContent, slot0._godescitem)
 
-	slot0._clickLen = slot0._scrollreward.gameObject:GetComponentsInChildren(typeof(SLFramework.UGUI.UIClickListener), true).Length
+	slot5 = true
+	slot0._clickLen = slot0._scrollreward.gameObject:GetComponentsInChildren(typeof(SLFramework.UGUI.UIClickListener), slot5).Length
 
 	for slot5 = 0, slot0._clickLen - 1 do
 		slot0._allClicks[slot5 + 1] = slot1[slot5]

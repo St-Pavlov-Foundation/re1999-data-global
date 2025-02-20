@@ -17,6 +17,7 @@ function slot0.onInitView(slot0)
 	slot0._btnheroselect = gohelper.findChildButtonWithAudio(slot0._gotrainselect, "hero/#btn_hero_select")
 	slot0._gocritterinfo = gohelper.findChild(slot0._gotrainselect, "#go_critter_info")
 	slot0._txtcrittername = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#txt_critter_name")
+	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0._gotrainselect, "#go_critter_info/#btn_detail")
 	slot0._scrollcritterarr = gohelper.findChildScrollRect(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr")
 	slot0._gocritteritem = gohelper.findChild(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem")
 	slot0._txtname = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_name")
@@ -41,11 +42,13 @@ end
 function slot0.addEvents(slot0)
 	slot0._btncritterselect:AddClickListener(slot0._btncritterselectOnClick, slot0)
 	slot0._btnheroselect:AddClickListener(slot0._btnheroselectOnClick, slot0)
+	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btncritterselect:RemoveClickListener()
 	slot0._btnheroselect:RemoveClickListener()
+	slot0._btndetail:RemoveClickListener()
 end
 
 function slot0._btncritterselectOnClick(slot0)
@@ -58,12 +61,19 @@ function slot0._btnheroselectOnClick(slot0)
 	slot0.viewContainer:dispatchEvent(CritterEvent.UITrainSubTab, 3)
 end
 
+function slot0._btndetailOnClick(slot0)
+	if CritterModel.instance:getCritterMOByUid(slot0._selectCritterUid) then
+		CritterController.instance:openRoomCritterDetailView(slot1.finishTrain ~= true, slot1, true)
+	end
+end
+
 function slot0._editableInitView(slot0)
 	slot0._trainPreveSendDict = {}
 	slot0._attributeItems = {}
 	slot0._goCritterAttrContent = gohelper.findChild(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content")
 	slot0._gopreferenceitem = gohelper.findChild(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem")
-	slot0._referenceCanvasGroup = gohelper.onceAddComponent(slot0._gopreferenceitem, typeof(UnityEngine.CanvasGroup))
+	slot6 = UnityEngine.CanvasGroup
+	slot0._referenceCanvasGroup = gohelper.onceAddComponent(slot0._gopreferenceitem, typeof(slot6))
 
 	gohelper.setActive(slot0._gobaseitem, false)
 

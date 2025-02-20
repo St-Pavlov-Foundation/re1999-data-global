@@ -3,7 +3,9 @@ module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPr
 slot0 = class("GoldenMilletPresentDisplayView", BaseViewExtended)
 
 function slot0.onInitView(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+	slot4 = true
+
+	gohelper.setActive(slot0.viewGO, slot4)
 
 	slot0._btnPresentList = slot0:getUserDataTb_()
 

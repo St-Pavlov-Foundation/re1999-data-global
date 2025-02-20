@@ -102,8 +102,9 @@ end
 function slot0.getInfoList(slot0, slot1)
 	slot2 = {}
 	slot3 = slot0:getList()
+	slot7 = slot3
 
-	slot0:_refreshShowTab(slot3)
+	slot0:_refreshShowTab(slot7)
 
 	for slot7, slot8 in ipairs(slot3) do
 		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot7, slot8:getLineHeight(), slot7))

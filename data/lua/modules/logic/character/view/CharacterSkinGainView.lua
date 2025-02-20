@@ -71,12 +71,10 @@ function slot0._editableInitView(slot0)
 
 	slot0._videoPlayer:AddDisplayUGUI(slot0._displauUGUI)
 	slot0._videoPlayer:SetEventListener(slot0._videoStatusUpdate, slot0)
+	slot0._videoPlayer:LoadMedia(langVideoUrl("character_get_start"))
 
-	slot5 = "character_get_start"
-
-	slot0._videoPlayer:LoadMedia(langVideoUrl(slot5))
-
-	slot0._gostarList = gohelper.findChild(slot0.viewGO, "root/effect/xingxing")
+	slot5 = "root/effect/xingxing"
+	slot0._gostarList = gohelper.findChild(slot0.viewGO, slot5)
 	slot0._starList = slot0:getUserDataTb_()
 
 	for slot5 = 1, 6 do
@@ -150,12 +148,14 @@ function slot0._refreshView(slot0)
 	slot0._simageicon:LoadImage(ResUrl.getHeadIconImg(slot0._skinCo.id), slot0._loadedImage, slot0)
 	slot0._simagesignature:LoadImage(ResUrl.getSignature(slot1.signature))
 	UISpriteSetMgr.instance:setCharactergetSprite(slot0._imagecareericon, "charactercareer" .. slot1.career)
-	UISpriteSetMgr.instance:setCharactergetSprite(slot0._imagecareerline, "line_" .. slot1.career)
 
-	slot6 = slot1.career
-	slot5 = "charactercareer_big_0" .. slot6
+	slot6 = "line_" .. slot1.career
 
-	slot0._simagecareericon:LoadImage(ResUrl.getCharacterGetIcon(slot5))
+	UISpriteSetMgr.instance:setCharactergetSprite(slot0._imagecareerline, slot6)
+
+	slot5 = ResUrl.getCharacterGetIcon
+
+	slot0._simagecareericon:LoadImage(slot5("charactercareer_big_0" .. slot1.career))
 
 	for slot5, slot6 in ipairs(slot0._starList) do
 		gohelper.setActive(slot6, slot5 <= CharacterEnum.Star[slot1.rare])

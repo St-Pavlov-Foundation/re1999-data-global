@@ -62,6 +62,10 @@ function slot0._refreshUI(slot0)
 end
 
 function slot0._onAddPlayOperationData(slot0)
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		return
+	end
+
 	slot0:_refreshUI()
 
 	if slot0._curCardCount > 0 then

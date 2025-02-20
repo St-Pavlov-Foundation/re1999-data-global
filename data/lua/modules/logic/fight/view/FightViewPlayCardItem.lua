@@ -91,7 +91,7 @@ function slot0.updateItem(slot0, slot1)
 	slot0.fightBeginRoundOp = slot1
 	slot2 = slot1
 	slot4 = slot2 and (slot2:isMoveCard() or slot2:isMoveUniversal())
-	slot5 = slot2 and slot2:isPlayCard()
+	slot5 = slot2 and (slot2:isPlayCard() or slot2:isAssistBossPlayCard())
 
 	gohelper.setActive(slot0._emtpyGO, not slot2)
 	gohelper.setActive(slot0._moveGO, slot4)
@@ -112,7 +112,7 @@ function slot0.updateItem(slot0, slot1)
 
 		slot0._cardItem:updateItem(slot2.belongToEntityId, slot2.skillId)
 
-		slot7 = FightBuffHelper.simulateBuffList(FightEntityModel.instance:getById(slot2.belongToEntityId), slot2)
+		slot7 = FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot2.belongToEntityId), slot2)
 
 		FightViewHandCardItemLock.setCardLock(slot2 and slot2.belongToEntityId, slot2 and slot2.skillId, slot0._lockGO, false, slot7)
 		slot0:_setCardPreRemove(slot2, slot7)
@@ -201,7 +201,7 @@ function slot0._onClickThis(slot0)
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
 	end
 
-	if not FightDataHelper.stageMgr:isEmptyOperateState() then
+	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 

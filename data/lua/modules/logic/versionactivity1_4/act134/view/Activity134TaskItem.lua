@@ -185,9 +185,10 @@ function slot0.refreshRewardItems(slot0)
 
 	gohelper.setActive(slot0.scrollReward.gameObject, true)
 
-	slot6 = "#"
+	slot6 = "|"
+	slot7 = "#"
 
-	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, "|", slot6)) do
+	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, slot6, slot7)) do
 		if not slot0.rewardItemList[slot6] then
 			slot11 = IconMgr.instance:getCommonPropItemIcon(slot0.goRewardContent)
 

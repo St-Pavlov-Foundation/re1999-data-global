@@ -52,6 +52,20 @@ function slot0.getCurrentInteractionId(slot0)
 	return slot0._currentInteractionId
 end
 
+function slot0.getInteractMO(slot0)
+	if slot0:checkSameType(RoomBuildingEnum.BuildingType.Interact) then
+		if not slot0._interactMO then
+			slot0._interactMO = RoomInteractBuildingMO.New()
+
+			slot0._interactMO:init(slot0)
+		end
+
+		return slot0._interactMO
+	end
+
+	return nil
+end
+
 function slot0.getPlaceAudioId(slot0, slot1)
 	if slot0.config and slot0.config.placeAudio and slot0.config.placeAudio ~= 0 then
 		return slot0.config.placeAudio

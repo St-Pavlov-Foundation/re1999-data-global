@@ -64,7 +64,8 @@ function slot0.createRewardUIs(slot0)
 end
 
 function slot0.refreshRewardItems(slot0, slot1)
-	slot0._pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo(slot0._chapterId)
+	slot5 = slot0._chapterId
+	slot0._pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo(slot5)
 
 	for slot5, slot6 in ipairs(slot0._rewarditems) do
 		slot0:refreshRewardUIItem(slot6, slot0._pointRewardCfg, slot1)

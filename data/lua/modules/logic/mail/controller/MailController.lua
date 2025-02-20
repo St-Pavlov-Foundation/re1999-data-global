@@ -65,9 +65,9 @@ function slot0.initShowedMailIds(slot0)
 	slot0.showedMailIds = {}
 
 	if not string.nilorempty(PlayerPrefsHelper.getString(slot0.recordedMailIdKey, "")) then
-		slot5 = slot0.recordedIdDelimiter
+		slot6 = slot1
 
-		for slot5, slot6 in ipairs(string.split(slot1, slot5)) do
+		for slot5, slot6 in ipairs(string.split(slot6, slot0.recordedIdDelimiter)) do
 			if tonumber(slot6) then
 				table.insert(slot0.showedMailIds, slot7)
 			end
@@ -203,10 +203,13 @@ end
 function slot0.reallyShowToast(slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
 
-	slot5 = slot0
+	slot6 = slot0
 
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot5)
-	slot0:logNormal("start show ...")
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot6)
+
+	slot5 = "start show ..."
+
+	slot0:logNormal(slot5)
 
 	for slot5, slot6 in ipairs(slot0.showTitles) do
 		if MailModel.instance:getReadedMailIds()[slot6.id] then

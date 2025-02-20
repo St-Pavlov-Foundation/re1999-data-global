@@ -20,7 +20,10 @@ function slot0._editableInitView(slot0)
 	slot0._heroItemDrag = slot0:getUserDataTb_()
 
 	gohelper.setActive(slot0._goheroitem, false)
-	gohelper.setActive(slot0._goaidheroitem, false)
+
+	slot6 = false
+
+	gohelper.setActive(slot0._goaidheroitem, slot6)
 
 	slot0.heroPosTrList = slot0:getUserDataTb_()
 	slot0._heroItemPosList = slot0:getUserDataTb_()
@@ -301,7 +304,9 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 				slot6:onItemCompleteDrag(uv0, uv1, slot1)
 			end
 
-			slot0:_setDragEnabled(true)
+			slot5 = true
+
+			slot0:_setDragEnabled(slot5)
 
 			for slot5, slot6 in ipairs(slot0._heroItemList) do
 				slot6:flowCurrentParent()
@@ -376,8 +381,9 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 		}
 		slot0.activity104Equips[slot1].equipUid = slot0:getAct104PosEquips(slot2).equipUid
 		slot0.activity104Equips[slot2].equipUid = slot0:getAct104PosEquips(slot1).equipUid
+		slot11 = uv5
 
-		HeroSingleGroupModel.instance:swap(uv4, uv5)
+		HeroSingleGroupModel.instance:swap(uv4, slot11)
 
 		for slot11, slot12 in ipairs(slot0.heroList) do
 			if HeroSingleGroupModel.instance:getHeroUids()[slot11] ~= slot12 then

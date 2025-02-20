@@ -184,6 +184,13 @@ function slot0.playAddPointEffect(slot0, slot1, slot2)
 	else
 		slot0:playAnim(uv0.AnimName.Add, slot0.switchToNextState, slot0, slot1)
 	end
+
+	if FightBuffHelper.checkPlayDuDuGuAddExPointEffect(slot0.mgr.entity) then
+		slot4 = slot3.effect:addHangEffect("v2a3_ddg/ddg_innate_03", ModuleEnum.SpineHangPointRoot, nil, 1)
+
+		slot4:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(slot3.id, slot4)
+	end
 end
 
 function slot0.playRemoveStoredEffect(slot0)

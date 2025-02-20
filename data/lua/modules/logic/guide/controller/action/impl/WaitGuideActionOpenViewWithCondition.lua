@@ -55,11 +55,11 @@ function slot0.manyFailure()
 end
 
 function slot0.enterFightSubEntity()
-	if not FightEntityModel.instance:getMySideList() or #slot0 < 3 then
+	if not FightDataHelper.entityMgr:getMyNormalList() or #slot0 < 3 then
 		return
 	end
 
-	if not FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList() or #slot1 == 0 then
+	if not FightDataHelper.entityMgr:getMySubList() or #slot1 == 0 then
 		return
 	end
 

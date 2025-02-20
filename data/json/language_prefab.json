@@ -4385,7 +4385,7 @@
   },
   {
     "id": "p_equipinfoteamshowview_current",
-    "lang": "language_90001007"
+    "lang": "language_90001090"
   },
   {
     "id": "p_dungeoncumulativerewardsview_titlecn",
@@ -10461,7 +10461,7 @@
   },
   {
     "id": "p_v1a6_talent_lvupview_txt_Skill1",
-    "lang": "language_10032079"
+    "lang": "language_90001087"
   },
   {
     "id": "p_v1a6_talent_lvupview_txt_Skill2",
@@ -13533,7 +13533,7 @@
   },
   {
     "id": "p_v2a0_warmup_txt_Reward",
-    "lang": "language_10047802"
+    "lang": "language_10061114"
   },
   {
     "id": "p_playercardlayoutview_txt_tips",
@@ -15420,6 +15420,854 @@
     "lang": "language_10055993"
   },
   {
+    "id": "p_towertaskview_txt_time",
+    "lang": "language_10061115"
+  },
+  {
+    "id": "p_v2a3_storeview_txt_title1",
+    "lang": "language_10061116"
+  },
+  {
+    "id": "p_v2a3_storeview_txt_title2",
+    "lang": "language_10061117"
+  },
+  {
+    "id": "p_v2a3_storeview_txt_title3",
+    "lang": "language_10061118"
+  },
+  {
+    "id": "p_towerbossspepisodetview_txt_easy",
+    "lang": "language_10061119"
+  },
+  {
+    "id": "p_towerbossspepisodetview_txt_normal",
+    "lang": "language_10031068"
+  },
+  {
+    "id": "p_towerbossspepisodetview_txt_hard",
+    "lang": "language_10031221"
+  },
+  {
+    "id": "p_towerbossspepisodetview_txt_StartAgain",
+    "lang": "language_10030078"
+  },
+  {
+    "id": "p_towerbossselectview_txt_title",
+    "lang": "language_10058588"
+  },
+  {
+    "id": "p_towerbossselectitem_txt_sp",
+    "lang": "language_10031420"
+  },
+  {
+    "id": "p_towerbossselectitem_txt_new",
+    "lang": "language_10061120"
+  },
+  {
+    "id": "p_act174fightreadyview_txt_tips",
+    "lang": "language_10061121"
+  },
+  {
+    "id": "p_act174fightreadyview_txt_bet",
+    "lang": "language_10061122"
+  },
+  {
+    "id": "p_act174fightreadyview_txt_betcancel",
+    "lang": "language_10029702"
+  },
+  {
+    "id": "p_act174fightreadyview_txt_player",
+    "lang": "language_10061123"
+  },
+  {
+    "id": "p_act174fightreadyview_txt_enemy",
+    "lang": "language_10061124"
+  },
+  {
+    "id": "p_act174mainview_txt_shop",
+    "lang": "language_10059248"
+  },
+  {
+    "id": "p_act174mainview_txt_rule",
+    "lang": "language_10061125"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_title",
+    "lang": "language_10058794"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_unlock",
+    "lang": "language_10061126"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_unlock_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_uplv",
+    "lang": "language_10061127"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_uplv_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_uprank",
+    "lang": "language_10061128"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_uprank_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_empty",
+    "lang": "language_10061129"
+  },
+  {
+    "id": "p_characterdestinyslotview_txt_lock",
+    "lang": "language_10061130"
+  },
+  {
+    "id": "p_act174matchview_txt_cancel",
+    "lang": "language_10061131"
+  },
+  {
+    "id": "p_act174ruledetailview_txt_rule1",
+    "lang": "language_10061132"
+  },
+  {
+    "id": "p_act174ruledetailview_txt_rule3",
+    "lang": "language_10061133"
+  },
+  {
+    "id": "p_act174ruledetailview_txt_role",
+    "lang": "language_10061134"
+  },
+  {
+    "id": "p_act174ruledetailview_txt_collection",
+    "lang": "language_10061135"
+  },
+  {
+    "id": "p_act174ruledetailview_txt_buff",
+    "lang": "language_10061136"
+  },
+  {
+    "id": "p_act174achievewallview_txt_title",
+    "lang": "language_10061137"
+  },
+  {
+    "id": "p_act174achievewallview_txt_title_en",
+    "lang": "language_10061138"
+  },
+  {
+    "id": "p_v2a3_destiny_fullview_txt_stone",
+    "lang": "language_10061139"
+  },
+  {
+    "id": "p_v2a3_destiny_fullview_txt_dec",
+    "lang": "language_10059246"
+  },
+  {
+    "id": "p_v2a3_destiny_stoneoverview_txt_title1",
+    "lang": "language_10061140"
+  },
+  {
+    "id": "p_v2a3_destiny_stoneoverview_txt_title2",
+    "lang": "language_10053357"
+  },
+  {
+    "id": "p_bpenterview_txt_add",
+    "lang": "language_10061141"
+  },
+  {
+    "id": "p_turnbackbeginnerview_txt_monthcard",
+    "lang": "language_10061142"
+  },
+  {
+    "id": "p_packagestoregoodsview_txt_actdec1",
+    "lang": "language_10061143"
+  },
+  {
+    "id": "p_packagestoregoodsview_txt_actdec2",
+    "lang": "language_10061144"
+  },
+  {
+    "id": "p_packagestoregoodsview_txt_actdec3",
+    "lang": "language_10061145"
+  },
+  {
+    "id": "p_act174gameview_txt_herobag",
+    "lang": "language_10061146"
+  },
+  {
+    "id": "p_act174gameview_txt_collectionbag",
+    "lang": "language_10061147"
+  },
+  {
+    "id": "p_towermainview_txt_hasNew",
+    "lang": "language_10061148"
+  },
+  {
+    "id": "p_towermainview_txt_hasNew1",
+    "lang": "language_10061149"
+  },
+  {
+    "id": "p_towermainview_txt_limitTimeEpisode",
+    "lang": "language_10061150"
+  },
+  {
+    "id": "p_towermainview_txt_bossHandbook",
+    "lang": "language_10061151"
+  },
+  {
+    "id": "p_towermainview_txt_reward",
+    "lang": "language_10061152"
+  },
+  {
+    "id": "p_towermainview_txt_bossEpisode",
+    "lang": "language_10061153"
+  },
+  {
+    "id": "p_towermainview_txt_mopup",
+    "lang": "language_10061154"
+  },
+  {
+    "id": "p_towermainview_txt_fight_lock",
+    "lang": "language_10061155"
+  },
+  {
+    "id": "p_towermainview_txt_fight_start",
+    "lang": "language_10061156"
+  },
+  {
+    "id": "p_towermainview_txt_fight_restart",
+    "lang": "language_10061157"
+  },
+  {
+    "id": "p_towermopupview_txt_progress",
+    "lang": "language_10061158"
+  },
+  {
+    "id": "p_towermopupview_txt_rewardpreview",
+    "lang": "language_10061159"
+  },
+  {
+    "id": "p_towermopupview_txt_mopup",
+    "lang": "language_10061160"
+  },
+  {
+    "id": "p_v2a3_puzzlemazedrawview_txt_Target",
+    "lang": "language_10061161"
+  },
+  {
+    "id": "p_towerassistbossitem_txt_open",
+    "lang": "language_10061162"
+  },
+  {
+    "id": "p_towerassistbossitem_txt_cancel",
+    "lang": "language_10061163"
+  },
+  {
+    "id": "p_towerassistbossitem_txt_sure",
+    "lang": "language_10061164"
+  },
+  {
+    "id": "p_towerassistbosstview_txt_title",
+    "lang": "language_10061151"
+  },
+  {
+    "id": "p_towerassistbosstdetailview_txt_bosstower",
+    "lang": "language_10061165"
+  },
+  {
+    "id": "p_towerassistbosstdetailview_txt_canlight",
+    "lang": "language_10061166"
+  },
+  {
+    "id": "p_towerassistbosstdetailview_txt_talen",
+    "lang": "language_10061167"
+  },
+  {
+    "id": "p_towerassistbosstdetailview_txt_base",
+    "lang": "language_10061168"
+  },
+  {
+    "id": "p_towerassistbosstdetailview_txt_assist",
+    "lang": "language_10061169"
+  },
+  {
+    "id": "p_towerbossattributetipview_txt_title",
+    "lang": "language_10061168"
+  },
+  {
+    "id": "p_towerpermanentview_txt_Title",
+    "lang": "language_10058499"
+  },
+  {
+    "id": "p_towerherogroupview_txt_Buff",
+    "lang": "language_10061168"
+  },
+  {
+    "id": "p_towerherogroupview_txt_Lv",
+    "lang": "language_10061170"
+  },
+  {
+    "id": "p_towerherogroupview_SmallTips_txt_Lv",
+    "lang": "language_10061171"
+  },
+  {
+    "id": "p_towerherogroupview_SmallTips_txt_1",
+    "lang": "language_10061172"
+  },
+  {
+    "id": "p_towerherogroupview_SmallTips_txt_2",
+    "lang": "language_10061173"
+  },
+  {
+    "id": "p_towerherogroupview_txt_Reset",
+    "lang": "language_10061174"
+  },
+  {
+    "id": "p_v2a3_versionsummonselfselectsixhalfview_txt_first",
+    "lang": "language_10061175"
+  },
+  {
+    "id": "p_v2a3_versionsummonselfselectsixhalfview_txt_tips",
+    "lang": "language_10061176"
+  },
+  {
+    "id": "p_packagestoregoodsitem_txt_materialup",
+    "lang": "language_10061177"
+  },
+  {
+    "id": "p_act174forcepickview_txt_role",
+    "lang": "language_10061178"
+  },
+  {
+    "id": "p_act174forcepickview_txt_collection",
+    "lang": "language_10061135"
+  },
+  {
+    "id": "p_commonheroitemnew_lost",
+    "lang": "language_10061179"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_unlock",
+    "lang": "language_10061180"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_unlock_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_select",
+    "lang": "language_90001089"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_select_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_unselect",
+    "lang": "language_10031284"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_unselect_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_exchange",
+    "lang": "language_10029698"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_exchange_en",
+    "lang": ""
+  },
+  {
+    "id": "p_characterview_txt_destiny",
+    "lang": "language_10058794"
+  },
+  {
+    "id": "p_towertimelimitlevelview_txt_boss",
+    "lang": "language_10061181"
+  },
+  {
+    "id": "p_act174settlementview_txt_group",
+    "lang": "language_10061182"
+  },
+  {
+    "id": "p_act174settlementview_txt_fight",
+    "lang": "language_10061183"
+  },
+  {
+    "id": "p_act174settlementview_txt_badge",
+    "lang": "language_10061137"
+  },
+  {
+    "id": "p_act174settlementview_txt_score",
+    "lang": "language_10061184"
+  },
+  {
+    "id": "p_act174settlementview_txt_title_en",
+    "lang": "language_10061185"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_dragtip",
+    "lang": "language_10061186"
+  },
+  {
+    "id": "p_act174mainview_txt_endgame",
+    "lang": "language_10061187"
+  },
+  {
+    "id": "p_act174endlessview_txt_Escape",
+    "lang": "language_10061187"
+  },
+  {
+    "id": "p_act174endlessview_txt_Enter",
+    "lang": "language_10061188"
+  },
+  {
+    "id": "p_act174endlessview_txt_start",
+    "lang": "language_10041995"
+  },
+  {
+    "id": "p_act174endlessview_txt_dec1",
+    "lang": "language_10061189"
+  },
+  {
+    "id": "p_act174endlessview_txt_dec2",
+    "lang": "language_10029833"
+  },
+  {
+    "id": "p_act174endlessview_txt_dec3",
+    "lang": "language_10061190"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_roletxt1",
+    "lang": "language_10061191"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_rolename1",
+    "lang": "language_10024711"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_roletxt2",
+    "lang": "language_10061192"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_rolename2",
+    "lang": "language_10005333"
+  },
+  {
+    "id": "p_act174endless_txt_tip2",
+    "lang": "language_10061193"
+  },
+  {
+    "id": "p_v2a3_dungeonmapview_txt_shop",
+    "lang": "language_10059238"
+  },
+  {
+    "id": "p_towerbossresultview_txt_goBossLevChange",
+    "lang": "language_10061194"
+  },
+  {
+    "id": "p_towerbossresultview_txt_goReward",
+    "lang": "language_10031353"
+  },
+  {
+    "id": "p_towerpermanentresult_txt_Difficulty1",
+    "lang": "language_10061119"
+  },
+  {
+    "id": "p_towerpermanentresult_txt_Difficulty2",
+    "lang": "language_10026646"
+  },
+  {
+    "id": "p_towerpermanentresult_txt_Difficulty3",
+    "lang": "language_10031221"
+  },
+  {
+    "id": "p_towertalentall_txt_Title",
+    "lang": "language_10061195"
+  },
+  {
+    "id": "p_towertalent_txt_Attr",
+    "lang": "language_10061195"
+  },
+  {
+    "id": "p_towertalent_txt_Close",
+    "lang": "language_10030582"
+  },
+  {
+    "id": "p_towertalent_txt_Sure",
+    "lang": "language_10061196"
+  },
+  {
+    "id": "p_towertalent_txt_Cancel",
+    "lang": "language_10029702"
+  },
+  {
+    "id": "p_commonalityslider_txt",
+    "lang": "language_10061197"
+  },
+  {
+    "id": "p_towertalentall_txt_Empty",
+    "lang": "language_10061198"
+  },
+  {
+    "id": "p_towertalentview_point_schedule",
+    "lang": "language_10061199"
+  },
+  {
+    "id": "p_towertalentview_point",
+    "lang": "language_10061200"
+  },
+  {
+    "id": "p_towermainentry_txt_Tips",
+    "lang": "language_10042116"
+  },
+  {
+    "id": "p_towermainentry_txt_limitTimeEpisode",
+    "lang": "language_10058589"
+  },
+  {
+    "id": "p_towermainentry_txt_bossEpisode",
+    "lang": "language_10058588"
+  },
+  {
+    "id": "p_towermainentry_txt_Tips2",
+    "lang": "language_10061201"
+  },
+  {
+    "id": "p_towermainentry_txt_Reward",
+    "lang": "language_10031269"
+  },
+  {
+    "id": "p_towermainentry_txt_Entry",
+    "lang": "language_10031970"
+  },
+  {
+    "id": "p_act174gameview_txt_first",
+    "lang": "language_10061202"
+  },
+  {
+    "id": "p_dungeonview_txt_tower",
+    "lang": "language_10058491"
+  },
+  {
+    "id": "p_towermainview_txt_locktips",
+    "lang": "language_10061203"
+  },
+  {
+    "id": "p_towerbossepisodeview_txt_title",
+    "lang": "language_10061204"
+  },
+  {
+    "id": "p_towerbossepisodeview_txt_reward",
+    "lang": "language_10061205"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview_txt_shopnamecn1",
+    "lang": "language_10061206"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview_txt_shopnamecn2",
+    "lang": "language_10061207"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview_txt_shopnamecn3",
+    "lang": "language_10032116"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview2_txt_shopnamecn1",
+    "lang": "language_10061208"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview2_txt_shopnamecn2",
+    "lang": "language_10061209"
+  },
+  {
+    "id": "p_v2a3_giftrecommendview2_txt_shopnamecn3",
+    "lang": "language_10032116"
+  },
+  {
+    "id": "p_charactertalentstatview_txt_title",
+    "lang": "language_10061210"
+  },
+  {
+    "id": "p_charactertalentstatview_txt_title_en",
+    "lang": "language_10030398"
+  },
+  {
+    "id": "p_towerguideview_txt",
+    "lang": "language_10061211"
+  },
+  {
+    "id": "p_towerbossepisodeview_bossunlock",
+    "lang": "language_10061212"
+  },
+  {
+    "id": "p_towerbossepisodeview_skillunlock",
+    "lang": "language_10061213"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_roletxt3",
+    "lang": "language_10048408"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_rolename3",
+    "lang": "language_10006328"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_roletxt4",
+    "lang": "language_10048407"
+  },
+  {
+    "id": "p_v2a3_storeroleskinview_rolename4",
+    "lang": "language_10005245"
+  },
+  {
+    "id": "p_v1a5_aizila_gameview_txt_Forward",
+    "lang": "language_10032188"
+  },
+  {
+    "id": "p_v1a5_aizila_gameview_txt_Continue",
+    "lang": "language_10032189"
+  },
+  {
+    "id": "p_v2a3_storeblockpackageview_name",
+    "lang": "language_10061214"
+  },
+  {
+    "id": "p_v2a3_storeblockpackageview_dec",
+    "lang": "language_10061215"
+  },
+  {
+    "id": "p_v2a3_tower_help_1_txt_Title",
+    "lang": "language_10061216"
+  },
+  {
+    "id": "p_v2a3_tower_help_1_txt_1",
+    "lang": "language_10061217"
+  },
+  {
+    "id": "p_v2a3_tower_help_1_txt_2",
+    "lang": "language_10061218"
+  },
+  {
+    "id": "p_v2a3_tower_help_1_txt_3",
+    "lang": "language_10061219"
+  },
+  {
+    "id": "p_v2a3_tower_help_2_txt_1",
+    "lang": "language_10061220"
+  },
+  {
+    "id": "p_v2a3_tower_help_2_txt_2",
+    "lang": "language_10061221"
+  },
+  {
+    "id": "p_v2a3_tower_help_3_txt_Title",
+    "lang": "language_10061222"
+  },
+  {
+    "id": "p_v2a3_tower_help_3_txt_1",
+    "lang": "language_10061223"
+  },
+  {
+    "id": "p_v2a3_tower_help_4_txt_1",
+    "lang": "language_10061224"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_Title",
+    "lang": "language_10061225"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_1",
+    "lang": "language_10061226"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_2",
+    "lang": "language_10061227"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_3",
+    "lang": "language_10061228"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_4",
+    "lang": "language_10061229"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_5",
+    "lang": "language_10061230"
+  },
+  {
+    "id": "p_v2a3_tower_help_5_txt_6",
+    "lang": "language_10061231"
+  },
+  {
+    "id": "p_v2a3_tower_help_6_txt_1",
+    "lang": "language_10061232"
+  },
+  {
+    "id": "p_v2a3_tower_help_6_txt_2",
+    "lang": "language_10061233"
+  },
+  {
+    "id": "p_v2a3_tower_help_7_txt_1",
+    "lang": "language_10061234"
+  },
+  {
+    "id": "p_v2a3_tower_help_7_txt_2",
+    "lang": "language_10061235"
+  },
+  {
+    "id": "p_v2a3_tower_help_7_txt_3",
+    "lang": "language_10061236"
+  },
+  {
+    "id": "p_v2a3_tower_help_8_txt_Title",
+    "lang": "language_10061237"
+  },
+  {
+    "id": "p_v2a3_tower_help_8_txt_1",
+    "lang": "language_10061238"
+  },
+  {
+    "id": "p_v2a3_tower_help_8_txt_2",
+    "lang": "language_10061239"
+  },
+  {
+    "id": "p_v2a3_tower_help_8_txt_3",
+    "lang": "language_10061240"
+  },
+  {
+    "id": "p_towerbossepisodeview_txt_Start",
+    "lang": "language_10061241"
+  },
+  {
+    "id": "p_towerbossspepisodeview_txt_Start",
+    "lang": "language_10061242"
+  },
+  {
+    "id": "p_towertimelimitlevelview_txt_title",
+    "lang": "language_10058589"
+  },
+  {
+    "id": "p_towerbossspepisodetview_txt_Start",
+    "lang": "language_10061243"
+  },
+  {
+    "id": "p_act174_help_1_txt_1",
+    "lang": "language_10061244"
+  },
+  {
+    "id": "p_act174_help_1_txt_2",
+    "lang": "language_10061245"
+  },
+  {
+    "id": "p_act174_help_1_txt_3",
+    "lang": "language_10061246"
+  },
+  {
+    "id": "p_roomblockpackagegetview_txt_cobrand",
+    "lang": "language_10061247"
+  },
+  {
+    "id": "p_v2a3_season_enterview_txt_Title",
+    "lang": "language_10058488"
+  },
+  {
+    "id": "p_act174gameview_txt_equiped",
+    "lang": "language_10061248"
+  },
+  {
+    "id": "p_act174betsuccessview_txt_rule",
+    "lang": "language_10061249"
+  },
+  {
+    "id": "p_linkageactivity_txt_Tips",
+    "lang": "language_10061250"
+  },
+  {
+    "id": "p_act174gameview_txt_unequip",
+    "lang": "language_10061251"
+  },
+  {
+    "id": "p_act174itemtipview_txt_unequip",
+    "lang": "language_10061252"
+  },
+  {
+    "id": "p_act174gameview_txt_equiped2",
+    "lang": "language_10061253"
+  },
+  {
+    "id": "p_act174gameview_txt_shoptip",
+    "lang": "language_10061254"
+  },
+  {
+    "id": "p_act174forcepickview_txt_title",
+    "lang": "language_10061255"
+  },
+  {
+    "id": "p_act174forcepickview_txt_title2",
+    "lang": "language_10061256"
+  },
+  {
+    "id": "p_act174forcepickview_txt_title3",
+    "lang": "language_10061257"
+  },
+  {
+    "id": "p_act174endlessview_txt_title1",
+    "lang": "language_10061258"
+  },
+  {
+    "id": "p_act174settlementview_txt_title1",
+    "lang": "language_10061259"
+  },
+  {
+    "id": "p_linkageactivity_txt_Descr",
+    "lang": "language_10048433"
+  },
+  {
+    "id": "p_gameview_txt_unlocktips",
+    "lang": "language_10061260"
+  },
+  {
+    "id": "p_v2a3_warmup_txt_WrongChannel",
+    "lang": "language_10061261"
+  },
+  {
+    "id": "p_v2a3_warmup_txt_tips",
+    "lang": "language_10061262"
+  },
+  {
+    "id": "p_shortenact_txt_rewardname1",
+    "lang": "language_10062109"
+  },
+  {
+    "id": "p_shortenact_txt_rewardname2",
+    "lang": "language_10062110"
+  },
+  {
+    "id": "shortenact_txt1",
+    "lang": "language_10062108"
+  },
+  {
+    "id": "shortenact_txt2",
+    "lang": "language_10062109"
+  },
+  {
+    "id": "shortenact_txt3",
+    "lang": "language_10062110"
+  },
+  {
+    "id": "shortenact_txt4",
+    "lang": "language_10062123"
+  },
+  {
     "id": "p_v2a2_lopera_levelview_txt1",
     "lang": "language_10055994"
   },
@@ -15488,10 +16336,6 @@
     "lang": "language_10053352"
   },
   {
-    "id": "p_v2a3_destiny_stoneoverview_txt_title2",
-    "lang": "language_10053357"
-  },
-  {
     "id": "p_v2a4_giftrecommendview3_txt_shopnamecn1",
     "lang": "language_10053332"
   },
@@ -15502,26 +16346,6 @@
   {
     "id": "p_v2a4_giftrecommendview3_txt_shopnamecn3",
     "lang": "language_10053333"
-  },
-  {
-    "id": "p_v2a3_storeroleskinview_roletxt3",
-    "lang": "language_10048408"
-  },
-  {
-    "id": "p_v2a3_storeroleskinview_rolename3",
-    "lang": "language_10006328"
-  },
-  {
-    "id": "p_v2a3_storeroleskinview_roletxt4",
-    "lang": "language_10048407"
-  },
-  {
-    "id": "p_v2a3_storeroleskinview_rolename4",
-    "lang": "language_10005245"
-  },
-  {
-    "id": "p_linkageactivity_txt_Descr",
-    "lang": "language_10048433"
   },
   {
     "id": "v1a9_selfselectsix_summon_up",

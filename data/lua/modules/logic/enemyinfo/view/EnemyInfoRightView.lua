@@ -267,7 +267,9 @@ function slot0.refreshMultiStage(slot0)
 		return
 	end
 
-	gohelper.setActive(slot0._gomultistage, true)
+	slot8 = true
+
+	gohelper.setActive(slot0._gomultistage, slot8)
 
 	for slot8, slot9 in ipairs(slot3) do
 		if not slot0.stageItemList[slot8] then
@@ -334,10 +336,10 @@ function slot0.refreshAttribute(slot0)
 	end
 
 	slot3 = string.splitToNumber(slot2, "#")
-	slot7 = table.remove
-	slot8 = slot3
+	slot7 = 2
+	slot8 = table.remove
 
-	table.insert(slot3, 2, slot7(slot8, 4))
+	table.insert(slot3, slot7, slot8(slot3, 4))
 
 	for slot7, slot8 in ipairs(uv0.AttrIdList) do
 		slot9 = slot0.attributeItemList[slot7]

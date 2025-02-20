@@ -121,6 +121,41 @@ function slot0._tryPlaceCharacterById(slot0, slot1, slot2, slot3)
 	end
 end
 
+function slot0.openInteractBuildingView(slot0, slot1)
+	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) and slot2:checkSameType(RoomBuildingEnum.BuildingType.Interact) then
+		RoomCameraController.instance:saveCameraStateByKey(ViewName.RoomInteractBuildingView)
+
+		slot0._followBuildingUid = slot1
+
+		ViewMgr.instance:openView(ViewName.RoomInteractBuildingView, {
+			buildingUid = slot1
+		})
+		RoomCameraController.instance:tweenCameraByBuildingUid(slot1, RoomEnum.CameraState.InteractBuilding, slot2:getInteractMO() and slot3.config and slot3.config.cameraId or 0, slot0._cameraInteractFinishCallback, slot0)
+
+		if RoomCameraController.instance:getRoomScene() and slot5.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) then
+			slot6.cameraFollowTargetComp:setFollowGOPath(RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
+
+			slot7, slot8, slot9 = slot6.cameraFollowTargetComp:getPositionXYZ()
+
+			slot5.cameraFollow:setFollowTarget(slot6.cameraFollowTargetComp)
+			slot5.cameraFollow:setIsPass(true, slot8)
+		end
+	end
+end
+
+function slot0._cameraInteractFinishCallback(slot0)
+	if slot0._followBuildingUid == nil then
+		return
+	end
+
+	slot0._followBuildingUid = nil
+
+	if RoomCameraController.instance:getRoomScene() and slot1.camera:getCameraState() == RoomEnum.CameraState.InteractBuilding and ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView) then
+		slot1.cameraFollow:setIsPass(false)
+		slot1.fovblock:setLookBuildingUid(RoomEnum.CameraState.InteractBuilding, slot0._followBuildingUid)
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

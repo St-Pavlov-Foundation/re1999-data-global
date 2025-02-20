@@ -3,12 +3,9 @@ module("modules.logic.fight.system.work.FightWorkDialogueBeforeRoundStart", pack
 slot0 = class("FightWorkDialogueBeforeRoundStart", FightWorkItem)
 
 function slot0.onStart(slot0)
-	slot0:cancelFightWorkSafeTimer()
-
-	slot1 = slot0:com_registFlowSequence()
+	slot1 = slot0:com_registWorkDoneFlowSequence()
 
 	slot1:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce))
-	slot1:registFinishCallback(slot0.finishWork, slot0)
 	slot1:start()
 end
 

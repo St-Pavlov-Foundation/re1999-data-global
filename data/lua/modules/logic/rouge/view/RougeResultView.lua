@@ -215,7 +215,9 @@ function slot0.try2ShowResult(slot0, slot1)
 		slot3 = slot2 or slot3
 	end
 
-	slot0:setAllResultItemVisible(false)
+	slot7 = false
+
+	slot0:setAllResultItemVisible(slot7)
 
 	for slot7 = slot1, slot3 do
 		slot0:refreshResultContent(slot0:getOrCreateResultItem(slot7), slot0._descList[slot7])

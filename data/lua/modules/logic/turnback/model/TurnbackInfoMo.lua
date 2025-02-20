@@ -15,6 +15,7 @@ function slot0.ctor(slot0)
 	slot0.startTime = 0
 	slot0.remainAdditionCount = 0
 	slot0.leaveTime = 0
+	slot0.monthCardAddedBuyCount = 0
 	slot0.config = nil
 end
 
@@ -30,6 +31,7 @@ function slot0.init(slot0, slot1)
 	slot0.startTime = tonumber(slot1.startTime)
 	slot0.endTime = tonumber(slot1.endTime)
 	slot0.leaveTime = tonumber(slot1.leaveTime)
+	slot0.monthCardAddedBuyCount = tonumber(slot1.monthCardAddedBuyCount)
 
 	slot0:setRemainAdditionCount(slot1.remainAdditionCount, true)
 

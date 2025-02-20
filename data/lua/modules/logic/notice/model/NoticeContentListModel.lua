@@ -15,9 +15,11 @@ end
 function slot0._convertContentUrl(slot0, slot1)
 	slot3 = string.split(string.gsub(slot1, "[<>]", "|"), "|")
 
-	table.sort(slot3, function (slot0, slot1)
+	function slot8(slot0, slot1)
 		return #slot0 > #slot1
-	end)
+	end
+
+	table.sort(slot3, slot8)
 
 	for slot8, slot9 in ipairs(slot3) do
 		if string.find(slot9, "link=2#") then
@@ -48,7 +50,9 @@ end
 
 function slot0.hasTitle(slot0)
 	if slot0.noticeMO then
-		for slot4, slot5 in ipairs(slot0:getList()) do
+		slot5 = slot0
+
+		for slot4, slot5 in ipairs(slot0.getList(slot5)) do
 			if slot5.type == NoticeContentType.TxtTopTitle then
 				return true
 			end
@@ -76,7 +80,8 @@ function slot0.getInfoList(slot0, slot1)
 		return {}
 	end
 
-	slot3 = gohelper.findChildComponent(slot1, "#txt_content", typeof(TMPro.TextMeshProUGUI))
+	slot9 = TMPro.TextMeshProUGUI
+	slot3 = gohelper.findChildComponent(slot1, "#txt_content", typeof(slot9))
 	slot4 = {}
 
 	for slot8, slot9 in ipairs(slot2) do

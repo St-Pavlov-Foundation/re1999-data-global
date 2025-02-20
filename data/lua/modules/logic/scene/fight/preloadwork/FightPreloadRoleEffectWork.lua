@@ -66,7 +66,7 @@ function slot0._analyseEffectUrlList(slot0)
 	slot1 = {}
 	slot2 = {}
 
-	for slot7, slot8 in ipairs(FightEntityModel.instance:getMySideList(FightEnum.EntitySide.MySide)) do
+	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot9 = slot8.id
 
 		for slot14, slot15 in ipairs(slot8.skillList) do

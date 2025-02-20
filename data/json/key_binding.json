@@ -65,7 +65,7 @@
   {
     "hud": 1,
     "id": 10,
-    "description": "当前活动",
+    "description": "活动入口",
     "key": "I",
     "editable": 1
   },
@@ -268,91 +268,91 @@
   {
     "hud": 3,
     "id": 7,
-    "description": "选中左侧的牌/向左移牌",
+    "description": "选中左侧咒语",
     "key": "A",
     "editable": 1
   },
   {
     "hud": 3,
     "id": 8,
-    "description": "选中右侧的牌/向右移牌",
+    "description": "选中右侧咒语",
     "key": "D",
     "editable": 1
   },
   {
     "hud": 3,
     "id": 9,
-    "description": "选中第1张牌",
+    "description": "选中第1个咒语",
     "key": "Alpha1",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 10,
-    "description": "选中第2张牌",
+    "description": "选中第2个咒语",
     "key": "Alpha2",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 11,
-    "description": "选中第3张牌",
+    "description": "选中第3个咒语",
     "key": "Alpha3",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 12,
-    "description": "选中第4张牌",
+    "description": "选中第4个咒语",
     "key": "Alpha4",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 13,
-    "description": "选中第5张牌",
+    "description": "选中第5个咒语",
     "key": "Alpha5",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 14,
-    "description": "选中第6张牌",
+    "description": "选中第6个咒语",
     "key": "Alpha6",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 15,
-    "description": "选中第7张牌",
+    "description": "选中第7个咒语",
     "key": "Alpha7",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 16,
-    "description": "选中第8张牌",
+    "description": "选中第8个咒语",
     "key": "Alpha8",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 17,
-    "description": "选中第9张牌",
+    "description": "选中第9个咒语",
     "key": "Alpha9",
     "editable": 0
   },
   {
     "hud": 3,
     "id": 18,
-    "description": "出牌",
+    "description": "释放咒语",
     "key": "Space",
     "editable": 1
   },
   {
     "hud": 3,
     "id": 19,
-    "description": "撤销出牌",
+    "description": "撤销咒语",
     "key": "R",
     "editable": 1
   },
@@ -436,7 +436,7 @@
   {
     "hud": 4,
     "id": 9,
-    "description": "购入荒原地块",
+    "description": "购入",
     "key": "R",
     "editable": 1
   },

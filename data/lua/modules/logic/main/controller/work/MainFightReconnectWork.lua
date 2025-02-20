@@ -55,7 +55,11 @@ function slot0._onConfirm(slot0)
 
 	DungeonModel.instance:SetSendChapterEpisodeId(nil, slot2)
 
-	if DungeonConfig.instance:isLeiMiTeBeiChapterType(DungeonConfig.instance:getEpisodeCO(slot2)) then
+	if DungeonConfig.instance:getEpisodeCO(slot2).type == DungeonEnum.EpisodeType.TowerPermanent and TowerModel.instance:getCurPermanentMo() then
+		TowerPermanentModel.instance:setLocalPassLayer(slot4.passLayerId)
+	end
+
+	if DungeonConfig.instance:isLeiMiTeBeiChapterType(slot3) then
 		FightController.instance:setFightParamByEpisodeId(slot2, slot1.type == FightEnum.FightReason.DungeonRecord, slot1.multiplication)
 	elseif slot3.type == DungeonEnum.EpisodeType.WeekWalk then
 		WeekWalkModel.instance:setCurMapId(slot1.layerId)

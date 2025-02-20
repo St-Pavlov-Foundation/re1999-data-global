@@ -10,8 +10,8 @@ function slot0.ctor(slot0, slot1)
 end
 
 function slot0.detectState(slot0)
-	if slot0._entity:getMO() and slot1:getBuffList() then
-		for slot6, slot7 in ipairs(slot2) do
+	if slot0._entity:getMO() and slot1:getBuffDic() then
+		for slot6, slot7 in pairs(slot2) do
 			if slot7.buffId == 30513 or slot7.buffId == 30515 then
 				FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, slot0._entity.id)
 			end

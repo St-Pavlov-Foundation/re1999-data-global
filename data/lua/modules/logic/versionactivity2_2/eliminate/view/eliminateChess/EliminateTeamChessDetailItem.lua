@@ -37,6 +37,7 @@ function slot0._editableRemoveEvents(slot0)
 end
 
 function slot0.onClick(slot0)
+	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessInfo, slot0._soliderId)
 end
 

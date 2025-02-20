@@ -1,19 +1,21 @@
 module("modules.logic.common.defines.UIAnimationName", package.seeall)
 
 return {
-	SwitchOpen = "switch_open",
 	Loop = "loop",
-	Close = "close",
+	Out = "out",
+	Voice = "voice",
 	Selected = "selected",
 	Switch = "switch",
-	Voice = "voice",
-	Start = "start",
-	SwitchClose = "switch_close",
 	Unlock = "unlock",
-	Right = "right",
 	Idle = "idle",
 	Finish = "finish",
 	Click = "click",
 	Left = "left",
-	Open = "open"
+	Open = "open",
+	Close = "close",
+	Start = "start",
+	SwitchClose = "switch_close",
+	Right = "right",
+	In = "in",
+	SwitchOpen = "switch_open"
 }

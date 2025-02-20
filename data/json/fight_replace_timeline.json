@@ -1416,6 +1416,62 @@
     "condition": "4#31020114#31020123#222001821"
   },
   {
+    "id": "hongnujian_300401_skill1",
+    "timeline": "hongnujian_300404_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#300404"
+  },
+  {
+    "id": "hongnujian_300401_skill2",
+    "timeline": "hongnujian_300404_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#300404"
+  },
+  {
+    "id": "hongnujian_300401_skill3",
+    "timeline": "hongnujian_300404_skill3",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#300404"
+  },
+  {
+    "id": "hongnujian_300401_unique",
+    "timeline": "hongnujian_300404_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#300404"
+  },
+  {
+    "id": "tannante_304301_skill1",
+    "timeline": "tannante_304304_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304304"
+  },
+  {
+    "id": "tannante_304301_skill2",
+    "timeline": "tannante_304304_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304304"
+  },
+  {
+    "id": "tannante_304301_unique",
+    "timeline": "tannante_304304_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304304"
+  },
+  {
     "id": "getian_308401_innate",
     "timeline": "getian_308404_innate",
     "priority": 1,
@@ -1464,6 +1520,38 @@
     "condition": "5#308404"
   },
   {
+    "id": "smews_308801_skill1",
+    "timeline": "smews_308803_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308803"
+  },
+  {
+    "id": "smews_308801_skill1_1",
+    "timeline": "smews_308803_skill1_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308803"
+  },
+  {
+    "id": "smews_308801_skill2",
+    "timeline": "smews_308803_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308803"
+  },
+  {
+    "id": "smews_308801_unique",
+    "timeline": "smews_308803_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308803"
+  },
+  {
     "id": "yaxian_305301_innate1",
     "timeline": "yaxian_305304_innate1",
     "priority": 1,
@@ -1494,5 +1582,29 @@
     "target": 1,
     "simulate": 1,
     "condition": "5#305304"
+  },
+  {
+    "id": "zhixinquaner_310501_skill1",
+    "timeline": "zhixinquaner_310501_skill1_1",
+    "priority": 3,
+    "target": 1,
+    "simulate": 1,
+    "condition": "4#31050131#31050132#31050133#31050134#31050135#31050136"
+  },
+  {
+    "id": "zhixinquaner_310501_skill2",
+    "timeline": "zhixinquaner_310501_skill2_1",
+    "priority": 3,
+    "target": 1,
+    "simulate": 1,
+    "condition": "4#31050131#31050132#31050133#31050134#31050135#31050136"
+  },
+  {
+    "id": "zhixinquaner_310501_skill3",
+    "timeline": "zhixinquaner_310501_skill3_1",
+    "priority": 3,
+    "target": 1,
+    "simulate": 1,
+    "condition": "4#31050131#31050132#31050133#31050134#31050135#31050136"
   }
 ]

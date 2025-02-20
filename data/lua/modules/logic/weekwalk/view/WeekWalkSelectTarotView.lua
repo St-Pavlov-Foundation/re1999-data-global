@@ -39,9 +39,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_beibao00.png"))
 
-	slot4 = "btn_01.png"
+	slot4 = ResUrl.getWeekWalkBg
 
-	slot0._simageline:LoadImage(ResUrl.getWeekWalkBg(slot4))
+	slot0._simageline:LoadImage(slot4("btn_01.png"))
 
 	slot0._gotarotitems = slot0:getUserDataTb_()
 

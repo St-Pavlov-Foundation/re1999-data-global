@@ -32,12 +32,12 @@ function slot0._onSwitchMode(slot0, slot1)
 		end
 	else
 		if slot3 then
-			for slot7, slot8 in pairs(slot3) do
-				if slot8:getMO() then
-					slot0:setVehiclePosByMO(slot8, slot9)
-					slot8:setShow(true)
+			for slot8, slot9 in pairs(slot3) do
+				if RoomMapVehicleModel.instance:getById(slot8) then
+					slot0:setVehiclePosByMO(slot9, slot10)
+					slot9:setShow(true)
 				else
-					slot0:removeUnit(slot2, slot7)
+					slot0:removeUnit(slot2, slot8)
 				end
 			end
 		end

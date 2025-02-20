@@ -189,7 +189,9 @@ function slot0.triggerUnit(slot0, slot1, slot2)
 		slot4:addWork(slot7)
 	end
 
-	for slot10, slot11 in ipairs(slot1:getExploreUnitMO().triggerEffects) do
+	slot11 = slot1
+
+	for slot10, slot11 in ipairs(slot1.getExploreUnitMO(slot11).triggerEffects) do
 		if slot0:getTriggerHandle(slot11[1]) then
 			slot13:setParam(slot11[2], slot1, slot10, slot2)
 
@@ -225,7 +227,9 @@ function slot0.triggerDone(slot0, slot1)
 end
 
 function slot0.setDonePerformance(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1:getExploreUnitMO().doneEffects) do
+	slot6 = slot1
+
+	for slot5, slot6 in ipairs(slot1.getExploreUnitMO(slot6).doneEffects) do
 		if slot0:getTriggerHandle(slot6[1]) then
 			slot7:setParam(slot6[2], slot1)
 			slot7:onStart()
@@ -248,7 +252,9 @@ function slot0.doDoneTrigger(slot0, slot1)
 
 	slot0:getFlow(slot1):buildFlow()
 
-	for slot7, slot8 in ipairs(slot2:getExploreUnitMO().doneEffects) do
+	slot8 = slot2
+
+	for slot7, slot8 in ipairs(slot2.getExploreUnitMO(slot8).doneEffects) do
 		if slot0:getTriggerHandle(slot8[1]) then
 			slot9:setParam(slot8[2], slot2)
 			slot3:addWork(slot9)
@@ -281,7 +287,9 @@ function slot0.cancelTrigger(slot0, slot1, slot2)
 
 	slot0:getFlow(slot1.id):buildFlow()
 
-	for slot8, slot9 in ipairs(slot1:getExploreUnitMO().triggerEffects) do
+	slot9 = slot1
+
+	for slot8, slot9 in ipairs(slot1.getExploreUnitMO(slot9).triggerEffects) do
 		if slot0:getTriggerHandle(slot9[1]) then
 			slot10:setParam(slot9[2], slot1, slot8, slot2, true)
 			slot4:addWork(slot10)

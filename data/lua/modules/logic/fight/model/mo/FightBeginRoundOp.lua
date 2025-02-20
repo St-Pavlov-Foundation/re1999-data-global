@@ -48,7 +48,7 @@ function slot0.playCard(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	slot0.skillId = slot3
 	slot0.belongToEntityId = slot4
 
-	if FightCardMOHelper.isSpecialCardById(slot4, slot3) then
+	if FightCardDataHelper.isSpecialCardById(slot4, slot3) then
 		if slot5.cardType == FightEnum.CardType.ROUGE_SP or slot5.cardType == FightEnum.CardType.USE_ACT_POINT then
 			slot0.costActPoint = 1
 		else
@@ -56,10 +56,19 @@ function slot0.playCard(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 		end
 	end
 
-	slot0.clientSimulateCanPlayCard = FightViewHandCardItemLock.canUseCardSkill(slot0.belongToEntityId, slot0.skillId, FightBuffHelper.simulateBuffList(FightEntityModel.instance:getById(slot0.belongToEntityId)))
+	slot0.clientSimulateCanPlayCard = FightViewHandCardItemLock.canUseCardSkill(slot0.belongToEntityId, slot0.skillId, FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot0.belongToEntityId)))
 	slot0.cardInfoMO = FightCardInfoMO.New()
 
 	slot0.cardInfoMO:init(slot5)
+end
+
+function slot0.playAssistBossHandCard(slot0, slot1, slot2)
+	slot0.operType = FightEnum.CardOpType.AssistBoss
+	slot0.param1 = slot1
+	slot0.toId = slot2
+	slot0.skillId = slot1
+	slot0.belongToEntityId = FightDataHelper.entityMgr:getAssistBoss().id
+	slot0.costActPoint = 0
 end
 
 function slot0.simulateDissolveCard(slot0, slot1)
@@ -82,6 +91,10 @@ end
 
 function slot0.isPlayCard(slot0)
 	return slot0.operType == FightEnum.CardOpType.PlayCard
+end
+
+function slot0.isAssistBossPlayCard(slot0)
+	return slot0.operType == FightEnum.CardOpType.AssistBoss
 end
 
 function slot0.isSimulateDissolveCard(slot0)

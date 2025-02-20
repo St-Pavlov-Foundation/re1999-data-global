@@ -40,7 +40,9 @@ function slot0._getUIUrlList(slot0)
 		table.insert(slot1, RoomResHelper.getBuildingPath(slot7.buildingId, slot7.level))
 	end
 
-	table.insert(slot1, RoomScenePreloader.ResInitBuilding)
+	slot6 = RoomScenePreloader.ResInitBuilding
+
+	table.insert(slot1, slot6)
 
 	for slot6, slot7 in ipairs(slot1) do
 		slot0.context.poolGODict[slot7] = 0

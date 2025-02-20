@@ -54,37 +54,44 @@ function slot0.copyCharacterCardList(slot0, slot1)
 	end
 
 	slot9 = #slot3
+	slot10 = slot0.isTowerBattle
 
-	for slot14, slot15 in ipairs(slot2) do
-		if not slot4[slot15.uid] then
-			slot4[slot15.uid] = true
+	for slot15, slot16 in ipairs(slot2) do
+		if not slot4[slot16.uid] then
+			slot4[slot16.uid] = true
 
 			if slot0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(slot15.heroId) > 0 then
-					table.insert({}, slot15)
+				if WeekWalkModel.instance:getCurMapHeroCd(slot16.heroId) > 0 then
+					table.insert({}, slot16)
 				else
-					table.insert(slot3, slot15)
+					table.insert(slot3, slot16)
 				end
-			elseif slot0._moveHeroId and slot15.heroId == slot0._moveHeroId then
+			elseif slot10 then
+				if TowerModel.instance:isHeroBan(slot16.heroId) then
+					table.insert(slot11, slot16)
+				else
+					table.insert(slot3, slot16)
+				end
+			elseif slot0._moveHeroId and slot16.heroId == slot0._moveHeroId then
 				slot0._moveHeroId = nil
 				slot0._moveHeroIndex = slot9 + 1
 
-				table.insert(slot3, slot0._moveHeroIndex, slot15)
+				table.insert(slot3, slot0._moveHeroIndex, slot16)
 			else
-				table.insert(slot3, slot15)
+				table.insert(slot3, slot16)
 			end
 		end
 	end
 
-	if slot0.adventure then
-		tabletool.addValues(slot3, slot10)
+	if slot0.adventure or slot10 then
+		tabletool.addValues(slot3, slot11)
 	end
 
 	slot0:setList(slot3)
 
 	if slot1 and #slot3 > 0 and slot5 > 0 and #slot0._scrollViews > 0 then
-		for slot14, slot15 in ipairs(slot0._scrollViews) do
-			slot15:selectCell(slot5, true)
+		for slot15, slot16 in ipairs(slot0._scrollViews) do
+			slot16:selectCell(slot5, true)
 		end
 
 		if slot3[slot5] then
@@ -133,9 +140,10 @@ function slot0.isInTeamHero(slot0, slot1)
 	return slot0._inTeamHeroUids and slot0._inTeamHeroUids[slot1]
 end
 
-function slot0.setParam(slot0, slot1, slot2)
+function slot0.setParam(slot0, slot1, slot2, slot3)
 	slot0.specialHero = slot1
 	slot0.adventure = slot2
+	slot0.isTowerBattle = slot3
 end
 
 slot0.instance = slot0.New()

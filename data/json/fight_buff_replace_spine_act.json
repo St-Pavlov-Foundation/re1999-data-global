@@ -208,5 +208,89 @@
     "priority": 1,
     "combination": [],
     "suffix": "_trans"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050131,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050131,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050132,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050132,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050133,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050133,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050134,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050134,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050135,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050135,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310501,
+    "buffId": 31050136,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
+  },
+  {
+    "id": 310502,
+    "buffId": 31050136,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_channel"
   }
 ]

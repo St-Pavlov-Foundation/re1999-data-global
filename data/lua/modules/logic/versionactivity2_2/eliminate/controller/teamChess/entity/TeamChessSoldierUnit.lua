@@ -9,6 +9,7 @@ function slot0.refreshTransform(slot0, slot1, slot2, slot3)
 	slot0._unitParentPosition = slot2
 
 	slot0:updatePosByTr()
+	slot0:refreshShowModeState()
 end
 
 function slot0.getPosByTr(slot0)
@@ -138,6 +139,10 @@ function slot0.setNormalActive(slot0, slot1)
 end
 
 function slot0.setShowModeType(slot0, slot1)
+	if gohelper.isNil(slot0._resGo) then
+		return
+	end
+
 	if slot0._lastModelType ~= nil and slot0._lastModelType == slot1 then
 		return
 	end
@@ -315,6 +320,8 @@ function slot0.onDragEnd(slot0, slot1, slot2)
 end
 
 function slot0.onClick(slot0)
+	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
+
 	slot1 = slot0._unitMo.stronghold
 	slot2 = slot0._unitMo.uid
 	slot3 = slot0._unitMo.soldierId
@@ -378,6 +385,22 @@ function slot0.dispose(slot0)
 	else
 		slot0:playAnimator("out")
 		TaskDispatcher.runDelay(slot0.onDestroy, slot0, 0.33)
+	end
+end
+
+function slot0.refreshShowModeState(slot0)
+	slot1 = EliminateTeamChessEnum.ModeType.Normal
+
+	if slot0._unitMo ~= nil and slot0._unitMo:canActiveMove() then
+		slot1 = EliminateTeamChessEnum.ModeType.Outline
+	end
+
+	slot0:setShowModeType(slot1)
+end
+
+function slot0.refreshMeshOrder(slot0)
+	if slot0._unitMo ~= nil then
+		slot0:setAllMeshRenderOrderInLayer(slot0._unitMo:getOrder())
 	end
 end
 

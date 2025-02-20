@@ -29,7 +29,13 @@ function slot0._setNodeVisible(slot0, slot1, slot2)
 	end
 
 	for slot7, slot8 in ipairs(slot0._nodeList[slot1]) do
-		gohelper.setActive(gohelper.findChild(slot0._spineGo, slot8), slot2)
+		slot9 = gohelper.findChild(slot0._spineGo, slot8)
+
+		gohelper.setActive(slot9, slot2)
+
+		if not slot9 and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("找不到特效节点：%s,请检查路径", slot8))
+		end
 
 		if slot2 then
 			slot0._effectVisible = true

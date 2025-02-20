@@ -149,7 +149,9 @@ function slot0._refreshEmpty(slot0)
 end
 
 function slot0._placeEmptyBlock(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)) do
+	slot7 = true
+
+	for slot7, slot8 in ipairs(slot1.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, slot7)) do
 		if slot0:getBlockMO(slot8.x, slot8.y) then
 			slot0:_refreshEmptyMO(slot9)
 		else
@@ -424,8 +426,9 @@ function slot0.debugRootOutBlock(slot0, slot1)
 
 		if slot0:getBlockMO(slot9.x, slot9.y) and slot11.blockState == RoomBlockEnum.BlockState.Water then
 			slot12 = false
+			slot17 = true
 
-			for slot17, slot18 in ipairs(slot9:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)) do
+			for slot17, slot18 in ipairs(slot9:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, slot17)) do
 				if slot0:getBlockMO(slot18.x, slot18.y) and slot19.blockState == RoomBlockEnum.BlockState.Map then
 					slot12 = true
 

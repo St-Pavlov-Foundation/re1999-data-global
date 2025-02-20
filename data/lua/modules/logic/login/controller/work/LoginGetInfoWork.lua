@@ -144,6 +144,15 @@ function slot0._initInfo(slot0)
 		})
 	end
 
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
+		table.insert(slot0.GetInfoFuncList, {
+			TowerRpc.sendGetTowerInfoRequest,
+			TowerRpc.instance,
+			"sendGetTowerInfoRequest",
+			false
+		})
+	end
+
 	slot0._callbackIdDict = {}
 end
 
@@ -153,10 +162,10 @@ function slot0.onStart(slot0, slot1)
 	slot0._leftInfoCount = #slot0.GetInfoFuncList
 	slot0._waitCount = 0
 	slot0._waitCount = slot0._waitCount + 1
-	slot5 = slot0._onDungeonInfoUpdateAll
-	slot6 = slot0
+	slot5 = DungeonEvent.OnUpdateDungeonInfo
+	slot6 = slot0._onDungeonInfoUpdateAll
 
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, slot5, slot6)
+	DungeonController.instance:registerCallback(slot5, slot6, slot0)
 
 	for slot5, slot6 in ipairs(slot0.GetInfoFuncList) do
 		slot7 = slot6[1]

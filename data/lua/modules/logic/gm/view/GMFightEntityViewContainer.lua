@@ -74,8 +74,8 @@ end
 function slot0._onGetEntityInfo(slot0, slot1)
 	FightRpc.instance:refreshEntityMO(slot1)
 
-	if slot1.entityInfo and FightDataMgr.instance:getEntityDataMgr():getEntityMO(slot1.entityInfo.uid) then
-		FightEntityDataMgr.copyEntityMO(FightEntityModel.instance:getById(slot2.id), slot2)
+	if slot1.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(slot1.entityInfo.uid) then
+		FightEntityDataHelper.copyEntityMO(FightDataHelper.entityMgr:getById(slot2.id), slot2)
 	end
 
 	GMFightEntityModel.instance:onGetSingleEntityInfo(slot1)

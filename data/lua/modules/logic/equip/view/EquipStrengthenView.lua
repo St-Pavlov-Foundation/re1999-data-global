@@ -209,9 +209,9 @@ function slot0._editableInitView(slot0)
 	slot0.goBreakRightArrow = gohelper.findChild(slot0._gobreakeffect, "go_rightarrow")
 	slot0.goNotFilter = gohelper.findChild(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_notfilter")
 	slot0.goFilter = gohelper.findChild(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_filter")
-	slot5 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Gold).icon .. "_1"
+	slot5 = slot0._imagecurrency
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecurrency, slot5)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(slot5, CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Gold).icon .. "_1")
 
 	slot0._equipLvBtns = slot0:getUserDataTb_()
 	slot0._equipLvArrow = slot0:getUserDataTb_()
@@ -271,13 +271,14 @@ function slot0.initFilterDrop(slot0)
 	slot0.trDropArrow = gohelper.findChildComponent(slot0.dropFilter.gameObject, "Arrow", typeof(UnityEngine.Transform))
 	slot0.dropClick = gohelper.getClick(slot0.dropFilter.gameObject)
 	slot0.dropExtend = DropDownExtend.Get(slot0.dropFilter.gameObject)
-	slot4 = slot0.onDropHide
 
-	slot0.dropExtend:init(slot0.onDropShow, slot4, slot0)
+	slot0.dropExtend:init(slot0.onDropShow, slot0.onDropHide, slot0)
 
 	slot0.filterRareLevelList = {}
+	slot2 = EquipConfig.instance
+	slot4 = slot2
 
-	for slot4 = 2, EquipConfig.instance:getMaxFilterRare() do
+	for slot4 = 2, slot2.getMaxFilterRare(slot4) do
 		table.insert(slot0.filterRareLevelList, slot4)
 	end
 
@@ -294,9 +295,12 @@ function slot0.initFilterDrop(slot0)
 	slot0.dropFilter:ClearOptions()
 	slot0.dropFilter:AddOptions(slot1)
 	slot0.dropFilter:AddOnValueChanged(slot0.onDropValueChanged, slot0)
+
+	slot6 = slot0
+
 	slot0.dropClick:AddClickListener(function ()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	end, slot0)
+	end, slot6)
 
 	for slot6, slot7 in ipairs(slot0.filterRareLevelList) do
 		if slot7 == EquipChooseListModel.instance:getFilterRare() then

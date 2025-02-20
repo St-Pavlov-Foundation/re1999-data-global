@@ -57,8 +57,9 @@ end
 
 function slot0._onClickOK(slot0)
 	slot1 = GMResetCardsModel.instance:getModel1()
+	slot8 = slot1
 
-	for slot7, slot8 in ipairs(slot1:getList()) do
+	for slot7, slot8 in ipairs(slot1.getList(slot8)) do
 		if slot7 < slot1:getCount() then
 			slot2 = "" .. (slot8.newSkillId or slot8.oldSkillId) .. "#"
 		end

@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkTriggerStress", package.seeall)
 slot0 = class("FightWorkTriggerStress", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if not FightEntityModel.instance:getById(slot0._actEffectMO.targetId) then
+	if not FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
 		return slot0:onDone(true)
 	end
 

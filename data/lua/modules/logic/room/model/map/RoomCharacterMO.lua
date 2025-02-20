@@ -209,7 +209,9 @@ function slot0.getRemainMovePositions(slot0)
 		return slot1
 	end
 
-	table.insert(slot1, slot0.currentPosition)
+	slot5 = slot0.currentPosition
+
+	table.insert(slot1, slot5)
 
 	for slot5 = slot0._movePoint + 1, #slot0._nextPositions do
 		table.insert(slot1, slot0._nextPositions[slot5])

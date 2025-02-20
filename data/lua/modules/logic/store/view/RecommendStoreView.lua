@@ -203,9 +203,7 @@ end
 function slot0._refreshTabsItem(slot0)
 	slot1, slot2 = StoreHelper.getRecommendStoreSecondTabConfig()
 
-	table.sort(slot1, function (slot0, slot1)
-		return uv0:_tabSortFunction(slot0, slot1)
-	end)
+	slot0:sortPage(slot1)
 
 	slot3 = false
 
@@ -244,7 +242,9 @@ function slot0._refreshTabsItem(slot0)
 		end
 	end
 
-	gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, false)
+	slot8 = false
+
+	gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, slot8)
 
 	for slot8 = #slot1 + 1, #slot0._categoryItemContainer do
 		slot0._categoryItemContainer[slot8].btn:RemoveClickListener()
@@ -284,6 +284,37 @@ function slot0._tabSortFunction(slot0, slot1, slot2)
 	end
 
 	return slot5 < slot6
+end
+
+function slot0.sortPage(slot0, slot1)
+	slot0:_cacheConfigGroupData(slot1)
+	table.sort(slot1, function (slot0, slot1)
+		return uv0:_tabSortGroupFunction(slot0, slot1)
+	end)
+
+	slot0._cacheConfigGroupDic = {}
+	slot0._cacheConfigOrderDic = {}
+end
+
+function slot0._cacheConfigGroupData(slot0, slot1)
+	slot0._cacheConfigGroupDic = {}
+	slot0._cacheConfigOrderDic = {}
+
+	if not slot1 or #slot1 <= 0 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		slot0._cacheConfigGroupDic[slot6.id], slot0._cacheConfigOrderDic[slot6.id] = StoreHelper.getRecommendStoreGroupAndOrder(slot6, true)
+	end
+end
+
+function slot0._tabSortGroupFunction(slot0, slot1, slot2)
+	if slot0._cacheConfigGroupDic[slot1.id] == slot0._cacheConfigGroupDic[slot2.id] then
+		return slot0._cacheConfigOrderDic[slot1.id] < slot0._cacheConfigOrderDic[slot2.id]
+	end
+
+	return slot3 < slot4
 end
 
 function slot0._checkSortType(slot0, slot1)

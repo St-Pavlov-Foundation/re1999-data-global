@@ -15,7 +15,9 @@ function slot0.init(slot0, slot1)
 end
 
 function slot0._btnclosebuffOnClick(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+	slot4 = false
+
+	gohelper.setActive(slot0._goBuffContainer, slot4)
 
 	for slot4, slot5 in pairs(slot0._buffTab) do
 		slot0._buffTab[slot4] = nil

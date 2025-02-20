@@ -38,11 +38,22 @@ function slot0.MainThumbnailRecommendView_register(slot0)
 		slot0:_gm_stopBannerLoopAnimUpdate()
 	end
 
-	function slot0._inOpenTime(slot0, ...)
+	function slot0._inOpenTime(slot0, slot1, ...)
 		if GM_MainThumbnailRecommendView.s_ShowAllBanner then
-			return true
+			if not slot1 then
+				return true
+			end
+
+			slot2 = ServerTime.now()
+			slot5 = string.nilorempty(slot1.onlineTime) and slot2 or TimeUtil.stringToTimestamp(slot1.onlineTime)
+
+			if (string.nilorempty(slot1.offlineTime) and slot2 or TimeUtil.stringToTimestamp(slot1.offlineTime)) < slot2 then
+				return false
+			end
+
+			return slot1.isOffline == 0
 		else
-			return GMMinusModel.instance:callOriginalSelfFunc(slot0, "_inOpenTime", ...)
+			return GMMinusModel.instance:callOriginalSelfFunc(slot0, "_inOpenTime", slot1, ...)
 		end
 	end
 

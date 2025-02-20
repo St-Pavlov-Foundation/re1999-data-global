@@ -64,9 +64,9 @@ function slot0.onLoadResEnd(slot0)
 	slot0.instGo = slot0.loader:getInstGO()
 	slot0.rootGo = slot0.instGo.transform:GetChild(0):GetChild(0).gameObject
 	slot0.anim = slot0.instGo:GetComponent(typeof(UnityEngine.Animator))
-	slot4 = 0
+	slot4 = "open1"
 
-	slot0.anim:Play("open1", slot4, 1)
+	slot0.anim:Play(slot4, 0, 1)
 
 	for slot4 = 1, 6 do
 		slot0.plans[slot4] = gohelper.findChild(slot0.rootGo, slot4)
@@ -150,8 +150,9 @@ function slot0.revertPlane(slot0, slot1)
 	slot0.renderers[slot1] = slot0.hideRenderers[slot1]
 	slot0.renderers[slot1].sortingOrder = slot3.sortingOrder
 	slot0.hideRenderers[slot1] = nil
+	slot9 = true
 
-	slot0:getPlaneByIndex(slot1).transform:SetParent(slot0.rootGo.transform, true)
+	slot0:getPlaneByIndex(slot1).transform:SetParent(slot0.rootGo.transform, slot9)
 
 	slot5 = slot0:getCurGrids()
 

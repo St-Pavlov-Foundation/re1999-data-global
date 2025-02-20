@@ -32,9 +32,10 @@ function slot0.init(slot0, slot1, slot2)
 
 		slot0.talentCubeInfos:init(slot2.talentCubeInfos)
 
-		slot6 = slot0.talent
+		slot6 = slot0.heroId
+		slot7 = slot0.talent
 
-		slot0.talentCubeInfos:setOwnData(slot0.heroId, slot6)
+		slot0.talentCubeInfos:setOwnData(slot6, slot7)
 
 		slot0.originalTalentCubeInfos = {}
 
@@ -47,6 +48,10 @@ function slot0.init(slot0, slot1, slot2)
 			}
 		end
 	end
+
+	slot0.destinyRank = slot2.destinyRank
+	slot0.destinyLevel = slot2.destinyLevel
+	slot0.destinyStone = slot2.destinyStone
 
 	return true
 end
@@ -70,7 +75,10 @@ function slot0.getHeroInfo(slot0)
 		talentCubeInfos = slot0:getOriginalTalentCubeInfos(),
 		balanceLevel = slot0:getBalanceLevel(),
 		isOpenTalent = slot0:getIsOpenTalent(),
-		style = slot0:getTalentStyle()
+		style = slot0:getTalentStyle(),
+		destinyRank = slot0:getDestinyRank(),
+		destinyLevel = slot0:getDestinyLevel(),
+		destinyStone = slot0:getDestinyStone()
 	}
 end
 
@@ -148,6 +156,18 @@ end
 
 function slot0.getTalentStyle(slot0)
 	return slot0.style
+end
+
+function slot0.getDestinyRank(slot0)
+	return slot0.destinyRank
+end
+
+function slot0.getDestinyLevel(slot0)
+	return slot0.destinyLevel
+end
+
+function slot0.getDestinyStone(slot0)
+	return slot0.destinyStone
 end
 
 return slot0

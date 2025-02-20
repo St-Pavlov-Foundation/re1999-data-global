@@ -1526,99 +1526,6 @@ slot0 = {
 		"Activity174",
 		"Act174FightRoundInfo"
 	},
-	[-4207] = {
-		"Activity178",
-		"GetAct178InfoRequest",
-		"GetAct178InfoReply"
-	},
-	[-23603] = {
-		"Activity178",
-		"Act178StartEpisodeRequest",
-		"Act178StartEpisodeReply"
-	},
-	[-4938] = {
-		"Activity178",
-		"Act178EndEpisodeRequest",
-		"Act178EndEpisodeReply"
-	},
-	[1205] = {
-		"Activity178",
-		"Act178EndRoundRequest",
-		"Act178EndRoundReply"
-	},
-	[-13420] = {
-		"Activity178",
-		"Act178RestRequest",
-		"Act178RestReply"
-	},
-	[15513] = {
-		"Activity178",
-		"Act178ResetRequest",
-		"Act178ResetReply"
-	},
-	[-19286] = {
-		"Activity178",
-		"Act178UnlockTalentRequest",
-		"Act178UnlockTalentReply"
-	},
-	[20710] = {
-		"Activity178",
-		"Act178BuildRequest",
-		"Act178BuildReply"
-	},
-	[-17381] = {
-		"Activity178",
-		"Act178GetRewardRequest",
-		"Act178GetRewardReply"
-	},
-	[656] = {
-		"Activity178",
-		"Act178InteractRequest",
-		"Act178InteractReply"
-	},
-	[-15705] = {
-		"Activity178",
-		"Act178CurrencyChangePush"
-	},
-	[17118] = {
-		"Activity179",
-		"Get179InfosRequest",
-		"Get179InfosReply"
-	},
-	[20711] = {
-		"Activity179",
-		"Set179ScoreRequest",
-		"Set179ScoreReply"
-	},
-	[16886] = {
-		"Activity180",
-		"Get180InfosRequest",
-		"Get180InfosReply"
-	},
-	[6703] = {
-		"Activity180",
-		"Act180EnterEpisodeRequest",
-		"Act180EnterEpisodeReply"
-	},
-	[-28087] = {
-		"Activity180",
-		"Act180StoryRequest",
-		"Act180StoryReply"
-	},
-	[-29661] = {
-		"Activity180",
-		"Act180GameFinishRequest",
-		"Act180GameFinishReply"
-	},
-	[-2735] = {
-		"Activity180",
-		"Act180SaveGameRequest",
-		"Act180SaveGameReply"
-	},
-	[-29435] = {
-		"Activity180",
-		"Act180EpisodePush"
-	},
 	[-29545] = {
 		"Activity181",
 		"Get181InfosRequest",
@@ -1633,6 +1540,16 @@ slot0 = {
 		"Activity181",
 		"Get181SpBonusRequest",
 		"Get181SpBonusReply"
+	},
+	[18246] = {
+		"Activity189",
+		"GetAct189InfoRequest",
+		"GetAct189InfoReply"
+	},
+	[12102] = {
+		"Activity189",
+		"GetAct189OnceBonusRequest",
+		"GetAct189OnceBonusReply"
 	},
 	[-14582] = {
 		"Activity",
@@ -2060,6 +1977,16 @@ slot0 = {
 		"PuzzleFinishRequest",
 		"PuzzleFinishReply"
 	},
+	[20143] = {
+		"Dungeon",
+		"SavePuzzleProgressRequest",
+		"SavePuzzleProgressReply"
+	},
+	[15392] = {
+		"Dungeon",
+		"GetPuzzleProgressRequest",
+		"GetPuzzleProgressReply"
+	},
 	[-24665] = {
 		"Dungeon",
 		"RefreshAssistRequest",
@@ -2473,6 +2400,11 @@ slot0 = {
 		"UpdateHeroGroupNameRequest",
 		"UpdateHeroGroupNameReply"
 	},
+	[2131] = {
+		"HeroGroup",
+		"GetHeroGroupSnapshotListRequest",
+		"GetHeroGroupSnapshotListReply"
+	},
 	[-27005] = {
 		"HeroInvitation",
 		"GetHeroInvitationInfoRequest",
@@ -2603,6 +2535,36 @@ slot0 = {
 	[-29459] = {
 		"Hero",
 		"HeroLevelUpUpdatePush"
+	},
+	[31906] = {
+		"Hero",
+		"HeroTalentStyleStatRequest",
+		"HeroTalentStyleStatReply"
+	},
+	[9532] = {
+		"Hero",
+		"DestinyLevelUpRequest",
+		"DestinyLevelUpReply"
+	},
+	[387] = {
+		"Hero",
+		"DestinyRankUpRequest",
+		"DestinyRankUpReply"
+	},
+	[-32300] = {
+		"Hero",
+		"DestinyStoneUnlockRequest",
+		"DestinyStoneUnlockReply"
+	},
+	[6261] = {
+		"Hero",
+		"DestinyStoneUseRequest",
+		"DestinyStoneUseReply"
+	},
+	[-23957] = {
+		"Hero",
+		"HeroRedDotReadRequest",
+		"HeroRedDotReadReply"
 	},
 	[-27537] = {
 		"HeroStory",
@@ -3965,6 +3927,11 @@ slot0 = {
 		"ChooseMultiUpHeroRequest",
 		"ChooseMultiUpHeroReply"
 	},
+	[4911] = {
+		"Summon",
+		"ChooseEnhancedPoolHeroRequest",
+		"ChooseEnhancedPoolHeroReply"
+	},
 	[-3389] = {
 		"Task",
 		"GetTaskInfoRequest",
@@ -3997,6 +3964,44 @@ slot0 = {
 		"Task",
 		"FinishReadTaskRequest",
 		"FinishReadTaskReply"
+	},
+	[-13537] = {
+		"Tower",
+		"GetTowerInfoRequest",
+		"GetTowerInfoReply"
+	},
+	[-17459] = {
+		"Tower",
+		"TowerMopUpRequest",
+		"TowerMopUpReply"
+	},
+	[-4800] = {
+		"Tower",
+		"TowerActiveTalentRequest",
+		"TowerActiveTalentReply"
+	},
+	[10119] = {
+		"Tower",
+		"TowerResetTalentRequest",
+		"TowerResetTalentReply"
+	},
+	[5874] = {
+		"Tower",
+		"TowerResetSubEpisodeRequest",
+		"TowerResetSubEpisodeReply"
+	},
+	[-122] = {
+		"Tower",
+		"StartTowerBattleRequest",
+		"StartTowerBattleReply"
+	},
+	[-764] = {
+		"Tower",
+		"TowerBattleFinishPush"
+	},
+	[-25273] = {
+		"Tower",
+		"TowerLayerUpdatePush"
 	},
 	[-15599] = {
 		"Turnback",

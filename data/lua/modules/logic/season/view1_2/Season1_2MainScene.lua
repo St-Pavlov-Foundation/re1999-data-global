@@ -339,7 +339,8 @@ function slot0._loadSceneFinish(slot0)
 	slot0._gorole3 = gohelper.findChild(slot0._goroles, "kongbutong_3")
 	slot0._gorole4 = gohelper.findChild(slot0._goroles, "jiexika_b_4")
 	slot0._gorole5 = gohelper.findChild(slot0._goroles, "jinmier_5")
-	slot0._gorole6 = gohelper.findChild(slot0._goroles, "yaxian_b_6")
+	slot5 = "yaxian_b_6"
+	slot0._gorole6 = gohelper.findChild(slot0._goroles, slot5)
 
 	for slot5 = 1, 6 do
 		if slot0[string.format("_gorole%s", slot5)] then

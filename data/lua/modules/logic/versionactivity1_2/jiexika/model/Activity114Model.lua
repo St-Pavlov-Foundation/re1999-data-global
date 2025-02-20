@@ -173,9 +173,9 @@ function slot0._checkHaveNextWeekInfo(slot0)
 		return
 	end
 
-	slot4 = slot0._nextWeekInfo
+	slot4 = slot0.id
 
-	slot0:onGetInfo(slot0.id, slot4)
+	slot0:onGetInfo(slot4, slot0._nextWeekInfo)
 
 	for slot4 in pairs(slot0.changeEventList) do
 		Activity114Controller.instance:dispatchEvent(slot4)
@@ -317,9 +317,10 @@ function slot0.onFeatureChange(slot0, slot1)
 			end
 
 			if not string.nilorempty(slot9.courseEfficiency) then
-				slot14 = "#"
+				slot14 = "|"
+				slot15 = "#"
 
-				for slot14, slot15 in ipairs(GameUtil.splitString2(slot9.courseEfficiency, true, "|", slot14)) do
+				for slot14, slot15 in ipairs(GameUtil.splitString2(slot9.courseEfficiency, true, slot14, slot15)) do
 					slot2[slot15[1]] = (slot2[slot15[1]] or 0) + slot15[2] / 1000
 				end
 			end

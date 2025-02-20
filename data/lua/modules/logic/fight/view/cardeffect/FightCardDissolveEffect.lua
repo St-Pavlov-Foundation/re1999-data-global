@@ -34,7 +34,9 @@ function slot0.onStart(slot0, slot1)
 		table.insert(slot0._cloneItemGOs, slot11)
 		slot0:_hideEffect(slot11)
 
-		for slot16 = 0, slot11:GetComponentsInChildren(gohelper.Type_Image, false).Length - 1 do
+		slot16 = false
+
+		for slot16 = 0, slot11:GetComponentsInChildren(gohelper.Type_Image, slot16).Length - 1 do
 			slot17 = slot12[slot16]
 			slot17.color.a = 1
 			slot17.enabled = false
@@ -48,7 +50,9 @@ function slot0.onStart(slot0, slot1)
 
 		table.insert(slot0._meshGOs, slot13)
 
-		for slot18 = 0, slot13:GetComponentsInChildren(typeof(UnityEngine.Renderer), false).Length - 1 do
+		slot18 = false
+
+		for slot18 = 0, slot13:GetComponentsInChildren(typeof(UnityEngine.Renderer), slot18).Length - 1 do
 			slot19 = slot14[slot18].material
 
 			table.insert(slot0._mats, slot19)
@@ -72,10 +76,12 @@ function slot0.onStart(slot0, slot1)
 end
 
 function slot0._tweenFrameFunc(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._mats) do
-		slot8 = uv0[2]
+	if slot0._mats then
+		for slot5, slot6 in ipairs(slot0._mats) do
+			slot8 = uv0[2]
 
-		MaterialUtil.setPropValue(slot6, uv0[1], slot8, MaterialUtil.getLerpValue(slot8, uv0[3], uv0[4], slot1))
+			MaterialUtil.setPropValue(slot6, uv0[1], slot8, MaterialUtil.getLerpValue(slot8, uv0[3], uv0[4], slot1))
+		end
 	end
 end
 
@@ -188,6 +194,13 @@ function slot0.clearWork(slot0)
 
 			slot0._renderers[slot4] = nil
 		end
+	end
+
+	if slot0._flow then
+		slot0._flow:unregisterDoneListener(slot0._onWorkDone, slot0)
+		slot0._flow:stop()
+
+		slot0._flow = nil
 	end
 
 	slot0._cloneMats = nil

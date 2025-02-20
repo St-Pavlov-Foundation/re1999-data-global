@@ -109,6 +109,20 @@ slot0.ActEffectWorkCls = {
 	[FightEnum.EffectType.CARDDECKGENERATE] = FightWorkCardDeckGenerate,
 	[FightEnum.EffectType.CARDDECKDELETE] = FightWorkCardDeckDelete,
 	[FightEnum.EffectType.DELCARDANDDAMAGE] = FightWorkDelCardAndDamage,
+	[FightEnum.EffectType.PROGRESSCHANGE] = FightWorkProgressChange,
+	[FightEnum.EffectType.ASSISTBOSSSKILLCD] = FightWorkChangeAssistBossCD,
+	[FightEnum.EffectType.DAMAGESHAREHP] = FightWorkDamageShareHp,
+	[FightEnum.EffectType.PROGRESSMAXCHANGE] = FightWorkProgressMaxChange,
+	[FightEnum.EffectType.ASSISTBOSSSKILLCHANGE] = FightWorkAssistBossSkillChange,
+	[FightEnum.EffectType.ASSISTBOSSCHANGE] = FightWorkAssistBossChange,
+	[FightEnum.EffectType.ZXQREMOVECARD] = FightWorkZXQRemoveCard,
+	[FightEnum.EffectType.ADDITIONALDAMAGE] = FightWorkAdditionalDamage,
+	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = FightWorkAdditionalDamageCrit,
+	[FightEnum.EffectType.ACT174FIRST] = FightWorkAct174First,
+	[FightEnum.EffectType.ACT174USECARD] = FightWorkAct174UseCard,
+	[FightEnum.EffectType.CHANGESHIELD] = FightWorkChangeShield,
+	[FightEnum.EffectType.TOWERSCORECHANGE] = FightWorkTowerScoreChangeWork,
+	[FightEnum.EffectType.ACT174MONSTERAICARD] = FightWorkAct174MonsterAiCard,
 	[FightEnum.EffectType.CURE] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.DOT] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.REBOUND] = FightBuffTriggerEffect,
@@ -144,7 +158,10 @@ slot0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.PLAYAROUNDUPRANK] = FightWorkPlayAroundUpRankContainer,
 	[FightEnum.EffectType.PLAYAROUNDDOWNRANK] = FightWorkPlayAroundDownRankContainer,
 	[FightEnum.EffectType.PLAYCHANGERANKFAIL] = FightWorkPlayChangeRankFailContainer,
-	[FightEnum.EffectType.GUARDBREAK] = FightWorkEffectGuardBreakContainer
+	[FightEnum.EffectType.GUARDBREAK] = FightWorkEffectGuardBreakContainer,
+	[FightEnum.EffectType.ZXQREMOVECARD] = FightWorkZXQRemoveCardContainer,
+	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = FightWorkDeadlyPoisonContainer,
+	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonCritContainer
 }
 
 setmetatable(slot0.EffectType2FlowOrWork, {
@@ -165,10 +182,9 @@ function slot0.buildStepWorkList(slot0)
 		if slot8.actType == FightEnum.ActType.SKILL then
 			slot1 = uv0._buildSkillWork(slot0, slot8, nil, slot0[slot7 + 1], slot2, slot3)
 		elseif slot8.actType == FightEnum.ActType.EFFECT then
-			slot12 = slot8
-			slot13 = nil
+			slot12 = uv0._buildEffectWorks
 
-			tabletool.addValues(slot2, uv0._buildEffectWorks(slot12, slot13))
+			tabletool.addValues(slot2, slot12(slot8, nil))
 
 			for slot12, slot13 in ipairs(slot8.actEffectMOs) do
 				if slot13.effectType == FightEnum.EffectType.DEALCARD1 or slot13.effectType == FightEnum.EffectType.DEALCARD2 or slot13.effectType == FightEnum.EffectType.ROUNDEND then
@@ -213,7 +229,7 @@ end
 function slot0._buildSkillWork(slot0, slot1, slot2, slot3, slot4, slot5)
 	table.insert(slot4, FightGuideBeforeSkill.New(slot1))
 
-	if not string.nilorempty(FightConfig.instance:getSkinSkillTimeline(FightEntityModel.instance:getById(slot1.fromId) and slot6.skin, slot1.actId)) then
+	if not string.nilorempty(FightConfig.instance:getSkinSkillTimeline(FightDataHelper.entityMgr:getById(slot1.fromId) and slot6.skin, slot1.actId)) then
 		if FightWorkFbStory.checkHasFbStory() then
 			table.insert(slot4, FightWorkFbStory.New(FightWorkFbStory.Type_BeforePlaySkill, slot1.actId))
 		end

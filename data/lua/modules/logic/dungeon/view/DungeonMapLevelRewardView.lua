@@ -370,9 +370,10 @@ end
 
 function slot0.addAdvanceReward(slot0)
 	if slot0.episodeInfo.star < DungeonEnum.StarType.Advanced then
-		slot4 = slot0.episodeId
+		slot3 = DungeonModel.instance
+		slot5 = slot3
 
-		for slot4, slot5 in ipairs(DungeonModel.instance:getEpisodeAdvancedBonus(slot4)) do
+		for slot4, slot5 in ipairs(slot3.getEpisodeAdvancedBonus(slot5, slot0.episodeId)) do
 			slot0:_addReward(slot5[1], slot5[2], slot5[3], uv0.TagType.SecondPass, true, uv0.RewardType.SecondStar)
 		end
 	end
@@ -386,9 +387,10 @@ function slot0.addFirstReward(slot0, slot1)
 			slot2 = uv0.TagType.StoryFirst
 		end
 
-		slot6 = slot0.episodeId
+		slot5 = DungeonModel.instance
+		slot7 = slot5
 
-		for slot6, slot7 in ipairs(DungeonModel.instance:getEpisodeFirstBonus(slot6)) do
+		for slot6, slot7 in ipairs(slot5.getEpisodeFirstBonus(slot7, slot0.episodeId)) do
 			slot8 = true
 
 			if tonumber(slot7[1]) == MaterialEnum.MaterialType.Currency and tonumber(slot7[2]) == CurrencyEnum.CurrencyType.V1a9ToughEnter and ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle) ~= ActivityEnum.ActivityStatus.Normal and slot9 ~= ActivityEnum.ActivityStatus.NotUnlock then
@@ -404,9 +406,10 @@ end
 
 function slot0.addFreeReward(slot0)
 	if slot0.isFree then
-		slot4 = slot0.episodeId
+		slot3 = DungeonModel.instance
+		slot5 = slot3
 
-		for slot4, slot5 in ipairs(DungeonModel.instance:getEpisodeFreeDisplayList(slot4)) do
+		for slot4, slot5 in ipairs(slot3.getEpisodeFreeDisplayList(slot5, slot0.episodeId)) do
 			slot0:_addReward(slot5[1], slot5[2], 0, slot5[3], false, uv0.RewardType.Common)
 		end
 	end
@@ -420,11 +423,15 @@ function slot0.addDoubleDropReward(slot0)
 	slot2 = nil
 
 	if slot0.chapterCo.type == DungeonEnum.ChapterType.Gold or slot0.chapterCo.type == DungeonEnum.ChapterType.Exp then
-		for slot7, slot8 in ipairs(DungeonModel.instance:getEpisodeBonus(slot0.episodeId)) do
+		slot7 = slot0.episodeId
+
+		for slot7, slot8 in ipairs(DungeonModel.instance:getEpisodeBonus(slot7)) do
 			slot0:_addReward(slot8[1], slot8[2], slot8[3], uv0.TagType.TurnBack, false, uv0.RewardType.TurnBack)
 		end
 	else
-		for slot7, slot8 in ipairs(DungeonModel.instance:getEpisodeRewardDisplayList(slot0.episodeId)) do
+		slot7 = slot0.episodeId
+
+		for slot7, slot8 in ipairs(DungeonModel.instance:getEpisodeRewardDisplayList(slot7)) do
 			slot0:_addReward(slot8[1], slot8[2], 0, uv0.TagType.TurnBack, false, uv0.RewardType.TurnBack)
 		end
 	end
@@ -440,11 +447,15 @@ function slot0.addCommonRewardList(slot0)
 	slot1 = nil
 
 	if slot0.chapterCo.type == DungeonEnum.ChapterType.Gold or slot0.chapterCo.type == DungeonEnum.ChapterType.Exp then
-		for slot6, slot7 in ipairs(DungeonModel.instance:getEpisodeBonus(slot0.episodeId)) do
+		slot6 = slot0.episodeId
+
+		for slot6, slot7 in ipairs(DungeonModel.instance:getEpisodeBonus(slot6)) do
 			slot0:_addReward(slot7[1], slot7[2], slot7[3], uv0.TagType.None, true, uv0.RewardType.Common)
 		end
 	else
-		for slot6, slot7 in ipairs(DungeonModel.instance:getEpisodeRewardDisplayList(slot0.episodeId)) do
+		slot6 = slot0.episodeId
+
+		for slot6, slot7 in ipairs(DungeonModel.instance:getEpisodeRewardDisplayList(slot6)) do
 			slot0:_addReward(slot7[1], slot7[2], 0, slot7[3], false, uv0.RewardType.Common)
 		end
 	end

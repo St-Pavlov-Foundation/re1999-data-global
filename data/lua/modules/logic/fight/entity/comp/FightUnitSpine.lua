@@ -2,6 +2,14 @@ module("modules.logic.fight.entity.comp.FightUnitSpine", package.seeall)
 
 slot0 = class("FightUnitSpine", UnitSpine)
 
+function slot0._onResLoaded(slot0, slot1)
+	if gohelper.isNil(slot0._gameObj) then
+		return
+	end
+
+	uv0.super._onResLoaded(slot0, slot1)
+end
+
 function slot0.init(slot0, slot1)
 	uv0.super.init(slot0, slot1)
 	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
@@ -72,7 +80,7 @@ function slot0.tryPlay(slot0, slot1, slot2, slot3)
 		return false
 	end
 
-	for slot8, slot9 in ipairs(slot0.unitSpawn:getMO():getBuffList()) do
+	for slot8, slot9 in pairs(slot0.unitSpawn:getMO():getBuffDic()) do
 		if FightBuffHelper.isStoneBuff(slot9.buffId) then
 			return
 		end
@@ -209,10 +217,10 @@ function slot0.detectDisplayInScreen(slot0)
 		return true
 	end
 
-	if slot0:getSpineTr() and FightEntityModel.instance:getById(slot0.unitSpawn.id) and lua_fight_monster_display_condition.configDict[slot2.modelId] then
+	if slot0:getSpineTr() and FightDataHelper.entityMgr:getById(slot0.unitSpawn.id) and lua_fight_monster_display_condition.configDict[slot2.modelId] then
 		slot5 = false
 
-		for slot10, slot11 in ipairs(slot2:getBuffList()) do
+		for slot10, slot11 in pairs(slot2:getBuffDic()) do
 			if slot11.buffId == slot4.buffId then
 				slot5 = true
 

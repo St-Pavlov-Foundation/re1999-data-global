@@ -44,6 +44,7 @@ function slot0.refresh(slot0)
 	slot0._is_enter_type = slot0._config.invokeType == FightWorkFocusMonster.invokeType.Enter
 
 	if slot0._entityMO then
+		FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, true)
 		FightWorkFocusMonster.focusCamera(slot0._entityMO.id)
 		FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, true)
 	end

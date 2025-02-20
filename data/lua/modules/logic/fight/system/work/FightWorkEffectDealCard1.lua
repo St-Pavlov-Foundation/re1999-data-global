@@ -9,13 +9,10 @@ function slot0.onStart(slot0)
 		return
 	end
 
-	slot0:cancelFightWorkSafeTimer()
-
-	slot2 = slot0:com_registFlowSequence()
+	slot2 = slot0:com_registWorkDoneFlowSequence()
 
 	slot2:addWork(Work2FightWork.New(FightWorkDistributeCard))
 	slot2:registWork(FightWorkFunction, slot0._afterDistribute, slot0)
-	slot2:registFinishCallback(slot0.finishWork, slot0)
 	slot2:start()
 end
 

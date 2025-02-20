@@ -151,10 +151,9 @@ function slot0._initBossRed(slot0, slot1)
 		uv0(slot1, slot0:_createByDSL(uv1.BossRushBoss, slot9))
 		uv0(slot1, slot0:_createByDSL(uv1.BossRushNewBoss, slot9))
 
-		slot14 = slot0
-		slot15 = uv1.BossRushBossReward
+		slot14 = slot0._createByDSL
 
-		uv0(slot1, slot0._createByDSL(slot14, slot15, slot9))
+		uv0(slot1, slot14(slot0, uv1.BossRushBossReward, slot9))
 
 		for slot14, slot15 in pairs(slot2:getEpisodeStages(slot9)) do
 			uv0(slot1, slot0:_createByDSL(uv1.BossRushNewLayer, slot9, slot15.layer))
@@ -333,8 +332,9 @@ function slot0._refreshRoot(slot0)
 
 	for slot7, slot8 in pairs(slot0:_getConfig():getStages()) do
 		slot9 = slot8.stage
+		slot14 = slot9
 
-		slot0:_refreshNewBoss(slot3, slot9)
+		slot0:_refreshNewBoss(slot3, slot14)
 
 		for slot14, slot15 in pairs(slot1:getEpisodeStages(slot9)) do
 			slot0:_refreshNewLayer(slot3, slot9, slot15.layer)
@@ -651,11 +651,12 @@ function slot0._print(slot0, slot1)
 
 	function RedDotGroupMo.tostring(slot0)
 		slot1 = slot0.id
+		slot10 = slot1
 		slot5 = true
 
 		for slot9, slot10 in pairs(slot0.infos) do
 			if slot9 ~= 0 then
-				slot4 = string.format("%s\n\tuid: %s (%s)", string.format("%s(%s):", uv0[slot1], uv1(slot1)), uv1(slot9), uv1(slot10.value))
+				slot4 = string.format("%s\n\tuid: %s (%s)", string.format("%s(%s):", uv0[slot1], uv1(slot10)), uv1(slot9), uv1(slot10.value))
 				slot5 = false
 			end
 		end

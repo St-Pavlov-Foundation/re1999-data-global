@@ -98,9 +98,9 @@ function slot0.refreshEpisodeNodes(slot0)
 	end
 
 	slot7 = recthelper.rectToRelativeAnchorPos(slot0._episodeContainerItemList[slot2].containerTr.position, slot0.rectTransform).x + slot0._offsetX
-	slot11 = slot0._rawHeight
+	slot11 = slot7
 
-	recthelper.setSize(slot0.contentTransform, slot7, slot11)
+	recthelper.setSize(slot0.contentTransform, slot11, slot0._rawHeight)
 
 	slot0._contentWidth = slot7
 

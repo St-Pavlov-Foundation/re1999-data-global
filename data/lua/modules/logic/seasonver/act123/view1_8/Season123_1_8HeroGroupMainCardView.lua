@@ -17,9 +17,9 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = "img_vertin.png"
+	slot4 = ResUrl.getSeasonIcon
 
-	slot0._simagerole:LoadImage(ResUrl.getSeasonIcon(slot4))
+	slot0._simagerole:LoadImage(slot4("img_vertin.png"))
 
 	slot0._supercardItems = {}
 	slot0._supercardGroups = {}

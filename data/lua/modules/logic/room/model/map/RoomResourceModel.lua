@@ -177,9 +177,10 @@ function slot0._refreshBuildingLightResourcePoint(slot0)
 		return
 	end
 
-	slot6 = slot1.buildingUid
+	slot6 = slot1.rotate
+	slot7 = slot1.buildingUid
 
-	for slot6, slot7 in pairs(RoomBuildingHelper.getOccupyDict(slot1.buildingId, slot1.hexPoint, slot1.rotate, slot6)) do
+	for slot6, slot7 in pairs(RoomBuildingHelper.getOccupyDict(slot1.buildingId, slot1.hexPoint, slot6, slot7)) do
 		for slot11, slot12 in pairs(slot7) do
 			if slot13 and (RoomMapBlockModel.instance:getBlockMO(slot6, slot11) and RoomBuildingHelper.isJudge(slot13.hexPoint, slot13.id)) then
 				slot15 = slot13.replaceDefineId
@@ -229,9 +230,10 @@ function slot0._refreshLightResourcePoint(slot0)
 
 					if slot24 and not slot5[slot12][slot24] then
 						slot5[slot12][slot24] = true
-						slot29 = slot21.direction
+						slot29 = slot23
+						slot30 = slot21.direction
 
-						for slot29, slot30 in ipairs(slot13:getResorcePiontListByXYD(slot22, slot23, slot29)) do
+						for slot29, slot30 in ipairs(slot13:getResorcePiontListByXYD(slot22, slot29, slot30)) do
 							slot0._lightResourcePointDict[slot0:getIndexByXYD(slot30.x, slot30.y, slot30.direction)] = slot12
 						end
 					end
@@ -239,8 +241,9 @@ function slot0._refreshLightResourcePoint(slot0)
 			end
 
 			if slot16 then
-				slot21 = slot14.direction
-				slot0._lightResourcePointDict[slot0:getIndexByXYD(slot14.x, slot14.y, slot21)] = slot12
+				slot21 = slot14.y
+				slot22 = slot14.direction
+				slot0._lightResourcePointDict[slot0:getIndexByXYD(slot14.x, slot21, slot22)] = slot12
 
 				for slot21, slot22 in ipairs(slot15) do
 					if (slot22.x == 0 or slot22.y == 0) and slot12 == slot3:getResourceId(slot22.direction) then

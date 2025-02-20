@@ -46,15 +46,15 @@ function slot0.onInitView(slot0)
 	slot0._detailClick = {}
 
 	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1")))
-
-	slot7 = "#go_detail/skillDescContent/#go_skillDescItem2"
-
-	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, slot7)))
+	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2")))
 
 	slot0._cardOpAddPower = 0
+	slot6 = slot0.viewContainer
+	slot8 = slot6
+	slot7 = gohelper.findChild(slot0.viewGO, "root/heroSkill/#go_simple/skilliconnew")
 
 	for slot7, slot8 in ipairs(lua_cloth.configList) do
-		if not gohelper.isNil(gohelper.findChild(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], gohelper.findChild(slot0.viewGO, "root/heroSkill/#go_simple/skilliconnew")), tostring(slot8.id))) then
+		if not gohelper.isNil(gohelper.findChild(slot0:getResInst(slot6.getSetting(slot8).otherRes[2], slot7), tostring(slot8.id))) then
 			gohelper.setActive(slot9, slot8.id == FightModel.instance.clothId)
 
 			if slot8.id == FightModel.instance.clothId then
@@ -70,9 +70,10 @@ end
 
 function slot0.addEvents(slot0)
 	if not FightReplayModel.instance:isReplay() then
-		slot4 = slot0
+		slot4 = slot0._onClick
+		slot5 = slot0
 
-		slot0._click:AddClickListener(slot0._onClick, slot4)
+		slot0._click:AddClickListener(slot4, slot5)
 
 		for slot4, slot5 in ipairs(slot0._detailClick) do
 			slot5:AddClickListener(slot0._onClickSkillIcon, slot0, slot4)
@@ -103,7 +104,10 @@ function slot0.removeEvents(slot0)
 	TaskDispatcher.cancelTask(slot0._sendChangeSubRequest, slot0)
 	TaskDispatcher.cancelTask(slot0._sendUseClothSkillRequest, slot0)
 	TaskDispatcher.cancelTask(slot0._setState, slot0)
-	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot4)
 	slot0._click:RemoveClickListener()
 
 	for slot4, slot5 in ipairs(slot0._detailClick) do
@@ -157,15 +161,28 @@ function slot0._onClick(slot0)
 	end
 end
 
+function slot0.checkSkillKey(slot0)
+	for slot4, slot5 in ipairs(BattleActivityAdapter.skillSelectKey) do
+		if PCInputController.instance:getActivityFunPress(PCInputModel.Activity.battle, slot5) then
+			return true
+		end
+	end
+
+	return false
+end
+
 function slot0._checkAnyKey(slot0)
-	if UnityEngine.Input.anyKeyDown and not UnityEngine.Input.GetMouseButton(0) and slot0._state == uv0.Detail then
+	if UnityEngine.Input.anyKeyDown and not UnityEngine.Input.GetMouseButton(0) and not slot0:checkSkillKey() and slot0._state == uv0.Detail then
+		logNormal("FightViewClothSkill:_checkAnyKey()" .. tostring(UnityEngine.Input.anyKeyDown))
+		TaskDispatcher.cancelTask(slot0._checkAnyKey, slot0)
+
+		slot0._hasClickDetailIcon = nil
+
 		slot0:_onSkillKeyClick()
 	end
 end
 
 function slot0._onSkillKeyClick(slot0)
-	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot0)
-
 	if not FightReplayModel.instance:isReplay() then
 		if slot0._state == uv0.Detail then
 			slot0:_onTouch()
@@ -223,6 +240,7 @@ function slot0.showKeyTips(slot0)
 end
 
 function slot0._shrinkDetailUI(slot0)
+	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot0)
 	slot0._animator:Play("fight_heroskill_out", 0, 0)
 	slot0._animator:Update(0)
 
@@ -547,10 +565,10 @@ function slot0._checkSelectSkillTarget(slot0)
 end
 
 function slot0._selectChangeSub(slot0)
-	slot2 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()
+	slot2 = FightDataHelper.entityMgr:getMySubList()
 	slot4 = {}
 
-	for slot8, slot9 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot8, slot9 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		table.insert({}, slot9.id)
 	end
 

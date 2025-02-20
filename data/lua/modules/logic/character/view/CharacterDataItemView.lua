@@ -263,7 +263,16 @@ function slot0._unlockItemCallbackFail(slot0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
+function slot0.updateTMPRectHeight_LayoutElement(slot0)
+	for slot4 = 1, 3 do
+		LuaUtil.updateTMPRectHeight_LayoutElement(slot0.itemList[slot4].text)
+	end
+end
+
 function slot0.refreshItem(slot0)
+	TaskDispatcher.cancelTask(slot0.updateTMPRectHeight_LayoutElement, slot0)
+	TaskDispatcher.runDelay(slot0.updateTMPRectHeight_LayoutElement, slot0, 2)
+
 	slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8 = nil
 
 	for slot12 = 1, 3 do
@@ -530,6 +539,7 @@ function slot0._setItemTitlePos(slot0, slot1, slot2, slot3, slot4)
 end
 
 function slot0.onClose(slot0)
+	TaskDispatcher.cancelTask(slot0.updateTMPRectHeight_LayoutElement, slot0)
 	gohelper.setActive(slot0.viewGO, false)
 	slot0:_statEnd()
 end

@@ -131,27 +131,6 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.onClose(slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoInit, slot0.initInfo, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, slot0.updateViewStateEnd, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateViewState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, slot0.updateTeamChessViewWatchState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, slot0.onTeamChessSkillRelease, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginModelUpdated, slot0.teamChessItemDragBegin, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragModelUpdated, slot0.teamChessItemDrag, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEndModelUpdated, slot0.teamChessItemDragEnd, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.AddStrongholdChess, slot0.addStrongholdChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessPowerChange, slot0.teamChessPowerChange, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, slot0.strongHoldPowerChange, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ResourceDataChange, slot0.resourceDataChange, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, slot0.flowEnd, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStrongholdChess, slot0.removeStrongholdChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldSettle, slot0.strongHoldSettle, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.SoliderChessModelClick, slot0.soliderChessModelClick, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessView, slot0.showSoliderChessTip, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPerformReduction, slot0.strongHoldPerformReduction, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessUpdateActiveMoveState, slot0.teamChessUpdateActiveMoveState, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessGrowUpSkillChange, slot0.teamChessGrowUpValueChange, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, slot0.teamChessOnFlowStart, slot0)
 end
 
 function slot0.onOpenFinish(slot0)
@@ -435,13 +414,7 @@ function slot0.teamChessUpdateActiveMoveState(slot0, slot1)
 end
 
 function slot0.refreshActiveMoveState(slot0)
-	if slot0._strongHoldItems == nil then
-		return
-	end
-
-	for slot4 = 1, #slot0._strongHoldItems do
-		slot0._strongHoldItems[slot4]:refreshActiveMoveState()
-	end
+	TeamChessUnitEntityMgr.instance:refreshShowModeStateByTeamType(EliminateTeamChessEnum.TeamChessTeamType.player)
 end
 
 function slot0.teamChessPowerChange(slot0, slot1, slot2)
@@ -526,7 +499,9 @@ function slot0.showAddResourceView(slot0, slot1, slot2, slot3)
 
 	gohelper.setActive(slot0._goResourceTips, true)
 	TaskDispatcher.runDelay(function ()
-		gohelper.setActive(uv0._goResourceTips, false)
+		slot3 = false
+
+		gohelper.setActive(uv0._goResourceTips, slot3)
 
 		for slot3 = 1, #uv0._addResourceItem do
 			gohelper.setActive(uv0._addResourceItem[slot3].item, false)

@@ -29,8 +29,9 @@ end
 function slot0.checkNeedInitFightSuccIndicator(slot0)
 	slot1 = 8
 	slot3 = FightModel.instance:getFightParam() and slot2.episodeId
-	slot4 = slot3 and DungeonConfig.instance:getEpisodeCondition(slot3)
-	slot5 = slot4 and FightStrUtil.instance:getSplitString2Cache(slot4, false, "|", "#")
+	slot4 = slot3 and DungeonConfig.instance:getEpisodeCO(slot3)
+	slot5 = slot3 and DungeonConfig.instance:getEpisodeCondition(slot3)
+	slot6 = slot5 and FightStrUtil.instance:getSplitString2Cache(slot5, false, "|", "#")
 
 	if BossRushController.instance:isInBossRushFight() then
 		slot0:createBehaviour(FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips, 0)
@@ -38,10 +39,10 @@ function slot0.checkNeedInitFightSuccIndicator(slot0)
 		slot0:createBehaviour(FightEnum.IndicatorId.Act1_6DungeonBoss, 0)
 	end
 
-	if slot5 then
-		for slot9, slot10 in ipairs(slot5) do
-			if tonumber(slot10[1]) == slot1 then
-				slot0:createBehaviour(tonumber(slot10[2]), tonumber(slot10[3]) or 0)
+	if slot6 then
+		for slot10, slot11 in ipairs(slot6) do
+			if tonumber(slot11[1]) == slot1 then
+				slot0:createBehaviour(tonumber(slot11[2]), tonumber(slot11[3]) or 0)
 
 				return
 			end

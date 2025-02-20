@@ -190,6 +190,10 @@ function slot0.setParam(slot0, slot1, slot2, slot3, slot4)
 		if SeasonHeroGroupHandler.buildSeasonHandleFunc[slot0._episodeType] then
 			slot0.heroGroupType = slot13(slot5)
 		end
+	elseif HeroGroupHandler.checkIsEpisodeType(slot0._episodeType) then
+		slot0.heroGroupType = ModuleEnum.HeroGroupType.General
+
+		HeroGroupSnapshotModel.instance:setParam(slot0.episodeId)
 	elseif slot8 and slot6 and slot6.useTemp ~= 0 or slot9 or #slot12 > 0 or slot6 and ToughBattleModel.instance:getEpisodeId() then
 		slot0.heroGroupType = ModuleEnum.HeroGroupType.Temp
 		slot0._heroGroupList = {}
@@ -280,9 +284,10 @@ end
 
 function slot0._getAmountLimit(slot0, slot1)
 	if LuaUtil.isEmptyStr(slot1) == false then
-		slot6 = "#"
+		slot6 = "|"
+		slot7 = "#"
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, "|", slot6)) do
+		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, slot6, slot7)) do
 			if slot7[1] == FightEnum.EntitySide.MySide and lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.AmountLimit then
 				return tonumber(slot10.effect)
 			end
@@ -360,27 +365,44 @@ function slot0._setSingleGroup(slot0)
 				slot2
 			})
 		})
-		slot0:addAtLast(slot1)
+
+		if not slot0:getById(slot1.id) then
+			slot0:addAtLast(slot1)
+		end
 	end
 
 	slot1:clearAidHero()
 	HeroSingleGroupModel.instance:setSingleGroup(slot1, true)
 end
 
-function slot0.getCommonGroupName(slot0, slot1)
-	if string.nilorempty(slot0._commonGroups[slot1 or slot0.curGroupSelectIndex].name) then
+function slot0.getCommonGroupName(slot0, slot1, slot2)
+	slot2 = slot2 or slot0:getHeroGroupSnapshotType()
+
+	if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		if string.nilorempty(HeroGroupSnapshotModel.instance:getGroupName()) then
+			return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(slot1 or slot0:getHeroGroupSelectIndex()))
+		else
+			return slot3
+		end
+	end
+
+	if string.nilorempty(slot0._commonGroups[slot1].name) then
 		return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(slot1))
 	else
-		return slot2
+		return slot3
 	end
 end
 
-function slot0.setCommonGroupName(slot0, slot1, slot2)
-	if slot2 == slot0:getCommonGroupName(slot1 or slot0.curGroupSelectIndex) then
+function slot0.setCommonGroupName(slot0, slot1, slot2, slot3)
+	if slot2 == slot0:getCommonGroupName(slot1 or slot0:getHeroGroupSelectIndex(), slot3 or slot0:getHeroGroupSnapshotType()) then
 		return
 	end
 
-	slot0._commonGroups[slot1].name = slot2
+	if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		HeroGroupSnapshotModel.instance:setGroupName(slot3, slot1, slot2)
+	else
+		slot0._commonGroups[slot1].name = slot2
+	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupName)
 end
@@ -404,12 +426,38 @@ function slot0.getCurGroupMO(slot0)
 		else
 			return slot0._commonGroups[slot0.curGroupSelectIndex]
 		end
+	elseif slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		return HeroGroupSnapshotModel.instance:getCurGroup()
 	else
 		return slot0:getById(slot0._curGroupId)
 	end
 end
 
+function slot0.getHeroGroupSelectIndex(slot0)
+	if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		return HeroGroupSnapshotModel.instance:getSelectIndex()
+	end
+
+	return slot0.curGroupSelectIndex
+end
+
+function slot0.getHeroGroupSnapshotType(slot0)
+	if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		return HeroGroupSnapshotModel.instance:getCurSnapshotId()
+	end
+
+	return ModuleEnum.HeroGroupSnapshotType.Common
+end
+
 function slot0.setHeroGroupSelectIndex(slot0, slot1)
+	if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+		if HeroGroupSnapshotModel.instance:setSelectIndex(nil, slot1) then
+			slot0:_setSingleGroup()
+		end
+
+		return slot2
+	end
+
 	if not slot0.heroGroupTypeCo then
 		logError("没有配置。。")
 
@@ -488,7 +536,11 @@ function slot0.saveCurGroupData(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	SeasonHeroGroupHandler.setHeroGroupSnapshot(slot3, slot0.heroGroupType, slot0.episodeId, slot1, slot2)
+	if SeasonHeroGroupHandler.NeedGetHeroCardSeason[slot0.heroGroupType] then
+		SeasonHeroGroupHandler.setHeroGroupSnapshot(slot3, slot0.heroGroupType, slot0.episodeId, slot1, slot2)
+
+		return
+	end
 
 	if slot0.curGroupSelectIndex == 0 then
 		if slot0.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
@@ -500,10 +552,21 @@ function slot0.saveCurGroupData(slot0, slot1, slot2, slot3)
 			HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Resources, slot0.heroGroupTypeCo.id, slot6, slot1, slot2)
 		end
 	else
-		slot6 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+		FightParam.initFightGroup(HeroGroupModule_pb.SetHeroGroupSnapshotRequest().fightGroup, slot3.clothId, slot3:getMainList(), slot3:getSubList(), slot3:getAllHeroEquips(), slot3:getAllHeroActivity104Equips(), slot3:getAssistBossId())
 
-		FightParam.initFightGroup(slot6.fightGroup, slot3.clothId, slot3:getMainList(), slot3:getSubList(), slot3:getAllHeroEquips(), slot3:getAllHeroActivity104Equips())
-		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Common, slot5, slot6, slot1, slot2)
+		slot7 = ModuleEnum.HeroGroupSnapshotType.Common
+		slot8 = slot5
+
+		if slot0.heroGroupType == ModuleEnum.HeroGroupType.General then
+			slot7 = HeroGroupSnapshotModel.instance:getCurSnapshotId()
+			slot8 = HeroGroupSnapshotModel.instance:getCurGroupId()
+		end
+
+		if slot7 and slot8 then
+			HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(slot7, slot8, slot6, slot1, slot2)
+		else
+			logError(string.format("未设置快照id, 无法保存, snapshotId:%s, snapshotSubId:%s", slot7, slot8))
+		end
 	end
 end
 

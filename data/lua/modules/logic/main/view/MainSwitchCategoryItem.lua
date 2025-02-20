@@ -23,9 +23,9 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._btnCategory = SLFramework.UGUI.UIClickListener.Get(slot0.viewGO)
-	slot4 = slot0
+	slot4 = slot0._onItemClick
 
-	slot0._btnCategory:AddClickListener(slot0._onItemClick, slot4)
+	slot0._btnCategory:AddClickListener(slot4, slot0)
 
 	slot0._bgs = slot0:getUserDataTb_()
 

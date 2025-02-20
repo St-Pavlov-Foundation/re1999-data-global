@@ -114,9 +114,10 @@ function slot0.refreshSchdule(slot0, slot1)
 
 	gohelper.setActive(slot0.goSchdule, true)
 
-	slot6 = #(Season166Config.instance:getSeasonInfoAnalys(slot0.activityId, slot0.infoId) or {})
+	slot2 = Season166Config.instance:getSeasonInfoAnalys(slot0.activityId, slot0.infoId) or {}
+	slot6 = #slot0.schduleItems
 
-	for slot6 = 1, math.max(#slot0.schduleItems, slot6) do
+	for slot6 = 1, math.max(slot6, #slot2) do
 		slot0:refreshSchduleItem(slot0.schduleItems[slot6] or slot0:createSchduleItem(slot6), slot2[slot6], slot1.stage)
 	end
 

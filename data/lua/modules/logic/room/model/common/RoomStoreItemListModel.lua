@@ -28,10 +28,10 @@ function slot0.setStoreGoodsMO(slot0, slot1)
 	for slot13 = 1, #slot6 do
 		slot14 = slot6[slot13]
 		slot16 = {}
-		slot20 = slot14[1]
-		slot21 = slot14[3]
+		slot20 = slot14[2]
+		slot21 = slot14[1]
 
-		RoomStoreItemMO.New():init(slot14[2], slot20, slot21, slot0._costId, slot1)
+		RoomStoreItemMO.New():init(slot20, slot21, slot14[3], slot0._costId, slot1)
 
 		for slot20, slot21 in ipairs(slot5) do
 			if slot21 then

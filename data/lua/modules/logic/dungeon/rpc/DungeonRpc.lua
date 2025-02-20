@@ -176,9 +176,10 @@ function slot0.onReceiveChapterMapElementUpdatePush(slot0, slot1, slot2)
 	DungeonMapModel.instance:setNewElements(slot3)
 	DungeonMapModel.instance:addElements(slot3)
 
-	slot7 = slot3
+	slot7 = DungeonEvent.OnAddElements
+	slot8 = slot3
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddElements, slot7)
+	DungeonController.instance:dispatchEvent(slot7, slot8)
 
 	for slot7, slot8 in ipairs(slot3) do
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, lua_chapter_map_element.configDict[slot8].mapId)
@@ -378,6 +379,35 @@ function slot0.onReceiveMainDramaRewardInfo(slot0, slot1, slot2)
 		DungeonModel.instance:setCanGetDramaReward(true)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnDramaRewardStatusChange)
 	end
+end
+
+function slot0.sendSavePuzzleProgressRequest(slot0, slot1, slot2)
+	slot3 = DungeonModule_pb.SavePuzzleProgressRequest()
+	slot3.elementId = slot1
+	slot3.progress = slot2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveSavePuzzleProgressReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+end
+
+function slot0.sendGetPuzzleProgressRequest(slot0, slot1, slot2, slot3)
+	slot4 = DungeonModule_pb.GetPuzzleProgressRequest()
+	slot4.elementId = slot1
+
+	slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveGetPuzzleProgressReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	PuzzleMazeDrawController.instance:onGetPuzzleDrawProgress(slot2.elementId, slot2.progress)
 end
 
 slot0.instance = slot0.New()

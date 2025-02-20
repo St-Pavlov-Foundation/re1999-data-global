@@ -15,15 +15,16 @@ function slot0.getMoListString(slot0, slot1, slot2, slot3, slot4)
 		return string.format("%s %s : []", slot5, slot2)
 	end
 
-	slot10 = slot4
-	slot11 = slot2
+	slot11 = slot4
 
 	uv0.addStack({
 		string.format("%s %s : [", slot5, slot2)
-	}, uv0.getPrefix(slot3 + 1), slot10, slot11)
+	}, uv0.getPrefix(slot3 + 1), slot11, slot2)
+
+	slot10 = slot2
 
 	for slot10, slot11 in ipairs(slot0) do
-		table.insert(slot6, slot1(slot11, slot3 + 1, slot10, uv0.getStack(slot4, slot2)))
+		table.insert(slot6, slot1(slot11, slot3 + 1, slot10, uv0.getStack(slot4, slot10)))
 	end
 
 	table.insert(slot6, slot5 .. "]")
@@ -142,9 +143,62 @@ function slot0.getFightActEffectString(slot0, slot1, slot2, slot3)
 		table.insert(slot6, uv0.getFightStepString(slot0.fightStep, slot1, nil, uv0.getStack(slot3, slot5)))
 	end
 
+	if slot0:HasField("assistBossInfo") then
+		table.insert(slot6, uv0.getAssistBossInfoString(slot0.assistBossInfo, slot1))
+	end
+
 	table.insert(slot6, slot4 .. "}")
 
 	return table.concat(slot6, "\n")
+end
+
+function slot0.getAssistBossInfoString(slot0, slot1, slot2)
+	slot3 = FightLogHelper.getPrefix(slot1 or 0)
+	slot4 = FightLogHelper.buildClassNameByIndex("AssistBossInfo", slot2)
+
+	if not slot0 then
+		return string.format("%s %s : nil", slot3, slot4)
+	end
+
+	slot5 = {
+		string.format("%s %s {", slot3, slot4)
+	}
+	slot1 = slot1 + 1
+	slot6 = FightLogHelper.getPrefix(slot1)
+
+	table.insert(slot5, string.format("%s currCd : %s", slot6, slot0.currCd))
+	table.insert(slot5, string.format("%s cdCfg : %s", slot6, slot0.cdCfg))
+	table.insert(slot5, string.format("%s formId : %s", slot6, slot0.formId))
+	table.insert(slot5, FightLogHelper.getFightAssistBossSkillListString(slot0.skills, slot1))
+	table.insert(slot5, slot3 .. "}")
+
+	return table.concat(slot5, "\n")
+end
+
+function slot0.getAssistBossSkillInfoString(slot0, slot1, slot2)
+	slot3 = FightLogHelper.getPrefix(slot1 or 0)
+	slot4 = FightLogHelper.buildClassNameByIndex("AssistBossSkillInfo", slot2)
+
+	if not slot0 then
+		return string.format("%s %s : nil", slot3, slot4)
+	end
+
+	slot5 = {
+		string.format("%s %s {", slot3, slot4)
+	}
+	slot6 = FightLogHelper.getPrefix(slot1 + 1)
+
+	table.insert(slot5, string.format("%s skillId : %s", slot6, slot0.skillId))
+	table.insert(slot5, string.format("%s needPower : %s", slot6, slot0.needPower))
+	table.insert(slot5, string.format("%s powerLow : %s", slot6, slot0.powerLow))
+	table.insert(slot5, string.format("%s powerHigh : %s", slot6, slot0.powerHigh))
+	table.insert(slot5, slot3 .. "}")
+
+	return table.concat(slot5, "\n")
+end
+
+function slot0.getFightAssistBossSkillListString(slot0, slot1, slot2)
+	return FightLogHelper.getMoListString(slot0, FightLogHelper.getAssistBossSkillInfoString, slot2 or "assistBossSkillInfoList", slot1)
 end
 
 function slot0.getFightActEffectListString(slot0, slot1, slot2, slot3)
@@ -321,7 +375,7 @@ function slot0.getEntityName(slot0)
 	elseif slot0 == FightEntityScene.EnemySideId then
 		return "重塑之手"
 	else
-		if FightEntityModel.instance:getById(slot0) then
+		if FightDataHelper.entityMgr:getById(slot0) then
 			return slot1:getEntityName()
 		end
 
@@ -336,7 +390,7 @@ function slot0.getSkillName(slot0)
 end
 
 function slot0.getTimelineName(slot0, slot1)
-	slot2 = slot0 and FightEntityModel.instance:getById(slot0)
+	slot2 = slot0 and FightDataHelper.entityMgr:getById(slot0)
 
 	return string.nilorempty(FightConfig.instance:getSkinSkillTimeline(slot2 and slot2.skin, slot1)) and "nil" or slot3
 end

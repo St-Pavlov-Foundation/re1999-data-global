@@ -373,10 +373,11 @@ function slot0.getOrBuildCollectionShapeMap(slot0, slot1, slot2)
 	slot0._collectionShapeMap = slot0._collectionShapeMap or {}
 
 	if not (slot0._collectionShapeMap[slot1] and slot3[slot2]) then
-		slot9 = RougeEnum.CollectionEditorParamType.Shape
+		slot9 = slot2
+		slot10 = RougeEnum.CollectionEditorParamType.Shape
 		slot4 = {}
 
-		for slot9, slot10 in ipairs(uv0.instance:getRotateEditorParam(slot1, slot2, slot9)) do
+		for slot9, slot10 in ipairs(uv0.instance:getRotateEditorParam(slot1, slot9, slot10)) do
 			if not slot4[slot10.x] then
 				slot4[slot10.x] = {}
 			end

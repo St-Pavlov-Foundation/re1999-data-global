@@ -11,6 +11,8 @@ function slot0.ctor(slot0)
 	slot0._isSelect = false
 	slot0._isNew = false
 	slot0._isUnlock = false
+	slot0._unlockPercent = 0
+	slot0._hotUnlockStyle = nil
 end
 
 function slot0.setMo(slot0, slot1, slot2, slot3)
@@ -76,6 +78,22 @@ end
 
 function slot0.setNew(slot0, slot1)
 	slot0._isNew = slot1 and slot0._styleId ~= 0
+end
+
+function slot0.setUnlockPercent(slot0, slot1)
+	slot0._unlockPercent = slot1
+end
+
+function slot0.getUnlockPercent(slot0)
+	return slot0._unlockPercent or 0
+end
+
+function slot0.setHotUnlockStyle(slot0, slot1)
+	slot0._hotUnlockStyle = slot1
+end
+
+function slot0.isHotUnlock(slot0)
+	return slot0._hotUnlockStyle
 end
 
 return slot0

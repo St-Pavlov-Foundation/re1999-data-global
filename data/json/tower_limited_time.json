@@ -1,0 +1,26 @@
+[
+  {
+    "season": 1,
+    "startTime": "2025-02-24",
+    "endTime": "2025-03-10",
+    "bossPool": "1#2#3",
+    "taskGroupId": 910001,
+    "isOnline": 1
+  },
+  {
+    "season": 2,
+    "startTime": "2025-03-10",
+    "endTime": "2025-03-24",
+    "bossPool": "1#2#3",
+    "taskGroupId": 910002,
+    "isOnline": 1
+  },
+  {
+    "season": 3,
+    "startTime": "2025-03-24",
+    "endTime": "2025-04-07",
+    "bossPool": "1#2#3",
+    "taskGroupId": 910003,
+    "isOnline": 1
+  }
+]

@@ -33,7 +33,7 @@ function slot0._detectMaskBuff(slot0)
 	slot1 = false
 
 	if slot0._entity:getMO() then
-		for slot7, slot8 in ipairs(slot2:getBuffList()) do
+		for slot7, slot8 in pairs(slot2:getBuffDic()) do
 			if slot8.buffId == uv0 then
 				slot1 = true
 

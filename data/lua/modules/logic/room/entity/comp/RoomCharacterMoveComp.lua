@@ -107,13 +107,18 @@ function slot0._updateMovingLookDir(slot0)
 
 		slot5 = slot1.currentPosition
 		slot5 = Vector3(slot5.x, slot5.y, slot5.z)
-		slot8 = slot3.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot5))
 
-		if (slot3.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot5 + Vector3.Normalize(Vector3(slot4.x, 0, slot4.y)))).z > 0 and slot10.x or -slot10.x) - (slot8.z > 0 and slot8.x or -slot8.x) > 0.0001 then
-			slot0.entity.characterspine:changeLookDir(SpineLookDir.Right)
-		else
-			slot0.entity.characterspine:changeLookDir(SpineLookDir.Left)
-		end
+		slot0.entity.characterspine:changeLookDir(slot0:getMoveToLookDirByPos(slot5, slot5 + Vector3.Normalize(Vector3(slot4.x, 0, slot4.y))))
+	end
+end
+
+function slot0.getMoveToLookDirByPos(slot0, slot1, slot2)
+	slot4 = slot0._scene.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot1))
+
+	if (slot0._scene.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot2)).z > 0 and slot6.x or -slot6.x) - (slot4.z > 0 and slot4.x or -slot4.x) > 0.0001 then
+		return SpineLookDir.Right
+	else
+		return SpineLookDir.Left
 	end
 end
 
@@ -156,7 +161,7 @@ function slot0._updateMovingPosition(slot0)
 
 	slot3 = slot1:getPositionCodeId()
 
-	if slot1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move or slot0._lastMoveState ~= slot2 or slot0._lastPositionCodeId ~= slot3 then
+	if slot1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move and slot1:canMove() or slot0._lastMoveState ~= slot2 or slot0._lastPositionCodeId ~= slot3 then
 		slot5 = slot0._lastMoveState == RoomCharacterEnum.CharacterMoveState.Move
 		slot0._lastMoveState = slot2
 

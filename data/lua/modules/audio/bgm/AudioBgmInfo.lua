@@ -14,7 +14,6 @@ function slot0.ctor(slot0)
 end
 
 function slot0._initBgmDatas(slot0)
-	slot0:_addBgmData(AudioBgmEnum.Layer.LinkageActivity_FullView, AudioEnum.Bgm.ui_shenghuo_discovery_amb_20234001, AudioEnum.Bgm.stop_ui_bus_2000048)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Main, AudioEnum.UI.Resume_MainMusic, AudioEnum.UI.Pause_MainMusic)
 	slot0:_addBgmData(AudioBgmEnum.Layer.PushBox, AudioEnum.Bgm.PushBox, AudioEnum.Story.Stop_PlotMusic)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Explore, AudioEnum.Bgm.play_ui_secretroom_music, AudioEnum.UI.Stop_UIMusic)
@@ -81,14 +80,13 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.NormalBattleV2_2, AudioEnum.Bgm.play_battle_youyui_2_2_normalfight, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.BossBattleV2_2, AudioEnum.Bgm.play_battle_youyui_2_2_bossfight, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.InvestigateView, AudioEnum.VersionActivity2_2Investigate.play_ui_youyu_survey_scene_loop, AudioEnum.UI.Stop_UI_Bus)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_3Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.Tower, AudioEnum.TowerBgm.play_replay_music_towermain_2_3, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.LinkageActivity_FullView, AudioEnum.Bgm.ui_shenghuo_discovery_amb_20234001, AudioEnum.Bgm.stop_ui_bus_2000048)
+	slot0:_addBgmData(AudioBgmEnum.Layer.V2a3_WarmUp, AudioEnum.Bgm.play_ui_shenghuo_preheat_amb_20234003, AudioEnum.Bgm.stop_ui_bus_2000048)
 end
 
 function slot0._initBgmUsage(slot0)
-	slot0:_addBgmUsage({
-		AudioBgmEnum.Layer.LinkageActivity_FullView
-	}, AudioBgmEnum.UsageType.View, {
-		ViewName.LinkageActivity_FullView
-	})
 	slot0:_addBgmUsage({
 		AudioBgmEnum.Layer.Main
 	}, AudioBgmEnum.UsageType.Scene, {
@@ -437,6 +435,27 @@ function slot0._initBgmUsage(slot0)
 		ViewName.EliminateSelectRoleView,
 		ViewName.EliminateSelectChessMenView
 	}, EliminateLevelController.queryBgm, nil)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_3Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_3EnterView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.Tower
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.TowerMainView,
+		ViewName.TowerMainEntryView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.LinkageActivity_FullView
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.LinkageActivity_FullView
+	})
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.V2a3_WarmUp
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.V2a3_WarmUp
+	})
 end
 
 function slot0._initBgmBind(slot0)

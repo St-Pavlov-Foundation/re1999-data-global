@@ -3,10 +3,6 @@ module("modules.logic.fight.system.work.FightWorkHeroUpgrade", package.seeall)
 slot0 = class("FightWorkHeroUpgrade", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if FightEntityModel.instance:getById(slot0._actEffectMO.targetId) then
-		FightEntityModel.instance:addEntityMO(slot0._actEffectMO.entityMO)
-	end
-
 	slot0:onDone(true)
 end
 

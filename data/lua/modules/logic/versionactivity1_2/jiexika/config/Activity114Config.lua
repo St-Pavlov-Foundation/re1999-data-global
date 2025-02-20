@@ -149,9 +149,9 @@ function slot0._splitVerifyInfo(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot7 = "|"
+	slot8 = slot1
 
-	for slot7, slot8 in pairs(string.split(slot1, slot7)) do
+	for slot7, slot8 in pairs(string.split(slot8, "|")) do
 		if not string.splitToNumber(slot8, "#")[1] then
 			logError("洁西卡事件奖励配置错误：" .. slot1)
 		end

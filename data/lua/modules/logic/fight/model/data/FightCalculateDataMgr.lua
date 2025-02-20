@@ -1,112 +1,14 @@
 module("modules.logic.fight.model.data.FightCalculateDataMgr", package.seeall)
 
-slot0 = class("FightCalculateDataMgr", FightBaseCalculateDataMgr)
+slot0 = FightDataBase("FightCalculateDataMgr", FightBaseCalculateDataMgr)
+
+function slot0.updateFightData(slot0, slot1)
+	slot0.dataMgr.fieldMgr:updateData(slot1)
+	slot0.dataMgr.entityMgr:updateData(slot1)
+	slot0.dataMgr.paTaMgr:updateData(slot1)
+end
 
 function slot0.afterPlayStepProto(slot0, slot1)
-	slot2 = slot0.dataMgr.fieldData
-	slot3 = slot0.dataMgr.handCardData
-	slot2.curRound = slot1.curRound
-	slot2.isFinish = slot1.isFinish
-	slot0.dataMgr.entityData.exPointInfo = {}
-
-	for slot8, slot9 in ipairs(slot1.exPointInfo) do
-		slot10 = {
-			uid = slot9.uid,
-			exPoint = slot9.exPoint,
-			powerInfos = {}
-		}
-
-		for slot14, slot15 in ipairs(slot9.powerInfos) do
-			slot10.powerInfos[slot14] = {
-				powerId = slot15.powerId,
-				num = slot15.num,
-				max = slot15.max
-			}
-		end
-
-		slot10.currentHp = slot9.currentHp
-		slot4.exPointInfo[slot8] = slot10
-	end
-
-	slot3.aiUseCards = {}
-
-	for slot8, slot9 in ipairs(slot1.aiUseCards) do
-		slot10 = FightCardInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot3.aiUseCards[slot8] = slot10
-	end
-
-	slot2.power = slot1.power
-	slot2.skillInfos = {}
-
-	for slot8, slot9 in ipairs(slot1.skillInfos) do
-		slot10 = FightPlayerSkillInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot2.skillInfos[slot8] = slot10
-	end
-
-	slot3.beforeCards1 = {}
-
-	for slot8, slot9 in ipairs(slot1.beforeCards1) do
-		slot10 = FightCardInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot3.beforeCards1[slot8] = slot10
-	end
-
-	slot3.teamACards1 = {}
-
-	for slot8, slot9 in ipairs(slot1.teamACards1) do
-		slot10 = FightCardInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot3.teamACards1[slot8] = slot10
-	end
-
-	slot3.beforeCards2 = {}
-
-	for slot8, slot9 in ipairs(slot1.beforeCards2) do
-		slot10 = FightCardInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot3.beforeCards2[slot8] = slot10
-	end
-
-	slot3.teamACards2 = {}
-
-	for slot8, slot9 in ipairs(slot1.teamACards2) do
-		slot10 = FightCardInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot3.teamACards2[slot8] = slot10
-	end
-
-	slot3.useCardList = {}
-
-	for slot8, slot9 in ipairs(slot1.useCardList) do
-		slot3.useCardList[slot8] = slot9
-	end
-
-	slot2.curRound = slot1.curRound
-	slot4.heroSpAttributes = {}
-
-	for slot8, slot9 in ipairs(slot1.heroSpAttributes) do
-		slot10 = FightPlayerSkillInfoMO.New()
-
-		slot10:init(slot9)
-
-		slot4.heroSpAttributes[slot8] = slot10
-	end
-
-	slot2.lastChangeHeroUid = slot1.lastChangeHeroUid
 end
 
 function slot0.playEffect2(slot0, slot1)
@@ -154,7 +56,7 @@ function slot0.playEffect6(slot0, slot1)
 		return
 	end
 
-	slot2:delBuff(slot2.buffModel:getById(slot3.uid))
+	slot2:delBuff(slot3.uid)
 end
 
 function slot0.playEffect7(slot0, slot1)
@@ -173,11 +75,13 @@ function slot0.playEffect8(slot0, slot1)
 end
 
 function slot0.playEffect9(slot0, slot1)
+	slot0.dataMgr.entityMgr:addDeadUid(slot1.targetId)
+
 	if not slot0:getTarEntityMO(slot1) then
 		return
 	end
 
-	slot2.isDead = true
+	slot2:setDead()
 end
 
 function slot0.playEffect12(slot0, slot1)
@@ -338,13 +242,13 @@ function slot0.playEffect53(slot0, slot1)
 end
 
 function slot0.playEffect54(slot0, slot1)
-	tabletool.clear(slot0:getHandCard())
+	slot2 = slot0:getHandCard()
 
-	if slot0.dataMgr:getHandCardDataMgr():getRedealProto() then
-		tabletool.addValues(slot2, FightHelper.buildInfoMOs(slot3.dealCardGroup, FightCardInfoMO))
+	if slot0.dataMgr.handCardMgr:getRedealProto() then
+		FightDataHelper.coverData(FightHelper.buildInfoMOs(slot3.dealCardGroup, FightCardInfoMO), slot2)
 	end
 
-	FightHandCardDataMgr.combineCardList(slot2)
+	FightCardDataHelper.combineCardList(slot2)
 end
 
 function slot0.playEffect55(slot0, slot1)
@@ -359,7 +263,7 @@ function slot0.playEffect56(slot0, slot1)
 		return
 	end
 
-	slot2:delBuff(slot2.buffModel:getById(slot3.uid))
+	slot2:delBuff(slot3.uid)
 end
 
 function slot0.playEffect57(slot0, slot1)
@@ -371,7 +275,7 @@ function slot0.playEffect57(slot0, slot1)
 end
 
 function slot0.playEffect58(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -385,11 +289,11 @@ function slot0.playEffect58(slot0, slot1)
 end
 
 function slot0.playEffect59(slot0, slot1)
-	slot0.dataMgr.handCardData:distribute(slot0.dataMgr.handCardData.beforeCards1, slot0.dataMgr.handCardData.teamACards1)
+	slot0.dataMgr.handCardMgr:distribute(slot0.dataMgr.handCardMgr.beforeCards1, slot0.dataMgr.handCardMgr.teamACards1)
 end
 
 function slot0.playEffect60(slot0, slot1)
-	slot0.dataMgr.handCardData:distribute(slot0.dataMgr.handCardData.beforeCards2, slot0.dataMgr.handCardData.teamACards2)
+	slot0.dataMgr.handCardMgr:distribute(slot0.dataMgr.handCardMgr.beforeCards2, slot0.dataMgr.handCardMgr.teamACards2)
 end
 
 function slot0.playEffect61(slot0, slot1)
@@ -421,10 +325,10 @@ function slot0.playEffect67(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() >= 1 then
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	else
 		FightHelper.setEffectEntitySide(slot1)
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	end
 end
 
@@ -450,7 +354,7 @@ function slot0.playEffect74(slot0, slot1)
 end
 
 function slot0.playEffect75(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -458,7 +362,7 @@ function slot0.playEffect75(slot0, slot1)
 		return
 	end
 
-	if not slot0.dataMgr:getEntityMO(slot2) then
+	if not slot0.dataMgr:getEntityById(slot2) then
 		return
 	end
 
@@ -476,7 +380,7 @@ function slot0.playEffect75(slot0, slot1)
 	slot5[slot6].skillId = slot7
 
 	if slot4 < 4 then
-		FightHandCardDataMgr.combineCardList(slot5)
+		FightCardDataHelper.combineCardList(slot5)
 	end
 end
 
@@ -487,7 +391,7 @@ function slot0.playEffect77(slot0, slot1)
 end
 
 function slot0.playEffect78(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -519,7 +423,7 @@ function slot0.playEffect84(slot0, slot1)
 end
 
 function slot0.playEffect85(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -534,10 +438,12 @@ function slot0.playEffect86(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() >= 1 then
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot3 = slot0.dataMgr.entityMgr:addEntityMO(slot1.entityMO)
+
+		table.insert(slot0.dataMgr.entityMgr:getOriginNormalList(slot3.side), slot3)
 	else
 		FightHelper.setEffectEntitySide(slot1)
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:addEntityMO(slot1.entityMO)
 	end
 end
 
@@ -578,7 +484,7 @@ function slot0.playEffect95(slot0, slot1)
 end
 
 function slot0.playEffect96(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -589,7 +495,7 @@ function slot0.playEffect96(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() < 4 then
-		FightHandCardDataMgr.combineCardList(slot2)
+		FightCardDataHelper.combineCardList(slot2)
 	end
 end
 
@@ -634,14 +540,33 @@ function slot0.playEffect107(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() >= 1 then
+		slot5 = slot0.dataMgr:getEntityById(slot1.entityMO.id).side
+
 		if slot0:getTarEntityMO(slot1) then
-			slot3.position = slot0.dataMgr:getEntityMO(slot1.entityMO.id).position or -1
+			slot3.position = slot4.position or -1
+
+			for slot10, slot11 in ipairs(slot0.dataMgr.entityMgr:getOriginListById(slot3.uid)) do
+				if slot11.uid == slot3.uid then
+					table.remove(slot6, slot10)
+
+					break
+				end
+			end
 		end
 
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		for slot10, slot11 in ipairs(slot0.dataMgr.entityMgr:getOriginSubList(slot5)) do
+			if slot11.uid == slot4.uid then
+				table.remove(slot6, slot10)
+
+				break
+			end
+		end
+
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
+		table.insert(slot0.dataMgr.entityMgr:getOriginNormalList(slot5), slot0.dataMgr.entityMgr:getById(slot4.uid))
 	else
 		FightHelper.setEffectEntitySide(slot1)
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	end
 end
 
@@ -727,10 +652,10 @@ function slot0.playEffect125(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() >= 1 then
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	else
 		FightHelper.setEffectEntitySide(slot1)
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	end
 end
 
@@ -780,27 +705,30 @@ function slot0.playEffect132(slot0, slot1)
 end
 
 function slot0.playEffect133(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
 	if #string.splitToNumber(slot1.reserveStr, "#") > 0 then
 		slot3 = slot0:getHandCard()
+		slot4 = {
+			[slot9] = true
+		}
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot3[slot8] then
-				slot9.C_REMOVE = true
+		for slot8, slot9 in ipairs(slot2) do
+			if slot3[slot9] then
+				-- Nothing
 			end
 		end
 
-		for slot7 = #slot3, 1, -1 do
-			if slot3[slot7] and slot8.C_REMOVE then
-				table.remove(slot3, slot7)
+		for slot8 = #slot3, 1, -1 do
+			if slot3[slot8] and slot4[slot8] then
+				table.remove(slot3, slot8)
 			end
 		end
 
 		if FightModel.instance:getVersion() < 4 then
-			FightHandCardDataMgr.combineCardList(slot3)
+			FightCardDataHelper.combineCardList(slot3)
 		end
 	end
 end
@@ -850,7 +778,7 @@ function slot0.playEffect140(slot0, slot1)
 end
 
 function slot0.playEffect141(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -887,7 +815,7 @@ function slot0.playEffect148(slot0, slot1)
 end
 
 function slot0.playEffect149(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -897,7 +825,7 @@ function slot0.playEffect149(slot0, slot1)
 	table.insert(slot0:getHandCard(), slot2)
 
 	if FightModel.instance:getVersion() < 4 then
-		FightHandCardDataMgr.combineCardList(slot3)
+		FightCardDataHelper.combineCardList(slot3)
 	end
 end
 
@@ -908,7 +836,7 @@ function slot0.playEffect151(slot0, slot1)
 end
 
 function slot0.playEffect152(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -919,59 +847,45 @@ function slot0.playEffect152(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() < 4 then
-		FightHandCardDataMgr.combineCardList(slot2)
+		FightCardDataHelper.combineCardList(slot2)
 	end
 end
 
 function slot0.playEffect153(slot0, slot1)
-	FightHandCardDataMgr.combineCardList(slot0:getHandCard())
+	FightCardDataHelper.combineCardList(slot0:getHandCard())
 end
 
 function slot0.playEffect154(slot0, slot1)
-	slot4 = false
-
-	if #slot0:getHandCard() ~= #FightHelper.buildInfoMOs(slot1.cardInfoList, FightCardInfoMO) then
-		slot4 = true
-		slot5 = "前后端卡牌数据不一致,卡牌数量不一致。请保存行为复现找开发看看,卡牌数量不同 \n服务器数据 = %s, \n本地数据 = %s"
-	else
-		slot5, slot6, slot7, slot8 = FightHelper.compareData(slot3, slot2)
-
-		if not slot5 then
-			slot4 = true
-			slot9 = "前后端卡牌数据不一致,请保存行为复现找开发看看 key = %s, \n服务器数据 = %s, \n本地数据 = %s"
-		end
-	end
-
-	if slot4 then
-		tabletool.clear(slot2)
-		tabletool.addValues(slot2, slot3)
-	end
+	FightDataHelper.coverData(FightHelper.buildInfoMOs(slot1.cardInfoList, FightCardInfoMO), slot0:getHandCard())
 end
 
 function slot0.playEffect155(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
 	if #string.splitToNumber(slot1.reserveStr, "#") > 0 then
 		slot3 = slot0:getHandCard()
+		slot4 = {
+			[slot9] = true
+		}
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot3[slot8] then
-				slot9.C_REMOVE = true
+		for slot8, slot9 in ipairs(slot2) do
+			if slot3[slot9] then
+				-- Nothing
 			end
 		end
 
-		for slot7 = #slot3, 1, -1 do
-			if slot3[slot7] and slot8.C_REMOVE then
-				table.remove(slot3, slot7)
+		for slot8 = #slot3, 1, -1 do
+			if slot3[slot8] and slot4[slot8] then
+				table.remove(slot3, slot8)
 			end
 		end
 	end
 end
 
 function slot0.playEffect156(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -1003,6 +917,10 @@ function slot0.playEffect161(slot0, slot1)
 end
 
 function slot0.playEffect162(slot0, slot1)
+	if slot0:isPerformanceData() then
+		return
+	end
+
 	slot2 = FightStepMO.New()
 
 	slot2:init(slot1.fightStep, true)
@@ -1040,7 +958,7 @@ function slot0.playEffect169(slot0, slot1)
 end
 
 function slot0.playEffect170(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -1059,10 +977,10 @@ function slot0.playEffect171(slot0, slot1)
 	end
 
 	if FightModel.instance:getVersion() >= 1 then
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	else
 		FightHelper.setEffectEntitySide(slot1)
-		slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+		slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 	end
 end
 
@@ -1081,15 +999,15 @@ function slot0.playEffect174(slot0, slot1)
 end
 
 function slot0.setRougeExData(slot0, slot1, slot2)
-	slot4[1] = string.splitToNumber(slot0.dataMgr.fieldData.exTeamStr, "#")[1] or 0
+	slot4[1] = string.splitToNumber(slot0.dataMgr.fieldMgr.exTeamStr, "#")[1] or 0
 	slot4[2] = slot4[2] or 0
 	slot4[3] = slot4[3] or 0
 	slot4[slot1] = slot2
-	slot0.dataMgr.fieldData.exTeamStr = string.format("%s#%s#%s", slot4[1], slot4[2], slot4[3])
+	slot0.dataMgr.fieldMgr.exTeamStr = string.format("%s#%s#%s", slot4[1], slot4[2], slot4[3])
 end
 
 function slot0.getRougeExData(slot0, slot1)
-	return string.splitToNumber(slot0.dataMgr.fieldData.exTeamStr, "#")[slot1] or 0
+	return string.splitToNumber(slot0.dataMgr.fieldMgr.exTeamStr, "#")[slot1] or 0
 end
 
 function slot0.playEffect188(slot0, slot1)
@@ -1105,7 +1023,7 @@ function slot0.playEffect190(slot0, slot1)
 end
 
 function slot0.playEffect191(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -1143,33 +1061,36 @@ function slot0.playEffect195(slot0, slot1)
 end
 
 function slot0.playEffect196(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
 	if #string.splitToNumber(slot1.reserveStr, "#") > 0 then
 		slot3 = slot0:getHandCard()
+		slot4 = {
+			[slot9] = true
+		}
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot3[slot8] then
-				slot9.C_REMOVE = true
+		for slot8, slot9 in ipairs(slot2) do
+			if slot3[slot9] then
+				-- Nothing
 			end
 		end
 
-		for slot7 = #slot3, 1, -1 do
-			if slot3[slot7] and slot8.C_REMOVE then
-				table.remove(slot3, slot7)
+		for slot8 = #slot3, 1, -1 do
+			if slot3[slot8] and slot4[slot8] then
+				table.remove(slot3, slot8)
 			end
 		end
 
 		if FightModel.instance:getVersion() < 4 then
-			FightHandCardDataMgr.combineCardList(slot3)
+			FightCardDataHelper.combineCardList(slot3)
 		end
 	end
 end
 
 function slot0.playEffect197(slot0, slot1)
-	if not FightHandCardDataMgr.cardChangeIsMySide(slot1) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
 		return
 	end
 
@@ -1179,7 +1100,7 @@ function slot0.playEffect197(slot0, slot1)
 	table.insert(slot0:getHandCard(), slot2)
 
 	if FightModel.instance:getVersion() < 4 then
-		FightHandCardDataMgr.combineCardList(slot3)
+		FightCardDataHelper.combineCardList(slot3)
 	end
 end
 
@@ -1196,7 +1117,7 @@ function slot0.playEffect206(slot0, slot1)
 		for slot6, slot7 in ipairs(slot2) do
 			slot8 = string.split(slot7, "#")
 
-			if slot0.dataMgr:getEntityMO(slot8[1]) then
+			if slot0.dataMgr:getEntityById(slot8[1]) then
 				slot11.position = tonumber(slot8[2]) or 1
 			end
 		end
@@ -1204,7 +1125,7 @@ function slot0.playEffect206(slot0, slot1)
 end
 
 function slot0.playEffect207(slot0, slot1)
-	if slot0.dataMgr:getEntityMO(slot1.targetId) then
+	if slot0.dataMgr:getEntityById(slot1.targetId) then
 		slot3.position = slot1.effectNum
 	end
 
@@ -1212,7 +1133,7 @@ function slot0.playEffect207(slot0, slot1)
 		for slot8, slot9 in ipairs(slot4) do
 			slot10 = string.split(slot9, "#")
 
-			if slot0.dataMgr:getEntityMO(slot10[1]) then
+			if slot0.dataMgr:getEntityById(slot10[1]) then
 				slot13.position = tonumber(slot10[2]) or 1
 			end
 		end
@@ -1220,7 +1141,7 @@ function slot0.playEffect207(slot0, slot1)
 end
 
 function slot0.playEffect208(slot0, slot1)
-	if slot0.dataMgr:getEntityMO(slot1.targetId) then
+	if slot0.dataMgr:getEntityById(slot1.targetId) then
 		slot3.position = slot1.effectNum
 	end
 
@@ -1228,7 +1149,7 @@ function slot0.playEffect208(slot0, slot1)
 		for slot8, slot9 in ipairs(slot4) do
 			slot10 = string.split(slot9, "#")
 
-			if slot0.dataMgr:getEntityMO(slot10[1]) then
+			if slot0.dataMgr:getEntityById(slot10[1]) then
 				slot13.position = tonumber(slot10[2]) or 1
 			end
 		end
@@ -1236,15 +1157,15 @@ function slot0.playEffect208(slot0, slot1)
 end
 
 function slot0.playEffect212(slot0, slot1)
-	slot0.dataMgr.fieldData.curRound = (slot0.dataMgr.fieldData.curRound or 1) + 1
+	slot0.dataMgr.fieldMgr.curRound = (slot0.dataMgr.fieldMgr.curRound or 1) + 1
 
-	for slot6, slot7 in pairs(slot0.dataMgr.entityData:getAllEntityMO()) do
+	for slot6, slot7 in pairs(slot0.dataMgr.entityMgr:getAllEntityMO()) do
 		slot7.subCd = 0
 	end
 end
 
 function slot0.playEffect214(slot0, slot1)
-	if slot0.dataMgr:getEntityMO(slot1.targetId) then
+	if slot0.dataMgr:getEntityById(slot1.targetId) then
 		slot3:changeStoredExPoint(slot1.effectNum)
 
 		if slot1.buff then
@@ -1262,7 +1183,7 @@ function slot0.playEffect228(slot0, slot1)
 end
 
 function slot0.playEffect233(slot0, slot1)
-	slot0.dataMgr.handCardData:distribute(slot0.dataMgr.handCardData.beforeCards1, slot0.dataMgr.handCardData.teamACards1)
+	slot0.dataMgr.handCardMgr:distribute(slot0.dataMgr.handCardMgr.beforeCards1, slot0.dataMgr.handCardMgr.teamACards1)
 end
 
 function slot0.playEffect234(slot0, slot1)
@@ -1294,7 +1215,7 @@ function slot0.playEffect236(slot0, slot1)
 end
 
 function slot0.playEffect238(slot0, slot1)
-	slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot1.entityMO)
+	slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
 end
 
 function slot0.playEffect244(slot0, slot1)
@@ -1312,12 +1233,93 @@ function slot0.playEffect244(slot0, slot1)
 	slot2:changeServerUniqueCost(slot3[2] - slot2:getExpointCostOffsetNum())
 end
 
+function slot0.playEffect251(slot0, slot1)
+	slot0.dataMgr.fieldMgr.progress = slot0.dataMgr.fieldMgr.progress + slot1.effectNum
+end
+
+function slot0.playEffect252(slot0, slot1)
+	slot0.dataMgr.paTaMgr:setCurrCD(slot1.effectNum)
+end
+
+function slot0.playEffect253(slot0, slot1)
+	if not slot0:getTarEntityMO(slot1) then
+		return
+	end
+
+	slot2:setHp(slot2.currentHp - slot1.effectNum)
+end
+
+function slot0.playEffect256(slot0, slot1)
+	slot0.dataMgr.fieldMgr.progressMax = slot0.dataMgr.fieldMgr.progressMax + slot1.effectNum
+	slot0.dataMgr.fieldMgr.param[FightEnum.ParamKey.ProgressSkill] = tonumber(slot1.reserveStr)
+end
+
+function slot0.playEffect258(slot0, slot1)
+	if slot1.teamType ~= FightEnum.TeamType.MySide then
+		return
+	end
+
+	if slot0:getHandCard()[slot1.effectNum] then
+		table.remove(slot2, slot3)
+	end
+end
+
+function slot0.playEffect260(slot0, slot1)
+	slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
+end
+
+function slot0.playEffect265(slot0, slot1)
+	slot0.dataMgr.paTaMgr:switchBossSkill(slot1.assistBossInfo)
+end
+
+function slot0.playEffect267(slot0, slot1)
+	if not slot0:getTarEntityMO(slot1) then
+		return
+	end
+
+	slot2:setHp(slot2.currentHp - slot1.effectNum)
+end
+
+function slot0.playEffect268(slot0, slot1)
+	if not slot0:getTarEntityMO(slot1) then
+		return
+	end
+
+	slot2:setHp(slot2.currentHp - slot1.effectNum)
+end
+
+function slot0.playEffect269(slot0, slot1)
+end
+
+function slot0.playEffect270(slot0, slot1)
+	for slot7 = #slot0:getHandCard(), 1, -1 do
+		if tabletool.indexOf(string.splitToNumber(slot1.reserveStr, "#"), slot7) then
+			table.remove(slot2, slot7)
+		end
+	end
+end
+
+function slot0.playEffect271(slot0, slot1)
+	if not slot0:getTarEntityMO(slot1) then
+		return
+	end
+
+	slot2:setShield(slot2.shieldValue + slot1.effectNum)
+end
+
+function slot0.playEffect272(slot0, slot1)
+end
+
+function slot0.playEffect273(slot0, slot1)
+	slot0.dataMgr.playCardMgr:setAct174EnemyCard(slot1.cardInfoList)
+end
+
 function slot0.playUndefineEffect(slot0)
 end
 
 function slot0.dealExPointInfo(slot0, slot1)
 	for slot5, slot6 in ipairs(slot1) do
-		if slot0.dataMgr:getEntityMO(slot6.uid) then
+		if slot0.dataMgr:getEntityById(slot6.uid) then
 			slot7:setHp(slot6.currentHp)
 
 			if not isDebugBuild then
@@ -1329,72 +1331,90 @@ function slot0.dealExPointInfo(slot0, slot1)
 end
 
 function slot0.playChangeWave(slot0)
-	if slot0.dataMgr:getCacheFightDataMgr():getAndRemove() then
+	if slot0.dataMgr.cacheFightMgr:getAndRemove() then
 		slot0.dataMgr:updateFightData(slot2)
 	end
 end
 
 function slot0.playChangeHero(slot0, slot1)
-	if not slot0.dataMgr:getEntityMO(slot1.toId) then
+	slot2 = slot0.dataMgr:getEntityById(slot1.toId)
+
+	if not slot0.dataMgr:getEntityById(slot1.fromId) then
 		return
 	end
 
-	if not slot0.dataMgr:getEntityMO(slot1.fromId) then
-		return
+	if slot2 then
+		slot3.position = slot2.position
+		slot2.position = -1
 	end
 
-	slot3.position = slot2.position
+	if slot1.actEffectMOs then
+		for slot7, slot8 in ipairs(slot1.actEffectMOs) do
+			if slot8.effectType == FightEnum.EffectType.CHANGEHERO then
+				if FightModel.instance:getVersion() >= 1 then
+					if slot8.entityMO then
+						slot0.dataMgr.entityMgr:replaceEntityMO(slot8.entityMO)
+					end
+				else
+					FightHelper.setEffectEntitySide(slot8)
 
-	for slot7, slot8 in ipairs(slot1.actEffectMOs) do
-		if slot8.effectType == FightEnum.EffectType.CHANGEHERO then
-			if FightModel.instance:getVersion() >= 1 then
-				slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot8.entityMO)
-			else
-				FightHelper.setEffectEntitySide(slot8)
-				slot0.dataMgr:getEntityDataMgr():replaceEntityMO(slot8.entityMO)
+					if slot8.entityMO then
+						slot0.dataMgr.entityMgr:replaceEntityMO(slot8.entityMO)
+					end
+				end
 			end
 		end
 	end
+
+	slot4 = slot3.side
+
+	for slot9, slot10 in ipairs(slot0.dataMgr.entityMgr:getOriginListById(slot1.toId)) do
+		if slot10.uid == slot1.toId then
+			table.remove(slot5, slot9)
+
+			break
+		end
+	end
+
+	slot9 = slot4
+
+	for slot9, slot10 in ipairs(slot0.dataMgr.entityMgr:getOriginSubList(slot9)) do
+		if slot10.uid == slot1.fromId then
+			table.remove(slot5, slot9)
+
+			break
+		end
+	end
+
+	table.insert(slot0.dataMgr.entityMgr:getOriginNormalList(slot4), slot0.dataMgr.entityMgr:getById(slot1.fromId))
 end
 
 function slot0.getTarEntityMO(slot0, slot1)
-	return slot0.dataMgr:getEntityMO(slot1.targetId)
+	return slot0.dataMgr:getEntityById(slot1.targetId)
 end
 
 function slot0.getHandCard(slot0)
-	return slot0.dataMgr:getHandCardDataMgr():getHandCard()
+	return slot0.dataMgr.handCardMgr:getHandCard()
 end
 
-slot1 = {
-	class = true
-}
-
-function slot0.coverData(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0) do
-		if slot1[slot6] == nil then
-			slot0[slot6] = nil
-		end
+function slot0.needLogError(slot0)
+	if slot0:isPerformanceData() then
+		return
 	end
 
-	for slot6, slot7 in pairs(slot1) do
-		slot8 = false
-
-		if uv0[slot6] then
-			slot8 = true
-		end
-
-		if slot2 and slot2[slot6] then
-			slot8 = true
-		end
-
-		if not slot8 then
-			if type(slot7) == "table" then
-				uv1.coverDataFromData(slot0[slot6], slot1[slot6], slot2)
-			else
-				slot0[slot6] = slot1[slot6]
-			end
-		end
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
 	end
+
+	return true
+end
+
+function slot0.isLocalData(slot0)
+	return slot0.dataMgr.__cname == FightLocalDataMgr.__cname
+end
+
+function slot0.isPerformanceData(slot0)
+	return slot0.dataMgr.__cname == FightDataMgr.__cname
 end
 
 return slot0

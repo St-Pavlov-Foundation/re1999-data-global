@@ -62,8 +62,8 @@ function slot0.LoadEffect(slot0)
 		return
 	end
 
-	slot5 = "itemEffect"
-	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot0._iconbg.gameObject, slot5)
+	slot5 = slot0._iconbg.gameObject
+	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot5, "itemEffect")
 
 	for slot5 = 4, 5 do
 		slot0._effectGos[slot5] = gohelper.findChild(slot0._effect, "effect" .. tostring(slot5))
@@ -246,7 +246,7 @@ function slot0.showNormalDeadline(slot0)
 	gohelper.setActive(slot0._deadline, false)
 
 	if slot0.canShowDeadLine then
-		gohelper.setActive(slot0._deadline1, slot0:_isItemHasDeadline() or slot0:_isLimitPowerPotion())
+		gohelper.setActive(slot0._deadline1, slot0:isExpiredItem())
 	else
 		gohelper.setActive(slot0._deadline1, false)
 	end
@@ -732,6 +732,10 @@ function slot0._onClick(slot0)
 	MaterialTipController.instance:showMaterialInfo(slot0._itemType, slot0._itemId, slot0._inPack, slot0._itemUid, slot0._cantJump, slot0._recordFarmItem, nil, slot0._itemQuantity, slot0._isConsume, slot0.jumpFinishCallback, slot0.jumpFinishCallbackObj, slot0.jumpFinishCallbackParam, {
 		roomBuildingLevel = slot0._roomBuildingLevel
 	})
+end
+
+function slot0.isExpiredItem(slot0)
+	return slot0:_isItemHasDeadline() or slot0:_isLimitPowerPotion()
 end
 
 return slot0

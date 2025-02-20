@@ -48,6 +48,7 @@ function slot0.start(slot0, slot1, slot2)
 		slot0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
 		slot0._optionalUpdateInst = slot0._optionalUpdate.Instance
 
+		slot0._optionalUpdateInst:SetUseReserveUrl(HotUpdateMgr.instance:getUseBackup())
 		slot0._optionalUpdateInst:Register(slot0._optionalUpdate.NotEnoughDiskSpace, slot0._onNotEnoughDiskSpace, slot0)
 		slot0._optionalUpdateInst:Register(slot0._optionalUpdate.DownloadStart, slot0._onDownloadStart, slot0)
 		slot0._optionalUpdateInst:Register(slot0._optionalUpdate.DownloadProgressRefresh, slot0._onDownloadProgressRefresh, slot0)

@@ -10,8 +10,9 @@ function slot0.init(slot0, slot1)
 	slot0.isWin = slot1.isWin
 	slot0.retryNum = slot1.retryNum
 	slot0.season = slot1.season
+	slot5 = slot0.retryNum
 
-	RougeModel.instance:updateRetryNum(slot0.retryNum)
+	RougeModel.instance:updateRetryNum(slot5)
 
 	slot0.battleHeroList = {}
 

@@ -24,8 +24,9 @@ function slot0.onInit(slot0)
 	for slot8, slot9 in ipairs(slot0:getSupportVoiceLangs()) do
 		slot10 = {}
 		slot0._voiceLangsDict[slot9] = slot10
+		slot14 = slot9
 
-		table.insert(slot10, slot9)
+		table.insert(slot10, slot14)
 
 		for slot14, slot15 in pairs(slot3) do
 			if not tabletool.indexOf(slot10, slot14) then

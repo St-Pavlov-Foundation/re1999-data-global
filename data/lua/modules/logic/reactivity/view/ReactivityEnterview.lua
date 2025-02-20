@@ -96,10 +96,9 @@ end
 function slot0.refreshUI(slot0)
 	slot1 = ActivityConfig.instance:getActivityCo(slot0.actId)
 	slot0._txtdesc.text = slot1.actDesc
-	slot2 = GameUtil.splitString2(slot1.activityBonus, true) or {}
-	slot6 = #slot0.rewardItems
+	slot6 = #(GameUtil.splitString2(slot1.activityBonus, true) or {})
 
-	for slot6 = 1, math.max(#slot2, slot6) do
+	for slot6 = 1, math.max(slot6, #slot0.rewardItems) do
 		slot8 = slot2[slot6]
 
 		if not slot0.rewardItems[slot6] then

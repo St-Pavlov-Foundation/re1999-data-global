@@ -370,11 +370,11 @@ function slot0._initViewList(slot0)
 	slot0:_addView("洞悉界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterRankUpView, slot0._onCommonCharacterViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterRankUpView/spineContainer/#go_spine", "characterRankUpViewOffset", "characterViewOffset")
 	slot0:_addView("结算界面 -> 复用角色界面, 可以特殊设置", ViewName.FightSuccView, slot0._onCommonCharacterViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/FightSuccView/spineContainer/spine", "fightSuccViewOffset", "characterViewOffset")
 	slot0:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, slot0._onCharacterGetViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterGetView/charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
-	slot0:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterSkinViewUpdate, "UIRoot/POPUP_TOP/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
-	slot0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_TOP/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
+	slot0:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
+	slot0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
 	slot0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine/", "playercardViewLive2dOffset", "characterViewOffset")
 	table.insert(slot0._viewNameList, "0#静态立绘")
-	slot0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, slot0._onCharacterDataViewOpenFromHandbook, slot0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_TOP/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
+	slot0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, slot0._onCharacterDataViewOpenFromHandbook, slot0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
 	slot0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset")
 	slot0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, slot0._onCharacterSkinGainViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
 	slot0:_addView("角色界面静态立绘", ViewName.CharacterView, slot0._onCharacterViewChangeStaticDrawingOpen, slot0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
@@ -449,7 +449,9 @@ function slot0._onMainViewFrameOpen(slot0, slot1)
 end
 
 function slot0.showTrigger(slot0)
-	gohelper.setActive(slot0._gotrigger, true)
+	slot4 = true
+
+	gohelper.setActive(slot0._gotrigger, slot4)
 
 	for slot4 = 1, uv0 do
 		slot0:updateTrigger(slot4)
@@ -457,12 +459,12 @@ function slot0.showTrigger(slot0)
 end
 
 function slot0.updateTrigger(slot0, slot1)
-	slot6 = slot1
+	slot6 = "triggerArea" .. slot1
 
 	for slot6 = 1, 4 do
 		slot7 = slot0["_gotrigger" .. slot1 .. slot6]
 
-		if SkinOffsetAdjustModel.instance:getTrigger(slot0._curSkinInfo, "triggerArea" .. slot6)[slot6] then
+		if SkinOffsetAdjustModel.instance:getTrigger(slot0._curSkinInfo, slot6)[slot6] then
 			gohelper.setActive(slot7, true)
 
 			slot9, slot10, slot11, slot12 = unpack(slot8)
@@ -1319,9 +1321,9 @@ function slot0.onClose(slot0)
 	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsetx.gameObject))
 	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsety.gameObject))
 
-	slot4 = slot0._slideroffsetscale.gameObject
+	slot4 = SLFramework.UGUI.UIDragListener.Get
 
-	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot4))
+	slot0:removeDragListener(slot4(slot0._slideroffsetscale.gameObject))
 
 	for slot4, slot5 in ipairs(slot0._btnList) do
 		slot5:RemoveClickListener()

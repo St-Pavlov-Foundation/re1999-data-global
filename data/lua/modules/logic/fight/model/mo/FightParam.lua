@@ -19,6 +19,7 @@ function slot0.ctor(slot0)
 	slot0.extraList = nil
 	slot0.assistUserId = nil
 	slot0.assistHeroUid = nil
+	slot0.assistBossId = nil
 	slot0.chapterId = nil
 	slot0.episodeId = nil
 	slot0.multiplication = nil
@@ -71,7 +72,7 @@ function slot0.setReqFightGroup(slot0, slot1)
 	elseif Season123Controller.sendEpisodeUseSeason123Equip() then
 		uv0.initFightGroup(slot2, slot0.clothId, slot0.mySideUids, slot0.mySideSubUids, slot0.equips, slot0.activity104Equips)
 	else
-		uv0.initFightGroup(slot2, slot0.clothId, slot0.mySideUids, slot0.mySideSubUids, slot0.equips)
+		uv0.initFightGroup(slot2, slot0.clothId, slot0.mySideUids, slot0.mySideSubUids, slot0.equips, nil, slot0.assistBossId)
 	end
 
 	tabletool.addValues(slot2.extraList, slot0.extraList)
@@ -87,84 +88,88 @@ function slot0.setReqFightGroup(slot0, slot1)
 	slot0.trialHeroList = slot2.trialHeroList
 end
 
-function slot0.initFightGroup(slot0, slot1, slot2, slot3, slot4, slot5)
+function slot0.initFightGroup(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	if slot1 then
 		slot0.clothId = slot1
 	end
 
-	slot6 = {}
-	slot7 = slot2 and #slot2 or 0
+	if slot6 then
+		slot0.assistBossId = slot6
+	end
+
+	slot7 = {}
+	slot8 = slot2 and #slot2 or 0
 
 	if slot2 then
-		for slot11, slot12 in ipairs(slot2) do
-			if tonumber(slot12) < 0 then
-				if HeroGroupTrialModel.instance:getById(slot12) then
-					slot6[slot11] = FightDef_pb.TrialHero()
-					slot6[slot11].pos = slot11
-					slot6[slot11].trialId = slot13.trialCo.id
+		for slot12, slot13 in ipairs(slot2) do
+			if tonumber(slot13) < 0 then
+				if HeroGroupTrialModel.instance:getById(slot13) then
+					slot7[slot12] = FightDef_pb.TrialHero()
+					slot7[slot12].pos = slot12
+					slot7[slot12].trialId = slot14.trialCo.id
 				else
-					table.insert(slot0.heroList, slot12)
+					table.insert(slot0.heroList, slot13)
 				end
 			else
-				table.insert(slot0.heroList, slot12)
+				table.insert(slot0.heroList, slot13)
 			end
 		end
 	end
 
 	if slot3 then
-		for slot11, slot12 in ipairs(slot3) do
-			if tonumber(slot12) < 0 then
-				if HeroGroupTrialModel.instance:getById(slot12) then
-					slot6[slot11 + slot7] = FightDef_pb.TrialHero()
-					slot6[slot11 + slot7].pos = -slot11
-					slot6[slot11 + slot7].trialId = slot13.trialCo.id
+		for slot12, slot13 in ipairs(slot3) do
+			if tonumber(slot13) < 0 then
+				if HeroGroupTrialModel.instance:getById(slot13) then
+					slot7[slot12 + slot8] = FightDef_pb.TrialHero()
+					slot7[slot12 + slot8].pos = -slot12
+					slot7[slot12 + slot8].trialId = slot14.trialCo.id
 				else
-					table.insert(slot0.subHeroList, slot12)
+					table.insert(slot0.subHeroList, slot13)
 				end
 			else
-				table.insert(slot0.subHeroList, slot12)
+				table.insert(slot0.subHeroList, slot13)
 			end
 		end
 	end
 
 	if slot4 then
-		for slot11, slot12 in ipairs(slot4) do
-			if slot6[slot11] then
-				for slot16, slot17 in ipairs(slot12.equipUid) do
-					table.insert(slot6[slot11].equipUid, slot17)
+		for slot12, slot13 in ipairs(slot4) do
+			if slot7[slot12] then
+				for slot17, slot18 in ipairs(slot13.equipUid) do
+					table.insert(slot7[slot12].equipUid, slot18)
 				end
 			else
-				FightDef_pb.FightEquip().heroUid = slot12.heroUid
+				FightDef_pb.FightEquip().heroUid = slot13.heroUid
 
-				for slot17, slot18 in ipairs(slot12.equipUid) do
-					table.insert(slot13.equipUid, slot18)
+				for slot18, slot19 in ipairs(slot13.equipUid) do
+					table.insert(slot14.equipUid, slot19)
 				end
 
-				table.insert(slot0.equips, slot13)
+				table.insert(slot0.equips, slot14)
 			end
 		end
 	end
 
 	if slot5 then
-		for slot11, slot12 in ipairs(slot5) do
-			FightDef_pb.FightEquip().heroUid = slot12.heroUid
+		for slot12, slot13 in ipairs(slot5) do
+			FightDef_pb.FightEquip().heroUid = slot13.heroUid
 
-			if slot12.equipUid then
-				for slot17, slot18 in ipairs(slot12.equipUid) do
-					table.insert(slot13.equipUid, slot18)
+			if slot13.equipUid then
+				for slot18, slot19 in ipairs(slot13.equipUid) do
+					table.insert(slot14.equipUid, slot19)
 
-					if slot6[slot11] then
-						table.insert(slot6[slot11].act104EquipUid, slot18)
+					if slot7[slot12] then
+						table.insert(slot7[slot12].act104EquipUid, slot19)
 					end
 				end
 			end
 
-			table.insert(slot0.activity104Equips, slot13)
+			table.insert(slot0.activity104Equips, slot14)
 		end
 	end
 
-	for slot11, slot12 in pairs(slot6) do
-		table.insert(slot0.trialHeroList, slot12)
+	for slot12, slot13 in pairs(slot7) do
+		table.insert(slot0.trialHeroList, slot13)
 	end
 end
 
@@ -173,7 +178,7 @@ function slot0.setAssistHeroInfo(slot0, slot1, slot2)
 	slot0.assistUserId = slot2
 end
 
-function slot0.setMySide(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+function slot0.setMySide(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
 	slot0.clothId = slot1
 	slot0.mySideUids = slot2
 	slot0.mySideSubUids = slot3
@@ -181,6 +186,7 @@ function slot0.setMySide(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 	slot0.activity104Equips = slot5
 	slot0.trialHeroList = slot6
 	slot0.extraList = slot7
+	slot0.assistBossId = slot8
 end
 
 function slot0.setEpisodeAndBattle(slot0, slot1, slot2)

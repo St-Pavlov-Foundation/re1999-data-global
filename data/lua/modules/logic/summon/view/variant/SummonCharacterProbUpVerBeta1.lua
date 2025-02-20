@@ -21,7 +21,8 @@ function slot0._editableInitView(slot0)
 	slot0._simageleft = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_left")
 	slot0._simageright = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_right")
 	slot0._simagejian = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_ad3/#simage_jian")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_mask")
+	slot4 = "#go_ui/current/#simage_mask"
+	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, slot4)
 
 	for slot4 = 1, uv0.SIMAGE_COUNT do
 		slot0["_simagead" .. slot4] = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_ad" .. slot4)
@@ -37,9 +38,9 @@ function slot0.refreshSingleImage(slot0)
 	slot0._simageright:LoadImage(ResUrl.getSummonCoverBg("hero/rightup"))
 	slot0._simagejian:LoadImage(ResUrl.getSummonCoverBg("hero/tianshi"))
 
-	slot4 = "title_img_deco"
+	slot4 = ResUrl.getSummonHeroIcon
 
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon(slot4))
+	slot0._simageline:LoadImage(slot4("title_img_deco"))
 
 	for slot4 = 1, uv0.SIMAGE_COUNT do
 		slot0["_simagead" .. slot4]:LoadImage(uv1[slot4], slot0._adLoaded, slot0)

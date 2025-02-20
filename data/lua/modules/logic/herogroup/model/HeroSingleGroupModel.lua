@@ -208,6 +208,23 @@ function slot0.isAidConflict(slot0, slot1)
 	return false
 end
 
+function slot0.getTeamLevel(slot0)
+	for slot7, slot8 in ipairs(slot0:getHeroUids()) do
+		if HeroModel.instance:getById(slot8) then
+			slot2 = 0 + slot9.level
+			slot3 = 0 + 1
+		end
+	end
+
+	slot4 = 0
+
+	if slot3 ~= 0 then
+		slot4 = math.floor(slot2 / slot3)
+	end
+
+	return slot4
+end
+
 slot0.instance = slot0.New()
 
 return slot0

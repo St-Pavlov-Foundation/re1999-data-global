@@ -46,4 +46,12 @@ function slot0.ctor(slot0)
 	slot0:registerFunction()
 end
 
+function slot0.OnkeyUp(slot0, slot1)
+	if ViewMgr.instance:IsPopUpViewOpen() then
+		return
+	end
+
+	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+end
+
 return slot0

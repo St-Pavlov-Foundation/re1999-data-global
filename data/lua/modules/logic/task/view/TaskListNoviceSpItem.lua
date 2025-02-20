@@ -98,7 +98,8 @@ end
 
 function slot0._refreshItem(slot0)
 	slot0._txtprogress.text = tostring(slot0._mo.progress)
-	slot0._txtmaxprogress.text = tostring(slot0._mo.config.maxProgress)
+	slot4 = slot0._mo.config.maxProgress
+	slot0._txtmaxprogress.text = tostring(slot4)
 	slot0._txttaskdes.text = slot0._mo.config.desc
 
 	for slot4, slot5 in pairs(slot0._rewardItems) do

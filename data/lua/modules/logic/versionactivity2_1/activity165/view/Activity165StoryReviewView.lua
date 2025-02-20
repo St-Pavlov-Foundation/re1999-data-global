@@ -33,7 +33,10 @@ function slot0.removeEvents(slot0)
 	slot0._btnstory1:RemoveClickListener()
 	slot0._btnstory2:RemoveClickListener()
 	slot0._btnstory3:RemoveClickListener()
-	slot0._animationEvent:RemoveEventListener(Activity165Enum.ReviewViewAnim.Switch)
+
+	slot4 = Activity165Enum.ReviewViewAnim.Switch
+
+	slot0._animationEvent:RemoveEventListener(slot4)
 
 	for slot4, slot5 in pairs(slot0._endingItem) do
 		slot5.btn:RemoveClickListener()
@@ -106,7 +109,8 @@ function slot0._onShowEnding(slot0, slot1)
 		gohelper.setActive(slot6.normal, slot5 ~= slot1)
 	end
 
-	slot0._mo = Activity165Model.instance:getStoryMo(slot0._actId, slot1)
+	slot6 = slot1
+	slot0._mo = Activity165Model.instance:getStoryMo(slot0._actId, slot6)
 	slot2 = 1
 
 	for slot6, slot7 in pairs(slot0._mo.unlockEndings) do
@@ -170,7 +174,10 @@ function slot0._isCanPlayUnlockAnim(slot0, slot1)
 end
 
 function slot0._activeTagBtn(slot0)
-	for slot4 = 1, Activity165Model.instance:getStoryCount() do
+	slot2 = Activity165Model.instance
+	slot4 = slot2
+
+	for slot4 = 1, slot2.getStoryCount(slot4) do
 		if slot0["_btnstory" .. slot4] then
 			gohelper.setActive(slot7.gameObject, Activity165Model.instance:getStoryMo(slot0._actId, slot4) and slot5.isUnlock)
 		end

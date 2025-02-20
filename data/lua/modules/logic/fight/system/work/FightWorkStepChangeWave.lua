@@ -48,9 +48,7 @@ function slot0._onPushFightWave(slot0)
 end
 
 function slot0._changeWave(slot0, slot1)
-	if SLFramework.FrameworkSettings.IsEditor then
-		-- Nothing
-	end
+	FightDataHelper.calMgr:playChangeWave()
 
 	slot0._nextWaveMsg = slot1
 	slot2 = FightModel.instance:getFightParam()

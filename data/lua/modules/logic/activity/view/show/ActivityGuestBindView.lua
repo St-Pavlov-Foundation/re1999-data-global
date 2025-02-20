@@ -54,9 +54,10 @@ function slot0.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
 	Activity1000Rpc.instance:sendAct1000GetInfoRequest(slot1.actId, slot0._refresh, slot0)
 
+	slot9 = "#"
 	slot5 = {}
 
-	for slot9 = 1, #GameUtil.splitString2(SDKConfig.instance:getGuestBindRewards(), true, "|", "#") do
+	for slot9 = 1, #GameUtil.splitString2(SDKConfig.instance:getGuestBindRewards(), true, "|", slot9) do
 		slot5[#slot5 + 1] = {
 			itemCO = slot4[slot9]
 		}

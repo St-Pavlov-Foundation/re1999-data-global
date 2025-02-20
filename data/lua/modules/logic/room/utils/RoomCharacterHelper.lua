@@ -1,5 +1,11 @@
 module("modules.logic.room.utils.RoomCharacterHelper", package.seeall)
 
+slot1 = {
+	"x",
+	"y",
+	"z"
+}
+
 return {
 	getCharacterPosition = function (slot0)
 		return HexMath.resourcePointToPosition(slot0, RoomBlockEnum.BlockSize, 0.33)
@@ -165,7 +171,8 @@ return {
 		end
 
 		slot4 = GameSceneMgr.instance:getCurScene().camera.camera.transform
-		slot5 = Vector2.Normalize(Vector2(slot4.forward.x, slot4.forward.z))
+		slot10 = slot4.forward.z
+		slot5 = Vector2.Normalize(Vector2(slot4.forward.x, slot10))
 		slot6 = 0
 
 		for slot10 = 1, #slot0 - 1 do
@@ -241,7 +248,10 @@ return {
 
 					table.insert(slot13, Vector2(0, slot14))
 					table.insert(slot13, Vector2(-slot15, slot14))
-					table.insert(slot13, Vector2(slot15, slot14))
+
+					slot22 = Vector2(slot15, slot14)
+
+					table.insert(slot13, slot22)
 
 					for slot22 = 0, 5 do
 						slot23 = slot22 * math.pi / 3
@@ -294,9 +304,11 @@ return {
 			table.insert({}, RoomHelper.vector3Distance2(slot16, slot3))
 		end
 
-		table.sort(slot10, function (slot0, slot1)
+		function slot15(slot0, slot1)
 			return uv0[slot0] < uv0[slot1]
-		end)
+		end
+
+		table.sort(slot10, slot15)
 
 		for slot15, slot16 in ipairs(slot10) do
 			if uv0.canConfirmPlace(slot0, slot9[slot16], slot1) then
@@ -498,9 +510,10 @@ return {
 		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
 		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
 
-		slot6 = SceneTag.RoomPartBuilding
+		slot5 = slot0.buildingmgr
+		slot7 = slot5
 
-		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(slot6))
+		LuaUtil.insertDict(slot1, slot5.getTagUnitDict(slot7, SceneTag.RoomPartBuilding))
 
 		slot2 = {}
 
@@ -529,10 +542,10 @@ return {
 				return false
 			end
 
-			slot10 = Vector3(0, 0.2, 0)
+			slot10 = slot3:GetSize() + Vector3(0, 0.2, 0)
 
 			for slot10 = 1, #slot0 do
-				if uv0.testAABB(slot0[slot10], slot1[slot10], Bounds(RoomBendingHelper.worldToBendingSimple(slot5), slot3:GetSize() + slot10)) then
+				if uv0.testAABB(slot0[slot10], slot1[slot10], Bounds(RoomBendingHelper.worldToBendingSimple(slot5), slot10)) then
 					return true
 				end
 			end
@@ -546,11 +559,7 @@ return {
 		slot5 = 0
 		slot6 = slot1
 
-		for slot11, slot12 in ipairs({
-			"x",
-			"y",
-			"z"
-		}) do
+		for slot11, slot12 in ipairs(uv0) do
 			if math.abs(slot0.direction[slot12]) < 0.01 then
 				if slot0.origin[slot12] < slot2.min[slot12] or slot2.max[slot12] < slot0.origin[slot12] then
 					return false
@@ -583,11 +592,10 @@ return {
 		slot1 = {}
 		slot3 = {}
 		slot4 = {}
-		slot7 = GameSceneMgr.instance:getCurScene().mapmgr
-		slot8 = slot7
-		slot9 = SceneTag.RoomMapBlock
+		slot8 = GameSceneMgr.instance:getCurScene().mapmgr
+		slot8 = slot8.getTagUnitDict
 
-		LuaUtil.insertDict(slot4, slot7.getTagUnitDict(slot8, slot9))
+		LuaUtil.insertDict(slot4, slot8(slot8, SceneTag.RoomMapBlock))
 
 		for slot8, slot9 in ipairs(slot4) do
 			tabletool.addValues(slot3, slot9:getGameObjectListByName("characterPathPoint"))

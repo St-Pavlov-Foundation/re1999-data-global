@@ -130,7 +130,9 @@ function slot0.onSummonSimulation(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goheroitem, false)
+	slot4 = false
+
+	gohelper.setActive(slot0._goheroitem, slot4)
 
 	slot0._heroItemTables = {}
 
@@ -260,7 +262,9 @@ function slot0.onSaveViewClose(slot0, slot1)
 end
 
 function slot0._refreshUI(slot0)
-	gohelper.setActive(slot0._simagebg0, not VirtualSummonScene.instance:isOpen())
+	slot5 = not VirtualSummonScene.instance:isOpen()
+
+	gohelper.setActive(slot0._simagebg0, slot5)
 
 	for slot5 = 1, #slot0._summonResultList do
 		if slot0._summonResultList[slot5].heroId and slot6.heroId ~= 0 then

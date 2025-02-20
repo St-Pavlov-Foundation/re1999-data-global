@@ -45,10 +45,10 @@ end
 
 function slot0.setAttacker(slot0, slot1)
 	slot0._attackerId = slot1
-	slot0._entityMO = FightEntityModel.instance:getById(slot0._attackerId)
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._attackerId)
 	slot0._skillIds = {}
 
-	if FightEntityModel.instance:getById(slot0._attackerId) then
+	if FightDataHelper.entityMgr:getById(slot0._attackerId) then
 		if slot2.modelId ~= slot0._entityMO.modelId then
 			slot0._curSkillId = nil
 		end

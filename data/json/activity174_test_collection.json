@@ -1,0 +1,353 @@
+[
+  {
+    "id": 20001,
+    "rare": 1,
+    "title": "language_10001515",
+    "desc": "language_10058337",
+    "icon": "8110213",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20006,
+    "rare": 1,
+    "title": "language_10043888",
+    "desc": "language_10058342",
+    "icon": "8120703",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20013,
+    "rare": 1,
+    "title": "language_10043904",
+    "desc": "language_10058347",
+    "icon": "8130203",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20024,
+    "rare": 1,
+    "title": "language_10001440",
+    "desc": "language_10058356",
+    "icon": "8230042",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20025,
+    "rare": 1,
+    "title": "language_10002072",
+    "desc": "language_10058357",
+    "icon": "8130315",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20043,
+    "rare": 1,
+    "title": "language_10040469",
+    "desc": "language_10058373",
+    "icon": "8150010",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20048,
+    "rare": 1,
+    "title": "language_10043918",
+    "desc": "language_10058378",
+    "icon": "8130505",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20054,
+    "rare": 1,
+    "title": "language_10002089",
+    "desc": "language_10058384",
+    "icon": "8130115",
+    "unique": 0,
+    "costCoin": 8
+  },
+  {
+    "id": 20010,
+    "rare": 2,
+    "title": "language_10001433",
+    "desc": "language_10058344",
+    "icon": "8220036",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20018,
+    "rare": 2,
+    "title": "language_10001803",
+    "desc": "language_10058350",
+    "icon": "8210711",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20023,
+    "rare": 2,
+    "title": "language_10001853",
+    "desc": "language_10058355",
+    "icon": "8120216",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20028,
+    "rare": 2,
+    "title": "language_10044185",
+    "desc": "language_10058359",
+    "icon": "8330412",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20034,
+    "rare": 2,
+    "title": "language_10044042",
+    "desc": "language_10058365",
+    "icon": "8230304",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20035,
+    "rare": 2,
+    "title": "language_10044041",
+    "desc": "language_10037473",
+    "icon": "8230204",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20037,
+    "rare": 2,
+    "title": "language_10002140",
+    "desc": "language_10058367",
+    "icon": "8230038",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20044,
+    "rare": 2,
+    "title": "language_10040471",
+    "desc": "language_10058374",
+    "icon": "8250011",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20047,
+    "rare": 2,
+    "title": "language_10044001",
+    "desc": "language_10058377",
+    "icon": "8220106",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20053,
+    "rare": 2,
+    "title": "language_10043969",
+    "desc": "language_10058383",
+    "icon": "8210105",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20056,
+    "rare": 2,
+    "title": "language_10002107",
+    "desc": "language_10058386",
+    "icon": "8220044",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20057,
+    "rare": 2,
+    "title": "language_10001560",
+    "desc": "language_10058387",
+    "icon": "8210031",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20059,
+    "rare": 2,
+    "title": "language_10002109",
+    "desc": "language_10058389",
+    "icon": "8220215",
+    "unique": 0,
+    "costCoin": 15
+  },
+  {
+    "id": 20060,
+    "rare": 2,
+    "title": "language_10052006",
+    "desc": "language_10058468",
+    "icon": "8330219",
+    "unique": 1,
+    "costCoin": 15
+  },
+  {
+    "id": 20003,
+    "rare": 3,
+    "title": "language_10001542",
+    "desc": "language_10058339",
+    "icon": "8210313",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20004,
+    "rare": 3,
+    "title": "language_10001432",
+    "desc": "language_10058340",
+    "icon": "8310114",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20011,
+    "rare": 3,
+    "title": "language_10044125",
+    "desc": "language_10058469",
+    "icon": "8320207",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20016,
+    "rare": 3,
+    "title": "language_10001805",
+    "desc": "language_10058349",
+    "icon": "8330715",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20019,
+    "rare": 3,
+    "title": "language_10001435",
+    "desc": "language_10058470",
+    "icon": "8310212",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20029,
+    "rare": 3,
+    "title": "language_10044085",
+    "desc": "language_10058360",
+    "icon": "8310022",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20031,
+    "rare": 3,
+    "title": "language_10044118",
+    "desc": "language_10058471",
+    "icon": "8320025",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20036,
+    "rare": 3,
+    "title": "language_10044178",
+    "desc": "language_10058366",
+    "icon": "8330211",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20038,
+    "rare": 3,
+    "title": "language_10052100",
+    "desc": "language_10058368",
+    "icon": "8350060",
+    "unique": 1,
+    "costCoin": 29
+  },
+  {
+    "id": 20039,
+    "rare": 3,
+    "title": "language_10052103",
+    "desc": "language_10058369",
+    "icon": "8350061",
+    "unique": 1,
+    "costCoin": 29
+  },
+  {
+    "id": 20040,
+    "rare": 3,
+    "title": "language_10052119",
+    "desc": "language_10058472",
+    "icon": "8330063",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20042,
+    "rare": 3,
+    "title": "language_10044167",
+    "desc": "language_10058372",
+    "icon": "8330020",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20049,
+    "rare": 3,
+    "title": "language_10044048",
+    "desc": "language_10058379",
+    "icon": "8230509",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20050,
+    "rare": 3,
+    "title": "language_10001438",
+    "desc": "language_10058380",
+    "icon": "8230040",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20051,
+    "rare": 3,
+    "title": "language_10002117",
+    "desc": "language_10058473",
+    "icon": "8330413",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20058,
+    "rare": 3,
+    "title": "language_10044139",
+    "desc": "language_10058474",
+    "icon": "8320506",
+    "unique": 0,
+    "costCoin": 29
+  },
+  {
+    "id": 20061,
+    "rare": 3,
+    "title": "language_10044189",
+    "desc": "language_10058475",
+    "icon": "8330418",
+    "unique": 1,
+    "costCoin": 29
+  }
+]

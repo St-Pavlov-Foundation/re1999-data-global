@@ -85,9 +85,9 @@ function slot0.refreshRewardItems(slot0)
 
 	gohelper.setActive(slot0._gogetall, slot2 > 1)
 
-	slot6 = #slot0._rewardItems
+	slot6 = #slot1
 
-	for slot6 = 1, math.max(#slot1, slot6) do
+	for slot6 = 1, math.max(slot6, #slot0._rewardItems) do
 		if not slot0._rewardItems[slot6] then
 			slot0._rewardItems[slot6] = ActivityTradeBargainRewardItem.New(gohelper.cloneInPlace(slot0._gorewarditem, "reward_item" .. tostring(slot6)), slot0._scrollrewards)
 		end

@@ -2,9 +2,10 @@ module("modules.logic.summon.view.variant.SummonCharacterProbUpVer112", package.
 
 slot0 = class("SummonCharacterProbUpVer112", SummonMainCharacterProbUp)
 slot0.SIMAGE_COUNT = 3
+slot4 = "heroversion_1_1/fg"
 slot0.preloadList = {
 	ResUrl.getSummonCoverBg("heroversion_1_1/full/bg1"),
-	ResUrl.getSummonCoverBg("heroversion_1_1/fg")
+	ResUrl.getSummonCoverBg(slot4)
 }
 
 for slot4 = 1, slot0.SIMAGE_COUNT do
@@ -21,9 +22,9 @@ function slot0.refreshSingleImage(slot0)
 	slot0._simagebg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/full/bg1"))
 	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 
-	slot4 = "heroversion_1_1/fg"
+	slot4 = ResUrl.getSummonCoverBg
 
-	slot0._simagefrontbg:LoadImage(ResUrl.getSummonCoverBg(slot4))
+	slot0._simagefrontbg:LoadImage(slot4("heroversion_1_1/fg"))
 
 	for slot4 = 1, uv0.SIMAGE_COUNT do
 		slot0["_simagead" .. slot4]:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/img_role" .. slot4 + 3), slot0._adLoaded, slot0)

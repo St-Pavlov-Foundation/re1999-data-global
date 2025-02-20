@@ -26,6 +26,9 @@ function slot0.init(slot0, slot1, slot2)
 	slot0.talentCubeInfos:setOwnData(slot0.heroId, slot0.talent)
 
 	slot0.style = slot1.style
+	slot0.destinyRank = slot1.destinyRank
+	slot0.destinyLevel = slot1.destinyLevel
+	slot0.destinyStone = slot1.destinyStone
 end
 
 return slot0

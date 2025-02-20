@@ -43,7 +43,10 @@ function slot0.onStart(slot0)
 	end
 
 	slot0._loader:addPath(slot0._texturePath)
-	slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+
+	slot5 = slot0
+
+	slot0._loader:startLoad(slot0._onLoadCallback, slot5)
 
 	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
 		if slot6.spine and slot6.spine:getSpineGO() then

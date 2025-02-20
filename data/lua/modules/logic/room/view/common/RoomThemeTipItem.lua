@@ -3,6 +3,10 @@ module("modules.logic.room.view.common.RoomThemeTipItem", package.seeall)
 slot0 = class("RoomThemeTipItem", ListScrollCellExtend)
 
 function slot0.onInitView(slot0)
+	slot0._hideSourcesShowTypeMap = {
+		[RoomEnum.SourcesShowType.Cobrand] = true
+	}
+
 	if slot0._editableInitView then
 		slot0:_editableInitView()
 	end
@@ -45,11 +49,12 @@ function slot0._refreshUI(slot0)
 
 	if not string.nilorempty(slot3.sourcesType) then
 		slot4 = string.splitToNumber(slot3.sourcesType, "#")
+		slot8 = slot4
 
-		slot0:_sortSource(slot4)
+		slot0:_sortSource(slot8)
 
 		for slot8, slot9 in pairs(slot4) do
-			if RoomConfig.instance:getSourcesTypeConfig(slot9) then
+			if RoomConfig.instance:getSourcesTypeConfig(slot9) and (not slot10.showType or not slot0._hideSourcesShowTypeMap[slot10.showType]) then
 				slot11 = slot0:_getSourceItem(slot9)
 
 				gohelper.setActive(slot11.go, true)
@@ -58,7 +63,7 @@ function slot0._refreshUI(slot0)
 
 				UISpriteSetMgr.instance:setRoomSprite(slot11.bg, slot10.bgIcon)
 				SLFramework.UGUI.GuiHelper.SetColor(slot11.bg, string.nilorempty(slot10.bgColor) and "#FFFFFF" or slot10.bgColor)
-			else
+			elseif slot10 == nil then
 				logError(string.format("小屋主题\"export_获得类型\"缺少配置。id:%s", slot9))
 			end
 		end

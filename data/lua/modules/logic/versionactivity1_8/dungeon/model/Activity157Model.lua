@@ -411,8 +411,9 @@ end
 
 function slot0.isFinishAllMission(slot0, slot1)
 	slot2 = true
+	slot8 = slot1
 
-	for slot8, slot9 in ipairs(Activity157Config.instance:getAct157MissionList(slot0:getActId(), slot1)) do
+	for slot8, slot9 in ipairs(Activity157Config.instance:getAct157MissionList(slot0:getActId(), slot8)) do
 		if not slot0:isFinishMission(slot1, slot9) then
 			slot2 = false
 

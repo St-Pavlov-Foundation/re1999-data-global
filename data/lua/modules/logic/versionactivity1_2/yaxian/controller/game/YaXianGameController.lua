@@ -155,8 +155,10 @@ end
 
 function slot0.updateAllPosInteractActive(slot0)
 	slot1 = {}
+	slot4 = YaXianGameModel.instance
+	slot6 = slot4
 
-	for slot5, slot6 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
+	for slot5, slot6 in ipairs(slot4.getInteractMoList(slot6)) do
 		if not slot1[YaXianGameHelper.getPosHashKey(slot6.posX, slot6.posY)] then
 			slot0:updatePosInteractActive(slot6.posX, slot6.posY)
 
@@ -243,7 +245,9 @@ function slot0.posCanWalk(slot0, slot1, slot2)
 end
 
 function slot0.posObjCanWalk(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot0:searchInteractByPos(slot1, slot2)) do
+	slot7 = slot2
+
+	for slot7, slot8 in ipairs(slot0:searchInteractByPos(slot1, slot7)) do
 		if YaXianGameHelper.canBlock(slot8.config) then
 			return false
 		end

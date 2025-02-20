@@ -60,9 +60,9 @@ end
 function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._goBuffContainer, false)
 
-	slot4 = slot0
+	slot4 = slot0._refreshArrow
 
-	slot0._scrollskilltipScrollview:AddOnValueChanged(slot0._refreshArrow, slot4)
+	slot0._scrollskilltipScrollview:AddOnValueChanged(slot4, slot0)
 
 	slot0._newskillitems = {}
 
@@ -120,7 +120,7 @@ end
 
 function slot0._setNewSkills(slot0, slot1, slot2, slot3)
 	slot0._curSkillLevel = slot0._curSkillLevel or nil
-	slot0._skillIdList = slot1
+	slot0._skillIdList = slot0:_checkDestinyEffect(slot1)
 	slot0._super = slot2
 
 	gohelper.setActive(slot0._newskilltips[1], not slot2)
@@ -189,6 +189,14 @@ function slot0._setNewSkills(slot0, slot1, slot2, slot3)
 	end
 end
 
+function slot0._checkDestinyEffect(slot0, slot1)
+	if slot1 and slot0.viewParam and slot0.viewParam.heroMo and slot2.destinyStoneMo then
+		slot1 = slot2.destinyStoneMo:_replaceSkill(slot1)
+	end
+
+	return slot1
+end
+
 function slot0._refreshSkill(slot0, slot1)
 	if not slot0._skillIdList[slot1] then
 		slot1 = 1
@@ -224,7 +232,9 @@ function slot0._refreshSkillSpecial(slot0, slot1)
 	slot2 = {}
 
 	if slot1.battleTag and slot1.battleTag ~= "" then
-		for slot6 = 1, #string.split(slot1.battleTag, "#") do
+		slot6 = "#"
+
+		for slot6 = 1, #string.split(slot1.battleTag, slot6) do
 			if not slot0._skillTagGOs[slot6] then
 				table.insert(slot0._skillTagGOs, gohelper.cloneInPlace(slot0._gospecialitem, "item" .. slot6))
 			end
@@ -344,7 +354,7 @@ function slot0.showInfo(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot0.entityMo = FightEntityModel.instance:getById(slot3)
+	slot0.entityMo = FightDataHelper.entityMgr:getById(slot3)
 	slot0.monsterName = FightConfig.instance:getEntityName(slot3)
 	slot0.entitySkillIndex = slot1.skillIndex
 
@@ -429,7 +439,7 @@ function slot0._btnUpgradeShowOnClock(slot0)
 end
 
 function slot0.refreshUpgradeUI(slot0)
-	gohelper.setActive(slot0._btnupgradeShow.gameObject, not slot0.upgraded and slot0.hasBreakLevelSkill)
+	gohelper.setActive(slot0._btnupgradeShow, not slot0.upgraded and slot0.hasBreakLevelSkill)
 	gohelper.setActive(slot0._goshowSelect, slot0.upgraded or slot0._upgradeSelectShow)
 	gohelper.setActive(slot0._goBtnUpgraded, slot0._upgradeSelectShow)
 	gohelper.setActive(slot0._goBtnNormal, not slot0._upgradeSelectShow)
@@ -445,14 +455,11 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._scrollskilltipScrollview:RemoveOnValueChanged()
 
-	for slot4 = 1, 3 do
-		slot0._newskillitems[slot4].icon:UnLoadImage()
-	end
-
-	slot0._newsuperskill.icon:UnLoadImage()
-
-	for slot4 = 1, 3 do
-		slot0._newskillitems[slot4].btn:RemoveClickListener()
+	if slot0._newskillitems then
+		for slot4, slot5 in pairs(slot0._newskillitems) do
+			slot5.icon:UnLoadImage()
+			slot5.btn:RemoveClickListener()
+		end
 	end
 end
 

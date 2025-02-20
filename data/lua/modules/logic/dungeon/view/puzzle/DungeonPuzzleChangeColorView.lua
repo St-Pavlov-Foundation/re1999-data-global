@@ -128,8 +128,10 @@ function slot0._setSortItem(slot0)
 	end
 
 	slot0._sortItems = {}
+	slot3 = DungeonConfig.instance
+	slot5 = slot3
 
-	for slot5 = 1, #string.splitToNumber(DungeonConfig.instance:getDecryptChangeColorCo(slot0.viewParam).colorsort, "#") do
+	for slot5 = 1, #string.splitToNumber(slot3.getDecryptChangeColorCo(slot5, slot0.viewParam).colorsort, "#") do
 		slot6 = gohelper.cloneInPlace(slot0._gosortitem)
 
 		gohelper.setActive(slot6, true)
@@ -149,8 +151,10 @@ function slot0._setInteractItem(slot0)
 	end
 
 	slot0._interactItems = {}
+	slot3 = DungeonConfig.instance
+	slot5 = slot3
 
-	for slot5 = 1, #string.splitToNumber(DungeonConfig.instance:getDecryptChangeColorCo(slot0.viewParam).interactbtns, "#") do
+	for slot5 = 1, #string.splitToNumber(slot3.getDecryptChangeColorCo(slot5, slot0.viewParam).interactbtns, "#") do
 		slot6 = gohelper.cloneInPlace(slot0._gointeractitem)
 
 		gohelper.setActive(slot6, true)

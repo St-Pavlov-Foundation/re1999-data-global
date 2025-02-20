@@ -2305,6 +2305,731 @@
     "bankName": "prologuechapter_8_part05"
   },
   {
+    "id": 23500001,
+    "eventName": "play_activitystorysfx_shenghuo_limb_install",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500002,
+    "eventName": "play_activitystorysfx_shenghuo_belt_tie",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500003,
+    "eventName": "play_activitystorysfx_shenghuo_stumbling_fall",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500004,
+    "eventName": "play_activitystorysfx_shenghuo_snail_crawl_slow",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500005,
+    "eventName": "play_activitystorysfx_shenghuo_snail_crawl_fast",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500006,
+    "eventName": "play_activitystorysfx_shenghuo_drums_fall",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500007,
+    "eventName": "play_activitystorysfx_shenghuo_limb_percussion",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500008,
+    "eventName": "play_activitystorysfx_shenghuo_metal_crash",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500009,
+    "eventName": "play_activitystorysfx_shenghuo_metal_friction",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500010,
+    "eventName": "play_activitystorysfx_shenghuo_window_smash",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500011,
+    "eventName": "play_activitystorysfx_shenghuo_recorder_open",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500012,
+    "eventName": "play_activitystorysfx_shenghuo_tears_drop",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500013,
+    "eventName": "play_activitystorysfx_shenghuo_knock_hazy",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500014,
+    "eventName": "play_activitystorysfx_shenghuo_desktop_clean",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500015,
+    "eventName": "play_activitystorysfx_shenghuo_dudugu_walk",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500016,
+    "eventName": "play_activitystorysfx_shenghuo_candle_burn_loop",
+    "bankName": "activitystory_shenghuo2_3_dudugu_sfx"
+  },
+  {
+    "id": 23500017,
+    "eventName": "play_activitysfx_shenghuo_oh",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500018,
+    "eventName": "play_activitysfx_shenghuo_skirt1",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500019,
+    "eventName": "play_activitysfx_shenghuo_skirt2",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500020,
+    "eventName": "play_activitysfx_shenghuo_papers",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500021,
+    "eventName": "play_activitysfx_shenghuo_qiqi",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500022,
+    "eventName": "play_activitysfx_shenghuo_mouth",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500023,
+    "eventName": "play_activitysfx_shenghuo_mj",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500024,
+    "eventName": "play_activitysfx_shenghuo_street",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500025,
+    "eventName": "play_activitysfx_shenghuo_yiyuan",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500026,
+    "eventName": "play_activitysfx_shenghuo_cough1",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500027,
+    "eventName": "play_activitysfx_shenghuo_cough2",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500028,
+    "eventName": "play_activitysfx_shenghuo_crash",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500029,
+    "eventName": "play_activitysfx_shenghuo_whistle",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500030,
+    "eventName": "play_activitysfx_shenghuo_clothes",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500031,
+    "eventName": "play_activitysfx_shenghuo_castle",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500032,
+    "eventName": "play_activitysfx_shenghuo_tap",
+    "bankName": "activity_shenghuo2_3_sfx_part01"
+  },
+  {
+    "id": 23500033,
+    "eventName": "play_activitysfx_shenghuo_dudu1",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500034,
+    "eventName": "play_activitysfx_shenghuo_dudu2",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500035,
+    "eventName": "play_activitysfx_shenghuo_dudu3",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500036,
+    "eventName": "play_activitysfx_shenghuo_dudu4",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500037,
+    "eventName": "play_activitysfx_shenghuo_dudu5",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500038,
+    "eventName": "play_activitysfx_shenghuo_dudu6",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500039,
+    "eventName": "play_activitysfx_shenghuo_dudu7",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500040,
+    "eventName": "play_activitysfx_shenghuo_dudu8",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500041,
+    "eventName": "play_activitysfx_shenghuo_dudu9",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500042,
+    "eventName": "play_activitysfx_shenghuo_dudu10",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500043,
+    "eventName": "play_activitysfx_shenghuo_flung",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500044,
+    "eventName": "play_activitysfx_shenghuo_window",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500045,
+    "eventName": "play_activitysfx_shenghuo_flap",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500046,
+    "eventName": "play_activitysfx_shenghuo_slime",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500047,
+    "eventName": "play_activitysfx_shenghuo_transition",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500048,
+    "eventName": "play_activitysfx_shenghuo_dance",
+    "bankName": "activity_shenghuo2_3_sfx_part02"
+  },
+  {
+    "id": 23500049,
+    "eventName": "play_activitysfx_shenghuo_hit",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500050,
+    "eventName": "play_activitysfx_shenghuo_wings",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500051,
+    "eventName": "play_activitysfx_shenghuo_toy",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500052,
+    "eventName": "play_activitysfx_shenghuo_shake",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500053,
+    "eventName": "play_activitysfx_shenghuo_door",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500054,
+    "eventName": "play_activitysfx_shenghuo_ribbons",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500055,
+    "eventName": "play_activitysfx_shenghuo_ribbons1",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500056,
+    "eventName": "play_activitysfx_shenghuo_ribbons2",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500057,
+    "eventName": "play_activitysfx_shenghuo_water",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500058,
+    "eventName": "play_activitysfx_shenghuo_rise",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500059,
+    "eventName": "play_activitysfx_shenghuo_cuffs",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500060,
+    "eventName": "play_activitysfx_shenghuo_jar",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500061,
+    "eventName": "play_activitysfx_shenghuo_jiqi1",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500062,
+    "eventName": "play_activitysfx_shenghuo_jiqi2",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500063,
+    "eventName": "play_activitysfx_shenghuo_jiqi3",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500064,
+    "eventName": "play_activitysfx_shenghuo_cup",
+    "bankName": "activity_shenghuo2_3_sfx_part03"
+  },
+  {
+    "id": 23500065,
+    "eventName": "play_activitysfx_shenghuo_fog1",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500066,
+    "eventName": "play_activitysfx_shenghuo_fog2",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500067,
+    "eventName": "play_activitysfx_shenghuo_bang",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500068,
+    "eventName": "play_activitysfx_shenghuo_fog3",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500069,
+    "eventName": "play_activitysfx_shenghuo_noise",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500070,
+    "eventName": "play_activitysfx_shenghuo_barefoot",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500071,
+    "eventName": "play_activitysfx_shenghuo_dijili1",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500072,
+    "eventName": "play_activitysfx_shenghuo_dijili2",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500073,
+    "eventName": "play_activitysfx_shenghuo_dijili3",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500074,
+    "eventName": "play_activitysfx_shenghuo_boardcar",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500075,
+    "eventName": "play_activitysfx_shenghuo_muma",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500076,
+    "eventName": "play_activitysfx_shenghuo_foot",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500077,
+    "eventName": "play_activitysfx_shenghuo_foot1",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500078,
+    "eventName": "play_activitysfx_shenghuo_fell",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500079,
+    "eventName": "play_activitysfx_shenghuo_wuya",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500080,
+    "eventName": "play_activitysfx_shenghuo_people",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500081,
+    "eventName": "play_activitysfx_shenghuo_people1",
+    "bankName": "activity_shenghuo2_3_sfx_part04"
+  },
+  {
+    "id": 23500082,
+    "eventName": "play_activitystorysfx_shenghuo_lowheels_jump",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500083,
+    "eventName": "play_activitystorysfx_shenghuo_roof_landing",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500084,
+    "eventName": "play_activitystorysfx_shenghuo_roof_caper",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500085,
+    "eventName": "play_activitystorysfx_shenghuo_dog_tailflick",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500086,
+    "eventName": "play_activitystorysfx_shenghuo_cuimianqiang_medical",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500087,
+    "eventName": "play_activitystorysfx_shenghuo_rapid_walk_loop",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500088,
+    "eventName": "play_activitystorysfx_shenghuo_defoliation_poke",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500089,
+    "eventName": "play_activitystorysfx_shenghuo_finger_broke",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500090,
+    "eventName": "play_activitystorysfx_shenghuo_double_into",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500091,
+    "eventName": "play_activitystorysfx_shenghuo_flashlight_shines",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500092,
+    "eventName": "play_activitystorysfx_shenghuo_dog_sobs",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500093,
+    "eventName": "play_activitystorysfx_shenghuo_aboard",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500094,
+    "eventName": "play_activitystorysfx_shenghuo_photos_lit",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500095,
+    "eventName": "play_activitystorysfx_shenghuo_word_wipe",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500096,
+    "eventName": "play_activitystorysfx_shenghuo_circling_walk_loop",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500097,
+    "eventName": "play_activitystorysfx_shenghuo_songbo_short",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500098,
+    "eventName": "play_activitystorysfx_shenghuo_songbo_long",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500099,
+    "eventName": "play_activitystorysfx_shenghuo_jingyou_daub",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500100,
+    "eventName": "play_activitystorysfx_shenghuo_smokealarms_loop",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500101,
+    "eventName": "play_activitystorysfx_shenghuo_spray_loop",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500102,
+    "eventName": "play_activitystorysfx_shenghuo_towel_wipe",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500103,
+    "eventName": "play_activitystorysfx_shenghuo_nail_grind",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500104,
+    "eventName": "play_activitystorysfx_shenghuo_trashcan_bump",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500105,
+    "eventName": "play_activitystorysfx_shenghuo_string_stumble",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500106,
+    "eventName": "play_activitystorysfx_shenghuo_trafficjams_loop",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500107,
+    "eventName": "play_activitystorysfx_shenghuo_lowheels_run",
+    "bankName": "activitystory_shenghuo2_3_yishi_huanzhuangshuixing_sfx"
+  },
+  {
+    "id": 23500108,
+    "eventName": "play_activitystory_shenghuo_children_laugh",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500109,
+    "eventName": "play_activitystory_shenghuo_open_window",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500110,
+    "eventName": "play_activitystory_shenghuo_pat_window",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500111,
+    "eventName": "play_activitystory_shenghuo_break_bread",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500112,
+    "eventName": "play_activitystory_shenghuo_sew_basket",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500113,
+    "eventName": "play_activitystory_shenghuo_birds_fly",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500114,
+    "eventName": "play_activitystory_shenghuo_count_coins",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500115,
+    "eventName": "play_activitystory_shenghuo_unbind",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500116,
+    "eventName": "play_activitystory_shenghuo_clears_throat",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500117,
+    "eventName": "play_activitystory_shenghuo_cave_runner",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500118,
+    "eventName": "play_activitystory_shenghuo_street_amb",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500119,
+    "eventName": "play_activitystory_shenghuo_firefly_amb",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500120,
+    "eventName": "play_activitystory_shenghuo_drop_flowers",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500121,
+    "eventName": "play_activitystory_shenghuo_tread_flowers",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500122,
+    "eventName": "play_activitystory_shenghuo_defloration",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500123,
+    "eventName": "play_activitystory_shenghuo_stumbling",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500124,
+    "eventName": "play_activitystory_shenghuo_demon_club",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500125,
+    "eventName": "play_activitystory_shenghuo_little_demon_01",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500126,
+    "eventName": "play_activitystory_shenghuo_little_demon_02",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500127,
+    "eventName": "play_activitystory_shenghuo_little_demon_03",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500128,
+    "eventName": "play_activitystory_shenghuo_coin_drop",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500129,
+    "eventName": "play_activitystory_shenghuo_big_dog_01",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500130,
+    "eventName": "play_activitystory_shenghuo_big_dog_02",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500131,
+    "eventName": "play_activitystory_shenghuo_big_dog_03",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500132,
+    "eventName": "play_activitystory_shenghuo_small_dog_01",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500133,
+    "eventName": "play_activitystory_shenghuo_small_dog_02",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500134,
+    "eventName": "play_activitystory_shenghuo_puppy_whimper",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500135,
+    "eventName": "play_activitystory_shenghuo_puppy_breath_01",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500136,
+    "eventName": "play_activitystory_shenghuo_puppy_breath_02",
+    "bankName": "activitystory_shenghuo2_3_zhixinquaner_sfx"
+  },
+  {
+    "id": 23500137,
+    "eventName": "play_activitysfx_shenghuo_staff_drop",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500138,
+    "eventName": "play_activitysfx_shenghuo_tap_spray",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500139,
+    "eventName": "play_activitysfx_shenghuo_pull_tooth",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500140,
+    "eventName": "play_activitysfx_shenghuo_jog",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500141,
+    "eventName": "play_activitysfx_shenghuo_move_fail",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500142,
+    "eventName": "play_activitysfx_shenghuo_crowd_near",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500143,
+    "eventName": "play_activitysfx_shenghuo_monster_roar",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500144,
+    "eventName": "play_activitysfx_shenghuo_open_drawer",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
+    "id": 23500145,
+    "eventName": "play_activitysfx_shenghuo_brush_crucible",
+    "bankName": "activity_shenghuo2_3_sfx_part05"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -2373,6 +3098,26 @@
     "id": 22530006,
     "eventName": "play_activitymusic_remember_second_2_2",
     "bankName": "activity2_2_music"
+  },
+  {
+    "id": 22530007,
+    "eventName": "play_activitymusic_theme_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 22530008,
+    "eventName": "play_activitymusic_ritual_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 22530009,
+    "eventName": "play_activitymusic_rally_2_3",
+    "bankName": "activity2_3_music"
+  },
+  {
+    "id": 22530010,
+    "eventName": "play_activitymusic_2_3_swanlake_distortion",
+    "bankName": "activity2_3_music"
   },
   {
     "id": 520105,
@@ -2483,5 +3228,40 @@
     "id": 22520006,
     "eventName": "play_youyu2_2_pv_sfx_vo_music",
     "bankName": "youyu2_2_cutscene_sfx_vo"
+  },
+  {
+    "id": 23520001,
+    "eventName": "play_activitysfx_shenghuo_chapter_open",
+    "bankName": "activity_shenghuo2_3_sfx"
+  },
+  {
+    "id": 23520002,
+    "eventName": "play_activitysfx_shenghuo_subsection_open",
+    "bankName": "activity_shenghuo2_3_sfx"
+  },
+  {
+    "id": 23520003,
+    "eventName": "play_activitysfx_shenghuo_chapter_continue",
+    "bankName": "activity_shenghuo2_3_sfx"
+  },
+  {
+    "id": 23520004,
+    "eventName": "play_shenghuo2_3_cutscene_yaxian_appear_before_sfx",
+    "bankName": "shenghuo2_3_cutscene_sfx_vo"
+  },
+  {
+    "id": 23520005,
+    "eventName": "play_shenghuo2_3_cutscene_yaxian_appear_back_sfx",
+    "bankName": "shenghuo2_3_cutscene_sfx_vo"
+  },
+  {
+    "id": 23520006,
+    "eventName": "play_shenghuo2_3_cutscene_fog_dance_sfx_vo",
+    "bankName": "shenghuo2_3_cutscene_sfx_vo"
+  },
+  {
+    "id": 23520007,
+    "eventName": "play_shenghuo2_3_pv_sfx_vo_music",
+    "bankName": "shenghuo2_3_cutscene_sfx_vo"
   }
 ]

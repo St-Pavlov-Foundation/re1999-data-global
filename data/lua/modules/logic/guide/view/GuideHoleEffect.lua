@@ -28,7 +28,10 @@ function slot0.setSize(slot0, slot1, slot2, slot3)
 	end
 
 	slot0:setVisible(true)
-	slot0:_playEffect(slot3)
+
+	slot7 = slot3
+
+	slot0:_playEffect(slot7)
 
 	slot0._width = slot1
 	slot0._height = slot2

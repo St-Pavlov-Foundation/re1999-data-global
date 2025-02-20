@@ -68,6 +68,7 @@ function slot0._checkFunc(slot0)
 
 	if slot1 then
 		logError("场上角色数据一分钟没有变化了,可能卡住了")
+		FightMsgMgr.sendMsg(FightMsgId.MaybeCrashed)
 		slot0:_releaseTimer()
 	end
 end

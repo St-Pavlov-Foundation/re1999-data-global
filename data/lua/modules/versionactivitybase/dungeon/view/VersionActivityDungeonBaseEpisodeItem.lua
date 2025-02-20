@@ -146,9 +146,9 @@ function slot0.refreshUnlockContent(slot0)
 end
 
 function slot0.refreshHardModeStar(slot0)
-	slot4 = slot0._config.id
+	slot4 = slot0.starItemList[1]
 
-	slot0:refreshEpisodeStar(slot0.starItemList[1], slot4, true)
+	slot0:refreshEpisodeStar(slot4, slot0._config.id, true)
 
 	for slot4 = 2, #slot0.starItemList do
 		gohelper.setActive(slot0.starItemList[slot4].goStar, false)
@@ -157,9 +157,10 @@ end
 
 function slot0.refreshStoryModeStar(slot0)
 	slot1 = nil
-	slot5 = slot0._config
+	slot4 = DungeonConfig.instance
+	slot6 = slot4
 
-	for slot5, slot6 in ipairs(DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(slot5)) do
+	for slot5, slot6 in ipairs(slot4.getVersionActivityBrotherEpisodeByEpisodeCo(slot6, slot0._config)) do
 		if not slot0.starItemList[slot5] then
 			table.insert(slot0.starItemList, slot0:createStarItem(gohelper.cloneInPlace(slot0._gostaricon)))
 		end

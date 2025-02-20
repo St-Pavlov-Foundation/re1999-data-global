@@ -69,7 +69,7 @@ function slot0.playAddFirstBuff(slot0)
 	for slot8, slot9 in ipairs(slot0._fightStepMO.actEffectMOs) do
 		if not slot9:isDone() and slot0.startEntity.id == slot9.targetId and slot9.effectType == FightEnum.EffectType.BUFFADD and slot0:inCheckNeedPlayBuff(slot9.effectNum) then
 			FightSkillBuffMgr.instance:playSkillBuff(slot0._fightStepMO, slot9)
-			slot9:setDone()
+			FightDataHelper.playEffectData(slot9)
 
 			if slot1 <= 0 + 1 then
 				return
@@ -167,7 +167,7 @@ function slot0._playAddBuff(slot0)
 	for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
 		if not slot8:isDone() and slot0.endEntity.id == slot8.targetId and slot8.effectType == FightEnum.EffectType.BUFFADD and slot0:inCheckNeedPlayBuff(slot8.effectNum) then
 			FightSkillBuffMgr.instance:playSkillBuff(slot0._fightStepMO, slot8)
-			slot8:setDone()
+			FightDataHelper.playEffectData(slot8)
 
 			if slot0.catapultBuffCount <= 0 + 1 then
 				return

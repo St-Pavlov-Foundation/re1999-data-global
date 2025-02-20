@@ -25,9 +25,9 @@ function slot0._btncloseOnClick(slot0)
 end
 
 function slot0.onOpen(slot0)
-	slot6 = #slot0._itemList
+	slot6 = #SeasonConfig.instance:getRuleTips(slot0.viewParam.actId)
 
-	for slot6 = 1, math.max(#SeasonConfig.instance:getRuleTips(slot0.viewParam.actId), slot6) do
+	for slot6 = 1, math.max(slot6, #slot0._itemList) do
 		slot0:updateItem(slot0:getOrCreateItem(slot6), slot2[slot6])
 	end
 end

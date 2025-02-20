@@ -133,10 +133,10 @@ end
 function slot0._createPoint(slot0, slot1, slot2)
 	slot0.points[slot1] = slot0:getUserDataTb_()
 	slot0.points[slot1].go = gohelper.cloneInPlace(slot0._gopoint, "Point")
-	slot6 = typeof
-	slot0.points[slot1].anim = slot0.points[slot1].go:GetComponent(slot6(UnityEngine.Animator))
+	slot0.points[slot1].anim = slot0.points[slot1].go:GetComponent(typeof(UnityEngine.Animator))
+	slot6 = true
 
-	gohelper.setActive(slot0.points[slot1].go, true)
+	gohelper.setActive(slot0.points[slot1].go, slot6)
 
 	for slot6 = 1, 7 do
 		gohelper.setActive(gohelper.findChild(slot0.points[slot1].go, "type" .. slot6), slot2 == slot6)

@@ -228,6 +228,7 @@ function slot0.onOpen(slot0)
 	WeatherController.instance:playAnim("s01_character_switch_in")
 	MainController.instance:dispatchEvent(MainEvent.ShowMainView)
 	slot0:_updateRedDot()
+	TowerController.instance:dailyReddotRefresh()
 end
 
 function slot0._updateRedDot(slot0)

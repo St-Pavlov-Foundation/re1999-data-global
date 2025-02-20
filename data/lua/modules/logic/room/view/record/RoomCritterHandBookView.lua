@@ -131,7 +131,8 @@ function slot0._btnyoungOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot0._goscroll2ArrowGo = gohelper.findChild(slot0._goscroll2, "gameobject")
+	slot4 = "gameobject"
+	slot0._goscroll2ArrowGo = gohelper.findChild(slot0._goscroll2, slot4)
 	slot0._goscroll2ArrowTrans = slot0._goscroll2ArrowGo.transform
 	slot0._goscroll2ArrowDefaultY = recthelper.getAnchorY(slot0._goscroll2ArrowTrans)
 

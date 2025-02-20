@@ -142,8 +142,9 @@ function slot0._initPageList(slot0)
 
 	if slot1 then
 		slot0._selectedStar = gohelper.findChild(slot0._gopagelist, "star_select")
+		slot6 = true
 
-		gohelper.setActive(slot0._selectedStar, true)
+		gohelper.setActive(slot0._selectedStar, slot6)
 
 		for slot6 = 1, slot0._episodeLen - 1 do
 			gohelper.setActive(gohelper.cloneInPlace(gohelper.findChild(slot0._gopagelist, "star")), true)

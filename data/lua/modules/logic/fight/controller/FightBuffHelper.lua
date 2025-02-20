@@ -31,11 +31,11 @@ function slot0.canPlayDormantBuffAni(slot0, slot1)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot0.targetId) then
+	if not FightDataHelper.entityMgr:getById(slot0.targetId) then
 		return
 	end
 
-	for slot9, slot10 in ipairs(slot3:getBuffList()) do
+	for slot9, slot10 in pairs(slot3:getBuffDic()) do
 		if uv0.isDormantBuff(slot10.buffId) then
 			slot4 = 0 + 1
 
@@ -67,7 +67,7 @@ function slot0.simulateBuffList(slot0, slot1)
 		return {}
 	end
 
-	slot2 = slot0 and tabletool.copy(slot0:getBuffList()) or {}
+	slot2 = slot0 and slot0:getBuffList()
 
 	for slot7, slot8 in ipairs(FightCardModel.instance:getCardOps()) do
 		if slot8:isPlayCard() then
@@ -180,7 +180,7 @@ function slot0.checkCurEntityIsBeContractAndHasChannel(slot0)
 		return false
 	end
 
-	slot2 = FightModel.instance.contractEntityUid and FightEntityModel.instance:getById(slot1)
+	slot2 = FightModel.instance.contractEntityUid and FightDataHelper.entityMgr:getById(slot1)
 
 	return slot2 and slot2:hasBuffFeature(FightEnum.BuffType_ContractCastChannel)
 end
@@ -206,7 +206,7 @@ function slot0.hasCastChannel(slot0, slot1)
 
 	if FightModel.instance:isBeContractEntity(slot0 and slot0.uid) then
 		if slot1 then
-			if uv0.hasFeature(nil, uv0.simulateBuffList(FightModel.instance.contractEntityUid and FightEntityModel.instance:getById(slot4)), FightEnum.BuffType_ContractCastChannel) then
+			if uv0.hasFeature(nil, uv0.simulateBuffList(FightModel.instance.contractEntityUid and FightDataHelper.entityMgr:getById(slot4)), FightEnum.BuffType_ContractCastChannel) then
 				return true
 			end
 		elseif uv0.checkCurEntityIsBeContractAndHasChannel(slot0 and slot0.uid) then
@@ -235,23 +235,23 @@ function slot0.initPurifyHandle()
 	end
 end
 
-function slot0.checkSkillCanPurifyBySkill(slot0, slot1, slot2, slot3)
+function slot0.checkSkillCanPurifyBySkill(slot0, slot1, slot2, slot3, slot4)
 	if not lua_skill.configDict[slot2] then
 		return false
 	end
 
-	slot5 = FightEntityModel.instance:getById(slot0)
+	slot6 = FightDataHelper.entityMgr:getById(slot0)
 
-	if uv0.hasCastChannel(slot5, slot3 or uv0.simulateBuffList(slot5)) then
+	if uv0.hasCastChannel(slot6, slot3 or uv0.simulateBuffList(slot6)) then
 		return false
 	end
 
-	if uv0.hasFeature(slot5, slot3, FightEnum.BuffFeature.Dream) and not FightCardModel.instance:isUniqueSkill(slot0, slot1) then
+	if uv0.hasFeature(slot6, slot3, FightEnum.BuffFeature.Dream) and not FightCardModel.instance:isUniqueSkill(slot0, slot1) then
 		return false
 	end
 
-	for slot9 = 1, FightEnum.MaxBehavior do
-		if uv0.checkSkillCanPurifyByBehaviour(slot0, slot1, slot4["behavior" .. slot9], slot3) then
+	for slot10 = 1, FightEnum.MaxBehavior do
+		if FightConditionHelper.checkCondition(slot5["condition" .. slot10], slot5["conditionTarget" .. slot10], slot4, slot0) and uv0.checkSkillCanPurifyByBehaviour(slot0, slot1, slot5["behavior" .. slot10], slot3) then
 			return true
 		end
 	end
@@ -266,7 +266,7 @@ function slot0.checkSkillCanPurifyByBehaviour(slot0, slot1, slot2, slot3)
 
 	uv0.initPurifyHandle()
 
-	slot4 = FightEntityModel.instance:getById(slot0)
+	slot4 = FightDataHelper.entityMgr:getById(slot0)
 
 	if uv0.hasCastChannel(slot4, slot3 or uv0.simulateBuffList(slot4)) then
 		return false
@@ -329,30 +329,12 @@ slot1 = "CareerRestraint"
 
 function slot0.restrainAll(slot0)
 	if FightHelper.getEntity(slot0) and slot1:getMO() then
-		for slot7, slot8 in ipairs(slot2:getBuffList()) do
+		for slot7, slot8 in pairs(slot2:getBuffDic()) do
 			if FightConfig.instance:hasBuffFeature(slot8.buffId, uv0) then
 				return true
 			end
 		end
 	end
-end
-
-function slot0.getLayer(slot0, slot1)
-	slot2 = nil
-
-	if FightSkillBuffMgr.instance:buffIsStackerBuff(lua_skill_buff.configDict[slot1]) then
-		slot2 = FightSkillBuffMgr.instance:getStackedCount(slot0, slot1)
-	elseif FightEntityModel.instance:getById(slot0) and slot4:getBuffList() then
-		for slot9, slot10 in ipairs(slot5) do
-			if slot10.buffId == slot1 then
-				slot2 = slot10.layer
-
-				break
-			end
-		end
-	end
-
-	return slot2 or 0
 end
 
 function slot0.isIncludeType(slot0, slot1)
@@ -392,11 +374,11 @@ function slot0.getTransferExPointUid(slot0)
 		return
 	end
 
-	if not (slot0.buffModel and slot0.buffModel:getList()) then
+	if not slot0:getBuffDic() then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
+	for slot5, slot6 in pairs(slot1) do
 		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
 			for slot12, slot13 in ipairs(slot8) do
 				if lua_buff_act.configDict[slot13[1]] and slot14.type == FightEnum.BuffType_TransferAddExPoint then
@@ -425,6 +407,64 @@ function slot0.hasCantAddExPointFeature(slot0)
 	end
 
 	return false
+end
+
+function slot0.isDuduBoneContinueChannelBuff(slot0)
+	if not slot0 then
+		return false
+	end
+
+	return FightConfig.instance:hasBuffFeature(slot0.buffId, FightEnum.BuffType_DuduBoneContinueChannel)
+end
+
+function slot0.isDeadlyPoisonBuff(slot0)
+	if not slot0 then
+		return false
+	end
+
+	return FightConfig.instance:hasBuffFeature(slot0.buffId, FightEnum.BuffType_DeadlyPoison)
+end
+
+function slot0.getDeadlyPoisonSignKey(slot0)
+	slot2 = FightStrUtil.instance:getSplitCache(lua_skill_buff.configDict[slot0.buffId].features, "#")
+
+	return string.format("%s_%s_%s", slot2[1], slot0.duration, slot2[2])
+end
+
+function slot0.getBuffMoSignKey(slot0)
+	if not slot0 then
+		return ""
+	end
+
+	if not lua_skill_buff.configDict[slot0.buffId] then
+		return ""
+	end
+
+	if not lua_skill_bufftype.configDict[slot1.typeId] then
+		return ""
+	end
+
+	if uv0.isDeadlyPoisonBuff(slot0) then
+		return uv0.getDeadlyPoisonSignKey(slot0)
+	end
+
+	return slot1.features .. "__" .. slot1.typeId
+end
+
+function slot0.checkPlayDuDuGuAddExPointEffect(slot0)
+	if not slot0 then
+		return false
+	end
+
+	if not FightDataHelper.entityMgr:getById(slot0.id) then
+		return false
+	end
+
+	if not slot1:hasBuffTypeId(31040003) then
+		return false
+	end
+
+	return slot1:hasBuffFeature(FightEnum.BuffType_UseCardFixExPoint) or slot1:hasBuffFeature(FightEnum.BuffType_ExPointCardMove)
 end
 
 return slot0

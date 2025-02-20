@@ -148,7 +148,10 @@ function slot0._refreshStatus(slot0)
 	gohelper.setActive(slot0._golock, not slot1)
 	gohelper.setActive(slot0._golockbg, not slot1)
 	gohelper.setActive(slot0._gocost, not slot1)
-	gohelper.setActive(slot0._gobuyed, slot1)
+
+	slot5 = slot1
+
+	gohelper.setActive(slot0._gobuyed, slot5)
 
 	for slot5, slot6 in pairs(slot0._itemList) do
 		gohelper.setActive(slot6.goget, slot1)

@@ -456,10 +456,18 @@ function slot0.getCustomPickProbability(slot0, slot1)
 			slot6 = 0 + slot5[slot10]
 		end
 
-		return slot6 * 0.001 / slot4 * 100, slot2.totalPosibility
+		return slot6 * 0.001 / slot4 * 100, slot2.totalPosibility, false
 	end
 
-	return 0, 0
+	if slot2 and slot2.type == SummonEnum.Type.StrongCustomOnePick then
+		if SummonCustomPickModel.instance:isHaveFirstSSR(slot1) then
+			return 50, 0, false
+		else
+			return 100, 0, true
+		end
+	end
+
+	return 0, 0, false
 end
 
 function slot0.getDiscountTime10Server(slot0, slot1)

@@ -42,8 +42,9 @@ function slot0.initMoData(slot0)
 		career = slot0.careerValueList[1]
 	}
 	slot0.careerMoDict[slot0.careerValueList[1]] = slot1
+	slot5 = slot1
 
-	table.insert(slot0.careerMoList, slot1)
+	table.insert(slot0.careerMoList, slot5)
 
 	for slot5 = 2, 6 do
 		slot1 = {

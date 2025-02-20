@@ -150,7 +150,23 @@ function slot0._refreshUI(slot0)
 		slot0._txtnum.text = math.max(slot1:getFinishProgress() + slot3, 0)
 		slot0._txttotal.text = math.max(slot1:getMaxProgress() + slot3, 0)
 		slot0._txttaskdes.text = slot1.config and slot1.config.desc or ""
-		slot4 = ItemModel.instance:getItemDataListByConfigStr(slot1.config.bonus)
+		slot4 = {}
+
+		if tonumber(slot1.config.bonus) then
+			slot10 = slot1.config.bonus
+
+			for slot9, slot10 in ipairs(DungeonConfig.instance:getRewardItems(tonumber(slot10))) do
+				slot4[slot9] = {
+					isIcon = true,
+					materilType = slot10[1],
+					materilId = slot10[2],
+					quantity = slot10[3]
+				}
+			end
+		else
+			slot4 = ItemModel.instance:getItemDataListByConfigStr(slot1.config.bonus)
+		end
+
 		slot0.item_list = slot4
 
 		IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onItemShow, slot4, slot0._gorewards)

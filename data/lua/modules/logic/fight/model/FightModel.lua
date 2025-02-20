@@ -47,8 +47,6 @@ function slot0.clear(slot0)
 	slot0._curWaveId = 1
 	slot0.indicatorDict = nil
 
-	FightEntityModel.instance:clear()
-	FightEntityModel.instance:clearDeadUids()
 	FightPlayCardModel.instance:clearUsedCards()
 	slot0:resetRTPCSpeedTo1()
 
@@ -59,6 +57,10 @@ function slot0.clear(slot0)
 
 	slot0.stressBehaviourDict = nil
 	slot0.entitySpAttrMoDict = nil
+	slot0.notifyEntityId = nil
+	slot0.canContractList = nil
+	slot0.contractEntityUid = nil
+	slot0.beContractEntityUid = nil
 end
 
 function slot0.onRestart(slot0)
@@ -81,7 +83,7 @@ end
 
 function slot0.updateMySide(slot0, slot1)
 	if slot0:getFightParam() then
-		slot2:setMySide(slot1.clothId, slot1.heroList, slot1.subHeroList, slot1.equips, slot1.activity104Equips, slot1.trialHeroList, slot1.extraList)
+		slot2:setMySide(slot1.clothId, slot1.heroList, slot1.subHeroList, slot1.equips, slot1.activity104Equips, slot1.trialHeroList, slot1.extraList, slot1.assistBossId)
 	end
 end
 
@@ -222,6 +224,15 @@ function slot0.initSpeedConfig(slot0)
 			slot2[1],
 			slot2[2]
 		}
+		slot2 = GameUtil.splitString2(lua_activity174_const.configDict[Activity174Enum.ConstKey.FightSpeed].value, true)
+		slot0._douQuQuSpeed = {
+			slot2[1][1],
+			slot2[2][1]
+		}
+		slot0._douQuQuUISpeed = {
+			slot2[1][2],
+			slot2[2][2]
+		}
 	end
 end
 
@@ -231,6 +242,10 @@ function slot0.getSpeed(slot0)
 	end
 
 	slot0:initSpeedConfig()
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		return slot0._douQuQuSpeed[slot0._userSpeed] or 1
+	end
 
 	if FightReplayModel.instance:isReplay() then
 		if uv0.instance.useBossSkillSpeed then
@@ -261,6 +276,10 @@ end
 
 function slot0.getUISpeed(slot0)
 	slot0:initSpeedConfig()
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		return slot0._douQuQuUISpeed[slot0._userSpeed] or 1
+	end
 
 	if FightReplayModel.instance:isReplay() then
 		return slot0._replayUISpeed[slot0._userSpeed] or 1
@@ -373,10 +392,6 @@ function slot0.updateFight(slot0, slot1, slot2)
 		slot0._fightActType = FightEnum.FightActType.Normal
 	end
 
-	FightEntityModel.instance:clearExistEntitys()
-	FightEntityModel.instance:setMySide(slot1.attacker)
-	FightEntityModel.instance:setEnemySide(slot1.defender)
-
 	if not slot2 then
 		FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Fight, slot1)
 	end
@@ -418,9 +433,9 @@ end
 
 function slot0.updateFightRound(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
+	FightLocalDataMgr.instance:cacheRoundProto(slot1)
 	FightDataMgr.instance:cacheRoundProto(slot1)
-	FightPerformanceDataMgr.instance:cacheRoundProto(slot1)
-	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightDataMgr.instance, slot1)
+	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
 
 	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
 
@@ -471,9 +486,9 @@ end
 
 function slot0.updateClothSkillRound(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
+	FightLocalDataMgr.instance:cacheRoundProto(slot1)
 	FightDataMgr.instance:cacheRoundProto(slot1)
-	FightPerformanceDataMgr.instance:cacheRoundProto(slot1)
-	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightDataMgr.instance, slot1)
+	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
 
 	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
 
@@ -547,6 +562,12 @@ function slot0.updateRecord(slot0, slot1)
 	slot0._recordMO = slot0._recordMO or FightRecordMO.New()
 
 	slot0._recordMO:init(slot1)
+
+	slot0._lastFightResult = slot0._recordMO.fightResult
+end
+
+function slot0.getLastFightResult(slot0)
+	return slot0._lastFightResult
 end
 
 function slot0.onEndFight(slot0)

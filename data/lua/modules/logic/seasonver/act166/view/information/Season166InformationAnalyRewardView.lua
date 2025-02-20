@@ -75,10 +75,9 @@ function slot0.refreshReward(slot0)
 	end
 
 	slot2 = Season166Model.instance:getActInfo(slot0.actId):getInformationMO(slot0.infoId)
-	slot3 = Season166Config.instance:getSeasonInfoAnalys(slot0.actId, slot0.infoId) or {}
-	slot7 = #slot0.rewardItems
+	slot7 = #(Season166Config.instance:getSeasonInfoAnalys(slot0.actId, slot0.infoId) or {})
 
-	for slot7 = 1, math.max(#slot3, slot7) do
+	for slot7 = 1, math.max(slot7, #slot0.rewardItems) do
 		slot0:refreshRewardItem(slot0.rewardItems[slot7] or slot0:createRewardItem(slot7), slot3[slot7])
 	end
 

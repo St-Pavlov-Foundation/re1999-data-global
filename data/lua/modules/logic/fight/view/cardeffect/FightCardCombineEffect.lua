@@ -256,13 +256,13 @@ function slot0.onStart(slot0, slot1)
 	slot0._sequence:addWork(slot6)
 
 	slot2[slot3] = FightCardModel.combineTwoCard(slot2[slot3], slot2[slot3 + 1], FightCardModel.instance:getBeCombineCardMO())
-	slot2[slot3].combineCanAddExpoint = FightCardMOHelper.combineCanAddExpoint(slot2, slot2[slot3], slot2[slot3 + 1])
+	slot2[slot3].combineCanAddExpoint = FightCardDataHelper.combineCanAddExpoint(slot2, slot2[slot3], slot2[slot3 + 1])
 
 	table.remove(slot2, slot3 + 1)
 	slot0._sequence:addWork(FunctionWork.New(function ()
-		slot4 = uv2
+		slot4 = FightEvent.UpdateHandCards
 
-		FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, slot4)
+		FightController.instance:dispatchEvent(slot4, uv2)
 
 		for slot4 = 1, #uv1.handCardItemList - 1 do
 			recthelper.setAnchorX(uv1.handCardItemList[slot4].tr, uv0.getCardPosXList(uv1.handCardItemList)[slot4 <= uv3 and slot4 or slot4 + 1])

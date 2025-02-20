@@ -227,6 +227,46 @@ function slot0.getPlayStyleEnterBtnAnimKey(slot0, slot1)
 	return "PlayStyleEnterBtnAnimKey_" .. slot1
 end
 
+function slot0.setHeroTalentStyleStatInfo(slot0, slot1)
+	if not slot0.unlockStateInfo then
+		slot0.unlockStateInfo = {}
+	end
+
+	if not slot0.unlockStateInfo[slot1.heroId] then
+		slot0.unlockStateInfo[slot1.heroId] = {}
+	end
+
+	slot2 = 0
+
+	if slot1.stylePercentList then
+		for slot6 = 1, #slot1.stylePercentList do
+			slot7 = slot1.stylePercentList[slot6]
+			slot8 = slot0:getCubeMoByStyle(slot1.heroId, slot7.style)
+
+			slot8:setUnlockPercent(slot7.percent)
+
+			slot0.unlockStateInfo[slot1.heroId][slot7.style] = slot8
+			slot2 = math.max(slot7.percent, slot2)
+		end
+	end
+
+	if slot0.unlockStateInfo[slot1.heroId] then
+		slot6 = slot1.heroId
+
+		for slot6, slot7 in pairs(slot0.unlockStateInfo[slot6]) do
+			slot7:setHotUnlockStyle(slot2 == slot7:getUnlockPercent())
+		end
+	end
+end
+
+function slot0.sortUnlockPercent(slot0, slot1)
+	return slot1:getUnlockPercent() < slot0:getUnlockPercent()
+end
+
+function slot0.getHeroTalentStyleStatInfo(slot0, slot1)
+	return slot0.unlockStateInfo and slot0.unlockStateInfo[slot1]
+end
+
 slot0.instance = slot0.New()
 
 return slot0

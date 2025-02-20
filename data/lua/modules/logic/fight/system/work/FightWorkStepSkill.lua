@@ -36,6 +36,8 @@ function slot0.onStart(slot0)
 		return
 	end
 
+	FightController.instance:registerCallback(FightEvent.BeforeDestroyEntity, slot0._onBeforeDestroyEntity, slot0)
+
 	if FightSkillMgr.instance:isEntityPlayingTimeline(slot0._attacker.id) then
 		TaskDispatcher.runRepeat(slot0._checkNoSkillPlaying, slot0, 0.01)
 	else
@@ -183,6 +185,13 @@ function slot0._removeEvents(slot0)
 	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, slot0._forceEndSkillStep, slot0)
 	FightController.instance:unregisterCallback(FightEvent.DialogContinueSkill, slot0._canPlaySkill2, slot0)
 	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, slot0._onFightDialogEnd, slot0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDestroyEntity, slot0._onBeforeDestroyEntity, slot0)
+end
+
+function slot0._onBeforeDestroyEntity(slot0, slot1)
+	if slot0._attacker and slot0._attacker.id == slot1.id then
+		slot0:onDone(true)
+	end
 end
 
 function slot0.onStop(slot0)

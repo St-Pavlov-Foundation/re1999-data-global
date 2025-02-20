@@ -139,7 +139,7 @@ function slot0._buildAniFlow_2_1(slot0)
 
 			gohelper.clone(FightHelper.getPreloadAssetItem(slot2):GetResource(slot2), uv0._card_transform.gameObject)
 
-			if not (FightEntityModel.instance:getById(uv0._card_mo.uid) and FightCardModel.instance:isUniqueSkill(slot0.id, uv0._card_mo.skillId)) then
+			if not (FightDataHelper.entityMgr:getById(uv0._card_mo.uid) and FightCardModel.instance:isUniqueSkill(slot0.id, uv0._card_mo.skillId)) then
 				slot2 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
 
 				gohelper.clone(FightHelper.getPreloadAssetItem(slot2):GetResource(slot2), uv0._card_transform.gameObject)

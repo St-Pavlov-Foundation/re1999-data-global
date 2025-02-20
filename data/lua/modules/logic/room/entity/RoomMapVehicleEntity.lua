@@ -7,6 +7,7 @@ function slot0.ctor(slot0, slot1)
 
 	slot0.id = slot1
 	slot0.entityId = slot0.id
+	slot0._isShow = true
 end
 
 function slot0.getTag(slot0)
@@ -95,6 +96,8 @@ function slot0.getVehicleMO(slot0)
 end
 
 function slot0.setShow(slot0, slot1)
+	slot0._isShow = slot1 and true or false
+
 	gohelper.setActive(slot0.containerGO, slot1)
 
 	if slot1 then
@@ -105,6 +108,10 @@ function slot0.setShow(slot0, slot1)
 	end
 
 	slot0.vehiclefollow:setShow(slot1)
+end
+
+function slot0.getIsShow(slot0)
+	return slot0._isShow
 end
 
 function slot0.beforeDestroy(slot0)

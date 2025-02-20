@@ -39,6 +39,10 @@ function slot0._removeWeekWalkInCdHero(slot0)
 		HeroSingleGroupModel.instance:remove(slot6)
 	end
 
+	for slot5, slot6 in ipairs(slot0._heroItemList) do
+		slot6:resetGrayFactor()
+	end
+
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 

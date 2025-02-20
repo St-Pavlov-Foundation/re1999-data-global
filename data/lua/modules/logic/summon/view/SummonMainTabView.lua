@@ -56,9 +56,9 @@ end
 function slot0.refreshUI(slot0)
 	slot1 = SummonMainCategoryListModel.instance:getList()
 	slot2 = {}
-	slot7 = SummonEnum.ResultType.Equip
-	slot8 = slot0:refreshTabGroupByType(slot1, SummonEnum.ResultType.Char, 1, slot2)
-	slot3 = slot0:refreshTabGroupByType(slot1, slot7, slot8, slot2)
+	slot7 = slot1
+	slot8 = SummonEnum.ResultType.Equip
+	slot3 = slot0:refreshTabGroupByType(slot7, slot8, slot0:refreshTabGroupByType(slot1, SummonEnum.ResultType.Char, 1, slot2), slot2)
 
 	ZProj.UGUIHelper.RebuildLayout(slot0._scrollcategory.content.transform)
 

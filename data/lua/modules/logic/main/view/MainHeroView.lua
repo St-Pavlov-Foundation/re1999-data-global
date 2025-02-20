@@ -660,7 +660,7 @@ function slot0._onDrag(slot0, slot1, slot2)
 
 		if slot10 >= slot0._dragParamMaxValue - 5 then
 			slot0:_onDragEnd(slot1, slot2)
-			slot0:clickPlayVoice(slot0._dragSpecialRespond)
+			slot0:_doClickPlayVoice(slot0._dragSpecialRespond)
 		end
 	end
 end
@@ -725,28 +725,27 @@ function slot0._clickDefault(slot0, slot1)
 
 	if slot0:_getSpecialInteraction() and slot0:_checkPosInBound(slot1) and slot0._skinInteraction:canPlay(slot2) and math.random() * 100 < string.splitToNumber(slot2.param, "#")[1] then
 		CharacterVoiceController.instance:setSpecialInteractionPlayType(CharacterVoiceEnum.PlayType.Click)
-		slot0:clickPlayVoice(slot2)
+		slot0:_doClickPlayVoice(slot2)
 
 		return
 	end
 
 	if slot0._skinInteraction:needRespond() then
 		if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, slot1) then
-			slot0:clickPlayVoice(slot3)
+			slot0:_doClickPlayVoice(slot3)
 		end
 
 		return
 	end
 
 	if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialTouch, slot1) and math.random() > 0.5 and slot0._skinInteraction:canPlay(slot3) then
-		slot0:clickPlayVoice(slot3)
+		slot0:_doClickPlayVoice(slot3, true)
 
 		return
 	end
 
 	if slot0:_getNormalTouch(slot1) and slot0._skinInteraction:canPlay(slot4) then
-		slot0:clickPlayVoice(slot4)
-		slot0:addFaith()
+		slot0:_doClickPlayVoice(slot4, true)
 	end
 end
 
@@ -805,6 +804,12 @@ function slot0.addFaith(slot0)
 end
 
 function slot0._onSuccessTouchHead(slot0, slot1)
+	if not slot0._showFaithToast then
+		return
+	end
+
+	slot0._showFaithToast = false
+
 	if slot1 then
 		GameFacade.showToast(ToastEnum.MainHeroAddSuccess)
 	else
@@ -826,6 +831,13 @@ function slot0.getHeightWeight(slot0)
 	end
 
 	return nil
+end
+
+function slot0._doClickPlayVoice(slot0, slot1, slot2)
+	slot0._showFaithToast = slot2
+
+	slot0:addFaith()
+	slot0:clickPlayVoice(slot1)
 end
 
 function slot0.clickPlayVoice(slot0, slot1)
@@ -933,7 +945,10 @@ function slot0._isViewGOActive(slot0)
 end
 
 function slot0._hasOpenFullView(slot0)
-	for slot4, slot5 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
+	slot3 = ViewMgr.instance
+	slot5 = slot3
+
+	for slot4, slot5 in ipairs(slot3.getOpenViewNameList(slot5)) do
 		if ViewMgr.instance:getSetting(slot5) and (slot6.viewType == ViewType.Full or slot6.bgBlur) then
 			return true
 		end
@@ -1085,9 +1100,10 @@ function slot0.getWelcomeLikeVoice(slot0, slot1, slot2)
 	slot5 = os.time()
 
 	return uv0.getHeightWeight(HeroModel.instance:getVoiceConfig(slot1, slot0, function (slot0)
-		slot5 = "#"
+		slot5 = "|"
+		slot6 = "#"
 
-		for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.time, false, "|", slot5)) do
+		for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.time, false, slot5, slot6)) do
 			if uv0._checkTime(slot6, uv1, uv2) then
 				return true
 			end

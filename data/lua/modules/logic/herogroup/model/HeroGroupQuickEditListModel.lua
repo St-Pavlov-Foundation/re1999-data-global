@@ -42,24 +42,32 @@ function slot0.copyQuickEditCardList(slot0)
 		end
 	end
 
-	for slot10, slot11 in ipairs(slot1) do
-		if not slot3[slot11.uid] then
-			slot3[slot11.uid] = true
+	slot6 = slot0.isTowerBattle
+
+	for slot11, slot12 in ipairs(slot1) do
+		if not slot3[slot12.uid] then
+			slot3[slot12.uid] = true
 
 			if slot0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(slot11.heroId) > 0 then
-					table.insert({}, slot11)
+				if WeekWalkModel.instance:getCurMapHeroCd(slot12.heroId) > 0 then
+					table.insert({}, slot12)
 				else
-					table.insert(slot2, slot11)
+					table.insert(slot2, slot12)
+				end
+			elseif slot6 then
+				if TowerModel.instance:isHeroBan(slot12.heroId) then
+					table.insert(slot7, slot12)
+				else
+					table.insert(slot2, slot12)
 				end
 			else
-				table.insert(slot2, slot11)
+				table.insert(slot2, slot12)
 			end
 		end
 	end
 
-	if slot0.adventure then
-		tabletool.addValues(slot2, slot6)
+	if slot0.adventure or slot6 then
+		tabletool.addValues(slot2, slot7)
 	end
 
 	slot0:setList(slot2)
@@ -193,9 +201,9 @@ function slot0.cancelAllSelected(slot0)
 end
 
 function slot0.isTeamFull(slot0)
-	slot5 = #slot0._inTeamHeroUidList
+	slot5 = HeroGroupModel.instance:getBattleRoleNum() or 0
 
-	for slot5 = 1, math.min(HeroGroupModel.instance:getBattleRoleNum() or 0, slot5) do
+	for slot5 = 1, math.min(slot5, #slot0._inTeamHeroUidList) do
 		if slot0._inTeamHeroUidList[slot5] == "0" and HeroGroupModel.instance:isPositionOpen(slot5) then
 			return false
 		end
@@ -204,8 +212,43 @@ function slot0.isTeamFull(slot0)
 	return true
 end
 
-function slot0.setParam(slot0, slot1)
+function slot0.checkHeroIsError(slot0, slot1)
+	if not slot1 or tonumber(slot1) < 0 then
+		return
+	end
+
+	if not HeroModel.instance:getById(slot1) then
+		return
+	end
+
+	if slot0.adventure then
+		if WeekWalkModel.instance:getCurMapHeroCd(slot2.heroId) > 0 then
+			return true
+		end
+	elseif slot0.isTowerBattle and TowerModel.instance:isHeroBan(slot2.heroId) then
+		return true
+	end
+end
+
+function slot0.cancelAllErrorSelected(slot0)
+	slot1 = false
+
+	for slot5, slot6 in pairs(slot0._inTeamHeroUidList) do
+		if slot0:checkHeroIsError(slot6) then
+			slot1 = true
+
+			break
+		end
+	end
+
+	if slot1 then
+		slot0._inTeamHeroUidList = {}
+	end
+end
+
+function slot0.setParam(slot0, slot1, slot2)
 	slot0.adventure = slot1
+	slot0.isTowerBattle = slot2
 end
 
 function slot0.clear(slot0)

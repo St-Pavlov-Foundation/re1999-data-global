@@ -10,6 +10,13 @@ function slot0.onStart(slot0, slot1)
 	slot0._count = 3
 	slot0._hasAddEvent = false
 	slot0._entity = slot1
+
+	if FightDataHelper.entityMgr:getById(slot0._entity.id) and not slot2:isCharacter() then
+		slot0:onDone(true)
+
+		return
+	end
+
 	slot0._oldColor = MaterialUtil.GetMainColor(slot0._entity.spineRenderer:getReplaceMat())
 
 	if not slot0._oldColor then

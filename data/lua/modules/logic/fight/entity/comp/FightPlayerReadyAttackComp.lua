@@ -32,7 +32,7 @@ function slot0._onPlayHandCard(slot0, slot1)
 	end
 
 	if #FightCardModel.instance:getEntityOps(slot1.uid, FightEnum.CardOpType.PlayCard) > 0 and not slot0._readyAttackWork then
-		slot4 = FightEntityModel.instance:getById(slot1.uid) and FightCardModel.instance:getCardOps()
+		slot4 = FightDataHelper.entityMgr:getById(slot1.uid) and FightCardModel.instance:getCardOps()
 
 		if FightViewHandCardItemLock.canUseCardSkill(slot1.uid, slot1.skillId, slot4 and FightBuffHelper.simulateBuffList(slot3, slot4[#slot4])) then
 			slot0._readyAttackWork = FightReadyAttackWork.New()

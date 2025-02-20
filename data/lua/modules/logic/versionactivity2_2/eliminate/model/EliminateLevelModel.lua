@@ -48,7 +48,7 @@ function slot0.getCurRoundType(slot0)
 end
 
 function slot0.getRoundNumber(slot0)
-	return EliminateTeamChessModel.instance:getServerTeamChessWar().round
+	return EliminateTeamChessModel.instance:getServerTeamChessWar() and slot1.round or 1
 end
 
 function slot0.needPlayShowView(slot0)

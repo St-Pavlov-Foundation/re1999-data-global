@@ -18,6 +18,10 @@ function slot0.getV2a0SignSingleBgLang(slot0)
 	return string.format("singlebg_lang/txt_v2a0_sign_singlebg/%s.png", slot0)
 end
 
+function slot0.getShortenActSingleBg(slot0)
+	return string.format("singlebg/shortenact_singlebg/%s.png", slot0)
+end
+
 function slot0.getSceneLevelUrl(slot0)
 	if lua_scene_level.configDict[slot0] then
 		return string.format("scenes/%s/%s_p.prefab", slot1.resName, slot1.resName)
@@ -1314,6 +1318,18 @@ function slot0.getV2a2RedLeafFestivalSignSingleBgLang(slot0)
 	return string.format("singlebg_lang/txt_v2a2_redleaffestival_singlebg/%s.png", slot0)
 end
 
+function slot0.getV2a3SignSingleBg(slot0)
+	return string.format("singlebg/v2a3_sign_singlebg/%s.png", slot0)
+end
+
+function slot0.getV2a3SignSingleBgLang(slot0)
+	return string.format("singlebg_lang/txt_v2a3_sign_singlebg/%s.png", slot0)
+end
+
+function slot0.getV2a3WarmUpSingleBg(slot0)
+	return string.format("singlebg/v2a3_warmup_singlebg/%s.png", slot0)
+end
+
 slot2 = string.len("Assets/ZResourcesLib/")
 
 function slot0.getPathWithoutAssetLib(slot0)
@@ -1356,8 +1372,28 @@ function slot0.getBgmEggIcon(slot0)
 	return string.format("singlebg/bgmtoggle_singlebg/%s.png", tostring(slot0))
 end
 
+function slot0.getTowerIcon(slot0)
+	return string.format("singlebg/tower_singlebg/%s.png", tostring(slot0))
+end
+
+function slot0.getAct174BadgeIcon(slot0, slot1)
+	return string.format("singlebg/act174/badgeicon/%s_%s.png", slot0, slot1)
+end
+
+function slot0.getAct174BuffIcon(slot0)
+	return string.format("singlebg/act174/bufficon/%s.png", slot0)
+end
+
 function slot0.getLiveHeadIconPrefab(slot0)
 	return string.format("ui/viewres/dynamichead/%s.prefab", tostring(slot0))
+end
+
+function slot0.getAntiqueEffect(slot0)
+	return string.format("ui/viewres/antique/effect/%s.prefab", tostring(slot0))
+end
+
+function slot0.getDestinyIcon(slot0)
+	return string.format("singlebg/characterdestiny/stone/%s.png", tostring(slot0))
 end
 
 return slot0

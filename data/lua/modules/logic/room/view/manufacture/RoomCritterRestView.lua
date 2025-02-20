@@ -424,7 +424,8 @@ function slot0.refreshSeatSlotBtns(slot0)
 		return
 	end
 
-	slot2 = slot0._scene.buildingmgr:getBuildingEntity(slot0:getViewBuilding(), SceneTag.RoomBuilding)
+	slot6 = SceneTag.RoomBuilding
+	slot2 = slot0._scene.buildingmgr:getBuildingEntity(slot0:getViewBuilding(), slot6)
 
 	for slot6, slot7 in pairs(slot0._seatSlotBtnDict) do
 		if not gohelper.isNil(slot2 and slot2:getCritterPoint(slot6)) then

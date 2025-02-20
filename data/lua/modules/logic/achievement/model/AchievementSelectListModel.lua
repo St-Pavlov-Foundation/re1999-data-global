@@ -161,7 +161,9 @@ function slot0.buildSingleMOList(slot0, slot1)
 		return {}
 	end
 
-	table.sort(slot4, slot0.sortAchievement)
+	slot8 = slot0.sortAchievement
+
+	table.sort(slot4, slot8)
 
 	for slot8, slot9 in ipairs(slot4) do
 		if AchievementModel.instance:getAchievementLevel(slot9.id) > 0 then

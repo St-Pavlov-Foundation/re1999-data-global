@@ -60,9 +60,9 @@ end
 function slot0._editableInitView(slot0)
 	slot0._simagefullbg:LoadImage(ResUrl.getActivity133Icon("v1a4_shiprepair_fullbg_0"))
 
-	slot4 = "v1a4_shiprepair_fullbg_mask"
+	slot4 = ResUrl.getActivity133Icon
 
-	slot0._simagecheckingmask:LoadImage(ResUrl.getActivity133Icon(slot4))
+	slot0._simagecheckingmask:LoadImage(slot4("v1a4_shiprepair_fullbg_mask"))
 
 	slot0._focusmaskopen = false
 	slot0._csView = slot0.viewContainer._scrollview
@@ -83,7 +83,8 @@ function slot0._editableInitView(slot0)
 		end
 	end
 
-	slot0.finalBonus = GameUtil.splitString2(Activity133Config.instance:getFinalBonus(), true)
+	slot5 = true
+	slot0.finalBonus = GameUtil.splitString2(Activity133Config.instance:getFinalBonus(), slot5)
 
 	for slot5, slot6 in ipairs(slot0.finalBonus) do
 		if not slot0._itemList[slot5] then

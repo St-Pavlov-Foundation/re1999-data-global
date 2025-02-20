@@ -71,6 +71,7 @@ function slot0.initFramework(slot0)
 end
 
 function slot0.initModuleLogic(slot0)
+	GameBranchMgr.instance:init(2, 3)
 	ModuleMgr.instance:init(addGlobalModule("modules.setting.module_mvc", "module_mvc"), slot0._onModuleIniFinish, slot0)
 end
 

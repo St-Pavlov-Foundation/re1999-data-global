@@ -10,6 +10,7 @@ function slot0.onInitView(slot0)
 	slot0._simageblockpackageicon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_blockpackageicon")
 	slot0._simagetipshui = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_hui")
 	slot0._simagetipsbai = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_bai")
+	slot0._gocobrand = gohelper.findChild(slot0.viewGO, "bg/#go_cobrand")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -42,6 +43,8 @@ function slot0._editableInitView(slot0)
 	gohelper.removeUIClickAudio(slot0._btnclose.gameObject)
 
 	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+	slot0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocobrand, RoomSourcesCobrandLogoItem, slot0)
+	slot0.cobrandLogoItem.__view = slot0
 end
 
 function slot0._refreshUI(slot0)
@@ -53,6 +56,8 @@ function slot0._refreshUI(slot0)
 	gohelper.setActive(slot0._txtname2.gameObject, slot3 or slot4 or slot5)
 	gohelper.setActive(slot0._simageblockpackageicon.gameObject, slot3 or slot4 or slot5)
 
+	slot6 = nil
+
 	if slot3 then
 		slot6 = RoomConfig.instance:getBlockPackageConfig(slot0._item.itemId)
 		slot0._txtname1.text = slot6.name
@@ -62,22 +67,22 @@ function slot0._refreshUI(slot0)
 		slot0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
 		slot0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
 	elseif slot4 then
-		slot6 = nil
+		slot7 = nil
 
-		if slot0._item.roomBuildingLevel and slot7 > 0 then
-			slot6 = RoomConfig.instance:getLevelGroupConfig(slot2, slot7) and slot8.rewardIcon
+		if slot0._item.roomBuildingLevel and slot8 > 0 then
+			slot7 = RoomConfig.instance:getLevelGroupConfig(slot2, slot8) and slot9.rewardIcon
 		end
 
-		slot8 = RoomConfig.instance:getBuildingConfig(slot2)
+		slot6 = RoomConfig.instance:getBuildingConfig(slot2)
 
-		if string.nilorempty(slot6) then
-			slot6 = slot8.rewardIcon
+		if string.nilorempty(slot7) then
+			slot7 = slot6.rewardIcon
 		end
 
-		slot0._txtname1.text = slot8.name
-		slot0._txtname2.text = slot8.name
+		slot0._txtname1.text = slot6.name
+		slot0._txtname2.text = slot6.name
 
-		slot0._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(slot6))
+		slot0._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(slot7))
 		slot0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
 		slot0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
 	elseif slot5 then
@@ -91,6 +96,8 @@ function slot0._refreshUI(slot0)
 	else
 		logError("不支持的物品类型, itemType: " .. tostring(slot1))
 	end
+
+	slot0.cobrandLogoItem:setSourcesTypeStr(slot6 and slot6.sourcesType)
 end
 
 function slot0._onEscape(slot0)
@@ -168,6 +175,7 @@ function slot0.onDestroyView(slot0)
 	slot0._simageblockpackageicon:UnLoadImage()
 	slot0._simagetipshui:UnLoadImage()
 	slot0._simagetipsbai:UnLoadImage()
+	slot0.cobrandLogoItem:onDestroy()
 end
 
 return slot0

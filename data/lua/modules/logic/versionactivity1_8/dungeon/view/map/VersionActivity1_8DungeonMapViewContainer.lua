@@ -54,12 +54,14 @@ end
 
 function slot0.onContainerInit(slot0)
 	slot0.versionActivityDungeonBaseMo = VersionActivity1_8DungeonMo.New()
-	slot4 = slot0.viewParam.chapterId
-	slot5 = slot0.viewParam.episodeId
+	slot5 = slot0.viewParam.chapterId
 
-	slot0.versionActivityDungeonBaseMo:init(VersionActivity1_8Enum.ActivityId.Dungeon, slot4, slot5)
+	slot0.versionActivityDungeonBaseMo:init(VersionActivity1_8Enum.ActivityId.Dungeon, slot5, slot0.viewParam.episodeId)
 	slot0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivity1_8DungeonMapChapterLayout)
-	slot0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivity1_8DungeonMapEpisodeItem)
+
+	slot4 = VersionActivity1_8DungeonMapEpisodeItem
+
+	slot0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(slot4)
 
 	for slot4, slot5 in ipairs(slot0._views) do
 		slot5.activityDungeonMo = slot0.versionActivityDungeonBaseMo

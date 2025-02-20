@@ -107,10 +107,10 @@ function slot0.sendEnterRogueRequest(slot0, slot1, slot2, slot3, slot4, slot5)
 
 	slot0:_packGroup(slot6.group, slot3.id, slot3.heroList, slot3.equips, slot3.groupName, slot3.clothId)
 
-	slot10 = slot4.id
-	slot11 = slot4.heroList
+	slot10 = slot6.backupGroup
+	slot11 = slot4.id
 
-	slot0:_packGroup(slot6.backupGroup, slot10, slot11, slot4.equips, slot4.groupName, slot3.clothId)
+	slot0:_packGroup(slot10, slot11, slot4.heroList, slot4.equips, slot4.groupName, slot3.clothId)
 
 	for slot10, slot11 in ipairs(slot5) do
 		table.insert(slot6.equipUids, slot11)

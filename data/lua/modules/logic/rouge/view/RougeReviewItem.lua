@@ -99,7 +99,9 @@ function slot0._initNodes(slot0, slot1)
 		return
 	end
 
-	gohelper.setActive(slot0["_goLine" .. #slot1], true)
+	slot6 = true
+
+	gohelper.setActive(slot0["_goLine" .. #slot1], slot6)
 
 	for slot6, slot7 in ipairs(slot1) do
 		slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._reviewView:getResInst(slot0._path, gohelper.findChild(slot2, "#go_End" .. slot6), "item" .. slot7.config.id), uv0)

@@ -20,6 +20,7 @@ slot0.ConversationEffectType = {
 	Hard = 6,
 	Magic = 7,
 	SoftLight = 8,
+	ReshapeMagic = 9,
 	TwoLineShow = 5,
 	LineByLine = 4,
 	WordByWord = 3,

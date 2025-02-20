@@ -15,11 +15,13 @@ function slot0.init(slot0, slot1)
 
 	for slot8, slot9 in ipairs(slot3) do
 		slot10 = AiZiLaRecordEventGroupMO.New()
-		slot14 = slot2[slot8]
-		slot15 = slot1
+		slot15 = slot2[slot8]
 
-		slot10:init(slot8, slot14, slot15)
-		table.insert(slot0._groupMOList, slot10)
+		slot10:init(slot8, slot15, slot1)
+
+		slot14 = slot10
+
+		table.insert(slot0._groupMOList, slot14)
 
 		for slot14, slot15 in ipairs(slot9) do
 			if slot4:getEventCo(slot0._actId, slot15) then

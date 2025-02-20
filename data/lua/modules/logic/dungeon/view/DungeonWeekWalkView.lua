@@ -185,9 +185,10 @@ function slot0.getWeekTaskProgress()
 
 	for slot7, slot8 in ipairs(WeekWalkTaskListModel.instance:getList()) do
 		if WeekWalkTaskListModel.instance:getTaskMo(slot8.id) and (slot9.finishCount > 0 or slot9.hasFinished) then
-			slot14 = "#"
+			slot14 = "|"
+			slot15 = "#"
 
-			for slot14, slot15 in ipairs(GameUtil.splitString2(slot8.bonus, true, "|", slot14)) do
+			for slot14, slot15 in ipairs(GameUtil.splitString2(slot8.bonus, true, slot14, slot15)) do
 				slot18 = slot15[3]
 
 				if not slot2[string.format("%s_%s", slot15[1], slot15[2])] then
@@ -232,8 +233,9 @@ function slot0._showBonus(slot0)
 		return
 	end
 
-	slot7, slot8, slot3 = uv0.getWeekTaskProgress()
-	slot0._txttaskprogress.text = string.format("%s/%s", slot7, slot8)
+	slot8, slot2, slot3 = uv0.getWeekTaskProgress()
+	slot7 = "%s/%s"
+	slot0._txttaskprogress.text = string.format(slot7, slot8, slot2)
 
 	gohelper.destroyAllChildren(slot0._gorewards)
 
@@ -303,6 +305,7 @@ function slot0.onHide(slot0)
 end
 
 function slot0.onOpen(slot0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
 	slot0:onShow()
 end
 
@@ -351,7 +354,6 @@ function slot0._initOnOpen(slot0)
 	slot0._refreshHelpFunc = slot1.showHelpBtnIcon
 	slot0._refreshTarget = slot1
 
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
 	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, slot0._OnSelectLevel, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0, LuaEventSystem.Low)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0, LuaEventSystem.Low)
@@ -415,6 +417,7 @@ end
 
 function slot0.onClose(slot0)
 	slot0:onHide()
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
 end
 
 function slot0._clearOnDestroy(slot0)
@@ -444,7 +447,6 @@ function slot0.onDestroyView(slot0)
 	slot0._simagerihtttopblack:UnLoadImage()
 	slot0._simagecenterdown:UnLoadImage()
 	slot0._simagebgimgnext:UnLoadImage()
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
 end
 
 return slot0

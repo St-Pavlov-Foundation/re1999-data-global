@@ -4,7 +4,7 @@ slot0 = class("FightWorkEffectUniversalCard", FightEffectBase)
 slot1 = "ui/viewres/fight/ui_effect_flusheddown.prefab"
 
 function slot0.onStart(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return

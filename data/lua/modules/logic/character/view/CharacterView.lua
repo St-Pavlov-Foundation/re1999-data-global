@@ -142,12 +142,10 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._btnskin.gameObject, CharacterEnum.SkinOpen)
 	gohelper.setActive(slot0._btnhelp.gameObject, HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character))
 	slot0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/juese_bj"))
+	slot0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon("guangyun"))
 
-	slot5 = "guangyun"
-
-	slot0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon(slot5))
-
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
+	slot5 = true
+	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, slot5)
 	slot0._rareStars = slot0:getUserDataTb_()
 
 	for slot5 = 1, 6 do
@@ -187,8 +185,8 @@ function slot0._editableInitView(slot0)
 
 	for slot5 = 1, 3 do
 		slot6 = slot0:getUserDataTb_()
-		slot10 = slot5
-		slot6.go = gohelper.findChild(slot0._goranklights, "light" .. slot10)
+		slot10 = "light" .. slot5
+		slot6.go = gohelper.findChild(slot0._goranklights, slot10)
 		slot6.lights = slot0:getUserDataTb_()
 
 		for slot10 = 1, slot5 do
@@ -198,7 +196,8 @@ function slot0._editableInitView(slot0)
 		slot0._ranklights[slot5] = slot6
 	end
 
-	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, CharacterSkillContainer)
+	slot5 = CharacterSkillContainer
+	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, slot5)
 	slot0._passiveskillitems = {}
 
 	for slot5 = 1, 3 do
@@ -636,6 +635,9 @@ function slot0._initExternalParams(slot0)
 	slot0._isOwnHero = slot1 and slot1.isOwnHero
 	slot0._fromHeroDetailView = slot1 and slot1.fromHeroDetailView
 	slot0._hideTrialTip = slot1 and slot1.hideTrialTip
+
+	slot0.viewContainer:setIsOwnHero(slot1)
+
 	uv0._externalParam = nil
 end
 
@@ -1089,38 +1091,39 @@ function slot0._refreshAttribute(slot0, slot1)
 	slot2 = slot0._heroMO
 	slot3 = slot2:getHeroBaseAttrDict(slot1)
 	slot4 = HeroConfig.instance:talentGainTab2IDTab(slot2:getTalentGain(slot1))
-	slot5 = {
-		[slot10] = 0
+	slot6 = slot2.destinyStoneMo:getAddAttrValues()
+	slot7 = {
+		[slot12] = 0
 	}
 
-	for slot9, slot10 in ipairs(uv0.AttrIdList) do
+	for slot11, slot12 in ipairs(uv0.AttrIdList) do
 		-- Nothing
 	end
 
 	if not slot0._heroMO:isOtherPlayerHero() and slot0._heroMO:hasDefaultEquip() then
-		slot8 = slot0._heroMO and slot0._heroMO:getTrialEquipMo() or EquipModel.instance:getEquip(slot0._heroMO.defaultEquipUid)
-		slot5[CharacterEnum.AttrId.Hp], slot5[CharacterEnum.AttrId.Attack], slot5[CharacterEnum.AttrId.Defense], slot5[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot8)
+		slot10 = slot0._heroMO and slot0._heroMO:getTrialEquipMo() or EquipModel.instance:getEquip(slot0._heroMO.defaultEquipUid)
+		slot7[CharacterEnum.AttrId.Hp], slot7[CharacterEnum.AttrId.Attack], slot7[CharacterEnum.AttrId.Defense], slot7[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot10)
 
-		for slot17, slot18 in ipairs(uv0.AttrIdList) do
-			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot8.config, slot8.breakLv)[slot18] ~= 0 then
-				slot5[slot18] = slot5[slot18] + math.floor(slot19 / 100 * slot3[slot18])
+		for slot19, slot20 in ipairs(uv0.AttrIdList) do
+			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot10.config, slot10.breakLv)[slot20] ~= 0 then
+				slot7[slot20] = slot7[slot20] + math.floor(slot21 / 100 * slot3[slot20])
 			end
 		end
 	end
 
-	for slot11, slot12 in ipairs(uv0.AttrIdList) do
-		slot14 = slot3[slot12] + slot5[slot12] + (slot4[slot12] and slot4[slot12].value and math.floor(slot4[slot12].value) or 0)
-		slot0._attributevalues[slot11].value.text = slot14
-		slot15 = HeroConfig.instance:getHeroAttributeCO(slot12)
-		slot0._attributevalues[slot11].name.text = slot15.name
+	for slot13, slot14 in ipairs(uv0.AttrIdList) do
+		slot17 = slot3[slot14] + slot7[slot14] + (slot4[slot14] and slot4[slot14].value and math.floor(slot4[slot14].value) or 0) + (slot5 and slot5:getAddValueByAttrId(slot6, slot14) or 0)
+		slot0._attributevalues[slot13].value.text = slot17
+		slot18 = HeroConfig.instance:getHeroAttributeCO(slot14)
+		slot0._attributevalues[slot13].name.text = slot18.name
 
-		CharacterController.instance:SetAttriIcon(slot0._attributevalues[slot11].icon, slot12, uv0.AttrIconColor)
+		CharacterController.instance:SetAttriIcon(slot0._attributevalues[slot13].icon, slot14, uv0.AttrIconColor)
 
-		slot16 = slot0._levelUpAttributeValues[slot11]
-		slot16.value.text = slot14
-		slot16.name.text = slot15.name
+		slot19 = slot0._levelUpAttributeValues[slot13]
+		slot19.value.text = slot17
+		slot19.name.text = slot18.name
 
-		CharacterController.instance:SetAttriIcon(slot16.icon, slot12, uv0.AttrIconColor)
+		CharacterController.instance:SetAttriIcon(slot19.icon, slot14, uv0.AttrIconColor)
 	end
 end
 
@@ -1138,30 +1141,32 @@ function slot0._refreshAttributeTips(slot0, slot1)
 	slot4 = slot1 == slot3
 	slot5 = slot2:getHeroBaseAttrDict(slot1)
 	slot6 = HeroConfig.instance:talentGainTab2IDTab(slot2:getTalentGain(slot1))
-	slot7 = {
-		[slot12] = 0
+	slot8 = slot2.destinyStoneMo:getAddAttrValues()
+	slot9 = {
+		[slot14] = 0
 	}
 
-	for slot11, slot12 in ipairs(uv0.AttrIdList) do
+	for slot13, slot14 in ipairs(uv0.AttrIdList) do
 		-- Nothing
 	end
 
 	if slot2:hasDefaultEquip() then
-		slot9 = EquipModel.instance:getEquip(slot2.defaultEquipUid)
-		slot7[CharacterEnum.AttrId.Hp], slot7[CharacterEnum.AttrId.Attack], slot7[CharacterEnum.AttrId.Defense], slot7[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot9)
+		slot11 = EquipModel.instance:getEquip(slot2.defaultEquipUid)
+		slot9[CharacterEnum.AttrId.Hp], slot9[CharacterEnum.AttrId.Attack], slot9[CharacterEnum.AttrId.Defense], slot9[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot11)
+		slot20 = slot11.breakLv
 
-		for slot18, slot19 in ipairs(uv0.AttrIdList) do
-			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot9.config, slot9.breakLv)[slot19] ~= 0 then
-				slot7[slot19] = slot7[slot19] + math.floor(slot20 / 100 * slot5[slot19])
+		for slot20, slot21 in ipairs(uv0.AttrIdList) do
+			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot11.config, slot20)[slot21] ~= 0 then
+				slot9[slot21] = slot9[slot21] + math.floor(slot22 / 100 * slot5[slot21])
 			end
 		end
 	end
 
-	for slot12, slot13 in ipairs(uv0.AttrIdList) do
-		slot0._levelUpAttributeValues[slot12].newValue.text = slot5[slot13] + slot7[slot13] + (slot6[slot13] and slot6[slot13].value and math.floor(slot6[slot13].value) or 0)
-		slot18 = slot4 and "#C7C3C0" or "#65B96F"
-		slot17.color = GameUtil.parseColor(slot18)
-		slot16.newValueArrow.color = GameUtil.parseColor(slot18)
+	for slot14, slot15 in ipairs(uv0.AttrIdList) do
+		slot0._levelUpAttributeValues[slot14].newValue.text = slot5[slot15] + slot9[slot15] + (slot6[slot15] and slot6[slot15].value and math.floor(slot6[slot15].value) or 0) + (slot7 and slot7:getAddValueByAttrId(slot8, slot15) or 0)
+		slot21 = slot4 and "#C7C3C0" or "#65B96F"
+		slot20.color = GameUtil.parseColor(slot21)
+		slot19.newValueArrow.color = GameUtil.parseColor(slot21)
 	end
 end
 

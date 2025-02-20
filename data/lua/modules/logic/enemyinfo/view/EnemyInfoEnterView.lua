@@ -19,8 +19,8 @@ function slot0._editableInitView(slot0)
 
 	slot0.simageRightBg:LoadImage("singlebg/dungeon/bg_battledetail.png")
 
-	slot4 = gohelper.Type_Transform
-	slot0.trTabContainer = gohelper.findChildComponent(slot0.viewGO, "#go_tab_container", slot4)
+	slot4 = "#go_tab_container"
+	slot0.trTabContainer = gohelper.findChildComponent(slot0.viewGO, slot4, gohelper.Type_Transform)
 
 	for slot4 = 0, slot0.trTabContainer.childCount - 1 do
 		gohelper.setActive(slot0.trTabContainer:GetChild(slot4).gameObject, false)

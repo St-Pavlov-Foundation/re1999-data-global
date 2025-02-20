@@ -72,7 +72,8 @@ end
 
 function slot0._onConfigOneAbCallback(slot0, slot1)
 	slot3 = cjson.decode(slot1:GetNonAbTextAsset(true))
-	slot0._allHandNum = slot0._allHandNum + tabletool.len(slot3)
+	slot7 = slot3
+	slot0._allHandNum = slot0._allHandNum + tabletool.len(slot7)
 
 	for slot7, slot8 in pairs(slot3) do
 		table.insert(slot0._jsonList, slot8)

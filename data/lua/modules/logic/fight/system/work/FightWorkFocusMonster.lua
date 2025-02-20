@@ -10,7 +10,7 @@ function slot0.onStart(slot0)
 
 	if slot1 then
 		ViewMgr.instance:openView(ViewName.FightTechniqueGuideView, {
-			entity = FightEntityModel.instance:getById(slot1),
+			entity = FightDataHelper.entityMgr:getById(slot1),
 			config = slot2
 		})
 		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
@@ -54,7 +54,7 @@ function slot0.getFocusEntityId()
 		return
 	end
 
-	table.sort(slot0, function (slot0, slot1)
+	function slot6(slot0, slot1)
 		slot3 = slot1:getMO()
 
 		if slot0:getMO() and slot3 and slot2.position ~= slot3.position then
@@ -62,7 +62,9 @@ function slot0.getFocusEntityId()
 		end
 
 		return tonumber(slot2.id) < tonumber(slot3.id)
-	end)
+	end
+
+	table.sort(slot0, slot6)
 
 	for slot6, slot7 in ipairs(slot0) do
 		if FightConfig.instance:getMonsterGuideFocusConfig(slot1.episodeId, uv0.invokeType.Enter, FightModel.instance:getCurWaveId(), slot7:getMO() and slot8.modelId) and not PlayerPrefsHelper.hasKey(FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(slot10)) then
@@ -181,6 +183,7 @@ function slot0.changeCameraPosition(slot0, slot1, slot2, slot3, slot4)
 end
 
 function slot0.showCardPart()
+	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, false)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, false)
 end
 

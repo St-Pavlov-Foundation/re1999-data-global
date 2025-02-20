@@ -54,6 +54,9 @@ slot0.BuildingArea = {
 	[slot0.BuildingType.Process] = true,
 	[slot0.BuildingType.Manufacture] = true
 }
+slot0.BuildingMapUiIcon = {
+	[slot0.BuildingType.Interact] = "critter_buildingicon_5"
+}
 slot0.FormulaBuildingType = {
 	Gather = 1,
 	ExpTree = 6,

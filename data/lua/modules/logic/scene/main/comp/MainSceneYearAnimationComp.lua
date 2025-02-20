@@ -195,8 +195,9 @@ function slot0._playNodeAnimation(slot0)
 	end
 
 	slot0.yearTable = {}
+	slot5 = slot0.circulationIndex
 
-	for slot5 = 1, #slot0:_numberConvertToTable(slot0.circulationNums[slot0.circulationIndex]) do
+	for slot5 = 1, #slot0:_numberConvertToTable(slot0.circulationNums[slot5]) do
 		slot7 = slot0:_getTotalIncrement(slot0.setNumYearTable[slot5], slot1[slot5])
 
 		table.insert(slot0.yearTable, {
@@ -290,8 +291,9 @@ end
 
 function slot0._numberConvertToTable(slot0, slot1)
 	slot3 = {}
+	slot7 = "."
 
-	for slot7 in string.gmatch(tostring(slot1), ".") do
+	for slot7 in string.gmatch(tostring(slot1), slot7) do
 		table.insert(slot3, tonumber(slot7))
 	end
 

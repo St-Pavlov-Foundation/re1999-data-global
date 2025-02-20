@@ -9,11 +9,11 @@ end
 
 function slot0._onRoundStart(slot0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.Distribute or slot1 == FightEnum.Stage.Card then
-		if not FightEntityModel.instance:getMySideList() or #slot2 < 3 then
+		if not FightDataHelper.entityMgr:getMyNormalList() or #slot2 < 3 then
 			return
 		end
 
-		if not FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList() or #slot3 == 0 then
+		if not FightDataHelper.entityMgr:getMySubList() or #slot3 == 0 then
 			return
 		end
 

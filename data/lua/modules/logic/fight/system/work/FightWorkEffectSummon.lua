@@ -3,8 +3,10 @@ module("modules.logic.fight.system.work.FightWorkEffectSummon", package.seeall)
 slot0 = class("FightWorkEffectSummon", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if slot0._actEffectMO.entityMO then
-		if FightEntityModel.instance:isDeadUid(slot1.uid) then
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._actEffectMO.entityMO.id)
+
+	if slot0._entityMO then
+		if FightDataHelper.entityMgr:isDeadUid(slot0._entityMO.uid) then
 			slot0:onDone(true)
 
 			return
@@ -12,13 +14,15 @@ function slot0.onStart(slot0)
 
 		slot0:com_registTimer(slot0._delayDone, 10)
 		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-		FightHelper.setEffectEntitySide(slot0._actEffectMO)
-		FightEntityModel.instance:addEntityMO(slot1)
 
-		slot0._entityId = slot1.id
-		slot3 = GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot1)
+		slot0._entityId = slot0._entityMO.id
+
+		if isTypeOf(GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._entityMO), FightEntityAssembledMonsterSub) then
+			slot0:onDone(true)
+
+			return
+		end
 	else
-		logError("summon fail, no entity")
 		slot0:onDone(true)
 	end
 end
@@ -28,51 +32,51 @@ function slot0._onSpineLoaded(slot0, slot1)
 		slot0._entity = FightHelper.getEntity(slot0._entityId)
 		slot0._audioId = 410000038
 
-		if slot0._actEffectMO.entityMO.side == FightEnum.EntitySide.MySide then
+		if slot0._entityMO.side == FightEnum.EntitySide.MySide then
 			slot0._flow = FlowParallel.New()
 
 			slot0._flow:addWork(FightWorkStartBornNormal.New(slot0._entity, false))
 		else
 			slot0._flow = FlowParallel.New()
-			slot3 = "buff/buff_zhaohuan"
-			slot4 = 0.6
-			slot5 = ModuleEnum.SpineHangPoint.mountbody
+			slot2 = "buff/buff_zhaohuan"
+			slot3 = 0.6
+			slot4 = ModuleEnum.SpineHangPoint.mountbody
 
-			if lua_fight_summon_show.configDict[slot2.skin] then
-				if not string.nilorempty(slot6.actionName) then
-					slot3 = nil
+			if lua_fight_summon_show.configDict[slot0._entityMO.skin] then
+				if not string.nilorempty(slot5.actionName) then
+					slot2 = nil
 
-					slot0._flow:addWork(FightWorkEntityPlayAct.New(slot0._entity, slot6.actionName))
+					slot0._flow:addWork(FightWorkEntityPlayAct.New(slot0._entity, slot5.actionName))
 				end
 
-				if slot6.audioId ~= 0 then
-					slot0._audioId = slot6.audioId
+				if slot5.audioId ~= 0 then
+					slot0._audioId = slot5.audioId
 				end
 
-				if not string.nilorempty(slot6.effect) then
-					slot3 = slot6.effect
+				if not string.nilorempty(slot5.effect) then
+					slot2 = slot5.effect
 
-					if slot6.effectTime and slot6.effectTime ~= 0 then
-						slot4 = slot6.effectTime / 1000 or slot4
+					if slot5.effectTime and slot5.effectTime ~= 0 then
+						slot3 = slot5.effectTime / 1000 or slot3
 					end
 				end
 
-				if not string.nilorempty(slot6.effectHangPoint) then
-					slot5 = slot6.effectHangPoint
+				if not string.nilorempty(slot5.effectHangPoint) then
+					slot4 = slot5.effectHangPoint
 				end
 
-				if slot6.ingoreEffect == 1 then
-					slot3 = nil
+				if slot5.ingoreEffect == 1 then
+					slot2 = nil
 				end
 			end
 
-			if slot3 then
-				slot0._flow:addWork(FightWorkStartBornExtendForEffect.New(slot0._entity, false, slot3, slot5, slot4 / FightModel.instance:getSpeed()))
+			if slot2 then
+				slot0._flow:addWork(FightWorkStartBornExtendForEffect.New(slot0._entity, false, slot2, slot4, slot3 / FightModel.instance:getSpeed()))
 			end
 		end
 
 		slot0:com_registTimer(slot0._delayDone, 60)
-		slot0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterSummon, slot2.modelId))
+		slot0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterSummon, slot0._entityMO.modelId))
 		slot0._flow:registerDoneListener(slot0._onSummonBornDone, slot0)
 		slot0._flow:start()
 		AudioMgr.instance:trigger(slot0._audioId)

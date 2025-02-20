@@ -69,7 +69,9 @@ function slot0.returnInstance(slot0, slot1)
 		uv2[slot0] = {}
 	end
 
-	gohelper.addChild(uv3.getPoolContainerGO(), slot1)
+	slot7 = slot1
+
+	gohelper.addChild(uv3.getPoolContainerGO(), slot7)
 
 	for slot7, slot8 in ipairs(slot3) do
 		if slot8 == slot1 then
@@ -154,7 +156,9 @@ function slot0._onTickSortSibling()
 		uv1[slot7] = slot11 * slot11 + slot12 * slot12 + slot13 * slot13
 	end
 
-	table.sort(uv0, uv2._sortByDistance)
+	slot6 = uv2._sortByDistance
+
+	table.sort(uv0, slot6)
 
 	for slot6, slot7 in ipairs(uv0) do
 		gohelper.setSibling(slot7, slot6 - 1)

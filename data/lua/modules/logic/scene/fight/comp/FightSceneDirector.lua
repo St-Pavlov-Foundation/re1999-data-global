@@ -119,13 +119,24 @@ function slot0._checkPrepared(slot0)
 			end
 
 			slot0:registRespBeginFight()
-		elseif slot1.isReplay or FightReplayModel.instance:isReconnectReplay() then
-			FightReplayController.instance:reqReplay(function ()
-				uv0._scene:onPrepared()
-			end)
-			FightReplayModel.instance:setReconnectReplay(false)
 		else
-			slot0._scene:onPrepared()
+			if slot1.fightActType == FightEnum.FightActType.Act174 then
+				slot0:registRespBeginFight()
+				slot0:dispatchEvent(FightSceneEvent.OnPrepareFinish)
+
+				slot2 = FightMsgMgr.sendMsg(FightMsgId.PlayDouQuQu)
+
+				return
+			end
+
+			if slot1.isReplay or FightReplayModel.instance:isReconnectReplay() then
+				FightReplayController.instance:reqReplay(function ()
+					uv0._scene:onPrepared()
+				end)
+				FightReplayModel.instance:setReconnectReplay(false)
+			else
+				slot0._scene:onPrepared()
+			end
 		end
 
 		slot0:dispatchEvent(FightSceneEvent.OnPrepareFinish)

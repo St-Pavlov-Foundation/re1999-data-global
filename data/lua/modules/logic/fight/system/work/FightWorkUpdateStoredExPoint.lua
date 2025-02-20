@@ -2,19 +2,22 @@ module("modules.logic.fight.system.work.FightWorkUpdateStoredExPoint", package.s
 
 slot0 = class("FightWorkUpdateStoredExPoint", FightEffectBase)
 
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO:getStoredExPoint()
+end
+
 function slot0.onStart(slot0)
-	if not FightEntityModel.instance:getById(slot0._actEffectMO.targetId) then
+	if not FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
 		slot0:onDone(true)
 
 		return
 	end
 
-	slot2:changeStoredExPoint(slot0._actEffectMO.effectNum)
+	slot0._newValue = slot0._entityMO and slot0._entityMO:getStoredExPoint()
 
-	if slot0._actEffectMO.buff then
-		slot2:updateBuff(slot0._actEffectMO.buff)
-	end
-
+	FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, slot0._entityId, slot0._oldValue)
 	slot0:onDone(true)
 end
 

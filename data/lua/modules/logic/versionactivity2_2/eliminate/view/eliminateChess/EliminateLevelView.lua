@@ -258,21 +258,6 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.onClose(slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoUpdate, slot0.updateInfo, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateViewState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterHpChange, slot0.mainCharacterHpChange, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.LevelConditionChange, slot0.updateTaskInfo, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterPowerChange, slot0.mainCharacterPowerChange, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillSuccess, slot0.onSkillRelease, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.CharacterHpDamageFlyEffectPlayFinish, slot0.mainCharacterHpChangeFlyFinish, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectBegin, slot0.initTeamChessSkill, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, slot0.onTeamChessSkillRelease, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.EnemyForecastChessIdUpdate, slot0.updateEnemyForecastChess, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, slot0.teamChessOnFlowEnd, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, slot0.teamChessOnFlowStart, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, slot0.eliminateOnPerformBegin, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, slot0.eliminateOnPerformEnd, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, slot0.match3ChessBeginViewClose, slot0)
 end
 
 function slot0.updateInfo(slot0)

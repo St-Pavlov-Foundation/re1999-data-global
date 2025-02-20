@@ -114,7 +114,7 @@ function slot0._showHeroIcon(slot0, slot1, slot2)
 	if slot0:checkAssist(slot1, HeroModel.instance:getById(slot1)) then
 		slot2 = slot2 or slot3.skin
 		slot4 = slot3.config.career
-	elseif (FightEntityModel.instance:getById(slot1) or FightEntityModel.instance:getDeadById(slot1)) and lua_monster.configDict[slot6.modelId] then
+	elseif FightDataHelper.entityMgr:getById(slot1) and lua_monster.configDict[slot6.modelId] then
 		slot5 = FightConfig.instance:getSkinCO(slot2 or slot7.skinId)
 		slot4 = slot7.career
 	end

@@ -3,7 +3,8 @@ module("modules.logic.herogroup.view.CharacterSkillContainer", package.seeall)
 slot0 = class("CharacterSkillContainer", LuaCompBase)
 
 function slot0.init(slot0, slot1)
-	slot0._goskills = gohelper.findChild(slot1, "line/go_skills")
+	slot5 = "line/go_skills"
+	slot0._goskills = gohelper.findChild(slot1, slot5)
 	slot0._skillitems = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -41,9 +42,10 @@ end
 
 function slot0._refreshSkillUI(slot0)
 	if slot0._heroId then
-		slot5 = slot0._heroMo
+		slot5 = slot0._showAttributeOption
+		slot6 = slot0._heroMo
 
-		for slot5, slot6 in pairs(SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(slot0._heroId, slot0._showAttributeOption, slot5)) do
+		for slot5, slot6 in pairs(SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(slot0._heroId, slot5, slot6)) do
 			if not lua_skill.configDict[slot6] then
 				logError(string.format("heroID : %s, skillId not found : %s", slot0._heroId, slot6))
 			end

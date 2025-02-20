@@ -78,6 +78,7 @@ function slot0.playStory(slot0, slot1, slot2, slot3, slot4, slot5)
 
 	slot0:resetStoryParam(slot2)
 	slot0:initStoryData(slot1, function ()
+		StoryModel.instance:setStoryFirstStep(0)
 		uv0:dispatchEvent(StoryEvent.Start, uv1)
 
 		if StoryModel.instance:hasConfigNotExist() then

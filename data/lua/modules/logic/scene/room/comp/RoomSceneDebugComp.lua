@@ -40,7 +40,9 @@ function slot0._debugConfirmPlaceBlock(slot0, slot1, slot2, slot3)
 	RoomBlockHelper.refreshBlockEntity(RoomBlockHelper.getNearBlockEntity(false, slot1, 1, true), "refreshBlock")
 	RoomBlockHelper.refreshBlockEntity(RoomBlockHelper.getNearBlockEntity(true, slot1, 1, true), "refreshWaveEffect")
 
-	for slot13, slot14 in ipairs(slot2.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)) do
+	slot13 = true
+
+	for slot13, slot14 in ipairs(slot2.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, slot13)) do
 		if RoomMapBlockModel.instance:getBlockMO(slot14.x, slot14.y) and slot15.blockState == RoomBlockEnum.BlockState.Water then
 			slot16 = slot0._scene.mapmgr:getBlockEntity(slot15.id, SceneTag.RoomEmptyBlock) or slot0._scene.mapmgr:spawnMapBlock(slot15)
 		end

@@ -79,9 +79,7 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-
-	slot0._actId = slot0.viewParam.actId
+	slot0._actId = slot0.viewContainer.activityId
 
 	slot0:refreshUI()
 end

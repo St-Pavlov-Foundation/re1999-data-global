@@ -22,7 +22,11 @@ function slot0.clearData(slot0)
 end
 
 function slot0.isCritterUnlock(slot0, slot1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Critter) and slot1 then
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Critter) and GuideModel.instance:isGuideFinish(CritterEnum.OppenFuncGuide.Critter) then
+		slot2 = true
+	end
+
+	if not slot2 and slot1 then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Critter))
 	end
 

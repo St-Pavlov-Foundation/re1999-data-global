@@ -60,6 +60,10 @@ function slot0.onInitView(slot0)
 	slot0._goreddotstory = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/redpoint")
 	slot0.storyUnSelectIconTag = RedDotController.instance:addRedDotTag(slot0._gostoryUnselectTextIcon, RedDotEnum.DotNode.HeroInvitationReward, true, slot0.refreshStoryIcon, slot0)
 	slot0.storySelectIconTag = RedDotController.instance:addRedDotTag(slot0._goreddotstory, RedDotEnum.DotNode.HeroInvitationReward, nil, slot0.refreshStoryIcon, slot0)
+	slot0._btntower = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_tower")
+	slot0._gotowerUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText")
+	slot0._gotowerSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerSelectText")
+	slot0._gotowerReddotEffect = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText/redpoint")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -76,7 +80,9 @@ function slot0.addEvents(slot0)
 	slot0._btnweekwalk:AddClickListener(slot0._btnweekwalkOnClick, slot0)
 	slot0._btnanecdote:AddClickListener(slot0._btnanecdoteOnClick, slot0)
 	slot0._btnDramaReward:AddClickListener(slot0._btnDramaRewardOnClick, slot0)
+	slot0._btntower:AddClickListener(slot0._btnTowerOnClick, slot0)
 	slot0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, slot0._onResidentStoryChange, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, slot0._showTowerEffect, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -89,7 +95,13 @@ function slot0.removeEvents(slot0)
 	slot0._btnweekwalk:RemoveClickListener()
 	slot0._btnanecdote:RemoveClickListener()
 	slot0._btnDramaReward:RemoveClickListener()
+	slot0._btntower:RemoveClickListener()
 	slot0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, slot0._onResidentStoryChange, slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, slot0._showTowerEffect, slot0)
+end
+
+function slot0._btnTowerOnClick(slot0)
+	TowerController.instance:openMainView()
 end
 
 function slot0._btnpermanentOnClick(slot0)
@@ -292,6 +304,7 @@ function slot0._refreshBtnUnlock(slot0)
 	gohelper.setActive(slot0._btnanecdote, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.RoleStory) and RoleStoryModel.instance:isInResident() and (VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS()) == false)
 	gohelper.setActive(slot0._btnpermanent, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Permanent) and PermanentModel.instance:hasActivityOnline())
 	gohelper.setActive(slot0._btnrouge, RougeOutsideController.instance:isOpen())
+	gohelper.setActive(slot0._btntower, TowerController.instance:isOpen())
 end
 
 function slot0.setBtnStatus(slot0)
@@ -299,6 +312,7 @@ function slot0.setBtnStatus(slot0)
 	slot7 = DungeonModel.instance:chapterListIsRoleStory()
 	slot8 = DungeonModel.instance:chapterListIsPermanent()
 	slot9 = false
+	slot10 = false
 	slot1 = slot1 or slot5
 
 	gohelper.setActive(slot0._gostorySelectText, slot1)
@@ -318,6 +332,8 @@ function slot0.setBtnStatus(slot0)
 	gohelper.setActive(slot0._goanecdoteSelectText, slot7)
 	gohelper.setActive(slot0._goperUnselectText, not slot8)
 	gohelper.setActive(slot0._goperSelectText, slot8)
+	gohelper.setActive(slot0._gotowerSelectText, slot10)
+	gohelper.setActive(slot0._gotowerUnselectText, not slot10)
 
 	if slot6 then
 		slot0.viewContainer:setOverrideClose(slot0._onExploreClose, slot0)
@@ -370,6 +386,7 @@ function slot0.setBtnStatus(slot0)
 
 	slot0:_showWeekWalkEffect()
 	slot0:_showGoldEffect()
+	slot0:_showTowerEffect()
 	AudioBgmManager.instance:checkBgm()
 end
 
@@ -393,6 +410,14 @@ function slot0._showGoldEffect(slot0)
 		gohelper.setActive(slot0._gogoldUnselectIcon, true)
 		gohelper.setActive(slot0._gogoldRedPoint, false)
 	end
+end
+
+function slot0._showTowerEffect(slot0)
+	if not TowerController.instance:isOpen() then
+		return
+	end
+
+	gohelper.setActive(slot0._gotowerReddotEffect, TowerTaskModel.instance:getTaskItemCanGetCount(TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}) > 0 or TowerPermanentModel.instance:checkCanShowMopUpReddot() or TowerController.instance:checkReddotHasNewUpdateTower())
 end
 
 function slot0.onUpdateParam(slot0)

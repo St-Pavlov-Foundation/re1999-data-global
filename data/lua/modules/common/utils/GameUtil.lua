@@ -433,7 +433,9 @@ function slot0.utf8isnum(slot0)
 		return false
 	end
 
-	for slot4 = 1, string.len(slot0) do
+	slot4 = slot0
+
+	for slot4 = 1, string.len(slot4) do
 		if not string.byte(slot0, slot4) then
 			return false
 		end
@@ -973,8 +975,9 @@ function slot0.logTab(slot0, slot1)
 	end
 
 	slot3 = string.rep("\t", slot1)
+	slot9 = " {"
 
-	table.insert({}, string.format(" {"))
+	table.insert({}, string.format(slot9))
 
 	for slot8, slot9 in pairs(slot0) do
 		if type(slot9) == "table" then
@@ -1025,12 +1028,42 @@ function slot0.getInstanceId()
 	return uv0.instanceId
 end
 
+slot0.msgId = 0
+
+function slot0.getMsgId()
+	uv0.msgId = uv0.msgId + 1
+
+	return uv0.msgId
+end
+
 function slot0.endsWith(slot0, slot1)
 	if string.nilorempty(slot0) or string.nilorempty(slot1) then
 		return false
 	end
 
 	return string.sub(slot0, -string.len(slot1)) == slot1
+end
+
+function slot0.isBaseOf(slot0, slot1)
+	if type(slot0) ~= type(slot1) then
+		return false
+	end
+
+	if type(slot0) ~= "table" or type(slot1) ~= "table" then
+		return false
+	end
+
+	slot2 = slot1
+
+	while slot2 ~= nil do
+		if slot2 == slot0 then
+			return true
+		end
+
+		slot2 = slot2.super
+	end
+
+	return false
 end
 
 return slot0

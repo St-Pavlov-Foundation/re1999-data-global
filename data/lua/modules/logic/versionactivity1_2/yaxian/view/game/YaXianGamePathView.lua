@@ -75,7 +75,10 @@ function slot0.refreshEnemyInteractPath(slot0, slot1)
 	slot0:recycleEnemyInteractPath()
 
 	if slot1 then
-		for slot5, slot6 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
+		slot4 = YaXianGameModel.instance
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getInteractMoList(slot6)) do
 			if slot6.nextPos then
 				slot0:buildPath(slot6.posX, slot6.posY, slot6.nextPos.posX, slot6.nextPos.posY, false)
 			end

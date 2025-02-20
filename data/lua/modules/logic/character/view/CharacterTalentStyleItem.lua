@@ -40,6 +40,7 @@ function slot0._editableInitView(slot0)
 	slot0._styleicon = gohelper.findChildImage(slot0.viewGO, "slot/icon")
 	slot0._styleglow = gohelper.findChildImage(slot0.viewGO, "slot/glow")
 	slot0._goselectQuan = gohelper.findChild(slot0.viewGO, "#go_select/quan")
+	slot0._gohot = gohelper.findChild(slot0.viewGO, "#go_hot")
 	slot0._imglock = slot0._golocked:GetComponent(typeof(UnityEngine.UI.Image))
 end
 
@@ -90,6 +91,8 @@ function slot0.showItemState(slot0)
 	slot0._imglock.color = Color(1, 1, 1, slot0._mo._isUnlock and 1 or 0.5)
 	slot0._styleslot.enabled = slot0._mo._isUnlock
 	slot0._styleicon.enabled = slot0._mo._isUnlock
+
+	gohelper.setActive(slot0._gohot, slot0._mo:isHotUnlock())
 end
 
 function slot0._hideUnlockAnim(slot0)

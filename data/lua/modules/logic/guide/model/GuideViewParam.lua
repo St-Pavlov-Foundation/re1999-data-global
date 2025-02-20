@@ -79,9 +79,10 @@ end
 
 function slot0.hasAction(slot0, slot1, slot2)
 	if string.nilorempty(slot1) == false then
-		slot7 = "#"
+		slot7 = "|"
+		slot8 = "#"
 
-		for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, true, "|", slot7)) do
+		for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, true, slot7, slot8)) do
 			if slot8[1] == slot2 then
 				return true
 			end

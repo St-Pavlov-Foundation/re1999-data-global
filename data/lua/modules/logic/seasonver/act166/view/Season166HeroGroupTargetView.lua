@@ -53,8 +53,9 @@ end
 function slot0.scoreItemShow(slot0, slot1, slot2, slot3)
 	gohelper.setActive(gohelper.findChild(slot1, "go_star/go_starIcon"), false)
 
+	slot10 = slot2.needScore
 	gohelper.findChildText(slot1, "txt_target").text = GameUtil.getSubPlaceholderLuaLang(luaLang("season166_targetscore"), {
-		slot2.needScore
+		slot10
 	})
 
 	for slot10 = 1, slot2.star do

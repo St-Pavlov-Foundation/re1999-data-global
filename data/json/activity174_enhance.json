@@ -1,0 +1,532 @@
+[
+  {
+    "id": 30001,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058393",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "101",
+    "coinValue": -15
+  },
+  {
+    "id": 30002,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058394",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "102",
+    "coinValue": -15
+  },
+  {
+    "id": 30003,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058395",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "103",
+    "coinValue": -15
+  },
+  {
+    "id": 30004,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058396",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "104",
+    "coinValue": -15
+  },
+  {
+    "id": 30005,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058397",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "105",
+    "coinValue": -12
+  },
+  {
+    "id": 30006,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058398",
+    "desc": "language_10058399",
+    "icon": "act174_pick_bufficon_5",
+    "effects": "106",
+    "coinValue": 0
+  },
+  {
+    "id": 30007,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058400",
+    "desc": "language_10058401",
+    "icon": "act174_pick_bufficon_3",
+    "effects": "107",
+    "coinValue": 0
+  },
+  {
+    "id": 30008,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058400",
+    "desc": "language_10058402",
+    "icon": "act174_pick_bufficon_3",
+    "effects": "108",
+    "coinValue": 0
+  },
+  {
+    "id": 30009,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058400",
+    "desc": "language_10058403",
+    "icon": "act174_pick_bufficon_3",
+    "effects": "109",
+    "coinValue": 0
+  },
+  {
+    "id": 30010,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058400",
+    "desc": "language_10058404",
+    "icon": "act174_pick_bufficon_3",
+    "effects": "110",
+    "coinValue": 0
+  },
+  {
+    "id": 30011,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058392",
+    "desc": "language_10058405",
+    "icon": "act174_pick_bufficon_1",
+    "effects": "112",
+    "coinValue": -15
+  },
+  {
+    "id": 30012,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058400",
+    "desc": "language_10058406",
+    "icon": "act174_pick_bufficon_3",
+    "effects": "113",
+    "coinValue": 0
+  },
+  {
+    "id": 30013,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058407",
+    "desc": "language_10058408",
+    "icon": "act174_pick_bufficon_4",
+    "effects": "114",
+    "coinValue": 0
+  },
+  {
+    "id": 30014,
+    "season": "2,3",
+    "rare": "1",
+    "title": "language_10058409",
+    "desc": "language_10058410",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30015,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058409",
+    "desc": "language_10058411",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30016,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058412",
+    "desc": "language_10058413",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "201",
+    "coinValue": 0
+  },
+  {
+    "id": 30017,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058415",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "202|203",
+    "coinValue": 0
+  },
+  {
+    "id": 30018,
+    "season": "2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058416",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "204|205",
+    "coinValue": 0
+  },
+  {
+    "id": 30019,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058417",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "206|207",
+    "coinValue": 0
+  },
+  {
+    "id": 30020,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058412",
+    "desc": "language_10058418",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "208",
+    "coinValue": 0
+  },
+  {
+    "id": 30021,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058412",
+    "desc": "language_10058419",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "209",
+    "coinValue": 0
+  },
+  {
+    "id": 30024,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058412",
+    "desc": "language_10058420",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "301",
+    "coinValue": 0
+  },
+  {
+    "id": 30025,
+    "season": "2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058421",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "302|303",
+    "coinValue": 0
+  },
+  {
+    "id": 30026,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058422",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "304|305",
+    "coinValue": 0
+  },
+  {
+    "id": 30027,
+    "season": "1,2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058423",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "306|307",
+    "coinValue": 0
+  },
+  {
+    "id": 30028,
+    "season": "2,3",
+    "rare": "1",
+    "title": "language_10058414",
+    "desc": "language_10058424",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "308|309",
+    "coinValue": 0
+  },
+  {
+    "id": 30030,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058425",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "115",
+    "coinValue": 0
+  },
+  {
+    "id": 30031,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058426",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30032,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058427",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30034,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058428",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30038,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058429",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30039,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058430",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30040,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058431",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30041,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058432",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30042,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058433",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30043,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058434",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30044,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058435",
+    "icon": "act174_pick_bufficon_2",
+    "effects": "",
+    "coinValue": 0
+  },
+  {
+    "id": 30046,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058436",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "117",
+    "coinValue": 0
+  },
+  {
+    "id": 30047,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058407",
+    "desc": "language_10058437",
+    "icon": "act174_pick_bufficon_4",
+    "effects": "118|119",
+    "coinValue": 0
+  },
+  {
+    "id": 30048,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058398",
+    "desc": "language_10058438",
+    "icon": "act174_pick_bufficon_5",
+    "effects": "120",
+    "coinValue": -15
+  },
+  {
+    "id": 30049,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058439",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "212",
+    "coinValue": 0
+  },
+  {
+    "id": 30050,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058440",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "213|214",
+    "coinValue": 0
+  },
+  {
+    "id": 30051,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058441",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "215|216",
+    "coinValue": 0
+  },
+  {
+    "id": 30052,
+    "season": "2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058442",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "217|218",
+    "coinValue": 0
+  },
+  {
+    "id": 30053,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058443",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "219|220",
+    "coinValue": 0
+  },
+  {
+    "id": 30054,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058444",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "221|222",
+    "coinValue": 0
+  },
+  {
+    "id": 30055,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058445",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "312",
+    "coinValue": 0
+  },
+  {
+    "id": 30056,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058446",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "313",
+    "coinValue": 0
+  },
+  {
+    "id": 30057,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058447",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "314|315",
+    "coinValue": 0
+  },
+  {
+    "id": 30058,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058448",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "316|317",
+    "coinValue": 0
+  },
+  {
+    "id": 30059,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058449",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "318|319",
+    "coinValue": 0
+  },
+  {
+    "id": 30060,
+    "season": "1,2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058450",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "320|321",
+    "coinValue": 0
+  },
+  {
+    "id": 30062,
+    "season": "2,3",
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058451",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "324|325",
+    "coinValue": 0
+  }
+]

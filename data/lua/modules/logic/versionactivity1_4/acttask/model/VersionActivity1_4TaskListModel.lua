@@ -58,7 +58,9 @@ function slot0.sortTaskMoList(slot0, slot1, slot2)
 end
 
 function slot0.checkTaskRedByPage(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, slot1)) do
+	slot7 = slot1
+
+	for slot7, slot8 in ipairs(TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, slot7)) do
 		if slot8.config.page == slot2 then
 			slot9 = true
 

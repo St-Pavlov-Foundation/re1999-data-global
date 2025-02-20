@@ -1,0 +1,272 @@
+[
+  {
+    "towerId": 1,
+    "layerId": 1,
+    "preLayerId": 0,
+    "openRound": 0,
+    "episodeId": 90100101,
+    "bossLevel": 1,
+    "firstReward": "1#620102#5|1#620101#80|1#110502#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 2,
+    "preLayerId": 1,
+    "openRound": 0,
+    "episodeId": 90100102,
+    "bossLevel": 2,
+    "firstReward": "1#620102#5|1#620101#80|1#110602#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 3,
+    "preLayerId": 2,
+    "openRound": 0,
+    "episodeId": 90100103,
+    "bossLevel": 3,
+    "firstReward": "1#620103#2|1#620102#10|1#620101#100|1#110103#2"
+  },
+  {
+    "towerId": 1,
+    "layerId": 4,
+    "preLayerId": 3,
+    "openRound": 0,
+    "episodeId": 90100104,
+    "bossLevel": 4,
+    "firstReward": "1#620102#5|1#620101#80|1#110702#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 5,
+    "preLayerId": 4,
+    "openRound": 0,
+    "episodeId": 90100105,
+    "bossLevel": 5,
+    "firstReward": "1#620103#2|1#620102#10|1#620101#150|1#110203#2"
+  },
+  {
+    "towerId": 1,
+    "layerId": 6,
+    "preLayerId": 5,
+    "openRound": 0,
+    "episodeId": 90100106,
+    "bossLevel": 6,
+    "firstReward": "1#620102#5|1#620101#80|1#110802#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 7,
+    "preLayerId": 6,
+    "openRound": 0,
+    "episodeId": 90100107,
+    "bossLevel": 7,
+    "firstReward": "1#620102#5|1#620101#80|1#110102#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 8,
+    "preLayerId": 7,
+    "openRound": 0,
+    "episodeId": 90100108,
+    "bossLevel": 8,
+    "firstReward": "1#620103#1|1#620102#15|1#620101#200|1#110303#2"
+  },
+  {
+    "towerId": 1,
+    "layerId": 9,
+    "preLayerId": 8,
+    "openRound": 0,
+    "episodeId": 90100109,
+    "bossLevel": 9,
+    "firstReward": "1#620102#5|1#620101#80|1#110202#5"
+  },
+  {
+    "towerId": 1,
+    "layerId": 10,
+    "preLayerId": 9,
+    "openRound": 0,
+    "episodeId": 90100110,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110403#2"
+  },
+  {
+    "towerId": 2,
+    "layerId": 1,
+    "preLayerId": 0,
+    "openRound": 0,
+    "episodeId": 90100201,
+    "bossLevel": 1,
+    "firstReward": "1#620102#5|1#620101#80|1#110302#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 2,
+    "preLayerId": 1,
+    "openRound": 0,
+    "episodeId": 90100202,
+    "bossLevel": 2,
+    "firstReward": "1#620102#5|1#620101#80|1#110402#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 3,
+    "preLayerId": 2,
+    "openRound": 0,
+    "episodeId": 90100203,
+    "bossLevel": 3,
+    "firstReward": "1#620103#2|1#620102#10|1#620101#100|1#110503#2"
+  },
+  {
+    "towerId": 2,
+    "layerId": 4,
+    "preLayerId": 3,
+    "openRound": 0,
+    "episodeId": 90100204,
+    "bossLevel": 4,
+    "firstReward": "1#620102#5|1#620101#80|1#110502#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 5,
+    "preLayerId": 4,
+    "openRound": 0,
+    "episodeId": 90100205,
+    "bossLevel": 5,
+    "firstReward": "1#620103#2|1#620102#15|1#620101#150|1#111002#2"
+  },
+  {
+    "towerId": 2,
+    "layerId": 6,
+    "preLayerId": 5,
+    "openRound": 0,
+    "episodeId": 90100206,
+    "bossLevel": 6,
+    "firstReward": "1#620102#5|1#620101#80|1#110602#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 7,
+    "preLayerId": 6,
+    "openRound": 0,
+    "episodeId": 90100207,
+    "bossLevel": 7,
+    "firstReward": "1#620102#5|1#620101#80|1#110702#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 8,
+    "preLayerId": 7,
+    "openRound": 0,
+    "episodeId": 90100208,
+    "bossLevel": 8,
+    "firstReward": "1#620103#1|1#620102#15|1#620101#200|1#110603#2"
+  },
+  {
+    "towerId": 2,
+    "layerId": 9,
+    "preLayerId": 8,
+    "openRound": 0,
+    "episodeId": 90100209,
+    "bossLevel": 9,
+    "firstReward": "1#620102#5|1#620101#80|1#110802#5"
+  },
+  {
+    "towerId": 2,
+    "layerId": 10,
+    "preLayerId": 9,
+    "openRound": 0,
+    "episodeId": 90100210,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110703#2"
+  },
+  {
+    "towerId": 3,
+    "layerId": 1,
+    "preLayerId": 0,
+    "openRound": 0,
+    "episodeId": 90100301,
+    "bossLevel": 1,
+    "firstReward": "1#620102#5|1#620101#80|1#110102#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 2,
+    "preLayerId": 1,
+    "openRound": 0,
+    "episodeId": 90100302,
+    "bossLevel": 2,
+    "firstReward": "1#620102#5|1#620101#80|1#110202#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 3,
+    "preLayerId": 2,
+    "openRound": 0,
+    "episodeId": 90100303,
+    "bossLevel": 3,
+    "firstReward": "1#620103#2|1#620102#10|1#620101#100|1#111012#2"
+  },
+  {
+    "towerId": 3,
+    "layerId": 4,
+    "preLayerId": 3,
+    "openRound": 0,
+    "episodeId": 90100304,
+    "bossLevel": 4,
+    "firstReward": "1#620102#5|1#620101#80|1#110302#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 5,
+    "preLayerId": 4,
+    "openRound": 0,
+    "episodeId": 90100305,
+    "bossLevel": 5,
+    "firstReward": "1#620103#2|1#620102#15|1#620101#150|1#110803#2"
+  },
+  {
+    "towerId": 3,
+    "layerId": 6,
+    "preLayerId": 5,
+    "openRound": 0,
+    "episodeId": 90100306,
+    "bossLevel": 6,
+    "firstReward": "1#620102#5|1#620101#80|1#110402#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 7,
+    "preLayerId": 6,
+    "openRound": 0,
+    "episodeId": 90100307,
+    "bossLevel": 7,
+    "firstReward": "1#620102#5|1#620101#80|1#110502#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 8,
+    "preLayerId": 7,
+    "openRound": 0,
+    "episodeId": 90100308,
+    "bossLevel": 8,
+    "firstReward": "1#620103#1|1#620102#15|1#620101#200|1#110103#2"
+  },
+  {
+    "towerId": 3,
+    "layerId": 9,
+    "preLayerId": 8,
+    "openRound": 0,
+    "episodeId": 90100309,
+    "bossLevel": 9,
+    "firstReward": "1#620102#5|1#620101#80|1#110602#5"
+  },
+  {
+    "towerId": 3,
+    "layerId": 10,
+    "preLayerId": 9,
+    "openRound": 0,
+    "episodeId": 90100310,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110203#2"
+  }
+]

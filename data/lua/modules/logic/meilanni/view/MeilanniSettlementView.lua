@@ -180,8 +180,9 @@ function slot0._initScores(slot0, slot1)
 			score = 100
 		}
 	}
+	slot11 = MeilanniConfig.instance:getGradleList(slot0._mapId)
 
-	tabletool.addValues(slot7, MeilanniConfig.instance:getGradleList(slot0._mapId))
+	tabletool.addValues(slot7, slot11)
 
 	slot0._gradleList = slot7
 	slot0._ratingTxtList = slot0:getUserDataTb_()

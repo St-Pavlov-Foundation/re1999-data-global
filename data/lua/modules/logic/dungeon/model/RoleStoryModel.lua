@@ -109,8 +109,9 @@ end
 function slot0.initFinishTweenDict(slot0)
 	if not slot0.roleStoryFinishDict then
 		slot0.roleStoryFinishDict = {}
+		slot6 = PlayerPrefsKey.RoleStoryFinishKey
 
-		for slot6, slot7 in ipairs(string.splitToNumber(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RoleStoryFinishKey), ""), "#")) do
+		for slot6, slot7 in ipairs(string.splitToNumber(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(slot6), ""), "#")) do
 			slot0.roleStoryFinishDict[slot7] = true
 		end
 	end

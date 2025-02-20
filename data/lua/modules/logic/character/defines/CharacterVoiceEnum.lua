@@ -13,5 +13,8 @@ slot0.PlayType = {
 	Auto = 2,
 	Click = 1
 }
+slot0.UIBloomView = {
+	CharacterDataView = "view_CharacterDataView"
+}
 
 return slot0

@@ -28,9 +28,9 @@ function slot0.split(slot0, slot1)
 end
 
 function slot0.splitToNumber(slot0, slot1)
-	slot6 = slot1
+	slot7 = slot0
 
-	for slot6, slot7 in ipairs(uv0.split(slot0, slot6)) do
+	for slot6, slot7 in ipairs(uv0.split(slot7, slot1)) do
 		-- Nothing
 	end
 

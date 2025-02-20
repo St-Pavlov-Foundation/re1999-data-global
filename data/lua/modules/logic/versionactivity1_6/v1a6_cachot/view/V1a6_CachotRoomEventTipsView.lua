@@ -269,10 +269,10 @@ function slot0._showCureEffect(slot0)
 		slot0._tweenId = nil
 	end
 
-	slot6 = 0.3
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, slot6, slot0._tweenUpdate, slot0._tweenEnd, slot0, nil, EaseType.Linear)
+	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, slot0._tweenUpdate, slot0._tweenEnd, slot0, nil, EaseType.Linear)
+	slot6 = 0
 
-	slot0:_tweenUpdate(0)
+	slot0:_tweenUpdate(slot6)
 
 	for slot6 = #slot0._hpChangeData + 1, #slot0._heroItems do
 		gohelper.setActive(slot0._heroItems[slot6] and slot7.go, false)

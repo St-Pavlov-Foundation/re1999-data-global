@@ -29,9 +29,10 @@ end
 function slot0.dealStartBuff(slot0)
 	if slot0._entity:getMO() then
 		slot0.filter_start_buff_stacked = {}
+		slot6 = slot1
 
-		for slot6, slot7 in ipairs(slot1.buffModel:getList()) do
-			slot0:addBuff(slot7, true)
+		for slot5, slot6 in pairs(slot1.getBuffDic(slot6)) do
+			slot0:addBuff(slot6, true)
 		end
 
 		slot0.filter_start_buff_stacked = nil
@@ -249,7 +250,7 @@ function slot0._udpateBuffVariant(slot0)
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0._entity:getMO().buffModel:getList()) do
+	for slot7, slot8 in pairs(slot0._entity:getMO():getBuffDic()) do
 		if lua_skill_buff.configDict[slot8.buffId] and string.sub(slot9.bloommat, 1, #slot9.bloommat - 1) == FightSceneBloomComp.Bloom_invisible then
 			slot1 = string.sub(slot9.bloommat, #slot9.bloommat)
 		end
@@ -343,12 +344,12 @@ function slot0.hideBuffEffects(slot0, slot1)
 end
 
 function slot0.hideLoopEffects(slot0, slot1)
-	if not slot0._entity:getMO() or not slot2.buffModel then
+	if not slot0._entity:getMO() then
 		return
 	end
 
 	for slot6, slot7 in pairs(slot0._buffEffectDict) do
-		if slot2.buffModel:getById(slot6) and lua_skill_buff.configDict[slot8.buffId] then
+		if slot2:getBuffMO(slot6) and lua_skill_buff.configDict[slot8.buffId] then
 			if slot8 and slot9.effectloop == 1 and lua_skill_bufftype.configDict[slot9.typeId].playEffect == 0 then
 				slot7:setActive(false, slot1)
 			end
@@ -378,7 +379,7 @@ function slot0._showBuffFloat(slot0, slot1)
 
 		if lua_skill_bufftype.configDict[slot2.typeId] and slot3.dontShowFloat ~= 0 then
 			if FightSkillBuffMgr.instance:buffIsStackerBuff(slot2) and slot3.takeStage == -1 then
-				slot4 = slot2.name .. luaLang("multiple") .. FightSkillBuffMgr.instance:getStackedCount(slot0._entity.id, slot2.id)
+				slot4 = slot2.name .. luaLang("multiple") .. FightSkillBuffMgr.instance:getStackedCount(slot0._entity.id, slot1)
 			end
 
 			FightFloatMgr.instance:float(slot1.entityId, FightEnum.FloatType.buff, slot4, slot3.dontShowFloat)
@@ -391,86 +392,91 @@ slot3 = {
 }
 
 function slot0.delBuff(slot0, slot1, slot2)
-	if slot1.type == FightEnum.BuffType.LayerSalveHalo then
+	if not slot0._buffDic[slot1] then
 		return
 	end
 
-	slot0._buffDic[slot1.uid] = nil
-	slot4 = slot1.uid
+	slot0._buffDic[slot1] = nil
 
-	if lua_skill_buff.configDict[slot1.buffId] then
-		if slot0._curBuffIdDic[slot5.id] then
-			slot0._curBuffIdDic[slot5.id] = slot0._curBuffIdDic[slot5.id] - 1
+	if slot3.type == FightEnum.BuffType.LayerSalveHalo then
+		return
+	end
+
+	slot5 = slot3.uid
+
+	if lua_skill_buff.configDict[slot3.buffId] then
+		if slot0._curBuffIdDic[slot6.id] then
+			slot0._curBuffIdDic[slot6.id] = slot0._curBuffIdDic[slot6.id] - 1
 		end
 
-		if slot0._curBuffTypeIdDic[slot5.typeId] then
-			slot0._curBuffTypeIdDic[slot5.typeId] = slot0._curBuffTypeIdDic[slot5.typeId] - 1
+		if slot0._curBuffTypeIdDic[slot6.typeId] then
+			slot0._curBuffTypeIdDic[slot6.typeId] = slot0._curBuffTypeIdDic[slot6.typeId] - 1
 		end
 
-		function slot6(slot0)
+		function slot7(slot0)
 			return slot0.id == uv0.id
 		end
 
-		slot7 = slot0._animPriorityQueue:getSize()
+		slot8 = slot0._animPriorityQueue:getSize()
 
-		slot0._animPriorityQueue:markRemove(slot6)
-		slot0._matPriorityQueue:markRemove(slot6)
+		slot0._animPriorityQueue:markRemove(slot7)
+		slot0._matPriorityQueue:markRemove(slot7)
 
-		if slot5.effect ~= "0" and not string.nilorempty(slot5.effect) and slot0._buffEffectDict[slot4] then
-			slot0._buffEffectDict[slot4] = nil
-			slot0._onceEffectDict[slot4] = nil
+		if slot6.effect ~= "0" and not string.nilorempty(slot6.effect) and slot0._buffEffectDict[slot5] then
+			slot0._buffEffectDict[slot5] = nil
+			slot0._onceEffectDict[slot5] = nil
 
-			if slot0._buff_loop_effect_name[slot8.path] then
-				slot0._buff_loop_effect_name[slot8.path] = slot0._buff_loop_effect_name[slot8.path] - 1
+			if slot0._buff_loop_effect_name[slot9.path] then
+				slot0._buff_loop_effect_name[slot9.path] = slot0._buff_loop_effect_name[slot9.path] - 1
 			end
 
-			if (slot0._buff_loop_effect_name[slot8.path] or 0) == 0 then
-				slot0._addBuffEffectPathDic[slot8.path] = nil
+			if (slot0._buff_loop_effect_name[slot9.path] or 0) == 0 then
+				slot0._addBuffEffectPathDic[slot9.path] = nil
 
-				slot0._entity.effect:removeEffect(slot8)
-				FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot8)
+				slot0._entity.effect:removeEffect(slot9)
+				FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot9)
 			end
 		end
 
-		slot9 = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot0._entity.id)
-		slot10 = slot5.id
-		slot11, slot12 = FightHelper.processBuffEffectPath(slot5.delEffect, slot0._entity, slot10, "delEffect", slot5.delAudio)
-		slot11, slot14 = FightHelper.filterBuffEffectBySkin(slot10, slot0._entity, slot11, slot12)
+		slot10 = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot0._entity.id)
+		slot11 = slot6.id
+		slot12, slot13 = FightHelper.processBuffEffectPath(slot6.delEffect, slot0._entity, slot11, "delEffect", slot6.delAudio)
+		slot12, slot15 = FightHelper.filterBuffEffectBySkin(slot11, slot0._entity, slot12, slot13)
 
-		if slot14 > 0 then
-			FightAudioMgr.instance:playAudio(slot12)
+		if slot15 > 0 then
+			FightAudioMgr.instance:playAudio(slot13)
 		end
 
-		if slot9 and slot11 ~= "0" and not string.nilorempty(slot11) then
-			slot13 = true
+		if slot10 and slot12 ~= "0" and not string.nilorempty(slot12) then
+			slot14 = true
 
-			if slot2 and uv0[slot5.id] then
-				slot13 = false
+			if slot2 and uv0[slot6.id] then
+				slot14 = false
 			end
 
-			if slot13 then
-				slot14 = nil
+			if slot14 then
+				slot15 = nil
 
-				if not string.find(slot11, "/") then
-					slot11 = "buff/" .. slot11
+				if not string.find(slot12, "/") then
+					slot12 = "buff/" .. slot12
 				end
 
-				if not string.nilorempty(slot5.delEffectHangPoint) then
-					slot0._entity.effect:addHangEffect(slot11, slot5.delEffectHangPoint):setLocalPos(0, 0, 0)
+				if not string.nilorempty(slot6.delEffectHangPoint) then
+					slot0._entity.effect:addHangEffect(slot12, slot6.delEffectHangPoint):setLocalPos(0, 0, 0)
 
-					if slot5.delEffectHangPoint == ModuleEnum.SpineHangPointRoot then
-						slot14:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(slot0._entity, slot11))
+					if slot6.delEffectHangPoint == ModuleEnum.SpineHangPointRoot then
+						slot15:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(slot0._entity, slot12))
 					end
 				else
-					slot16, slot17, slot18 = transformhelper.getPos(slot0._entity.go.transform)
+					slot17, slot18, slot19 = transformhelper.getPos(slot0._entity.go.transform)
 
-					slot0._entity.effect:addGlobalEffect(slot11):setWorldPos(slot16, slot17, slot18)
+					slot0._entity.effect:addGlobalEffect(slot12):setWorldPos(slot17, slot18, slot19)
 				end
 
-				FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot14)
+				FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot15)
 
-				slot0._delBuffEffectDic[slot4] = {
-					effectWrap = slot14,
+				slot0._delBuffEffectDic[slot5] = {
+					effectWrap = slot15,
 					time = Time.time + uv1
 				}
 
@@ -478,18 +484,18 @@ function slot0.delBuff(slot0, slot1, slot2)
 			end
 		end
 
-		slot0:_removeBuffHandler(slot4)
+		slot0:_removeBuffHandler(slot5)
 
-		if not string.nilorempty(slot5.animationName) and slot5.animationName ~= "0" or not uv2.isEmptyMat(slot5.mat) or not (string.nilorempty(slot5.bloommat) or slot5.bloommat == "0") then
+		if not string.nilorempty(slot6.animationName) and slot6.animationName ~= "0" or not uv2.isEmptyMat(slot6.mat) or not (string.nilorempty(slot6.bloommat) or slot6.bloommat == "0") then
 			slot0._entity:resetAnimState()
 			slot0._entity:resetSpineMat()
-			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(slot5.bloommat, false, slot0._entity, "buff_bloom")
+			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(slot6.bloommat, false, slot0._entity, "buff_bloom")
 			slot0:_udpateBuffVariant()
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:delBuff(slot0._entity, slot1)
-	FightController.instance:dispatchEvent(FightEvent.RemoveEntityBuff, slot0._entity.id, slot1)
+	GameSceneMgr.instance:getCurScene().specialEffectMgr:delBuff(slot0._entity, slot3)
+	FightController.instance:dispatchEvent(FightEvent.RemoveEntityBuff, slot0._entity.id, slot3)
 end
 
 function slot0.getBuffAnim(slot0)
@@ -517,15 +523,17 @@ end
 function slot0.releaseAllBuff(slot0)
 	if slot0._buffDic then
 		for slot4, slot5 in pairs(slot0._buffDic) do
-			slot0:delBuff(slot5)
+			slot0:delBuff(slot5.uid)
 		end
 	end
 end
 
 function slot0.beforeDestroy(slot0)
 	if slot0._entity:getMO() then
-		for slot6, slot7 in ipairs(slot1.buffModel:getList()) do
-			slot0:delBuff(slot7)
+		slot6 = slot1
+
+		for slot5, slot6 in pairs(slot1.getBuffDic(slot6)) do
+			slot0:delBuff(slot6.uid)
 		end
 	end
 
@@ -534,7 +542,10 @@ end
 
 function slot0.onDestroy(slot0)
 	TaskDispatcher.cancelTask(slot0._onTickCheckRemoveEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._onTickCheckRemoveDelBuffEffect, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._onTickCheckRemoveDelBuffEffect, slot4)
 
 	for slot4, slot5 in pairs(slot0._buffHandlerDict) do
 		FightBuffHandlerPool.putHandlerInst(slot5)

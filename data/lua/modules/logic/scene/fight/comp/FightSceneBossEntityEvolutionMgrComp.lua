@@ -49,7 +49,9 @@ end
 
 function slot0._onSpineLoaded(slot0, slot1)
 	if slot1.unitSpawn and slot2:getMO() and slot0._skinId2Entity[slot3.skin] then
-		for slot7, slot8 in ipairs(slot0._skinId2Entity[slot3.skin]) do
+		slot7 = slot3.skin
+
+		for slot7, slot8 in ipairs(slot0._skinId2Entity[slot7]) do
 			if slot8.spine and slot9._skeletonAnim and slot9._skeletonAnim.state:GetCurrent(0) and slot1._skeletonAnim then
 				slot1._skeletonAnim:Jump2Time(slot10.TrackTime)
 			end

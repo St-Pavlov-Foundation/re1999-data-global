@@ -132,7 +132,10 @@ function slot0.createLinePath(slot0, slot1)
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0.episodeItemList[slot1].episodeMo:getNodeMoList()) do
+	slot3 = slot0.episodeItemList[slot1].episodeMo
+	slot8 = slot3
+
+	for slot7, slot8 in ipairs(slot3.getNodeMoList(slot8)) do
 		for slot13, slot14 in ipairs(slot8.preNodeList) do
 			slot0:getMapItem(slot8.nodeId).lineItem = slot0:createLineItem(slot8, RougeMapModel.instance:getNode(slot14))
 		end

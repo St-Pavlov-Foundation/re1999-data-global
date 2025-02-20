@@ -29,8 +29,9 @@ end
 function slot0._initMap(slot0)
 	slot0._sceneRoot = UnityEngine.GameObject.New("Activity130Map")
 	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+	slot11 = 0
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0.5, slot4, 0)
+	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0.5, slot4, slot11)
 	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
 
 	slot7 = "ui/viewres/versionactivity_1_4/v1a4_37role/v1a4_role37_mapinteractiveitem.prefab"

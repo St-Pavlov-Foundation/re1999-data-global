@@ -35,9 +35,11 @@ function slot0.initComponents(slot0)
 	slot0:addComp("skinSpineEffect", FightSkinSpineEffect)
 	slot0:addComp("totalDamage", FightTotalDamageComp)
 
+	slot1 = slot0:getMO()
+
 	if BossRushController.instance:isInBossRushInfiniteFight(true) then
 		slot0:addComp("nameUI", BossRushFightNameUI)
-	else
+	elseif not slot1:isAssistBoss() then
 		slot0:addComp("nameUI", FightNameUI)
 	end
 
@@ -53,7 +55,7 @@ function slot0.addComp(slot0, slot1, slot2)
 end
 
 function slot0.getMO(slot0)
-	slot0.entityMO = FightEntityModel.instance:getById(slot0.id) or slot0.entityMO
+	slot0.entityMO = FightDataHelper.entityMgr:getById(slot0.id) or slot0.entityMO
 
 	return slot1 or slot0.entityMO
 end

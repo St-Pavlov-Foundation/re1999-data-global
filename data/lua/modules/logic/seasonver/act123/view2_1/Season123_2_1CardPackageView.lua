@@ -92,9 +92,9 @@ function slot0._btnskipOnClick(slot0)
 
 	slot0._animator:Stop()
 
-	slot5 = slot0
+	slot5 = slot0.showCardGetView
 
-	slot0._animator:Play("kabao_skip", slot0.showCardGetView, slot5)
+	slot0._animator:Play("kabao_skip", slot5, slot0)
 
 	for slot5 = 2, 5 do
 		gohelper.setActive(slot0.rareEffectList[slot5], slot5 == Season123CardPackageModel.instance:getCardMaxRare())
@@ -115,8 +115,8 @@ function slot0._editableInitView(slot0)
 	slot0.rareEffectList = slot0:getUserDataTb_()
 	slot0.rareLineEffectList = slot0:getUserDataTb_()
 	slot0.actId = Season123Model.instance:getCurSeasonId()
-	slot4 = UnityEngine.UI.GridLayoutGroup
-	slot0.contentGrid = slot0._gocardContent:GetComponent(typeof(slot4))
+	slot4 = typeof
+	slot0.contentGrid = slot0._gocardContent:GetComponent(slot4(UnityEngine.UI.GridLayoutGroup))
 
 	for slot4 = 2, 5 do
 		slot5 = gohelper.findChild(slot0._goopenEffect, "go_rare" .. slot4)
@@ -166,9 +166,9 @@ function slot0.playOpenCardAnim(slot0)
 	gohelper.setActive(slot0._btnskip.gameObject, true)
 	gohelper.setActive(slot0._gocardgetBtns, false)
 
-	slot5 = slot0
+	slot5 = slot0.showCardGetView
 
-	slot0._animator:Play("kabao_open", slot0.showCardGetView, slot5)
+	slot0._animator:Play("kabao_open", slot5, slot0)
 
 	slot0.openCardPackageAudioId = AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_jinye_cardpacks_open)
 	slot1 = Season123CardPackageModel.instance:getCardMaxRare()

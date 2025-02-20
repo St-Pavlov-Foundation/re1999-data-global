@@ -100,8 +100,8 @@ function slot0._onClickThis(slot0)
 			FightController.instance:dispatchEvent(FightEvent.OnEditorPlayBuffStart)
 		end
 	else
-		slot1:getMO():delBuff(slot3)
-		slot1.buff:delBuff(slot3)
+		slot1:getMO():delBuff(slot3.uid)
+		slot1.buff:delBuff(slot3.uid)
 	end
 
 	if slot2.typeId == 5001 then
@@ -114,9 +114,9 @@ function slot0._onClickThis(slot0)
 end
 
 function slot0._getEntityBuffMO(slot0, slot1, slot2)
-	for slot8, slot9 in ipairs(slot1:getMO().buffModel:getList()) do
-		if slot9.buffId == slot2 then
-			return slot9
+	for slot7, slot8 in pairs(slot1:getMO():getBuffDic()) do
+		if slot8.buffId == slot2 then
+			return slot8
 		end
 	end
 

@@ -40,12 +40,13 @@ function slot0.onStart(slot0, slot1)
 	TaskDispatcher.runDelay(slot0._delayDone, slot0, 5)
 
 	slot0._count = 0
-	slot6 = slot0
+	slot6 = slot0._onCountEntityInfoReply
+	slot7 = slot0
 
-	FightController.instance:registerCallback(FightEvent.CountEntityInfoReply, slot0._onCountEntityInfoReply, slot6)
+	FightController.instance:registerCallback(FightEvent.CountEntityInfoReply, slot6, slot7)
 
-	for slot6, slot7 in pairs(FightDataMgr.instance:getEntityDataMgr():getAllEntityMO()) do
-		if not slot7.isDead then
+	for slot6, slot7 in pairs(FightLocalDataMgr.instance.entityMgr:getAllEntityMO()) do
+		if not slot7:isStatusDead() then
 			slot0._count = slot0._count + 1
 
 			FightRpc.instance:sendEntityInfoRequest(slot7.uid)
@@ -60,8 +61,8 @@ end
 function slot0._compareLocalWithPerformance(slot0)
 	slot2 = false
 
-	for slot6, slot7 in pairs(FightDataMgr.instance:getEntityDataMgr():getAllEntityMO()) do
-		if not slot0:_compareData(slot7, FightEntityModel.instance:getById(slot7.id), uv0.Local2Performance) then
+	for slot6, slot7 in pairs(FightLocalDataMgr.instance.entityMgr:getAllEntityMO()) do
+		if not slot0:_compareData(slot7, FightDataHelper.entityMgr:getById(slot7.id), uv0.Local2Performance) then
 			slot2 = true
 		end
 	end
@@ -72,7 +73,7 @@ function slot0._compareLocalWithPerformance(slot0)
 end
 
 function slot0._compareData(slot0, slot1, slot2, slot3)
-	if slot1 and slot2 and not slot1.isDead then
+	if slot1 and slot2 and not slot1:isStatusDead() then
 		slot4 = slot1.id
 
 		if not FightEntityMoCompareHelper.compareEntityMo(slot1, slot2) then
@@ -88,7 +89,7 @@ function slot0._compareData(slot0, slot1, slot2, slot3)
 				logError(string.format("%s, entityId:%s, 角色名称:%s\n %s", slot8, slot4, slot6 and slot6.name or "", slot7))
 			end
 
-			FightEntityDataMgr.copyEntityMO(slot1, slot2)
+			FightEntityDataHelper.copyEntityMO(slot1, slot2)
 			FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, slot4)
 		end
 
@@ -100,14 +101,14 @@ end
 
 function slot0._onCountEntityInfoReply(slot0, slot1, slot2)
 	if slot1 == 0 then
-		if slot2.entityInfo and FightDataMgr.instance:getEntityDataMgr():getEntityMO(slot2.entityInfo.uid) then
+		if slot2.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(slot2.entityInfo.uid) then
 			slot4 = slot3.id
 			slot5 = FightEntityMO.New()
 
 			slot5:init(slot2.entityInfo, slot3.side)
 
-			if not uv0:_compareData(slot5, slot3, uv1.Server2Local) and FightEntityModel.instance:getById(slot4) then
-				FightEntityDataMgr.copyEntityMO(slot5, slot6)
+			if not uv0:_compareData(slot5, slot3, uv1.Server2Local) and FightDataHelper.entityMgr:getById(slot4) then
+				FightEntityDataHelper.copyEntityMO(slot5, slot6)
 				FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, slot4)
 			end
 		else

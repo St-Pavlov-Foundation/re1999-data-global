@@ -94,6 +94,10 @@ function slot0._getLive2d(slot0)
 	return slot0._live2d
 end
 
+function slot0.openBloomView(slot0, slot1)
+	slot0._openBloomView = slot1
+end
+
 function slot0.setResPath(slot0, slot1, slot2, slot3, slot4)
 	slot5 = slot0._curModel
 	slot6 = slot0._isLive2D
@@ -110,6 +114,8 @@ function slot0.setResPath(slot0, slot1, slot2, slot3, slot4)
 		slot0._curModel = slot0:_getLive2d()
 
 		slot0._curModel:setHeroId(slot1.characterId)
+		slot0._curModel:setSkinId(slot1.id)
+		slot0._curModel:openBloomView(slot0._openBloomView)
 		slot0._curModel:showModel()
 		slot0._curModel:setCameraSize(slot4 or slot1.cameraSize)
 		slot0._curModel:setResPath(ResUrl.getLightLive2d(slot1.live2d), slot2, slot3)

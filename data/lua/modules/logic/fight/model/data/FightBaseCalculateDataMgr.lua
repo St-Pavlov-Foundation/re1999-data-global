@@ -1,6 +1,6 @@
 module("modules.logic.fight.model.data.FightBaseCalculateDataMgr", package.seeall)
 
-slot0 = class("FightBaseCalculateDataMgr")
+slot0 = FightDataBase("FightBaseCalculateDataMgr")
 
 function slot0.ctor(slot0)
 	slot0._type2FuncName = {}
@@ -38,7 +38,15 @@ function slot0.playActEffectData(slot0, slot1)
 		slot0._type2FuncName[slot1.effectType] = slot0["playEffect" .. slot1.effectType] or slot0.playUndefineEffect
 	end
 
-	xpcall(slot2, __G__TRACKBACK__, slot0, slot1)
+	if slot0:isPerformanceData() then
+		slot1:setDone()
+		xpcall(slot2, uv0.ingoreLogError, slot0, slot1)
+	else
+		xpcall(slot2, __G__TRACKBACK__, slot0, slot1)
+	end
+end
+
+function slot0.ingoreLogError(slot0)
 end
 
 return slot0

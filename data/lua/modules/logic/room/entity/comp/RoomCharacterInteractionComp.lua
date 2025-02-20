@@ -166,10 +166,10 @@ function slot0._upateFaithFill(slot0)
 		slot3:Clear()
 		slot3:SetVector("_UVOffset", Vector4.New(0, Mathf.Lerp(-0.53, -0.7, slot0._faithFill), 0, 0))
 
-		slot8 = Vector4.New
-		slot9 = 0
+		slot8 = "_ParticlePosOffset"
+		slot9 = Vector4.New
 
-		slot3:SetVector("_ParticlePosOffset", slot8(slot9, slot0._offsetY, 0, 0))
+		slot3:SetVector(slot8, slot9(0, slot0._offsetY, 0, 0))
 
 		for slot8, slot9 in ipairs(slot1:getComponentsByPath(RoomEnum.EffectKey.CharacterFaithNormalKey, RoomEnum.ComponentName.Renderer, "mesh/faith_process")) do
 			slot9:SetPropertyBlock(slot3)
@@ -205,10 +205,10 @@ function slot0._updateParticlePosOffset(slot0)
 
 		slot14:Clear()
 
-		slot18 = Vector4.New
-		slot19 = 0
+		slot18 = "_ParticlePosOffset"
+		slot19 = Vector4.New
 
-		slot14:SetVector("_ParticlePosOffset", slot18(slot19, slot0._offsetY, 0, 0))
+		slot14:SetVector(slot18, slot19(0, slot0._offsetY, 0, 0))
 
 		for slot18, slot19 in ipairs(slot1:getComponentsByPath(slot0._curShowKey, RoomEnum.ComponentName.Renderer, "mesh")) do
 			slot19:SetPropertyBlock(slot14)

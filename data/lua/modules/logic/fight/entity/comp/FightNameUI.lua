@@ -11,6 +11,11 @@ function slot0.ctor(slot0, slot1)
 	slot0._opCtrl = FightNameUIOp.New(slot0)
 	slot0.buffMgr = FightNameUIBuffMgr.New()
 	slot0._power = FightNameUIPower.New(slot0, 1)
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		slot0._enemyOperation = FightNameUIEnemyOperation.New(slot0)
+		slot0._enemyOperation.INVOKED_OPEN_VIEW = true
+	end
 end
 
 function slot0.load(slot0, slot1)
@@ -169,6 +174,10 @@ function slot0._onLoaded(slot0)
 
 	slot0._opCtrl:init(slot0.entity, slot0._opContainerGO, slot0._opItemGO)
 
+	if slot0._enemyOperation then
+		slot0._enemyOperation:init(slot0.entity, slot0._opContainerGO, slot0._opItemGO)
+	end
+
 	slot0._buffContainerGO = gohelper.findChild(slot0._uiGO, "layout/top/buffContainer")
 	slot0._buffGO = gohelper.findChild(slot0._uiGO, "layout/top/buffContainer/buff")
 
@@ -204,6 +213,7 @@ function slot0._onLoaded(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, slot0._onUpdateUIFollower, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
 	slot0._power:onOpen()
 	slot0:_setPosOffset()
 	slot0:updateInnerLayout()
@@ -239,6 +249,10 @@ function slot0.beforeDestroy(slot0)
 		slot0.stressMgr:beforeDestroy()
 	end
 
+	if slot0._enemyOperation then
+		slot0._enemyOperation:disposeSelf()
+	end
+
 	slot0._opCtrl:beforeDestroy()
 	slot0.buffMgr:beforeDestroy()
 	CameraMgr.instance:getCameraTrace():RemoveChangeActor(slot0._uiFollower)
@@ -262,6 +276,7 @@ function slot0.beforeDestroy(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, slot0._onUpdateUIFollower, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
 	slot0:_killHpTween()
 	TaskDispatcher.cancelTask(slot0._onDelAniOver, slot0)
 	FightNameMgr.instance:unregister(slot0)
@@ -409,7 +424,7 @@ function slot0._insteadSpecialHp(slot0, slot1)
 			slot0:changeHpWithChoushiBuff(false)
 		end
 	else
-		for slot6, slot7 in ipairs(slot0.entity:getMO():getBuffList()) do
+		for slot6, slot7 in pairs(slot0.entity:getMO():getBuffDic()) do
 			if lua_skill_buff.configDict[slot7.buffId] and slot8.typeId == 3120005 then
 				slot0:changeHpWithChoushiBuff(true)
 
@@ -440,9 +455,6 @@ function slot0.addHp(slot0, slot1)
 	slot0._curHp = slot0._curHp + slot1
 	slot0._curHp = slot0._curHp >= 0 and slot0._curHp or 0
 	slot0._curHp = slot0._curHp <= slot3 and slot0._curHp or slot3
-
-	slot2:setHp(slot0._curHp)
-
 	slot0._txtHp.text = slot0._curHp
 
 	slot0:_tweenFillAmount()
@@ -455,7 +467,6 @@ end
 function slot0.setShield(slot0, slot1)
 	slot0._curShield = slot1 > 0 and slot1 or 0
 
-	slot0.entity:getMO():setShield(slot0._curShield)
 	slot0:_tweenFillAmount()
 end
 
@@ -543,14 +554,7 @@ function slot0._onMaxHpChange(slot0, slot1, slot2, slot3)
 		table.insert(slot0._hp_tweens, ZProj.TweenHelper.DOAnchorPosX(slot0._hp_container_tran, 0, 0.3, slot0._hpTweenDone, slot0))
 	elseif (slot0.entity:getMO().attrMO and slot4.attrMO.hp > 0 and slot4.attrMO.hp or 1) < (slot4.attrMO and slot4.attrMO.original_max_hp or 1) then
 		slot0._hp_ani:Play("down", 0, 0)
-
-		slot0._hp_width = slot0._hp_width or recthelper.getWidth(slot0._hp_container_tran)
-
-		table.insert(slot0._hp_tweens, ZProj.TweenHelper.DOAnchorPosX(slot0._hp_container_tran, 0 - slot0._hp_width * (slot6 - slot5) / slot6, 0.3, slot0._hpTweenDone, slot0))
-
-		slot9, slot10 = slot0:_getFillAmount()
-
-		table.insert(slot0._hp_tweens, ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot9, 0.3))
+		slot0:resetHp()
 	end
 end
 
@@ -566,6 +570,16 @@ function slot0._killHpTween(slot0)
 
 		slot0._hp_tweens = {}
 	end
+end
+
+function slot0._onChangeShield(slot0, slot1)
+	if slot1 ~= slot0.entity.id then
+		return
+	end
+
+	slot0._curShield = FightDataHelper.entityMgr:getById(slot1).shieldValue
+
+	slot0:_tweenFillAmount()
 end
 
 function slot0._onCurrentHpChange(slot0, slot1, slot2, slot3)
@@ -589,7 +603,7 @@ function slot0._onForceUpdatePerformanceData(slot0, slot1)
 		return
 	end
 
-	slot0:setShield(FightEntityModel.instance:getById(slot1).shieldValue)
+	slot0:setShield(FightDataHelper.entityMgr:getById(slot1).shieldValue)
 	slot0:resetHp()
 	slot0.buffMgr:refreshBuffList()
 	slot0._power:_refreshUI()

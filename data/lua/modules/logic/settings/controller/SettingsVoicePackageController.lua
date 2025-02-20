@@ -250,16 +250,19 @@ end
 
 function slot0.deleteVoicePack(slot0, slot1)
 	slot2 = SettingsVoicePackageModel.instance:getPackInfo(slot1)
-	slot7 = {
+	slot8 = {
 		current_language = GameConfig:GetCurLangShortcut(),
 		current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList(),
 		current_voice_pack_used = GameConfig:GetCurVoiceShortcut(),
 		voice_pack_delete = slot2.lang
 	}
 
-	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, slot7)
+	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, slot8)
 	slot2:setLocalSize(0)
-	slot0._optionalUpdateInst:RemovePackInfo(slot1)
+
+	slot7 = slot1
+
+	slot0._optionalUpdateInst:RemovePackInfo(slot7)
 
 	for slot7, slot8 in pairs(OptionPackageEnum.Package) do
 		slot0._optionalUpdateInst:RemovePackInfo(HotUpdateOptionPackageMgr.instance:formatLangPackName(slot1, slot8))

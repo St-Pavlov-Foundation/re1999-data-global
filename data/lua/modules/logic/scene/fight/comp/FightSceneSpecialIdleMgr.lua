@@ -44,7 +44,7 @@ end
 function slot0._detectCanPlay(slot0)
 	if slot0._play_dic then
 		for slot4, slot5 in pairs(slot0._play_dic) do
-			if FightHelper.getEntity(slot5) and math.random(0, 100) <= lua_skin_special_act.configDict[slot6:getMO().modelId].probability and slot6.spine.tryPlay and slot6.spine:tryPlay(SpineAnimState.idle_special1, slot7.loop == 1 and true) then
+			if FightHelper.getEntity(slot5) and lua_skin_special_act.configDict[slot6:getMO().modelId] and math.random(0, 100) <= slot7.probability and slot6.spine.tryPlay and slot6.spine:tryPlay(SpineAnimState.idle_special1, slot7.loop == 1 and true) then
 				slot0._entityPlayActName = slot0._entityPlayActName or {}
 				slot0._entityPlayActName[slot6.id] = FightHelper.processEntityActionName(slot6, SpineAnimState.idle_special1)
 

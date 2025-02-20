@@ -71,14 +71,18 @@ function slot0._onMoveOrCombine(slot0, slot1, slot2)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
+		return
+	end
+
+	if slot3:getMoveCardAddExPoint() < 1 then
 		return
 	end
 
 	if FightBuffHelper.getTransferExPointUid(slot3) then
-		if FightEntityModel.instance:getById(slot4) then
-			slot5:onMoveCardExPoint(slot2)
-			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, slot4)
+		if FightDataHelper.entityMgr:getById(slot5) then
+			slot6:onMoveCardExPoint(slot2)
+			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, slot5)
 		else
 			slot3:onMoveCardExPoint(slot2)
 			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, slot1)
@@ -98,19 +102,25 @@ function slot0._onPlayHandCard(slot0, slot1)
 		return
 	end
 
-	if FightEntityModel.instance:getById(slot1.uid) then
-		if FightBuffHelper.getTransferExPointUid(slot2) then
-			if FightEntityModel.instance:getById(slot3) then
-				slot4:onPlayCardExPoint(slot1.skillId)
-				FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, slot3)
-			else
-				slot2:onPlayCardExPoint(slot1.skillId)
-				FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, slot1.uid)
-			end
+	if not FightDataHelper.entityMgr:getById(slot1.uid) then
+		return
+	end
+
+	if slot2:getPlayCardAddExPoint() < 1 then
+		return
+	end
+
+	if FightBuffHelper.getTransferExPointUid(slot2) then
+		if FightDataHelper.entityMgr:getById(slot4) then
+			slot5:onPlayCardExPoint(slot1.skillId)
+			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, slot4)
 		else
 			slot2:onPlayCardExPoint(slot1.skillId)
 			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, slot1.uid)
 		end
+	else
+		slot2:onPlayCardExPoint(slot1.skillId)
+		FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, slot1.uid)
 	end
 end
 
@@ -134,11 +144,13 @@ function slot0._onResetCard(slot0)
 end
 
 function slot0._respBeginRound(slot0)
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot6:applyMoveCardExPoint()
 	end
 
-	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)) do
+	slot5 = false
+
+	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, slot5)) do
 		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, slot6.id)
 	end
 end

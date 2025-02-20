@@ -41,7 +41,8 @@ end
 function slot0.onUpdateParam(slot0, slot1, slot2)
 	slot0._storyId = slot2.storyId
 	slot0._actId = Activity165Model.instance:getActivityId()
-	slot0._storyMo = Activity165Model.instance:getStoryMo(slot0._actId, slot0._storyId)
+	slot8 = slot0._storyId
+	slot0._storyMo = Activity165Model.instance:getStoryMo(slot0._actId, slot8)
 	slot0._index = slot1
 
 	for slot8 = 1, #DungeonConfig.instance:getRewardItems(tonumber(slot2.bonus)) do

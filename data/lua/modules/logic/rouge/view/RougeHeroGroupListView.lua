@@ -19,7 +19,10 @@ function slot0._editableInitView(slot0)
 	slot0._heroItemDrag = slot0:getUserDataTb_()
 
 	gohelper.setActive(slot0._goheroitem, false)
-	gohelper.setActive(slot0._goaidheroitem, false)
+
+	slot6 = false
+
+	gohelper.setActive(slot0._goaidheroitem, slot6)
 
 	slot0.heroPosTrList = slot0:getUserDataTb_()
 	slot0._heroItemPosList = slot0:getUserDataTb_()
@@ -50,7 +53,8 @@ function slot0._editableInitView(slot0)
 		slot3 = math.min(slot4, HeroGroupModel.instance:positionOpenCount())
 	end
 
-	slot0._openCount = math.min(slot0._playerMax, slot3)
+	slot8 = slot3
+	slot0._openCount = math.min(slot0._playerMax, slot8)
 
 	for slot8 = 1, 4 do
 		table.insert(slot0._bgList, gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/bg" .. slot8 .. "/bg"))
@@ -401,7 +405,9 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 			slot6:onItemCompleteDrag(uv0, uv1, slot1)
 		end
 
-		slot0:_setDragEnabled(true)
+		slot5 = true
+
+		slot0:_setDragEnabled(slot5)
 
 		for slot5, slot6 in ipairs(slot0._heroItemList) do
 			slot6:flowCurrentParent()
@@ -499,9 +505,10 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 
 		RougeHeroSingleGroupModel.instance:swap(uv4, uv5)
 
-		slot9 = RougeEnum.FightTeamNormalHeroNum
+		slot10 = RougeEnum.FightTeamNormalHeroNum
+		slot9 = uv5 + slot10
 
-		RougeHeroSingleGroupModel.instance:swap(uv4 + RougeEnum.FightTeamNormalHeroNum, uv5 + slot9)
+		RougeHeroSingleGroupModel.instance:swap(uv4 + RougeEnum.FightTeamNormalHeroNum, slot9)
 
 		for slot9, slot10 in ipairs(slot0.heroList) do
 			if RougeHeroSingleGroupModel.instance:getHeroUids()[slot9] ~= slot10 then

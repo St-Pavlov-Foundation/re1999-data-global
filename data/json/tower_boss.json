@@ -1,0 +1,20 @@
+[
+  {
+    "towerId": 1,
+    "bossId": 1,
+    "name": "language_10060867",
+    "nameEn": "Mountain Ghost"
+  },
+  {
+    "towerId": 2,
+    "bossId": 2,
+    "name": "language_10061263",
+    "nameEn": "Star of Misfortune"
+  },
+  {
+    "towerId": 3,
+    "bossId": 3,
+    "name": "language_10061264",
+    "nameEn": "Operatic Reflection"
+  }
+]

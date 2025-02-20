@@ -63,7 +63,7 @@ function slot0.startRound(slot0)
 
 	slot1:onBeginRound()
 	slot0._roundSequence:buildFlow(slot1)
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play)
+	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.Normal)
 	slot0._roundSequence:start(slot0._onRoundFinish, slot0)
 end
 
@@ -72,7 +72,7 @@ function slot0.startClothSkillRound(slot0)
 
 	FightController.instance:setCurStage(FightEnum.Stage.ClothSkill)
 	slot0._clothSkillSequence:buildFlow(FightModel.instance:getCurRoundMO())
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play)
+	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.ClothSkill)
 	slot0._clothSkillSequence:start(slot0._onClothSkillRoundFinish, slot0)
 end
 

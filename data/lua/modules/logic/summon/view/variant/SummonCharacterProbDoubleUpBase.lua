@@ -9,6 +9,7 @@ function slot0._editableInitView(slot0)
 	slot0._gotag = gohelper.findChild(slot0._gobefore30, "#go_tag")
 	slot0._txtnum = gohelper.findChildText(slot0._gotag, "#txt_num")
 	slot0._textEN = gohelper.findChildText(slot0.viewGO, "#go_ui/summonbtns/summon10/textEN")
+	slot0._freetag = gohelper.findChild(slot0.viewGO, "#go_ui/current/tip/tip/freetag")
 	slot0._txtcurrency102.text = ""
 	slot0._txtcurrency101.text = ""
 
@@ -143,6 +144,7 @@ function slot0._refreshCost10(slot0)
 
 	gohelper.setActive(slot0._gotag, slot8)
 	gohelper.setActive(slot0._gobefore30, slot8)
+	gohelper.setActive(slot0._freetag, slot8)
 
 	slot0._textEN.text = "SUMMON*" .. slot2.cost_num
 

@@ -49,7 +49,7 @@ function slot0._updateDragHandCards(slot0)
 
 	slot10 = slot4
 
-	transformhelper.setLocalScale(slot2.tr, slot4, slot10, 1)
+	transformhelper.setLocalScale(slot2.tr, slot10, slot4, 1)
 
 	for slot10 = 1, slot0._cardCount do
 		slot11 = slot10

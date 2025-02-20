@@ -54,10 +54,10 @@ function slot0.createItem(slot0, slot1, slot2, slot3)
 end
 
 function slot0.onClickLevel(slot0, slot1)
-	slot5 = ExploreConfig.instance
-	slot6 = slot5
+	slot6 = ExploreConfig.instance
+	slot6 = slot6.getRewardConfig
 
-	ExploreTaskModel.instance:getTaskList(0):setList(slot5.getRewardConfig(slot6, slot0.viewParam.id, slot0._episodeCoList[slot1].id))
+	ExploreTaskModel.instance:getTaskList(0):setList(slot6(slot6, slot0.viewParam.id, slot0._episodeCoList[slot1].id))
 
 	for slot6 = 1, #slot0._btns do
 		ZProj.UGUIHelper.SetColorAlpha(slot0._btns[slot6][1], slot6 == slot1 and 1 or 0.5)

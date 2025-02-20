@@ -3,18 +3,25 @@ module("modules.logic.activity.view.ActivityMainBtnItem", package.seeall)
 slot0 = class("ActivityMainBtnItem", LuaCompBase)
 
 function slot0.init(slot0, slot1, slot2)
+	slot0:__onInit()
+
 	slot0._centerId = slot1
 	slot0._centerCo = ActivityConfig.instance:getActivityCenterCo(slot1)
 	slot0.go = gohelper.cloneInPlace(slot2)
 
 	gohelper.setActive(slot0.go, true)
 
+	slot0._imgGo = gohelper.findChild(slot0.go, "bg")
+	slot0._imgitem = gohelper.findChildImage(slot0._imgGo, "")
 	slot0._imgitem = gohelper.findChildImage(slot0.go, "bg")
-	slot0._btnitem = gohelper.getClick(gohelper.findChild(slot0.go, "bg"))
+	slot0._btnitem = gohelper.getClick(slot0._imgGo)
+
+	slot0:_initReddotitem(slot0.go)
+
 	slot0._reddotitem = gohelper.findChild(slot0.go, "go_activityreddot")
 
-	slot0:_refreshItem()
 	slot0:addEvent()
+	slot0:_refreshItem()
 end
 
 function slot0.addEvent(slot0)
@@ -46,31 +53,154 @@ function slot0.openActivityBeginnerView(slot0)
 end
 
 function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, slot0._centerCo.icon)
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, slot0._centerCo.icon, true)
+	slot0._redDot:refreshDot()
+end
+
+function slot0._showRedDotType(slot0, slot1, slot2)
+	slot1.show = true
+
+	slot1:showRedDot(ActivityConfig.instance:getActivityCo(slot2).redDotId ~= 0 and RedDotConfig.instance:getRedDotCO(slot4).style or RedDotEnum.Style.Normal)
+end
+
+function slot0.getActivityShowRedDotData(slot0, slot1)
+	return PlayerPrefsHelper.getString(PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId), "")
+end
+
+function slot0.destroy(slot0)
+	slot0:removeEvent()
+	gohelper.destroy(slot0.go)
+	slot0:__onDispose()
+end
+
+function slot0.getSortPriority(slot0)
+	return slot0._centerCo.sortPriority
+end
+
+function slot0.isShowRedDot(slot0)
+	return slot0._redDot.show
+end
+
+function slot0._initReddotitem(slot0, slot1)
+	if slot0._centerCo.id == ActivityEnum.ActivityType.Welfare then
+		slot0._redDot = RedDotController.instance:addRedDot(gohelper.findChild(slot1, "go_activityreddot"), tonumber(RedDotConfig.instance:getRedDotCO(slot0._centerCo.reddotid).parent), false, slot0._onRefreshDot_Welfare, slot0)
+	else
+		slot0._redDot = RedDotController.instance:addRedDot(slot2, slot3, false, slot0._onRefreshDot_ActivityBeginner, slot0)
+	end
+
+	return
+
+	for slot8 = 1, gohelper.findChild(slot1, "go_activityreddot/#go_special_reds").transform.childCount do
+		gohelper.setActive(slot3:GetChild(slot8 - 1).gameObject, false)
+	end
+
+	slot5 = nil
 
 	if slot0._centerCo.id == ActivityEnum.ActivityType.Welfare then
-		RedDotController.instance:addRedDot(slot0._reddotitem, tonumber(RedDotConfig.instance:getRedDotCO(slot0._centerCo.reddotid).parent), nil, slot0._safeCheckActivityWelfareRedDot, slot0)
+		slot0._redDot = RedDotController.instance:addRedDotTag(gohelper.findChild(slot2, "#go_welfare_red"), tonumber(RedDotConfig.instance:getRedDotCO(slot0._centerCo.reddotid).parent), false, slot0._onRefreshDot_Welfare, slot0)
 	else
-		RedDotController.instance:addRedDot(slot0._reddotitem, tonumber(slot1), nil, slot0._safeCheckActivityShowRedDotData, slot0)
+		slot0._redDot = RedDotController.instance:addRedDotTag(gohelper.findChild(slot2, "#go_activity_beginner_red"), slot6, false, slot0._onRefreshDot_ActivityBeginner, slot0)
+	end
+
+	slot0._btnitem2 = gohelper.getClick(slot5)
+end
+
+function slot0._onRefreshDot_Welfare(slot0, slot1)
+	slot0._curActId = nil
+	slot2, slot3 = pcall(slot1.dotId and slot0._checkRed_Welfare or slot0._checkActivityWelfareRedDot, slot0, slot1)
+
+	if not slot2 then
+		logError(string.format("ActivityMainBtnItem:_checkRed_Welfare actId:%s error:%s", slot0._curActId, slot3))
 	end
 end
 
-function slot0._safeCheckActivityWelfareRedDot(slot0, slot1)
+function slot0._onRefreshDot_ActivityBeginner(slot0, slot1)
 	slot0._curActId = nil
-	slot2, slot3 = pcall(slot0._checkActivityWelfareRedDot, slot0, slot1)
+	slot2, slot3 = pcall(slot1.dotId and slot0._checkRed_ActivityBeginner or slot0._checkActivityShowRedDotData, slot0, slot1)
 
 	if not slot2 then
-		logError(string.format("ActivityMainBtnItem:_safeCheckActivityWelfareRedDot actId:%s error:%s", slot0._curActId, slot3))
+		logError(string.format("ActivityMainBtnItem:_checkRed_ActivityBeginner actId:%s error:%s", slot0._curActId, slot3))
 	end
 end
 
-function slot0._safeCheckActivityShowRedDotData(slot0, slot1)
-	slot0._curActId = nil
-	slot2, slot3 = pcall(slot0._checkActivityShowRedDotData, slot0, slot1)
+function slot0._checkRed_ActivityBeginner(slot0, slot1)
+	slot2 = slot0:_checkIsShowRed_ActivityBeginner(slot1.dotId, 0)
+	slot1.show = slot2
 
-	if not slot2 then
-		logError(string.format("ActivityMainBtnItem:_safeCheckActivityShowRedDotData actId:%s error:%s", slot0._curActId, slot3))
+	gohelper.setActive(slot1.go, slot2)
+	gohelper.setActive(slot0._imgGo, not slot2)
+end
+
+function slot0._checkRed_Welfare(slot0, slot1)
+	slot2 = slot0:_checkIsShowRed_Welfare(slot1.dotId, 0)
+	slot1.show = slot2
+
+	gohelper.setActive(slot1.go, slot2)
+	gohelper.setActive(slot0._imgGo, not slot2)
+end
+
+function slot0._checkIsShowRed_Welfare(slot0, slot1, slot2)
+	if RedDotModel.instance:isDotShow(slot1, slot2 or 0) then
+		return true
 	end
+
+	for slot7, slot8 in pairs(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)) do
+		slot0._curActId = slot8
+
+		if slot8 == ActivityEnum.Activity.StoryShow and not TaskModel.instance:isFinishAllNoviceTask() and string.nilorempty(slot0:getActivityShowRedDotData(slot8)) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.ClassShow and not TeachNoteModel.instance:isFinalRewardGet() and string.nilorempty(slot0:getActivityShowRedDotData(slot8)) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function slot0._checkIsShowRed_ActivityBeginner(slot0, slot1, slot2)
+	if RedDotModel.instance:isDotShow(slot1, slot2 or 0) then
+		return true
+	end
+
+	for slot7, slot8 in pairs(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)) do
+		slot0._curActId = slot8
+
+		if slot8 == DoubleDropModel.instance:getActId() and string.nilorempty(slot0:getActivityShowRedDotData(slot8)) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.DreamShow and TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow) and slot9[1] and slot10.config and slot10.finishCount < slot10.config.maxFinishCount and string.nilorempty(slot0:getActivityShowRedDotData(slot8)) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.Activity1_7WarmUp and Activity125Controller.instance:checkActRed(slot8) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(slot8) then
+			return true
+		end
+
+		if (slot8 == ActivityEnum.Activity.Activity1_9WarmUp or slot8 == ActivityEnum.Activity.V2a0_WarmUp or slot8 == ActivityEnum.Activity.V2a1_WarmUp or slot8 == ActivityEnum.Activity.V2a2_WarmUp or slot8 == ActivityEnum.Activity.V2a3_WarmUp) and Activity125Controller.instance:checkActRed2(slot8) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.Activity1_5WarmUp and Activity146Controller.instance:isActFirstEnterToday() and (not Activity146Model.instance:isAllEpisodeFinish() or Activity146Model.instance:isHasEpisodeCanReceiveReward()) then
+			return true
+		end
+
+		if slot8 == ActivityEnum.Activity.V2a2_TurnBack_H5 and ActivityBeginnerController.instance:checkFirstEnter(slot8) then
+			return true
+		end
+
+		if slot8 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(slot8) then
+			return true
+		end
+	end
+
+	return false
 end
 
 function slot0._checkActivityShowRedDotData(slot0, slot1)
@@ -86,14 +216,10 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
-			if slot7 == ActivityEnum.Activity.DreamShow then
-				slot8 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+			if slot7 == ActivityEnum.Activity.DreamShow and TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow) and slot8[1] and slot9.config and slot9.finishCount < slot9.config.maxFinishCount and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
+				slot0:_showRedDotType(slot1, slot7)
 
-				if slot8[1].finishCount < slot8[1].config.maxFinishCount and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
-					slot0:_showRedDotType(slot1, slot7)
-
-					return
-				end
+				return
 			end
 
 			if slot7 == ActivityEnum.Activity.WeekWalkDeepShow and ActivityModel.instance:getActivityInfo()[slot7]:isNewStageOpen() then
@@ -114,7 +240,7 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
-			if (slot7 == ActivityEnum.Activity.Activity1_9WarmUp or slot7 == ActivityEnum.Activity.V2a0_WarmUp or slot7 == ActivityEnum.Activity.V2a1_WarmUp or slot7 == ActivityEnum.Activity.V2a2_WarmUp) and Activity125Controller.instance:checkActRed2(slot7) then
+			if (slot7 == ActivityEnum.Activity.Activity1_9WarmUp or slot7 == ActivityEnum.Activity.V2a0_WarmUp or slot7 == ActivityEnum.Activity.V2a1_WarmUp or slot7 == ActivityEnum.Activity.V2a2_WarmUp or slot7 == ActivityEnum.Activity.V2a3_WarmUp) and Activity125Controller.instance:checkActRed2(slot7) then
 				slot0:_showRedDotType(slot1, slot7)
 
 				return
@@ -147,27 +273,6 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 	end
 end
 
-function slot0._showRedDotType(slot0, slot1, slot2)
-	slot1.show = true
-
-	slot1:showRedDot(ActivityConfig.instance:getActivityCo(slot2).redDotId ~= 0 and RedDotConfig.instance:getRedDotCO(slot4).style or RedDotEnum.Style.Normal)
-end
-
-function slot0.getActivityShowRedDotData(slot0, slot1)
-	return PlayerPrefsHelper.getString(PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId), "")
-end
-
-function slot0.destroy(slot0)
-	slot0:removeEvent()
-	gohelper.setActive(slot0.go, false)
-	gohelper.destroy(slot0.go)
-
-	slot0.go = nil
-	slot0._imgitem = nil
-	slot0._btnitem = nil
-	slot0._reddotitem = nil
-end
-
 function slot0._checkActivityWelfareRedDot(slot0, slot1)
 	slot1:defaultRefreshDot()
 
@@ -188,10 +293,6 @@ function slot0._checkActivityWelfareRedDot(slot0, slot1)
 			end
 		end
 	end
-end
-
-function slot0.getSortPriority(slot0)
-	return slot0._centerCo.sortPriority
 end
 
 return slot0

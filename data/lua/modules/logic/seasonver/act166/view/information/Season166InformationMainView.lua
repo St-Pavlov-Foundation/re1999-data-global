@@ -82,9 +82,9 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.refreshReport(slot0)
-	slot5 = #slot0.reportItems
+	slot5 = #(Season166Config.instance:getSeasonInfos(slot0.actId) or {})
 
-	for slot5 = 1, math.max(#(Season166Config.instance:getSeasonInfos(slot0.actId) or {}), slot5) do
+	for slot5 = 1, math.max(slot5, #slot0.reportItems) do
 		if not slot0.reportItems[slot5] and gohelper.findChild(slot0.viewGO, string.format("Report%s", slot5)) then
 			slot0.reportItems[slot5] = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, Season166InformationReportItem)
 		end

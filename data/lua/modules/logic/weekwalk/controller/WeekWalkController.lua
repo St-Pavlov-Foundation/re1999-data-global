@@ -110,7 +110,7 @@ function slot0.openWeekWalkDeepLayerNoticeView(slot0, slot1, slot2)
 end
 
 function slot0.checkOpenWeekWalkDeepLayerNoticeView(slot0, slot1, slot2)
-	if GuideController.instance:isForbidGuides() or GuideModel.instance:isGuideFinish(GuideEnum.GuideId.WeekWalkDeep) then
+	if WeekWalkEnum.FirstDeepLayer <= WeekWalkModel.instance:getMaxLayerId() or GuideController.instance:isForbidGuides() or GuideModel.instance:isGuideFinish(GuideEnum.GuideId.WeekWalkDeep) then
 		slot0:openWeekWalkDeepLayerNoticeView()
 	end
 end

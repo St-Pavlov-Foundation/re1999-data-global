@@ -102,12 +102,12 @@ slot0.FilterType = {
 	WeekWalk = 6
 }
 slot0.AttrId = {
-	Cri = 201,
+	PoisonAddRate = 301,
 	Mdefense = 104,
 	Recri = 202,
 	DropDmg = 206,
 	Heal = 212,
-	Technic = 105,
+	DefenseBase = 603,
 	PlayAddRate = 215,
 	NormalSkillRate = 214,
 	AddDmg = 205,
@@ -116,9 +116,17 @@ slot0.AttrId = {
 	CriDmg = 203,
 	PlayDropRate = 216,
 	CriDef = 204,
+	HpBase = 601,
 	Clutch = 211,
+	Technic = 105,
+	MdefenseBase = 604,
+	AttackBase = 602,
 	Absorb = 210,
 	Revive = 209,
+	ReboundDmg = 218,
+	ExtraDmg = 219,
+	ReuseDmg = 220,
+	Cri = 201,
 	CurrentHp = 100,
 	Hp = 101,
 	LostHp = 99,
@@ -179,6 +187,9 @@ slot0.skillIndex = {
 	Skill2 = 2,
 	SkillEx = 3,
 	Skill1 = 1
+}
+slot0.DefaultSkinId = {
+	DuDuGu = 310401
 }
 
 setmetatable(slot0.TalentTxtByHeroType, {

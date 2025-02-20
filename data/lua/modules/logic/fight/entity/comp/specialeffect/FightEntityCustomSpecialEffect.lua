@@ -3,7 +3,7 @@ module("modules.logic.fight.entity.comp.specialeffect.FightEntityCustomSpecialEf
 slot0 = class("FightEntityCustomSpecialEffect", FightEntitySpecialEffectBase)
 
 function slot0.initClass(slot0)
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getList()) do
+	for slot5, slot6 in pairs(FightDataHelper.entityMgr:getAllEntityMO()) do
 		if slot6.modelId == 3079 then
 			slot0:registClass(FightEntitySpecialEffect3079_Buff)
 

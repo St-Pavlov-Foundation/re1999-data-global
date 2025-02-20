@@ -16,9 +16,35 @@ function slot0.createMap(slot0)
 
 	uv0.super.createMap(slot0)
 	TaskDispatcher.runDelay(slot0.focusToTarget, slot0, RougeMapEnum.PathSelectMapWaitTime)
+
+	slot0.openViewDone = ViewMgr.instance:isOpen(ViewName.RougeMapView)
+
+	if not ViewMgr.instance:isOpen(ViewName.RougeMapView) then
+		slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
+	end
+end
+
+function slot0.onOpenView(slot0, slot1)
+	if slot1 == ViewName.RougeMapView then
+		slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
+
+		slot0.openViewDone = true
+
+		slot0:_focusToTarget()
+	end
 end
 
 function slot0.focusToTarget(slot0)
+	slot0.delayDone = true
+
+	slot0:_focusToTarget()
+end
+
+function slot0._focusToTarget(slot0)
+	if not slot0.delayDone or not slot0.openViewDone then
+		return
+	end
+
 	slot0:clearTween()
 
 	slot1 = RougeMapModel.instance:getPathSelectCo()

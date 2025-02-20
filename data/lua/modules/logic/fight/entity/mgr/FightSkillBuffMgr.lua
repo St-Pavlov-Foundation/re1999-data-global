@@ -42,19 +42,35 @@ function slot0.hasPlayBuffEffect(slot0, slot1, slot2, slot3)
 	return false
 end
 
+slot0.StackBuffFeatureList = {
+	FightEnum.BuffType_DeadlyPoison
+}
+
 function slot0.buffIsStackerBuff(slot0, slot1)
-	if lua_skill_bufftype.configDict[slot1.typeId] and (FightStrUtil.instance:getSplitCache(slot2.includeTypes, "#")[1] == FightEnum.BuffIncludeTypes.Stacked or slot4 == FightEnum.BuffIncludeTypes.Stacked12 or slot4 == FightEnum.BuffIncludeTypes.Stacked15 or slot4 == FightEnum.BuffIncludeTypes.Stacked14) then
-		return true, slot4
+	if not slot1 then
+		return false
+	end
+
+	for slot6, slot7 in ipairs(uv0.StackBuffFeatureList) do
+		if FightConfig.instance:hasBuffFeature(slot1.id, slot7) then
+			return true, FightStrUtil.instance:getSplitCache(lua_skill_bufftype.configDict[slot1.typeId].includeTypes, "#")[1]
+		end
+	end
+
+	if lua_skill_bufftype.configDict[slot1.typeId] and (FightStrUtil.instance:getSplitCache(slot3.includeTypes, "#")[1] == FightEnum.BuffIncludeTypes.Stacked or slot5 == FightEnum.BuffIncludeTypes.Stacked12 or slot5 == FightEnum.BuffIncludeTypes.Stacked15 or slot5 == FightEnum.BuffIncludeTypes.Stacked14) then
+		return true, slot5
 	end
 end
 
+slot0.tempSignKeyDict = {}
+
 function slot0.dealStackerBuff(slot0, slot1)
-	slot2 = {}
+	tabletool.clear(uv0.tempSignKeyDict)
 
 	for slot6 = #slot1, 1, -1 do
-		if lua_skill_buff.configDict[slot1[slot6].buffId] and lua_skill_bufftype.configDict[slot8.typeId] and slot0:buffIsStackerBuff(slot8) then
-			if not slot2[slot8.features .. "__" .. slot8.typeId] then
-				slot2[slot10] = true
+		if lua_skill_buff.configDict[slot1[slot6].buffId] and slot0:buffIsStackerBuff(slot8) then
+			if not slot2[FightBuffHelper.getBuffMoSignKey(slot7)] then
+				slot2[slot9] = true
 			else
 				table.remove(slot1, slot6)
 			end
@@ -63,18 +79,15 @@ function slot0.dealStackerBuff(slot0, slot1)
 end
 
 function slot0.getStackedCount(slot0, slot1, slot2)
-	if not FightEntityModel.instance:getById(slot1) then
+	if not slot0:buffIsStackerBuff(lua_skill_buff.configDict[slot2.buffId]) then
 		return 1
 	end
 
-	slot5 = lua_skill_buff.configDict[slot2]
-	slot6 = slot5.features .. "__" .. slot5.typeId
-
-	if slot3.buffModel and slot3.buffModel:getList() then
-		for slot11, slot12 in ipairs(slot4) do
-			if lua_skill_buff.configDict[slot4[slot11].buffId] and lua_skill_bufftype.configDict[slot14.typeId] and slot0:buffIsStackerBuff(slot14) and slot6 == slot14.features .. "__" .. slot14.typeId then
-				if slot13.layer and slot13.layer ~= 0 then
-					slot7 = 0 + 1 + slot13.layer - 1
+	if FightHelper.getEntity(slot1):getMO():getBuffDic() then
+		for slot11, slot12 in pairs(slot5) do
+			if FightBuffHelper.getBuffMoSignKey(slot2) == FightBuffHelper.getBuffMoSignKey(slot12) then
+				if slot12.layer and slot12.layer ~= 0 then
+					slot7 = 0 + 1 + slot12.layer - 1
 				end
 			end
 		end

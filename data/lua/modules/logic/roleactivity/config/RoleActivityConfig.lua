@@ -43,7 +43,7 @@ function slot0.getStoryLevelList(slot0, slot1)
 end
 
 function slot0.getBattleLevelList(slot0, slot1)
-	slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0._enterConfig.configDict[slot1].episodeGroupId)
+	slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0._enterConfig.configDict[slot1].episodeGroupId) or {}
 
 	table.sort(slot3, uv0.SortById)
 

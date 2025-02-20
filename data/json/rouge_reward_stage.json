@@ -100,8 +100,8 @@
     "stage": 9,
     "preStage": 8,
     "bigRewardId": 6,
-    "icon": "",
-    "name": "",
+    "icon": "rouge_reward_reward6",
+    "name": "language_10061456",
     "lockName": "language_10043445",
     "jump": "",
     "openTime": "2025-3-1 05:00:00",
@@ -114,7 +114,7 @@
     "bigRewardId": 7,
     "icon": "",
     "name": "",
-    "lockName": "language_10043448",
+    "lockName": "language_10043450",
     "jump": "",
     "openTime": "2025-4-1 05:00:00",
     "pointLimit": 160
@@ -138,7 +138,7 @@
     "bigRewardId": 9,
     "icon": "",
     "name": "",
-    "lockName": "language_10043450",
+    "lockName": "language_10043448",
     "jump": "",
     "openTime": "2025-6-1 05:00:00",
     "pointLimit": 192

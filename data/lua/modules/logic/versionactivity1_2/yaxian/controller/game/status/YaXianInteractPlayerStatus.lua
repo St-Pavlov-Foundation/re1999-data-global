@@ -71,10 +71,10 @@ function slot0.handleInteractMoving(slot0, slot1)
 		return
 	end
 
-	slot7 = slot3.posX
-	slot8 = slot3.posY
+	slot7 = slot2.posY
+	slot8 = slot3.posX
 
-	for slot7, slot8 in YaXianGameHelper.getPassPosGenerator(slot2.posX, slot2.posY, slot7, slot8) do
+	for slot7, slot8 in YaXianGameHelper.getPassPosGenerator(slot2.posX, slot7, slot8, slot3.posY) do
 		if slot0.canWalkPos2Direction[YaXianGameHelper.getPosHashKey(slot7, slot8)] then
 			if slot1:isFighting() then
 				slot0:addStatus(YaXianGameEnum.IconStatus.Fight, slot9)

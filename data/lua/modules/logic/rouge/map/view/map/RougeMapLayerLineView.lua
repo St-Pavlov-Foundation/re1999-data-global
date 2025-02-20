@@ -78,9 +78,9 @@ function slot0.refreshLayer(slot0)
 
 	recthelper.setAnchor(slot0.rectTrStart, slot1, slot2)
 
-	slot3, slot6 = RougeMapHelper.getPos(slot0.pathSelectCo.endPos)
+	slot6, slot7 = RougeMapHelper.getPos(slot0.pathSelectCo.endPos)
 
-	recthelper.setAnchor(slot0.rectTrEnd, slot3, slot6)
+	recthelper.setAnchor(slot0.rectTrEnd, slot6, slot7)
 
 	for slot6, slot7 in ipairs(slot0.nextLayerList) do
 		slot8 = lua_rouge_layer.configDict[slot7]

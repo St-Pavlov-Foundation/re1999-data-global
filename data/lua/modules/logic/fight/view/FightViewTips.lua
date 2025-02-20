@@ -197,13 +197,16 @@ function slot0._buildLinkTag(slot0, slot1)
 	return string.gsub(string.gsub(slot1, "%[(.-)%]", "<link=\"%1\">[%1]</link>"), "%【(.-)%】", "<link=\"%1\">【%1】</link>")
 end
 
-function slot0.getCommonBuffTipScrollAnchor(slot0, slot1, slot2)
-	slot3 = slot0.rectTrScrollBuff
-	slot6 = CameraMgr.instance:getUICamera()
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
-	slot7, slot8 = recthelper.worldPosToAnchorPos2(slot3.position, slot1, slot6, slot6)
+slot0.Interval = 10
 
-	recthelper.setAnchor(slot2, slot7 - recthelper.getWidth(slot3) / 2, slot8 + math.min(recthelper.getHeight(slot3), recthelper.getHeight(slot0.rectTrBuffContent)) / 2)
+function slot0.getCommonBuffTipScrollAnchor(slot0, slot1, slot2)
+	slot5 = slot0.rectTrScrollBuff
+	slot7, slot8 = recthelper.uiPosToScreenPos2(slot5)
+	slot9, slot10 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(slot7, slot8, slot1, CameraMgr.instance:getUICamera(), nil, )
+	slot2.pivot = CommonBuffTipEnum.Pivot.Right
+	slot15 = slot9
+
+	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= GameUtil.getViewSize() / 2 + slot9 - recthelper.getWidth(slot5) / 2 - uv0.Interval and slot15 - slot11 - uv0.Interval or slot15 + slot11 + uv0.Interval + slot13, slot10 + math.min(recthelper.getHeight(slot5), recthelper.getHeight(slot0.rectTrBuffContent)) / 2)
 end
 
 function slot0._updateBuffs(slot0, slot1)
@@ -218,6 +221,7 @@ end
 function slot0.onClose(slot0)
 	TaskDispatcher.cancelTask(slot0._correctPos, slot0)
 	TaskDispatcher.cancelTask(slot0._hidePrompt, slot0)
+	TaskDispatcher.cancelTask(slot0._playPromptCloseAnim, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnBuffClick, slot0._onBuffClick, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnPassiveSkillClick, slot0._onPassiveSkillClick, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ShowCardSkillTips, slot0._showCardSkillTips, slot0)
@@ -268,25 +272,26 @@ function slot0._onPassiveSkillClick(slot0, slot1, slot2, slot3, slot4, slot5)
 end
 
 function slot0._onBuffClick(slot0, slot1, slot2, slot3, slot4)
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		logError("get EntityMo fail, entityId : " .. tostring(slot1))
 
 		return
 	end
 
 	if isDebugBuild then
-		slot7 = {}
+		slot6 = {}
+		slot11 = slot5
 
-		for slot11, slot12 in ipairs(slot5.buffModel and slot5.buffModel:getList()) do
-			table.insert(slot7, string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", slot12.buffId, slot12.count, slot12.duration, slot13.name, slot13.desc, slot13.isGoodBuff == 1 and "good" or "bad", lua_skill_buff.configDict[slot12.buffId].isNoShow == 0 and "show" or "noShow"))
+		for slot10, slot11 in pairs(slot5.getBuffDic(slot11)) do
+			table.insert(slot6, string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", slot11.buffId, slot11.count, slot11.duration, slot12.name, slot12.desc, slot12.isGoodBuff == 1 and "good" or "bad", lua_skill_buff.configDict[slot11.buffId].isNoShow == 0 and "show" or "noShow"))
 		end
 
-		logNormal(string.format("buff list %d :\n%s", #slot7, table.concat(slot7, "\n")))
+		logNormal(string.format("buff list %d :\n%s", #slot6, table.concat(slot6, "\n")))
 	end
 
 	slot6 = true
 
-	for slot11, slot12 in ipairs(slot5.buffModel and slot5.buffModel:getList()) do
+	for slot11, slot12 in pairs(slot5:getBuffDic()) do
 		if lua_skill_buff.configDict[slot12.buffId] and slot13.isNoShow == 0 then
 			slot6 = false
 
@@ -346,6 +351,7 @@ end
 
 function slot0._onShowFightPrompt(slot0, slot1, slot2)
 	TaskDispatcher.cancelTask(slot0._hidePrompt, slot0)
+	TaskDispatcher.cancelTask(slot0._playPromptCloseAnim, slot0)
 
 	slot3 = lua_fight_prompt.configDict[slot1]
 
@@ -357,12 +363,17 @@ function slot0._onShowFightPrompt(slot0, slot1, slot2)
 	slot0._prompAni:Play("open", 0, 0)
 
 	if slot2 then
-		TaskDispatcher.runDelay(slot0._hidePrompt, slot0, slot2 / 1000)
+		TaskDispatcher.runDelay(slot0._playPromptCloseAnim, slot0, slot2 / 1000)
 	end
 end
 
-function slot0._hidePrompt(slot0)
+function slot0._playPromptCloseAnim(slot0)
 	slot0._prompAni:Play("close", 0, 0)
+	TaskDispatcher.runDelay(slot0._hidePrompt, slot0, 0.0005)
+end
+
+function slot0._hidePrompt(slot0)
+	gohelper.setActive(slot0._gofightspecialtip, false)
 end
 
 function slot0._onShowSeasonGuardIntro(slot0, slot1, slot2, slot3)

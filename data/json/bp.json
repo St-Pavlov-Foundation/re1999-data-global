@@ -214,5 +214,23 @@
     "bpviewpos": "",
     "showBonus": "5#308203#1#1|1#140001#5|1#481010#2|9#1000#1|2#21#90|1#120012#25|1#481007#9|1#481006#6|1#120011#20|9#1003#150|2#3#225000|2#5#375000",
     "isSp": true
+  },
+  {
+    "bpId": 13,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#171303#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10061423",
+    "bpSkinNametxt": "language_10061758",
+    "bpSkinEnNametxt": "Dueling<br>Connoisseurs",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "5#304304#1#1|1#140001#5|1#481010#2|9#1000#1|1#620103#3|1#620102#40|2#21#90|1#120012#25|1#481007#9|1#481006#6|1#120011#20|9#1003#150|2#3#225000|2#5#375000",
+    "isSp": false
   }
 ]

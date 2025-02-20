@@ -57,8 +57,9 @@ end
 
 function slot0.getInfoList(slot0, slot1)
 	slot2 = {}
+	slot7 = slot0
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
+	for slot6, slot7 in ipairs(slot0.getList(slot7)) do
 		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot7.isTitle and 0 or 1, slot8 and 90 or 298, nil))
 	end
 

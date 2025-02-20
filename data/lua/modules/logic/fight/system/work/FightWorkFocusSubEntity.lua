@@ -8,7 +8,7 @@ function slot0.ctor(slot0, slot1)
 end
 
 function slot0.onStart(slot0)
-	if FightEntityModel.instance:isSub(slot0._entityMO.id) then
+	if FightDataHelper.entityMgr:isSub(slot0._entityMO.id) then
 		for slot6, slot7 in ipairs(slot0.context.subEntityList) do
 			if slot7.id == slot0._entityId then
 				slot0:onDone(true)

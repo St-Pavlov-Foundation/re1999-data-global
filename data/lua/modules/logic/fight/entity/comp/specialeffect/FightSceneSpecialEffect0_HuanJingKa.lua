@@ -96,7 +96,7 @@ function slot0._detectHaveBuff(slot0)
 
 	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
 		if slot7:getMO() then
-			for slot13, slot14 in ipairs(slot8:getBuffList()) do
+			for slot13, slot14 in pairs(slot8:getBuffDic()) do
 				if slot0:_isEffectBuff(slot14.buffId) then
 					slot1 = true
 

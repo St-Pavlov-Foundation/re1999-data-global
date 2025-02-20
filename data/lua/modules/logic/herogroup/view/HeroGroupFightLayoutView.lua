@@ -23,8 +23,8 @@ end
 function slot0._editableInitView(slot0)
 	slot0.goHeroGroupContain = gohelper.findChild(slot0.viewGO, "herogroupcontain")
 	slot0.heroGroupContainRectTr = slot0.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
-	slot4 = UnityEngine.Animator
-	slot0.containerAnimator = slot0.goHeroGroupContain:GetComponent(typeof(slot4))
+	slot4 = typeof
+	slot0.containerAnimator = slot0.goHeroGroupContain:GetComponent(slot4(UnityEngine.Animator))
 	slot0.heroItemList = {}
 
 	for slot4 = 1, 4 do

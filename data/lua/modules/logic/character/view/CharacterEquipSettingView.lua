@@ -246,8 +246,9 @@ function slot0.refreshEquipSkillDesc(slot0)
 	else
 		gohelper.setActive(slot0._gobaseskill.gameObject, true)
 
-		slot8 = slot0.selectedEquipMo.config.skillName
-		slot0._txtbasedestitle.text = string.format("<%s>%s</color>", slot0:getSkillNameColor(EquipHelper.getEquipSkillCareer(slot0.selectedEquipMo.config.id, slot0.selectedEquipMo.refineLv)), slot8)
+		slot8 = slot0:getSkillNameColor(EquipHelper.getEquipSkillCareer(slot0.selectedEquipMo.config.id, slot0.selectedEquipMo.refineLv))
+		slot9 = slot0.selectedEquipMo.config.skillName
+		slot0._txtbasedestitle.text = string.format("<%s>%s</color>", slot8, slot9)
 		slot4 = nil
 
 		for slot8, slot9 in ipairs(slot1) do

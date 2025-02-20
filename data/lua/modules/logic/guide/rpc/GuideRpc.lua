@@ -28,7 +28,9 @@ function slot0.onReceiveFinishGuideReply(slot0, slot1, slot2)
 end
 
 function slot0.onReceiveUpdateGuidePush(slot0, slot1, slot2)
-	GuideModel.instance:updateGuideList(slot2.guideInfos)
+	slot6 = slot2.guideInfos
+
+	GuideModel.instance:updateGuideList(slot6)
 
 	for slot6 = 1, #slot2.guideInfos do
 		slot7 = slot2.guideInfos[slot6]

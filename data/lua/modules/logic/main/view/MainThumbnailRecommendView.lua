@@ -209,7 +209,7 @@ function slot0._initPages(slot0, slot1)
 		end
 	end
 
-	table.sort(slot2, slot0._sort)
+	slot0:sortPage(slot2)
 
 	for slot9 = 1, CommonConfig.instance:getConstNum(ConstEnum.MainThumbnailRecommendItemCount) or 14 do
 		if slot2[slot9] then
@@ -229,6 +229,37 @@ end
 
 function slot0._sort(slot0, slot1)
 	return slot0.order < slot1.order
+end
+
+function slot0.sortPage(slot0, slot1)
+	slot0:_cacheConfigGroupData(slot1)
+	table.sort(slot1, function (slot0, slot1)
+		return uv0:_tabSortGroupFunction(slot0, slot1)
+	end)
+
+	slot0._cacheConfigGroupDic = {}
+	slot0._cacheConfigOrderDic = {}
+end
+
+function slot0._cacheConfigGroupData(slot0, slot1)
+	slot0._cacheConfigGroupDic = {}
+	slot0._cacheConfigOrderDic = {}
+
+	if not slot1 or #slot1 <= 0 then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot1) do
+		slot0._cacheConfigGroupDic[slot6.id], slot0._cacheConfigOrderDic[slot6.id] = StoreHelper.getRecommendStoreGroupAndOrder(slot6, false)
+	end
+end
+
+function slot0._tabSortGroupFunction(slot0, slot1, slot2)
+	if slot0._cacheConfigGroupDic[slot1.id] == slot0._cacheConfigGroupDic[slot2.id] then
+		return slot0._cacheConfigOrderDic[slot1.id] < slot0._cacheConfigOrderDic[slot2.id]
+	end
+
+	return slot3 < slot4
 end
 
 function slot0._checkRelations(slot0, slot1, slot2, slot3)

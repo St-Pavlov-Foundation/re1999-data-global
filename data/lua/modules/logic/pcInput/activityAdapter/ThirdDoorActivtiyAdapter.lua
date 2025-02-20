@@ -6,6 +6,10 @@ slot0.keytoFunction = {
 		ViewMgr.instance:openView(ViewName.ExploreMapView)
 	end,
 	[6] = function ()
+		if not ExploreSimpleModel.instance.isShowBag then
+			return
+		end
+
 		if ViewMgr.instance:isOpen(ViewName.ExploreBackpackView) then
 			ViewMgr.instance:closeView(ViewName.ExploreBackpackView)
 		else

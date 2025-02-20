@@ -285,10 +285,7 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 			slot0._aniFlow:addWork(WorkWaitSeconds.New(uv3 / FightModel.instance:getSpeed()))
 			slot0._aniFlow:addWork(FunctionWork.New(slot0._ballShowEffect, slot0))
 			slot0._aniFlow:addWork(FunctionWork.New(slot0._showNewball, slot0))
-
-			slot12 = FightModel.instance:getSpeed()
-
-			slot0._aniFlow:addWork(WorkWaitSeconds.New(uv4 / slot12))
+			slot0._aniFlow:addWork(WorkWaitSeconds.New(uv4 / FightModel.instance:getSpeed()))
 
 			slot8 = FlowParallel.New()
 
@@ -386,7 +383,7 @@ end
 
 function slot0._onBeforeEnterStepBehaviour(slot0)
 	if slot0._entity:getMO() then
-		for slot6, slot7 in ipairs(slot1:getBuffList()) do
+		for slot6, slot7 in pairs(slot1:getBuffDic()) do
 			slot0:_onBuffUpdate(slot0._entity.id, FightEnum.EffectType.BUFFADD, slot7.buffId, slot7.uid)
 		end
 	end

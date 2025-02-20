@@ -7,7 +7,7 @@ function slot0.onStart(slot0)
 end
 
 function slot0._startChangeCardEffect(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return

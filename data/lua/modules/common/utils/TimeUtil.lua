@@ -380,4 +380,42 @@ function slot0.isDstTime(slot0)
 	return os.date("*t", slot0).isdst
 end
 
+slot1 = 31536000
+
+function slot0.getFormatTime(slot0)
+	if not slot0 or slot0 <= 0 then
+		return "<1" .. luaLang("time_minute2")
+	end
+
+	if math.floor(slot0 / uv0) > 0 then
+		slot3 = math.floor(slot0 % uv0 / uv1.OneDaySecond)
+
+		if LangSettings.instance:isEn() then
+			slot2 = luaLang("time_year") .. " "
+		end
+
+		return slot1 .. slot2 .. slot3 .. luaLang("time_day")
+	end
+
+	slot2, slot3, slot4, slot5 = uv1.secondsToDDHHMMSS(slot0)
+
+	if slot2 > 0 then
+		if LangSettings.instance:isEn() then
+			slot6 = luaLang("time_day") .. " "
+		end
+
+		return slot2 .. slot6 .. slot3 .. luaLang("time_hour2")
+	elseif slot3 > 0 then
+		if LangSettings.instance:isEn() then
+			slot6 = luaLang("time_hour2") .. " "
+		end
+
+		return slot3 .. slot6 .. slot4 .. luaLang("time_minute2")
+	elseif slot4 > 0 then
+		return slot4 .. luaLang("time_minute2")
+	end
+
+	return "<1" .. luaLang("time_minute2")
+end
+
 return slot0

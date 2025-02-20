@@ -73,7 +73,7 @@ end
 
 function slot0._onBeforeEnterStepBehaviour(slot0)
 	if slot0._entity:getMO() then
-		for slot6, slot7 in ipairs(slot1:getBuffList()) do
+		for slot6, slot7 in pairs(slot1:getBuffDic()) do
 			slot0:_onBuffUpdate(slot0._entity.id, FightEnum.EffectType.BUFFADD, slot7.buffId, slot7.uid)
 		end
 	end

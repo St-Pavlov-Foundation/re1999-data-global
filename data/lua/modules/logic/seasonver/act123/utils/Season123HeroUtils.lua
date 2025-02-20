@@ -28,7 +28,9 @@ function slot0.createHeroMOByAssistMO(slot0, slot1)
 			table.insert(slot3.passiveSkillLevel, slot0.passiveSkillLevel[slot11])
 		end
 	else
-		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot4) do
+		slot12 = slot4
+
+		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot12) do
 			table.insert(slot3.passiveSkillLevel, slot12)
 		end
 	end
@@ -55,6 +57,10 @@ function slot0.createHeroMOByAssistMO(slot0, slot1)
 	slot9:setIsBalance(slot7)
 	slot9:setOtherPlayerIsOpenTalent(slot0.isOpenTalent)
 	slot9:setOtherPlayerTalentStyle(slot0.style)
+
+	slot9.destinyStoneMo = HeroDestinyStoneMO.New(slot0.heroId)
+
+	slot9.destinyStoneMo:refreshMo(slot0.destinyRank, slot0.destinyLevel, slot0.destinyStone, slot0.destinyStoneUnlock)
 
 	return slot9
 end

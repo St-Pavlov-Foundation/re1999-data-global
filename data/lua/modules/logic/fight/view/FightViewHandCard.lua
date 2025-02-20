@@ -172,10 +172,10 @@ function slot0.onClose(slot0)
 	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleMoveCardEnd, slot0.onControlRelease, slot0)
 	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelectLeft, slot0.selectLeftCard, slot0)
 
-	slot4 = PCInputEvent.NotifyBattleSelectRight
-	slot5 = slot0.selectRightCard
+	slot4 = PCInputController.instance
+	slot5 = PCInputEvent.NotifyBattleSelectRight
 
-	slot0:removeEventCb(PCInputController.instance, slot4, slot5, slot0)
+	slot0:removeEventCb(slot4, slot5, slot0.selectRightCard, slot0)
 
 	for slot4, slot5 in ipairs(slot0._handCardItemList) do
 		slot5:releaseSelf()
@@ -279,9 +279,15 @@ function slot0._onCardEndFlowDone(slot0)
 	slot1 = FightCardModel.instance:getHandCards()
 
 	FightCardModel.instance:coverCard(slot1)
-	FightDataMgr.instance:getHandCardDataMgr():coverHandCard(slot1)
+	FightDataHelper.coverData(slot1, FightLocalDataMgr.instance.handCardMgr:getHandCard())
+	FightDataHelper.coverData(slot1, FightDataHelper.handCardMgr:getHandCard())
 	slot0:_setBlockOperate(false)
 	slot0._cardEndFlow:unregisterDoneListener(slot0._onCardEndFlowDone, slot0)
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	FightRpc.instance:sendBeginRoundRequest(FightCardModel.instance:getCardOps())
 
 	if FightModel.instance:getVersion() >= 1 then
@@ -316,16 +322,15 @@ function slot0._refreshPrecisionShow(slot0)
 
 	gohelper.setActive(slot0._precisionFrame, false)
 
-	if FightDataHelper.stageMgr:isBaseStage() then
+	if FightDataHelper.stageMgr:isNormalStage() then
 		slot1 = {}
 
-		tabletool.addValues(slot1, FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide):getList())
+		FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, slot1)
 
-		slot6 = FightEnum.EntitySide.MySide
-		slot4 = FightEntityModel.instance:getSubModel(slot6)
-		slot5 = slot4
+		slot5 = FightEnum.EntitySide.MySide
+		slot6 = slot1
 
-		tabletool.addValues(slot1, slot4.getList(slot5))
+		FightDataHelper.entityMgr:getSubList(slot5, slot6)
 
 		for slot5, slot6 in ipairs(slot1) do
 			if slot6:hasBuffFeature(FightEnum.BuffFeature.PrecisionRegion) then
@@ -347,7 +352,7 @@ function slot0._detectPlayPrecisionEffect(slot0)
 			slot6 = slot5:getCardItem()
 
 			if slot4 == 1 then
-				if FightCardMOHelper.isPrecision(slot6._cardInfoMO) and slot0._precisionState then
+				if FightCardDataHelper.isPrecision(slot6._cardInfoMO) and slot0._precisionState then
 					slot6:showPrecisionEffect()
 				else
 					slot6:hidePrecisionEffect()
@@ -434,8 +439,13 @@ function slot0._toAutoPlayCard(slot0)
 		end
 
 		for slot5, slot6 in ipairs(slot1) do
-			slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.01))
-			slot0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New(slot6))
+			if slot6:isAssistBossPlayCard() then
+				slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.3))
+				slot0._autoPlayCardFlow:addWork(FightAutoPlayAssistBossCardWork.New(slot6))
+			else
+				slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.01))
+				slot0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New(slot6))
+			end
 		end
 
 		slot0._autoPlayCardFlow:addWork(FightAutoDetectForceEndWork.New())
@@ -479,7 +489,7 @@ function slot0._playHandCard(slot0, slot1, slot2, slot3)
 	FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 	slot0:_setBlockOperate(true)
 
-	slot5.playCanAddExpoint = FightCardMOHelper.playCanAddExpoint(slot4, slot5)
+	slot5.playCanAddExpoint = FightCardDataHelper.playCanAddExpoint(slot4, slot5)
 
 	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, FightCardModel.instance:playHandCardOp(slot1, slot2, slot5.skillId, slot5.uid, slot5))
 
@@ -517,7 +527,7 @@ function slot0._playHandCard(slot0, slot1, slot2, slot3)
 
 	slot8 = false
 
-	if FightCardMOHelper.isDiscard(slot5) then
+	if FightCardDataHelper.isDiscard(slot5) then
 		slot8 = true
 	end
 
@@ -678,7 +688,8 @@ end
 
 function slot0._onChangeOrRedealCardDone(slot0, slot1)
 	if slot1 then
-		slot2 = slot0:_filterInvalidCard(FightCardModel.instance:getHandCards())
+		slot6 = FightCardModel.instance:getHandCards()
+		slot2 = slot0:_filterInvalidCard(slot6)
 
 		for slot6, slot7 in ipairs(slot1) do
 			slot9 = slot7.cardInfo
@@ -952,7 +963,10 @@ function slot0._combineCards(slot0, slot1, slot2, slot3)
 			if FightCardModel.instance:getDistributeQueueLen() > 0 then
 				slot0:_nextDistributeCards(#slot1)
 			else
-				gohelper.destroy(gohelper.findChild(slot0._handCardGO, "CombineEffect"))
+				slot9 = slot0._handCardGO
+				slot10 = "CombineEffect"
+
+				gohelper.destroy(gohelper.findChild(slot9, slot10))
 
 				for slot9, slot10 in ipairs(slot1) do
 					table.insert({}, slot10.skillId)
@@ -993,6 +1007,7 @@ end
 
 function slot0._resetCard(slot0, slot1)
 	FightCardModel.instance:resetCardOps()
+	FightDataHelper.paTaMgr:resetOp()
 	FightController.instance:dispatchEvent(FightEvent.OnResetCard, slot1)
 
 	if slot0._cardPlayFlow.status == WorkStatus.Running then
@@ -1146,7 +1161,7 @@ function slot0._onDragEndFlowDone(slot0)
 	end
 
 	slot3 = slot0._dragBeginCards
-	slot3[slot1].moveCanAddExpoint = FightCardMOHelper.moveCanAddExpoint(slot3, slot3[slot1])
+	slot3[slot1].moveCanAddExpoint = FightCardDataHelper.moveCanAddExpoint(slot3, slot3[slot1])
 
 	if FightEnum.UniversalCard[slot3[slot1].skillId] and not FightCardModel.instance:getBeCombineCardMO() then
 		slot0:_updateNow()
@@ -1299,11 +1314,15 @@ function slot0.selectRightCard(slot0)
 end
 
 function slot0.OnKeyPlayCard(slot0, slot1)
+	if ViewMgr.instance:IsPopUpViewOpen() then
+		return
+	end
+
 	slot0:_longPressHandCardEnd()
 
-	for slot5, slot6 in pairs(slot0._handCardItemList) do
-		if slot6.index == slot1 and slot6.go.activeInHierarchy then
-			slot6:_onClickThis()
+	for slot6, slot7 in pairs(slot0._handCardItemList) do
+		if slot7.index == #FightCardModel.instance:getHandCards() - slot1 + 1 and slot7.go.activeInHierarchy then
+			slot7:_onClickThis()
 		end
 	end
 end
@@ -1314,7 +1333,10 @@ function slot0.OnkeyLongPress(slot0, slot1)
 	end
 
 	slot0:_longPressHandCardEnd()
-	FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
+
+	slot5 = FightEvent.HideCardSkillTips
+
+	FightController.instance:dispatchEvent(slot5)
 
 	for slot5, slot6 in pairs(slot0._handCardItemList) do
 		if slot6.index == slot1 and slot6.go.activeInHierarchy then
@@ -1324,15 +1346,15 @@ function slot0.OnkeyLongPress(slot0, slot1)
 end
 
 function slot0.onControlRelease(slot0)
-	if slot0._keyDrag or slot0._longPressIndex == nil then
-		slot0:OnSeleCardMoveEnd()
-
+	if not slot0._longPressIndex then
 		return
 	end
 
-	slot0:_playHandCard(slot0._longPressIndex)
-
-	slot0._longPressIndex = nil
+	for slot4, slot5 in pairs(slot0._handCardItemList) do
+		if slot5 and slot5.index == slot0._longPressIndex then
+			slot5:_onClickThis()
+		end
+	end
 end
 
 function slot0.OnSeleCardMoveEnd(slot0)
@@ -1435,7 +1457,7 @@ function slot0._onEnterOperateState(slot0, slot1)
 
 				slot9 = false
 
-				if FightEntityModel.instance:getById(slot7.cardInfoMO.uid) then
+				if FightDataHelper.entityMgr:getById(slot7.cardInfoMO.uid) then
 					if not slot10:isUniqueSkill(slot8.skillId) then
 						slot9 = true
 					end

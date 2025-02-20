@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkMasterCardRemove", package.seea
 slot0 = class("FightWorkMasterCardRemove", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return
@@ -17,7 +17,8 @@ function slot0.onStart(slot0)
 		AudioMgr.instance:trigger(20190020)
 		table.sort(slot1, FightWorkCardRemove2.sort)
 
-		slot3 = FightCardMOHelper.calcRemoveCardTime(tabletool.copy(FightCardModel.instance:getHandCards()), slot1, 0.7)
+		slot7 = 0.7
+		slot3 = FightCardDataHelper.calcRemoveCardTime(tabletool.copy(FightCardModel.instance:getHandCards()), slot1, slot7)
 
 		for slot7, slot8 in ipairs(slot1) do
 			table.remove(slot2, slot8)

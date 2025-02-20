@@ -93,7 +93,11 @@ function slot0.killAllSubMonster(slot0)
 	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
 		if FightHelper.isAssembledMonster(slot7) and slot7 ~= slot0 then
 			GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(slot7:getTag(), slot7.id)
-			FightEntityModel.instance:onDead(slot7.id)
+
+			slot8 = FightDataHelper.entityMgr:getById(slot7.id)
+
+			slot8:setDead()
+			FightDataHelper.entityMgr:addDeadUid(slot8.id)
 
 			slot0._alphaDic[slot7.id] = nil
 		end

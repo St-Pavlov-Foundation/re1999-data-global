@@ -38,6 +38,7 @@ function slot0.init(slot0, slot1)
 	slot0:setUniversal(false)
 
 	slot0._keyOffset = 8
+	slot0._keyMaxTipsNum = 9
 	slot0._restrainComp = MonoHelper.addLuaComOnceToGo(slot0.go, FightViewHandCardItemRestrain, slot0)
 	slot0._lockComp = MonoHelper.addLuaComOnceToGo(slot0.go, FightViewHandCardItemLock, slot0)
 	slot0._loader = slot0._loader or LoaderComponent.New()
@@ -175,14 +176,36 @@ function slot0.updateItem(slot0, slot1, slot2)
 	slot0:_hideEffect()
 	slot0:_refreshBlueStar()
 	slot0:showKeytips()
-
-	if slot0._pcTips and slot0.index <= 9 then
-		slot0._pcTips:Refresh(PCInputModel.Activity.battle, slot0.index + slot0._keyOffset)
-	end
 end
 
 function slot0.showKeytips(slot0)
-	slot0._pcTips = PCInputController.instance:showkeyTips(gohelper.findChild(slot0.go, "foranim/card/#go_pcbtn"), PCInputModel.Activity.battle, slot0.index + slot0._keyOffset)
+	slot1 = gohelper.findChild(slot0.go, "foranim/card/#go_pcbtn")
+
+	if #FightCardModel.instance:getHandCards() == 0 then
+		return
+	end
+
+	if slot2 - slot0.index + 1 >= 1 and slot3 <= slot2 and slot3 <= slot0._keyMaxTipsNum then
+		if not slot0._pcTips then
+			slot0._pcTips = PCInputController.instance:showkeyTips(slot1, PCInputModel.Activity.battle, slot3 + slot0._keyOffset)
+		else
+			slot0._pcTips:Refresh(PCInputModel.Activity.battle, slot3 + slot0._keyOffset)
+		end
+
+		if slot0._pcTips == nil then
+			return
+		end
+
+		if slot0._cardItem and slot0._cardItem:IsUniqueSkill() then
+			recthelper.setAnchorY(slot0._pcTips._go.transform, 200)
+		else
+			recthelper.setAnchorY(slot0._pcTips._go.transform, 150)
+		end
+
+		slot0._pcTips:Show(true)
+	elseif slot0._pcTips then
+		slot0._pcTips:Show(false)
+	end
 end
 
 function slot0.refreshCardMO(slot0, slot1, slot2)
@@ -238,7 +261,9 @@ function slot0._onDragHandCardBegin(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), true)
+	slot10 = true
+
+	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), slot10)
 
 	for slot10 = 1, 4 do
 		gohelper.setActive(gohelper.findChild(slot6, "jinengpai_" .. slot10), slot10 == slot5)
@@ -274,10 +299,10 @@ function slot0._updateSpEffect(slot0)
 	slot4 = {
 		[slot9] = true
 	}
-	slot8 = slot1.clientIgnoreCondition
-	slot9 = "#"
+	slot7 = FightStrUtil.instance
+	slot9 = slot7
 
-	for slot8, slot9 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot8, slot9)) do
+	for slot8, slot9 in ipairs(slot7.getSplitToNumberCache(slot9, slot1.clientIgnoreCondition, "#")) do
 		-- Nothing
 	end
 
@@ -300,7 +325,10 @@ function slot0._getConditionTargetUid(slot0, slot1)
 	elseif slot1 == 0 then
 		return FightCardModel.instance.curSelectEntityId
 	elseif slot1 == 202 then
-		for slot5, slot6 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+		slot4 = FightDataHelper.entityMgr
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getEnemyNormalList(slot6)) do
 			return slot6.id
 		end
 	end
@@ -317,8 +345,10 @@ function slot0._getConditionTargetUids(slot0, slot1)
 		}
 	elseif slot1 == 202 then
 		slot2 = {}
+		slot5 = FightDataHelper.entityMgr
+		slot7 = slot5
 
-		for slot6, slot7 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+		for slot6, slot7 in ipairs(slot5.getEnemyNormalList(slot7)) do
 			table.insert(slot2, slot7.id)
 		end
 
@@ -363,7 +393,7 @@ function slot0._checkSingleCondition(slot0, slot1, slot2)
 		return false
 	end
 
-	if not FightEntityModel.instance:getById(slot6) then
+	if not FightDataHelper.entityMgr:getById(slot6) then
 		return false
 	end
 
@@ -499,7 +529,7 @@ function slot0._checkSingleCondition(slot0, slot1, slot2)
 		slot11 = 0
 
 		for slot15, slot16 in ipairs(slot0:_getConditionTargetUids(slot2)) do
-			for slot22, slot23 in ipairs(FightEntityModel.instance:getById(slot16):getBuffList()) do
+			for slot22, slot23 in ipairs(FightDataHelper.entityMgr:getById(slot16):getBuffList()) do
 				if lua_skill_buff.configDict[slot23.buffId] and slot24.typeId == slot9 then
 					slot11 = slot11 + (slot23.layer and slot23.layer > 0 and slot23.layer or 1)
 				end
@@ -560,7 +590,7 @@ function slot0._checkSkillRateUpBehavior(slot0, slot1, slot2)
 		return false
 	end
 
-	if not FightEntityModel.instance:getById(slot6) then
+	if not FightDataHelper.entityMgr:getById(slot6) then
 		return false
 	end
 
@@ -576,7 +606,7 @@ function slot0._checkSkillRateUpBehavior(slot0, slot1, slot2)
 end
 
 function slot0._simulateBuffList(slot0, slot1)
-	slot2 = tabletool.copy(slot1.buffModel:getList())
+	slot2 = slot1:getBuffList()
 
 	for slot7, slot8 in ipairs(FightCardModel.instance:getCardOps()) do
 		if slot8:isPlayCard() then
@@ -667,14 +697,24 @@ function slot0._simulateSkillehavior(slot0, slot1, slot2, slot3, slot4, slot5)
 		slot9 = true
 	end
 
-	if slot9 and slot8 and slot8.type == "AddBuff" then
-		slot10 = FightBuffMO.New()
-		slot10.uid = "9999"
-		slot10.id = "9999"
-		slot10.entityId = slot1.id
-		slot10.buffId = slot6[2]
+	if slot9 and slot8 then
+		slot10 = nil
 
-		table.insert(slot5, slot10)
+		if slot8.type == "AddBuff" then
+			slot10 = slot6[2]
+		elseif slot8.type == "CatapultBuff" then
+			slot10 = slot6[5]
+		end
+
+		if slot10 then
+			slot11 = FightBuffMO.New()
+			slot11.uid = "9999"
+			slot11.id = "9999"
+			slot11.entityId = slot1.id
+			slot11.buffId = slot10
+
+			table.insert(slot5, slot11)
+		end
 	end
 end
 
@@ -719,6 +759,10 @@ function slot0.stopLongPressEffect(slot0)
 end
 
 function slot0._onClickThis(slot0)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if slot0._isLongPress and not PCInputController.instance:getIsUse() then
 		slot0._isLongPress = false
 
@@ -738,7 +782,7 @@ function slot0._onClickThis(slot0)
 	end
 
 	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
-		if FightEntityModel.instance:getById(slot0.cardInfoMO.uid) and slot1:isUniqueSkill(slot0.cardInfoMO.skillId) then
+		if FightDataHelper.entityMgr:getById(slot0.cardInfoMO.uid) and slot1:isUniqueSkill(slot0.cardInfoMO.skillId) then
 			return
 		end
 
@@ -770,7 +814,7 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	if not FightCardMOHelper.canPlayCard(slot0.cardInfoMO) then
+	if not FightCardDataHelper.canPlayCard(slot0.cardInfoMO) then
 		return
 	end
 
@@ -778,7 +822,10 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	for slot6, slot7 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
+	slot5 = FightCardModel.instance
+	slot7 = slot5
+
+	for slot6, slot7 in ipairs(slot5.getPlayCardOpList(slot7)) do
 		slot2 = 0 + slot7.costActPoint
 	end
 
@@ -786,7 +833,7 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	slot6 = #FightEntityModel.instance:getMySideList() + #FightEntityModel.instance:getSpModel(FightEnum.EntitySide.MySide):getList()
+	slot6 = #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
 
 	if lua_skill.configDict[slot1] and FightEnum.ShowLogicTargetView[slot3.logicTarget] and slot3.targetLimit == FightEnum.TargetLimit.MySide then
 		if slot6 > 1 then
@@ -817,6 +864,10 @@ function slot0._toPlayCard(slot0, slot1, slot2)
 end
 
 function slot0._onDragBegin(slot0, slot1, slot2)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -833,7 +884,7 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 		return
 	end
 
-	if not FightCardMOHelper.canMoveCard(slot0.cardInfoMO) then
+	if not FightCardDataHelper.canMoveCard(slot0.cardInfoMO) then
 		return
 	end
 
@@ -843,6 +894,10 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 end
 
 function slot0._onDragThis(slot0, slot1, slot2)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -859,6 +914,10 @@ function slot0._onDragThis(slot0, slot1, slot2)
 end
 
 function slot0._onDragEnd(slot0, slot1, slot2)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -922,7 +981,13 @@ function slot0._onLongPress(slot0)
 end
 
 function slot0._onHover(slot0)
-	slot0:_onLongPress()
+	if GuideController.instance:isGuiding() then
+		return
+	end
+
+	if not slot0._isLongPress then
+		slot0:_onLongPress()
+	end
 end
 
 function slot0._simulateDragHandCardBegin(slot0, slot1)
@@ -968,6 +1033,8 @@ function slot0._simulateDragHandCardEnd(slot0, slot1, slot2)
 	if slot0.index ~= slot1 then
 		return
 	end
+
+	slot0._isDraging = true
 
 	slot0:_onDragEnd(nil, {
 		position = recthelper.uiPosToScreenPos(slot0.tr)
@@ -1206,10 +1273,12 @@ function slot0.playCardAConvertCardB(slot0)
 				end
 			end
 		else
+			slot9 = slot0.cardInfoMO.skillId
+
 			for slot9 = 0, slot2 - 1 do
 				slot10 = slot1:GetChild(slot9).gameObject
 
-				if slot9 + 1 == FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId) then
+				if slot9 + 1 == FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot9) then
 					gohelper.setActive(slot10, true)
 
 					slot4 = gohelper.onceAddComponent(slot10, typeof(UnityEngine.Animation))

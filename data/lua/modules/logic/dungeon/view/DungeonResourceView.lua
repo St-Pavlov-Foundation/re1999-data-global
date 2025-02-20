@@ -34,8 +34,9 @@ end
 
 function slot0._OnActStateChange(slot0)
 	slot0._index = 1
+	slot5 = DungeonChapterListModel.instance:getFbList()
 
-	slot0:addChapterItem(DungeonChapterListModel.instance:getFbList())
+	slot0:addChapterItem(slot5)
 
 	for slot5, slot6 in ipairs(slot0._itemList) do
 		if slot0._index <= slot5 then
@@ -49,8 +50,14 @@ function slot0._OnShowResourceView(slot0)
 
 	slot0._simageresourcebg:LoadImage(ResUrl.getDungeonIcon("full/bg123"))
 	slot0._simagerebottommaskbg:LoadImage(ResUrl.getDungeonIcon("bg_down"))
-	slot0._simagedrawbg:LoadImage(ResUrl.getDungeonIcon("qianbihua"))
-	slot0:addChapterItem(DungeonChapterListModel.instance:getFbList())
+
+	slot6 = "qianbihua"
+
+	slot0._simagedrawbg:LoadImage(ResUrl.getDungeonIcon(slot6))
+
+	slot5 = DungeonChapterListModel.instance:getFbList()
+
+	slot0:addChapterItem(slot5)
 
 	for slot5, slot6 in ipairs(slot0._itemList) do
 		if slot0._index <= slot5 then

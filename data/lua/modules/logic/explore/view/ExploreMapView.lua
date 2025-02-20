@@ -111,10 +111,9 @@ function slot0.onOpen(slot0)
 	gohelper.setActive(slot0._gocategory, false)
 	gohelper.setActive(slot0._gocategoryon, false)
 
-	slot11 = slot2 and slot2.signsId or ""
 	slot11 = {}
 
-	if string.splitToNumber(slot11, "#") then
+	if string.splitToNumber(slot2 and slot2.signsId or "", "#") then
 		for slot15, slot16 in ipairs(slot10) do
 			table.insert(slot11, lua_explore_signs.configDict[slot16])
 		end
@@ -201,13 +200,13 @@ function slot0.setScale(slot0, slot1, slot2)
 
 	slot3, slot4 = transformhelper.getLocalPos(slot0._mapContainer)
 	slot0._scale = slot1
-	slot9 = 1
 
-	transformhelper.setLocalScale(slot0._mapContainer, slot0._scale, slot0._scale, slot9)
+	transformhelper.setLocalScale(slot0._mapContainer, slot0._scale, slot0._scale, 1)
 
-	slot8 = slot4 / slot0._scale * slot1
+	slot8 = slot3 / slot0._scale * slot1
+	slot9 = slot4 / slot0._scale * slot1
 
-	transformhelper.setLocalPosXY(slot0._mapContainer, slot3 / slot0._scale * slot1, slot8)
+	transformhelper.setLocalPosXY(slot0._mapContainer, slot8, slot9)
 
 	for slot8, slot9 in pairs(slot0._mapItems) do
 		slot9:setScale(1 / slot0._scale)

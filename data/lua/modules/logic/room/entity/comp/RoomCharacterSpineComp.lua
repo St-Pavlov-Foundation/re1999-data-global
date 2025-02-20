@@ -391,8 +391,12 @@ function slot0._onAnimCallback(slot0, slot1, slot2, slot3)
 
 	if slot0._isAnimal and slot1 == RoomCharacterEnum.CharacterAnimalAnimStateName.Jump and slot2 == SpineAnimEvent.ActionComplete then
 		GameSceneMgr.instance:getCurScene().character:setCharacterAnimal(slot0.entity.id, false)
-	elseif not slot0._isAnimal and slot1 == RoomCharacterEnum.CharacterAnimStateName.Touch and slot2 == SpineAnimEvent.ActionComplete then
+	elseif not slot0._isAnimal and slot0._touchAction and slot2 == SpineAnimEvent.ActionComplete then
 		slot0._touchAction = false
+
+		if slot1 == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+			slot0:_stopPlaySpecialIdle()
+		end
 
 		slot0:refreshAnimState()
 		TaskDispatcher.cancelTask(slot0._touchAfter, slot0)

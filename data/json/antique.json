@@ -11,7 +11,8 @@
     "desc": "language_10022187",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 161002,
@@ -25,7 +26,8 @@
     "desc": "language_10022189",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 161003,
@@ -39,7 +41,8 @@
     "desc": "language_10022191",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 161004,
@@ -53,7 +56,8 @@
     "desc": "language_10022193",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 161005,
@@ -67,7 +71,8 @@
     "desc": "language_10022195",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 181001,
@@ -81,7 +86,8 @@
     "desc": "language_10038606",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": ""
   },
   {
     "id": 191001,
@@ -95,7 +101,8 @@
     "desc": "language_10044432",
     "sources": "",
     "storyId": 800001,
-    "iconArea": 1
+    "iconArea": 1,
+    "effect": "v1a9_caidai"
   },
   {
     "id": 211001,
@@ -109,7 +116,8 @@
     "desc": "language_10039345",
     "sources": "",
     "storyId": 0,
-    "iconArea": 1
+    "iconArea": 1,
+    "effect": ""
   },
   {
     "id": 221001,
@@ -123,6 +131,7 @@
     "desc": "language_10056512",
     "sources": "",
     "storyId": 0,
-    "iconArea": 0
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

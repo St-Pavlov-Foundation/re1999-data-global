@@ -94,9 +94,10 @@ end
 if getGlobal("Partial_GMTool") then
 	logNormal("<color=#00FF00> hotfix finished </color>")
 	function (slot0)
-		slot4 = slot0
+		slot4 = slot0._update
+		slot5 = slot0
 
-		UpdateBeat:Remove(slot0._update, slot4)
+		UpdateBeat:Remove(slot4, slot5)
 
 		for slot4, slot5 in pairs(slot0) do
 			if uv0(slot5) == "table" and slot5.onClear then

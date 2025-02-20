@@ -78,6 +78,10 @@ end
 function slot0.onStep(slot0)
 	slot2 = string.gsub(slot0.config[slot0._curStep].desc, " ", " ")
 
+	if LangSettings.instance:isEn() then
+		slot2 = slot1.desc
+	end
+
 	if not slot0._hasIconDialogItem then
 		slot0._hasIconDialogItem = MonoHelper.addLuaComOnceToGo(slot0.viewGO, TMPFadeIn)
 

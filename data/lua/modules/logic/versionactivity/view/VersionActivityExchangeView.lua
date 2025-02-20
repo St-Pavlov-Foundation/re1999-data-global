@@ -97,10 +97,10 @@ function slot0.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_paraphrase_open)
 	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.updateItemNum, slot0)
 
-	slot5 = slot0.refreshReward
-	slot6 = slot0
+	slot5 = VersionActivityEvent.VersionActivity112Update
+	slot6 = slot0.refreshReward
 
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.VersionActivity112Update, slot5, slot6)
+	slot0:addEventCb(VersionActivityController.instance, slot5, slot6, slot0)
 	Activity112Rpc.instance:sendGet112InfosRequest(slot0.actId)
 
 	slot0._needList = {}

@@ -30,7 +30,10 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	for slot5, slot6 in ipairs(VersionActivity1_5RevivalTaskModel.instance:getTaskMoList()) do
+	slot4 = VersionActivity1_5RevivalTaskModel.instance
+	slot6 = slot4
+
+	for slot5, slot6 in ipairs(slot4.getTaskMoList(slot6)) do
 		table.insert(slot0.heroTabItemList, VersionActivity1_5HeroTabItem.createItem(gohelper.cloneInPlace(slot0._goTabItem), slot6))
 
 		if not false and slot6:isUnlock() then

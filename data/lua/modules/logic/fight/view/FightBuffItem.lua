@@ -71,51 +71,7 @@ function slot0.updateBuffMO(slot0, slot1)
 		gohelper.onceAddComponent(slot0.go, gohelper.Type_CanvasGroup).alpha = 1
 
 		UISpriteSetMgr.instance:setBuffSprite(slot0._imgIcon, slot2.iconId)
-
-		if slot2.isGoodBuff == 1 then
-			gohelper.setActive(slot0._txtGoodBuff.gameObject, true)
-			gohelper.setActive(slot0._txtGoodCount.gameObject, true)
-			gohelper.setActive(slot0._txtBadBuff.gameObject, false)
-			gohelper.setActive(slot0._txtBadCount.gameObject, false)
-
-			if FightSkillBuffMgr.instance:buffIsStackerBuff(slot2) then
-				slot0._txtGoodBuff.text = ""
-				slot0._txtGoodCount.text = FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot2.id)
-			else
-				slot0._txtGoodBuff.text = slot0:getBuffGoodText(slot1)
-
-				if slot1.layer and slot1.layer > 0 then
-					slot0._txtGoodCount.text = slot1.layer
-				else
-					slot0._txtGoodCount.text = slot1.count > 0 and slot1.count or ""
-				end
-			end
-		else
-			gohelper.setActive(slot0._txtGoodBuff.gameObject, false)
-			gohelper.setActive(slot0._txtGoodCount.gameObject, false)
-			gohelper.setActive(slot0._txtBadBuff.gameObject, true)
-			gohelper.setActive(slot0._txtBadCount.gameObject, true)
-
-			slot3, slot4 = FightSkillBuffMgr.instance:buffIsStackerBuff(slot2)
-
-			if slot3 then
-				slot0._txtBadBuff.text = ""
-
-				if slot4 == FightEnum.BuffIncludeTypes.Stacked12 then
-					slot0._txtBadBuff.text = slot1.duration > 0 and slot1.duration or ""
-				end
-
-				slot0._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot2.id)
-			else
-				slot0._txtBadBuff.text = slot1.duration > 0 and slot1.duration or ""
-
-				if slot1.layer and slot1.layer > 0 then
-					slot0._txtBadCount.text = slot1.layer
-				else
-					slot0._txtBadCount.text = slot1.count > 0 and slot1.count or ""
-				end
-			end
-		end
+		slot0:refreshTxt(slot1, slot2)
 
 		if slot0:isTimeBuff(slot2) then
 			gohelper.setActive(slot0._bgIcon.gameObject, true)
@@ -145,6 +101,85 @@ function slot0.getBuffGoodText(slot0, slot1)
 	end
 
 	return ""
+end
+
+function slot0.refreshTxt(slot0, slot1, slot2)
+	if FightBuffHelper.isDeadlyPoisonBuff(slot1) then
+		slot0:refreshDeadlyPoisonTxt(slot1, slot2)
+
+		return
+	end
+
+	if FightBuffHelper.isDuduBoneContinueChannelBuff(slot1) then
+		slot0:refreshDuduBoneContinueChannelTxt(slot1, slot2)
+
+		return
+	end
+
+	if slot2.isGoodBuff == 1 then
+		gohelper.setActive(slot0._txtGoodBuff.gameObject, true)
+		gohelper.setActive(slot0._txtGoodCount.gameObject, true)
+		gohelper.setActive(slot0._txtBadBuff.gameObject, false)
+		gohelper.setActive(slot0._txtBadCount.gameObject, false)
+
+		if FightSkillBuffMgr.instance:buffIsStackerBuff(slot2) then
+			slot0._txtGoodBuff.text = ""
+			slot0._txtGoodCount.text = FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot1)
+		else
+			slot0._txtGoodBuff.text = slot0:getBuffGoodText(slot1)
+
+			if slot1.layer and slot1.layer > 0 then
+				slot0._txtGoodCount.text = slot1.layer
+			else
+				slot0._txtGoodCount.text = slot1.count > 0 and slot1.count or ""
+			end
+		end
+	else
+		gohelper.setActive(slot0._txtGoodBuff.gameObject, false)
+		gohelper.setActive(slot0._txtGoodCount.gameObject, false)
+		gohelper.setActive(slot0._txtBadBuff.gameObject, true)
+		gohelper.setActive(slot0._txtBadCount.gameObject, true)
+
+		slot3, slot4 = FightSkillBuffMgr.instance:buffIsStackerBuff(slot2)
+
+		if slot3 then
+			slot0._txtBadBuff.text = ""
+
+			if slot4 == FightEnum.BuffIncludeTypes.Stacked12 then
+				slot0._txtBadBuff.text = slot1.duration > 0 and slot1.duration or ""
+			end
+
+			slot0._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot1)
+		else
+			slot0._txtBadBuff.text = slot1.duration > 0 and slot1.duration or ""
+
+			if slot1.layer and slot1.layer > 0 then
+				slot0._txtBadCount.text = slot1.layer
+			else
+				slot0._txtBadCount.text = slot1.count > 0 and slot1.count or ""
+			end
+		end
+	end
+end
+
+function slot0.refreshDeadlyPoisonTxt(slot0, slot1, slot2)
+	gohelper.setActive(slot0._txtGoodBuff.gameObject, false)
+	gohelper.setActive(slot0._txtGoodCount.gameObject, false)
+	gohelper.setActive(slot0._txtBadBuff.gameObject, true)
+	gohelper.setActive(slot0._txtBadCount.gameObject, true)
+
+	slot0._txtBadBuff.text = slot1.duration > 0 and slot1.duration or ""
+	slot0._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot1)
+end
+
+function slot0.refreshDuduBoneContinueChannelTxt(slot0, slot1, slot2)
+	gohelper.setActive(slot0._txtGoodBuff.gameObject, true)
+	gohelper.setActive(slot0._txtGoodCount.gameObject, true)
+	gohelper.setActive(slot0._txtBadBuff.gameObject, false)
+	gohelper.setActive(slot0._txtBadCount.gameObject, false)
+
+	slot0._txtGoodBuff.text = slot1.exInfo
+	slot0._txtGoodCount.text = ""
 end
 
 function slot0.calculateBuffType(slot0, slot1)

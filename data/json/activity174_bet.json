@@ -1,0 +1,17 @@
+[
+  {
+    "activityId": 12304,
+    "level": 1,
+    "ratio": 100
+  },
+  {
+    "activityId": 12304,
+    "level": 2,
+    "ratio": 200
+  },
+  {
+    "activityId": 12304,
+    "level": 3,
+    "ratio": 300
+  }
+]

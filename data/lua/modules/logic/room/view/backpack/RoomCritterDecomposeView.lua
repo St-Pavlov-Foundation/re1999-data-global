@@ -218,9 +218,10 @@ end
 
 function slot0.initMatureDropFilter(slot0)
 	slot0.dropMatureExtend = DropDownExtend.Get(slot0._dropmaturefilter.gameObject)
-	slot5 = slot0
+	slot5 = slot0.onMatureDropHide
+	slot6 = slot0
 
-	slot0.dropMatureExtend:init(slot0.onMatureDropShow, slot0.onMatureDropHide, slot5)
+	slot0.dropMatureExtend:init(slot0.onMatureDropShow, slot5, slot6)
 
 	slot0.filterMatureTypeList = {
 		CritterEnum.MatureFilterType.All,
@@ -241,9 +242,9 @@ end
 
 function slot0.initRareFilterDrop(slot0)
 	slot0.dropRareExtend = DropDownExtend.Get(slot0._goRareDrop)
-	slot5 = slot0
+	slot5 = slot0.onRareDropHide
 
-	slot0.dropRareExtend:init(slot0.onRareDropShow, slot0.onRareDropHide, slot5)
+	slot0.dropRareExtend:init(slot0.onRareDropShow, slot5, slot0)
 
 	slot1 = {}
 	slot0.filterRareList = {}

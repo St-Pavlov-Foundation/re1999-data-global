@@ -414,7 +414,10 @@ function slot0._createStepList(slot0)
 	slot1 = gohelper.findChild(slot0._storyItem, "#go_point/eg")
 
 	gohelper.setActive(gohelper.findChild(slot1, "#go_eg").gameObject, false)
-	gohelper.setActive(slot1, false)
+
+	slot8 = false
+
+	gohelper.setActive(slot1, slot8)
 
 	slot0._stepItemList = slot0:getUserDataTb_()
 
@@ -587,7 +590,10 @@ function slot0.checkKeyword(slot0)
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._storyMo:getKeywordList()) do
+	slot4 = slot0._storyMo
+	slot6 = slot4
+
+	for slot5, slot6 in ipairs(slot4.getKeywordList(slot6)) do
 		if slot6.isUsed and not LuaUtil.tableContains(slot0._curStep._keywordIdList, slot6.keywordId) then
 			slot0._curStep:addKeywordItem(slot7)
 		end

@@ -14,6 +14,7 @@ function slot0.onInitView(slot0)
 	slot0._btnPlay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#txt_title/#btn_Play")
 	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
 	slot0._txttime = gohelper.findChildText(slot0.viewGO, "#txt_desc/#txt_time")
+	slot0._goeffect = gohelper.findChild(slot0.viewGO, "#go_effect")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -103,6 +104,31 @@ function slot0._refreshUI(slot0)
 		gohelper.setActive(slot0._simagesign.gameObject, true)
 		slot0._simagesign:LoadImage(ResUrl.getSignature(slot1.sign))
 	end
+
+	slot5 = not string.nilorempty(slot1.effect)
+
+	gohelper.setActive(slot0._goeffect, slot5)
+
+	if slot5 then
+		slot6 = ResUrl.getAntiqueEffect(slot4)
+
+		if not slot0._loader then
+			slot0._loader = PrefabInstantiate.Create(slot0._goeffect)
+		end
+
+		if slot0._effectPrefab then
+			gohelper.destroy(slot0._effectPrefab)
+			slot0._loader:dispose()
+
+			slot0._effectPrefab = nil
+		end
+
+		slot0._loader:startLoad(slot6, slot0.onLoadCallBack, slot0)
+	end
+end
+
+function slot0.onLoadCallBack(slot0)
+	slot0._effectPrefab = slot0._loader:getInstGO()
 end
 
 function slot0.onClose(slot0)
@@ -112,6 +138,12 @@ function slot0.onDestroyView(slot0)
 	slot0._simagebg:UnLoadImage()
 	slot0._simagegifticon:UnLoadImage()
 	slot0._simagesign:UnLoadImage()
+
+	if slot0._loader then
+		slot0._loader:dispose()
+
+		slot0._loader = nil
+	end
 end
 
 return slot0

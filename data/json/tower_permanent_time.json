@@ -1,0 +1,20 @@
+[
+  {
+    "stageId": 1,
+    "time": "",
+    "name": "language_10061227",
+    "nameEn": "Euphotic Zone"
+  },
+  {
+    "stageId": 2,
+    "time": "",
+    "name": "language_10061228",
+    "nameEn": "Mesophotic Zone"
+  },
+  {
+    "stageId": 3,
+    "time": "",
+    "name": "language_10061229",
+    "nameEn": "Bathyal Zone"
+  }
+]

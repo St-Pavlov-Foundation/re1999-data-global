@@ -8,14 +8,18 @@ function slot0.onInitView(slot0)
 	slot0.uid_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/uid/input")
 	slot0.hp_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/hp/input")
 	slot0.hp_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/hp/max")
-	slot0.expoint_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/expoint/input")
-	slot0.expoint_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/expoint/max")
+	slot0.expoint_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/expoint/input")
+	slot0.expoint_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/power/expoint/max")
+	slot0.expoint_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/expoint")
 	slot0.power_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/power/input")
 	slot0.power_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/power/power/max")
 	slot0.power_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/power")
 	slot0.stress_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/stress/input")
 	slot0.stress_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/power/stress/max")
 	slot0.stress_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/stress")
+	slot0.assistBoss_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss/input")
+	slot0.assistBoss_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss/max")
+	slot0.assistBoss_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss")
 	slot0._icon = gohelper.findChildSingleImage(slot0.viewGO, "info/image")
 	slot0._imgIcon = gohelper.findChildImage(slot0.viewGO, "info/image")
 	slot0._imgCareer = gohelper.findChildImage(slot0.viewGO, "info/image/career")
@@ -27,6 +31,7 @@ function slot0.addEvents(slot0)
 	slot0.expoint_input:AddOnEndEdit(slot0._onEndEditExpoint, slot0)
 	slot0.power_input:AddOnEndEdit(slot0._onEndEditPower, slot0)
 	slot0.stress_input:AddOnEndEdit(slot0._onEndEditStress, slot0)
+	slot0.assistBoss_input:AddOnEndEdit(slot0._onEndEditAssistBoss, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -35,6 +40,7 @@ function slot0.removeEvents(slot0)
 	slot0.expoint_input:RemoveOnEndEdit()
 	slot0.power_input:RemoveOnEndEdit()
 	slot0.stress_input:RemoveOnEndEdit()
+	slot0.assistBoss_input:RemoveOnEndEdit()
 end
 
 function slot0.onOpen(slot0)
@@ -50,38 +56,56 @@ function slot0._onSelectHero(slot0, slot1)
 	slot0.id_input:SetText(tostring(slot1.modelId))
 	slot0.uid_input:SetText(tostring(slot1.id))
 	slot0.hp_input:SetText(tostring(slot1.currentHp))
-	slot0.expoint_input:SetText(tostring(slot1.exPoint))
 
-	if slot1:getPowerInfo(FightEnum.PowerType.Power) then
-		slot0.power_input:SetText(tostring(slot2.num))
+	slot0.hp_max.text = "/" .. tostring(slot1.attrMO.hp)
+	slot2 = slot1:isAssistBoss()
 
-		slot0.power_max.text = "/" .. tostring(slot2.max)
+	gohelper.setActive(slot0.expoint_go, not slot2)
+
+	if not slot2 then
+		slot0.expoint_input:SetText(tostring(slot1.exPoint))
+
+		slot0.expoint_max.text = "/" .. tostring(slot1:getMaxExPoint())
 	end
 
-	gohelper.setActive(slot0.power_go, slot2)
+	if slot1:getPowerInfo(FightEnum.PowerType.Power) then
+		slot0.power_input:SetText(tostring(slot3.num))
+
+		slot0.power_max.text = "/" .. tostring(slot3.max)
+	end
+
+	gohelper.setActive(slot0.power_go, slot3)
 
 	if slot1:getPowerInfo(FightEnum.PowerType.Stress) then
-		slot0.stress_input:SetText(tostring(slot3.num))
+		slot0.stress_input:SetText(tostring(slot4.num))
 
-		slot0.stress_max.text = "/" .. tostring(slot3.max)
+		slot0.stress_max.text = "/" .. tostring(slot4.max)
 	end
 
 	gohelper.setActive(slot0.stress_go, slot1:hasStress())
 
-	slot0.hp_max.text = "/" .. tostring(slot1.attrMO.hp)
-	slot0.expoint_max.text = "/" .. tostring(slot1:getMaxExPoint())
+	if slot2 then
+		slot5 = slot1:getPowerInfo(FightEnum.PowerType.AssistBoss)
 
+		slot0.assistBoss_input:SetText(tostring(slot5.num))
+
+		slot0.assistBoss_max.text = "/" .. tostring(slot5.max)
+	end
+
+	gohelper.setActive(slot0.assistBoss_go, slot2)
 	slot0._icon:UnLoadImage()
 
+	slot5 = slot1:isMonster() and lua_monster.configDict[slot1.modelId] or lua_character.configDict[slot1.modelId]
+
 	if slot1:isCharacter() then
-		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO((slot1:isMonster() and lua_monster.configDict[slot1.modelId] or lua_character.configDict[slot1.modelId]).skinId).retangleIcon))
+		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot1.originSkin).retangleIcon))
 	elseif slot1:isMonster() then
-		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot5.headIcon))
+		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot6.headIcon))
 
 		slot0._imgIcon.enabled = true
 	end
 
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot4.career))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot1.career))
 end
 
 function slot0._onEndEditHp(slot0, slot1)
@@ -96,7 +120,7 @@ function slot0._onEndEditHp(slot0, slot1)
 
 		slot2.currentHp = slot6
 
-		if FightDataMgr.instance:getEntityMO(slot2.id) then
+		if FightLocalDataMgr.instance:getEntityById(slot2.id) then
 			slot7.currentHp = slot6
 		end
 
@@ -116,7 +140,7 @@ function slot0._onEndEditExpoint(slot0, slot1)
 		slot6 = slot2.exPoint
 		slot2.exPoint = slot5
 
-		if FightDataMgr.instance:getEntityMO(slot2.id) then
+		if FightLocalDataMgr.instance:getEntityById(slot2.id) then
 			slot7.exPoint = slot5
 		end
 
@@ -137,7 +161,7 @@ function slot0._onEndEditPower(slot0, slot1)
 
 		slot4.num = slot7
 
-		if FightDataMgr.instance:getEntityMO(slot2.id) and slot8:getPowerInfo(FightEnum.PowerType.Power) then
+		if FightLocalDataMgr.instance:getEntityById(slot2.id) and slot8:getPowerInfo(FightEnum.PowerType.Power) then
 			slot9.num = slot7
 		end
 
@@ -155,17 +179,40 @@ function slot0._onEndEditStress(slot0, slot1)
 		slot5 = slot2:getPowerInfo(FightEnum.PowerType.Stress) and slot4.num or 0
 
 		if slot3 ~= Mathf.Clamp(slot3, 0, slot4 and slot4.max or 0) then
-			slot0.stress_input:SetTextWithoutNotify(tostring(slot3))
+			slot0.stress_input:SetTextWithoutNotify(tostring(slot7))
 		end
 
 		slot4.num = slot7
 
-		if FightDataMgr.instance:getEntityMO(slot2.id) and slot8:getPowerInfo(FightEnum.PowerType.Stress) then
+		if FightLocalDataMgr.instance:getEntityById(slot2.id) and slot8:getPowerInfo(FightEnum.PowerType.Stress) then
 			slot9.num = slot7
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.PowerChange, slot2.id, FightEnum.PowerType.Stress, slot5, slot7)
 		GMRpc.instance:sendGMRequest(string.format("fightChangePower %s %s %d", slot2.id, FightEnum.PowerType.Stress, slot7))
+	end
+end
+
+function slot0._onEndEditAssistBoss(slot0, slot1)
+	if not GMFightEntityModel.instance.entityMO:isAssistBoss() then
+		return
+	end
+
+	if tonumber(slot1) then
+		slot5 = slot2:getPowerInfo(FightEnum.PowerType.AssistBoss) and slot4.num or 0
+
+		if slot3 ~= Mathf.Clamp(slot3, 0, slot4 and slot4.max or 0) then
+			slot0.assistBoss_input:SetTextWithoutNotify(tostring(slot7))
+		end
+
+		slot4.num = slot7
+
+		if FightLocalDataMgr.instance:getEntityById(slot2.id) and slot8:getPowerInfo(FightEnum.PowerType.AssistBoss) then
+			slot9.num = slot7
+		end
+
+		FightController.instance:dispatchEvent(FightEvent.PowerChange, slot2.id, FightEnum.PowerType.AssistBoss, slot5, slot7)
+		GMRpc.instance:sendGMRequest(string.format("fightChangePower %s %s %d", slot2.id, FightEnum.PowerType.AssistBoss, slot7))
 	end
 end
 

@@ -37,7 +37,8 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._godispatcharea, true)
 	gohelper.setActive(slot0._goareaitem, false)
 
-	slot0.transform = slot0._godispatcharea:GetComponent(gohelper.Type_RectTransform)
+	slot4 = gohelper.Type_RectTransform
+	slot0.transform = slot0._godispatcharea:GetComponent(slot4)
 	slot0.areaItemList = {}
 	slot0.shaderParamList = slot0:getUserDataTb_()
 	slot0.shaderParamValueList = {}

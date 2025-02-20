@@ -70,6 +70,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnSummon, slot0._checkBossAndUpdate, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
 
 	slot0.sheildWidth = recthelper.getWidth(slot0._goHpShield.transform)
 
@@ -100,6 +101,7 @@ function slot0.onClose(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnSummon, slot0._checkBossAndUpdate, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
 	slot0._btnpassiveSkill:RemoveClickListener()
 end
 
@@ -129,11 +131,12 @@ function slot0._checkBossAndUpdate(slot0)
 		gohelper.setActive(slot0._bossHpGO, false)
 
 		slot0._aniHpEffect.enabled = false
+		slot0._bossEntityMO = nil
 
 		return
 	end
 
-	if slot0._bossEntityMO and not FightEntityModel.instance:getById(slot0._bossEntityMO.id) then
+	if slot0._bossEntityMO and not FightDataHelper.entityMgr:getById(slot0._bossEntityMO.id) then
 		slot0._bossEntityMO = nil
 	end
 
@@ -185,7 +188,7 @@ end
 
 function slot0._getBossEntityMO(slot0)
 	if slot0:_getBossId() then
-		for slot6, slot7 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 			if FightHelper.isBossId(slot1, slot7.modelId) then
 				return slot7
 			end
@@ -223,7 +226,7 @@ function slot0._insteadSpecialHp(slot0, slot1)
 			slot0:changeBossHpWithChouShiBuff(false)
 		end
 	elseif slot0._bossEntityMO then
-		for slot6, slot7 in ipairs(slot0._bossEntityMO:getBuffList()) do
+		for slot6, slot7 in pairs(slot0._bossEntityMO:getBuffDic()) do
 			if lua_skill_buff.configDict[slot7.buffId] and slot8.typeId == 3120005 then
 				slot0:changeBossHpWithChouShiBuff(true)
 
@@ -485,10 +488,10 @@ function slot0._updatePassiveSkill(slot0)
 		return
 	end
 
-	slot6 = true
+	slot6 = FightConfig.instance:getPassiveSkillsAfterUIFilter(lua_monster.configDict[slot0._bossEntityMO.modelId].id)
 	slot0.bossSkillInfos = {}
 
-	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(FightConfig.instance:getPassiveSkillsAfterUIFilter(lua_monster.configDict[slot0._bossEntityMO.modelId].id), slot6) do
+	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(slot6, true) do
 		if lua_skill_specialbuff.configDict[slot2[slot6]] then
 			if not slot0._specialSkillGOs[slot6] then
 				slot9 = slot0:getUserDataTb_()
@@ -570,6 +573,12 @@ function slot0._onMaxHpChange(slot0, slot1, slot2, slot3)
 end
 
 function slot0._onCurrentHpChange(slot0, slot1, slot2, slot3)
+	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
+		slot0:_updateUI()
+	end
+end
+
+function slot0._onChangeShield(slot0, slot1)
 	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
 		slot0:_updateUI()
 	end

@@ -30,7 +30,9 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.showReward(slot0, slot1, slot2)
-	recthelper.setWidth(slot1.transform, #slot2 * 205 + 20)
+	slot8 = #slot2 * 205 + 20
+
+	recthelper.setWidth(slot1.transform, slot8)
 
 	for slot8, slot9 in ipairs(slot2) do
 		slot10 = gohelper.clone(slot0._goitem, slot1)

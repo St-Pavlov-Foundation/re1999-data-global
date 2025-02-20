@@ -61,7 +61,7 @@ function slot0._onSelectEntity(slot0, slot1, slot2)
 	if slot1 == slot0._side then
 		slot0:_onPlayFinish()
 
-		slot3 = FightEntityModel.instance:getModel(slot0._side):getList()
+		slot3 = FightDataHelper.entityMgr:getNormalList(slot0._side)
 
 		if slot2 or slot3 and slot3[1] then
 			slot0._skillSelectView:setAttacker(slot2 or slot3[1].id)

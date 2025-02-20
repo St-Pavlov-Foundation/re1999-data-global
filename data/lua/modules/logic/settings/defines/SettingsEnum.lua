@@ -3,6 +3,7 @@ module("modules.logic.settings.defines.SettingsEnum", package.seeall)
 slot0 = _M
 slot0.ShowType = {
 	LimitedRoleEffect = 2,
+	Push = 4,
 	KeyMap = 3,
 	RecordVideo = 1
 }
@@ -36,10 +37,13 @@ slot0.CategoryList = {
 		openIds = {}
 	},
 	{
-		id = 5,
 		name = "settings_push",
 		subname = "PUSH",
-		openIds = {}
+		id = 5,
+		openIds = {},
+		showIds = {
+			slot0.ShowType.Push
+		}
 	},
 	{
 		id = 6,

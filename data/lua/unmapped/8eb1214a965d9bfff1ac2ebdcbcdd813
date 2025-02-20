@@ -227,6 +227,30 @@ slot0 = {
 			[1.0] = "ui/viewres/activity/v2a2_springfestival_signitem.prefab"
 		}
 	},
+	ShortenAct_PanelView = {
+		destroy = 0,
+		container = "ShortenAct_PanelViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/activity/shortenact_panelview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1.0] = "ui/viewres/activity/shortenact_taskitem.prefab"
+		}
+	},
+	ShortenAct_FullView = {
+		destroy = 0,
+		container = "ShortenAct_FullViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/activity/shortenact_fullview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1.0] = "ui/viewres/activity/shortenact_taskitem.prefab"
+		}
+	},
 	SimulateLoginView = {
 		destroy = 3,
 		container = "SimulateLoginViewContainer",
@@ -846,6 +870,15 @@ slot0 = {
 		container = "FightCardDeckViewContainer",
 		bgBlur = 1,
 		mainRes = "ui/viewres/fight/fightcarddeckview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default
+	},
+	FightGMDouQuQuTest = {
+		destroy = 0,
+		container = "FightGMDouQuQuTestContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/gm/fightgmdouququtest.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
@@ -2872,12 +2905,47 @@ slot0 = {
 			}
 		}
 	},
+	CharacterTalentStatView = {
+		destroy = 0,
+		container = "CharacterTalentStatViewContainer",
+		mainRes = "ui/viewres/character/charactertalentup/charactertalentstatview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal
+	},
 	CharacterTalentChessFilterView = {
 		destroy = 0,
 		container = "CharacterTalentChessFilterViewContainer",
 		mainRes = "ui/viewres/character/charactertalentup/charactertalentchessfilterview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
+	},
+	CharacterDestinySlotView = {
+		destroy = 0,
+		container = "CharacterDestinySlotViewContainer",
+		mainRes = "ui/viewres/character/characterdestiny/characterdestinyslotview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Nomal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	},
+	CharacterDestinyStoneView = {
+		destroy = 0,
+		container = "CharacterDestinyStoneViewContainer",
+		mainRes = "ui/viewres/character/characterdestiny/characterdestinystoneview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Nomal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
 	},
 	GMToolView = {
 		destroy = 0,
@@ -4917,6 +4985,24 @@ slot0.RoomTransportSiteView = {
 		RoomTransportCritterItem.prefabPath
 	}
 }
+slot0.RoomInteractBuildingView = {
+	destroy = 0,
+	container = "RoomInteractBuildingViewContainer",
+	mainRes = "ui/viewres/room/transport/roominteractbuildingview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		RoomInteractCharacterItem.prefabUrl
+	}
+}
 slot0.RoomManufacturePlaceCostView = {
 	destroy = 0,
 	container = "RoomManufacturePlaceCostViewContainer",
@@ -6917,14 +7003,6 @@ slot0.ActivityStoryShowView = {
 	destroy = 0,
 	container = "ActivityStoryShowViewContainer",
 	mainRes = "ui/viewres/activity/show/activitystoryshowview.prefab",
-	layer = "POPUP_TOP",
-	viewType = ViewType.Normal,
-	anim = ViewAnim.Default
-}
-slot0.ActivityWeekWalkDeepShowView = {
-	destroy = 0,
-	container = "ActivityWeekWalkDeepShowViewContainer",
-	mainRes = "ui/viewres/activity/show/activityweekwalkdeepshowview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
@@ -12598,11 +12676,11 @@ slot0.V1a8_Work_PanelSignView = {
 		[1.0] = "ui/viewres/activity/v1a8_work_signitem.prefab"
 	}
 }
-slot0.Season123_2_1EntryView = {
+slot0.Season123_2_3EntryView = {
 	destroy = 0,
-	container = "Season123_2_1EntryViewContainer",
+	container = "Season123_2_3EntryViewContainer",
 	bgBlur = 4,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123mainview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123mainview.prefab",
 	layer = "POPUP",
 	viewType = ViewType.Full,
 	tabRes = {
@@ -12613,11 +12691,11 @@ slot0.Season123_2_1EntryView = {
 		}
 	}
 }
-slot0.Season123_2_1EntryOverview = {
+slot0.Season123_2_3EntryOverview = {
 	destroy = 0,
-	container = "Season123_2_1EntryOverviewContainer",
+	container = "Season123_2_3EntryOverviewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123entryoverview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123entryoverview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Internal,
@@ -12629,11 +12707,11 @@ slot0.Season123_2_1EntryOverview = {
 		}
 	}
 }
-slot0.Season123_2_1RetailView = {
+slot0.Season123_2_3RetailView = {
 	destroy = 0,
-	container = "Season123_2_1RetailViewContainer",
+	container = "Season123_2_3RetailViewContainer",
 	bgBlur = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123retaillevelinfoview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123retaillevelinfoview.prefab",
 	layer = "POPUP",
 	viewType = ViewType.Full,
 	tabRes = {
@@ -12649,11 +12727,11 @@ slot0.Season123_2_1RetailView = {
 		}
 	}
 }
-slot0.Season123_2_1HeroGroupFightView = {
+slot0.Season123_2_3HeroGroupFightView = {
 	bgBlur = 4,
-	container = "Season123_2_1HeroGroupFightViewContainer",
+	container = "Season123_2_3HeroGroupFightViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123herogroupview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123herogroupview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Internal,
@@ -12673,11 +12751,11 @@ slot0.Season123_2_1HeroGroupFightView = {
 		[1.0] = "ui/viewres/fight/clothskill.prefab"
 	}
 }
-slot0.Season123_2_1EpisodeListView = {
+slot0.Season123_2_3EpisodeListView = {
 	destroy = 0,
-	container = "Season123_2_1EpisodeListViewContainer",
+	container = "Season123_2_3EpisodeListViewContainer",
 	bgBlur = 4,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123episodelistview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123episodelistview.prefab",
 	layer = "POPUP",
 	viewType = ViewType.Full,
 	tabRes = {
@@ -12688,19 +12766,19 @@ slot0.Season123_2_1EpisodeListView = {
 		}
 	}
 }
-slot0.Season123_2_1EpisodeLoadingView = {
+slot0.Season123_2_3EpisodeLoadingView = {
 	destroy = 0,
-	container = "Season123_2_1EpisodeLoadingViewContainer",
+	container = "Season123_2_3EpisodeLoadingViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123episodeloadingview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123episodeloadingview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full
 }
-slot0.Season123_2_1EpisodeDetailView = {
+slot0.Season123_2_3EpisodeDetailView = {
 	destroy = 0,
-	container = "Season123_2_1EpisodeDetailViewContainer",
+	container = "Season123_2_3EpisodeDetailViewContainer",
 	bgBlur = 4,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123marketview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123marketview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	tabRes = {
@@ -12711,10 +12789,10 @@ slot0.Season123_2_1EpisodeDetailView = {
 		}
 	}
 }
-slot0.Season123_2_1PickAssistView = {
+slot0.Season123_2_3PickAssistView = {
 	destroy = 0,
-	container = "Season123_2_1PickAssistViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123pickassistview.prefab",
+	container = "Season123_2_3PickAssistViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123pickassistview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	tabRes = {
@@ -12725,13 +12803,13 @@ slot0.Season123_2_1PickAssistView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123pickassistitem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123pickassistitem.prefab"
 	}
 }
-slot0.Season123_2_1HeroGroupEditView = {
-	container = "Season123_2_1HeroGroupEditViewContainer",
+slot0.Season123_2_3HeroGroupEditView = {
+	container = "Season123_2_3HeroGroupEditViewContainer",
 	destroy = 5,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123herogroupeditview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123herogroupeditview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Internal,
@@ -12743,28 +12821,28 @@ slot0.Season123_2_1HeroGroupEditView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123herogroupedititem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123herogroupquickedititem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123herogroupedititem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123herogroupquickedititem.prefab"
 	},
 	customAnimBg = {
 		"bg"
 	}
 }
-slot0.Season123_2_1PickHeroEntryView = {
+slot0.Season123_2_3PickHeroEntryView = {
 	destroy = 0,
-	container = "Season123_2_1PickHeroEntryViewContainer",
+	container = "Season123_2_3PickHeroEntryViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123pickheroentryview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123pickheroentryview.prefab",
 	layer = "POPUP",
 	viewType = ViewType.Normal,
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1PickHeroView = {
+slot0.Season123_2_3PickHeroView = {
 	destroy = 0,
-	container = "Season123_2_1PickHeroViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123pickheroview.prefab",
+	container = "Season123_2_3PickHeroViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123pickheroview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	tabRes = {
@@ -12775,40 +12853,40 @@ slot0.Season123_2_1PickHeroView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123pickheroitem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123pickheroitem.prefab"
 	}
 }
-slot0.Season123_2_1StageLoadingView = {
+slot0.Season123_2_3StageLoadingView = {
 	destroy = 0,
-	container = "Season123_2_1StageLoadingViewContainer",
+	container = "Season123_2_3StageLoadingViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123loadingview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123loadingview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal
 }
-slot0.Season123_2_1StageFinishView = {
+slot0.Season123_2_3StageFinishView = {
 	destroy = 0,
-	container = "Season123_2_1StageFinishViewContainer",
+	container = "Season123_2_3StageFinishViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123stagefinishview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123stagefinishview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal
 }
-slot0.Season123_2_1ShowHeroView = {
+slot0.Season123_2_3ShowHeroView = {
 	destroy = 0,
-	container = "Season123_2_1ShowHeroViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123showheroview.prefab",
+	container = "Season123_2_3ShowHeroViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123showheroview.prefab",
 	layer = "POPUP",
 	viewType = ViewType.Normal,
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1EquipHeroView = {
+slot0.Season123_2_3EquipHeroView = {
 	bgBlur = 0,
-	container = "Season123_2_1EquipHeroViewContainer",
+	container = "Season123_2_3EquipHeroViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123equipheroview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123equipheroview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12820,15 +12898,15 @@ slot0.Season123_2_1EquipHeroView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123equipcarditem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123equipcarditem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1EquipView = {
+slot0.Season123_2_3EquipView = {
 	bgBlur = 0,
-	container = "Season123_2_1EquipViewContainer",
+	container = "Season123_2_3EquipViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123equipview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123equipview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12840,15 +12918,15 @@ slot0.Season123_2_1EquipView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123equipcarditem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123equipcarditem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1EnemyView = {
+slot0.Season123_2_3EnemyView = {
 	bgBlur = 1,
-	container = "Season123_2_1EnemyViewContainer",
+	container = "Season123_2_3EnemyViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123enemyview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123enemyview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default,
@@ -12864,10 +12942,10 @@ slot0.Season123_2_1EnemyView = {
 		"#simage_rightbg"
 	}
 }
-slot0.Season123_2_1StoreView = {
+slot0.Season123_2_3StoreView = {
 	destroy = 0,
-	container = "Season123_2_1StoreViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123storeview.prefab",
+	container = "Season123_2_3StoreViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123storeview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12884,13 +12962,13 @@ slot0.Season123_2_1StoreView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123storeitem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123storeitem.prefab"
 	}
 }
-slot0.Season123_2_1TaskView = {
+slot0.Season123_2_3TaskView = {
 	destroy = 0,
-	container = "Season123_2_1TaskViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123taskview.prefab",
+	container = "Season123_2_3TaskViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123taskview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12902,14 +12980,14 @@ slot0.Season123_2_1TaskView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123taskitem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123taskitem.prefab"
 	}
 }
-slot0.Season123_2_1EquipBookView = {
+slot0.Season123_2_3EquipBookView = {
 	bgBlur = 0,
-	container = "Season123_2_1EquipBookViewContainer",
+	container = "Season123_2_3EquipBookViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123equipbookview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123equipbookview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12926,15 +13004,15 @@ slot0.Season123_2_1EquipBookView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123equipbookitem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123equipbookitem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1BatchDecomposeView = {
+slot0.Season123_2_3BatchDecomposeView = {
 	bgBlur = 0,
-	container = "Season123_2_1BatchDecomposeViewContainer",
+	container = "Season123_2_3BatchDecomposeViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123batchdecomposeview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123batchdecomposeview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -12951,22 +13029,22 @@ slot0.Season123_2_1BatchDecomposeView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123decomposeitem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123decomposeitem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1DecomposeFilterView = {
+slot0.Season123_2_3DecomposeFilterView = {
 	destroy = 10,
-	container = "Season123_2_1DecomposeFilterViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123decomposefilterview.prefab",
+	container = "Season123_2_3DecomposeFilterViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123decomposefilterview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1DecomposeView = {
-	container = "Season123_2_1DecomposeViewContainer",
+slot0.Season123_2_3DecomposeView = {
+	container = "Season123_2_3DecomposeViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123decomposeview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123decomposeview.prefab",
 	destroy = 0,
 	blurIterations = 3,
 	blurFactor = 0.85,
@@ -12976,13 +13054,13 @@ slot0.Season123_2_1DecomposeView = {
 	reduceRate = PostProcessingMgr.DesamplingRate.x8,
 	anim = ViewAnim.Default,
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1CelebrityCardTipView = {
-	container = "Season123_2_1CelebrityCardTipViewContainer",
+slot0.Season123_2_3CelebrityCardTipView = {
+	container = "Season123_2_3CelebrityCardTipViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123celebritycardtipview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123celebritycardtipview.prefab",
 	destroy = 0,
 	blurIterations = 3,
 	blurFactor = 0.85,
@@ -12991,23 +13069,23 @@ slot0.Season123_2_1CelebrityCardTipView = {
 	desampleRate = PostProcessingMgr.DesamplingRate.x8,
 	reduceRate = PostProcessingMgr.DesamplingRate.x8,
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1CelebrityCardGetView = {
+slot0.Season123_2_3CelebrityCardGetView = {
 	destroy = 0,
-	container = "Season123_2_1CelebrityCardGetViewContainer",
+	container = "Season123_2_3CelebrityCardGetViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123celebritycardgetview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123celebritycardgetview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1CardPackageView = {
+slot0.Season123_2_3CardPackageView = {
 	bgBlur = 1,
-	container = "Season123_2_1CardPackageViewContainer",
+	container = "Season123_2_3CardPackageViewContainer",
 	destroy = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123cardpackageview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123cardpackageview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default,
@@ -13019,15 +13097,15 @@ slot0.Season123_2_1CardPackageView = {
 		}
 	},
 	otherRes = {
-		[1.0] = "ui/viewres/seasonver/v2a1_act123/season123cardpackageitem.prefab",
-		[2.0] = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+		[1.0] = "ui/viewres/seasonver/v2a3_act123/season123cardpackageitem.prefab",
+		[2.0] = "ui/viewres/seasonver/v2a3_act123/season123celebritycarditem.prefab"
 	}
 }
-slot0.Season123_2_1StoryView = {
+slot0.Season123_2_3StoryView = {
 	destroy = 0,
-	container = "Season123_2_1StoryViewContainer",
+	container = "Season123_2_3StoryViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123storyview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123storyview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default,
@@ -13039,86 +13117,86 @@ slot0.Season123_2_1StoryView = {
 		}
 	}
 }
-slot0.Season123_2_1StoryPagePopView = {
+slot0.Season123_2_3StoryPagePopView = {
 	destroy = 0,
-	container = "Season123_2_1StoryPagePopViewContainer",
+	container = "Season123_2_3StoryPagePopViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123storypagepopview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123storypagepopview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1RecordWindow = {
+slot0.Season123_2_3RecordWindow = {
 	destroy = 0,
-	container = "Season123_2_1RecordWindowContainer",
+	container = "Season123_2_3RecordWindowContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123recordwindow.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123recordwindow.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1FightSuccView = {
+slot0.Season123_2_3FightSuccView = {
 	destroy = 0,
-	container = "Season123_2_1FightSuccViewContainer",
+	container = "Season123_2_3FightSuccViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123fightsuccview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123fightsuccview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1FightFailView = {
+slot0.Season123_2_3FightFailView = {
 	destroy = 0,
-	container = "Season123_2_1FightFailViewContainer",
+	container = "Season123_2_3FightFailViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123fightfailview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123fightfailview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1SettlementView = {
+slot0.Season123_2_3SettlementView = {
 	destroy = 0,
-	container = "Season123_2_1SettlementViewContainer",
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123settlementview.prefab",
+	container = "Season123_2_3SettlementViewContainer",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123settlementview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default,
 	otherRes = {
-		itemRes = "ui/viewres/seasonver/v2a1_act123/season123settlementherogroupitem.prefab"
+		itemRes = "ui/viewres/seasonver/v2a3_act123/season123settlementherogroupitem.prefab"
 	}
 }
-slot0.Season123_2_1AdditionRuleTipView = {
+slot0.Season123_2_3AdditionRuleTipView = {
 	destroy = 0,
-	container = "Season123_2_1AdditionRuleTipViewContainer",
+	container = "Season123_2_3AdditionRuleTipViewContainer",
 	bgBlur = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123additionruletipview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123additionruletipview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default
 }
-slot0.Season123_2_1FightRuleTipView = {
+slot0.Season123_2_3FightRuleTipView = {
 	destroy = 0,
-	container = "Season123_2_1FightRuleTipViewContainer",
+	container = "Season123_2_3FightRuleTipViewContainer",
 	bgBlur = 0,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123fightruletipview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123fightruletipview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Modal,
 	anim = ViewAnim.Default,
 	tabRes = {
 		{
 			{
-				"ui/viewres/seasonver/v2a1_act123/season123fightruleview.prefab"
+				"ui/viewres/seasonver/v2a3_act123/season123fightruleview.prefab"
 			},
 			{
-				"ui/viewres/seasonver/v2a1_act123/season123fightcardview.prefab"
+				"ui/viewres/seasonver/v2a3_act123/season123fightcardview.prefab"
 			}
 		}
 	}
 }
-slot0.Season123_2_1ResetView = {
+slot0.Season123_2_3ResetView = {
 	destroy = 0,
-	container = "Season123_2_1ResetViewContainer",
+	container = "Season123_2_3ResetViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/seasonver/v2a1_act123/season123resetview.prefab",
+	mainRes = "ui/viewres/seasonver/v2a3_act123/season123resetview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	tabRes = {
@@ -16853,8 +16931,6 @@ slot0.LoperaGameResultView = {
 		LoperaGoodsItem.prefabPath3
 	}
 }
-slot6 = NavigateButtonsView.prefabPath
-slot5 = "prefabPath3"
 slot0.LoperaSmeltView = {
 	bgBlur = 3,
 	container = "LoperaSmeltViewContainer",
@@ -16866,12 +16942,12 @@ slot0.LoperaSmeltView = {
 	tabRes = {
 		{
 			{
-				slot6
+				NavigateButtonsView.prefabPath
 			}
 		}
 	},
 	otherRes = {
-		LoperaGoodsItem[slot5]
+		LoperaGoodsItem.prefabPath3
 	}
 }
 slot0.LoperaSmeltResultView = {
@@ -16949,6 +17025,801 @@ slot0.WebView = {
 	mainRes = "ui/viewres/webview/webview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal
+}
+slot0.TowerGuideView = {
+	destroy = 0,
+	container = "TowerGuideViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/tower/towerguideview.prefab",
+	blurFactor = 0.3,
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal
+}
+slot0.TowerPermanentView = {
+	destroy = 0,
+	container = "TowerPermanentViewContainer",
+	mainRes = "ui/viewres/tower/towerpermanentview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerMopUpView = {
+	destroy = 0,
+	container = "TowerMopUpViewContainer",
+	bgBlur = 4,
+	mainRes = "ui/viewres/tower/towermopupview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.TowerMainView = {
+	destroy = 0,
+	container = "TowerMainViewContainer",
+	mainRes = "ui/viewres/tower/towermainview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossSelectView = {
+	destroy = 0,
+	container = "TowerBossSelectViewContainer",
+	mainRes = "ui/viewres/tower/towerbossselectview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		itemRes = "ui/viewres/tower/towerbossselectitem.prefab"
+	}
+}
+slot0.TowerBossEpisodeView = {
+	destroy = 0,
+	container = "TowerBossEpisodeViewContainer",
+	mainRes = "ui/viewres/tower/towerbossepisodeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossSpEpisodeView = {
+	destroy = 0,
+	container = "TowerBossSpEpisodeViewContainer",
+	mainRes = "ui/viewres/tower/towerbossspepisodeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerAssistBossView = {
+	destroy = 0,
+	container = "TowerAssistBossViewContainer",
+	mainRes = "ui/viewres/tower/towerassistbosstview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		itemRes = "ui/viewres/tower/towerassistbossitem.prefab"
+	}
+}
+slot0.TowerHeroGroupFightView = {
+	bgBlur = 4,
+	container = "TowerHeroGroupFightViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/tower/towerherogroupview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Internal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/fight/clothskill.prefab"
+	}
+}
+slot0.TowerAssistBossDetailView = {
+	destroy = 0,
+	container = "TowerAssistBossDetailViewContainer",
+	mainRes = "ui/viewres/tower/towerassistbosstdetailview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerAssistBossTalentView = {
+	destroy = 0,
+	container = "TowerAssistBossTalentViewContainer",
+	mainRes = "ui/viewres/tower/towertalentview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerAssistBossTalentTallView = {
+	destroy = 0,
+	container = "TowerAssistBossTalentTallViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/tower/towertalentallview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossResultView = {
+	destroy = 0,
+	container = "TowerBossResultViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/tower/towerbossresultview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default
+}
+slot0.TowerPermanentResultView = {
+	destroy = 0,
+	container = "TowerPermanentResultViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/tower/towerpermanentresultview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default
+}
+slot0.TowerTaskView = {
+	destroy = 0,
+	container = "TowerTaskViewContainer",
+	mainRes = "ui/viewres/tower/towertaskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/tower/towertaskitem.prefab"
+	}
+}
+slot0.TowerTimeLimitLevelView = {
+	destroy = 0,
+	container = "TowerTimeLimitLevelViewContainer",
+	mainRes = "ui/viewres/tower/towertimelimitlevelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossSkillTipsView = {
+	destroy = 0,
+	container = "TowerBossSkillTipsViewContainer",
+	mainRes = "ui/viewres/tower/towerbosstipview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossAttributeTipsView = {
+	destroy = 0,
+	container = "TowerBossAttributeTipsViewContainer",
+	mainRes = "ui/viewres/tower/towerbossattributetipview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerBossHeroGroupAttributeTipsView = {
+	destroy = 0,
+	container = "TowerBossHeroGroupAttributeTipsViewContainer",
+	mainRes = "ui/viewres/tower/towerherogrouptipsview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.TowerSkillTipView = {
+	destroy = 0,
+	container = "TowerSkillTipViewContainer",
+	bgBlur = 4,
+	mainRes = "ui/viewres/tower/towerbossskilltipview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default,
+	customAnimBg = {
+		"#go_newskilltip/skillbg"
+	}
+}
+slot0.VersionActivity2_3EnterView = {
+	destroy = 0,
+	container = "VersionActivity2_3EnterViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_enter/v2a3_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				"ui/viewres/versionactivity_2_3/v2a3_enter/v2a3_dungeonenterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_3/v2a3_enter/v2a3_act174enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_3/v2a3_roledudugu/v2a3_roledudugu_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/v2a3_zhixinquaner_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_3/v2a3_season/v2a3_season_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_1_4/v1a4_bossrush/v1a6_bossrush_enterview.prefab"
+			},
+			{
+				"ui/viewres/dungeon/rolestory/rolestoryenterview.prefab"
+			},
+			{
+				"ui/viewres/activity/show/activityweekwalkdeepshowview.prefab"
+			},
+			{
+				"ui/viewres/tower/towermainentryview.prefab"
+			}
+		}
+	}
+}
+slot0.VersionActivity2_3StoreView = {
+	destroy = 0,
+	container = "VersionActivity2_3StoreViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_storeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	}
+}
+slot0.VersionActivity2_3TaskView = {
+	destroy = 0,
+	container = "VersionActivity2_3TaskViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		"ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_taskitem.prefab"
+	}
+}
+slot0.VersionActivity2_3DungeonMapView = {
+	destroy = 0,
+	container = "VersionActivity2_3DungeonMapViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_dungeonmapview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	anim = ViewAnim.Default,
+	otherRes = {
+		"ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_mapepisodeitem.prefab",
+		"ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab",
+		"ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_dungeonmap_direction.prefab"
+	},
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.VersionActivity2_3DungeonMapLevelView = {
+	destroy = 0,
+	container = "VersionActivity2_3DungeonMapLevelViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_dungeon/v2a3_dungeonmaplevelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		},
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.ActDuDuGuLevelView = {
+	destroy = 0,
+	container = "ActDuDuGuLevelViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_roledudugu/v2a3_roledudugu_levelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/versionactivity_2_3/v2a3_roledudugu/v2a3_roledudugu_levelstageitem.prefab"
+	}
+}
+slot0.ActDuDuGuTaskView = {
+	bgBlur = 0,
+	container = "ActDuDuGuTaskViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_roledudugu/v2a3_roledudugu_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/versionactivity_2_3/v2a3_roledudugu/v2a3_roledudugu_taskitem.prefab"
+	}
+}
+slot0.ActivityInsightShowView_2_3 = {
+	destroy = 0,
+	container = "ActivityInsightShowView_2_3Container",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_newinsight/v2a3_activityinsightshowview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.ZhiXinQuanErLevelView = {
+	destroy = 0,
+	container = "ZhiXinQuanErLevelViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/v2a3_zhixinquaner_levelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/v2a3_zhixinquaner_levelviewstageitem.prefab"
+	}
+}
+slot0.ZhiXinQuanErTaskView = {
+	bgBlur = 0,
+	container = "ZhiXinQuanErTaskViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/v2a3_zhixinquaner_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1.0] = "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/v2a3_zhixinquaner_taskitem.prefab"
+	}
+}
+slot0.PuzzleMazeDrawView = {
+	destroy = 0,
+	container = "PuzzleMazeDrawViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/maze/v2a3_puzzlemazedrawview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		"ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/maze/v2a3_puzzlemazeitem.prefab",
+		"ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/maze/v2a3_puzzlemazepath.prefab",
+		"ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/maze/v2a3_puzzlemazepawn.prefab",
+		"ui/viewres/versionactivity_2_3/v2a3_zhixinquaner/maze/v2a3_puzzlemazeswitchitem.prefab"
+	}
+}
+slot0.Act174MainView = {
+	destroy = 0,
+	container = "Act174MainViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174mainview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.Act174BadgeWallView = {
+	destroy = 0,
+	container = "Act174BadgeWallViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174badgewallview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+slot0.Act174RotationView = {
+	destroy = 0,
+	container = "Act174RotationViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174ruledetailview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.Act174StoreView = {
+	destroy = 0,
+	container = "Act174StoreViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174storeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	}
+}
+slot0.Act174ForcePickView = {
+	destroy = 0,
+	container = "Act174ForcePickViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174forcepickview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.Act174GameView = {
+	destroy = 0,
+	container = "Act174GameViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174gameview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+slot0.Act174MatchView = {
+	destroy = 0,
+	container = "Act174MatchViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174matchview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+slot6 = NavigateButtonsView.prefabPath
+slot0.Act174FightReadyView = {
+	destroy = 0,
+	container = "Act174FightReadyViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174fightreadyview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	anim = ViewAnim.Internal,
+	tabRes = {
+		{
+			{
+				slot6
+			}
+		}
+	},
+	otherRes = {
+		Activity174Enum.PrefabPath.BattleHero
+	}
+}
+slot0.Act174BetSuccessView = {
+	destroy = 0,
+	container = "Act174BetSuccessViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174betsuccessview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal
+}
+slot0.Act174FightResultView = {
+	destroy = 0,
+	container = "Act174FightResultViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174fightresultview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	otherRes = {
+		Activity174Enum.PrefabPath.BattleHero
+	}
+}
+slot0.Act174EndLessView = {
+	destroy = 0,
+	container = "Act174EndLessViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174endlessview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+slot5 = "BattleHero"
+slot0.Act174SettlementView = {
+	destroy = 0,
+	container = "Act174SettlementViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174settlementview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	otherRes = {
+		Activity174Enum.PrefabPath[slot5]
+	}
+}
+slot0.Act174ItemTipView = {
+	destroy = 0,
+	container = "Act174ItemTipViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174itemtipview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal
+}
+slot0.Act174BuffTipView = {
+	destroy = 0,
+	container = "Act174BuffTipViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174bufftipsview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal
+}
+slot0.Act174RoleInfo = {
+	destroy = 0,
+	container = "Act174RoleInfoContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_3/act174/act174roleinfo.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal
+}
+slot0.VersionActivity2_3NewCultivationGiftView = {
+	destroy = 0,
+	container = "VersionActivity2_3NewCultivationGiftViewContainer",
+	mainRes = "ui/viewres/activity/v2a3_destiny_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.VersionActivity2_3NewCultivationGiftFullView = {
+	destroy = 0,
+	container = "VersionActivity2_3NewCultivationGiftFullViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v2a3_destiny_panelsview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.VersionActivity2_3NewCultivationGiftRewardView = {
+	destroy = 0,
+	container = "VersionActivity2_3NewCultivationGiftRewardViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_3/v2a3_newcultivationgift/v2a3_newcultivationrewardview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+slot0.VersionActivity2_3NewCultivationDetailView = {
+	destroy = 0,
+	container = "VersionActivity2_3NewCultivationDetailViewContainer",
+	mainRes = "ui/viewres/activity/v2a3_destiny_preview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+slot0.V2a3_Role_FullSignView_Part1 = {
+	destroy = 0,
+	container = "V2a3_Role_FullSignView_Part1_Container",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/v2a3_role_fullsignview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1.0] = "ui/viewres/activity/v2a3_role_signitem.prefab"
+	}
+}
+slot0.V2a3_Role_FullSignView_Part2 = {
+	destroy = 0,
+	container = "V2a3_Role_FullSignView_Part2_Container",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/v2a3_role_fullsignview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1.0] = "ui/viewres/activity/v2a3_role_signitem.prefab"
+	}
+}
+slot0.V2a3_Role_PanelSignView_Part1 = {
+	destroy = 0,
+	container = "V2a3_Role_PanelSignView_Part1_Container",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v2a3_role_panelsignview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1.0] = "ui/viewres/activity/v2a3_role_signitem.prefab"
+	}
+}
+slot0.V2a3_Role_PanelSignView_Part2 = {
+	destroy = 0,
+	container = "V2a3_Role_PanelSignView_Part2_Container",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v2a3_role_panelsignview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1.0] = "ui/viewres/activity/v2a3_role_signitem.prefab"
+	}
+}
+slot0.LinkageActivity_PanelView = {
+	destroy = 0,
+	container = "LinkageActivity_PanelViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/linkageactivity_panelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default
+}
+slot0.LinkageActivity_FullView = {
+	destroy = 0,
+	container = "LinkageActivity_FullViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/linkageactivity_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.V2a3_WarmUp = {
+	destroy = 0,
+	container = "V2a3_WarmUpContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/v2a3_warmup/v2a3_warmup.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	preloader = module_views_preloader
+}
+slot0.V2a3_Special_FullSignView = {
+	destroy = 0,
+	container = "V2a3_Special_FullSignViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/v2a3_special_fullsignview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+slot0.V2a3_Special_PanelsView = {
+	destroy = 0,
+	container = "V2a3_Special_PanelsViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v2a3_special_panelsview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
 }
 slot1 = {}
 

@@ -113,9 +113,10 @@ function slot0.getInteractionBuilingUid(slot0)
 
 	slot3 = slot1.currentPosition
 	slot5 = HexMath.positionToRoundHex(Vector2(slot3.x, slot3.z), RoomBlockEnum.BlockSize)
+	slot10 = slot5.y
 
 	for slot10 = 1, #slot2 do
-		if RoomMapBuildingModel.instance:getBuildingMOById(slot2[slot10]) and (slot12:getCurrentInteractionId() == nil or slot12:getCurrentInteractionId() == 0) and slot0:getBuildingRangeIndexList(slot11) and tabletool.indexOf(slot13, RoomResourceModel.instance:getIndexByXY(slot5.x, slot5.y)) then
+		if RoomMapBuildingModel.instance:getBuildingMOById(slot2[slot10]) and (slot12:getCurrentInteractionId() == nil or slot12:getCurrentInteractionId() == 0) and slot0:getBuildingRangeIndexList(slot11) and tabletool.indexOf(slot13, RoomResourceModel.instance:getIndexByXY(slot5.x, slot10)) then
 			return slot11
 		end
 	end

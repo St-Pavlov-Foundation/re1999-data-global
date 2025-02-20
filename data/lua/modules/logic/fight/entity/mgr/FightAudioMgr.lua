@@ -192,7 +192,7 @@ function slot0.playHeroVoiceRandom(slot0, slot1, slot2)
 end
 
 function slot0.getHeroVoiceRandom(slot0, slot1, slot2, slot3)
-	if not slot0:_getHeroVoiceCOs(slot1, slot2, FightEntityModel.instance:getById(slot3) and slot4.skin) or #slot5 == 0 then
+	if not slot0:_getHeroVoiceCOs(slot1, slot2, FightDataHelper.entityMgr:getById(slot3) and slot4.skin) or #slot5 == 0 then
 		return
 	end
 

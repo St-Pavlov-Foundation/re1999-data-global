@@ -30,7 +30,7 @@
     "audioicon": "2001_2",
     "sort": 2051,
     "audioType": 1,
-    "audioLength": 70.071,
+    "audioLength": 68.571,
     "audioEvaluates": "language_10039351"
   },
   {
@@ -47,7 +47,7 @@
     "audioicon": "2002_2",
     "sort": 2031,
     "audioType": 1,
-    "audioLength": 133.784,
+    "audioLength": 132.284,
     "audioEvaluates": "language_10039354"
   },
   {
@@ -64,7 +64,7 @@
     "audioicon": "2003_2",
     "sort": 2001,
     "audioType": 1,
-    "audioLength": 106.054,
+    "audioLength": 104.554,
     "audioEvaluates": "language_10039357"
   },
   {
@@ -81,7 +81,7 @@
     "audioicon": "2004_2",
     "sort": 2011,
     "audioType": 1,
-    "audioLength": 91.5,
+    "audioLength": 90.0,
     "audioEvaluates": "language_10039360"
   },
   {
@@ -98,7 +98,7 @@
     "audioicon": "2005_2",
     "sort": 2041,
     "audioType": 1,
-    "audioLength": 82.5,
+    "audioLength": 81.0,
     "audioEvaluates": "language_10039363"
   },
   {
@@ -115,7 +115,7 @@
     "audioicon": "1010501_2",
     "sort": 10502,
     "audioType": 5,
-    "audioLength": 107.1,
+    "audioLength": 105.6,
     "audioEvaluates": "language_10039366"
   },
   {
@@ -132,7 +132,7 @@
     "audioicon": "1010502_2",
     "sort": 10501,
     "audioType": 5,
-    "audioLength": 81.5,
+    "audioLength": 80.0,
     "audioEvaluates": "language_10039369"
   },
   {
@@ -149,7 +149,7 @@
     "audioicon": "1010601_2",
     "sort": 10601,
     "audioType": 8,
-    "audioLength": 117.725,
+    "audioLength": 116.225,
     "audioEvaluates": "language_10039372"
   },
   {
@@ -166,7 +166,7 @@
     "audioicon": "1010602_2",
     "sort": 10602,
     "audioType": 8,
-    "audioLength": 133.169,
+    "audioLength": 131.669,
     "audioEvaluates": "language_10039375"
   },
   {
@@ -183,7 +183,7 @@
     "audioicon": "1010701_2",
     "sort": 10701,
     "audioType": 10,
-    "audioLength": 146.616,
+    "audioLength": 145.116,
     "audioEvaluates": "language_10039378"
   },
   {
@@ -200,7 +200,7 @@
     "audioicon": "1010702_2",
     "sort": 10702,
     "audioType": 10,
-    "audioLength": 97.5,
+    "audioLength": 96.0,
     "audioEvaluates": "language_10039381"
   },
   {
@@ -217,7 +217,7 @@
     "audioicon": "1021901_2",
     "sort": 21901,
     "audioType": 10,
-    "audioLength": 111.618,
+    "audioLength": 110.118,
     "audioEvaluates": "language_10039384"
   },
   {
@@ -234,7 +234,7 @@
     "audioicon": "1021902_2",
     "sort": 21902,
     "audioType": 10,
-    "audioLength": 108.794,
+    "audioLength": 107.294,
     "audioEvaluates": "language_10039387"
   },
   {
@@ -251,7 +251,7 @@
     "audioicon": "2006_2",
     "sort": 2021,
     "audioType": 1,
-    "audioLength": 70.466,
+    "audioLength": 68.966,
     "audioEvaluates": "language_10045503"
   },
   {
@@ -268,7 +268,7 @@
     "audioicon": "1022001_2",
     "sort": 22001,
     "audioType": 11,
-    "audioLength": 163.5,
+    "audioLength": 162.0,
     "audioEvaluates": "language_10045516"
   },
   {
@@ -285,7 +285,7 @@
     "audioicon": "1022002_2",
     "sort": 22002,
     "audioType": 11,
-    "audioLength": 128.603,
+    "audioLength": 127.103,
     "audioEvaluates": "language_10045519"
   },
   {
@@ -302,7 +302,7 @@
     "audioicon": "1022101_2",
     "sort": 22101,
     "audioType": 12,
-    "audioLength": 118.5,
+    "audioLength": 117.0,
     "audioEvaluates": "language_10048440"
   },
   {
@@ -319,7 +319,7 @@
     "audioicon": "1022102_2",
     "sort": 22102,
     "audioType": 12,
-    "audioLength": 143.542,
+    "audioLength": 142.042,
     "audioEvaluates": "language_10048443"
   },
   {
@@ -336,7 +336,7 @@
     "audioicon": "1010801_2",
     "sort": 10801,
     "audioType": 13,
-    "audioLength": 118.5,
+    "audioLength": 117.0,
     "audioEvaluates": "language_10053428"
   },
   {
@@ -353,7 +353,7 @@
     "audioicon": "1010802_2",
     "sort": 10802,
     "audioType": 13,
-    "audioLength": 131.409,
+    "audioLength": 129.909,
     "audioEvaluates": "language_10053431"
   },
   {
@@ -370,7 +370,7 @@
     "audioicon": "1022201_2",
     "sort": 22201,
     "audioType": 13,
-    "audioLength": 155.1,
+    "audioLength": 153.6,
     "audioEvaluates": "language_10053434"
   },
   {
@@ -387,7 +387,7 @@
     "audioicon": "1022202_2",
     "sort": 22202,
     "audioType": 13,
-    "audioLength": 93.5,
+    "audioLength": 92.0,
     "audioEvaluates": "language_10053437"
   },
   {
@@ -404,7 +404,58 @@
     "audioicon": "1022203_2",
     "sort": 22203,
     "audioType": 13,
-    "audioLength": 56.357,
+    "audioLength": 54.857,
     "audioEvaluates": "language_10053440"
+  },
+  {
+    "id": 1022301,
+    "audio": 20230007,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221131,
+    "defaultUnlock": 0,
+    "audioName": "language_10058485",
+    "audioNameEn": "London Dawning",
+    "audioIntroduce": "language_10058486",
+    "audioBg": "1022301_1",
+    "audioicon": "1022301_2",
+    "sort": 22301,
+    "audioType": 14,
+    "audioLength": 115.135,
+    "audioEvaluates": "language_10058487"
+  },
+  {
+    "id": 1022302,
+    "audio": 20230008,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221132,
+    "defaultUnlock": 0,
+    "audioName": "language_10058488",
+    "audioNameEn": "Tourney in the Fog",
+    "audioIntroduce": "language_10058489",
+    "audioBg": "1022302_1",
+    "audioicon": "1022302_2",
+    "sort": 22302,
+    "audioType": 14,
+    "audioLength": 131.2,
+    "audioEvaluates": "language_10058490"
+  },
+  {
+    "id": 1022303,
+    "audio": 20230009,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221133,
+    "defaultUnlock": 0,
+    "audioName": "language_10058491",
+    "audioNameEn": "Reveries in the Rain",
+    "audioIntroduce": "language_10058492",
+    "audioBg": "1022303_1",
+    "audioicon": "1022303_2",
+    "sort": 22303,
+    "audioType": 14,
+    "audioLength": 128.0,
+    "audioEvaluates": "language_10058493"
   }
 ]

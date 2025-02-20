@@ -74,7 +74,8 @@ function slot0.handleDelayAnimTransition(slot0)
 end
 
 function slot0.lightStar(slot0)
-	slot0.curStageStep, slot0.maxStep = Season123ProgressUtils.getStageProgressStep(slot0._actId, slot0._stageId)
+	slot4 = slot0._stageId
+	slot0.curStageStep, slot0.maxStep = Season123ProgressUtils.getStageProgressStep(slot0._actId, slot4)
 	slot0.lightCnt = 1
 
 	for slot4 = 1, #slot0._progressDeactives do

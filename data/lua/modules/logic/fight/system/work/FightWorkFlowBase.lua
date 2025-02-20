@@ -19,25 +19,25 @@ function slot0.start(slot0, slot1)
 	end
 
 	if slot0.COUNTERDEEP == 0 then
-		return uv0.super.start(slot0, slot1)
+		return FightWorkItem.start(slot0, slot1)
 	elseif slot0.COUNTERDEEP % uv1 == 0 then
-		return slot0:com_registTimer(uv0.super.start, 0.01, slot1)
+		return slot0:com_registTimer(FightWorkItem.start, 0.01, slot1)
 	else
-		return uv0.super.start(slot0, slot1)
+		return FightWorkItem.start(slot0, slot1)
 	end
 end
 
 function slot0.onDestructorFinish(slot0)
 	if not slot0.COUNTERDEEP then
-		return uv0.super.onDestructorFinish(slot0)
+		return FightWorkItem.onDestructorFinish(slot0)
 	end
 
 	if slot0.COUNTERDEEP == 0 then
-		return uv0.super.onDestructorFinish(slot0)
-	elseif slot0.COUNTERDEEP % uv1 == 0 then
-		return FightTimer.registTimer(uv0.super.onDestructorFinish, slot0, 0.01)
+		return FightWorkItem.onDestructorFinish(slot0)
+	elseif slot0.COUNTERDEEP % uv0 == 0 then
+		return FightTimer.registTimer(FightWorkItem.onDestructorFinish, slot0, 0.01)
 	else
-		return uv0.super.onDestructorFinish(slot0)
+		return FightWorkItem.onDestructorFinish(slot0)
 	end
 end
 

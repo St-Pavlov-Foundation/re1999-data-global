@@ -39,7 +39,7 @@ function slot0.onStart(slot0, slot1)
 			gohelper.setActive(uv1, false)
 			recthelper.setAnchor(uv1.transform, 0, 0)
 
-			if not gohelper.isNil(uv0) then
+			if not gohelper.isNil(uv0) and uv2 then
 				uv2:getOpCtrl():onFlyEnd(MonoHelper.getLuaComFromGo(uv0, FightOpItem))
 			end
 		end))

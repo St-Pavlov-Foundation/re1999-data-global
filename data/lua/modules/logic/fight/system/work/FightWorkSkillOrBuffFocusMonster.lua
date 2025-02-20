@@ -9,7 +9,7 @@ end
 function slot0.onStart(slot0)
 	if slot0:isSkillFocus(slot0._fightStepMO) then
 		ViewMgr.instance:openView(ViewName.FightTechniqueGuideView, {
-			entity = FightEntityModel.instance:getById(slot1),
+			entity = FightDataHelper.entityMgr:getById(slot1),
 			config = slot0.monster_guide_focus_config
 		})
 		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
@@ -50,7 +50,7 @@ function slot0.isSkillFocus(slot0, slot1)
 
 	if not FightConfig.instance:getMonsterGuideFocusConfig(slot2.episodeId, slot1.actType, slot1.actId, slot3:getMO().modelId) then
 		for slot8, slot9 in ipairs(slot1.actEffectMOs) do
-			if slot9.effectType == FightEnum.EffectType.BUFFADD and FightEntityModel.instance:getById(slot9.targetId) and FightConfig.instance:getMonsterGuideFocusConfig(slot2.episodeId, FightWorkFocusMonster.invokeType.Buff, slot9.buff.buffId, slot10.modelId) then
+			if slot9.effectType == FightEnum.EffectType.BUFFADD and FightDataHelper.entityMgr:getById(slot9.targetId) and FightConfig.instance:getMonsterGuideFocusConfig(slot2.episodeId, FightWorkFocusMonster.invokeType.Buff, slot9.buff.buffId, slot10.modelId) then
 				break
 			end
 		end

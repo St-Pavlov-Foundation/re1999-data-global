@@ -220,23 +220,27 @@ function slot0._btnpassiveskillOnClick(slot0)
 end
 
 function slot0._btnconfirmOnClick(slot0)
-	if slot0._adventure then
+	if slot0._isShowQuickEdit then
 		if HeroGroupQuickEditListModel.instance:getHeroUids() and #slot1 > 0 then
-			for slot5, slot6 in pairs(slot1) do
-				if HeroModel.instance:getById(slot6) and WeekWalkModel.instance:getCurMapHeroCd(slot7.heroId) > 0 then
-					GameFacade.showToast(ToastEnum.HeroGroupEdit)
+			if slot0._adventure then
+				for slot5, slot6 in pairs(slot1) do
+					if HeroModel.instance:getById(slot6) and WeekWalkModel.instance:getCurMapHeroCd(slot7.heroId) > 0 then
+						GameFacade.showToast(ToastEnum.HeroGroupEdit)
 
-					return
+						return
+					end
+				end
+			elseif slot0._isTowerBattle then
+				for slot5, slot6 in pairs(slot1) do
+					if HeroModel.instance:getById(slot6) and TowerModel.instance:isHeroBan(slot7.heroId) then
+						GameFacade.showToast(ToastEnum.TowerHeroGroupEdit)
+
+						return
+					end
 				end
 			end
-		elseif slot0._heroMO and WeekWalkModel.instance:getCurMapHeroCd(slot0._heroMO.heroId) > 0 then
-			GameFacade.showToast(ToastEnum.HeroGroupEdit)
-
-			return
 		end
-	end
 
-	if slot0._isShowQuickEdit then
 		slot0:_saveQuickGroupInfo()
 		slot0:closeThis()
 
@@ -256,6 +260,18 @@ function slot0._btnconfirmOnClick(slot0)
 	end
 
 	if slot0._heroMO then
+		if slot0._adventure then
+			if WeekWalkModel.instance:getCurMapHeroCd(slot0._heroMO.heroId) > 0 then
+				GameFacade.showToast(ToastEnum.HeroGroupEdit)
+
+				return
+			end
+		elseif slot0._isTowerBattle and TowerModel.instance:isHeroBan(slot0._heroMO.heroId) then
+			GameFacade.showToast(ToastEnum.TowerHeroGroupEdit)
+
+			return
+		end
+
 		if slot0._heroMO.isPosLock then
 			GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
@@ -412,6 +428,7 @@ function slot0._btnquickeditOnClick(slot0)
 			HeroGroupQuickEditListModel.instance:selectCell(HeroGroupQuickEditListModel.instance:getIndex(slot1), true)
 		end
 	else
+		HeroGroupQuickEditListModel.instance:cancelAllErrorSelected()
 		slot0:_saveQuickGroupInfo()
 		slot0:_onHeroItemClick(nil)
 		HeroGroupEditListModel.instance:cancelAllSelected()
@@ -796,7 +813,10 @@ function slot0._saveQuickGroupInfo(slot0)
 
 		slot0:replaceQuickGroupHeroDefaultEquip(HeroGroupQuickEditListModel.instance:getHeroUids())
 
-		for slot6 = 1, HeroGroupModel.instance:getBattleRoleNum() do
+		slot4 = HeroGroupModel.instance
+		slot6 = slot4
+
+		for slot6 = 1, slot4.getBattleRoleNum(slot6) do
 			if slot1[slot6] ~= nil then
 				HeroSingleGroupModel.instance:addTo(slot7, slot6)
 
@@ -890,9 +910,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	slot4 = "guang_027"
+	slot4 = ResUrl.getHeroGroupBg
 
-	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
+	slot0._simageredlight:LoadImage(slot4("guang_027"))
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()
@@ -945,7 +965,8 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot0._goBtnEditQuickMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn2")
-	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn1")
+	slot4 = "btn1"
+	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, slot4)
 	slot0._attributevalues = {}
 
 	for slot4 = 1, 5 do
@@ -983,6 +1004,7 @@ function slot0.onOpen(slot0)
 	slot0._singleGroupMOId = slot0.viewParam.singleGroupMOId
 	slot0._adventure = slot0.viewParam.adventure
 	slot0._equips = slot0.viewParam.equips
+	slot0._isTowerBattle = TowerModel.instance:isInTowerBattle()
 
 	for slot4 = 1, 2 do
 		slot0._selectDmgs[slot4] = false
@@ -997,8 +1019,8 @@ function slot0.onOpen(slot0)
 	end
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
-	HeroGroupEditListModel.instance:setParam(slot0._originalHeroUid, slot0._adventure, slot0._heroHps)
-	HeroGroupQuickEditListModel.instance:setParam(slot0._adventure, slot0._heroHps)
+	HeroGroupEditListModel.instance:setParam(slot0._originalHeroUid, slot0._adventure, slot0._isTowerBattle)
+	HeroGroupQuickEditListModel.instance:setParam(slot0._adventure, slot0._isTowerBattle)
 
 	slot0._heroMO = HeroGroupEditListModel.instance:copyCharacterCardList(true)
 

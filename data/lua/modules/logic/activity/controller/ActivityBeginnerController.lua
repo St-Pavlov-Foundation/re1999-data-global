@@ -26,10 +26,6 @@ function slot0._initHandlers(slot0)
 		[ActivityEnum.Activity.ClassShow] = {
 			slot0.checkRedDotWithActivityId,
 			slot0.checkFirstEnter
-		},
-		[ActivityEnum.Activity.WeekWalkDeepShow] = {
-			slot0.checkRedDot,
-			slot0.checkActivityNewStage
 		}
 	}
 	slot0._defaultHandler = {

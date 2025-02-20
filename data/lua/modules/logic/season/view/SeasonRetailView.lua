@@ -188,9 +188,9 @@ function slot0.onOpen(slot0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_open)
 	end
 
-	slot4 = Activity104Event.RefreshRetail
+	slot4 = Activity104Controller.instance
 
-	slot0:addEventCb(Activity104Controller.instance, slot4, slot0._onRefreshRetailSuccess, slot0)
+	slot0:addEventCb(slot4, Activity104Event.RefreshRetail, slot0._onRefreshRetailSuccess, slot0)
 
 	slot0._rewardCardItems = {}
 
@@ -301,7 +301,9 @@ function slot0._showEntrance(slot0)
 		slot10 = gohelper.findChild(slot0["_scrollcelebritycard" .. slot8.position].gameObject, "scrollcontent_seasoncelebritycarditem")
 
 		if #slot0._rewardCardItems[slot8.position].celebrityCards > 0 then
-			for slot14, slot15 in pairs(slot0._rewardCardItems[slot8.position].celebrityCards) do
+			slot14 = slot8.position
+
+			for slot14, slot15 in pairs(slot0._rewardCardItems[slot14].celebrityCards) do
 				gohelper.setActive(slot15.go, false)
 			end
 		end

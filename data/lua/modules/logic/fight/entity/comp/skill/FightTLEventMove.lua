@@ -29,10 +29,9 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		if slot11 then
 			slot0._combinative_entitys = {}
 			slot0._combinative_pos_offsets = {}
-			slot14 = slot10[1]
-			slot15 = slot14
+			slot16 = slot10[1].getSide
 
-			for slot15, slot16 in ipairs(FightHelper.getSideEntitys(slot14.getSide(slot15))) do
+			for slot15, slot16 in ipairs(FightHelper.getSideEntitys(slot16(slot16))) do
 				if slot16:getMO() then
 					if FightConfig.instance:getSkinCO(slot17.skin) and slot18.mainBody == 1 then
 						slot0._follow_entity = slot16
@@ -48,12 +47,12 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 				tabletool.removeValue(slot0._combinative_entitys, slot0._follow_entity)
 			end
 
-			slot12, slot13, slot14 = FightHelper.getEntityStandPos(slot0._follow_entity:getMO())
+			slot12, slot13, slot19 = FightHelper.getEntityStandPos(slot0._follow_entity:getMO())
 
 			for slot19, slot20 in ipairs(slot0._combinative_entitys) do
 				slot21, slot22, slot23 = FightHelper.getEntityStandPos(slot20:getMO())
 
-				table.insert(slot0._combinative_pos_offsets, Vector3.New(slot21, slot22, slot23) - Vector3.New(slot12, slot13, slot14))
+				table.insert(slot0._combinative_pos_offsets, Vector3.New(slot21, slot22, slot23) - Vector3.New(slot12, slot13, slot19))
 			end
 
 			slot10 = {

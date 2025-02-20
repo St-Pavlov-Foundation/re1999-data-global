@@ -47,7 +47,7 @@ function slot0.onOpen(slot0)
 	NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onBtnEsc, slot0)
 
 	if FightEnum.ShowLogicTargetView[slot0.viewParam.skillConfig.logicTarget] and slot1.targetLimit == FightEnum.TargetLimit.MySide then
-		if #FightEntityModel.instance:getMySideList() + #FightEntityModel.instance:getSpModel(FightEnum.EntitySide.MySide):getList() > 1 then
+		if #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide) > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
 				mustSelect = true,
 				fromId = slot0.viewParam.fromId,

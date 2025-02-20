@@ -1,0 +1,130 @@
+[
+  {
+    "id": 30047,
+    "rare": "2",
+    "title": "language_10058398",
+    "desc": "language_10058476",
+    "icon": "act174_pick_bufficon_5",
+    "costCoin": 0
+  },
+  {
+    "id": 30048,
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058438",
+    "icon": "act174_pick_bufficon_6",
+    "costCoin": -15
+  },
+  {
+    "id": 30049,
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058439",
+    "icon": "act174_pick_bufficon_7",
+    "costCoin": 0
+  },
+  {
+    "id": 30050,
+    "rare": "2",
+    "title": "language_10058392",
+    "desc": "language_10058477",
+    "icon": "act174_pick_bufficon_1",
+    "costCoin": 0
+  },
+  {
+    "id": 30051,
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058478",
+    "icon": "act174_pick_bufficon_2",
+    "costCoin": 0
+  },
+  {
+    "id": 30052,
+    "rare": "2",
+    "title": "language_10058400",
+    "desc": "language_10058479",
+    "icon": "act174_pick_bufficon_3",
+    "costCoin": 0
+  },
+  {
+    "id": 30053,
+    "rare": "2",
+    "title": "language_10058407",
+    "desc": "language_10058443",
+    "icon": "act174_pick_bufficon_4",
+    "costCoin": 0
+  },
+  {
+    "id": 30054,
+    "rare": "2",
+    "title": "language_10058398",
+    "desc": "language_10058480",
+    "icon": "act174_pick_bufficon_5",
+    "costCoin": 0
+  },
+  {
+    "id": 30055,
+    "rare": "2",
+    "title": "language_10058414",
+    "desc": "language_10058481",
+    "icon": "act174_pick_bufficon_6",
+    "costCoin": 0
+  },
+  {
+    "id": 30056,
+    "rare": "2",
+    "title": "language_10058412",
+    "desc": "language_10058482",
+    "icon": "act174_pick_bufficon_7",
+    "costCoin": 0
+  },
+  {
+    "id": 30057,
+    "rare": "2",
+    "title": "language_10058392",
+    "desc": "language_10058447",
+    "icon": "act174_pick_bufficon_1",
+    "costCoin": 0
+  },
+  {
+    "id": 30058,
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058448",
+    "icon": "act174_pick_bufficon_2",
+    "costCoin": 0
+  },
+  {
+    "id": 30059,
+    "rare": "2",
+    "title": "language_10058400",
+    "desc": "language_10058449",
+    "icon": "act174_pick_bufficon_3",
+    "costCoin": 0
+  },
+  {
+    "id": 30060,
+    "rare": "2",
+    "title": "language_10058407",
+    "desc": "language_10058450",
+    "icon": "act174_pick_bufficon_4",
+    "costCoin": 0
+  },
+  {
+    "id": 30061,
+    "rare": "2",
+    "title": "language_10058398",
+    "desc": "language_10058483",
+    "icon": "act174_pick_bufficon_5",
+    "costCoin": 0
+  },
+  {
+    "id": 30062,
+    "rare": "2",
+    "title": "language_10058409",
+    "desc": "language_10058484",
+    "icon": "act174_pick_bufficon_2",
+    "costCoin": 0
+  }
+]

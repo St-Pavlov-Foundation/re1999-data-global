@@ -33,7 +33,7 @@ end
 
 function slot0._buildActEffect(slot0, slot1, slot2)
 	slot3 = {}
-	slot5 = FightEntityModel.instance:getById(slot0.fromId) and slot4.side
+	slot5 = FightDataHelper.entityMgr:getById(slot0.fromId) and slot4.side
 
 	if not slot4 then
 		if slot0.fromId == FightEntityScene.MySideId then

@@ -11,7 +11,6 @@ function slot0.onInitView(slot0)
 	slot0._txtrolestory = gohelper.findChildTextMesh(slot0.viewGO, "right/#btn_rolestory/txt")
 	slot0._gorolestorynew = gohelper.findChild(slot0.viewGO, "right/#btn_rolestory/new")
 	slot0._btnreactivity = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_activityreprint")
-	slot0._keytipsReactivity = gohelper.findChild(slot0._btnreactivity.gameObject, "#go_pcbtn")
 	slot0._imagereactivity = gohelper.findChildImage(slot0.viewGO, "right/#btn_activityreprint/image_activityreprint")
 	slot0._goreactivityred = gohelper.findChild(slot0.viewGO, "right/#btn_activityreprint/#go_activityreprintreddot")
 	slot0._txtreactivity = gohelper.findChildTextMesh(slot0.viewGO, "right/#btn_activityreprint/txt")
@@ -40,7 +39,11 @@ function slot0._btnreactivityOnClick(slot0)
 end
 
 function slot0.OnNotifyEnterCurActivity(slot0)
-	slot0:_btnreactivityOnClick()
+	if slot0._btnreactivity.gameObject.activeSelf then
+		slot0:_btnreactivityOnClick()
+	end
+
+	slot0:_btnrolestoryOnClick()
 end
 
 function slot0._btnrolestoryOnClick(slot0)
@@ -64,13 +67,19 @@ function slot0._onRougeClick(slot0)
 	RougeController.instance:openRougeMainView()
 end
 
+function slot0._onDouQuQuClick(slot0)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+	slot0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, , slot0._douququActId)
+end
+
 function slot0._getEnterController(slot0)
 	return slot0.viewContainer:getMainActivityEnterView():getCurEnterController()
 end
 
 function slot0._editableInitView(slot0)
-	slot0._seasonActId = ActivityConfig.instance:getSesonActivityConfig() and slot1.id or Season166Model.instance:getCurSeasonId()
+	slot0._seasonActId = ActivityConfig.instance:getSesonActivityConfig() and slot1.id or Season123Model.instance:getCurSeasonId() or Season166Model.instance:getCurSeasonId()
 	slot0._rougeActId = ActivityConfig.instance:getRougeActivityConfig() and slot2.id
+	slot0._douququActId = VersionActivity2_3Enum.ActivityId.Act174
 
 	slot0:_initActs()
 end
@@ -85,12 +94,15 @@ function slot0._initActs(slot0)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.Reactivity, slot0._getReactivityStatus, slot0._getReactivityStartTime)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.SeasonActivity, slot0._getSeasonActivityStatus, slot0._getSeasonActivityStartTime)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.Rouge, slot0._getRougeStatus, slot0._getRougeStartTime)
+	slot0:_addActHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0._getDouQuQuStatus, slot0._getDouQuQuStartTime)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, slot0._onRoleStoryClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.SeasonActivity, slot0._onSeasonClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.Rouge, slot0._onRougeClick)
+	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0._onDouQuQuClick)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, slot0.refreshRoleStoryBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, slot0.refreshSeasonBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge, slot0.refreshRougeBtn)
+	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0.refreshDouQuQuBtn)
 end
 
 function slot0._addRefreshBtnHandler(slot0, slot1, slot2)
@@ -146,6 +158,14 @@ function slot0._getRougeStartTime(slot0)
 	return ActivityModel.instance:getActMO(slot0._rougeActId) and slot2:getRealStartTimeStamp() * 1000
 end
 
+function slot0._getDouQuQuStatus(slot0)
+	return (slot0._douququActId and ActivityHelper.getActivityStatus(slot1)) == ActivityEnum.ActivityStatus.Normal
+end
+
+function slot0._getDouQuQuStartTime(slot0)
+	return ActivityModel.instance:getActMO(slot0._douququActId) and slot2:getRealStartTimeStamp() * 1000
+end
+
 function slot0._onStoryChange(slot0)
 	slot0:onRefreshActivityState()
 end
@@ -167,6 +187,13 @@ end
 function slot0.refreshRougeBtn(slot0)
 	gohelper.setActive(slot0._btnrolestory, true)
 	slot0:_roleStoryLoadImage(ActivityConfig.instance:getRougeActivityConfig().extraDisplayIcon, slot0.onLoadImage, slot0)
+
+	slot0._txtrolestory.text = ""
+end
+
+function slot0.refreshDouQuQuBtn(slot0)
+	gohelper.setActive(slot0._btnrolestory, true)
+	slot0:_roleStoryLoadImage(ActivityConfig.instance:getActivityCo(slot0._douququActId).extraDisplayIcon, slot0.onLoadImage, slot0)
 
 	slot0._txtrolestory.text = ""
 end
@@ -310,7 +337,11 @@ function slot0.showKeyTips(slot0)
 		return
 	end
 
+	slot0._keytipsReactivity = gohelper.findChild(slot0._btnreactivity.gameObject, "#go_pcbtn")
+	slot0._keytipsRoleStory = gohelper.findChild(slot0._btnrolestory.gameObject, "#go_pcbtn")
+
 	PCInputController.instance:showkeyTips(slot0._keytipsReactivity, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
+	PCInputController.instance:showkeyTips(slot0._keytipsRoleStory, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
 end
 
 function slot0.onClose(slot0)

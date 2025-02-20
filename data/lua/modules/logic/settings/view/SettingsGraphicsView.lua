@@ -317,4 +317,12 @@ function slot0._refreshDropdownList(slot0)
 	slot0._preSelectedIndex = slot0._drop:GetValue()
 end
 
+function slot0._refreshDropdownList(slot0)
+	slot0._drop:ClearOptions()
+	slot0._drop:AddOptions(SettingsModel.instance:getResolutionRatioStrList())
+	slot0._drop:SetValue(SettingsModel.instance:getCurrentDropDownIndex())
+
+	slot0._preSelectedIndex = slot0._drop:GetValue()
+end
+
 return slot0

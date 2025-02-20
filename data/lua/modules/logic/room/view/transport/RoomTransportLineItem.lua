@@ -39,7 +39,7 @@ function slot0._btndelectPathOnClick(slot0)
 		slot1:setIsEdit(true)
 		slot0:refreshLinkUI()
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
-		RoomTransportController.instance:waitRefreshPathLineChanged()
+		RoomTransportController.instance:updateBlockUseState()
 	end
 end
 

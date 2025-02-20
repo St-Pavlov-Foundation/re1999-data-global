@@ -248,8 +248,9 @@ end
 function slot0.getCurrentAchievementIds(slot0)
 	slot1 = {}
 	slot4 = slot0:getFitCategoryAchievementCfgs(AchievementMainCommonModel.instance:getCurrentCategory(), AchievementMainCommonModel.instance:getCurrentFilterType())
+	slot10 = slot0:getSortFunction(AchievementMainCommonModel.instance:getCurrentSortType())
 
-	table.sort(slot4, slot0:getSortFunction(AchievementMainCommonModel.instance:getCurrentSortType()))
+	table.sort(slot4, slot10)
 
 	for slot10, slot11 in ipairs(slot4) do
 		table.insert(slot1, slot11.id)

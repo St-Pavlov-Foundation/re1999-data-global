@@ -144,6 +144,7 @@ function slot0._createSpine(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slo
 
 	if not string.nilorempty(slot0._paramsArr[15]) then
 		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(slot13:getTag(), slot13.id)
+		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, slot13, tonumber(slot0._paramsArr[15]))
 		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, slot13, tonumber(slot0._paramsArr[15]))
 	end
 

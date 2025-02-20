@@ -2,7 +2,7 @@ module("modules.logic.fight.system.work.FightStepEffectFlow", package.seeall)
 
 slot0 = class("FightStepEffectFlow", FightEffectBase)
 
-function slot0.setDataIsDone(slot0)
+function slot0.playEffectData(slot0)
 end
 
 function slot0.playAdjacentSequenceEffect(slot0, slot1, slot2)

@@ -57,10 +57,10 @@ function slot0.onOpen(slot0)
 	gohelper.setActive(slot0._gonofull, not slot1)
 
 	slot0._newIds = BalanceUmbrellaModel.instance:getAllNoPlayIds()
-	slot5 = 999
-	slot6 = slot0.viewName
+	slot5 = "BalanceUmbrellaView_playclue"
+	slot6 = 999
 
-	UIBlockHelper.instance:startBlock("BalanceUmbrellaView_playclue", slot5, slot6)
+	UIBlockHelper.instance:startBlock(slot5, slot6, slot0.viewName)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
 	for slot5, slot6 in pairs(slot0._clues) do

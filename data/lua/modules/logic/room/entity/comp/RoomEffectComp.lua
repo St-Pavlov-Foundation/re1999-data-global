@@ -25,6 +25,8 @@ function slot0.init(slot0, slot1)
 	slot0._typeComponentsData = RoomEffectCompCacheData.New(slot0)
 	slot0._goSameNameChildsData = RoomEffectCompCacheData.New(slot0)
 	slot0._goPathChildsData = RoomEffectCompCacheData.New(slot0)
+	slot0._goSameNameChildsTrsData = RoomEffectCompCacheData.New(slot0)
+	slot0._goPathChildsTrsData = RoomEffectCompCacheData.New(slot0)
 	slot0.isEmulator = SDKMgr.instance:isEmulator()
 end
 
@@ -284,10 +286,52 @@ function slot0.getGameObjectByPath(slot0, slot1, slot2)
 	end
 end
 
+function slot0.getGameObjectsTrsByName(slot0, slot1, slot2)
+	slot3 = slot0._goSameNameChildsTrsData:getDataByKey(slot1, slot2)
+
+	if slot0.__willDestroy then
+		return slot3
+	end
+
+	if not slot3 and slot0._goHasDict[slot1] and slot0:getGameObjectsByName(slot1, slot2) then
+		slot8 = slot1
+		slot9 = slot2
+
+		slot0._goSameNameChildsTrsData:addDataByKey(slot8, slot9, {})
+
+		for slot8, slot9 in ipairs(slot4) do
+			table.insert(slot3, slot9.transform)
+		end
+	end
+
+	return slot3
+end
+
+function slot0.getGameObjectTrsByPath(slot0, slot1, slot2)
+	slot3 = slot0._goPathChildsTrsData:getDataByKey(slot1, slot2)
+
+	if not slot0.__willDestroy and not slot3 and slot0._goHasDict[slot1] then
+		slot0._goPathChildsTrsData:addDataByKey(slot1, slot2, {})
+
+		if slot0:getGameObjectByPath(slot1, slot2) then
+			table.insert(slot3, slot4)
+		end
+	end
+
+	if slot3 then
+		return slot3[1]
+	end
+end
+
 function slot0.removeComponentsByKey(slot0, slot1)
 	slot0._typeComponentsData:removeDataByKey(slot1)
 	slot0._goSameNameChildsData:removeDataByKey(slot1)
 	slot0._goPathChildsData:removeDataByKey(slot1)
+	slot0._goSameNameChildsTrsData:removeDataByKey(slot1)
+
+	slot5 = slot1
+
+	slot0._goPathChildsTrsData:removeDataByKey(slot5)
 
 	for slot5, slot6 in pairs(slot0._sameNameComponentsDic) do
 		slot6:removeDataByKey(slot1)
@@ -597,7 +641,9 @@ function slot0.returnEffect(slot0, slot1, slot2, slot3)
 end
 
 function slot0.returnAllEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDestroy, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._delayDestroy, slot4)
 
 	for slot4, slot5 in pairs(slot0._resDict) do
 		slot0:returnEffect(slot4, slot0._goDict[slot4], slot5)

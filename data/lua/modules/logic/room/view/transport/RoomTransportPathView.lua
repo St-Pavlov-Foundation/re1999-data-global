@@ -235,6 +235,10 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 		return
 	end
 
+	if not RoomTransportHelper.canPathByBlockMO(slot3, slot0._isRemoveBuilding) then
+		return
+	end
+
 	if not (RoomMapTransportPathModel.instance:getTempTransportPathMO() or RoomMapTransportPathModel.instance:addTempTransportPathMO(slot3.hexPoint, slot0._lineDataMO.fromType, slot0._lineDataMO.toType)) then
 		return
 	end
@@ -559,12 +563,14 @@ function slot0._onSelectLineItem(slot0, slot1)
 
 	slot0:_refreshLineLinkUI()
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathViewShowChanged)
-
-	if slot0._lineDataMO and RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) then
-		slot0:_setIsRemoveLand(slot3.blockCleanType == RoomBlockEnum.CleanType.CleanLand)
-	end
-
+	slot0:_initSelectLineRemoveLand()
 	slot0:_updateAllPathBlockState()
+end
+
+function slot0._initSelectLineRemoveLand(slot0)
+	if slot0._lineDataMO and RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) then
+		slot0:_setIsRemoveLand(slot1.blockCleanType == RoomBlockEnum.CleanType.CleanLand)
+	end
 end
 
 function slot0.refreshUI(slot0)
@@ -640,6 +646,7 @@ function slot0._clearPath(slot0)
 		RoomMapTransportPathModel.instance:resetByTransportPathMOList(RoomTransportPathModel.instance:getList())
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:updateBlockUseState()
+		slot0:_initSelectLineRemoveLand()
 	end
 end
 

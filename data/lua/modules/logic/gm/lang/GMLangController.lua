@@ -119,7 +119,9 @@ end
 
 function slot0.print(slot0)
 	for slot4, slot5 in pairs(slot0._inUseDic) do
-		logNormal(slot4, "===================================")
+		slot9 = "==================================="
+
+		logNormal(slot4, slot9)
 
 		for slot9, slot10 in pairs(slot5) do
 			logNormal(slot9, ":", slot10)
@@ -165,9 +167,10 @@ function slot0.init(slot0)
 end
 
 function slot0.changeLang(slot0, slot1)
-	slot6 = slot0
+	slot6 = slot0._onChangeLangTxtType2
+	slot7 = slot0
 
-	LangSettings.instance:SetCurLangType(slot1, slot0._onChangeLangTxtType2, slot6)
+	LangSettings.instance:SetCurLangType(slot1, slot6, slot7)
 	GameGlobalMgr.instance:getLangFont():changeFontAsset()
 	GameGlobalMgr.instance:getLangFont():ControlDoubleEn()
 

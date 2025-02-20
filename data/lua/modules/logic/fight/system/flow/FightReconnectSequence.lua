@@ -4,10 +4,6 @@ slot0 = class("FightReconnectSequence", BaseFightSequence)
 
 function slot0.buildFlow(slot0, slot1)
 	uv0.super.buildFlow(slot0)
-
-	slot2 = FightEntityModel.instance
-
-	slot2:clearDeadUids()
 	slot0:addWork(FunctionWork.New(function ()
 		FightRpc.instance:dealCardInfoPushData()
 	end))

@@ -73,9 +73,9 @@ function slot0.refreshStoreContent(slot0)
 
 	table.sort(slot2, uv0.sortGoods)
 
-	slot6 = #slot0.storeItemList
+	slot6 = #slot2
 
-	for slot6 = 1, math.max(#slot2, slot6) do
+	for slot6 = 1, math.max(slot6, #slot0.storeItemList) do
 		if not slot0.storeItemList[slot6] then
 			slot0.storeItemList[slot6] = SeasonStoreItem.New(slot0:getItemGo(slot6))
 		end

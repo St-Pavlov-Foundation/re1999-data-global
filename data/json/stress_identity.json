@@ -3538,5 +3538,15 @@
     "param": "52100061",
     "isNoShow": 1,
     "desc": ""
+  },
+  {
+    "id": 6230001,
+    "name": "language_10060987",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "521300001",
+    "isNoShow": 1,
+    "desc": ""
   }
 ]

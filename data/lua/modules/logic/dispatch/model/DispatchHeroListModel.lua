@@ -122,7 +122,9 @@ function slot0.deselectMo(slot0, slot1)
 	end
 
 	if slot0:getSelectedIndex(slot1) and slot2 > 0 then
-		table.remove(slot0.selectedHeroList, slot2)
+		slot6 = slot2
+
+		table.remove(slot0.selectedHeroList, slot6)
 
 		slot0.selectedHeroIndexDict[slot1] = nil
 

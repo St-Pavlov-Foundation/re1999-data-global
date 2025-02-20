@@ -141,10 +141,10 @@ function slot0._onRunCheckTrainTask(slot0)
 	end
 
 	slot6 = {}
-	slot9 = RoomCritterModel.instance
-	slot10 = slot9
+	slot10 = RoomCritterModel.instance
+	slot10 = slot10.getTrainCritterMOList
 
-	tabletool.addValues(slot6, slot9.getTrainCritterMOList(slot10))
+	tabletool.addValues(slot6, slot10(slot10))
 
 	for slot10, slot11 in ipairs(slot6) do
 		if not slot3[slot11.uid] then
@@ -157,10 +157,10 @@ function slot0._onRunCheckTrainTask(slot0)
 	end
 
 	slot7 = {}
-	slot10 = RoomCharacterModel.instance
-	slot11 = slot10
+	slot11 = RoomCharacterModel.instance
+	slot11 = slot11.getList
 
-	tabletool.addValues(slot7, slot10.getList(slot11))
+	tabletool.addValues(slot7, slot11(slot11))
 
 	for slot11, slot12 in ipairs(slot7) do
 		slot13 = slot12.id

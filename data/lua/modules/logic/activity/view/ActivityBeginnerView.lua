@@ -31,13 +31,13 @@ slot1 = {
 	[ActivityEnum.Activity.V2a1_MoonFestival] = ViewName.V2a1_MoonFestival_FullView,
 	[ActivityEnum.Activity.LinkageActivity_FullView] = ViewName.LinkageActivity_FullView,
 	[ActivityEnum.Activity.V2a2_SpringFestival] = ViewName.V2a2_SpringFestival_FullView,
+	[slot2:getActivityId()] = ViewName.ShortenAct_FullView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.NorSign] = ViewName.ActivityNorSignView,
 	[ActivityEnum.Activity.NoviceInsight] = ViewName.ActivityNoviceInsightView,
 	[ActivityEnum.Activity.StoryShow] = ViewName.ActivityStoryShowView,
 	[ActivityEnum.Activity.DreamShow] = ViewName.ActivityDreamShowView,
 	[ActivityEnum.Activity.ClassShow] = ViewName.ActivityClassShowView,
-	[ActivityEnum.Activity.WeekWalkDeepShow] = ViewName.ActivityWeekWalkDeepShowView,
 	[ActivityEnum.Activity.VersionActivity1_3Radio] = ViewName.VersionActivity1_3RadioView,
 	[ActivityEnum.Activity.SummerSignPart1_1_2] = ViewName.SummerSignPart1View_1_2,
 	[ActivityEnum.Activity.SummerSignPart2_1_2] = ViewName.SummerSignPart2View_1_2,
@@ -86,9 +86,16 @@ slot1 = {
 	[VersionActivity2_2Enum.ActivityId.LimitDecorate] = ViewName.Activity173PanelView,
 	[ActivityEnum.Activity.V2a2_WarmUp] = ViewName.V2a2_WarmUp,
 	[ActivityEnum.Activity.RoomSign] = ViewName.VersionActivity2_2RoomSignView,
+	[ActivityEnum.Activity.V2a3_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
+	[ActivityEnum.Activity.V2a3_Role_SignView_Part1] = ViewName.V2a3_Role_FullSignView_Part1,
+	[ActivityEnum.Activity.V2a3_Role_SignView_Part2] = ViewName.V2a3_Role_FullSignView_Part2,
+	[ActivityEnum.Activity.LinkageActivity_FullView] = ViewName.LinkageActivity_FullView,
+	[ActivityEnum.Activity.V2a3_WarmUp] = ViewName.V2a3_WarmUp,
+	[ActivityEnum.Activity.V2a3_Special] = ViewName.V2a3_Special_FullSignView,
 	[ActivityEnum.Activity.V2a4_Blind_Box_Draw] = ViewName.Activity181MainView
 }
 slot2 = VoyageConfig.instance
+slot2 = ShortenActConfig.instance
 slot2 = {
 	[ActivityEnum.ActivityTypeID.OpenTestWarmUp] = ViewName.ActivityWarmUpView,
 	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView
@@ -114,7 +121,9 @@ function slot0._refreshView(slot0)
 		slot0:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedCategory(slot1)
+	slot5 = slot1
+
+	ActivityModel.instance:removeFinishedCategory(slot5)
 
 	slot0.data = {}
 

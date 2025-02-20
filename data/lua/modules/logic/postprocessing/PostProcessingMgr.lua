@@ -381,6 +381,10 @@ function slot0.setBlurIterations(slot0, slot1)
 	slot0._capture.blurIterations = slot1
 end
 
+function slot0.setUIBloom(slot0, slot1)
+	slot0._uiBloomActive = slot1
+end
+
 function slot0.setUIBlurActive(slot0, slot1, slot2, slot3, slot4)
 	if slot0._uiCamData and slot0._unitCamData and slot0._capture then
 		slot5 = CameraMgr.instance:getMainCamera()
@@ -413,6 +417,13 @@ function slot0.setUIBlurActive(slot0, slot1, slot2, slot3, slot4)
 			if slot1 == 1 then
 				TaskDispatcher.runDelay(slot0.setFreezeVisbleBack, slot0, 0)
 			end
+		end
+
+		if slot0._uiBloomActive then
+			slot0._uiCamData.usePostProcess = true
+
+			slot0:setUIPPValue("bloomActive", true)
+			slot0:setUIPPValue("localBloomActive", false)
 		end
 	end
 end

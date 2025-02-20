@@ -49,7 +49,8 @@ function slot0.onLoadCallback(slot0)
 end
 
 function slot0.initChannelDrop(slot0)
-	slot0.channelDrop = gohelper.findChildDropdown(slot0.goGmNode, "channel_drop")
+	slot4 = "channel_drop"
+	slot0.channelDrop = gohelper.findChildDropdown(slot0.goGmNode, slot4)
 
 	slot0.channelDrop:ClearOptions()
 
@@ -66,7 +67,8 @@ function slot0.initChannelDrop(slot0)
 end
 
 function slot0.initSubChannelDrop(slot0)
-	slot0.subChannelDrop = gohelper.findChildDropdown(slot0.goGmNode, "subchannel_drop")
+	slot4 = "subchannel_drop"
+	slot0.subChannelDrop = gohelper.findChildDropdown(slot0.goGmNode, slot4)
 
 	slot0.subChannelDrop:ClearOptions()
 
@@ -83,7 +85,8 @@ function slot0.initSubChannelDrop(slot0)
 end
 
 function slot0.initServerTypeDrop(slot0)
-	slot0.serverTypeDrop = gohelper.findChildDropdown(slot0.goGmNode, "servertype_drop")
+	slot4 = "servertype_drop"
+	slot0.serverTypeDrop = gohelper.findChildDropdown(slot0.goGmNode, slot4)
 
 	slot0.serverTypeDrop:ClearOptions()
 

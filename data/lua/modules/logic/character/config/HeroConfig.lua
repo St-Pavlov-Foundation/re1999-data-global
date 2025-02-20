@@ -330,8 +330,10 @@ function slot0.sortAttrForEquipView(slot0, slot1)
 end
 
 function slot0.getHeroAttrRate(slot0, slot1, slot2)
+	slot7 = 1
+
 	for slot7, slot8 in ipairs(lua_character_grow.configList) do
-		if SkillConfig.instance:getherolevelCO(slot1, 1)[slot2] < slot8[slot2] then
+		if SkillConfig.instance:getherolevelCO(slot1, slot7)[slot2] < slot8[slot2] then
 			return slot8.id - 1 == 0 and 1 or slot8.id - 1
 		end
 	end

@@ -97,6 +97,7 @@ function slot0._refreshUI(slot0)
 		slot0._txtnameright.text = slot0._mo:getSenderName()
 		slot0._txtcontentright.text = LuaUtil.replaceSpace(slot0._mo.content)
 
+		LuaUtil.updateTMPRectHeight_LayoutElement(slot0._txtcontentright)
 		gohelper.setActive(slot0._btnopright, slot3)
 
 		if slot3 then
@@ -126,6 +127,7 @@ function slot0._refreshUI(slot0)
 		slot0._txtnameleft.text = slot4
 		slot0._txtcontentleft.text = LuaUtil.replaceSpace(slot0._mo.content)
 
+		LuaUtil.updateTMPRectHeight_LayoutElement(slot0._txtcontentleft)
 		gohelper.setActive(slot0._btnopleft, slot3)
 
 		if slot3 then

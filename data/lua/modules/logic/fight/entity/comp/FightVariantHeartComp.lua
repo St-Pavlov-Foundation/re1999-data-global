@@ -7,7 +7,8 @@ slot0.VariantKey = {
 	"_STYLIZATIONMOSTER3_ON",
 	"_STYLIZATIONMOSTER2_ON",
 	"_STYLE_JOINT_ON",
-	"_STYLE_RAIN_STORM_ON"
+	"_STYLE_RAIN_STORM_ON",
+	"_STYLE_ASSIST_ON"
 }
 slot1 = "_NoiseMap3"
 slot2 = {
@@ -16,7 +17,8 @@ slot2 = {
 	"",
 	"noise_03_manual",
 	"noise_sty_joint2_manual",
-	"textures/style_rain_strom_manual"
+	"textures/style_rain_strom_manual",
+	"textures/style_assist_noise_manual"
 }
 slot3 = "_Pow"
 slot4 = {

@@ -22,6 +22,10 @@ function slot0.onInitView(slot0)
 	slot0._txttitle4 = gohelper.findChildText(slot0.viewGO, "#go_4/#txt_title4")
 	slot0._scrollcontent4 = gohelper.findChildScrollRect(slot0.viewGO, "#go_4/#scroll_content4")
 	slot0._txtinfo4 = gohelper.findChildText(slot0.viewGO, "#go_4/#scroll_content4/Viewport/Content/#txt_info4")
+	slot0._go5 = gohelper.findChild(slot0.viewGO, "#go_5")
+	slot0._txttitle5 = gohelper.findChildText(slot0.viewGO, "#go_5/#txt_titlecn")
+	slot0._scrollcontent5 = gohelper.findChildScrollRect(slot0.viewGO, "#go_5/#scroll_content")
+	slot0._txtinfo5 = gohelper.findChildText(slot0.viewGO, "#go_5/#scroll_content/Viewport/Content/#txt_content")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -42,7 +46,8 @@ slot0.FragmentInfoTypeMap = {
 	1,
 	1,
 	3,
-	4
+	4,
+	5
 }
 
 function slot0._btncloseOnClick(slot0)
@@ -245,7 +250,7 @@ function slot0.onOpen(slot0)
 	slot0._notShowToast = slot0.viewParam.notShowToast
 	slot1 = lua_chapter_map_fragment.configDict[slot0._fragmentId]
 
-	for slot5 = 1, 4 do
+	for slot5 = 1, 5 do
 		slot6 = uv0.FragmentInfoTypeMap[slot5] or 1
 
 		gohelper.setActive(slot0["_go" .. slot6], slot6 == (uv0.FragmentInfoTypeMap[slot1.type] or 1))
@@ -347,6 +352,13 @@ function slot0.fragmentInfoShowHandleFunc4(slot0, slot1)
 	slot0._txttitle4.text = slot1.title
 
 	gohelper.setActive(slot0._txtinfo4.gameObject, true)
+end
+
+function slot0.fragmentInfoShowHandleFunc5(slot0, slot1)
+	slot0._txtinfo5.text = slot1.content
+	slot0._txttitle5.text = slot1.title
+
+	gohelper.setActive(slot0._txtinfo5.gameObject, true)
 end
 
 return slot0

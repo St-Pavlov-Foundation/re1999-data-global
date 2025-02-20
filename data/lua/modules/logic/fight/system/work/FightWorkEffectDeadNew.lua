@@ -15,8 +15,6 @@ function slot0.ctor(slot0, slot1, slot2, slot3)
 end
 
 function slot0.onStart(slot0)
-	FightEntityModel.instance:addDeadUid(slot0._actEffectMO.targetId)
-
 	slot0._deadEntity = FightHelper.getEntity(slot0._actEffectMO.targetId)
 
 	if slot0._deadEntity and not slot0._deadEntity.isDead then
@@ -118,11 +116,13 @@ function slot0._playDeadWork(slot0)
 		slot0._deadEntity.spine:play(slot2, false, false)
 	end
 
-	for slot7, slot8 in ipairs(slot1.buffModel:getList()) do
-		slot0._deadEntity.buff:delBuff(slot8, true)
+	slot7 = slot1
+
+	for slot6, slot7 in pairs(slot1.getBuffDic(slot7)) do
+		slot0._deadEntity.buff:delBuff(slot7.uid, true)
 	end
 
-	slot1.buffModel:clear()
+	slot1:clearAllBuff()
 	slot0._deadEntity:resetSpineMat()
 	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, slot0._deadEntity.id)
 	FightController.instance:dispatchEvent(FightEvent.SetEntityWeatherEffectVisible, slot0._deadEntity, false)
@@ -292,7 +292,6 @@ function slot0._doneAndRemoveEntity(slot0)
 end
 
 function slot0._dispatchDead(slot0)
-	FightEntityModel.instance:onDead(slot0._deadEntity.id)
 	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, slot0._deadEntity.id)
 end
 

@@ -16,9 +16,10 @@ function slot0.getMoListString(slot0, slot1, slot2, slot3)
 	end
 
 	slot5 = {
-		string.format("%s %s : [", slot4, slot9)
+		string.format("%s %s : [", slot9, slot10)
 	}
-	slot9 = slot2
+	slot9 = slot4
+	slot10 = slot2
 
 	for slot9, slot10 in ipairs(slot0) do
 		table.insert(slot5, slot1(slot10, slot3 + 1, slot9))
@@ -38,15 +39,16 @@ function slot0.getMoDictString(slot0, slot1, slot2, slot3, slot4)
 		return string.format("%s %s : []", slot5, slot2)
 	end
 
-	slot10 = slot4
-	slot11 = slot2
+	slot11 = slot4
 
 	uv0.addStack({
 		string.format("%s %s : [", slot5, slot2)
-	}, uv0.getPrefix(slot3 + 1), slot10, slot11)
+	}, uv0.getPrefix(slot3 + 1), slot11, slot2)
+
+	slot10 = slot2
 
 	for slot10, slot11 in pairs(slot0) do
-		table.insert(slot6, slot1(slot11, slot3 + 1, tostring(slot10), uv0.getStack(slot4, slot2)))
+		table.insert(slot6, slot1(slot11, slot3 + 1, tostring(slot10), uv0.getStack(slot4, slot10)))
 	end
 
 	table.insert(slot6, slot5 .. "]")
@@ -139,7 +141,8 @@ function slot0.getFightActEffectString(slot0, slot1, slot2)
 	slot5 = {
 		string.format("%s %s {", slot3, slot4)
 	}
-	slot6 = uv0.getPrefix(slot1 + 1)
+	slot1 = slot1 + 1
+	slot6 = uv0.getPrefix(slot1)
 
 	table.insert(slot5, string.format("%s targetId : %s 作用对象:%s", slot6, slot0.targetId, uv0.getEntityName(slot0.targetId)))
 	table.insert(slot5, string.format("%s effectType : %s 效果类型:%s", slot6, slot0.effectType, uv0.getEffectTypeName(slot0.effectType)))
@@ -149,6 +152,7 @@ function slot0.getFightActEffectString(slot0, slot1, slot2)
 	table.insert(slot5, string.format("%s buffActId : %s", slot6, slot0.buffActId))
 	table.insert(slot5, string.format("%s reserveId : %s", slot6, slot0.reserveId))
 	table.insert(slot5, string.format("%s reserveStr : %s", slot6, slot0.reserveStr))
+	table.insert(slot5, uv0.getAssistBossInfoString(slot0.assistBossInfo, slot1))
 
 	if slot0.cus_stepMO then
 		table.insert(slot5, uv0.getFightStepString(slot0.cus_stepMO, slot1))
@@ -165,6 +169,55 @@ function slot0.getFightActEffectString(slot0, slot1, slot2)
 	table.insert(slot5, slot3 .. "}")
 
 	return table.concat(slot5, "\n")
+end
+
+function slot0.getAssistBossInfoString(slot0, slot1, slot2)
+	slot3 = uv0.getPrefix(slot1 or 0)
+	slot4 = uv0.buildClassNameByIndex("AssistBossInfo", slot2)
+
+	if not slot0 then
+		return string.format("%s %s : nil", slot3, slot4)
+	end
+
+	slot5 = {
+		string.format("%s %s {", slot3, slot4)
+	}
+	slot1 = slot1 + 1
+	slot6 = uv0.getPrefix(slot1)
+
+	table.insert(slot5, string.format("%s currCd : %s", slot6, slot0.currCd))
+	table.insert(slot5, string.format("%s cdCfg : %s", slot6, slot0.cdCfg))
+	table.insert(slot5, string.format("%s formId : %s", slot6, slot0.formId))
+	table.insert(slot5, uv0.getAssistBossSkillInfoString(slot0.skills, slot1))
+	table.insert(slot5, slot3 .. "}")
+
+	return table.concat(slot5, "\n")
+end
+
+function slot0.getAssistBossSkillInfoString(slot0, slot1, slot2)
+	slot3 = uv0.getPrefix(slot1 or 0)
+	slot4 = uv0.buildClassNameByIndex("AssistBossSkillInfo", slot2)
+
+	if not slot0 then
+		return string.format("%s %s : nil", slot3, slot4)
+	end
+
+	slot5 = {
+		string.format("%s %s {", slot3, slot4)
+	}
+	slot6 = uv0.getPrefix(slot1 + 1)
+
+	table.insert(slot5, string.format("%s skillId : %s", slot6, slot0.skillId))
+	table.insert(slot5, string.format("%s needPower : %s", slot6, slot0.needPower))
+	table.insert(slot5, string.format("%s powerLow : %s", slot6, slot0.powerLow))
+	table.insert(slot5, string.format("%s powerHigh : %s", slot6, slot0.powerHigh))
+	table.insert(slot5, slot3 .. "}")
+
+	return table.concat(slot5, "\n")
+end
+
+function slot0.getFightAssistBossSkillListString(slot0, slot1, slot2)
+	return uv0.getMoListString(slot0, uv0.getAssistBossSkillInfoString, slot2 or "assistBossSkillInfoList", slot1)
 end
 
 function slot0.getFightActEffectListString(slot0, slot1, slot2)
@@ -321,7 +374,7 @@ function slot0.getEntityName(slot0)
 	elseif slot0 == FightEntityScene.EnemySideId then
 		return "重塑之手"
 	else
-		if FightEntityModel.instance:getById(slot0) then
+		if FightDataHelper.entityMgr:getById(slot0) then
 			return slot1:getEntityName()
 		end
 
@@ -336,7 +389,7 @@ function slot0.getSkillName(slot0)
 end
 
 function slot0.getTimelineName(slot0, slot1)
-	slot2 = slot0 and FightEntityModel.instance:getById(slot0)
+	slot2 = slot0 and FightDataHelper.entityMgr:getById(slot0)
 
 	return string.nilorempty(FightConfig.instance:getSkinSkillTimeline(slot2 and slot2.skin, slot1)) and "nil" or slot3
 end
@@ -597,6 +650,27 @@ slot0.EffectTypeNameDict = {
 	[FightEnum.EffectType.CARDDECKGENERATE] = "生成指定技能插入牌库",
 	[FightEnum.EffectType.CARDDECKDELETE] = "删除指定技能牌库",
 	[FightEnum.EffectType.DELCARDANDDAMAGE] = "删除卡牌并造成伤害",
+	[FightEnum.EffectType.CHARM] = " 魅惑（同眩晕效果一致）",
+	[FightEnum.EffectType.PROGRESSCHANGE] = "战场进度变化",
+	[FightEnum.EffectType.ASSISTBOSSSKILLCD] = "修改协助boss技能cd",
+	[FightEnum.EffectType.DAMAGESHAREHP] = "共享血量扣血",
+	[FightEnum.EffectType.USECARDFIXEXPOINT] = "使用卡牌修正大招点",
+	[FightEnum.EffectType.DEADLYPOISON] = "剧毒",
+	[FightEnum.EffectType.PROGRESSMAXCHANGE] = "战场进度最大值变化",
+	[FightEnum.EffectType.DUDUBONECONTINUECHANNEL] = "笃笃骨吟诵",
+	[FightEnum.EffectType.ZXQREMOVECARD] = "纸信圈专属移除卡牌，没有表现效果",
+	[FightEnum.EffectType.CURECORRECT] = " 治疗修正",
+	[FightEnum.EffectType.ASSISTBOSSCHANGE] = " 协助boss改变",
+	[FightEnum.EffectType.CONFUSION] = " 混乱效果",
+	[FightEnum.EffectType.RETAINPERTRIFIED] = " 攻击石化单位时不解除石化",
+	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = "剧毒本源创伤",
+	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = "剧毒本源创伤暴击",
+	[FightEnum.EffectType.ASSISTBOSSSKILLCHANGE] = "协助boss技能改变",
+	[FightEnum.EffectType.LOCKBURN] = "锁燃烧",
+	[FightEnum.EffectType.ADDITIONALDAMAGE] = "附加伤害",
+	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = "附加伤害暴击",
+	[FightEnum.EffectType.ACT174FIRST] = "活动174决定先后手",
+	[FightEnum.EffectType.ACT174USECARD] = "活动174回合出牌",
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 

@@ -1,16 +1,25 @@
 module("modules.logic.room.utils.RoomBendingHelper", package.seeall)
 
 slot1, slot2 = nil
-slot3, slot4 = nil
+slot3 = 0
+slot4 = 0
+slot5 = 0
+slot6, slot7 = nil
 
 return {
 	bendingAmount = 0,
 	bendingPosition = Vector3(0, 0, 0),
+	_bendingPosX = 0,
+	_bendingPosY = 0,
+	_bendingPosZ = 0,
 	setBendingAmount = function (slot0)
 		uv0.bendingAmount = slot0
 	end,
 	setBendingPosition = function (slot0)
 		uv0.bendingPosition = slot0
+		uv0._bendingPosX = slot0.x
+		uv0._bendingPosY = slot0.y
+		uv0._bendingPosZ = slot0.z
 	end,
 	worldToBendingSimple = function (slot0)
 		return uv0.worldToBending(slot0, true)
@@ -19,9 +28,17 @@ return {
 		if not uv0 or UnityEngine.Time.frameCount ~= uv1 then
 			uv0 = CameraMgr.instance:getMainCameraTrs().position
 			uv1 = UnityEngine.Time.frameCount
+			uv4 = uv0.z
+			uv3 = uv0.y
+			uv2 = uv0.x
 		end
 
 		return uv0
+	end,
+	getCameraPosXYZ = function ()
+		uv0.getCameraPos()
+
+		return uv1, uv2, uv3
 	end,
 	getCameraEuler = function ()
 		if not uv0 or UnityEngine.Time.frameCount ~= uv1 then
@@ -32,29 +49,43 @@ return {
 		return uv0
 	end,
 	worldToBending = function (slot0, slot1)
-		slot2 = uv0.getCameraEuler()
-		slot4 = slot0 - uv0.bendingPosition
+		return uv0.worldXYZToBending(slot0.x, slot0.y, slot0.z, slot1)
+	end,
+	worldXYZToBending = function (slot0, slot1, slot2, slot3)
+		slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12 = uv0.worldXYZToBendingXYZ(slot0, slot1, slot2, slot3)
 
-		slot4:Set(slot4.x * math.cos(Mathf.Deg2Rad * slot2.y) - slot4.z * math.sin(Mathf.Deg2Rad * slot2.y), 0, slot4.z * math.cos(Mathf.Deg2Rad * slot2.y) + slot4.x * math.sin(Mathf.Deg2Rad * slot2.y))
-
-		slot9 = slot4.x * slot4.x * uv0.bendingAmount * 0.08 + slot4.z * slot4.z * uv0.bendingAmount * 0.08
-
-		if slot1 then
-			slot4:Set(slot0.x, slot0.y - slot9, slot0.z)
-
-			return slot4
+		if slot3 then
+			return Vector3(slot4, slot5, slot6)
 		end
 
-		slot10 = Vector3(slot4.x == 0 and 0 or Mathf.Rad2Deg * math.atan(slot7 / slot4.x), slot2.y, slot4.z == 0 and 0 or Mathf.Rad2Deg * math.atan(slot8 / slot4.z))
+		slot13 = Quaternion.New()
 
-		Quaternion.New():SetEuler(slot10.z, slot10.y, -slot10.x)
+		slot13:SetEuler(slot7, slot8, slot9)
 
-		slot13 = slot0 - uv0.getCameraPos()
+		return Vector3(slot4, slot5, slot6), slot13, Vector3(slot10, slot11, slot12)
+	end,
+	worldToBendingXYZ = function (slot0, slot1)
+		return uv0.worldXYZToBendingXYZ(slot0.x, slot0.y, slot0.z, slot1)
+	end,
+	worldXYZToBendingXYZ = function (slot0, slot1, slot2, slot3)
+		slot5 = uv0.getCameraEuler().y
+		slot9 = slot0 - uv0._bendingPosX
+		slot10 = slot1 - uv0._bendingPosY
+		slot11 = slot2 - uv0._bendingPosZ
+		slot12 = slot9 * math.cos(Mathf.Deg2Rad * slot5) - slot11 * math.sin(Mathf.Deg2Rad * slot5)
+		slot13 = slot11 * math.cos(Mathf.Deg2Rad * slot5) + slot9 * math.sin(Mathf.Deg2Rad * slot5)
+		slot16 = slot12 * slot12 * uv0.bendingAmount * 0.08 + slot13 * slot13 * uv0.bendingAmount * 0.08
 
-		slot13:Set(slot13.x * math.cos(Mathf.Deg2Rad * slot2.y) - slot13.z * math.sin(Mathf.Deg2Rad * slot2.y), 0, slot13.z * math.cos(Mathf.Deg2Rad * slot2.y) + slot13.x * math.sin(Mathf.Deg2Rad * slot2.y))
-		slot13:Set(slot0.x, slot0.y - slot9, slot0.z)
+		if slot3 then
+			return slot0, slot1 - slot16, slot2
+		end
 
-		return slot13, slot11, Vector3(slot2.x * 0.7, (slot13.z == 0 and 0 or Mathf.Rad2Deg * math.atan(slot13.x / slot13.z)) * 0.5, 0)
+		slot20, slot21, slot22 = uv0.getCameraPosXYZ()
+		slot23 = slot0 - slot20
+		slot24 = slot1 - slot21
+		slot25 = slot2 - slot22
+
+		return slot0, slot1 - slot16, slot2, -(slot12 == 0 and 0 or Mathf.Rad2Deg * math.atan(slot14 / slot12)), slot5, slot13 == 0 and 0 or Mathf.Rad2Deg * math.atan(slot15 / slot13), slot4.x * 0.7, (slot25 * math.cos(Mathf.Deg2Rad * slot5) + slot23 * math.sin(Mathf.Deg2Rad * slot5) == 0 and 0 or Mathf.Rad2Deg * math.atan((slot23 * math.cos(Mathf.Deg2Rad * slot5) - slot25 * math.sin(Mathf.Deg2Rad * slot5)) / slot27)) * 0.5, 0
 	end,
 	bendingToWorld = function (slot0)
 		slot2 = slot0 - uv0.bendingPosition

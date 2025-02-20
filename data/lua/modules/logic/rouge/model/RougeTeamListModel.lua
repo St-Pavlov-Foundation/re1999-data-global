@@ -29,9 +29,11 @@ function slot0.getSelectedHeroList(slot0)
 		table.insert(slot1, slot5)
 	end
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return uv0._selectedHeroMap[slot0] < uv0._selectedHeroMap[slot1]
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot1[slot5] = slot6.heroId

@@ -15,7 +15,7 @@ function slot0.onStart(slot0)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot0._fightActEffectMO.targetId) or slot2.side ~= FightEnum.EntitySide.MySide then
+	if not FightDataHelper.entityMgr:getById(slot0._fightActEffectMO.targetId) or slot2.side ~= FightEnum.EntitySide.MySide then
 		slot0:onDone(true)
 
 		return

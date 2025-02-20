@@ -21,8 +21,8 @@ function slot0.com_loadAsset(slot0, slot1, slot2, slot3)
 	slot0:registComponent(FightLoaderComponent):loadAsset(slot1, slot2, slot0, slot3)
 end
 
-function slot0.com_loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:registComponent(FightLoaderComponent):loadListAsset(slot1, slot2, slot3, slot0, slot4, slot5)
+function slot0.com_loadListAsset(slot0, slot1, slot2, slot3, slot4)
+	slot0:registComponent(FightLoaderComponent):loadListAsset(slot1, slot2, slot3, slot0, slot4)
 end
 
 function slot0.com_registFlowSequence(slot0)
@@ -53,6 +53,10 @@ function slot0.com_registCustomFlow(slot0, slot1)
 	return slot0:registComponent(FightFlowComponent):registCustomFlow(slot1)
 end
 
+function slot0.com_releaseAllFlow(slot0)
+	slot0:releaseComponent(FightFlowComponent)
+end
+
 function slot0.com_registWork(slot0, slot1, ...)
 	return slot0:registComponent(FightWorkComponent):registWork(slot1, ...)
 end
@@ -67,6 +71,18 @@ end
 
 function slot0.com_playIdSequeueWork(slot0, slot1, slot2, ...)
 	return slot0:registComponent(FightWorkComponent):playIdSequeueWork(slot1, slot2, ...)
+end
+
+function slot0.com_releaseAllWork(slot0)
+	slot0:releaseComponent(FightWorkComponent)
+end
+
+function slot0.com_registObjItemList(slot0, slot1, slot2, slot3, slot4)
+	return slot0:registComponent(FightObjItemListComponent):registObjItemList(slot1, slot2, slot3, slot4)
+end
+
+function slot0.com_registViewItemList(slot0, slot1, slot2, slot3, slot4)
+	return slot0:registComponent(FightObjItemListComponent):registViewItemList(slot1, slot2, slot3, slot4)
 end
 
 function slot0.com_cancelTimer(slot0, slot1)
@@ -103,6 +119,10 @@ function slot0.com_restartRepeatTimer(slot0, slot1, slot2, slot3, slot4)
 	return slot0:registComponent(FightTimerComponent):restartRepeatTimer(slot1, slot2, slot3, slot4)
 end
 
+function slot0.com_releaseAllTimer(slot0)
+	return slot0:registComponent(FightTimerComponent):releaseAllTimer()
+end
+
 function slot0.com_registFightEvent(slot0, slot1, slot2, slot3)
 	slot0:com_registEvent(FightController.instance, slot1, slot2, slot3)
 end
@@ -127,7 +147,56 @@ function slot0.com_sendEvent(slot0, slot1, slot2, ...)
 	slot1:dispatchEvent(slot2, ...)
 end
 
-function slot0.com_getBuffConfig(slot0, slot1)
+function slot0.com_registMsg(slot0, slot1, slot2)
+	return slot0:registComponent(FightMsgComponent):registMsg(slot1, slot2, slot0)
+end
+
+function slot0.com_removeMsg(slot0, slot1)
+	return slot0:registComponent(FightMsgComponent):removeMsg(slot1)
+end
+
+function slot0.com_sendMsg(slot0, slot1, ...)
+	return FightMsgMgr.sendMsg(slot1, ...)
+end
+
+function slot0.com_lockMsg(slot0)
+	return slot0:registComponent(FightMsgComponent):lockMsg()
+end
+
+function slot0.com_unlockMsg(slot0)
+	return slot0:registComponent(FightMsgComponent):unlockMsg()
+end
+
+function slot0.com_openSubView(slot0, slot1, slot2, slot3, ...)
+	return slot0:registComponent(FightViewComponent):openSubView(slot1, slot2, slot3, ...)
+end
+
+function slot0.com_openSubViewForBaseView(slot0, slot1, slot2, ...)
+	return slot0:registComponent(FightViewComponent):openSubViewForBaseView(slot1, slot2, ...)
+end
+
+function slot0.com_openExclusiveView(slot0, slot1, slot2, slot3, slot4, ...)
+	return slot0:registComponent(FightViewComponent):openExclusiveView(slot1, slot2, slot3, slot4, ...)
+end
+
+function slot0.com_hideExclusiveGroup(slot0, slot1)
+	return slot0:registComponent(FightViewComponent):hideExclusiveGroup(slot1)
+end
+
+function slot0.com_hideExclusiveView(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightViewComponent):hideExclusiveView(slot1, slot2, slot3)
+end
+
+function slot0.com_setExclusiveViewVisible(slot0, slot1, slot2)
+	return slot0:registComponent(FightViewComponent):setExclusiveViewVisible(slot1, slot2)
+end
+
+function slot0.com_registClick(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightClickComponent):registClick(slot1, slot2, slot0, slot3)
+end
+
+function slot0.com_removeClick(slot0, slot1)
+	return slot0:registComponent(FightClickComponent):removeClick(slot1)
 end
 
 return slot0

@@ -133,7 +133,7 @@ function slot0.openSummonDetail(slot0, slot1, slot2, slot3)
 			summonSimulationActId = slot3,
 			luckyBagId = slot2
 		})
-	elseif slot1.type == SummonEnum.Type.CustomPick then
+	elseif slot1.type == SummonEnum.Type.CustomPick or slot1.type == SummonEnum.Type.StrongCustomOnePick then
 		ViewMgr.instance:openView(ViewName.SummonCustomPickDetailView, slot4)
 	else
 		ViewMgr.instance:openView(ViewName.SummonPoolDetailView, slot4)

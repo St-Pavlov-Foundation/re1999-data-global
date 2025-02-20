@@ -23,9 +23,12 @@ function slot0.onStart(slot0, slot1)
 	slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(uv0.buff_siwang))
 	slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(uv0.buff_siwang_monster))
 	slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(uv0.buff_zhunbeigongji))
-	slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(uv0.scene_mask_default))
 
-	for slot6, slot7 in ipairs(FightEntityModel.instance:getMySideList()) do
+	slot7 = uv0.scene_mask_default
+
+	slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(slot7))
+
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		if slot7.skin and lua_skin_spine_action.configDict[slot8] and slot9[SpineAnimState.born] and not string.nilorempty(slot10.effect) then
 			for slot15, slot16 in ipairs(string.split(slot10.effect, "#")) do
 				slot0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(slot16))
@@ -33,7 +36,7 @@ function slot0.onStart(slot0, slot1)
 		end
 	end
 
-	for slot7, slot8 in ipairs(FightEntityModel.instance:getEnemySideList()) do
+	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 		if FightConfig.instance:getSkinCO(slot8.skin) and not string.nilorempty(slot9.effect) then
 			for slot14, slot15 in ipairs(string.split(slot9.effect, "#")) do
 				slot16 = FightHelper.getEffectUrlWithLod(slot15)

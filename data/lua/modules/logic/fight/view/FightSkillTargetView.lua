@@ -15,9 +15,9 @@ function slot0.addEvents(slot0)
 end
 
 function slot0.removeEvents(slot0)
-	slot4 = FightEvent.SimulateSelectSkillTargetInView
+	slot4 = FightController.instance
 
-	slot0:removeEventCb(FightController.instance, slot4, slot0._simulateSelect, slot0)
+	slot0:removeEventCb(slot4, FightEvent.SimulateSelectSkillTargetInView, slot0._simulateSelect, slot0)
 
 	for slot4 = 1, #slot0._itemList do
 		gohelper.getClick(slot0._itemList[slot4].go):RemoveClickListener()
@@ -38,12 +38,15 @@ function slot0.onOpen(slot0)
 
 	if not slot0._targetLimit then
 		slot0._targetLimit = {}
+		slot6 = slot0.viewParam.fromId
 
-		for slot6, slot7 in ipairs(FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot0.viewParam.skillId, slot0.viewParam.fromId)) do
-			if FightEntityModel.instance:getById(slot7).entityType == 3 then
+		for slot6, slot7 in ipairs(FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot0.viewParam.skillId, slot6)) do
+			if FightDataHelper.entityMgr:getById(slot7).entityType == 3 then
 				-- Nothing
 			elseif not slot8:hasBuffFeature(FightEnum.BuffType_CantSelect) then
-				if not slot8:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
+				if slot8:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
+					-- Nothing
+				elseif DungeonModel.instance.curSendChapterId ~= DungeonEnum.ChapterId.RoleDuDuGu or slot8.originSkin ~= CharacterEnum.DefaultSkinId.DuDuGu then
 					table.insert(slot0._targetLimit, slot7)
 				end
 			end
@@ -79,9 +82,9 @@ function slot0._onBtnEsc(slot0)
 end
 
 function slot0._sortByStandPos(slot0, slot1)
-	slot3 = FightEntityModel.instance:getById(slot1)
+	slot3 = FightDataHelper.entityMgr:getById(slot1)
 
-	if FightEntityModel.instance:getById(slot0) and slot3 then
+	if FightDataHelper.entityMgr:getById(slot0) and slot3 then
 		return math.abs(slot2.position) < math.abs(slot3.position)
 	else
 		return math.abs(tonumber(slot0)) < math.abs(tonumber(slot1))

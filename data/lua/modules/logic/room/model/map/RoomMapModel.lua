@@ -96,7 +96,9 @@ function slot0.getBuildingConfigParam(slot0, slot1)
 
 		if slot3.crossload and slot3.crossload ~= 0 and RoomBuildingEnum.Crossload[slot1] then
 			for slot14, slot15 in ipairs(RoomBuildingEnum.Crossload[slot1].AnimStatus) do
-				table.insert(slot8, slot15.resId)
+				slot19 = slot15.resId
+
+				table.insert(slot8, slot19)
 
 				for slot19, slot20 in ipairs(slot15.replaceBlockRes) do
 					if not slot9[slot20.x] then

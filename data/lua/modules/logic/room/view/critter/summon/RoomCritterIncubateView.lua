@@ -152,7 +152,10 @@ end
 function slot0._hidePreview(slot0)
 	gohelper.setActive(slot0._btnoverview.gameObject, false)
 	gohelper.setActive(slot0._imageselect.gameObject, true)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, true)
+
+	slot4 = true
+
+	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, slot4)
 
 	for slot4, slot5 in ipairs(slot0._tipItem) do
 		gohelper.setActive(slot5.go, false)
@@ -370,7 +373,7 @@ function slot0.onDropValueChanged(slot0, slot1)
 end
 
 function slot0._setSortWay(slot0)
-	transformhelper.setLocalRotation(slot0._goSortWay.transform, 0, 0, CritterIncubateModel.instance:getSortWay() and 0 or 180)
+	transformhelper.setLocalRotation(slot0._goSortWay.transform, 0, 0, CritterIncubateModel.instance:getSortWay() and 180 or 0)
 	CritterIncubateListModel.instance:sortMoList(slot0.filterMO)
 end
 

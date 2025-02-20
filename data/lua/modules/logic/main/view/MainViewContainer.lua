@@ -12,12 +12,12 @@ function slot0.buildViews(slot0)
 		slot0._mainHeroNoInteractive,
 		slot0._mainHeroView,
 		MainHeroMipView.New(),
-		MainActivityCenterView.New(),
 		slot0._mainActivityEnterView,
-		MainNoticeRequestView.New(),
 		MainActExtraDisplay.New(),
 		TabViewGroup.New(1, "#go_righttop"),
-		MainViewCamera.New()
+		MainViewCamera.New(),
+		MainActivityCenterView.New(),
+		MainNoticeRequestView.New()
 	}
 end
 

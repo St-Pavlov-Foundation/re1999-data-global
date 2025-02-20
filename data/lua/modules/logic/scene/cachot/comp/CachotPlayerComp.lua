@@ -32,7 +32,8 @@ end
 function slot0.onSceneLevelLoaded(slot0)
 	slot2 = lua_scene_level.configDict[slot0:getCurScene():getCurLevelId()]
 	slot0._sceneGo = slot0._levelComp:getSceneGo()
-	slot3 = slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	slot8 = UnityEngine.Animator
+	slot3 = slot0._sceneGo:GetComponent(typeof(slot8))
 	slot3.enabled = false
 
 	for slot8 = 0, slot3.runtimeAnimatorController.animationClips.Length - 1 do

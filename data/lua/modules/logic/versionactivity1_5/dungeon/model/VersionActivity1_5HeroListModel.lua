@@ -30,8 +30,10 @@ function slot0.initHeroList(slot0)
 	end
 
 	slot0.heroList = {}
+	slot3 = HeroModel.instance
+	slot5 = slot3
 
-	for slot4, slot5 in ipairs(HeroModel.instance:getList()) do
+	for slot4, slot5 in ipairs(slot3.getList(slot5)) do
 		slot6 = VersionActivity1_5DispatchHeroMo.New()
 
 		slot6:init(slot5)
@@ -129,7 +131,9 @@ function slot0.deselectMo(slot0, slot1)
 	end
 
 	if slot2 > 0 then
-		table.remove(slot0.selectedHeroList, slot2)
+		slot6 = slot2
+
+		table.remove(slot0.selectedHeroList, slot6)
 
 		slot0.selectedHeroIndexDict[slot1] = nil
 

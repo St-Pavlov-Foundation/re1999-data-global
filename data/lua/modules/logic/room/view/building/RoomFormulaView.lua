@@ -332,7 +332,7 @@ function slot0._refreshShowType(slot0)
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		if RoomFormulaModel.instance:getTopTreeLevelFormulaCount(slot0.id) > 0 and not (RoomFormulaModel.instance:getTopTreeLevelFormulaCount(slot1.id) > 0) then
 			return true
 		elseif slot3 and not slot2 then
@@ -340,7 +340,9 @@ function slot0._refreshShowType(slot0)
 		else
 			return slot0.id < slot1.id
 		end
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if not slot0._showTypeItemList[slot5] then

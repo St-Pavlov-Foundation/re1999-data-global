@@ -230,9 +230,9 @@ end
 
 function slot0.fillChessBoardBase(slot0)
 	slot1, slot2 = Va3ChessGameModel.instance:getGameSize()
-	slot6 = ", h = "
+	slot6 = tostring(slot1)
 
-	logNormal("fill w = " .. tostring(slot1) .. slot6 .. tostring(slot2))
+	logNormal("fill w = " .. slot6 .. ", h = " .. tostring(slot2))
 
 	for slot6 = 1, slot1 do
 		slot0._baseTiles[slot6] = slot0._baseTiles[slot6] or {}
@@ -297,8 +297,9 @@ function slot0.createAllInteractObjs(slot0)
 	end
 
 	slot1 = Va3ChessGameController.instance.interacts:getList()
+	slot5 = Va3ChessInteractMgr.sortRenderOrder
 
-	table.sort(slot1, Va3ChessInteractMgr.sortRenderOrder)
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0:createInteractObj(slot6)

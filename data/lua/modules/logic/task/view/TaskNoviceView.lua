@@ -115,7 +115,9 @@ function slot0._flagPlayUpdate(slot0)
 	slot0._noviceFlags[slot0._flagPlayCount + slot1].ani:Play("play")
 
 	if slot0._totalAct <= slot0._flagPlayCount + slot1 then
-		TaskDispatcher.cancelTask(slot0._flagPlayUpdate, slot0)
+		slot6 = slot0
+
+		TaskDispatcher.cancelTask(slot0._flagPlayUpdate, slot6)
 
 		for slot6 = slot1, slot0._totalAct - 1 do
 			UISpriteSetMgr.instance:setCommonSprite(slot0._noviceFlags[slot6 + 1].img, "logo_huoyuedu")

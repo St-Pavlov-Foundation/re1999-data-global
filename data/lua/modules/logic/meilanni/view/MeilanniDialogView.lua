@@ -374,7 +374,9 @@ function slot0._getDialogItem(slot0, slot1)
 end
 
 function slot0._showAllEpisodeHistory(slot0)
-	MeilanniModel.instance:setDialogItemFadeIndex(-1)
+	slot5 = -1
+
+	MeilanniModel.instance:setDialogItemFadeIndex(slot5)
 
 	for slot5, slot6 in ipairs(slot0._mapInfo.episodeInfos) do
 		if slot5 == #slot0._mapInfo.episodeInfos then

@@ -62,9 +62,11 @@ end
 function slot0._initPackageId(slot0)
 	slot1 = lua_block_package.configList
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return slot0.id < slot1.id
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot7 = slot0:getUserDataTb_()

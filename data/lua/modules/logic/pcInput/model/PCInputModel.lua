@@ -69,11 +69,26 @@ function slot0.Save(slot0, slot1)
 end
 
 function slot0.load(slot0)
+	slot2 = slot0:loadFromConfig()
+
 	if PlayerPrefsHelper.getString("keyBinding") and slot1 ~= "null" then
-		return cjson.decode(slot1)
+		return slot0:CheckConfigUpdate(cjson.decode(slot1), slot2)
 	end
 
-	return slot0:loadFromConfig()
+	return slot2
+end
+
+function slot0.CheckConfigUpdate(slot0, slot1, slot2)
+	for slot7, slot8 in pairs(LuaUtil.deepCopy(slot2)) do
+		for slot12, slot13 in pairs(slot8) do
+			if slot1[slot13.hud] and slot1[slot13.hud][slot13.id] then
+				getmetatable(slot13).__newindex = nil
+				slot13[uv0.Configfield.key] = slot1[slot13.hud][slot13.id][uv0.Configfield.key]
+			end
+		end
+	end
+
+	return slot3
 end
 
 function slot0.loadFromConfig(slot0)

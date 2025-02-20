@@ -412,5 +412,28 @@
     "cgScale": "1.5",
     "mainviewName": "language_10055310",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 19,
+    "chapterId": 1919,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110803#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10045590",
+    "photo": "309502",
+    "cgBg": "309501",
+    "order": 19,
+    "name": "language_10058590",
+    "nameEn": "A</size> Fool's <color=#D2CDBC><size=30>Gold</size></color><size=140>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_19",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12307,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 191903,
+    "cgPos": "508#275",
+    "cgScale": "1",
+    "mainviewName": "language_10060911",
+    "permanentUnlock": "2#24#1"
   }
 ]

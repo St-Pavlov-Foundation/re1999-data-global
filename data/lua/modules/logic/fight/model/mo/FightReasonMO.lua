@@ -33,6 +33,10 @@ function slot0._parseData(slot0)
 		slot0.actElementId = slot2[2]
 		slot0.battleId = slot2[3]
 		slot0.actEpisodeId = slot2[4]
+	elseif slot1.type == DungeonEnum.EpisodeType.TowerPermanent or slot1.type == DungeonEnum.EpisodeType.TowerBoss or slot1.type == DungeonEnum.EpisodeType.TowerLimited then
+		slot2 = string.splitToNumber(slot0.data, "#")
+
+		TowerModel.instance:setRecordFightParam(slot2[1], slot2[2], slot2[3], slot2[4], slot2[5])
 	end
 end
 

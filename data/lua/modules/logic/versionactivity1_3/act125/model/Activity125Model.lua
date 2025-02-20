@@ -195,6 +195,14 @@ function slot0.hasRedDot(slot0, slot1)
 	return slot2:hasRedDot()
 end
 
+function slot0.isActivityOpen(slot0, slot1)
+	if ActivityModel.instance:isActOnLine(slot1) == false then
+		return false
+	end
+
+	return ActivityModel.instance:getActMO(slot1):isOpen() and not slot2:isExpired()
+end
+
 slot0.instance = slot0.New()
 
 return slot0

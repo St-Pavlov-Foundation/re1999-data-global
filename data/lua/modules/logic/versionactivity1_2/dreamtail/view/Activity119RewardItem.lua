@@ -22,8 +22,8 @@ function slot0.onInitView(slot0)
 		slot0._rewards[slot4]._bg = gohelper.findChild(slot0._rewards[slot4]._goreward, "bg")
 		slot0._rewards[slot4]._itemposContent = gohelper.findChild(slot0._rewards[slot4]._goreward, "itemposContent")
 		slot0._rewards[slot4]._state = gohelper.findChild(slot0._rewards[slot4]._goreward, "state")
-		slot8 = "lockbg"
-		slot0._rewards[slot4]._lockbg = gohelper.findChild(slot0._rewards[slot4]._goreward, slot8)
+		slot8 = slot0._rewards[slot4]._goreward
+		slot0._rewards[slot4]._lockbg = gohelper.findChild(slot8, "lockbg")
 
 		for slot8 = 1, 3 do
 			slot0._rewards[slot4]["_itempos" .. slot8] = gohelper.findChild(slot0._rewards[slot4]._itemposContent, "itempos" .. slot8)
@@ -59,7 +59,9 @@ function slot0.setBonus(slot0, slot1, slot2, slot3)
 			gohelper.setActive(slot0._rewards[slot0.bonusCount]._goreward, false)
 		end
 
-		gohelper.setActive(slot0._rewards[slot5]._goreward, true)
+		slot9 = true
+
+		gohelper.setActive(slot0._rewards[slot5]._goreward, slot9)
 
 		for slot9 = slot5 + 1, slot0.bonusCount do
 			gohelper.setActive(slot0.bonusItems[slot9].go, false)

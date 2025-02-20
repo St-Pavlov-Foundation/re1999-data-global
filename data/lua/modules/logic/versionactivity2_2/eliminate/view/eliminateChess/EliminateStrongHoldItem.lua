@@ -378,16 +378,6 @@ function slot0.setChessGray(slot0, slot1, slot2)
 	end
 end
 
-function slot0.refreshActiveMoveState(slot0)
-	if slot0._data.mySidePiece then
-		for slot5 = 1, #slot1 do
-			if TeamChessUnitEntityMgr.instance:getEntity(slot1[slot5] and slot6.uid) and slot6 then
-				slot8:setShowModeType(slot6:canActiveMove() and EliminateTeamChessEnum.ModeType.Outline or EliminateTeamChessEnum.ModeType.Normal)
-			end
-		end
-	end
-end
-
 function slot0.teamChessUpdateActiveMoveState(slot0, slot1)
 	if slot1 == nil then
 		return
@@ -564,10 +554,9 @@ function slot0.teamChessGrowUpValueChange(slot0, slot1, slot2, slot3)
 
 	if slot0._data:getMySideIndexByUid(slot1) ~= -1 and slot0._playerGrowUpList and slot0._playerGrowUpList[slot4] and slot5.progressImage then
 		slot7 = slot0._data:getMySideByUid(slot1) and slot6:getSkill(slot2)
-		slot8 = slot7 and slot7:getGrowUpProgress() or 0
 		slot9 = slot7 and slot7:needShowGrowUp() or false
 
-		if slot3 ~= nil then
+		if (slot7 and slot7:getGrowUpProgress() or 0) > 0 then
 			uv0.DOFillAmount(slot5.progressImage, slot8, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime, nil, , , EaseType.OutQuart)
 			uv0.DOFillAmount(slot5.progressImageEff, slot8, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime, nil, , , EaseType.OutQuart)
 		else
@@ -581,12 +570,18 @@ function slot0.teamChessGrowUpValueChange(slot0, slot1, slot2, slot3)
 	end
 
 	if slot0._data:getEnemySideIndexByUid(slot1) ~= -1 and slot0._enemyGrowUpList and slot0._enemyGrowUpList[slot5] and slot6.progressImage then
-		slot8 = slot0._data:getMySideByUid(slot1) and slot7:getSkill(slot2)
-		slot9 = slot8 and slot8:getGrowUpProgress() or 0
-		slot6.progressImage.fillAmount = slot9
-		slot6.progressImageEff.fillAmount = slot9
+		slot8 = slot0._data:getEnemySideByUid(slot1) and slot7:getSkill(slot2)
+		slot10 = slot8 and slot8:needShowGrowUp() or false
 
-		gohelper.setActive(slot6.item, slot8 and slot8:needShowGrowUp() or false)
+		if (slot8 and slot8:getGrowUpProgress() or 0) > 0 then
+			uv0.DOFillAmount(slot6.progressImage, slot9, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime, nil, , , EaseType.OutQuart)
+			uv0.DOFillAmount(slot6.progressImageEff, slot9, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime, nil, , , EaseType.OutQuart)
+		else
+			slot6.progressImage.fillAmount = slot9
+			slot6.progressImageEff.fillAmount = slot9
+		end
+
+		gohelper.setActive(slot6.item, slot10)
 
 		return
 	end

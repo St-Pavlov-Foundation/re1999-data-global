@@ -10,7 +10,7 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		slot7 = slot1.toId
 	end
 
-	slot8 = FightEntityModel.instance:getById(slot7)
+	slot8 = FightDataHelper.entityMgr:getById(slot7)
 
 	if slot1.customType == "change_hero" then
 		FightEntityModel.instance:getSubModel(slot8.side):remove(slot8)

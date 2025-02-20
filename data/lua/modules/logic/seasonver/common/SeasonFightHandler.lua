@@ -120,7 +120,9 @@ function slot0.loadSeasonCondition(slot0, slot1, slot2, slot3)
 		return true
 	elseif slot0 == DungeonEnum.EpisodeType.Season166Base then
 		if Season166Model.instance:getBattleContext() and slot5.baseId and slot5.baseId > 0 then
-			gohelper.setActive(slot2, false)
+			slot9 = false
+
+			gohelper.setActive(slot2, slot9)
 
 			for slot9 = 1, 3 do
 				slot10 = gohelper.clone(slot2, slot3, "desc" .. slot9)

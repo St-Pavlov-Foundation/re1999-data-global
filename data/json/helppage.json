@@ -3620,6 +3620,166 @@
     "isCn": 0
   },
   {
+    "id": 2310001,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_5",
+    "iconText": "v2a3_tower_help_5",
+    "unlockGuideId": 23202,
+    "isCn": 0
+  },
+  {
+    "id": 2310002,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_6",
+    "iconText": "v2a3_tower_help_6",
+    "unlockGuideId": 23206,
+    "isCn": 0
+  },
+  {
+    "id": 2310003,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_7",
+    "iconText": "v2a3_tower_help_7",
+    "unlockGuideId": 23203,
+    "isCn": 0
+  },
+  {
+    "id": 2310004,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_3",
+    "iconText": "v2a3_tower_help_3",
+    "unlockGuideId": 23205,
+    "isCn": 0
+  },
+  {
+    "id": 2310005,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_4",
+    "iconText": "v2a3_tower_help_4",
+    "unlockGuideId": 23205,
+    "isCn": 0
+  },
+  {
+    "id": 2310006,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_8",
+    "iconText": "v2a3_tower_help_8",
+    "unlockGuideId": 23208,
+    "isCn": 0
+  },
+  {
+    "id": 2310007,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_1",
+    "iconText": "v2a3_tower_help_1",
+    "unlockGuideId": 23207,
+    "isCn": 0
+  },
+  {
+    "id": 2310008,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "v2a3_tower_help_2",
+    "iconText": "v2a3_tower_help_2",
+    "unlockGuideId": 23207,
+    "isCn": 0
+  },
+  {
+    "id": 2300000,
+    "title": "",
+    "type": 1,
+    "text": "赛季玩法指引",
+    "icon": "v2a3_season_help_1",
+    "iconText": "v2a3_season_help_1",
+    "unlockGuideId": 23001,
+    "isCn": 0
+  },
+  {
+    "id": 2300001,
+    "title": "",
+    "type": 1,
+    "text": "曝光回合指引图",
+    "icon": "v1a7_season_help_4",
+    "iconText": "v1a7_season_help_4",
+    "unlockGuideId": 23007,
+    "isCn": 0
+  },
+  {
+    "id": 2300002,
+    "title": "",
+    "type": 1,
+    "text": "零售指引图",
+    "icon": "v1a7_season_help_5",
+    "iconText": "v1a7_season_help_5",
+    "unlockGuideId": 23004,
+    "isCn": 0
+  },
+  {
+    "id": 2300003,
+    "title": "",
+    "type": 1,
+    "text": "选人界面指引图",
+    "icon": "v1a7_season_help_2",
+    "iconText": "v1a7_season_help_2",
+    "unlockGuideId": 23002,
+    "isCn": 0
+  },
+  {
+    "id": 2300004,
+    "title": "",
+    "type": 1,
+    "text": "编队界面指引图",
+    "icon": "v1a7_season_help_3",
+    "iconText": "v1a7_season_help_3",
+    "unlockGuideId": 23003,
+    "isCn": 0
+  },
+  {
+    "id": 2300005,
+    "title": "",
+    "type": 1,
+    "text": "名人卡指引图",
+    "icon": "v1a7_season_help_6",
+    "iconText": "v1a7_season_help_6",
+    "unlockGuideId": 23005,
+    "isCn": 0
+  },
+  {
+    "id": 2300006,
+    "title": "",
+    "type": 1,
+    "text": "重置界面指引图",
+    "icon": "v1a7_season_help_7",
+    "iconText": "v1a7_season_help_7",
+    "unlockGuideId": 23006,
+    "isCn": 0
+  },
+  {
+    "id": 2340001,
+    "title": "",
+    "type": 1,
+    "text": "",
+    "icon": "act174_help_1",
+    "iconText": "act174_help_1",
+    "unlockGuideId": 23404,
+    "isCn": 1
+  },
+  {
     "id": 19001,
     "title": "language_10000135",
     "type": 1,

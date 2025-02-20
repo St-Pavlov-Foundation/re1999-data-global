@@ -68,7 +68,8 @@ function slot0._getBuildingTypeClickFunc(slot0, slot1)
 			[RoomBuildingEnum.BuildingType.Process] = slot0._onManufactureBuildingClick,
 			[RoomBuildingEnum.BuildingType.Manufacture] = slot0._onManufactureBuildingClick,
 			[RoomBuildingEnum.BuildingType.Trade] = slot0._onTradeBuildingClick,
-			[RoomBuildingEnum.BuildingType.Rest] = slot0._onRestBuildingClick
+			[RoomBuildingEnum.BuildingType.Rest] = slot0._onRestBuildingClick,
+			[RoomBuildingEnum.BuildingType.Interact] = slot0._onInteractBuildingClick
 		}
 	end
 
@@ -94,6 +95,10 @@ function slot0._onRestBuildingClick(slot0, slot1)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	ManufactureController.instance:openCritterBuildingView(slot1.buildingUid)
+end
+
+function slot0._onInteractBuildingClick(slot0, slot1)
+	RoomInteractionController.instance:openInteractBuildingView(slot1.buildingUid)
 end
 
 slot0.instance = slot0.New()

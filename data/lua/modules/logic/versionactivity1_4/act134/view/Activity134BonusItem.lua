@@ -55,8 +55,9 @@ end
 
 function slot0.rewardItem(slot0)
 	slot0._rewarditems = {}
+	slot6 = false
 
-	gohelper.setActive(slot0._gorewardtemplate, false)
+	gohelper.setActive(slot0._gorewardtemplate, slot6)
 
 	for slot6 = 1, #string.split(slot0.co.bonus, "|") do
 		slot7 = string.splitToNumber(slot2[slot6], "#")

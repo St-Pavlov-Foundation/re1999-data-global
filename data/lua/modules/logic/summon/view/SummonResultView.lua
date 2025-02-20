@@ -27,7 +27,9 @@ function slot0._btnokOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goheroitem, false)
+	slot4 = false
+
+	gohelper.setActive(slot0._goheroitem, slot4)
 
 	slot0._heroItemTables = {}
 

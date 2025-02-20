@@ -327,9 +327,9 @@ function slot0.fiterFightCardDataList(slot0, slot1, slot2)
 		end
 	end
 
-	slot8 = slot0
+	slot8 = slot3
 
-	uv0.fiterFightCardData(Season123EquipItemListModel.TotalEquipPos, slot3, slot8, nil, slot2)
+	uv0.fiterFightCardData(Season123EquipItemListModel.TotalEquipPos, slot8, slot0, nil, slot2)
 
 	for slot8 = 1, Season123EquipItemListModel.TotalEquipPos - 1 do
 		uv0.fiterFightCardData(slot8, slot3, slot0, slot4, slot2)

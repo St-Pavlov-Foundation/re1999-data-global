@@ -509,7 +509,7 @@
     "recoverLimit": 0,
     "dayRecoverNum": 0,
     "maxLimit": 999999999,
-    "sources": "10011501"
+    "sources": ""
   },
   {
     "id": 1502,
@@ -525,7 +525,7 @@
     "recoverLimit": 0,
     "dayRecoverNum": 0,
     "maxLimit": 700,
-    "sources": "10011501"
+    "sources": ""
   },
   {
     "id": 1511,
@@ -1230,5 +1230,85 @@
     "dayRecoverNum": 0,
     "maxLimit": 999999999,
     "sources": "10012240"
+  },
+  {
+    "id": 2301,
+    "name": "language_10058578",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "2301",
+    "smallIcon": "",
+    "useDesc": "language_10058579",
+    "desc": "language_10058580",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": ""
+  },
+  {
+    "id": 2302,
+    "name": "language_10058581",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "2302",
+    "smallIcon": "2302_1",
+    "useDesc": "language_10058582",
+    "desc": "language_10058583",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 6000,
+    "sources": ""
+  },
+  {
+    "id": 2303,
+    "name": "language_10003248",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "101303",
+    "smallIcon": "",
+    "useDesc": "language_10058584",
+    "desc": "language_10003250",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": ""
+  },
+  {
+    "id": 2304,
+    "name": "language_10003245",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "100102",
+    "smallIcon": "",
+    "useDesc": "language_10033892",
+    "desc": "language_10003247",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 10,
+    "dayRecoverNum": 5,
+    "maxLimit": 100,
+    "sources": ""
+  },
+  {
+    "id": 2305,
+    "name": "language_10033894",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "100702",
+    "smallIcon": "",
+    "useDesc": "language_10033895",
+    "desc": "language_10033896",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": ""
   }
 ]

@@ -57,7 +57,9 @@ function slot0.removeEventListeners(slot0)
 end
 
 function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	recthelper.setHeight(slot0._tr, slot3)
+	slot7 = slot3
+
+	recthelper.setHeight(slot0._tr, slot7)
 
 	slot0._mo = slot1
 

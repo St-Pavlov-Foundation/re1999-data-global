@@ -1512,7 +1512,7 @@
     "dec": 2694,
     "verifingHide": 0,
     "bindActivityId": 0,
-    "roomLevel": 3
+    "roomLevel": 6
   },
   {
     "id": 220105,
@@ -1527,7 +1527,7 @@
     "dec": 2694,
     "verifingHide": 0,
     "bindActivityId": 0,
-    "roomLevel": 3
+    "roomLevel": 6
   },
   {
     "id": 220106,
@@ -1542,7 +1542,7 @@
     "dec": 2694,
     "verifingHide": 0,
     "bindActivityId": 0,
-    "roomLevel": 3
+    "roomLevel": 6
   },
   {
     "id": 77,
@@ -1556,6 +1556,36 @@
     "showInEpisode": 0,
     "dec": 2001,
     "verifingHide": 0,
+    "bindActivityId": 0,
+    "roomLevel": 0
+  },
+  {
+    "id": 78,
+    "name": "language_10058793",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 10520,
+    "elementId": 0,
+    "verifingEpisodeId": 10520,
+    "isAlwaysShowBtn": 0,
+    "showInEpisode": 0,
+    "dec": 10520,
+    "verifingHide": 1,
+    "bindActivityId": 0,
+    "roomLevel": 0
+  },
+  {
+    "id": 79,
+    "name": "language_10058794",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 10520,
+    "elementId": 0,
+    "verifingEpisodeId": 10520,
+    "isAlwaysShowBtn": 0,
+    "showInEpisode": 0,
+    "dec": 0,
+    "verifingHide": 1,
     "bindActivityId": 0,
     "roomLevel": 0
   }

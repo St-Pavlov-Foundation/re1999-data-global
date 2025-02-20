@@ -20,7 +20,8 @@ function slot0.onInitView(slot0)
 	slot0._furiousGO = gohelper.findChild(slot0.viewGO, "right/#scroll_info/Viewport/Content/furious")
 	slot0._aspellGO = gohelper.findChild(slot0.viewGO, "right/#scroll_info/Viewport/Content/aspell")
 	slot0._useBtnGO = gohelper.findChild(slot0.viewGO, "right/#btn_use")
-	slot0._inUsingGO = gohelper.findChild(slot0.viewGO, "right/#go_inuse")
+	slot4 = "right/#go_inuse"
+	slot0._inUsingGO = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._clickUseThis = gohelper.getClick(slot0._useBtnGO)
 	slot0._txtFuriousPropList = slot0:getUserDataTb_()
 	slot0._furiousPropGOList = slot0:getUserDataTb_()
@@ -30,7 +31,8 @@ function slot0.onInitView(slot0)
 		table.insert(slot0._furiousPropGOList, gohelper.findChild(slot0.viewGO, string.format("right/#scroll_info/Viewport/Content/furious/furiouslist/#furiousitem%d", slot4)))
 	end
 
-	slot0._txtFuriousDesc = gohelper.findChildText(slot0.viewGO, "right/#scroll_info/Viewport/Content/furious/#txt_furiousdesc")
+	slot4 = "right/#scroll_info/Viewport/Content/furious/#txt_furiousdesc"
+	slot0._txtFuriousDesc = gohelper.findChildText(slot0.viewGO, slot4)
 	slot0._txtAspellList = {}
 
 	for slot4 = 1, 3 do

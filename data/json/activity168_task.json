@@ -12,7 +12,7 @@
     "listenerParam": "1220401",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#20|9#1003#4|2#3#5000"
+    "bonus": "22801111"
   },
   {
     "id": 362202,
@@ -27,7 +27,7 @@
     "listenerParam": "1220402",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#30|1#110103#2|2#5#5000"
+    "bonus": "22801112"
   },
   {
     "id": 362203,
@@ -42,7 +42,7 @@
     "listenerParam": "1220403",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#20|9#1004#2|2#3#5000"
+    "bonus": "22801113"
   },
   {
     "id": 362204,
@@ -57,7 +57,7 @@
     "listenerParam": "1220404",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#30|1#110403#2|2#5#5000"
+    "bonus": "22801114"
   },
   {
     "id": 362205,
@@ -72,7 +72,7 @@
     "listenerParam": "1220405",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#20|9#1003#4|2#3#5000"
+    "bonus": "22801115"
   },
   {
     "id": 362206,
@@ -87,7 +87,7 @@
     "listenerParam": "1220406",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#40|1#110103#2|2#5#5000"
+    "bonus": "22801116"
   },
   {
     "id": 362207,
@@ -102,7 +102,7 @@
     "listenerParam": "1220407",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#20|9#1004#2|2#3#5000"
+    "bonus": "22801117"
   },
   {
     "id": 362208,
@@ -117,7 +117,7 @@
     "listenerParam": "1220408",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "2#2#20|9#1003#4|2#5#5000"
+    "bonus": "22801118"
   },
   {
     "id": 362209,
@@ -132,7 +132,7 @@
     "listenerParam": "229101",
     "maxProgress": 1,
     "jumpId": 10012210,
-    "bonus": "2#2#40|1#110603#1|2#5#10000"
+    "bonus": "22801120"
   },
   {
     "id": 362210,
@@ -147,6 +147,6 @@
     "listenerParam": "1220409",
     "maxProgress": 1,
     "jumpId": 0,
-    "bonus": "1#110403#1|2#3#5000"
+    "bonus": "22801119"
   }
 ]

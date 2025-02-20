@@ -50,7 +50,7 @@ function slot0._updateUI(slot0)
 		return
 	end
 
-	if LangSettings.instance:getCurLang() == LangSettings.kr then
+	if LangSettings.instance:getCurLang() == LangSettings.kr or LangSettings.instance:isEn() then
 		slot0._txtcontent.text = slot0.viewParam.tipsContent
 	else
 		slot0._txtcontent.text = string.gsub(slot0.viewParam.tipsContent, " ", " ")

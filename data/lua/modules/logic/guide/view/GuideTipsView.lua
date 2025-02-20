@@ -90,7 +90,7 @@ function slot0._updateUI(slot0)
 
 	slot1 = string.gsub(slot0.viewParam.tipsContent, " ", " ")
 
-	if LangSettings.instance:getCurLang() == LangSettings.kr then
+	if LangSettings.instance:getCurLang() == LangSettings.kr or LangSettings.instance:isEn() then
 		slot1 = slot0.viewParam.tipsContent
 	end
 

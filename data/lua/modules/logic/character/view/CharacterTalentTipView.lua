@@ -132,9 +132,10 @@ function slot0._showAllattr(slot0)
 		return
 	end
 
-	slot8 = slot0._goattributeItem
+	slot8 = slot0._goattributeContent
+	slot9 = slot0._goattributeItem
 
-	gohelper.CreateObjList(slot0, slot0._onItemShow, slot2, slot0._goattributeContent, slot8)
+	gohelper.CreateObjList(slot0, slot0._onItemShow, slot2, slot8, slot9)
 
 	slot4 = {}
 

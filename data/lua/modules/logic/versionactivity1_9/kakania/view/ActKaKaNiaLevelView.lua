@@ -209,8 +209,9 @@ function slot0.OnFightItemClick(slot0, slot1)
 	end
 
 	slot0.latestfightItem = slot1
+	slot5 = AudioEnum.RoleActivity.fight_switch
 
-	AudioMgr.instance:trigger(AudioEnum.RoleActivity.fight_switch)
+	AudioMgr.instance:trigger(slot5)
 
 	for slot5, slot6 in ipairs(slot0.fightItemList) do
 		slot6:refreshSelect(slot1)
@@ -359,7 +360,9 @@ end
 
 function slot0._playFightFinishAnim(slot0)
 	if RoleActivityModel.instance:getNewFinishFightLvl() then
-		RoleActivityModel.instance:updateData(slot0.actId)
+		slot5 = slot0.actId
+
+		RoleActivityModel.instance:updateData(slot5)
 
 		for slot5, slot6 in ipairs(slot0.fightItemList) do
 			if slot6.id == slot1 then

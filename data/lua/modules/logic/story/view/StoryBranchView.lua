@@ -14,11 +14,13 @@ end
 function slot0.addEvents(slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, slot0._onSelectOption, slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, slot0._onFinishSelectOptionView, slot0)
+	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0:removeEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, slot0._onSelectOption, slot0)
 	slot0:removeEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, slot0._onFinishSelectOptionView, slot0)
+	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, slot0.OnStoryDialogSelect, slot0)
 end
 
 function slot0._editableInitView(slot0)
@@ -40,6 +42,12 @@ end
 function slot0.onClose(slot0)
 end
 
+function slot0.OnStoryDialogSelect(slot0, slot1)
+	if slot0._keyTrigger and slot0._keyTrigger[slot1] then
+		slot0._keyTrigger[slot1]:onSelectOptionView()
+	end
+end
+
 function slot0._refreshView(slot0)
 	if #slot0._items > 0 then
 		for slot4, slot5 in pairs(slot0._items) do
@@ -50,6 +58,7 @@ function slot0._refreshView(slot0)
 	end
 
 	slot0:_setSelectList()
+	slot0:showKeyTips()
 end
 
 function slot0._setSelectList(slot0)
@@ -61,6 +70,25 @@ function slot0._setSelectList(slot0)
 	end
 
 	slot0._itemCount = #slot0._items
+end
+
+function slot0.showKeyTips(slot0)
+	slot0._keyTrigger = {}
+
+	if slot0._items then
+		slot1 = 1
+
+		for slot5, slot6 in ipairs(slot0._items) do
+			if slot6 and slot6.viewGO.activeSelf then
+				if gohelper.findChild(slot6.viewGO, "bgdark/#go_pcbtn") then
+					PCInputController.instance:showkeyTips(slot7, 0, 0, "Alpha" .. slot1)
+				end
+
+				slot0._keyTrigger[slot1] = slot6
+				slot1 = slot1 + 1
+			end
+		end
+	end
 end
 
 function slot0._onSelectOption(slot0, slot1)

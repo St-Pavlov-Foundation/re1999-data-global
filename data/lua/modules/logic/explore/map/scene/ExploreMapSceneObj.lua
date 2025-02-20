@@ -86,7 +86,9 @@ function slot0._loadedCb(slot0, slot1)
 			end
 		end
 
-		for slot7 = 0, slot0._go:GetComponentsInChildren(uv1, true).Length - 1 do
+		slot7 = true
+
+		for slot7 = 0, slot0._go:GetComponentsInChildren(uv1, slot7).Length - 1 do
 			slot8 = slot3[slot7]
 
 			if slot0.rendererInfos[slot7 + 1] then

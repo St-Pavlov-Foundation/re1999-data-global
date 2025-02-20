@@ -53,9 +53,9 @@ function slot0.initRightRopStatus(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = "full/bg_equipbg.png"
+	slot4 = ResUrl.getEquipBg
 
-	slot0._simagebg:LoadImage(ResUrl.getEquipBg(slot4))
+	slot0._simagebg:LoadImage(slot4("full/bg_equipbg.png"))
 
 	slot0._rareLineColor = {
 		"#DCF5D5",
@@ -345,7 +345,10 @@ end
 
 function slot0.showBreakContainer(slot0, slot1)
 	gohelper.setActive(slot0._scrollbreakequip.gameObject, true)
-	gohelper.setActive(slot0._scrollcostequip.gameObject, false)
+
+	slot5 = false
+
+	gohelper.setActive(slot0._scrollcostequip.gameObject, slot5)
 
 	for slot5, slot6 in pairs(slot1) do
 		if not slot0._breakCostItems[slot5] then

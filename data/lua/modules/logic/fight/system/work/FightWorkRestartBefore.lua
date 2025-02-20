@@ -2,15 +2,10 @@ module("modules.logic.fight.system.work.FightWorkRestartBefore", package.seeall)
 
 slot0 = class("FightWorkRestartBefore", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightParam = slot1
+function slot0.ctor(slot0)
 end
 
 function slot0.onStart(slot0)
-	slot0.episode_config = slot0._fightParam:getCurEpisodeConfig()
-	slot0.chapter_config = DungeonConfig.instance:getChapterCO(slot0.episode_config.chapterId)
-	slot0._play_type = slot0.chapter_config.type
-
 	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, slot0._onDestroyViewFinish, slot0)
 	GameSceneMgr.instance:getCurScene().view:onSceneClose()
 	GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
@@ -46,6 +41,14 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 		FightModel.instance:onRestart()
 		FightController.instance:dispatchEvent(FightEvent.OnRestartFightDisposeDone)
 		gohelper.setActiveCanvasGroup(ViewMgr.instance:getUILayer(UILayerName.Hud), false)
+
+		if slot0.context and slot0.context.noReloadScene then
+			slot0:_correctRootState()
+			slot2.view:onScenePrepared()
+			slot0:onDone(true)
+
+			return
+		end
 
 		if GameSceneMgr.instance:getCurLevelId() ~= FightModel.instance:getFightParam():getSceneLevel(1) then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)

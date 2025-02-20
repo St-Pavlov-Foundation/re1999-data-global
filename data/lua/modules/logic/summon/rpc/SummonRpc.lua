@@ -89,6 +89,21 @@ function slot0.onReceiveChooseMultiUpHeroReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.sendChooseEnhancedPoolHeroRequest(slot0, slot1, slot2, slot3, slot4)
+	slot5 = SummonModule_pb.ChooseEnhancedPoolHeroRequest()
+	slot5.poolId = slot1
+	slot5.heroId = slot2
+
+	return slot0:sendMsg(slot5, slot3, slot4)
+end
+
+function slot0.onReceiveChooseEnhancedPoolHeroReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
+		slot0:sendGetSummonInfoRequest()
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

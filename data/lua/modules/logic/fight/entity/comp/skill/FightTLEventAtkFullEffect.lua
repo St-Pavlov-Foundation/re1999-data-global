@@ -42,8 +42,11 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	end
 
 	if not string.nilorempty(slot3[6]) then
+		slot13 = slot0._attacker
+		slot15 = slot13
+
 		for slot15, slot16 in ipairs(GameUtil.splitString2(slot3[6], true)) do
-			if GameSceneMgr.instance:getCurScene():getCurLevelId() == slot16[1] and FightHelper.getEntityStanceId(slot0._attacker:getMO()) == slot16[2] then
+			if GameSceneMgr.instance:getCurScene():getCurLevelId() == slot16[1] and FightHelper.getEntityStanceId(slot13.getMO(slot15)) == slot16[2] then
 				slot5 = slot5 + slot16[3] or 0
 				slot6 = slot6 + slot16[4] or 0
 				slot7 = slot7 + slot16[5] or 0
@@ -51,7 +54,7 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	if not string.nilorempty(slot3[7]) and FightEntityModel.instance:getModel(slot0._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide):getByIndex(1) then
+	if not string.nilorempty(slot3[7]) and FightDataHelper.entityMgr:getNormalList(slot0._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide)[1] then
 		for slot17, slot18 in ipairs(GameUtil.splitString2(slot3[7], true)) do
 			if GameSceneMgr.instance:getCurScene():getCurLevelId() == slot18[1] and FightHelper.getEntityStanceId(slot9) == slot18[2] then
 				slot5 = slot5 + slot18[3] or 0

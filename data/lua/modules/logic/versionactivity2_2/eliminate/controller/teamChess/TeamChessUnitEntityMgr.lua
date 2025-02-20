@@ -211,6 +211,14 @@ function slot0.restoreTempShowModeAndCacheByTeamType(slot0, slot1)
 	end
 end
 
+function slot0.refreshShowModeStateByTeamType(slot0, slot1)
+	for slot5, slot6 in pairs(slot0._entitys) do
+		if slot6 and slot6._unitMo.teamType == slot1 then
+			slot6:refreshShowModeState()
+		end
+	end
+end
+
 function slot0.clear(slot0)
 	for slot4, slot5 in pairs(slot0._entitys) do
 		slot5:dispose()

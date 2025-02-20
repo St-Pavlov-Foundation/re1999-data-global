@@ -2,27 +2,28 @@ module("modules.logic.fight.system.work.FightWorkCurrentHpChange", package.seeal
 
 slot0 = class("FightWorkCurrentHpChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:_startChangeCurrentHp()
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO.currentHp
 end
 
-function slot0._startChangeCurrentHp(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		logError("change CURRENTHPCHANGE fail, entity not exist: " .. slot1)
+function slot0.onStart(slot0)
+	if not FightHelper.getEntity(slot0._entityId) then
 		slot0:onDone(true)
 
 		return
 	end
 
-	slot3 = slot2:getMO()
-	slot3.currentHp = slot0._actEffectMO.effectNum
+	if not slot0._entityMO then
+		slot0:onDone(true)
 
-	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot0._actEffectMO.targetId, slot3.currentHp, slot3.currentHp)
-	slot0:_onDone()
-end
+		return
+	end
 
-function slot0._onDone(slot0)
-	slot0:clearWork()
+	slot0._newValue = slot0._entityMO and slot0._entityMO.currentHp
+
+	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot0._actEffectMO.targetId, slot0._oldValue, slot0._newValue)
 	slot0:onDone(true)
 end
 

@@ -1,0 +1,302 @@
+[
+  {
+    "layerId": 1,
+    "stageId": 1,
+    "preLayerId": 0,
+    "isElite": 0,
+    "episodeIds": "90000101",
+    "firstReward": "1#620102#15|1#620101#200|1#110103#2",
+    "spReward": "",
+    "index": 1
+  },
+  {
+    "layerId": 2,
+    "stageId": 1,
+    "preLayerId": 1,
+    "isElite": 0,
+    "episodeIds": "90000201",
+    "firstReward": "1#620102#15|1#620101#200|1#110203#2",
+    "spReward": "",
+    "index": 2
+  },
+  {
+    "layerId": 3,
+    "stageId": 1,
+    "preLayerId": 2,
+    "isElite": 0,
+    "episodeIds": "90000301",
+    "firstReward": "1#620102#15|1#620101#200|1#110303#2",
+    "spReward": "",
+    "index": 3
+  },
+  {
+    "layerId": 4,
+    "stageId": 1,
+    "preLayerId": 3,
+    "isElite": 0,
+    "episodeIds": "90000401",
+    "firstReward": "1#620102#15|1#620101#200|1#110403#2",
+    "spReward": "",
+    "index": 4
+  },
+  {
+    "layerId": 5,
+    "stageId": 1,
+    "preLayerId": 4,
+    "isElite": 0,
+    "episodeIds": "90000501",
+    "firstReward": "2#2#120|1#620103#4|1#620102#20|1#620101#250|1#110104#1",
+    "spReward": "2#2#120",
+    "index": 5
+  },
+  {
+    "layerId": 6,
+    "stageId": 1,
+    "preLayerId": 5,
+    "isElite": 0,
+    "episodeIds": "90000601",
+    "firstReward": "1#620102#15|1#620101#200|1#110503#2",
+    "spReward": "",
+    "index": 6
+  },
+  {
+    "layerId": 7,
+    "stageId": 1,
+    "preLayerId": 6,
+    "isElite": 0,
+    "episodeIds": "90000701",
+    "firstReward": "1#620102#15|1#620101#200|1#111002#2",
+    "spReward": "",
+    "index": 7
+  },
+  {
+    "layerId": 8,
+    "stageId": 1,
+    "preLayerId": 7,
+    "isElite": 0,
+    "episodeIds": "90000801",
+    "firstReward": "1#620102#15|1#620101#200|1#110603#2",
+    "spReward": "",
+    "index": 8
+  },
+  {
+    "layerId": 9,
+    "stageId": 1,
+    "preLayerId": 8,
+    "isElite": 0,
+    "episodeIds": "90000901",
+    "firstReward": "1#620102#15|1#620101#200|1#110703#2",
+    "spReward": "",
+    "index": 9
+  },
+  {
+    "layerId": 10,
+    "stageId": 1,
+    "preLayerId": 9,
+    "isElite": 1,
+    "episodeIds": "90001001|90001002|90001003",
+    "firstReward": "2#2#240|1#620103#8|1#620102#30|1#620101#400|1#111006#1",
+    "spReward": "2#2#240",
+    "index": 10
+  },
+  {
+    "layerId": 11,
+    "stageId": 2,
+    "preLayerId": 10,
+    "isElite": 0,
+    "episodeIds": "90001101",
+    "firstReward": "1#620102#15|1#620101#200|1#110803#2",
+    "spReward": "",
+    "index": 1
+  },
+  {
+    "layerId": 12,
+    "stageId": 2,
+    "preLayerId": 11,
+    "isElite": 0,
+    "episodeIds": "90001201",
+    "firstReward": "1#620102#15|1#620101#200|1#110103#2",
+    "spReward": "",
+    "index": 2
+  },
+  {
+    "layerId": 13,
+    "stageId": 2,
+    "preLayerId": 12,
+    "isElite": 0,
+    "episodeIds": "90001301",
+    "firstReward": "1#620102#15|1#620101#200|1#110203#2",
+    "spReward": "",
+    "index": 3
+  },
+  {
+    "layerId": 14,
+    "stageId": 2,
+    "preLayerId": 13,
+    "isElite": 0,
+    "episodeIds": "90001401",
+    "firstReward": "1#620102#15|1#620101#200|1#110303#2",
+    "spReward": "",
+    "index": 4
+  },
+  {
+    "layerId": 15,
+    "stageId": 2,
+    "preLayerId": 14,
+    "isElite": 0,
+    "episodeIds": "90001501",
+    "firstReward": "2#2#120|1#620103#4|1#620102#20|1#620101#250|1#110204#1",
+    "spReward": "2#2#120",
+    "index": 5
+  },
+  {
+    "layerId": 16,
+    "stageId": 2,
+    "preLayerId": 15,
+    "isElite": 0,
+    "episodeIds": "90001601",
+    "firstReward": "1#620102#15|1#620101#200|1#110403#2",
+    "spReward": "",
+    "index": 6
+  },
+  {
+    "layerId": 17,
+    "stageId": 2,
+    "preLayerId": 16,
+    "isElite": 0,
+    "episodeIds": "90001701",
+    "firstReward": "1#620102#15|1#620101#200|1#110503#2",
+    "spReward": "",
+    "index": 7
+  },
+  {
+    "layerId": 18,
+    "stageId": 2,
+    "preLayerId": 17,
+    "isElite": 0,
+    "episodeIds": "90001801",
+    "firstReward": "1#620102#15|1#620101#200|1#111002#2",
+    "spReward": "",
+    "index": 8
+  },
+  {
+    "layerId": 19,
+    "stageId": 2,
+    "preLayerId": 18,
+    "isElite": 0,
+    "episodeIds": "90001901",
+    "firstReward": "1#620102#15|1#620101#200|1#110603#2",
+    "spReward": "",
+    "index": 9
+  },
+  {
+    "layerId": 20,
+    "stageId": 2,
+    "preLayerId": 19,
+    "isElite": 1,
+    "episodeIds": "90002001|90002002|90002003",
+    "firstReward": "2#2#240|1#620103#8|1#620102#30|1#620101#400|1#111005#1",
+    "spReward": "2#2#240",
+    "index": 10
+  },
+  {
+    "layerId": 21,
+    "stageId": 3,
+    "preLayerId": 20,
+    "isElite": 0,
+    "episodeIds": "90002101",
+    "firstReward": "1#620102#15|1#620101#200|1#110703#2",
+    "spReward": "",
+    "index": 1
+  },
+  {
+    "layerId": 22,
+    "stageId": 3,
+    "preLayerId": 21,
+    "isElite": 0,
+    "episodeIds": "90002201",
+    "firstReward": "1#620102#15|1#620101#200|1#111012#2",
+    "spReward": "",
+    "index": 2
+  },
+  {
+    "layerId": 23,
+    "stageId": 3,
+    "preLayerId": 22,
+    "isElite": 0,
+    "episodeIds": "90002301",
+    "firstReward": "1#620102#15|1#620101#200|1#110803#2",
+    "spReward": "",
+    "index": 3
+  },
+  {
+    "layerId": 24,
+    "stageId": 3,
+    "preLayerId": 23,
+    "isElite": 0,
+    "episodeIds": "90002401",
+    "firstReward": "1#620102#15|1#620101#200|1#110103#2",
+    "spReward": "",
+    "index": 4
+  },
+  {
+    "layerId": 25,
+    "stageId": 3,
+    "preLayerId": 24,
+    "isElite": 1,
+    "episodeIds": "90002501|90002502",
+    "firstReward": "2#2#120|1#620103#4|1#620102#20|1#620101#250|1#110304#1",
+    "spReward": "2#2#120",
+    "index": 5
+  },
+  {
+    "layerId": 26,
+    "stageId": 3,
+    "preLayerId": 25,
+    "isElite": 0,
+    "episodeIds": "90002601",
+    "firstReward": "1#620102#15|1#620101#200|1#110203#2",
+    "spReward": "",
+    "index": 6
+  },
+  {
+    "layerId": 27,
+    "stageId": 3,
+    "preLayerId": 26,
+    "isElite": 0,
+    "episodeIds": "90002701",
+    "firstReward": "1#620102#15|1#620101#200|1#110303#2",
+    "spReward": "",
+    "index": 7
+  },
+  {
+    "layerId": 28,
+    "stageId": 3,
+    "preLayerId": 27,
+    "isElite": 0,
+    "episodeIds": "90002801",
+    "firstReward": "1#620102#15|1#620101#200|1#110403#2",
+    "spReward": "",
+    "index": 8
+  },
+  {
+    "layerId": 29,
+    "stageId": 3,
+    "preLayerId": 28,
+    "isElite": 0,
+    "episodeIds": "90002901",
+    "firstReward": "1#620102#15|1#620101#200|1#110503#2",
+    "spReward": "",
+    "index": 9
+  },
+  {
+    "layerId": 30,
+    "stageId": 3,
+    "preLayerId": 29,
+    "isElite": 1,
+    "episodeIds": "90003001|90003002|90003003",
+    "firstReward": "1#171305#1|2#2#240|1#620103#8|1#620102#30|1#620101#400",
+    "spReward": "1#171305#1",
+    "index": 10
+  }
+]

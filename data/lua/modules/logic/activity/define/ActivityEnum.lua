@@ -11,7 +11,7 @@ slot0.Activity = {
 	V1a9_SemmelWeisGift = 11916,
 	NewWelfare = 11924,
 	Activity1_5WarmUp = 11511,
-	RoleSignViewPart1_1_6 = 11614,
+	V2a3_WarmUp = 12310,
 	Activity1_8WarmUp = 11810,
 	V2a2_DecalogPresent = 12240,
 	RoleSignViewPart2_1_8 = 11801,
@@ -19,7 +19,7 @@ slot0.Activity = {
 	RoleSignViewPart1_1_9 = 11913,
 	RoleSignViewPart1_1_7 = 11711,
 	RoleSignViewPart1_1_4 = 11425,
-	Activity1_6WarmUp = 11622,
+	V2a3_Special = 12321,
 	DoubleFestivalSign_1_3 = 11311,
 	NewYearEve = 11621,
 	V2a3_Role_SignView_Part1 = 12308,
@@ -54,6 +54,8 @@ slot0.Activity = {
 	Work_SignView_1_8 = 11808,
 	RoleSignViewPart2_1_6 = 11616,
 	V2a1_Role_SignView_Part1 = 12108,
+	RoleSignViewPart1_1_6 = 11614,
+	Activity1_6WarmUp = 11622,
 	V2a4_Blind_Box_Draw = 12434,
 	v2a2_RedLeafFestival = 12232,
 	RoomSign = 12239,
@@ -110,6 +112,7 @@ slot0.ActivitySortWeight = {
 }
 slot0.ActivityTypeID = {
 	Act158 = 158,
+	Act189 = 189,
 	DreamTail = 119,
 	JieXiKa = 114,
 	OpenTestWarmUp = 106,
@@ -128,7 +131,7 @@ slot0.VersionActivityIdDict = {
 	Activity1_42 = 11420,
 	Activity1_41 = 11401,
 	Activity1_6 = 11601,
-	Activity1_52 = 11517,
+	Activity2_3 = 12301,
 	Activity2_0 = 12002,
 	Activity1_3 = 11301,
 	Activity2_1 = 12101,
@@ -138,10 +141,11 @@ slot0.VersionActivityIdDict = {
 	Activity2_2 = 12201,
 	Activity1_2 = 11201,
 	Activity1_7 = 11701,
+	Activity1_52 = 11517,
 	Activity1_8 = 11803
 }
 slot0.VersionActivityIdList = {
-	slot0.VersionActivityIdDict.Activity2_2
+	slot0.VersionActivityIdDict.Activity2_3
 }
 slot0.MainIcon = {
 	[slot0.VersionActivityIdDict.Activity1_1] = "rk1111",
@@ -157,13 +161,15 @@ slot0.MainIcon = {
 	[slot0.VersionActivityIdDict.Activity1_9] = "rk_1_9",
 	[slot0.VersionActivityIdDict.Activity2_0] = "rk_2_0",
 	[slot0.VersionActivityIdDict.Activity2_1] = "rk_2_1",
-	[slot0.VersionActivityIdDict.Activity2_2] = "rk_2_2"
+	[slot0.VersionActivityIdDict.Activity2_2] = "rk_2_2",
+	[slot0.VersionActivityIdDict.Activity2_3] = "rk_2_3"
 }
 slot0.ShowVersionActivityEpisode = 10103
 slot0.MainViewActivityState = {
 	RoleStoryActivity = 1,
 	SeasonActivity = 3,
 	Rouge = 4,
+	DouQuQu = 6,
 	Reactivity = 2,
 	None = 0
 }

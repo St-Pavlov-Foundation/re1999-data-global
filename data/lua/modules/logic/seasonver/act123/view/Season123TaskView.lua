@@ -231,9 +231,9 @@ function slot0.moveScrollPos(slot0)
 		slot3 = 0 + slot0.stageMapItemTab[slot7].height
 	end
 
-	slot8 = 0.5
-	slot9 = slot0.refreshArrowUI
-	slot0.scrollMoveTweenId = ZProj.TweenHelper.DOAnchorPosY(slot0.mapcontentRectTrans, -slot1 / 2 + (slot0.curStage - 1) * slot2 + slot3 + slot0.stageMapItemTab[slot0.curStage].height / 2, slot8, slot9, slot0)
+	slot8 = -slot1 / 2 + (slot0.curStage - 1) * slot2 + slot3 + slot0.stageMapItemTab[slot0.curStage].height / 2
+	slot9 = 0.5
+	slot0.scrollMoveTweenId = ZProj.TweenHelper.DOAnchorPosY(slot0.mapcontentRectTrans, slot8, slot9, slot0.refreshArrowUI, slot0)
 
 	for slot8, slot9 in ipairs(slot0.stageMapItemTab) do
 		slot9.item:setScale()

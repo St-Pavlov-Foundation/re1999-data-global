@@ -23,5 +23,10 @@
     "activityId": 12234,
     "totalLimit": 20,
     "dailyLimit": 4
+  },
+  {
+    "activityId": 12317,
+    "totalLimit": 20,
+    "dailyLimit": 4
   }
 ]

@@ -239,8 +239,10 @@ function slot0._dispatchEscape(slot0, slot1)
 				[ViewName.ToughBattleLoadingView] = true,
 				[ViewName.RougeResultView] = true
 			}
+			slot9 = V1a6_CachotEventController.instance
+			slot11 = slot9
 
-			for slot10, slot11 in pairs(V1a6_CachotEventController.instance:getNoCloseViews()) do
+			for slot10, slot11 in pairs(slot9.getNoCloseViews(slot11)) do
 				slot0._dontCloseViewNameDict[slot11] = true
 			end
 

@@ -142,6 +142,7 @@ slot0.Type = {
 	Limit = 6,
 	NewPlayer = 201,
 	CustomPick = 7,
+	StrongCustomOnePick = 12,
 	Newbie = 1,
 	LuckyBag = 5,
 	MultiProbUp4 = 4,

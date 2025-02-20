@@ -1,6 +1,6 @@
 module("modules.logic.fight.model.data.FightCacheFightDataMgr", package.seeall)
 
-slot0 = class("FightCacheFightDataMgr")
+slot0 = FightDataBase("FightCacheFightDataMgr")
 
 function slot0.ctor(slot0)
 	slot0.cache = {}

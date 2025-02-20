@@ -71,9 +71,9 @@ function slot0.getEffectTagIDsFromDescNotRecursion(slot0, slot1)
 
 	slot2 = {}
 	slot1 = slot1 or ""
-	slot6 = "]"
+	slot6 = "%[(.-)%]"
 
-	for slot6 in string.gmatch(string.gsub(string.gsub(slot1, "【", "["), "】", slot6), "%[(.-)%]") do
+	for slot6 in string.gmatch(string.gsub(string.gsub(slot1, "【", "["), "】", "]"), slot6) do
 		if string.nilorempty(slot6) or slot0._skillTagInfos[slot6] == nil then
 			logError(string.format(" '%s' 技能描述中， '%s' tag 不存在", slot1, slot6))
 		else
@@ -143,9 +143,10 @@ function slot0.treeLevelTraversal(slot0, slot1, slot2, slot3)
 
 			table.insert(slot2, slot8)
 
-			slot13 = slot8
+			slot12 = SkillConfig.instance
+			slot14 = slot12
 
-			for slot13, slot14 in ipairs(slot0:getEffectTagIDsFromDescNotRecursion(SkillConfig.instance:getSkillEffectDescCo(slot13).desc)) do
+			for slot13, slot14 in ipairs(slot0:getEffectTagIDsFromDescNotRecursion(slot12.getSkillEffectDescCo(slot14, slot8).desc)) do
 				if not slot3[slot14] then
 					table.insert(slot1, slot14)
 				end

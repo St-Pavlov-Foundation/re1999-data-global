@@ -156,7 +156,10 @@ function slot0.initDrop(slot0)
 	end
 
 	slot0.dropMap:ClearOptions()
-	slot0.dropMap:AddOptions(slot0.layerStrList)
+
+	slot4 = slot0.layerStrList
+
+	slot0.dropMap:AddOptions(slot4)
 
 	slot0.layerId = RougeMapEditModel.instance:getMiddleLayerId()
 
@@ -186,9 +189,9 @@ function slot0.refreshAllText(slot0)
 
 	gohelper.setActive(slot0.goStartTextContainer, true)
 
-	slot8 = "路径点id : "
+	slot8 = slot2
 
-	for slot8 = slot0:refreshPointDictText(slot2, slot8, slot0:refreshPointDictText(slot1, "坐标点id : ", 0)) + 1, #slot0.textGoList do
+	for slot8 = slot0:refreshPointDictText(slot8, "路径点id : ", slot0:refreshPointDictText(slot1, "坐标点id : ", 0)) + 1, #slot0.textGoList do
 		gohelper.setActive(slot0.textGoList[slot8], false)
 	end
 end

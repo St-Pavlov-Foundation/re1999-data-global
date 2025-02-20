@@ -2,8 +2,13 @@ module("modules.logic.task.config.TaskConfigGetDefine", package.seeall)
 
 slot0 = class("TaskConfigGetDefine", BaseConfig)
 
+function slot0._getActivity189(slot0)
+	return Activity189Config.instance:getTaskCO(slot0)
+end
+
 function slot0.ctor(slot0)
 	slot0._defineList = {
+		[TaskEnum.TaskType.Activity189] = uv0._getActivity189,
 		[TaskEnum.TaskType.Daily] = uv0._getDaily,
 		[TaskEnum.TaskType.Weekly] = uv0._getWeekly,
 		[TaskEnum.TaskType.Achievement] = uv0._getAchievement,

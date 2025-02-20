@@ -8,11 +8,10 @@ function slot0.onStart(slot0, slot1)
 	slot2 = string.split(slot0.actionParam, "#")
 	slot0._viewName = ViewName[slot2[1]]
 	slot0._conditionParam = slot2[3]
+	slot0._delayTime = slot2[4] and tonumber(slot2[4]) or 0.2
 	slot0._conditionCheckFun = slot0[slot2[2]]
 
-	if slot0:_check() then
-		slot0:onDone(true)
-
+	if slot0:checkDone() then
 		return
 	end
 
@@ -22,15 +21,32 @@ function slot0.onStart(slot0, slot1)
 end
 
 function slot0.clearWork(slot0)
+	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.ReOpenWhileOpen, slot0._checkOpenView, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._checkOpenView, slot0)
 end
 
 function slot0._checkOpenView(slot0, slot1, slot2)
+	slot0:checkDone()
+end
+
+function slot0.checkDone(slot0)
+	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+
 	if slot0:_check() then
-		slot0:onDone(true)
+		if slot0._delayTime and slot0._delayTime > 0 then
+			TaskDispatcher.runDelay(slot0._delayDone, slot0, slot0._delayTime)
+		else
+			slot0:onDone(true)
+		end
 	end
+
+	return slot1
+end
+
+function slot0._delayDone(slot0)
+	slot0:onDone(true)
 end
 
 function slot0._check(slot0)

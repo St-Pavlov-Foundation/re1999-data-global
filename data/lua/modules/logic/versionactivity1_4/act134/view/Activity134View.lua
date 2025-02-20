@@ -87,9 +87,9 @@ function slot0._btnrightswitchOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = "v1a4_dustyrecords_fullbg_1"
+	slot4 = ResUrl.getV1a4DustRecordsIcon
 
-	slot0._simagefullbg:LoadImage(ResUrl.getV1a4DustRecordsIcon(slot4))
+	slot0._simagefullbg:LoadImage(slot4("v1a4_dustyrecords_fullbg_1"))
 
 	slot0.storyTotalCount = Activity134Model.instance:getStoryTotalCount()
 	slot0.actId = VersionActivity1_4Enum.ActivityId.DustyRecords
@@ -105,7 +105,10 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._simagefullbg:UnLoadImage()
 	slot0._simagedetailbg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0.cutAnimEnd, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0.cutAnimEnd, slot4)
 
 	for slot4, slot5 in ipairs(slot0.bonusItemList) do
 		slot5:onDestroyView()
@@ -191,7 +194,10 @@ function slot0.initReportItem(slot0)
 	slot4 = gohelper.findChild(slot0.viewGO, "Right")
 
 	slot0.goright.transform:SetParent(slot0._scrollviewright.transform, false)
-	transformhelper.setLocalPosXY(slot0.goright.transform, 0, 255)
+
+	slot9 = 255
+
+	transformhelper.setLocalPosXY(slot0.goright.transform, 0, slot9)
 
 	slot0.reportItemList = {}
 

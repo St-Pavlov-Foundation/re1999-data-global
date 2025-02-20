@@ -2,26 +2,28 @@ module("modules.logic.fight.system.work.FightWorkKill", package.seeall)
 
 slot0 = class("FightWorkKill", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:_startKill()
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.targetId
+	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+	slot0._oldValue = slot0._entityMO and slot0._entityMO.currentHp
 end
 
-function slot0._startKill(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
+function slot0.onStart(slot0)
+	if not FightHelper.getEntity(slot0._entityId) then
 		slot0:onDone(true)
 
 		return
 	end
 
-	slot3 = slot2:getMO()
+	if not slot0._entityMO then
+		slot0:onDone(true)
 
-	slot3:setHp(0)
-	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot0._actEffectMO.targetId, slot3.currentHp, 0)
-	slot0:_onDone()
-end
+		return
+	end
 
-function slot0._onDone(slot0)
-	slot0:clearWork()
+	slot0._newValue = slot0._entityMO and slot0._entityMO.currentHp
+
+	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot0._entityId, slot0._oldValue, slot0._newValue)
 	slot0:onDone(true)
 end
 

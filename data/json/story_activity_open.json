@@ -2198,5 +2198,293 @@
     "titleEn": "The Double-Sided Mirror",
     "labelRes": "8",
     "storyBg": "singlebg/v2a1_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 1,
+    "title": "language_10058592",
+    "titleEn": "First Day Back in London",
+    "labelRes": "1",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 2,
+    "title": "language_10058594",
+    "titleEn": "Swallows in the Chimney",
+    "labelRes": "2",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 3,
+    "title": "language_10058596",
+    "titleEn": "Fog Hag",
+    "labelRes": "3",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 4,
+    "title": "language_10058598",
+    "titleEn": "Past Glory",
+    "labelRes": "4",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 5,
+    "title": "language_10058600",
+    "titleEn": "Little Knocker-Upper",
+    "labelRes": "5",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 6,
+    "title": "language_10058602",
+    "titleEn": "Black Swan",
+    "labelRes": "6",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 7,
+    "title": "language_10058604",
+    "titleEn": "Brunch",
+    "labelRes": "7",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 8,
+    "title": "language_10058606",
+    "titleEn": "Raining Fish",
+    "labelRes": "8",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 9,
+    "title": "language_10058608",
+    "titleEn": "Hesitation and Challenge",
+    "labelRes": "9",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 10,
+    "title": "language_10058610",
+    "titleEn": "Dust-Covered Pearl",
+    "labelRes": "10",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 11,
+    "title": "language_10058612",
+    "titleEn": "Clang! Clang!",
+    "labelRes": "11",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 12,
+    "title": "language_10058614",
+    "titleEn": "Old Wood",
+    "labelRes": "12",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 13,
+    "title": "language_10058616",
+    "titleEn": "Ribbon-Cutting Ceremony",
+    "labelRes": "13",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 14,
+    "title": "language_10058618",
+    "titleEn": "Soot in the Petri Dish",
+    "labelRes": "14",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 15,
+    "title": "language_10058620",
+    "titleEn": "Back in the Game",
+    "labelRes": "15",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 16,
+    "title": "language_10058622",
+    "titleEn": "Our Uluru Games",
+    "labelRes": "16",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 17,
+    "title": "language_10044489",
+    "titleEn": "Opening Ceremony",
+    "labelRes": "17",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 18,
+    "title": "language_10058625",
+    "titleEn": "Hazy Memories",
+    "labelRes": "18",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 19,
+    "title": "language_10058627",
+    "titleEn": "Dancing in the Smog",
+    "labelRes": "19",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 20,
+    "title": "language_10058629",
+    "titleEn": "London, Sunny",
+    "labelRes": "20",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 21,
+    "title": "language_10058631",
+    "titleEn": "Slithering Snails",
+    "labelRes": "1",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 22,
+    "title": "language_10058632",
+    "titleEn": "Machine Lubricant",
+    "labelRes": "2",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 23,
+    "title": "language_10058633",
+    "titleEn": "Fallen Swan",
+    "labelRes": "3",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 24,
+    "title": "language_10058634",
+    "titleEn": "Flickering Candlelight",
+    "labelRes": "4",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 25,
+    "title": "language_10058635",
+    "titleEn": "Phone Call",
+    "labelRes": "5",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 26,
+    "title": "language_10058636",
+    "titleEn": "Echoing Knocks",
+    "labelRes": "6",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 27,
+    "title": "language_10058637",
+    "titleEn": "Podium",
+    "labelRes": "7",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 28,
+    "title": "language_10058638",
+    "titleEn": "Goodbye, Friend",
+    "labelRes": "8",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 29,
+    "title": "language_10058639",
+    "titleEn": "Bird Companion",
+    "labelRes": "1",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 30,
+    "title": "language_10058640",
+    "titleEn": "Stolen Name",
+    "labelRes": "2",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 31,
+    "title": "language_10058641",
+    "titleEn": "Cross Street",
+    "labelRes": "3",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 32,
+    "title": "language_10058642",
+    "titleEn": "New Friends, Old Friends",
+    "labelRes": "4",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 33,
+    "title": "language_10058643",
+    "titleEn": "Flowers and Pebbles",
+    "labelRes": "5",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 34,
+    "title": "language_10058644",
+    "titleEn": "Peppy Paws",
+    "labelRes": "6",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 35,
+    "title": "language_10058645",
+    "titleEn": "Through the Darkness",
+    "labelRes": "7",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 23,
+    "part": 36,
+    "title": "language_10035552",
+    "titleEn": "The Answer",
+    "labelRes": "8",
+    "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
   }
 ]

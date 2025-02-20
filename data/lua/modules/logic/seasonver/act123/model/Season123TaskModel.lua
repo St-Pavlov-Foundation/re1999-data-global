@@ -44,11 +44,16 @@ function slot0.setTaskInfoList(slot0, slot1)
 		end
 	end
 
-	slot0.tempTaskModel:setList(slot2)
+	slot7 = slot2
+
+	slot0.tempTaskModel:setList(slot7)
 	slot0:sortList()
 	slot0:checkRedDot()
 
-	for slot7, slot8 in pairs(slot0.tempTaskModel:getList()) do
+	slot6 = slot0.tempTaskModel
+	slot8 = slot6
+
+	for slot7, slot8 in pairs(slot6.getList(slot8)) do
 		slot0:initTaskMap(slot8)
 	end
 end
@@ -117,8 +122,9 @@ end
 function slot0.refreshList(slot0, slot1)
 	slot0.curTaskType = slot1 or slot0.curTaskType
 	slot2 = {}
+	slot7 = slot0.tempTaskModel
 
-	for slot6, slot7 in pairs(slot0.tempTaskModel:getList()) do
+	for slot6, slot7 in pairs(slot5.getList(slot7)) do
 		if #Season123Config.instance:getTaskListenerParamCache(slot7.config) > 1 and tonumber(slot8[1]) == slot0.curStage and slot7.config.isRewardView == slot0.curTaskType then
 			table.insert(slot2, slot7)
 		elseif slot7.config.isRewardView == Activity123Enum.TaskNormalType and slot7.config.isRewardView == slot0.curTaskType then

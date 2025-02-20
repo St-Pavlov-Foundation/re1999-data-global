@@ -32,6 +32,7 @@ function slot0.ctor(slot0)
 	slot0.birthdayCount = 0
 	slot0.talentStyleUnlock = nil
 	slot0.isFavor = false
+	slot0.destinyStoneMo = nil
 	slot0.trialCo = nil
 	slot0.trialAttrCo = nil
 	slot0.trialEquipMo = nil
@@ -214,9 +215,10 @@ function slot0.initFromTrial(slot0, slot1, slot2, slot3)
 
 	if CharacterEnum.TalentRank <= slot6.rank and slot6.talent > 0 then
 		slot11 = lua_character_talent.configDict[slot6.heroId][slot6.talent]
+		slot20 = ","
 		HeroDef_pb.TalentTemplateInfo().id = 1
 
-		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot6.talent][slot11.talentMould][string.splitToNumber(slot11.exclusive, "#")[1]].talenScheme, true, "#", ",")) do
+		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot6.talent][slot11.talentMould][string.splitToNumber(slot11.exclusive, "#")[1]].talenScheme, true, "#", slot20)) do
 			HeroDef_pb.TalentCubeInfo().cubeId = slot21[1]
 			slot22.direction = slot21[2] or 0
 			slot22.posX = slot21[3] or 0
@@ -282,7 +284,10 @@ function slot0.update(slot0, slot1)
 	slot0.talentStyleUnlock = slot1.talentStyleUnlock
 	slot0.isShowTalentStyleRed = slot1.talentStyleRed == 1
 	slot0.isFavor = slot1.isFavor
+	slot0.destinyStoneMo = slot0.destinyStoneMo or HeroDestinyStoneMO.New(slot0.heroId)
 
+	slot0.destinyStoneMo:refreshMo(slot1.destinyRank, slot1.destinyLevel, slot1.destinyStone, slot1.destinyStoneUnlock)
+	slot0.destinyStoneMo:setRedDot(slot1.redDot)
 	slot0:setIsBelongOtherPlayer(slot1.belongOtherPlayer)
 end
 
@@ -509,8 +514,9 @@ function slot0.getHeroLevelConfig(slot0, slot1)
 			end
 		end
 
+		slot12 = slot6
 		slot2 = {
-			[slot13] = slot0:lerpAttr(SkillConfig.instance:getherolevelCO(slot0.heroId, slot5)[slot13], SkillConfig.instance:getherolevelCO(slot0.heroId, slot6)[slot13], slot5, slot6, slot1)
+			[slot13] = slot0:lerpAttr(SkillConfig.instance:getherolevelCO(slot0.heroId, slot5)[slot13], SkillConfig.instance:getherolevelCO(slot0.heroId, slot12)[slot13], slot5, slot6, slot1)
 		}
 
 		for slot12, slot13 in pairs(CharacterEnum.AttrIdToAttrName) do
@@ -609,10 +615,10 @@ function slot0.getTotalBaseAttrDict(slot0, slot1, slot2, slot3, slot4, slot5, sl
 	end
 
 	if slot3 > 1 and slot14 then
-		slot18 = slot3
-		slot19 = nil
+		slot19 = slot3
+		slot18 = slot0:getTalentGain(slot2, slot19, nil, slot7)
 
-		for slot18, slot19 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot0:getTalentGain(slot2, slot18, slot19, slot7))) do
+		for slot18, slot19 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot18)) do
 			if HeroConfig.instance:getHeroAttributeCO(slot18).type ~= 1 then
 				slot12[slot18].value = slot12[slot18].value / 10
 			else
@@ -621,12 +627,12 @@ function slot0.getTotalBaseAttrDict(slot0, slot1, slot2, slot3, slot4, slot5, sl
 		end
 	end
 
-	for slot19, slot20 in ipairs(CharacterEnum.BaseAttrIdList) do
+	for slot20, slot21 in ipairs(CharacterEnum.BaseAttrIdList) do
 		-- Nothing
 	end
 
 	return {
-		[slot20] = slot9[slot20] + slot10[slot20] + (slot12[slot20] and slot12[slot20].value or 0)
+		[slot21] = slot9[slot21] + slot10[slot21] + (slot12[slot21] and slot12[slot21].value or 0) + (slot0.destinyStoneMo and slot0.destinyStoneMo:getAddValueByAttrId(slot0.destinyStoneMo:getAddAttrValues(), slot21) or 0)
 	}
 end
 
@@ -645,9 +651,10 @@ end
 function slot0.getTalentCubeInfos(slot0, slot1)
 	slot2 = {}
 	slot3 = lua_character_talent.configDict[slot0][slot1]
-	slot11 = ","
+	slot11 = "#"
+	slot12 = ","
 
-	for slot11, slot12 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot1][slot3.talentMould][string.splitToNumber(slot3.exclusive, "#")[1]].talenScheme, true, "#", slot11)) do
+	for slot11, slot12 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot1][slot3.talentMould][string.splitToNumber(slot3.exclusive, "#")[1]].talenScheme, true, slot11, slot12)) do
 		HeroDef_pb.TalentCubeInfo().cubeId = slot12[1]
 		slot13.direction = slot12[2] or 0
 		slot13.posX = slot12[3] or 0
@@ -695,10 +702,10 @@ function slot0.getCachotTotalBaseAttrDict(slot0, slot1, slot2, slot3, slot4, slo
 	slot12 = {}
 
 	if slot3 > 1 then
-		slot16 = slot3
-		slot17 = slot4
+		slot17 = slot3
+		slot16 = slot0:getTalentGain(slot2, slot17, slot4, slot5)
 
-		for slot16, slot17 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot0:getTalentGain(slot2, slot16, slot17, slot5))) do
+		for slot16, slot17 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot16)) do
 			if HeroConfig.instance:getHeroAttributeCO(slot16).type ~= 1 then
 				slot12[slot16].value = slot12[slot16].value / 10
 			else
@@ -742,10 +749,11 @@ function slot0._calcEquipAttr(slot0, slot1, slot2, slot3, slot4)
 end
 
 function slot0.getTotalBaseAttrList(slot0, slot1, slot2, slot3)
+	slot9 = slot3
 	slot5 = {}
 
 	for slot9, slot10 in ipairs(CharacterEnum.BaseAttrIdList) do
-		table.insert(slot5, slot0:getTotalBaseAttrDict(slot1, slot2, slot3)[slot10])
+		table.insert(slot5, slot0:getTotalBaseAttrDict(slot1, slot2, slot9)[slot10])
 	end
 
 	return slot5
@@ -807,6 +815,34 @@ function slot0.getHeroUseStyleCubeId(slot0)
 	end
 
 	return slot0.talentCubeInfos.own_main_cube_id
+end
+
+function slot0.isCanOpenDestinySystem(slot0, slot1)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DestinyStone) then
+		slot2 = lua_open.configDict[OpenEnum.UnlockFunc.DestinyStone].episodeId
+
+		if slot1 and not DungeonModel.instance:hasPassLevel(slot2) then
+			GameFacade.showToast(ToastEnum.DungeonMapLevel, DungeonConfig.instance:getEpisodeDisplay(slot2))
+		end
+
+		return false
+	end
+
+	if not slot0:isHasDestinySystem() then
+		return false
+	end
+
+	if tonumber(CommonConfig.instance:getConstStr(CharacterDestinyEnum.DestinyStoneOpenLevelConstId[slot0.config.rare or 5])) <= slot0.level then
+		return true
+	elseif slot1 then
+		slot5, slot6 = HeroConfig.instance:getShowLevel(tonumber(slot4))
+
+		GameFacade.showToast(ToastEnum.CharacterDestinyUnlockLevel, GameUtil.getNum2Chinese(slot6 - 1), slot5)
+	end
+end
+
+function slot0.isHasDestinySystem(slot0)
+	return CharacterDestinyConfig.instance:hasDestinyHero(slot0.heroId)
 end
 
 return slot0

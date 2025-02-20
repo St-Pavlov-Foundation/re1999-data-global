@@ -126,8 +126,9 @@ function slot0._trySetDialogInteract(slot0, slot1)
 		end
 
 		slot6 = false
+		slot12 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-		for slot11, slot12 in ipairs(GameUtil.randomTable(tabletool.copy(RoomMapBlockModel.instance:getFullBlockMOList()))) do
+		for slot11, slot12 in ipairs(GameUtil.randomTable(tabletool.copy(slot12))) do
 			if (not slot4[slot12.hexPoint.x] or not slot4[slot13.x][slot13.y]) and slot0:_trySetTwoCharacterInOneBlock(slot2, slot3, slot13) then
 				break
 			end

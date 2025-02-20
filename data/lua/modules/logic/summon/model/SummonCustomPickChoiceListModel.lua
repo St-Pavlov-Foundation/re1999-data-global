@@ -108,9 +108,17 @@ function slot0.getPoolId(slot0)
 	return slot0._poolId
 end
 
+function slot0.getPoolType(slot0)
+	return SummonConfig.instance:getSummonPool(slot0._poolId).type or SummonEnum.Type.Normal
+end
+
 function slot0.getCharIdList(slot0)
+	if SummonConfig.instance:getSummonPool(slot0._poolId).type == SummonEnum.Type.StrongCustomOnePick then
+		return string.splitToNumber(slot1.param, "#")
+	end
+
 	if SummonConfig.instance:getSummon(slot0._poolId) then
-		return string.splitToNumber(slot1[SummonEnum.CustomPickRare].summonId, "#")
+		return string.splitToNumber(slot2[SummonEnum.CustomPickRare].summonId, "#")
 	end
 
 	return {}

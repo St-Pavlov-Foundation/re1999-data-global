@@ -34,7 +34,7 @@ function slot0.processStr(slot0)
 			slot2 = ""
 			slot3 = ""
 
-			if FightDataMgr.instance:getEntityMO(slot1) then
+			if FightLocalDataMgr.instance:getEntityById(slot1) then
 				slot3 = slot4:getEntityName()
 			end
 
@@ -99,7 +99,7 @@ function slot0.processStr(slot0)
 			else
 				uv0 = slot2
 
-				if FightDataMgr.instance:getEntityMO(slot2) then
+				if FightLocalDataMgr.instance:getEntityById(slot2) then
 					slot3 = slot4:getEntityName()
 				end
 			end
@@ -113,7 +113,7 @@ function slot0.processStr(slot0)
 				slot3 = "维尔汀"
 			elseif slot1 == FightEntityScene.EnemySideId then
 				slot3 = "重塑之手"
-			elseif FightDataMgr.instance:getEntityMO(slot2) then
+			elseif FightLocalDataMgr.instance:getEntityById(slot2) then
 				slot3 = slot4:getEntityName()
 			end
 
@@ -134,7 +134,7 @@ function slot0.processStr(slot0)
 				slot3 = "维尔汀"
 			elseif slot1 == FightEntityScene.EnemySideId then
 				slot3 = "重塑之手"
-			elseif FightDataMgr.instance:getEntityMO(slot2) then
+			elseif FightLocalDataMgr.instance:getEntityById(slot2) then
 				slot3 = slot4:getEntityName()
 			end
 
@@ -215,8 +215,9 @@ function slot0.typeExplain(slot0)
 	slot6 = {
 		[slot10] = slot11
 	}
+	slot10 = "=.-([-%d]+).-%-%-(.-)\n"
 
-	for slot10, slot11 in string.gmatch(string.gsub(string.sub(slot3, slot4, slot5), "FightEnum.EffectType =", ""), "=.-([-%d]+).-%-%-(.-)\n") do
+	for slot10, slot11 in string.gmatch(string.gsub(string.sub(slot3, slot4, slot5), "FightEnum.EffectType =", ""), slot10) do
 		-- Nothing
 	end
 

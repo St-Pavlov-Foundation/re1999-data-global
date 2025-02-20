@@ -43,7 +43,6 @@ end
 
 function slot0._onDragBegin(slot0, slot1, slot2)
 	slot0._isDragUI = true
-	slot0._isDragFirstBegin = true
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragBeginListener, slot2)
 end
@@ -51,32 +50,16 @@ end
 function slot0._onDrag(slot0, slot1, slot2)
 	slot0._isDragUI = true
 
-	if not slot0._isStartDrag and slot0._dragStartY < slot2.position.y and slot0._isDragFirstBegin then
-		if nil then
-			slot0._isStartDrag = true
-		else
-			slot0._isDragFirstBegin = false
-		end
-	end
-
-	if not slot0._isStartDrag then
-		CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragListener, slot2)
-	end
+	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragListener, slot2)
 end
 
 function slot0._onDragEnd(slot0, slot1, slot2)
 	slot0._isDragUI = false
 
-	if slot0._isStartDrag then
-		slot0._isStartDrag = false
-	end
-
 	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragEndListener, slot2)
 end
 
 function slot0._editableInitView(slot0)
-	slot0._isStartDrag = false
-	slot0._isDragFirstBegin = false
 	slot0._isDragUI = false
 	slot0._dragStartY = 250 * UnityEngine.Screen.height / 1080
 end

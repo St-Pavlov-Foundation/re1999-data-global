@@ -72,7 +72,10 @@ function slot0._refreshItem(slot0)
 	end
 
 	gohelper.setActive(slot0._goEmpty, false)
-	gohelper.setActive(slot0._scrollChapterList.gameObject, true)
+
+	slot6 = true
+
+	gohelper.setActive(slot0._scrollChapterList.gameObject, slot6)
 
 	for slot6, slot7 in pairs(slot0._collectItems) do
 		slot7:hideItems()

@@ -77,11 +77,16 @@ function slot0._onUpdate(slot0)
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0._toDeleteTweenIdDict) do
-		slot0._tweenParamDict[slot4] = nil
+	slot1 = false
+
+	for slot5, slot6 in pairs(slot0._toDeleteTweenIdDict) do
+		slot0._tweenParamDict[slot5] = nil
+		slot1 = true
 	end
 
-	slot0._toDeleteTweenIdDict = {}
+	if slot1 then
+		slot0._toDeleteTweenIdDict = {}
+	end
 end
 
 function slot0.getFloat(slot0, slot1, slot2, slot3, slot4, slot5)

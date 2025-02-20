@@ -52,6 +52,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleBackPack, slot0.OnBackPackClick, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.RefreshPlayCardRoundOp, slot0._onRefreshPlayCardRoundOp, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, slot0._onPlayCardFlowDone, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.OnPlayAssistBossCardFlowDone, slot0._onPlayAssistBossCardDone, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.EnterOperateState, slot0._onEnterOperateState, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, slot0._onHidePlayCardAllCard, slot0)
@@ -59,6 +60,10 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._onEnterStage(slot0, slot1)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
 	if slot1 == FightStageMgr.StageType.Play then
 		gohelper.setActive(slot0._playCardGO, false)
 	end
@@ -95,6 +100,7 @@ function slot0.OnBackPackClick(slot0)
 		for slot4, slot5 in pairs(slot0._playCardItemList) do
 			if slot5 then
 				slot5:_onClickThis()
+				FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 
 				return
 			end
@@ -144,7 +150,7 @@ function slot0._onAddPlayOperationData(slot0, slot1)
 	TaskDispatcher.runDelay(slot0._resetScrollView, slot0, 1)
 
 	if uv0.VisibleCount < uv0.getMaxItemCount() then
-		if FightCardMOHelper.isNoCostSpecialCard(slot1.cardInfoMO) then
+		if FightCardDataHelper.isNoCostSpecialCard(slot1.cardInfoMO) then
 			return
 		end
 
@@ -188,6 +194,11 @@ function slot0.getMaxItemCount()
 			slot2 = slot2 + 1
 			slot3 = slot3 + 1
 		end
+
+		if slot9:isAssistBossPlayCard() then
+			slot2 = slot2 + 1
+			slot3 = slot3 + 1
+		end
 	end
 
 	return slot2, slot3
@@ -228,7 +239,7 @@ function slot0.recordPlayData(slot0, slot1)
 		return
 	end
 
-	if slot1:isPlayCard() then
+	if slot1:isPlayCard() or slot1:isAssistBossPlayCard() then
 		table.insert(slot0._begin_round_ops, slot1)
 	elseif slot1:isMoveCard() then
 		if FightCardModel.instance:getCardMO().extraMoveAct > 0 and slot2 > #slot0._extra_move_round_ops then
@@ -251,6 +262,14 @@ function slot0._onPlayOperationEffectDone(slot0, slot1, slot2)
 end
 
 function slot0._onPlayCardFlowDone(slot0, slot1)
+	tabletool.removeValue(slot0._all_recorded_ops, slot1)
+
+	if #slot0._all_recorded_ops == 0 then
+		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone)
+	end
+end
+
+function slot0._onPlayAssistBossCardDone(slot0, slot1)
 	tabletool.removeValue(slot0._all_recorded_ops, slot1)
 
 	if #slot0._all_recorded_ops == 0 then

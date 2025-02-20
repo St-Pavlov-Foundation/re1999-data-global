@@ -99,7 +99,9 @@ function slot1._generateResSplitCfg(slot0)
 		end
 
 		for slot23, slot24 in ipairs(slot13.uiFolder) do
-			for slot29, slot30 in ipairs(uv0._getFolderPrefabs(string.gsub(slot24, SLFramework.FrameworkSettings.ResourcesLibName .. "/", ""))) do
+			slot29 = ""
+
+			for slot29, slot30 in ipairs(uv0._getFolderPrefabs(string.gsub(slot24, SLFramework.FrameworkSettings.ResourcesLibName .. "/", slot29))) do
 				slot0:_fillUIRes(slot30, slot14)
 			end
 		end
@@ -134,7 +136,7 @@ function slot1._generateResSplitCfg(slot0)
 			for slot23, slot24 in pairs(slot19) do
 				if slot24 then
 					if slot0._allVersionSplitPathMap[slot23] then
-						logError("存在于多个版本分包中的资源： " .. slot23)
+						logWarn("存在于多个版本分包中的资源： " .. slot23)
 					else
 						slot0._allVersionSplitPathMap[slot23] = true
 					end
@@ -172,9 +174,10 @@ function slot1._mergeSplitResult(slot0)
 
 	slot3:close()
 
-	for slot9, slot10 in pairs(slot2) do
-		if slot10.pathList then
-			slot0:_checkSingleBgAb(slot10.pathList, cjson.decode(string.gsub(slot3:read("*a"), "\\/", "/")))
+	for slot10, slot11 in pairs(slot2) do
+		if slot11.pathList then
+			slot0:_checkSingleBgAb(slot11.pathList, cjson.decode(string.gsub(slot3:read("*a"), "\\/", "/")))
+			slot0:_checkResWhiteList(slot11.pathList, slot0:_getResWhiteListDict())
 		end
 	end
 
@@ -225,10 +228,37 @@ function slot1._checkSingleBgAb(slot0, slot1, slot2)
 	end
 end
 
+function slot1._getResWhiteListDict(slot0)
+	slot1 = io.open(ResSplitEnum.VersionResWhiteListPath, "r")
+
+	slot1:close()
+
+	slot4 = {}
+
+	if cjson.decode(string.gsub(slot1:read("*a"), "\\/", "/")) and #slot3 > 0 then
+		for slot8, slot9 in ipairs(slot3) do
+			slot4[slot9] = true
+		end
+	end
+
+	return slot4
+end
+
+function slot1._checkResWhiteList(slot0, slot1, slot2)
+	if slot1 and #slot1 > 0 and slot2 then
+		for slot6 = #slot1, 1, -1 do
+			if slot2[slot1[slot6]] then
+				table.remove(slot1, slot6)
+			end
+		end
+	end
+end
+
 function slot1._ExportSplitResult(slot0)
 	slot2 = io.open(ResSplitEnum.VersionResSplitCfgPath, "w")
+	slot8 = string.gsub(cjson.encode(slot0:_mergeSplitResult()), "\\/", "/")
 
-	slot2:write(tostring(string.gsub(cjson.encode(slot0:_mergeSplitResult()), "\\/", "/")))
+	slot2:write(tostring(slot8))
 	slot2:close()
 
 	for slot7, slot8 in pairs(slot0._versionSplitData) do
@@ -281,8 +311,9 @@ function slot1._InitAudioInfoXml(slot0)
 	slot2:close()
 
 	slot4 = ResSplitXmlTree:new()
+	slot9 = slot2:read("*a")
 
-	ResSplitXml2lua.parser(slot4):parse(slot2:read("*a"))
+	ResSplitXml2lua.parser(slot4):parse(slot9)
 
 	slot0._bnk2wenDic = {}
 	slot0.bankEvent2wenDic = {}
@@ -515,9 +546,9 @@ end
 
 function slot1._fillUIRes(slot0, slot1, slot2, slot3)
 	slot5 = string.sub(slot1, string.find(slot1, "Assets"), string.len(slot1))
-	slot11 = uv0.UIPrefab
+	slot11 = ResSplitEnum.Path
 
-	slot2:addResSplitInfo(ResSplitEnum.Path, slot11, string.gsub(slot5, SLFramework.FrameworkSettings.AssetRootDir .. "/", ""))
+	slot2:addResSplitInfo(slot11, uv0.UIPrefab, string.gsub(slot5, SLFramework.FrameworkSettings.AssetRootDir .. "/", ""))
 
 	for slot11 = 0, ZProj.AssetDatabaseHelper.GetDependencies(slot5, true).Length - 1 do
 		slot12 = slot7[slot11]

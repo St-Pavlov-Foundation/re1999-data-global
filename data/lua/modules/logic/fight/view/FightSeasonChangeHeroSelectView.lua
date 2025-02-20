@@ -22,7 +22,7 @@ end
 
 function slot0._onBlock(slot0, slot1, slot2)
 	if FightSkillSelectView.getClickEntity(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide), slot0._blockTransform, slot2) then
-		if not FightEntityModel.instance:getById(slot4) then
+		if not FightDataHelper.entityMgr:getById(slot4) then
 			return
 		end
 

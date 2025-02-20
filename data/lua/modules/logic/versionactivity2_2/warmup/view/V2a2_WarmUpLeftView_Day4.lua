@@ -86,7 +86,8 @@ end
 function slot1._editableInitView(slot0)
 	uv0._editableInitView(slot0)
 
-	slot0._guideGo = gohelper.findChild(slot0.viewGO, "guide_day4")
+	slot4 = "guide_day4"
+	slot0._guideGo = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._startDefaultPosList = {}
 	slot0._startGoList = slot0:getUserDataTb_()
 	slot0._endGoList = slot0:getUserDataTb_()
@@ -323,10 +324,13 @@ function slot1.setData(slot0)
 		if slot3 > 0 and slot3 == #slot1 then
 			slot0:_setActive_anim(true)
 
-			slot8 = 1
+			slot9 = 1
 
-			slot0:playAnimRaw_before_idle(0, slot8)
-			slot0:_setNeedWait(3)
+			slot0:playAnimRaw_before_idle(0, slot9)
+
+			slot8 = 3
+
+			slot0:_setNeedWait(slot8)
 
 			for slot8, slot9 in ipairs(slot1) do
 				slot0:_onPutState(slot8, slot0._onPut_doneCb, slot0)

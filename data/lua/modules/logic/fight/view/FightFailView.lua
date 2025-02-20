@@ -328,10 +328,9 @@ function slot0.getShowConditionsCoList(slot0)
 	slot1 = {}
 
 	if not string.nilorempty(slot0.battleCo.additionRule) then
-		slot6 = true
-		slot7 = "|"
+		slot7 = slot2
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot2, slot6, slot7, "#")) do
+		for slot6, slot7 in ipairs(GameUtil.splitString2(slot7, true, "|", "#")) do
 			table.insert(slot1, slot7)
 		end
 	end

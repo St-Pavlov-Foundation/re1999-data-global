@@ -38,9 +38,10 @@ end
 
 function slot0.doneRunningWork(slot0)
 	slot1 = {}
-	slot5 = slot1
+	slot5 = slot0._sequence
+	slot6 = slot1
 
-	slot0:_getRunningWorks(slot0._sequence, slot5)
+	slot0:_getRunningWorks(slot5, slot6)
 
 	for slot5, slot6 in ipairs(slot1) do
 		logError("行为复现出错，work: " .. slot6.__cname)

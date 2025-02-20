@@ -123,6 +123,7 @@ function slot0._initMapOb(slot0, slot1, slot2)
 	RoomInteractionController.instance:init()
 	RoomCritterController.instance:initMapTrainCritter()
 	RoomCritterController.instance:init()
+	RoomInteractBuildingModel.instance:init()
 end
 
 function slot0._initMapEdit(slot0, slot1)
@@ -141,6 +142,7 @@ function slot0._initMapEdit(slot0, slot1)
 	RoomTransportController.instance:initPathData(slot1.roadInfos)
 	RoomTransportController.instance:updateBlockUseState()
 	slot0:updateBlockReplaceDefineId()
+	RoomInteractBuildingModel.instance:init()
 end
 
 function slot0._initMapVisit(slot0, slot1, slot2)
@@ -159,6 +161,7 @@ function slot0._initMapVisit(slot0, slot1, slot2)
 	RoomTransportController.instance:initPathData(slot2.roadInfos)
 	RoomTransportController.instance:updateBlockUseState()
 	RoomVehicleController.instance:init()
+	RoomInteractBuildingModel.instance:init()
 end
 
 function slot0._initMapDebug(slot0, slot1, slot2)
@@ -213,6 +216,7 @@ function slot0.clearMap(slot0)
 	RoomVehicleController.instance:clear()
 	RoomInteractionController.instance:clear()
 	RoomCritterController.instance:clear()
+	RoomInteractBuildingModel.instance:clear()
 end
 
 function slot0.resetRoom(slot0)
@@ -473,6 +477,7 @@ function slot0.useCharacterReply(slot0, slot1, slot2, slot3)
 	slot4.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceCharacter, {
 		tempCharacterMO = slot5
 	})
+	RoomInteractBuildingModel.instance:checkAllHero()
 end
 
 function slot0.unUseCharacterRequest(slot0, slot1, slot2, slot3, slot4)
@@ -513,6 +518,7 @@ function slot0.unUseCharacterReply(slot0, slot1, slot2, slot3)
 	end
 
 	RoomCharacterController.instance:updateCharacterFaith(slot3.roomHeroDatas)
+	RoomInteractBuildingModel.instance:checkAllHero()
 
 	if slot0._unUseCharacterCallback then
 		slot0._unUseCharacterCallback(slot0._unUseCharacterCallbackObj)

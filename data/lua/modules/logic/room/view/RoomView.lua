@@ -87,6 +87,20 @@ function slot0._editableInitView(slot0)
 		gohelper.setActive(gohelper.findChild(slot0.viewGO, "go_normalroot/go_inventorytask"), false)
 	end
 
+	slot0._showHideViewNameDict = {
+		[ViewName.RoomCharacterPlaceView] = true,
+		[ViewName.RoomInitBuildingView] = true,
+		[ViewName.RoomManufactureBuildingView] = true,
+		[ViewName.RoomCritterBuildingView] = true,
+		[ViewName.RoomTransportSiteView] = true,
+		[ViewName.RoomInteractBuildingView] = true
+	}
+	slot0._showHideViewNameList = {}
+
+	for slot4, slot5 in pairs(slot0._showHideViewNameDict) do
+		table.insert(slot0._showHideViewNameList, slot4)
+	end
+
 	slot0:_updateNavigateButtonShow()
 	gohelper.removeUIClickAudio(slot0._btncharacter.gameObject)
 	gohelper.addUIClickAudio(slot0._btnlayoutplan.gameObject, AudioEnum.Room.play_ui_home_yield_open)
@@ -220,6 +234,10 @@ function slot0._btnWarehouseOnClick(slot0)
 end
 
 function slot0._show(slot0, slot1)
+	if slot0:_isHasNeedHideView() then
+		return
+	end
+
 	if slot0:_isCheckHideView(slot1) then
 		slot0:_hideView()
 	else
@@ -228,6 +246,10 @@ function slot0._show(slot0, slot1)
 end
 
 function slot0._hide(slot0, slot1)
+	if slot0:_isHasNeedHideView() then
+		return
+	end
+
 	slot0._animator:Play("hide")
 end
 
@@ -262,17 +284,18 @@ function slot0._updateNavigateButtonShow(slot0, slot1)
 	slot8 = RoomCharacterHelper.isInDialogInteraction()
 	slot9 = RoomMapController.instance:isInRoomInitBuildingViewCamera()
 	slot10 = RoomTransportController.instance:isTransportPathShow() or RoomTransportController.instance:isTransportSitShow()
-	slot11, slot12 = nil
+	slot11 = ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
+	slot12, slot13 = nil
 
 	if slot1 and type(slot1) == "table" then
-		slot11 = slot1.inCritterBuildingView or ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
-		slot12 = slot1.inManufactureBuildingView or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+		slot12 = slot1.inCritterBuildingView or ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+		slot13 = slot1.inManufactureBuildingView or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
 	else
-		slot11 = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
-		slot12 = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+		slot12 = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+		slot13 = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
 	end
 
-	slot0.viewContainer:setNavigateButtonShow(not slot3 and not slot4 and not slot5 and not slot6 and not slot8 and not slot9 and not slot7 and not slot10 and not slot11 and not slot12)
+	slot0.viewContainer:setNavigateButtonShow(not slot3 and not slot4 and not slot5 and not slot6 and not slot8 and not slot9 and not slot7 and not slot10 and not slot11 and not slot12 and not slot13)
 end
 
 function slot0._addBtnAudio(slot0)
@@ -301,13 +324,13 @@ function slot0._refreshBtnShow(slot0)
 
 	gohelper.setActive(slot0._btnlayoutplan, slot9 and (not slot6 or slot5))
 
-	slot0._isShowManufactureBtn = VersionValidator.instance:isInReviewing() or slot8 and not slot6 and not slot7
+	slot0._isShowManufactureBtn = VersionValidator.instance:isInReviewing() or slot8 and not slot6 and not slot7 and not ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
 
 	slot0:_checkManufactureUnlock()
 
-	slot11 = RoomModel.instance:getVisitParam()
+	slot12 = RoomModel.instance:getVisitParam()
 
-	gohelper.setActive(slot0._btnlayoutcopy, not RoomEnum.IsCloseLayouCopy and RoomController.instance:isVisitMode() and slot11 and slot11.userId and SocialModel.instance:isMyFriendByUserId(slot11.userId))
+	gohelper.setActive(slot0._btnlayoutcopy, not RoomEnum.IsCloseLayouCopy and RoomController.instance:isVisitMode() and slot12 and slot12.userId and SocialModel.instance:isMyFriendByUserId(slot12.userId))
 
 	if RoomController.instance:isDebugMode() then
 		ViewMgr.instance:openView(ViewName.RoomDebugView)
@@ -354,6 +377,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, slot0._listViewShowChanged, slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, slot0._listViewShowChanged, slot0)
 	slot0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, slot0._listViewShowChanged, slot0)
+	slot0:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, slot0._listViewShowChanged, slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.RefreshNavigateButton, slot0._updateNavigateButtonShow, slot0)
@@ -364,6 +388,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathViewShowChanged, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportSiteViewShowChanged, slot0._updateNavigateButtonShow, slot0)
+	slot0:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingViewChange, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChange, slot0._updateNavigateButtonShow, slot0)
 	slot0:addEventCb(RoomController.instance, RoomEvent.SwitchScene, slot0._switchScene, slot0)
@@ -420,22 +445,10 @@ function slot0._onOpenView(slot0, slot1)
 end
 
 function slot0._onCloseView(slot0, slot1)
-	if slot0:_isCheckHideView(slot1) then
-		slot2 = true
-
-		for slot6, slot7 in pairs(slot0._showHitViewNameDict) do
-			if ViewMgr.instance:isOpening(slot6) then
-				slot2 = false
-
-				break
-			end
-		end
-
-		if slot2 then
-			slot0:_showView()
-			slot0:_layoutPlanUnLockAnim()
-			slot0:_checkManufactureUnlock()
-		end
+	if slot0:_isCheckHideView(slot1) and not slot0:_isHasNeedHideView() then
+		slot0:_showView()
+		slot0:_layoutPlanUnLockAnim()
+		slot0:_checkManufactureUnlock()
 	end
 
 	if slot1 == ViewName.RoomManufactureGetView then
@@ -447,18 +460,18 @@ function slot0._onCloseView(slot0, slot1)
 end
 
 function slot0._isCheckHideView(slot0, slot1)
-	if not slot0._showHitViewNameDict then
-		slot0._showHitViewNameDict = {
-			[ViewName.RoomCharacterPlaceView] = true,
-			[ViewName.RoomInitBuildingView] = true,
-			[ViewName.RoomManufactureBuildingView] = true,
-			[ViewName.RoomCritterBuildingView] = true,
-			[ViewName.RoomTransportSiteView] = true
-		}
+	if slot0._showHideViewNameDict[slot1] then
+		return true
 	end
 
-	if slot0._showHitViewNameDict[slot1] then
-		return true
+	return false
+end
+
+function slot0._isHasNeedHideView(slot0)
+	for slot4 = 1, #slot0._showHideViewNameList do
+		if ViewMgr.instance:isOpen(slot0._showHideViewNameList[slot4]) then
+			return true
+		end
 	end
 
 	return false

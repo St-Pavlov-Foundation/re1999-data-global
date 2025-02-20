@@ -124,8 +124,9 @@ function slot0.onRoleFirstEnter(slot0)
 	end
 
 	slot0.dir = ExploreMapModel.instance:getHeroDir()
+	slot6 = 0
 
-	slot0:setRotate(0, slot0.dir, 0)
+	slot0:setRotate(0, slot0.dir, slot6)
 
 	slot1 = false
 

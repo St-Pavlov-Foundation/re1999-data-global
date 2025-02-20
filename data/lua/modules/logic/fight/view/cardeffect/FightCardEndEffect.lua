@@ -13,7 +13,7 @@ function slot0.onStart(slot0, slot1)
 	slot0._playCardCount = 0
 
 	for slot6, slot7 in ipairs(FightCardModel.instance:getCardOps()) do
-		if slot7:isPlayCard() then
+		if slot7:isPlayCard() or slot7:isAssistBossPlayCard() then
 			slot0._playCardCount = slot0._playCardCount + 1
 		end
 	end
@@ -112,11 +112,29 @@ function slot0._playCardFlow(slot0)
 
 	if ViewMgr.instance:getContainer(ViewName.FightView) and slot9.fightViewPlayCard then
 		for slot14, slot15 in ipairs(slot8) do
-			if slot15:isPlayCard() then
-				slot7[slot10:getShowIndex(slot15)] = true
+			if slot15:isPlayCard() or slot15:isAssistBossPlayCard() then
+				if slot10:getShowIndex(slot15) then
+					slot7[slot16] = true
 
-				if slot15:needCopyCard() then
-					slot7[slot16 + 1] = true
+					if slot15:needCopyCard() then
+						slot7[slot16 + 1] = true
+					end
+				else
+					slot17 = {}
+
+					for slot21, slot22 in ipairs(slot8) do
+						table.insert(slot17, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", slot22.operType, slot22.toId, slot22.skillId, slot22.belongToEntityId, slot22.costActPoint))
+					end
+
+					slot18 = table.concat(slot17, "\n")
+
+					tabletool.clear(slot17)
+
+					for slot22, slot23 in ipairs(slot10._begin_round_ops) do
+						table.insert(slot17, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", slot23.operType, slot23.toId, slot23.skillId, slot23.belongToEntityId, slot23.costActPoint))
+					end
+
+					logError(string.format("get temp_index fail : %s, \n ops : {%s},\n begin_round_ops : {%s}", tostring(slot16), slot18, table.concat(slot17, "\n")))
 				end
 			end
 		end
@@ -137,7 +155,9 @@ function slot0._playCardFlow(slot0)
 		end
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #slot0._playCardItemGOs)
+	slot14 = #slot0._playCardItemGOs
+
+	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, slot14)
 
 	for slot14, slot15 in ipairs(slot0._playCardItemGOs) do
 		slot16 = slot0._cloneItemGOs[slot14].transform

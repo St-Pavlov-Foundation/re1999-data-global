@@ -114,8 +114,9 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._materialItemList = {}
+	slot4 = false
 
-	gohelper.setActive(slot0._gomaterialitem, false)
+	gohelper.setActive(slot0._gomaterialitem, slot4)
 
 	slot0._maxMaterialItemCount = 3
 
@@ -131,12 +132,12 @@ function slot0._editableInitView(slot0)
 		gohelper.setActive(slot5.go, true)
 	end
 
-	slot4 = UnityEngine.CanvasGroup
-	slot0._canvasGroup = slot0._gonormal:GetComponent(typeof(slot4))
+	slot0._canvasGroup = slot0._gonormal:GetComponent(typeof(UnityEngine.CanvasGroup))
 
 	gohelper.removeUIClickAudio(slot0._btnclick.gameObject)
 
-	slot0._gosynthesis = gohelper.findChild(slot0.viewGO, "#go_normal/#synthesis")
+	slot4 = "#go_normal/#synthesis"
+	slot0._gosynthesis = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._treeLevelItemList = {}
 
 	for slot4 = 1, RoomFormulaModel.MAX_FORMULA_TREE_LEVEL do
@@ -212,9 +213,9 @@ function slot0._refreshUI(slot0)
 	UISpriteSetMgr.instance:setRoomSprite(slot0._imagecoinRare, "bg_wupindi_3")
 	slot0._simagecoinIcon:LoadImage(ResUrl.getCurrencyItemIcon("203"))
 
-	slot9 = #RoomProductionHelper.getCostMaterialItemList(slot4)
+	slot9 = slot0._maxMaterialItemCount
 
-	for slot9 = 1, math.min(slot0._maxMaterialItemCount, slot9) do
+	for slot9 = 1, math.min(slot9, #RoomProductionHelper.getCostMaterialItemList(slot4)) do
 		slot10 = slot5[slot9]
 		slot11.costItem = slot0._materialItemList[slot9].costItem or IconMgr.instance:getRoomGoodsItem(slot11.gopos, ViewMgr.instance:getContainer(ViewName.RoomFormulaView))
 
@@ -229,7 +230,9 @@ function slot0._refreshUI(slot0)
 		gohelper.setActive(slot11.goempty, false)
 	end
 
-	for slot9 = math.min(slot0._maxMaterialItemCount, #slot5) + 1, #slot0._materialItemList do
+	slot9 = #slot5
+
+	for slot9 = math.min(slot0._maxMaterialItemCount, slot9) + 1, #slot0._materialItemList do
 		slot10 = slot0._materialItemList[slot9]
 
 		gohelper.setActive(slot10.goempty, true)
@@ -405,9 +408,9 @@ function slot0._refreshCoinCount(slot0)
 end
 
 function slot0._refreshMaterialItemCount(slot0)
-	slot7 = #RoomProductionHelper.getCostMaterialItemList(slot0._mo:getFormulaId())
+	slot7 = slot0._maxMaterialItemCount
 
-	for slot7 = 1, math.min(slot0._maxMaterialItemCount, slot7) do
+	for slot7 = 1, math.min(slot7, #RoomProductionHelper.getCostMaterialItemList(slot0._mo:getFormulaId())) do
 		slot9 = slot3[slot7]
 		slot12 = slot9.quantity * slot0._mo:getFormulaCombineCount() <= ItemModel.instance:getItemQuantity(slot9.type, slot9.id)
 

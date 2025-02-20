@@ -332,7 +332,8 @@ function slot0.refreshTempOccupyDict(slot0)
 
 		slot0._tempOccupyIndexDict = {}
 		slot0._tempOccupyDict = RoomBuildingHelper.getOccupyDict(slot0._tempBuildingMO.buildingId, slot1, slot0._tempBuildingMO.rotate)
-		slot3 = RoomBuildingAreaHelper.checkBuildingArea(slot0._tempBuildingMO.buildingId, slot1, slot0._tempBuildingMO.rotate)
+		slot7 = slot0._tempBuildingMO.rotate
+		slot3 = RoomBuildingAreaHelper.checkBuildingArea(slot0._tempBuildingMO.buildingId, slot1, slot7)
 
 		for slot7, slot8 in pairs(slot0._tempOccupyDict) do
 			for slot12, slot13 in pairs(slot8) do
@@ -389,9 +390,10 @@ function slot0._refreshLightResourcePoint(slot0)
 
 		slot3 = RoomBuildingController.instance:isPressBuilding()
 		slot4 = uv0.instance:getAllOccupyDict()
-		slot9 = slot0._tempBuildingMO.buildingUid
+		slot9 = slot0._tempBuildingMO.rotate
+		slot10 = slot0._tempBuildingMO.buildingUid
 
-		for slot9, slot10 in pairs(RoomBuildingHelper.getOccupyDict(slot0._tempBuildingMO.buildingId, slot0._tempBuildingMO.hexPoint, slot0._tempBuildingMO.rotate, slot9)) do
+		for slot9, slot10 in pairs(RoomBuildingHelper.getOccupyDict(slot0._tempBuildingMO.buildingId, slot0._tempBuildingMO.hexPoint, slot9, slot10)) do
 			for slot14, slot15 in pairs(slot10) do
 				if slot15.buildingUid ~= slot3 then
 					for slot19 = 0, 6 do

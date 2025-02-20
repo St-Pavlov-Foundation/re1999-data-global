@@ -34,4 +34,24 @@ function slot0.finishTask(slot0, slot1, slot2)
 	end
 end
 
+function slot0.getMaxFinishCount(slot0)
+	return slot0.config and slot0.config.maxFinishCount or 1
+end
+
+function slot0.isClaimed(slot0)
+	return slot0:getMaxFinishCount() <= slot0.finishCount
+end
+
+function slot0.isClaimable(slot0)
+	return not slot0:isClaimed() and slot0.hasFinished
+end
+
+function slot0.isFinished(slot0)
+	return slot0.hasFinished or slot0:isClaimed()
+end
+
+function slot0.isUnfinished(slot0)
+	return not slot0:isClaimed() and not slot0:isClaimable()
+end
+
 return slot0

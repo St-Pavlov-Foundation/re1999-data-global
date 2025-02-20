@@ -300,11 +300,10 @@ function slot0.showProgress(slot0)
 
 		gohelper.setActive(slot0._txttotallevel.gameObject, false)
 	elseif slot0._isNormalEquip then
-		slot4 = EquipConfig.instance
-		slot4 = slot4.getCurrentBreakLevelMaxLevel
-		slot0._txttotallevel.text = string.format("/%s", slot4(slot4, slot0._equipMO))
+		slot0._txttotallevel.text = string.format("/%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO))
+		slot4 = true
 
-		gohelper.setActive(slot0._txttotallevel.gameObject, true)
+		gohelper.setActive(slot0._txttotallevel.gameObject, slot4)
 
 		for slot4 = 1, 5 do
 			UISpriteSetMgr.instance:setEquipSprite(slot0["_image" .. slot4], slot4 <= slot0._equipMO.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")

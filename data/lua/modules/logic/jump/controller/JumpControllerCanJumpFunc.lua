@@ -458,6 +458,26 @@ function slot0.canJumpToRougeMainView(slot0, slot1)
 	return slot2, slot3, slot4
 end
 
+function slot0.canJumpToTower(slot0, slot1)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
+		slot2, slot3 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Tower)
+
+		return false, slot2, slot3
+	end
+
+	if string.splitToNumber(slot1, "#")[2] == TowerEnum.TowerType.Boss then
+		if not TowerController.instance:isBossTowerOpen() or not TowerModel.instance:checkHasOpenStateTower(TowerEnum.TowerType.Boss) then
+			return false, ToastEnum.TowerNotOpen
+		end
+	elseif slot3 == TowerEnum.TowerType.Limited then
+		if not TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() or not TowerController.instance:isTimeLimitTowerOpen() then
+			return false, ToastEnum.TowerNotOpen
+		end
+	end
+
+	return slot0:defaultCanJump(slot1)
+end
+
 slot0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.StoreView] = slot0.canJumpToStoreView,
 	[JumpEnum.JumpView.SummonView] = slot0.canJumpToSummonView,
@@ -483,6 +503,7 @@ slot0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.Achievement] = slot0.canJumpToAchievement,
 	[JumpEnum.JumpView.BossRush] = slot0.canJumpToBossRush,
 	[JumpEnum.JumpView.SeasonMainView] = slot0.canJumpToSeasonMainView,
+	[JumpEnum.JumpView.Tower] = slot0.canJumpToTower,
 	[JumpEnum.JumpView.V1a5Dungeon] = slot0.canJumpToAct1_5DungeonView,
 	[JumpEnum.JumpView.V1a6Dungeon] = slot0.canJumpToAct1_6DungeonView,
 	[JumpEnum.JumpView.Season123] = slot0.canJumpToSeason123,

@@ -11,9 +11,10 @@ function slot0.onStart(slot0, slot1)
 	end
 
 	slot0._playVictoryList = {}
-	slot6 = uv0
+	slot6 = slot0
+	slot7 = uv0
 
-	TaskDispatcher.runDelay(slot0._onVictoryEnd, slot0, slot6)
+	TaskDispatcher.runDelay(slot0._onVictoryEnd, slot6, slot7)
 
 	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
 		if slot7.spine:hasAnimation(SpineAnimState.victory) then
@@ -21,7 +22,11 @@ function slot0.onStart(slot0, slot1)
 
 			slot7.spine:addAnimEventCallback(slot0._onAnimEvent, slot0, slot7)
 			slot7.spine:play(slot0._victoryActName, false, true, true)
-			slot7.nameUI:setActive(false)
+
+			if slot7.nameUI then
+				slot7.nameUI:setActive(false)
+			end
+
 			table.insert(slot0._playVictoryList, slot7)
 		end
 	end

@@ -37,9 +37,9 @@ function slot0.initNode(slot0)
 	slot0.goUpAll = gohelper.findChild(slot0.instanceGo, "up_all")
 	slot0.pointContainer = gohelper.findChild(slot0.instanceGo, "pointContainer")
 	slot0.goDotItemList = {}
-	slot5 = slot0
+	slot5 = slot0.createDotItem
 
-	table.insert(slot0.goDotItemList, slot0.createDotItem(slot5, gohelper.findChild(slot0.instanceGo, "pointContainer/dot_item")))
+	table.insert(slot0.goDotItemList, slot5(slot0, gohelper.findChild(slot0.instanceGo, "pointContainer/dot_item")))
 
 	for slot5 = 2, slot0.totalIndicatorNum do
 		table.insert(slot0.goDotItemList, slot0:createDotItem(gohelper.cloneInPlace(slot1)))
@@ -166,6 +166,8 @@ function slot0.onDestroy(slot0)
 	if gohelper.isNil(slot0.simageSignature) then
 		slot0.simageSignature:UnLoadImage()
 	end
+
+	uv0.super.onDestroy(slot0)
 end
 
 return slot0

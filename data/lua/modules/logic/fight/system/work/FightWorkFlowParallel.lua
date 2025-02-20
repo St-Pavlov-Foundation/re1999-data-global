@@ -17,6 +17,10 @@ function slot0.registWork(slot0, slot1, ...)
 end
 
 function slot0.addWork(slot0, slot1)
+	if slot1.PARENTROOTCLASS and slot1.PARENTROOTCLASS.PARENTROOTCLASS then
+		logError("战斗任务流添加work,但是此work是被组件初始化的,已经拥有父节点,请检查代码,类名:" .. slot1.PARENTROOTCLASS.PARENTROOTCLASS.__cname)
+	end
+
 	slot1.PARENTROOTCLASS = slot0
 
 	table.insert(slot0._instantiateClass, slot1)

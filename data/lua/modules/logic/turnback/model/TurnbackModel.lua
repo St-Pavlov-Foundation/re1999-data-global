@@ -285,6 +285,42 @@ function slot0.getAdditionRewardList(slot0, slot1)
 	return slot2
 end
 
+function slot0.getMonthCardShowState(slot0)
+	if slot0:getCurTurnbackMo() == nil then
+		return false
+	end
+
+	if slot1.config == nil then
+		return false
+	end
+
+	if slot2.monthCardAddedId == nil then
+		return false
+	end
+
+	if StoreConfig.instance:getMonthCardAddConfig(slot2.monthCardAddedId) == nil then
+		return false
+	end
+
+	return slot1.monthCardAddedBuyCount < slot3.limit
+end
+
+function slot0.getCurrentTurnbackMonthCardId(slot0)
+	if slot0:getCurTurnbackMo() == nil then
+		return nil
+	end
+
+	return slot1.config.monthCardAddedId
+end
+
+function slot0.addCurrentMonthBuyCount(slot0)
+	if slot0:getCurTurnbackMo() == nil then
+		return
+	end
+
+	slot1.monthCardAddedBuyCount = slot1.monthCardAddedBuyCount + 1
+end
+
 slot0.instance = slot0.New()
 
 return slot0

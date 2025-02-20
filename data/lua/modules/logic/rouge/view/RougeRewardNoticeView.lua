@@ -107,7 +107,9 @@ function slot0._openAnim(slot0)
 			return
 		end
 
-		TaskDispatcher.cancelTask(uv0._playAnim, uv0)
+		slot3 = uv0
+
+		TaskDispatcher.cancelTask(uv0._playAnim, slot3)
 
 		function uv0.playfunc(slot0)
 			if not uv0.viewContainer or not uv0.viewContainer._isVisible then

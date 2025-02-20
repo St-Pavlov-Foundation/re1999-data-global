@@ -56,6 +56,7 @@ function slot0.initComponents(slot0)
 	end
 
 	slot0:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
+	slot0:addComp("interactActionComp", RoomCharacterInteractActionComp)
 end
 
 function slot0.onStart(slot0)
@@ -70,17 +71,17 @@ function slot0.setLocalPos(slot0, slot1, slot2, slot3, slot4)
 	end
 
 	if slot4 then
-		slot5 = slot0.go.transform.localPosition
+		slot5, slot6, slot7 = transformhelper.getLocalPos(slot0.goTrs)
 		slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, 0.05, slot0._frameCallback, slot0._finishCallback, slot0, {
-			originalX = slot5.x,
-			originalY = slot5.y,
-			originalZ = slot5.z,
+			originalX = slot5,
+			originalY = slot6,
+			originalZ = slot7,
 			x = slot1,
 			y = slot2,
 			z = slot3
 		})
 	else
-		transformhelper.setLocalPos(slot0.go.transform, slot1, slot2, slot3)
+		transformhelper.setLocalPos(slot0.goTrs, slot1, slot2, slot3)
 	end
 
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterPositionChanged, slot0:getMO().id)
@@ -90,12 +91,16 @@ function slot0.setLocalPos(slot0, slot1, slot2, slot3, slot4)
 	end
 end
 
+function slot0.getLocalPosXYZ(slot0)
+	return transformhelper.getLocalPos(slot0.goTrs)
+end
+
 function slot0._frameCallback(slot0, slot1, slot2)
-	transformhelper.setLocalPos(slot0.go.transform, slot2.originalX + (slot2.x - slot2.originalX) * slot1, slot2.originalY + (slot2.y - slot2.originalY) * slot1, slot2.originalZ + (slot2.z - slot2.originalZ) * slot1)
+	transformhelper.setLocalPos(slot0.goTrs, slot2.originalX + (slot2.x - slot2.originalX) * slot1, slot2.originalY + (slot2.y - slot2.originalY) * slot1, slot2.originalZ + (slot2.z - slot2.originalZ) * slot1)
 end
 
 function slot0._finishCallback(slot0, slot1)
-	transformhelper.setLocalPos(slot0.go.transform, slot1.x, slot1.y, slot1.z)
+	transformhelper.setLocalPos(slot0.goTrs, slot1.x, slot1.y, slot1.z)
 end
 
 function slot0._getCharacterRes(slot0)
@@ -203,7 +208,9 @@ function slot0.playFaithEffect(slot0)
 end
 
 function slot0.getMO(slot0)
-	return RoomCharacterModel.instance:getCharacterMOById(slot0.id)
+	slot0._mo = RoomCharacterModel.instance:getCharacterMOById(slot0.id) or slot0._mo
+
+	return slot0._mo
 end
 
 return slot0

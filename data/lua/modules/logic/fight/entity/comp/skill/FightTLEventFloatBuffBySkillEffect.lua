@@ -46,7 +46,7 @@ function slot0.floatBuff(slot0, slot1)
 	for slot8, slot9 in ipairs(slot0.fightStepMO.actEffectMOs) do
 		if not slot9:isDone() and slot0.fightStepMO.toId == slot9.targetId and slot9.effectType == FightEnum.EffectType.BUFFADD and slot9.effectNum == slot0.buffId then
 			FightSkillBuffMgr.instance:playSkillBuff(slot0.fightStepMO, slot9)
-			slot9:setDone()
+			FightDataHelper.playEffectData(slot9)
 
 			if slot1 <= 0 + 1 then
 				return

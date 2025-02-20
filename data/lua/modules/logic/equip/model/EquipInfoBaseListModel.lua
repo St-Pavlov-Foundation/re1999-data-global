@@ -21,8 +21,10 @@ end
 
 function slot0.initEquipList(slot0, slot1)
 	slot0.equipMoList = {}
+	slot5 = EquipModel.instance
+	slot7 = slot5
 
-	for slot6, slot7 in ipairs(EquipModel.instance:getEquips()) do
+	for slot6, slot7 in ipairs(slot5.getEquips(slot7)) do
 		if EquipHelper.isNormalEquip(slot7.config) then
 			if slot1:isFiltering() then
 				if slot1:checkIsIncludeTag(slot7.config) then

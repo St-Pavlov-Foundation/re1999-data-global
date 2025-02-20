@@ -11,6 +11,7 @@ function slot0.reqConfigNames(slot0)
 		"skin",
 		"skin_special_act",
 		"skin_ui_effect",
+		"skin_ui_bloom",
 		"skin_monster_scale",
 		"skin_monster_hide_buff_effect",
 		"skin_store_tag",

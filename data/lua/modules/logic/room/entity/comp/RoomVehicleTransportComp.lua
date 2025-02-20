@@ -35,6 +35,7 @@ function slot0.addEventListeners(slot0)
 end
 
 function slot0.removeEventListeners(slot0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TransportCritterChanged, slot0._onCritterChanged, slot0)
 end
 
 function slot0.beforeDestroy(slot0)
@@ -125,18 +126,22 @@ function slot0._onVehicleStartMove(slot0)
 
 			slot0.entity.effect:playEffectAnimator(slot0._effectKey, RoomBuildingEnum.AnimName.Takeoff)
 		end
-	elseif not slot1 then
+	elseif not slot1 and slot0.entity:getIsShow() then
 		slot0.entity.vehiclemove:restart()
 	end
 end
 
 function slot0._onDelayVheicleMove(slot0)
-	if slot0.entity and slot0.entity.vehiclemove then
+	if slot0.entity and slot0.entity.vehiclemove and slot0.entity:getIsShow() then
 		slot0.entity.vehiclemove:restart()
 	end
 end
 
 function slot0._onCheckTransportRepeate(slot0)
+	if not slot0.entity:getIsShow() then
+		return
+	end
+
 	if not slot0._isWorking then
 		if slot0:_isTransportWorking() and not slot0:_checkDelayRunTime() then
 			slot0:_onVehicleStartMove()

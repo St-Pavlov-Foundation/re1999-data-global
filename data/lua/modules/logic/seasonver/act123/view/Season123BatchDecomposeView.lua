@@ -166,8 +166,9 @@ function slot0.initDropFilter(slot0)
 	slot0.dropFilterLabelList = {}
 	slot1 = luaLang("common_all")
 	slot0.dropFilterItemTab[0] = slot1
+	slot5 = slot1
 
-	table.insert(slot0.dropFilterLabelList, slot1)
+	table.insert(slot0.dropFilterLabelList, slot5)
 
 	for slot5 = 1, uv0.maxOverCount do
 		table.insert(slot0.dropFilterLabelList, string.format(luaLang("Season123DecomposeOverPart"), slot5))

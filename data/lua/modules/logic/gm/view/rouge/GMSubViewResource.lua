@@ -55,9 +55,9 @@ function slot0.initViewContent(slot0)
 	end
 
 	slot0.lineIndex = 1
-	slot4 = "开启资源慢加载"
-	slot5 = slot0.onStartToggleChange
-	slot0.startToggle = slot0:addToggle(slot0:getLineGroup(), slot4, slot5, slot0)
+	slot4 = slot0:getLineGroup()
+	slot5 = "开启资源慢加载"
+	slot0.startToggle = slot0:addToggle(slot4, slot5, slot0.onStartToggleChange, slot0)
 	slot0.strategyList = {
 		DelayLoadResMgr.DelayStrategyEnum.Multiple,
 		DelayLoadResMgr.DelayStrategyEnum.Fixed
@@ -109,10 +109,14 @@ function slot0.initUIValue(slot0)
 		end
 	end
 
-	slot0.strategyInput:SetText(DelayLoadResMgr.instance:getDelayStrategyValue())
+	slot6 = DelayLoadResMgr.instance:getDelayStrategyValue()
+
+	slot0.strategyInput:SetText(slot6)
 
 	slot0.enablePatternList = tabletool.copy(DelayLoadResMgr.instance:getEnablePatternList())
-	slot0.disablePatternList = tabletool.copy(DelayLoadResMgr.instance:getDisablePatternList())
+	slot5 = DelayLoadResMgr.instance
+	slot7 = slot5
+	slot0.disablePatternList = tabletool.copy(slot5.getDisablePatternList(slot7))
 
 	for slot6, slot7 in ipairs(slot0.enablePatternList) do
 		slot0.enablePatternInputList[slot6]:SetText(slot7)

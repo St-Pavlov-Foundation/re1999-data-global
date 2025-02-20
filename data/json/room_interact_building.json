@@ -1,0 +1,32 @@
+[
+  {
+    "buildingId": 22301,
+    "heroCount": 3,
+    "intervalTime": 300000,
+    "interactType": 0,
+    "showTime": 30000,
+    "heroAnimStr": "idle|idle|idle",
+    "buildingAnim": "",
+    "cameraId": 2341
+  },
+  {
+    "buildingId": 22302,
+    "heroCount": 3,
+    "intervalTime": 300000,
+    "interactType": 1,
+    "showTime": 10000,
+    "heroAnimStr": "idle|idle|idle",
+    "buildingAnim": "",
+    "cameraId": 2342
+  },
+  {
+    "buildingId": 22303,
+    "heroCount": 5,
+    "intervalTime": 300000,
+    "interactType": 1,
+    "showTime": 30000,
+    "heroAnimStr": "idle|idle|idle|idle|idle",
+    "buildingAnim": "",
+    "cameraId": 2343
+  }
+]

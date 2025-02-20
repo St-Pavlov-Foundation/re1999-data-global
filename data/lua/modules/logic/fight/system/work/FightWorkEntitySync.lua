@@ -4,7 +4,6 @@ slot0 = class("FightWorkEntitySync", FightEffectBase)
 
 function slot0.onStart(slot0)
 	if slot0._actEffectMO.entityMO then
-		FightEntityModel.instance:replaceEntityMO(slot0._actEffectMO.entityMO)
 		slot0:com_sendFightEvent(FightEvent.EntitySync, slot1.id)
 	end
 

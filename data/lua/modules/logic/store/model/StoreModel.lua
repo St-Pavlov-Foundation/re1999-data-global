@@ -144,7 +144,11 @@ function slot0.chargeOrderComplete(slot0, slot1)
 	slot0.updateChargeStore = false
 
 	if slot0._chargeStoreDic[slot1] == nil then
-		slot2 = slot0._chargePackageStoreDic[slot1] or slot0._versionChargePackageDict[slot1] or slot0._onceTimeChargePackageDict[slot1]
+		if slot1 == StoreEnum.LittleMonthCardGoodsId then
+			slot2 = slot0._allPackageDic[slot1]
+		else
+			slot2 = slot0._chargePackageStoreDic[slot1] or slot0._versionChargePackageDict[slot1] or slot0._onceTimeChargePackageDict[slot1]
+		end
 	else
 		slot0.updateChargeStore = true
 	end
@@ -152,7 +156,7 @@ function slot0.chargeOrderComplete(slot0, slot1)
 	if slot2 then
 		slot2.buyCount = slot2.buyCount + 1
 
-		if slot2.config.id == StoreEnum.MonthCardGoodsId then
+		if slot2.config.id == StoreEnum.MonthCardGoodsId or slot3 == StoreEnum.LittleMonthCardGoodsId then
 			ChargeRpc.instance:sendGetMonthCardInfoRequest(slot0.updateGoodsInfo, slot0)
 		else
 			slot0:updateGoodsInfo()
@@ -217,6 +221,10 @@ function slot0.getGoodsMO(slot0, slot1)
 			end
 		end
 	end
+end
+
+function slot0.getChargeGoodsMo(slot0, slot1)
+	return slot0._chargeStoreDic[slot1]
 end
 
 function slot0.isStoreSkinChargePackageValid(slot0, slot1)

@@ -13,6 +13,36 @@ function slot0.onStart(slot0, slot1)
 	slot0:_dealStory()
 end
 
+function slot0._test(slot0)
+	slot1 = {}
+	slot2 = SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/singlebg/storybg/")
+	slot3 = "Assets/ZResourcesLib/singlebg/storybg/"
+	slot4 = ResSplitModel.instance:getExcludeDic(ResSplitEnum.Path)
+
+	for slot9, slot10 in pairs(HandbookConfig.instance:getCGList()) do
+		if StoryBgZoneModel.instance:getBgZoneByPath(slot10.image) ~= nil then
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryRes(slot11.path), true)
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryRes(slot11.sourcePath), true)
+		end
+	end
+
+	for slot10, slot11 in pairs(HandbookConfig.instance:getStoryGroupList()) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStorySmallBg(slot11.image), true)
+	end
+
+	for slot10 = 0, slot2.Length - 1 do
+		if not string.find(slot2[slot10], ".meta") and not slot4[string.gsub(SLFramework.FileHelper.GetUnityPath(slot11), "D:/work/projm%-client/Unity/Assets/ZResourcesLib/", "")] then
+			table.insert(slot1, slot12)
+		end
+	end
+
+	slot8 = io.open("Assets/ZResourcesLib/configs/ressplit2.json", "w")
+
+	slot8:write(tostring(string.gsub(cjson.encode(slot1), "\\/", "/")))
+	slot8:close()
+	slot0:onDone(true)
+end
+
 function slot0._dealStory(slot0)
 	slot0._storyIndex = slot0._storyIndex + 1
 
@@ -78,48 +108,49 @@ function slot0._addStoryRes(slot0)
 	slot3 = nil
 
 	for slot8, slot9 in ipairs(StoryStepModel.instance:getStepList()) do
-		slot13 = ResUrl.getStoryBg(slot9.bg.bgImg)
-		slot14 = slot2
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryBg(slot9.bg.bgImg), slot2)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, slot13, slot14)
-
-		for slot13, slot14 in pairs(slot9.videoList) do
-			ResSplitModel.instance:setExclude(ResSplitEnum.Video, string.split(slot14.video, ".")[1], slot2)
+		if StoryBgZoneModel.instance:getBgZoneByPath(slot9.bg.bgImg) then
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryRes(slot10.sourcePath), slot2)
 		end
 
-		for slot13, slot14 in pairs(slot9.conversation.audios) do
-			if ResSplitModel.instance.audioDic[slot14] then
-				ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, slot15.bankName, slot2)
+		for slot14, slot15 in pairs(slot9.videoList) do
+			ResSplitModel.instance:setExclude(ResSplitEnum.Video, string.split(slot15.video, ".")[1], slot2)
+		end
+
+		for slot14, slot15 in pairs(slot9.conversation.audios) do
+			if ResSplitModel.instance.audioDic[slot15] then
+				ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, slot16.bankName, slot2)
 			end
 		end
 
-		for slot13, slot14 in pairs(slot9.audioList) do
-			if ResSplitModel.instance.audioDic[slot14.audio] then
-				ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, slot15.bankName, slot2)
+		for slot14, slot15 in pairs(slot9.audioList) do
+			if ResSplitModel.instance.audioDic[slot15.audio] then
+				ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, slot16.bankName, slot2)
 			end
 		end
 
-		slot13 = string.format("singlebg/headicon_small/%s", slot9.conversation.heroIcon)
-		slot14 = slot2
+		slot14 = ResSplitEnum.Path
+		slot15 = string.format("singlebg/headicon_small/%s", slot9.conversation.heroIcon)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, slot13, slot14)
+		ResSplitModel.instance:setExclude(slot14, slot15, slot2)
 
-		for slot13, slot14 in pairs(slot9.picList) do
-			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryItem(slot14.picture), slot2)
+		for slot14, slot15 in pairs(slot9.picList) do
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryItem(slot15.picture), slot2)
 		end
 
-		for slot13, slot14 in pairs(slot9.heroList) do
-			if StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(slot14.heroIndex) then
-				slot3 = slot15.type == 0 and string.format("rolesstory/%s", slot15.prefab) or string.format("live2d/roles/%s", slot15.live2dPrefab)
+		for slot14, slot15 in pairs(slot9.heroList) do
+			if StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(slot15.heroIndex) then
+				slot3 = slot16.type == 0 and string.format("rolesstory/%s", slot16.prefab) or string.format("live2d/roles/%s", slot16.live2dPrefab)
 
-				if slot15.type == 0 and slot15.prefab == "" then
-					logError("rolesstory is nil", slot1, slot14.heroIndex)
-				elseif slot15.type ~= 0 and slot15.live2dPrefab == "" then
-					logError("live2dPrefab is nil", slot1, slot14.heroIndex)
-				elseif slot15.type == 0 then
+				if slot16.type == 0 and slot16.prefab == "" then
+					logError("rolesstory is nil", slot1, slot15.heroIndex)
+				elseif slot16.type ~= 0 and slot16.live2dPrefab == "" then
+					logError("live2dPrefab is nil", slot1, slot15.heroIndex)
+				elseif slot16.type == 0 then
 					ResSplitModel.instance:setExclude(ResSplitEnum.Path, string.gsub(slot3, "/" .. SLFramework.FileHelper.GetFileName(slot3, true), ""), slot2)
 				else
-					ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.gsub(slot3, slot16, ""), slot2)
+					ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.gsub(slot3, slot17, ""), slot2)
 				end
 			end
 		end

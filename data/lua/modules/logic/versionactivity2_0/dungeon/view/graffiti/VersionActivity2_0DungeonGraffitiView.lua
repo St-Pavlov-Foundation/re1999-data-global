@@ -169,7 +169,8 @@ function slot0.moveToFirstCanDrawGraffiti(slot0)
 end
 
 function slot0.refreshJumpBtnShow(slot0)
-	slot0.curNeedUnlockItems = Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.ToUnlock)
+	slot5 = Activity161Enum.graffitiState.ToUnlock
+	slot0.curNeedUnlockItems = Activity161Model.instance:getItemsByState(slot5)
 	slot0.jumpRightElementId = 0
 	slot0.jumpLeftElementId = 0
 
@@ -216,9 +217,10 @@ end
 
 function slot0.getCurRewardCanGetStage(slot0)
 	slot1 = 0
+	slot7 = Activity161Enum.graffitiState.IsFinished
 
 	for slot7, slot8 in pairs(Activity161Config.instance:getAllRewardCos(slot0.actId)) do
-		if slot8.paintedNum <= GameUtil.getTabLen(Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.IsFinished)) then
+		if slot8.paintedNum <= GameUtil.getTabLen(Activity161Model.instance:getItemsByState(slot7)) then
 			slot1 = slot7
 		end
 	end

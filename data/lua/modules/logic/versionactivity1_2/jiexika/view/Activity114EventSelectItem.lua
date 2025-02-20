@@ -30,8 +30,8 @@ function slot0.init(slot0, slot1)
 	slot0._btnunselecthelp = gohelper.findChildButtonWithAudio(slot1, "#go_unselected/#go_check/#btn_help")
 	slot0._gounselecttippos = gohelper.findChildComponent(slot1, "#go_unselected/#go_tippos", typeof(UnityEngine.Transform))
 	slot0._goSelectAnim = SLFramework.AnimatorPlayer.Get(slot0._goselect)
-	slot5 = UnityEngine.Animator
-	slot0._goUnSelectAnim = slot0._gounselect:GetComponent(typeof(slot5))
+	slot5 = typeof
+	slot0._goUnSelectAnim = slot0._gounselect:GetComponent(slot5(UnityEngine.Animator))
 	slot0._isFirstEnter = true
 	slot0.selectTypeTab = {}
 

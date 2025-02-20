@@ -76,8 +76,12 @@ function slot0.removeFollowTarget(slot0, slot1)
 	end
 end
 
-function slot0.setIsPass(slot0, slot1)
+function slot0.setIsPass(slot0, slot1, slot2)
 	slot0._isPass = slot1 == true
+
+	if slot0._isPass and slot2 ~= nil then
+		slot0._offsetY = tonumber(slot2)
+	end
 end
 
 function slot0.getIsPass(slot0)

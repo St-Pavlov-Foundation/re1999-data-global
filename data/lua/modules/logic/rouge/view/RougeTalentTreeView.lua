@@ -345,7 +345,8 @@ function slot0.onOpen(slot0)
 		slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot0._tabIndex)
 	end
 
-	slot0._configList = RougeTalentConfig.instance:getRougeTalentDict(slot0._season)
+	slot4 = slot0._season
+	slot0._configList = RougeTalentConfig.instance:getRougeTalentDict(slot4)
 
 	for slot4, slot5 in ipairs(slot0._configList) do
 		if not slot0._pointList[slot4] then

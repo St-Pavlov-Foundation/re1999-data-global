@@ -19,7 +19,7 @@ end
 
 function slot0._onBeforeEnterStepBehaviour(slot0)
 	if slot0._entity:getMO() then
-		for slot6, slot7 in ipairs(slot1:getBuffList()) do
+		for slot6, slot7 in pairs(slot1:getBuffDic()) do
 			slot0:_onBuffUpdate(slot0._entity.id, FightEnum.EffectType.BUFFADD, slot7.buffId, slot7.uid)
 		end
 	end
@@ -82,7 +82,7 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 			slot9 = slot6 and slot6.layer or 0
 
 			if FightSkillBuffMgr.instance:buffIsStackerBuff(lua_skill_buff.configDict[slot3]) then
-				slot9 = FightSkillBuffMgr.instance:getStackedCount(slot1, slot3)
+				slot9 = FightSkillBuffMgr.instance:getStackedCount(slot1, slot6)
 			elseif slot2 == FightEnum.EffectType.BUFFDEL or slot2 == FightEnum.EffectType.BUFFDELNOEFFECT then
 				slot9 = 0
 			end

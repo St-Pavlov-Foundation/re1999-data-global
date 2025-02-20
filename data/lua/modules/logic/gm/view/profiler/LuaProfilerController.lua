@@ -259,11 +259,13 @@ function slot0.SC_StopRecordAllocAndDumpStat(slot0)
 		return
 	end
 
-	slot7 = os.time() - uv1
-	slot8 = " s \n"
+	slot8 = os.time() - uv1
 
-	slot2:write("collectTotalTime:" .. slot7 .. slot8)
-	slot2:write("fileLine, count, mem K, avg K\n")
+	slot2:write("collectTotalTime:" .. slot8 .. " s \n")
+
+	slot7 = "fileLine, count, mem K, avg K\n"
+
+	slot2:write(slot7)
 
 	for slot7, slot8 in ipairs(slot1) do
 		slot2:write(string.format("%s, %d, %f, %f\n", slot8[1], slot8[2], slot8[3], slot8[3] / slot8[2]))
@@ -335,11 +337,13 @@ function slot0.dumpEventInfos(slot0)
 		return slot1.dispatchCount < slot0.dispatchCount
 	end)
 
-	slot6 = os.time() - uv1
-	slot7 = " s \n"
+	slot7 = os.time() - uv1
 
-	slot2:write("collectTotalTime:" .. slot6 .. slot7)
-	slot2:write("cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n")
+	slot2:write("collectTotalTime:" .. slot7 .. " s \n")
+
+	slot6 = "cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n"
+
+	slot2:write(slot6)
 
 	for slot6, slot7 in pairs(uv0) do
 		slot2:write(string.format("%s, %s, %d, %s, %d\n", slot7.cbObjName, slot7.eventName, slot7.paramsCount, table.concat(slot7.paramTypes, "|"), slot7.dispatchCount))

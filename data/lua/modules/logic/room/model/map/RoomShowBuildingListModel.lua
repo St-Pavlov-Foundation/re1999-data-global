@@ -106,7 +106,9 @@ function slot0.setShowBuildingList(slot0)
 		end
 	end
 
-	table.sort(slot1, slot0._sortFunction)
+	slot14 = slot0._sortFunction
+
+	table.sort(slot1, slot14)
 
 	slot0._emptyCount = 0
 

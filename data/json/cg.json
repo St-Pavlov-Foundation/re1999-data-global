@@ -2440,5 +2440,16 @@
     "episodeId": 10824,
     "image": "story_atcg/2_2/2_2_at_emo.jpg",
     "preCgId": 0
+  },
+  {
+    "id": 101901,
+    "order": 0,
+    "storyChapterId": 1019,
+    "name": "language_10061483",
+    "nameEn": "Highway Polka",
+    "desc": "language_10061484",
+    "episodeId": 191908,
+    "image": "story_atcg/2_3/2_3_at_ys_huanzhuangshuixing.jpg",
+    "preCgId": 0
   }
 ]

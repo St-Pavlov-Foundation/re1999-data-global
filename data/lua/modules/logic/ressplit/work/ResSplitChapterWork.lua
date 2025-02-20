@@ -10,7 +10,10 @@ function slot0.onStart(slot0, slot1)
 			slot9 = {}
 
 			if DungeonConfig.instance:getBattleCo(slot7.id) then
-				ResSplitHelper.checkConfigEmpty(string.format("Character:%d", slot8.id), "sceneIds", slot8.sceneIds)
+				slot15 = slot8.id
+				slot14 = slot8.sceneIds
+
+				ResSplitHelper.checkConfigEmpty(string.format("Character:%d", slot15), "sceneIds", slot14)
 
 				for slot14, slot15 in ipairs(string.splitToNumber(slot8.sceneIds, "#")) do
 					if SceneConfig.instance:getSceneLevelCOs(slot15) then

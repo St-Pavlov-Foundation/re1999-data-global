@@ -428,17 +428,17 @@ function slot0.getFinishGoalNum(slot0)
 	slot5 = {}
 
 	if not string.nilorempty(slot3) then
-		slot9 = true
+		slot10 = slot3
 
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot3, slot9)) do
+		for slot9, slot10 in ipairs(GameUtil.splitString2(slot10, true)) do
 			table.insert(slot5, slot10)
 		end
 	end
 
 	if not string.nilorempty(slot4) then
-		slot9 = true
+		slot10 = slot4
 
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot4, slot9)) do
+		for slot9, slot10 in ipairs(GameUtil.splitString2(slot10, true)) do
 			table.insert(slot5, slot10)
 		end
 	end

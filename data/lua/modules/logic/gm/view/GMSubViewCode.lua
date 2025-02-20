@@ -48,7 +48,9 @@ function slot0.initViewContent(slot0)
 		slot4 = string.split(slot3, "#")
 	end
 
-	for slot8 = 1, math.ceil(#slot2 / 6) do
+	slot8 = #slot2 / 6
+
+	for slot8 = 1, math.ceil(slot8) do
 		for slot12 = 1, 6 do
 			if slot2[(slot8 - 1) * 6 + slot12] then
 				slot14 = slot0:addToggle("Line" .. slot8, slot2[slot13], slot0.tabChange, slot0)

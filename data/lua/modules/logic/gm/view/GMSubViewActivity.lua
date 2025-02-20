@@ -34,6 +34,17 @@ function slot0.initViewContent(slot0)
 	slot0._txtSoliderID = slot0:addInputText("L4", "222001, 222002, 222003, 222004, 22101, 22102", "输入士兵ID")
 
 	slot0:addButton("L4", "直接打开小队玩法（正常流程）", slot0._onClickEditorStartMatch3WarChessInfo_3, slot0)
+	slot0:addButton("L5", "斗蛐蛐测试工具", slot0._douQuQuTest, slot0)
+	slot0:addLabel("L5", "X场次Y回合开始")
+
+	slot0.douQuQuStartIndex = slot0:addInputText("L5", nil, "场次")
+
+	slot0._setRectTransSize(slot0.douQuQuStartIndex.gameObject, nil, 150, 80)
+
+	slot0.douQuQuStartRound = slot0:addInputText("L5", nil, "回合")
+
+	slot0._setRectTransSize(slot0.douQuQuStartRound.gameObject, nil, 150, 80)
+	slot0:addButton("L5", "开始战斗", slot0._douQuQuTestForceIndexRound, slot0)
 	slot0:initActivityDrop()
 
 	slot0._inited = true
@@ -43,8 +54,9 @@ function slot0.initActivityDrop(slot0)
 	slot0.activityIdList = {}
 	slot0.activityShowStrList = {}
 	slot2 = {}
+	slot6 = VersionActivity1_7Enum.ActivityId
 
-	tabletool.addValues(slot2, VersionActivity1_7Enum.ActivityId)
+	tabletool.addValues(slot2, slot6)
 
 	slot0.activityAll = {
 		["1_7all"] = slot2
@@ -177,6 +189,21 @@ end
 
 function slot0._onClickEditorStartMatch3WarChessInfo_3(slot0)
 	EliminateLevelController.instance:enterLevel(tonumber(slot0._txtLevelID:GetText()), tonumber(slot0._txtCharacterID:GetText()), string.splitToNumber(slot0._txtSoliderID:GetText(), ","))
+end
+
+function slot0._douQuQuTest(slot0)
+	ViewMgr.instance:openView(ViewName.FightGMDouQuQuTest)
+	slot0:closeThis()
+end
+
+function slot0._douQuQuTestForceIndexRound(slot0)
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
+		FightMsgMgr.sendMsg(FightMsgId.GMDouQuQuSkip2IndexRound, tonumber(slot0.douQuQuStartIndex:GetText()), tonumber(slot0.douQuQuStartRound:GetText()))
+	else
+		FightPlayMgr._onGMDouQuQuSkip2IndexRound(slot0, slot1, slot2)
+	end
+
+	slot0:closeThis()
 end
 
 return slot0

@@ -63,6 +63,7 @@ return {
 	onSelectTalentStyle = 20003,
 	onTalentStyleRead = 20004,
 	onReturnTalentView = 20005,
+	onHeroTalentStyleStatReply = 20006,
 	onVideoBtnDisplay = 30001,
 	onClientVideoPlayFinish = 30002
 }

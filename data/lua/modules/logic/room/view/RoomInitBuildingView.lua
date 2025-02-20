@@ -1374,14 +1374,17 @@ function slot0._onEscape(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	slot4 = false
+	slot5 = false
 
-	PopupController.instance:setPause("roominitbuildingview_changeeffect", slot4)
+	PopupController.instance:setPause("roominitbuildingview_changeeffect", slot5)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changeeffect")
 	TaskDispatcher.cancelTask(slot0._resetChangeProcessText, slot0)
 	TaskDispatcher.cancelTask(slot0._realChangeSelectPart, slot0)
 	TaskDispatcher.cancelTask(slot0._changeShowSkinList, slot0)
-	TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot4)
 
 	slot0._keepOpenSkinListAfterChange = false
 

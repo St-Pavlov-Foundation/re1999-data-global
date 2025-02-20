@@ -71,7 +71,7 @@
   },
   {
     "heroId": 3088,
-    "motion": "woquan|baoxiong|sikao",
+    "motion": "woquan|baoxiong|sikao|yaoqing",
     "onlyStopCut": 0
   },
   {
@@ -86,7 +86,7 @@
   },
   {
     "heroId": 3048,
-    "motion": "shou|xihao|beishou|zaochen",
+    "motion": "shou|xihao|beishou|zaochen|xianliao1",
     "onlyStopCut": 0
   },
   {
@@ -102,6 +102,21 @@
   {
     "heroId": 3065,
     "motion": "xinshang",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3004,
+    "motion": "baoxiong",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3104,
+    "motion": "mozhang01|baishou|xingli",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3043,
+    "motion": "xuanshi|baoxiong",
     "onlyStopCut": 1
   }
 ]

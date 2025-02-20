@@ -351,8 +351,8 @@
   },
   {
     "id": 3200031,
-    "eventName": "play_chapter04_noise_dream",
-    "bankName": "chapter04_fightingaudio"
+    "eventName": "play_dreamlandboss_music",
+    "bankName": "dreamlandboss_music"
   },
   {
     "id": 3200032,
@@ -1543,5 +1543,55 @@
     "id": 2590101,
     "eventName": "play_ui_checkpoint_noise_manors",
     "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3230001,
+    "eventName": "play_plot_music_dailyemotion",
+    "bankName": "plot_music_dailyemotion"
+  },
+  {
+    "id": 3230002,
+    "eventName": "play_battle_shenghuo_2_3_normalfight",
+    "bankName": "activtiy_shenghuo_combataudio"
+  },
+  {
+    "id": 3230003,
+    "eventName": "play_battle_shenghuo_2_3_normalfight",
+    "bankName": "activtiy_shenghuo_combataudio"
+  },
+  {
+    "id": 3230004,
+    "eventName": "play_battle_shenghuo_2_3_bossfight",
+    "bankName": "activtiy_shenghuo_combataudio"
+  },
+  {
+    "id": 2610101,
+    "eventName": "play_ui_checkpoint_noise_sports",
+    "bankName": "activtiy_shenghuo_combataudio_noise"
+  },
+  {
+    "id": 2630101,
+    "eventName": "play_ui_checkpoint_noise_bazaar",
+    "bankName": "activtiy_shenghuo_combataudio_noise"
+  },
+  {
+    "id": 2640101,
+    "eventName": "play_ui_checkpoint_noise_old_house",
+    "bankName": "activtiy_shenghuo_combataudio_noise"
+  },
+  {
+    "id": 2650101,
+    "eventName": "play_ui_checkpoint_noise_sports_season",
+    "bankName": "activtiy_shenghuo_combataudio_noise"
+  },
+  {
+    "id": 2660101,
+    "eventName": "play_ui_checkpoint_noise_house",
+    "bankName": "activtiy_shenghuo_combataudio_noise"
+  },
+  {
+    "id": 2820101,
+    "eventName": "play_ui_checkpoint_noise_athletes_lounge",
+    "bankName": "activtiy_wulu_combataudio_noise"
   }
 ]

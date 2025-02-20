@@ -5721,7 +5721,7 @@ return {
 		"",
 		"v2a2_310201_luopeila/310201_luopeila.prefab",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2202,
@@ -5739,7 +5739,7 @@ return {
 		"",
 		"v2a2_520101_anjonala/520101_anjonala.prefab",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2203,
@@ -5757,7 +5757,7 @@ return {
 		"",
 		"v2a2_512401_dengken/512401_dengken.prefab",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2204,
@@ -5775,7 +5775,7 @@ return {
 		"rolesprefab/v2a2_310101_blm_p/310101_blm_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2205,
@@ -5784,16 +5784,16 @@ return {
 		"伊戈尔将军",
 		"",
 		"516401.png",
-		"-450#-870#1.1",
-		"0#-870#1.1",
-		"450#-870#1.1",
+		"-450#-840#1.1",
+		"0#-840#1.1",
+		"450#-840#1.1",
 		"-300#0#1",
 		"0#0#1",
 		"300#0#1",
 		"rolesprefab/v2a2_516401_yge_p/516401_yge_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2206,
@@ -5811,7 +5811,7 @@ return {
 		"rolesprefab/v2a2_517901_mlde_p/517901_mlde_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2207,
@@ -5829,7 +5829,7 @@ return {
 		"rolesprefab/v2a2_518001_tlm_p/518001_tlm_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2208,
@@ -5847,7 +5847,7 @@ return {
 		"rolesprefab/v2a2_518101_jlyn_p/518101_jlyn_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2209,
@@ -5865,7 +5865,7 @@ return {
 		"rolesprefab/v2a2_518201_mkd_p/518201_mkd_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2210,
@@ -5883,7 +5883,7 @@ return {
 		"rolesprefab/v2a2_517801_sts_p/517801_sts_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2211,
@@ -5901,7 +5901,7 @@ return {
 		"rolesprefab/v2a2_518501_dlsys_p/518501_dlsys_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2212,
@@ -5919,7 +5919,7 @@ return {
 		"rolesprefab/v2a2_518401_mlann_p/518401_mlann_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2213,
@@ -5937,7 +5937,7 @@ return {
 		"rolesprefab/v2a2_518301_znjr_p/518301_znjr_p.prefab",
 		"",
 		"",
-		""
+		"临时资源"
 	},
 	{
 		2214,
@@ -6154,5 +6154,257 @@ return {
 		"305201_xinbabieta/305201_xinbabieta.prefab",
 		"Drawables/ArtMesh138|Drawables/ArtMesh139|Drawables/ArtMesh140|Drawables/ArtMesh141|Drawables/ArtMesh142|Drawables/ArtMesh143|Drawables/ArtMesh152|Drawables/ArtMesh153|Drawables/ArtMesh154|Drawables/ArtMesh155|Drawables/ArtMesh156|Drawables/ArtMesh157|Drawables/ArtMesh158|Drawables/ArtMesh159|Drawables/ArtMesh160|Drawables/ArtMesh161|Drawables/ArtMesh162|Drawables/ArtMesh163|Drawables/ArtMesh164|Drawables/ArtMesh165|Drawables/ArtMesh166|Drawables/ArtMesh167|Drawables/ArtMesh168|Drawables/ArtMesh169|Drawables/ArtMesh170|Drawables/ArtMesh171|Drawables/ArtMesh172|Drawables/ArtMesh173|Drawables/ArtMesh174|Drawables/ArtMesh175|Drawables/ArtMesh191|Drawables/ArtMesh144|Drawables/ArtMesh194|Drawables/ArtMesh195|Drawables/ArtMesh196|Drawables/ArtMesh197|Drawables/ArtMesh198|Drawables/ArtMesh199|Drawables/ArtMesh200|Drawables/ArtMesh192|Drawables/ArtMesh193|Drawables/ArtMesh176|Drawables/ArtMesh177|Drawables/ArtMesh178|Drawables/ArtMesh179|Drawables/ArtMesh180|Drawables/ArtMesh181|Drawables/ArtMesh182|Drawables/ArtMesh309|Drawables/ArtMesh307|Drawables/ArtMesh308|Drawables/ArtMesh304|Drawables/ArtMesh303|Drawables/ArtMesh293|Drawables/ArtMesh151|Drawables/ArtMesh145|Drawables/ArtMesh146|Drawables/ArtMesh148|Drawables/ArtMesh149|Drawables/ArtMesh150|Drawables/ArtMesh183|Drawables/ArtMesh184|Drawables/ArtMesh187|Drawables/ArtMesh185|Drawables/ArtMesh186|Drawables/ArtMesh188|Drawables/ArtMesh306|Drawables/ArtMesh305|Drawables/ArtMesh147|Drawables/ArtMesh189|Drawables/ArtMesh190",
 		"隐藏魔精"
+	},
+	{
+		2301,
+		1,
+		false,
+		"纸信圈儿",
+		"Flutterpage",
+		"310501.png",
+		"-500#0#1",
+		"0#0#1",
+		"500#0#1",
+		"-275#-495#128",
+		"124#-495#128",
+		"453#-495#128",
+		"",
+		"v2a3_310501_zxqe/310501_zxqe.prefab",
+		"",
+		""
+	},
+	{
+		2302,
+		0,
+		false,
+		"灯倌",
+		"",
+		"",
+		"-380#-322#1.27",
+		"0#-322#1.27",
+		"512#-322#1.27",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_629901_dg_p/629901_dg_p.prefab",
+		"",
+		"",
+		""
+	},
+	{
+		2303,
+		1,
+		false,
+		"笃笃骨",
+		"Willow",
+		"310401.png",
+		"-500#0#1",
+		"0#0#1",
+		"500#0#1",
+		"-385#-921#152",
+		"5.7#-921#152",
+		"425#-921#152",
+		"",
+		"v2a3_310401_ddg/310401_ddg.prefab",
+		"",
+		""
+	},
+	{
+		2304,
+		0,
+		false,
+		"夏洛特",
+		"",
+		"628901.png",
+		"-500#-400#1.3",
+		"50#-400#1.3",
+		"500#-400#1.3",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_628901_xddg_p/628901_xddg_p.prefab",
+		"",
+		"",
+		"小笃笃骨"
+	},
+	{
+		2305,
+		0,
+		false,
+		"教练",
+		"",
+		"",
+		"-400#-70#0.85",
+		"0#-70#0.85",
+		"400#-70#0.85",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_628801_ddgjl_p/628801_ddgjl_p.prefab",
+		"",
+		"root/mountweapon",
+		"隐藏帽子"
+	},
+	{
+		2306,
+		0,
+		false,
+		"卡洛琳",
+		"",
+		"628601.png",
+		"-521#-810#1.45",
+		"0#-810#1.45",
+		"521#-810#1.45",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_628601_kll_p/628601_kll_p.prefab",
+		"",
+		"",
+		""
+	},
+	{
+		2307,
+		1,
+		false,
+		"宽檐帽",
+		"Brimley",
+		"310601.png",
+		"-500#0#1",
+		"0#0#1",
+		"500#0#1",
+		"-414#-2.6#88",
+		"-94.2#-2.6#88",
+		"407#-2.6#88",
+		"Assets/ZResourcesLib/live2d/roles/v2a3_310601_kzm/310601_kzm.prefab",
+		"v2a3_310601_kym/310601_kym.prefab",
+		"",
+		""
+	},
+	{
+		2308,
+		0,
+		false,
+		"潘佐",
+		"",
+		"564801.png",
+		"-439.1#-881.5#1.03",
+		"0#60#1.03",
+		"351#-881.5#1.03",
+		"-200#0#1",
+		"0#100#1",
+		"200#0#1",
+		"rolesprefab/v2a3_564801_pz_p/564801_pz_p.prefab",
+		"",
+		"",
+		"环状水星轶事NPC"
+	},
+	{
+		2309,
+		0,
+		false,
+		"老大",
+		"boss",
+		"",
+		"-439.1#-881.5#1.03",
+		"0#-881.5#1.03",
+		"351#-881.5#1.03",
+		"-200#0#1",
+		"0#0#1",
+		"200#0#1",
+		"rolesprefab/v1a9_562701_wltn_p/562701_wltn_p.prefab",
+		"",
+		"",
+		""
+	},
+	{
+		2310,
+		0,
+		false,
+		"福葛先生",
+		"",
+		"628701.png",
+		"-470#-989#0.9",
+		"47#-989#0.9",
+		"441#-989#0.9",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_628701_fg_p/628701_fg_p.prefab",
+		"",
+		"",
+		""
+	},
+	{
+		2311,
+		0,
+		false,
+		"基金会分部成员Ⅱ",
+		"",
+		"",
+		"-435.4#-787.3#1.5",
+		"0#-787.3#1.5",
+		"413.7#-787.3#1.5",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_629101_jjhldfbnzy_p/629101_jjhldfbnzy_p.prefab",
+		"",
+		"",
+		"女成员"
+	},
+	{
+		2312,
+		1,
+		false,
+		"笃笃骨",
+		"Willow",
+		"310415.png",
+		"-500#0#1",
+		"0#0#1",
+		"500#0#1",
+		"-385#-907#150",
+		"23.5#-907#150",
+		"412#-907#150",
+		"",
+		"v2a3_310402_ddg/310402_ddg.prefab",
+		"",
+		"笃笃骨进阶"
+	},
+	{
+		2313,
+		0,
+		false,
+		"卡洛琳",
+		"",
+		"628616.png",
+		"-521#-810#1.45",
+		"0#-810#1.45",
+		"521#-810#1.45",
+		"-300#0#1",
+		"0#0#1",
+		"300#0#1",
+		"rolesprefab/v2a3_628602_klltcf_p/628602_klltcf_p.prefab",
+		"",
+		"",
+		"卡洛琳无外套"
+	},
+	{
+		2314,
+		0,
+		false,
+		"潘佐",
+		"",
+		"564801.png",
+		"-439.1#-881.5#1.03",
+		"0#-881.5#1.03",
+		"351#-881.5#1.03",
+		"-200#0#1",
+		"0#100#1",
+		"200#0#1",
+		"Assets/ZResourcesLib/rolesstory/rolesprefab/v2a3_564801_pz_p/564801_pz_p.prefab",
+		"",
+		"",
+		"环状水星轶事NPC"
 	}
 }

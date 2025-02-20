@@ -346,5 +346,65 @@
     "effectCompName": "CommonRoleEffect",
     "motion": "b_shenshou|b_ruchang|b_zhanshi|b_shuzi|b_jiangluo2",
     "node": "Drawables/bone4/effect-Bone/roleeffect_37_shenshou4|Drawables/bone1/effect-Bone/roleeffect_37_ruchang1#Drawables/bone2/effect-Bone/roleeffect_37_ruchang2|Drawables/bone1/effect-Bone/roleeffect_37_zhanshi|Drawables/bone1/effect-Bone/roleeffect_37_shuzi|Drawables/bone6/effect-Bone/roleeffect_37_jiangluo2"
+  },
+  {
+    "heroResName": "310501_zxqe",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_taitou01",
+    "node": "Drawables/bone/effect-Bone/roleeffect_zxqe_taitou"
+  },
+  {
+    "heroResName": "305304_yaxian",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_idle",
+    "node": "Drawables/bone/effect-Bone/roleeffect_yaxian_daiji|Drawables/bone2/effect-Bone/roleeffect_yaxian_daiji"
+  },
+  {
+    "heroResName": "304304_tnt",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_xuanshi",
+    "node": "Drawables/bone/effect-Bone/roleeffect_tnt_xuanshi"
+  },
+  {
+    "heroResName": "308803_smews",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_pifeng|b_yaoshi",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_smews_pifeng#Drawables/bone/effect-Bone/roleeffect_smews_pifeng|Drawables/bone3/effect-Bone/roleeffect_smews_ys3"
+  },
+  {
+    "heroResName": "300404_hongnujian",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_kaiqiang",
+    "node": "Drawables/bone/effect-Bone/roleeffect_hnj_kq#Drawables/bone2/effect-Bone/roleeffect_hnj_kq"
+  },
+  {
+    "heroResName": "310601_kym",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_feizou",
+    "node": "Drawables/bone/effect-Bone/roleeffect_kzm_feizou"
+  },
+  {
+    "heroResName": "310602_kym",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_jianchi",
+    "node": "Drawables/bone/effect-Bone/roleeffect_kzm_feizou"
+  },
+  {
+    "heroResName": "310401_ddg",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_mozhang01|b_mozhang03|b_xingli",
+    "node": "Drawables/bone7/effect-Bone/roleeffect_ddg_mz1_1|Drawables/bone7/effect-Bone/roleeffect_ddg_mz3_1|Drawables/bone8/effect-Bone/roleeffect_ddg_xl8#Drawables/bone6/effect-Bone/roleeffect_ddg_xl6"
+  },
+  {
+    "heroResName": "310402_ddg",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_mozhang01|b_mozhang03|b_jisi",
+    "node": "Drawables/bone7/effect-Bone/roleeffect_ddg_mz1_1|Drawables/bone7/effect-Bone/roleeffect_ddg_mz3_1|Drawables/bone8/effect-Bone/roleeffect_ddg_js8_1#Drawables/bone7/effect-Bone/roleeffect_ddg_js7#Drawables/bone8/effect-Bone/roleeffect_ddg_js8_2"
+  },
+  {
+    "heroResName": "310502_zxqe",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_fengzhizi",
+    "node": "Drawables/bone/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone2/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone3/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone4/effect-Bone/roleeffect_zxqe_fzz"
   }
 ]

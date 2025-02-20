@@ -137,11 +137,11 @@ function slot0._addHistoryToList(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	slot5 = #slot2.gainIds
 	slot1 = slot1 or {}
 	slot3 = math.max(1, slot3)
+	slot10 = #slot2.gainIds
 
-	for slot10 = slot3, math.min(slot3 + slot4, slot5) do
+	for slot10 = slot3, math.min(slot3 + slot4, slot10) do
 		if SummonConfig.poolTypeIsLuckyBag(slot2.poolType) and slot2.luckyBagIdSet and slot2.luckyBagIdSet[slot12] then
 			-- Nothing
 		end

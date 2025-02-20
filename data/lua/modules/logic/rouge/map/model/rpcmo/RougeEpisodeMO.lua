@@ -93,7 +93,9 @@ function slot0.getArrivedNode(slot0)
 end
 
 function slot0.sortNode(slot0)
-	table.sort(slot0.nodeMoList, uv0._sortFunc)
+	slot4 = uv0._sortFunc
+
+	table.sort(slot0.nodeMoList, slot4)
 
 	for slot4, slot5 in ipairs(slot0.nodeMoList) do
 		slot5:setIndex(slot4)

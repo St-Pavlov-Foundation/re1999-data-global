@@ -68,7 +68,7 @@ function slot1(slot0, slot1)
 		return slot12 < slot13
 	end
 
-	return slot2 < slot2
+	return slot2 < slot3
 end
 
 function slot0.setCritterPlaceList(slot0, slot1)

@@ -364,6 +364,16 @@ function slot0.isCollectionPlaceInSlotArea(slot0, slot1)
 	return slot0._slotCollections:getById(slot1) ~= nil
 end
 
+function slot0.getCollectionPlaceArea(slot0, slot1)
+	if slot0:isCollectionPlaceInBag(slot1) then
+		return RougeEnum.CollectionPlaceArea.BagArea
+	end
+
+	if slot0:isCollectionPlaceInSlotArea(slot1) then
+		return RougeEnum.CollectionPlaceArea.SlotArea
+	end
+end
+
 function slot0.oneKeyPlace2SlotArea(slot0, slot1)
 	if not slot1 then
 		return

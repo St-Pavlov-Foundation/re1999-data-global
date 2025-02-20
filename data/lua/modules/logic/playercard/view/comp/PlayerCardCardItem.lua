@@ -54,7 +54,8 @@ function slot0.initCard(slot0)
 end
 
 function slot0._initCard3(slot0)
-	slot0.goRole = gohelper.findChild(slot0.goNormal, "#go_role")
+	slot4 = "#go_role"
+	slot0.goRole = gohelper.findChild(slot0.goNormal, slot4)
 	slot0._collectionFulls = slot0:getUserDataTb_()
 
 	for slot4 = 1, 5 do
@@ -69,7 +70,8 @@ function slot0._initCard4(slot0)
 end
 
 function slot0._initCard6(slot0)
-	slot0.goExplore = gohelper.findChild(slot0.goNormal, "#go_explore")
+	slot4 = "#go_explore"
+	slot0.goExplore = gohelper.findChild(slot0.goNormal, slot4)
 	slot0.exportItem = {}
 
 	for slot4 = 1, 3 do

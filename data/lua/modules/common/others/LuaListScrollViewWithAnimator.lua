@@ -230,18 +230,11 @@ function slot0.moveToByCheckFunc(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
+	slot8 = slot0._csListScroll.gameObject:GetComponent(gohelper.Type_ScrollRect).content
 	slot10 = slot0._param.scrollDir == ScrollEnum.ScrollDirV
 	slot14 = slot0._param.startSpace + (math.ceil(slot6 / slot0._param.lineCount) - 1) * ((slot10 and slot0._param.cellSpaceV or slot0._param.cellSpaceH) + (slot10 and slot0._param.cellHeight or slot0._param.cellWidth))
 	slot15 = 0
-
-	if slot10 then
-		slot15 = math.max(0, recthelper.getHeight(slot0._csListScroll.gameObject:GetComponent(gohelper.Type_ScrollRect).content) - recthelper.getHeight(slot7.transform))
-	else
-		slot15 = math.max(0, recthelper.getWidth(slot8) - recthelper.getWidth(slot7.transform))
-		slot14 = -slot14
-	end
-
-	slot14 = math.min(slot15, slot14)
+	slot14 = (not slot10 or math.min(math.max(0, recthelper.getHeight(slot8) - recthelper.getHeight(slot7.transform)), slot14)) and math.max(math.max(0, recthelper.getWidth(slot8) - recthelper.getWidth(slot7.transform)), -slot14)
 
 	if slot0._moveTweenId then
 		ZProj.TweenHelper.KillById(slot0._moveTweenId)

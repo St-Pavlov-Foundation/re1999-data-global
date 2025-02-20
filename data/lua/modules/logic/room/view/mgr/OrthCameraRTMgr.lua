@@ -16,8 +16,8 @@ function slot0.initRT(slot0)
 	end
 
 	slot0._orthCamera = slot1
-	slot5 = 0
-	slot0._renderTexture = UnityEngine.RenderTexture.GetTemporary(768, 512, slot5, UnityEngine.RenderTextureFormat.ARGB32)
+	slot5 = 512
+	slot0._renderTexture = UnityEngine.RenderTexture.GetTemporary(768, slot5, 0, UnityEngine.RenderTextureFormat.ARGB32)
 	slot0._originalTargetTexture = slot0._orthCamera.targetTexture
 	slot0._orthographicSize = slot0._orthCamera.orthographicSize
 	slot0._orthCamera.targetTexture = slot0._renderTexture

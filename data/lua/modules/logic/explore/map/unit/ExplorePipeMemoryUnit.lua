@@ -9,7 +9,9 @@ function slot0.onResLoaded(slot0)
 		if slot0.mo:getNeedColor() == ExploreEnum.PipeColor.None then
 			gohelper.setActive(slot1, false)
 		else
-			for slot7 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true).Length - 1 do
+			slot7 = true
+
+			for slot7 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), slot7).Length - 1 do
 				slot8 = ExploreEnum.PipeColorDef[slot0.mo:getNeedColor()]
 
 				ZProj.ParticleSystemHelper.SetStartColor(slot3[slot7], slot8.r, slot8.g, slot8.b, 1)

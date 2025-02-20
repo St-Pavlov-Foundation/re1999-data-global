@@ -184,7 +184,10 @@ function slot0._editableInitView(slot0)
 	gohelper.addUIClickAudio(slot0._btnshowcharacterA3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
 	gohelper.addUIClickAudio(slot0._btnshowcharacterB1.gameObject, AudioEnum.UI.play_ui_hero_card_click)
 	gohelper.addUIClickAudio(slot0._btnshowcharacterB2.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterB3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+
+	slot4 = AudioEnum.UI.play_ui_hero_card_click
+
+	gohelper.addUIClickAudio(slot0._btnshowcharacterB3.gameObject, slot4)
 
 	slot0._collectionfulls = slot0:getUserDataTb_()
 	slot0._collectiontxt = slot0:getUserDataTb_()

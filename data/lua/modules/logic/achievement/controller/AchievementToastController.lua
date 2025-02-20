@@ -65,9 +65,9 @@ end
 function slot0.tryShowToast(slot0, slot1)
 	if slot1 then
 		slot2 = #slot1
-		slot7 = slot2
+		slot7 = 1
 
-		for slot7 = Mathf.Clamp(slot2 - AchievementEnum.ShowMaxToastCount + 1, 1, slot7), slot2 do
+		for slot7 = Mathf.Clamp(slot2 - AchievementEnum.ShowMaxToastCount + 1, slot7, slot2), slot2 do
 			slot8 = slot1[slot7]
 
 			slot0:showToastByTaskId(slot8.taskId, slot8.toastType)

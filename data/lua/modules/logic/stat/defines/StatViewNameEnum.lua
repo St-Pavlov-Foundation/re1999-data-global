@@ -63,10 +63,6 @@ slot0.ChineseViewName = {
 	[ViewName.ActMercuriaTaskView] = "环状水星角色任务",
 	[ViewName.VersionActivity1_5DungeonMapView] = "复兴！乌卢鲁运动会副本-复刻",
 	[ViewName.Permanent1_2EnterView] = "1.2常驻复刻",
-	[ViewName.Season123_2_1EntryView] = "2.1赛季",
-	[ViewName.Season123_2_1EpisodeListView] = "2.1赛季关卡列表",
-	[ViewName.Season123_2_1EpisodeDetailView] = "2.1赛季关卡详情",
-	[ViewName.Season123_2_1StoreView] = "2.1赛季商店",
 	[ViewName.VersionActivity2_1EnterView] = "2.1版本活动页-《77号公路》",
 	[ViewName.VersionActivity2_1DungeonMapView] = "副本地图-《77号公路》",
 	[ViewName.LanShouPaMapView] = "蓝手帕角色活动",
@@ -85,7 +81,21 @@ slot0.ChineseViewName = {
 	[ViewName.TianShiNaNaTaskView] = "天使娜娜角色任务",
 	[ViewName.LoperaMainView] = "洛佩拉角色活动",
 	[ViewName.LoperaTaskView] = "洛佩拉角色任务",
-	[ViewName.PowerView] = "体力购买界面"
+	[ViewName.PowerView] = "体力购买界面",
+	[ViewName.Season123_2_3EntryView] = "2.3赛季",
+	[ViewName.Season123_2_3EpisodeListView] = "2.3赛季关卡列表",
+	[ViewName.Season123_2_3EpisodeDetailView] = "2.3赛季关卡详情",
+	[ViewName.Season123_2_3StoreView] = "2.3赛季商店",
+	[ViewName.VersionActivity2_3EnterView] = "2.3版本活动页",
+	[ViewName.VersionActivity2_3DungeonMapView] = "副本地图-圣火纪行：东区黎明",
+	[ViewName.Permanent1_5EnterView] = "1.5常驻复刻",
+	[ViewName.VersionActivity2_3StoreView] = "2.3副本商店",
+	[ViewName.ActDuDuGuLevelView] = "笃笃骨角色活动",
+	[ViewName.ActDuDuGuTaskView] = "笃笃骨角色任务",
+	[ViewName.ZhiXinQuanErLevelView] = "纸信圈儿角色活动",
+	[ViewName.ZhiXinQuanErTaskView] = "纸信圈儿角色任务",
+	[ViewName.Act174MainView] = "和平角斗场",
+	[ViewName.TowerMainView] = "爬塔"
 }
 slot0.NeedTrackViewDict = {
 	[ViewName.VersionActivity1_8EnterView] = true,
@@ -132,10 +142,6 @@ slot0.NeedTrackViewDict = {
 	[ViewName.ActMercuriaTaskView] = true,
 	[ViewName.VersionActivity1_5DungeonMapView] = true,
 	[ViewName.Permanent1_2EnterView] = true,
-	[ViewName.Season123_2_1EntryView] = true,
-	[ViewName.Season123_2_1EpisodeListView] = true,
-	[ViewName.Season123_2_1EpisodeDetailView] = true,
-	[ViewName.Season123_2_1StoreView] = true,
 	[ViewName.VersionActivity2_1EnterView] = true,
 	[ViewName.VersionActivity2_1DungeonMapView] = true,
 	[ViewName.LanShouPaMapView] = true,
@@ -154,7 +160,21 @@ slot0.NeedTrackViewDict = {
 	[ViewName.TianShiNaNaTaskView] = true,
 	[ViewName.LoperaMainView] = true,
 	[ViewName.LoperaTaskView] = true,
-	[ViewName.PowerView] = true
+	[ViewName.PowerView] = true,
+	[ViewName.Season123_2_3EntryView] = true,
+	[ViewName.Season123_2_3EpisodeListView] = true,
+	[ViewName.Season123_2_3EpisodeDetailView] = true,
+	[ViewName.Season123_2_3StoreView] = true,
+	[ViewName.VersionActivity2_3EnterView] = true,
+	[ViewName.VersionActivity2_3DungeonMapView] = true,
+	[ViewName.Permanent1_5EnterView] = true,
+	[ViewName.VersionActivity2_3StoreView] = true,
+	[ViewName.ActDuDuGuLevelView] = true,
+	[ViewName.ActDuDuGuTaskView] = true,
+	[ViewName.ZhiXinQuanErLevelView] = true,
+	[ViewName.ZhiXinQuanErTaskView] = true,
+	[ViewName.Act174MainView] = true,
+	[ViewName.TowerMainView] = true
 }
 slot0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
@@ -162,6 +182,7 @@ slot0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity2_0EnterView,
 	ViewName.VersionActivity2_1EnterView,
 	ViewName.VersionActivity2_2EnterView,
+	ViewName.VersionActivity2_3EnterView,
 	ViewName.StoreView
 }
 slot0.TabViewContainerID = {
@@ -170,15 +191,21 @@ slot0.TabViewContainerID = {
 	[ViewName.VersionActivity2_0EnterView] = 2,
 	[ViewName.VersionActivity2_1EnterView] = 2,
 	[ViewName.VersionActivity2_2EnterView] = 2,
+	[ViewName.VersionActivity2_3EnterView] = 2,
 	[ViewName.StoreView] = 3
 }
 slot0.TabViewName = {
 	V2a2_Season166EnterView = "赛季",
+	VersionActivity2_3DuDuGuEnterView = "笃笃骨",
+	VersionActivity2_3Act174EnterView = "和平角斗场",
+	VersionActivity2_3ZhiXinQuanErEnterView = "纸信圈儿",
+	VersionActivity2_3DungeonEnterView = "圣火纪行：东区黎明",
 	V2a2_LoperaEnterView = "洛佩拉",
 	V2a2_RoomCritterEnterView = "魔精公司",
 	V2a2_DungeonEnterView = "忧郁的热带",
 	V2a2_TianShiNaNaEnterView = "天使娜娜",
 	V2a2_EliminateEnterView = "小队玩法",
+	V2a3_Season123EnterView = "赛季",
 	[V1a8_DungeonEnterView] = "副本",
 	[V1a8_Season123EnterView] = "赛季",
 	[V1a8_WeilaEnterView] = "维拉",

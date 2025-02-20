@@ -35,7 +35,7 @@ function slot0.updateItem(slot0, slot1)
 	end
 
 	slot0._skillId = slot1.skillId
-	slot4 = FightBuffHelper.simulateBuffList(FightEntityModel.instance:getById(slot0.cardInfoMO.uid))
+	slot4 = FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot0.cardInfoMO.uid))
 	slot0._canUse = uv0.canUseCardSkill(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId)
 
 	uv0.setCardLock(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId, slot0._lockGO, false, slot4)
@@ -43,6 +43,10 @@ function slot0.updateItem(slot0, slot1)
 end
 
 function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
+	if not slot0.cardInfoMO then
+		return
+	end
+
 	if slot1 ~= slot0.cardInfoMO.uid then
 		return
 	end
@@ -64,13 +68,13 @@ slot1 = {}
 slot2 = {}
 
 function slot0._beforePlayHandCard(slot0)
-	slot2 = FightBuffHelper.simulateBuffList(FightEntityModel.instance:getById(slot0.cardInfoMO.uid))
+	slot2 = FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot0.cardInfoMO.uid))
 	uv0[slot0.cardInfoMO.skillId] = uv1.canUseCardSkill(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId, slot2)
 	uv2[slot0.cardInfoMO.skillId] = uv1.canPreRemove(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId, nil, slot2)
 end
 
 function slot0._afterPlayHandCard(slot0)
-	slot2 = FightBuffHelper.simulateBuffList(FightEntityModel.instance:getById(slot0.cardInfoMO.uid))
+	slot2 = FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot0.cardInfoMO.uid))
 
 	uv0.setCardLock(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId, slot0._lockGO, false, slot2)
 
@@ -192,7 +196,10 @@ function slot0.setCardPreRemove(slot0, slot1, slot2, slot3)
 	slot5 = FightCardModel.instance:getSkillLv(slot0, slot1)
 
 	gohelper.setActive(gohelper.findChild(slot2, "normal"), not slot4)
-	gohelper.setActive(gohelper.findChild(slot2, "bigskill"), slot4)
+
+	slot11 = slot4
+
+	gohelper.setActive(gohelper.findChild(slot2, "bigskill"), slot11)
 
 	for slot11 = 1, 4 do
 		gohelper.setActive(gohelper.findChild(slot11 == FightEnum.UniqueSkillCardLv and slot7 or slot6, tostring(slot11)), slot11 == slot5)
@@ -240,7 +247,7 @@ slot5 = {
 }
 
 function slot0.canPreRemove(slot0, slot1, slot2, slot3)
-	if FightBuffHelper.hasCastChannel(FightEntityModel.instance:getById(slot0), slot3) then
+	if FightBuffHelper.hasCastChannel(FightDataHelper.entityMgr:getById(slot0), slot3) then
 		return false
 	end
 
@@ -253,7 +260,7 @@ function slot0.canPreRemove(slot0, slot1, slot2, slot3)
 			return false
 		end
 
-		if slot10:isPlayCard() and slot10.clientSimulateCanPlayCard and (uv0[lua_skill.configDict[slot10.skillId].logicTarget] or uv1[slot12] and slot0 == slot10.toId and slot0 ~= slot10.belongToEntityId) and FightBuffHelper.checkSkillCanPurifyBySkill(slot0, slot1, slot10.skillId, slot3) then
+		if slot10:isPlayCard() and slot10.clientSimulateCanPlayCard and (uv0[lua_skill.configDict[slot10.skillId].logicTarget] or uv1[slot12] and slot0 == slot10.toId and slot0 ~= slot10.belongToEntityId) and FightBuffHelper.checkSkillCanPurifyBySkill(slot0, slot1, slot10.skillId, slot3, slot10.belongToEntityId) then
 			return true
 		end
 	end
@@ -309,7 +316,7 @@ function slot0.canUseCardSkill(slot0, slot1, slot2)
 		return false
 	end
 
-	if not FightEntityModel.instance:getById(slot0) then
+	if not FightDataHelper.entityMgr:getById(slot0) then
 		return true
 	end
 
@@ -325,7 +332,7 @@ function slot0.canUseCardSkill(slot0, slot1, slot2)
 
 	if FightModel.instance:isBeContractEntity(slot0) then
 		if slot2 then
-			if FightBuffHelper.hasFeature(nil, FightBuffHelper.simulateBuffList(FightModel.instance.contractEntityUid and FightEntityModel.instance:getById(slot5)), FightEnum.BuffType_ContractCastChannel) then
+			if FightBuffHelper.hasFeature(nil, FightBuffHelper.simulateBuffList(FightModel.instance.contractEntityUid and FightDataHelper.entityMgr:getById(slot5)), FightEnum.BuffType_ContractCastChannel) then
 				return false
 			end
 		elseif FightBuffHelper.checkCurEntityIsBeContractAndHasChannel(slot0) then
@@ -353,7 +360,9 @@ function slot0.isLockByLockBuffType(slot0, slot1, slot2)
 				return true
 			end
 		elseif slot5.UseSkillHasBuffCond then
-			for slot10 = 3, #FightStrUtil.instance:getSplitToNumberCache(slot0.featureStr, "#") do
+			slot10 = "#"
+
+			for slot10 = 3, #FightStrUtil.instance:getSplitToNumberCache(slot0.featureStr, slot10) do
 				if slot6[slot10] == slot1.id and FightHelper.getEntity(slot2) and slot11.buff and not slot11.buff:haveBuffTypeId(slot6[2]) then
 					return true
 				end
@@ -369,14 +378,14 @@ function slot0._getCardLockReason(slot0, slot1, slot2)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot0) then
+	if not FightDataHelper.entityMgr:getById(slot0) then
 		return
 	end
 
 	slot5, slot6 = uv0.getLockBuffMo(slot3, slot2, lua_skill.configDict[slot1])
 
 	if FightModel.instance:isBeContractEntity(slot0) then
-		slot8 = FightModel.instance.contractEntityUid and FightEntityModel.instance:getById(slot7)
+		slot8 = FightModel.instance.contractEntityUid and FightDataHelper.entityMgr:getById(slot7)
 		slot5, slot6 = uv0.getLockBuffMo(slot8, FightBuffHelper.simulateBuffList(slot8), slot4, slot5, slot6)
 	end
 

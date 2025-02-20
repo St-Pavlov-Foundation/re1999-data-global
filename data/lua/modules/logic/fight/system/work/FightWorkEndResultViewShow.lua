@@ -22,6 +22,7 @@ function slot0.onStart(slot0)
 
 	if slot0:_needHideEntity() then
 		FightHelper.hideAllEntity()
+		FightMsgMgr.sendMsg(FightMsgId.ReleaseAllEntrustedEntity)
 		FightController.instance:dispatchEvent(FightEvent.ReleaseAllEntrustedEntity)
 	end
 
@@ -39,6 +40,8 @@ function slot0.onStart(slot0)
 				show_scene_dissolve_effect = true,
 				fight_result = slot7
 			})
+		elseif slot2 and slot2.type == DungeonEnum.EpisodeType.TowerLimited then
+			slot0:showSuccView()
 		else
 			if slot7 == FightEnum.FightResult.OutOfRoundFail then
 				if BossRushController.instance:isInBossRushDungeon() then
@@ -118,6 +121,14 @@ function slot0._showSuccView(slot0)
 			return
 		elseif slot1.type == DungeonEnum.EpisodeType.Season166Base or slot1.type == DungeonEnum.EpisodeType.Season166Train then
 			Season166Controller.instance:openResultPanel()
+
+			return
+		elseif slot1.type == DungeonEnum.EpisodeType.TowerBoss then
+			ViewMgr.instance:openView(ViewName.TowerBossResultView)
+
+			return
+		elseif slot1.type == DungeonEnum.EpisodeType.TowerPermanent or slot1.type == DungeonEnum.EpisodeType.TowerLimited then
+			ViewMgr.instance:openView(ViewName.TowerPermanentResultView)
 
 			return
 		end

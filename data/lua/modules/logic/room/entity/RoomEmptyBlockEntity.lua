@@ -3,7 +3,9 @@ module("modules.logic.room.entity.RoomEmptyBlockEntity", package.seeall)
 slot0 = class("RoomEmptyBlockEntity", RoomBaseBlockEntity)
 
 function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+	slot5 = slot1
+
+	uv0.super.ctor(slot0, slot5)
 
 	slot0._nearWaveList = {}
 	slot0._nearRiverList = {}

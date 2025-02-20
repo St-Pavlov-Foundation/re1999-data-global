@@ -131,21 +131,6 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.onClose(slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.OnChessSelect, slot0.onSelectItem, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, slot0.onPerformBegin, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, slot0.onPerformEnd, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.ShowChessInfo, slot0.showSoliderChessTip, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessEndViewOpen, slot0.match3ChessEndViewOpen, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, slot0.match3ChessBeginViewClose, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffect, slot0.playResourceFlyEffect, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffectPlayFinish, slot0.resourceFlyFinish, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.RefreshInitChessShow, slot0.refreshViewActive, slot0)
-	slot0:removeEventCb(EliminateChessController.instance, EliminateChessEvent.PlayEliminateEffect, slot0.playEliminateEffect, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, slot0.updateViewStateChangeEnd, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateViewState, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillViewOpen, slot0.characterSkillOpen, slot0)
-	slot0:removeEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillCancel, slot0.characterSkillClose, slot0)
-	slot0:removeEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, slot0.updateStrongHoldItemInfo, slot0)
 end
 
 function slot0.onSelectItem(slot0, slot1, slot2, slot3)

@@ -112,8 +112,9 @@ function OptionPackageDownloader.start(slot0, slot1, slot2, slot3, slot4)
 	for slot9, slot10 in pairs(slot1 or {}) do
 		if slot10 and slot10.res and #slot10.res > 0 then
 			slot0._lang2DownloadList[slot9] = slot10
+			slot14 = slot9
 
-			table.insert(slot0._download_pack_list, slot9)
+			table.insert(slot0._download_pack_list, slot14)
 
 			for slot14, slot15 in ipairs(slot10.res) do
 				slot0._totalSize = slot0._totalSize + slot15.length

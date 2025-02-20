@@ -17,7 +17,10 @@ function slot0._editableInitView(slot0)
 	slot0._heroItemDrag = slot0:getUserDataTb_()
 
 	gohelper.setActive(slot0._goheroitem, false)
-	gohelper.setActive(slot0._goaidheroitem, false)
+
+	slot4 = false
+
+	gohelper.setActive(slot0._goaidheroitem, slot4)
 
 	slot0.heroPosTrList = slot0:getUserDataTb_()
 	slot0._heroItemPosList = slot0:getUserDataTb_()
@@ -322,7 +325,9 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 				slot6:onItemCompleteDrag(uv0, uv1, slot1)
 			end
 
-			slot0:_setDragEnabled(true)
+			slot5 = true
+
+			slot0:_setDragEnabled(slot5)
 
 			for slot5, slot6 in ipairs(slot0._heroItemList) do
 				slot6:flowCurrentParent()

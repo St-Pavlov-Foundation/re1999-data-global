@@ -42,12 +42,11 @@ function slot0._btnheroDetailOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = "guang_005"
-
-	slot0._simagecenterbg:LoadImage(ResUrl.getCharacterIcon(slot4))
+	slot0._simagecenterbg:LoadImage(ResUrl.getCharacterIcon("guang_005"))
 
 	slot0._txtlevel = gohelper.findChildText(slot0._goeffect, "#go_level")
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
+	slot4 = true
+	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, slot4)
 
 	slot0._uiSpine:useRT()
 
@@ -58,8 +57,8 @@ function slot0._editableInitView(slot0)
 
 	for slot4 = 1, 3 do
 		slot5 = slot0:getUserDataTb_()
-		slot9 = tostring(slot4)
-		slot5.go = gohelper.findChild(slot0._goranknormal, "insightlight" .. slot9)
+		slot9 = "insightlight" .. tostring(slot4)
+		slot5.go = gohelper.findChild(slot0._goranknormal, slot9)
 		slot5.lights = {}
 
 		for slot9 = 1, slot4 do
@@ -70,7 +69,8 @@ function slot0._editableInitView(slot0)
 		slot0._rareGos[slot4] = gohelper.findChild(slot0._txtskillDetail.gameObject, "rare" .. slot4)
 	end
 
-	slot0._norrank.eyes = slot0:getUserDataTb_()
+	slot4 = slot0
+	slot0._norrank.eyes = slot0.getUserDataTb_(slot4)
 
 	for slot4 = 1, 2 do
 		table.insert(slot0._norrank.eyes, gohelper.findChild(slot0._goranknormal, "eyes/eye" .. tostring(slot4)))
@@ -186,7 +186,8 @@ function slot0._refreshEffect(slot0)
 			gohelper.setActive(slot0._goskill, true)
 
 			slot8 = CharacterModel.instance:getMaxUnlockPassiveLevel(slot0.heroMo.heroId)
-			slot9 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(slot0.heroMo.heroId, slot0.heroMo.exSkillLevel)
+			slot13 = slot0.heroMo.exSkillLevel
+			slot9 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(slot0.heroMo.heroId, slot13)
 
 			for slot13, slot14 in pairs(slot0._rareGos) do
 				gohelper.setActive(slot14, false)

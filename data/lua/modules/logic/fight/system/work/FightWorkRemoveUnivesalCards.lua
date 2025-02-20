@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkRemoveUnivesalCards", package.s
 slot0 = class("FightWorkRemoveUnivesalCards", FightEffectBase)
 
 function slot0.onStart(slot0, slot1)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return

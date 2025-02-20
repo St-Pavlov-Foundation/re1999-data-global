@@ -355,10 +355,10 @@ function slot0.beforeDestroy(slot0)
 	end
 
 	slot0._specialEffectClass = nil
-	slot4 = slot0._onSpineLoaded
-	slot5 = slot0
+	slot4 = FightEvent.OnSpineLoaded
+	slot5 = slot0._onSpineLoaded
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot4, slot5)
+	FightController.instance:unregisterCallback(slot4, slot5, slot0)
 	slot0:_dealTimeEffect()
 
 	for slot4, slot5 in pairs(slot0._playingEffectDict) do

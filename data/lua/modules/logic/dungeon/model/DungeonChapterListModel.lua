@@ -190,8 +190,9 @@ end
 
 function slot0.getMixCellPos(slot0, slot1)
 	slot2 = 0
+	slot7 = slot0
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
+	for slot6, slot7 in ipairs(slot0.getList(slot7)) do
 		if slot7.id == slot1 then
 			return slot2
 		end
@@ -204,8 +205,9 @@ end
 
 function slot0.getLastUnlockChapterId(slot0)
 	slot1 = nil
+	slot6 = slot0
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
+	for slot5, slot6 in ipairs(slot0.getList(slot6)) do
 		if DungeonModel.instance:chapterIsUnLock(slot6.id) then
 			slot1 = slot6.id
 		end

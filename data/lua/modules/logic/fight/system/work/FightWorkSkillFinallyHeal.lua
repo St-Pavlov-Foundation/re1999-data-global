@@ -42,7 +42,7 @@ function slot0._onSkillEnd(slot0, slot1, slot2, slot3)
 
 	for slot7, slot8 in ipairs(slot0._actEffectMOs) do
 		if FightHelper.getEntity(slot8.targetId) and not slot9.isDead then
-			slot8:setDone()
+			FightDataHelper.playEffectData(slot8)
 
 			if slot8.effectType == FightEnum.EffectType.HEAL then
 				FightFloatMgr.instance:float(slot9.id, FightEnum.FloatType.heal, slot8.effectNum)
@@ -50,10 +50,12 @@ function slot0._onSkillEnd(slot0, slot1, slot2, slot3)
 				FightFloatMgr.instance:float(slot9.id, FightEnum.FloatType.crit_heal, slot8.effectNum)
 			end
 
-			slot9.nameUI:addHp(slot8.effectNum)
+			if slot9.nameUI then
+				slot9.nameUI:addHp(slot8.effectNum)
 
-			if not FightSkillMgr.instance:isPlayingAnyTimeline() then
-				slot9.nameUI:setActive(true)
+				if not FightSkillMgr.instance:isPlayingAnyTimeline() then
+					slot9.nameUI:setActive(true)
+				end
 			end
 
 			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot9, slot8.effectNum)

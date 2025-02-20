@@ -223,7 +223,9 @@ function slot0.everyFrame(slot0, slot1)
 end
 
 function slot0.animFinish(slot0)
-	TaskDispatcher.cancelTask(slot0.animFinish, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0.animFinish, slot4)
 
 	BpModel.instance.preStatus = nil
 	BpModel.instance.animData = nil
@@ -344,7 +346,10 @@ function slot0._updateBtn(slot0)
 end
 
 function slot0._canGetAnyBonus(slot0)
-	for slot7, slot8 in ipairs(BpBonusModel.instance:getList()) do
+	slot6 = BpBonusModel.instance
+	slot8 = slot6
+
+	for slot7, slot8 in ipairs(slot6.getList(slot8)) do
 		if slot8.level <= math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id)) then
 			slot9 = BpConfig.instance:getBonusCO(BpModel.instance.id, slot8.level)
 			slot11 = string.split(slot9.payBonus, "|")

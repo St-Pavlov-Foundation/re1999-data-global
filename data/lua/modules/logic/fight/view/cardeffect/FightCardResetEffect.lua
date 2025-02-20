@@ -43,8 +43,10 @@ function slot0._buildPlayCardFadeOut(slot0)
 			t = slot0._dt * 3
 		}))
 
-		if slot6.fightBeginRoundOp then
-			gohelper.setActive(gohelper.findChild(slot7, "imgEmpty"), not slot12:isPlayCard() or slot12.costActPoint >= 1)
+		if slot6.fightBeginRoundOp and slot12:isAssistBossPlayCard() then
+			gohelper.setActive(gohelper.findChild(slot7, "imgEmpty"), false)
+		elseif slot12 then
+			gohelper.setActive(slot8, not slot12:isPlayCard() or slot12.costActPoint >= 1)
 		else
 			gohelper.setActive(slot8, true)
 		end
@@ -64,12 +66,16 @@ function slot0._buildPlayCardMove(slot0)
 	slot4 = FlowParallel.New()
 
 	for slot8, slot9 in ipairs(slot0.context.playCardItemList) do
-		if not slot9.fightBeginRoundOp or not slot11:isPlayCard() or slot11.costActPoint ~= 0 then
+		slot10 = slot9.go
+
+		if slot9.fightBeginRoundOp and slot11:isPlayCard() and slot11.costActPoint == 0 then
+			-- Nothing
+		elseif not slot11 or not slot11:isAssistBossPlayCard() then
 			slot12, slot13 = FightViewPlayCard.calcCardPosX(slot3, slot1 + slot2)
 
 			slot4:addWork(TweenWork.New({
 				type = "DOAnchorPos",
-				tr = slot9.go.transform,
+				tr = slot10.transform,
 				tox = slot12,
 				toy = slot13,
 				t = slot0._dt * 3
@@ -87,8 +93,9 @@ function slot0._buildHandCardMove(slot0)
 	slot2 = {
 		[slot11] = true
 	}
+	slot9 = FlowParallel.New()
 
-	FlowSequence.New():addWork(FlowParallel.New())
+	FlowSequence.New():addWork(slot9)
 
 	for slot9 = 1, #slot0.context.view.viewContainer.fightViewHandCard._handCardItemList do
 		if slot1[slot9] and slot1[slot9].origin then
@@ -103,11 +110,11 @@ function slot0._buildHandCardMove(slot0)
 	end
 
 	slot3:addWork(FunctionWork.New(function ()
-		slot3 = FightCardModel.instance
-		slot4 = slot3
-		slot3 = slot3.getHandCards
+		slot3 = FightEvent.UpdateHandCards
+		slot4 = FightCardModel.instance
+		slot4 = slot4.getHandCards
 
-		FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, slot3(slot4))
+		FightController.instance:dispatchEvent(slot3, slot4(slot4))
 
 		for slot3, slot4 in ipairs(uv0) do
 			if not uv1[slot3] then

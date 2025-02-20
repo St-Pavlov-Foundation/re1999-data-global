@@ -108,6 +108,7 @@ function slot0._placeCharacter(slot0)
 		if slot0._scene.charactermgr:getCharacterEntity(slot5.id, SceneTag.RoomCharacter) then
 			slot0._scene.charactermgr:moveTo(slot6, slot5.currentPosition)
 			slot6.characterspine:refreshAnimState()
+			slot6.interactActionComp:endIneract()
 			slot0:_delayCritterFollow(0.05)
 		end
 	end

@@ -14,6 +14,7 @@ function slot0.onInitView(slot0)
 	slot0._txtactname = gohelper.findChildText(slot0.viewGO, "left/#go_actname/#txt_actname")
 	slot0._btntheme = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_theme")
 	slot0._txttheme = gohelper.findChildText(slot0.viewGO, "left/#btn_theme/txt")
+	slot0._gocobrand = gohelper.findChild(slot0.viewGO, "left/#go_cobrand")
 	slot0._gobuyContent = gohelper.findChild(slot0.viewGO, "right/#go_buyContent")
 	slot0._goblockInfoItem = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content/#go_blockInfoItem")
 	slot0._gopay = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_pay")
@@ -69,6 +70,8 @@ function slot0._editableInitView(slot0)
 
 	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
 	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+
+	slot0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocobrand, RoomSourcesCobrandLogoItem, slot0)
 end
 
 function slot0._refreshUI(slot0)
@@ -76,26 +79,29 @@ function slot0._refreshUI(slot0)
 	slot0._canJump = slot0.viewParam.canJump
 	slot1 = false
 	slot2 = false
+	slot3 = nil
 
 	if slot0._roomSkinId then
-		slot4 = ""
+		slot5 = ""
 
-		if RoomConfig.instance:getRoomSkinActId(slot0._roomSkinId) and slot3 ~= 0 then
-			slot4 = ActivityConfig.instance:getActivityCo(slot3) and slot5.name or ""
+		if RoomConfig.instance:getRoomSkinActId(slot0._roomSkinId) and slot4 ~= 0 then
+			slot5 = ActivityConfig.instance:getActivityCo(slot4) and slot6.name or ""
 		end
 
-		slot0._txtactname.text = slot4
-		slot0._txttime.text = ActivityModel.instance:getActMO(slot3) and slot5:getRemainTimeStr3(false, true) or ""
+		slot0._txtactname.text = slot5
+		slot0._txttime.text = ActivityModel.instance:getActMO(slot4) and slot6:getRemainTimeStr3(false, true) or ""
 	else
 		slot0._config = ItemModel.instance:getItemConfig(slot0.viewParam.type, slot0.viewParam.id)
-		slot4 = RoomConfig.instance:getThemeIdByItem(slot0.viewParam.id, slot0.viewParam.type) and lua_room_theme.configDict[slot3]
-		slot0._txttheme.text = slot4 and slot4.name or ""
-		slot2 = slot3 ~= nil
+		slot5 = RoomConfig.instance:getThemeIdByItem(slot0.viewParam.id, slot0.viewParam.type) and lua_room_theme.configDict[slot4]
+		slot0._txttheme.text = slot5 and slot5.name or ""
+		slot2 = slot4 ~= nil
+		slot3 = slot0._config.sourcesType
 	end
 
+	slot0.cobrandLogoItem:setSourcesTypeStr(slot3)
 	gohelper.setActive(slot0._goact, slot1)
 	gohelper.setActive(slot0._gotime, slot1)
-	gohelper.setActive(slot0._btntheme.gameObject, slot2)
+	gohelper.setActive(slot0._btntheme.gameObject, slot2 and not slot0.cobrandLogoItem:getIsShow())
 	slot0:_cloneJumpItem()
 end
 
@@ -234,6 +240,7 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._simagebg1:UnLoadImage()
 	slot0._simagebg2:UnLoadImage()
+	slot0.cobrandLogoItem:onDestroy()
 end
 
 return slot0

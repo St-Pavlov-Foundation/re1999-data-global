@@ -6,7 +6,8 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0.tr = slot1.transform
 	slot0._imgMat = gohelper.findChildImage(slot1, "imgMat")
-	slot0._imgTag = gohelper.findChildImage(slot1, "imgTag")
+	slot5 = "imgTag"
+	slot0._imgTag = gohelper.findChildImage(slot1, slot5)
 	slot0._imgBgs = slot0:getUserDataTb_()
 	slot0._imgBgGos = slot0:getUserDataTb_()
 
@@ -70,16 +71,16 @@ function slot0.updateCardInfoMO(slot0, slot1)
 		return
 	end
 
-	slot4 = FightEntityModel.instance:getById(slot1.uid)
+	slot4 = FightDataHelper.entityMgr:getById(slot1.uid)
 
 	if (not FightCardModel.instance:isUniqueSkill(slot1.uid, slot1.skillId) or not FightEnum.UniqueSkillCardLv) and FightCardModel.instance:getSkillLv(slot1.uid, slot1.skillId) == FightEnum.UniqueSkillCardLv then
 		slot3 = 1
 	end
 
-	slot10 = slot2.showTag
-	slot9 = "jnk_gj" .. slot10
+	slot9 = slot0._imgTag
+	slot10 = "jnk_gj" .. slot2.showTag
 
-	UISpriteSetMgr.instance:setFightSprite(slot0._imgTag, slot9)
+	UISpriteSetMgr.instance:setFightSprite(slot9, slot10)
 
 	for slot9, slot10 in ipairs(slot0._imgBgs) do
 		gohelper.setActive(slot10.gameObject, slot9 == slot3)

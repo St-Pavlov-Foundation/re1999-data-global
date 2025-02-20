@@ -25,7 +25,9 @@ function slot0.onSummonSingleAnimFinish(slot0)
 		return
 	end
 
-	table.sort(slot2, SummonModel.sortRewards)
+	slot6 = SummonModel.sortRewards
+
+	table.sort(slot2, slot6)
 
 	for slot6, slot7 in ipairs(slot2) do
 		if slot7.materilType == MaterialEnum.MaterialType.Currency then

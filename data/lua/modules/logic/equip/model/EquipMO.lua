@@ -21,7 +21,9 @@ function slot0.getBreakLvByLevel(slot0, slot1)
 	slot2 = math.huge
 
 	if slot0.config then
-		for slot6, slot7 in pairs(lua_equip_break_cost.configDict[slot0.config.rare]) do
+		slot6 = slot0.config.rare
+
+		for slot6, slot7 in pairs(lua_equip_break_cost.configDict[slot6]) do
 			if slot6 < slot2 and slot1 <= slot7.level then
 				slot2 = slot6
 			end
@@ -45,7 +47,9 @@ function slot0.initByConfig(slot0, slot1, slot2, slot3, slot4)
 	slot5 = math.huge
 
 	if slot0.config then
-		for slot9, slot10 in pairs(lua_equip_break_cost.configDict[slot0.config.rare]) do
+		slot9 = slot0.config.rare
+
+		for slot9, slot10 in pairs(lua_equip_break_cost.configDict[slot9]) do
 			if slot9 < slot5 and slot0.level <= slot10.level then
 				slot5 = slot9
 			end

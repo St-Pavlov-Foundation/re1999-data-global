@@ -684,6 +684,10 @@ function slot0.showDungeonView(slot0)
 		return slot2
 	end
 
+	if slot0:enterTowerView(slot1) then
+		return slot2
+	end
+
 	slot4 = false
 
 	if slot1 and DungeonConfig.instance:getElementEpisode(slot1) then
@@ -805,6 +809,47 @@ function slot0.enterFairyLandView(slot0, slot1)
 		if not FairyLandModel.instance:isFinishFairyLand() then
 			return ViewName.FairyLandView
 		end
+	end
+end
+
+function slot0.enterTowerView(slot0, slot1)
+	if not DungeonConfig.instance:getEpisodeCO(slot1) then
+		return nil
+	end
+
+	slot3 = nil
+
+	if slot2.type == DungeonEnum.EpisodeType.TowerPermanent then
+		slot3 = {
+			jumpId = TowerEnum.JumpId.TowerPermanent
+		}
+	end
+
+	if slot2.type == DungeonEnum.EpisodeType.TowerBoss then
+		slot3 = {
+			jumpId = TowerEnum.JumpId.TowerBoss,
+			towerId = TowerModel.instance:getRecordFightParam() and slot4.towerId,
+			passLayerId = slot5 and slot5.layerId
+		}
+
+		if TowerModel.instance:getFightFinishParam() and slot5.towerType == TowerEnum.TowerType.Boss then
+			-- Nothing
+		end
+	end
+
+	if slot2.type == DungeonEnum.EpisodeType.TowerLimited then
+		slot3 = {
+			jumpId = TowerEnum.JumpId.TowerLimited
+		}
+	end
+
+	if slot3 then
+		TowerModel.instance:clearFightFinishParam()
+		DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
+		slot0:enterDungeonView()
+		TowerController.instance:openMainView(slot3)
+
+		return ViewName.TowerMainView
 	end
 end
 

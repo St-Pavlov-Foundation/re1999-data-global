@@ -3,6 +3,8 @@ module("modules.logic.main.view.ActCenterItemBase", package.seeall)
 slot0 = class("ActCenterItemBase", LuaCompBase)
 
 function slot0.init(slot0, slot1)
+	slot0:__onInit()
+
 	slot0._imgitem = gohelper.findChildImage(slot1, "bg")
 	slot0._btnitem = gohelper.findChildClick(slot1, "bg")
 	slot0._goactivityreddot = gohelper.findChild(slot1, "go_activityreddot")
@@ -22,6 +24,7 @@ function slot0.onDestroyView(slot0)
 	gohelper.setActive(slot0.go, false)
 	gohelper.destroy(slot0.go)
 	slot0:onDestroy()
+	slot0:__onDispose()
 end
 
 function slot0._addEvent(slot0)
@@ -82,14 +85,6 @@ function slot0.onInit(slot0, slot1)
 end
 
 function slot0.onDestroy(slot0)
-	slot0.go = nil
-	slot0._transform = nil
-	slot0._imgitem = nil
-	slot0._btnitem = nil
-	slot0._goactivityreddot = nil
-	slot0._txttheme = nil
-	slot0._godeadline = nil
-	slot0._txttime = nil
 end
 
 function slot0.onOpen(slot0)

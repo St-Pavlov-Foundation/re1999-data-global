@@ -320,9 +320,12 @@ function slot0.tweenCameraFocusSite(slot0, slot1, slot2)
 			end
 
 			slot5.cameraFollowTargetComp:setFollowGOPath(slot2 and RoomEnum.EntityChildKey.FirstPersonCameraGOKey or RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
-			slot3.cameraFollow:setIsPass(true)
 
-			slot9, slot3.cameraFollow._offsetY, slot11 = slot5.cameraFollowTargetComp:getPositionXYZ()
+			slot9, slot10, slot11 = slot5.cameraFollowTargetComp:getPositionXYZ()
+
+			slot3.cameraFollow:setIsPass(true, slot10)
+
+			slot3.cameraFollow._offsetY = slot10
 
 			if slot2 then
 				slot13, slot14, slot15 = slot5.cameraFollowTargetComp:getRotateXYZ()
@@ -336,6 +339,8 @@ function slot0.tweenCameraFocusSite(slot0, slot1, slot2)
 			}, nil, slot0._onTweenCameraFocusSiteFinsh, slot0)
 
 			slot0._tweenCameraFocusSiteParams = true
+
+			slot3.fovblock:setLookVehicleUid(slot7, slot4.id)
 		end
 
 		return
@@ -440,10 +445,10 @@ function slot0._refreshBlockByIds(slot0, slot1)
 					table.insert(slot2, slot10)
 				end
 
-				slot15 = false
-				slot16 = true
+				slot15 = 1
+				slot16 = false
 
-				for slot15, slot16 in ipairs(RoomBlockHelper.getNearBlockEntity(false, slot8.hexPoint, 1, slot15, slot16)) do
+				for slot15, slot16 in ipairs(RoomBlockHelper.getNearBlockEntity(false, slot8.hexPoint, slot15, slot16, true)) do
 					if slot16 and not tabletool.indexOf(slot2, slot16) then
 						table.insert(slot2, slot16)
 					end

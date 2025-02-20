@@ -138,7 +138,7 @@ function slot0._updateBtns(slot0)
 end
 
 function slot0._shallowFinish(slot0)
-	return WeekWalkModel.instance:getMapInfo(205) and slot1.isFinish > 0
+	return WeekWalkModel.instance:getMapInfo(205) and slot1.isFinished > 0
 end
 
 function slot0._onChangeRightBtnVisible(slot0, slot1)
@@ -428,7 +428,9 @@ function slot0._moveTargetLayer(slot0)
 end
 
 function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayHideBtnHelp, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._delayHideBtnHelp, slot4)
 	slot0:_endAmbientSound()
 
 	for slot4, slot5 in ipairs(slot0._layerPageList) do

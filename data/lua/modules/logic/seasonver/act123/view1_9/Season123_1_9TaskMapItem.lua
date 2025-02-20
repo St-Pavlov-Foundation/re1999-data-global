@@ -19,8 +19,8 @@ function slot0.init(slot0, slot1)
 	slot0._goprogress = gohelper.findChild(slot0.go, "root/#go_progress")
 	slot0._gofinish = gohelper.findChild(slot0.go, "root/#image_finish")
 	slot0._txttime = gohelper.findChildText(slot0.go, "root/#image_finish/#txt_time")
-	slot5 = UnityEngine.CanvasGroup
-	slot0._canvasGroup = slot0.go:GetComponent(typeof(slot5))
+	slot5 = typeof
+	slot0._canvasGroup = slot0.go:GetComponent(slot5(UnityEngine.CanvasGroup))
 	slot0.progressItemList = slot0:getUserDataTb_()
 
 	for slot5 = 1, 5 do

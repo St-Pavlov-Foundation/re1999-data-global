@@ -346,7 +346,9 @@ function slot0._initRewards(slot0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_read_over)
 	end
 
-	gohelper.setActive(slot0._btngetreward.gameObject, slot3)
+	slot10 = slot3
+
+	gohelper.setActive(slot0._btngetreward.gameObject, slot10)
 
 	for slot10, slot11 in pairs(slot0._rewardItemTab) do
 		if not slot5[slot11] then

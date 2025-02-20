@@ -190,10 +190,10 @@ function slot0._onStartDownload(slot0)
 	slot0._adapter:setDownloder(slot0._downloader, slot0._httpWorker)
 	ViewMgr.instance:openView(ViewName.OptionPackageDownloadView)
 
-	slot9 = slot0
-	slot10 = slot0._adapter
+	slot9 = slot0._onDownloadFinish
+	slot10 = slot0
 
-	slot0._downloader:start(slot4, slot0._onDownloadFinish, slot9, slot10)
+	slot0._downloader:start(slot4, slot9, slot10, slot0._adapter)
 	OptionPackageModel.instance:addLocalPackSetName(slot1)
 
 	slot5 = {}

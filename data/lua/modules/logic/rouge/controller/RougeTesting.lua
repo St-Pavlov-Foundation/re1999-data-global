@@ -92,9 +92,11 @@ function slot1._make_RougeItemLayout(slot0)
 		slot2 = RougeEnum.MaxCollectionSlotSize.y
 	end
 
+	slot10 = math.random(1, slot2)
+
 	for slot10 = 1, 0 do
 		({
-			pos = slot0:_make_RougeBagPos(math.random(1, slot1), math.random(1, slot2)),
+			pos = slot0:_make_RougeBagPos(math.random(1, slot1), slot10),
 			rotation = math.random(0, 3),
 			item = slot0:_make_RougeItem(),
 			baseEffects = {},

@@ -52,10 +52,10 @@ function slot0.unloadMap(slot0)
 end
 
 function slot0.destroy(slot0)
-	slot4 = slot0._onUseItemChange
-	slot5 = slot0
+	slot4 = ExploreEvent.UseItemChanged
+	slot5 = slot0._onUseItemChange
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.UseItemChanged, slot4, slot5)
+	ExploreController.instance:unregisterCallback(slot4, slot5, slot0)
 
 	for slot4, slot5 in pairs(slot0._whirlDict) do
 		slot5:destroy()

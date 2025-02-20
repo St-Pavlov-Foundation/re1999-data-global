@@ -43,7 +43,8 @@ end
 
 function slot0.isEnterBuilingCrossLoad(slot0, slot1, slot2, slot3, slot4)
 	if RoomMapBuildingModel.instance:getBuildingParam(slot1, slot2) and slot5.isCrossload and slot5.replacResPoins then
-		slot7 = slot0:findDirectionPathList(slot3, slot4)
+		slot11 = slot4
+		slot7 = slot0:findDirectionPathList(slot3, slot11)
 
 		for slot11, slot12 in pairs(slot5.replacResPoins) do
 			for slot16, slot17 in ipairs(slot7) do
@@ -89,9 +90,10 @@ function slot0.updatePathGraphic(slot0, slot1)
 	end
 
 	slot0._lastUpdatePathGraphicTimeDic[slot1] = Time.time
-	slot9 = slot4.buildingUid
+	slot9 = slot4.rotate
+	slot10 = slot4.buildingUid
 
-	for slot9, slot10 in pairs(RoomBuildingHelper.getOccupyDict(slot4.buildingId, slot4.hexPoint, slot4.rotate, slot9)) do
+	for slot9, slot10 in pairs(RoomBuildingHelper.getOccupyDict(slot4.buildingId, slot4.hexPoint, slot9, slot10)) do
 		for slot14, slot15 in pairs(slot10) do
 			if slot2.mapmgr:getBlockEntity(RoomMapBlockModel.instance:getBlockMO(slot9, slot14).id, SceneTag.RoomMapBlock) then
 				slot2.path:updatePathGraphic(slot17.go)
@@ -105,8 +107,9 @@ end
 function slot0._closeGraphic(slot0, slot1)
 	if not gohelper.isNil(slot1) then
 		slot3 = {}
+		slot7 = slot3
 
-		ZProj.AStarPathBridge.ArrayToLuaTable(ZProj.AStarPathBridge.FindChildrenByName(slot1, "#collider"), slot3)
+		ZProj.AStarPathBridge.ArrayToLuaTable(ZProj.AStarPathBridge.FindChildrenByName(slot1, "#collider"), slot7)
 
 		for slot7, slot8 in ipairs(slot3) do
 			gohelper.setActive(slot8, false)

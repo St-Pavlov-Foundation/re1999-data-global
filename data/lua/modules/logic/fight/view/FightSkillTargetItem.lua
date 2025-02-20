@@ -8,7 +8,7 @@ function slot0.init(slot0, slot1)
 end
 
 function slot0.onUpdateMO(slot0, slot1)
-	slot2 = FightEntityModel.instance:getById(slot1)
+	slot2 = FightDataHelper.entityMgr:getById(slot1)
 
 	slot0._cardIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot2.skin).retangleIcon))
 

@@ -114,7 +114,7 @@ end
 
 function slot0._addEvents(slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshStep, slot0._onUpdateUI, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshBackground, slot0._hardTrans, slot0)
+	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshBackground, slot0._colorFadeBgRefresh, slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.ShowBackground, slot0._showBg, slot0)
 end
 
@@ -210,7 +210,11 @@ function slot0._resetData(slot0)
 	slot0._cimagebgimg.vecInSide = Vector4.zero
 	slot0._cimagebgold.vecInSide = Vector4.zero
 	slot0._bgBlur.zoneImage = nil
-	slot0._imagebg.material = nil
+
+	if slot0._imagebg.material ~= slot0._blurMat or slot0._bgCo.effType ~= StoryEnum.BgEffectType.BgBlur then
+		slot0._imagebg.material = nil
+	end
+
 	slot0._imagebgtop.material = nil
 	slot0._imagebgold.material = nil
 	slot0._imagebgoldtop.material = nil
@@ -258,6 +262,16 @@ function slot0._enterChange(slot0)
 	else
 		slot0:_commonTrans(slot0._bgCo.transType)
 	end
+end
+
+function slot0._colorFadeBgRefresh(slot0)
+	if StoryBgZoneModel.instance:getBgZoneByPath(slot0._bgCo.bgImg) then
+		slot0._cimagebgimg.enabled = true
+
+		gohelper.setActive(slot0._simagebgimgtop.gameObject, true)
+	end
+
+	slot0:_hardTrans()
 end
 
 function slot0._hardTrans(slot0)
@@ -345,6 +359,12 @@ function slot0._refreshBg(slot0)
 end
 
 function slot0._onNewBgImgLoaded(slot0)
+	if slot0._cloneBgImgTop then
+		gohelper.destroy(slot0._cloneBgImgTop)
+
+		slot0._cloneBgImgTop = nil
+	end
+
 	if not slot0._imagebg or not slot0._imagebg.sprite then
 		return
 	end
@@ -360,11 +380,6 @@ function slot0._onNewBgImgLoaded(slot0)
 
 	slot0._imagebg:SetNativeSize()
 	slot0:_checkPlayEffect()
-end
-
-function slot0._onNewBgImgTopLoaded(slot0)
-	slot0._imagebgtop:SetNativeSize()
-	slot0:_setZoneMat()
 end
 
 function slot0._showBgBottom(slot0, slot1)
@@ -409,7 +424,11 @@ end
 function slot0._loadTopBg(slot0)
 	slot1 = StoryBgZoneModel.instance:getBgZoneByPath(slot0._bgCo.bgImg)
 
-	gohelper.setActive(slot0._simagebgimgtop.gameObject, slot1)
+	if slot0._simagebgimgtop.gameObject.activeSelf then
+		slot0._cloneBgImgTop = gohelper.cloneInPlace(slot0._simagebgimgtop.gameObject)
+	end
+
+	gohelper.setActive(slot0._simagebgimgtop.gameObject, false)
 
 	if slot1 then
 		if slot0._simagebgimgtop.curImageUrl == ResUrl.getStoryRes(slot1.path) then
@@ -418,13 +437,6 @@ function slot0._loadTopBg(slot0)
 			slot0._simagebgimgtop:UnLoadImage()
 			slot0._simagebgimgtop:LoadImage(ResUrl.getStoryRes(slot1.path), slot0._onNewBgImgTopLoaded, slot0)
 			transformhelper.setLocalPosXY(slot0._simagebgimgtop.gameObject.transform, slot1.offsetX, slot1.offsetY)
-		end
-
-		if slot0._simagebgimg.curImageUrl == ResUrl.getStoryRes(slot1.sourcePath) then
-			slot0:_onNewZoneBgImgLoaded()
-		else
-			slot0._simagebgimg:UnLoadImage()
-			slot0._simagebgimg:LoadImage(ResUrl.getStoryRes(slot1.sourcePath), slot0._onNewZoneBgImgLoaded, slot0)
 		end
 	else
 		if slot0._simagebgimg.curImageUrl == ResUrl.getStoryRes(slot0._bgCo.bgImg) then
@@ -438,7 +450,20 @@ function slot0._loadTopBg(slot0)
 	end
 end
 
+function slot0._onNewBgImgTopLoaded(slot0)
+	slot0._imagebgtop:SetNativeSize()
+	slot0:_setZoneMat()
+
+	if slot0._simagebgimg.curImageUrl == ResUrl.getStoryRes(StoryBgZoneModel.instance:getBgZoneByPath(slot0._bgCo.bgImg).sourcePath) then
+		slot0:_onNewZoneBgImgLoaded()
+	else
+		slot0._simagebgimg:UnLoadImage()
+		slot0._simagebgimg:LoadImage(ResUrl.getStoryRes(slot1.sourcePath), slot0._onNewZoneBgImgLoaded, slot0)
+	end
+end
+
 function slot0._onNewZoneBgImgLoaded(slot0)
+	gohelper.setActive(slot0._simagebgimgtop.gameObject, true)
 	slot0:_onNewBgImgLoaded()
 	slot0:_setZoneMat()
 end
@@ -1091,7 +1116,7 @@ end
 
 function slot0._removeEvents(slot0)
 	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshStep, slot0._onUpdateUI, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshBackground, slot0._hardTrans, slot0)
+	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshBackground, slot0._colorFadeBgRefresh, slot0)
 	slot0:removeEventCb(StoryController.instance, StoryEvent.ShowBackground, slot0._showBg, slot0)
 end
 

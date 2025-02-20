@@ -50,9 +50,9 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._animator = slot0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	slot4 = slot0._gotargetItem
+	slot4 = slot0
 	slot0._targetTbList = {
-		slot0:_createTargetTB(slot4)
+		slot0._createTargetTB(slot4, slot0._gotargetItem)
 	}
 
 	for slot4 = #slot0._targetTbList + 1, 3 do

@@ -26,7 +26,8 @@ slot1 = {
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.StoryShow] = ViewName.ActivityStoryShowView,
 	[ActivityEnum.Activity.ClassShow] = ViewName.ActivityClassShowView,
-	[ActivityEnum.Activity.NewInsight] = ViewName.ActivityInsightShowView
+	[ActivityEnum.Activity.NewInsight] = ViewName.ActivityInsightShowView,
+	[ActivityEnum.Activity.V2a3_NewInsight] = ViewName.ActivityInsightShowView_2_3
 }
 
 function slot0.onUpdateParam(slot0)
@@ -34,6 +35,7 @@ end
 
 function slot0.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
+	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, slot0._openSubView, slot0)
 	slot0:_refreshView()
@@ -44,7 +46,9 @@ function slot0._refreshView(slot0)
 		slot0:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedWelfare(slot1)
+	slot5 = slot1
+
+	ActivityModel.instance:removeFinishedWelfare(slot5)
 
 	slot0.data = {}
 

@@ -238,20 +238,6 @@ function slot0._pressingEffectDelayDestroy(slot0)
 	slot0.effect:refreshEffect()
 end
 
-function slot0.playFaithEffect(slot0)
-	if not slot0.critterspine:getCharacterGO() then
-		return
-	end
-
-	slot0.effect:addParams({
-		[RoomEnum.EffectKey.FaithEffectKey] = {
-			res = RoomScenePreloader.ResCharacterFaithEffect,
-			containerGO = slot0.staticContainerGO
-		}
-	}, 1.8)
-	slot0.effect:refreshEffect()
-end
-
 function slot0.getMO(slot0)
 	slot0._mo = RoomCritterModel.instance:getCritterMOById(slot0.id) or slot0._mo
 

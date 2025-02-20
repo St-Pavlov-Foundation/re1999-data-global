@@ -311,9 +311,10 @@ function slot0._onStoryReplaceHero(slot0, slot1)
 		slot0._critterItem:setEffectByType(0)
 		slot0._critterItem:hideEffects()
 	else
-		slot7 = "#"
+		slot7 = "|"
+		slot8 = "#"
 
-		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, false, "|", slot7)) do
+		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, false, slot7, slot8)) do
 			slot0._critterItem:setEffectByName(slot8[2])
 			slot0._critterItem:setCritterEffectOffset(tonumber(slot8[3]), tonumber(slot8[4]))
 			slot0._critterItem:setCritterEffectScale(tonumber(slot8[5]))

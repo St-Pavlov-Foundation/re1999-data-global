@@ -136,7 +136,8 @@ function slot0._editableInitView(slot0)
 	slot0.characterClickTabs = slot0:getUserDataTb_()
 	slot1 = slot0._btnclassify.gameObject
 	slot0._goFiltering = gohelper.findChild(slot1, "btn2")
-	slot0._goFilterno = gohelper.findChild(slot1, "btn1")
+	slot5 = "btn1"
+	slot0._goFilterno = gohelper.findChild(slot1, slot5)
 
 	for slot5 = 1, 7 do
 		slot0["_gocharacter" .. slot5] = slot5 >= 4 and gohelper.findChild(slot0._gorightpage, "#go_character" .. slot5) or gohelper.findChild(slot0._goleftpage, "#go_character" .. slot5)
@@ -265,9 +266,10 @@ function slot0.findItemSubNodes(slot0, slot1)
 		simagesignature = gohelper.findChildSingleImage(slot2, "hero/txt_name/image_career/simage_signature"),
 		careerIcon = gohelper.findChildImage(slot2, "hero/txt_name/image_career"),
 		gonew = gohelper.findChild(slot2, "hero/go_new"),
-		txtname = gohelper.findChildTextMesh(slot2, "hero/txt_name"),
+		txtname = gohelper.findChildTextMesh(slot2, slot7),
 		gostars = {}
 	}
+	slot7 = "hero/txt_name"
 
 	for slot7 = 1, 6 do
 		table.insert(slot3.gostars, gohelper.findChild(slot2, "hero/txt_name/star/star" .. slot7))
@@ -542,9 +544,9 @@ function slot0.showBookItem(slot0, slot1, slot2, slot3, slot4)
 		if slot8 then
 			slot1.simagesignature:LoadImage(ResUrl.getSignature(slot2.signature))
 
-			slot13 = tostring(slot2.career)
+			slot13 = "lssx_" .. tostring(slot2.career)
 
-			UISpriteSetMgr.instance:setCommonSprite(slot1.careerIcon, "lssx_" .. slot13)
+			UISpriteSetMgr.instance:setCommonSprite(slot1.careerIcon, slot13)
 
 			slot9 = LangSettings.instance:getCurLangShortcut()
 

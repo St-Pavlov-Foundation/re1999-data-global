@@ -87,8 +87,9 @@ end
 function slot0.getCurDayBirthdayHeros(slot0)
 	slot1 = slot0:getCurDate()
 	slot2 = {}
+	slot7 = slot1.day
 
-	for slot7, slot8 in pairs(slot0:getDayAllBirthdayHeros(slot1.month, slot1.day)) do
+	for slot7, slot8 in pairs(slot0:getDayAllBirthdayHeros(slot1.month, slot7)) do
 		if HeroConfig.instance:getHeroCO(slot8).roleBirthday ~= "" then
 			if string.splitToNumber(slot9.roleBirthday, "/")[1] == slot1.month and slot10[2] == slot1.day then
 				if slot0:isHeroBirthdayGet(slot8) then
@@ -109,8 +110,9 @@ end
 
 function slot0.getNoSignBirthdayHeros(slot0, slot1, slot2)
 	slot3 = {}
+	slot8 = slot2
 
-	for slot8, slot9 in ipairs(slot0:getDayAllBirthdayHeros(slot1, slot2)) do
+	for slot8, slot9 in ipairs(slot0:getDayAllBirthdayHeros(slot1, slot8)) do
 		if HeroConfig.instance:getHeroCO(slot9).roleBirthday ~= "" then
 			if string.splitToNumber(slot10.roleBirthday, "/")[1] == slot1 and slot11[2] == slot2 and slot0:getHeroBirthdayCount(slot9) < #string.split(slot10.birthdayBonus, ";") then
 				table.insert(slot3, tonumber(slot10.id))
@@ -334,9 +336,9 @@ function slot0.isSignSeverDataGet(slot0)
 end
 
 function slot0.getValidMonthCard(slot0, slot1, slot2, slot3)
-	slot8 = 0
+	slot8 = slot3
 	slot9 = 0
-	slot4 = TimeUtil.timeToTimeStamp(slot1, slot2, slot3, slot8, slot9, 0)
+	slot4 = TimeUtil.timeToTimeStamp(slot1, slot2, slot8, slot9, 0, 0)
 
 	for slot8, slot9 in pairs(slot0._signInfo.monthCardHistory) do
 		if TimeUtil.isSameDay(slot4, slot9.startTime - TimeDispatcher.DailyRefreshTime * 3600) or TimeUtil.isSameDay(slot4, slot9.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1) then

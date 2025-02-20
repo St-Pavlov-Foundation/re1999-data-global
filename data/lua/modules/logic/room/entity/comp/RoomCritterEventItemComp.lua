@@ -141,10 +141,10 @@ function slot0._updateParticlePosOffset(slot0)
 
 		slot15:Clear()
 
-		slot19 = Vector4.New
-		slot20 = 0
+		slot19 = "_ParticlePosOffset"
+		slot20 = Vector4.New
 
-		slot15:SetVector("_ParticlePosOffset", slot19(slot20, slot0._offsetY, 0, 0))
+		slot15:SetVector(slot19, slot20(0, slot0._offsetY, 0, 0))
 
 		for slot19, slot20 in ipairs(slot1:getComponentsByKey(slot2, RoomEnum.ComponentName.Renderer)) do
 			slot20:SetPropertyBlock(slot15)

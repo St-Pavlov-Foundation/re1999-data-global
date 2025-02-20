@@ -379,6 +379,20 @@ function slot0.onReceiveTalentStyleReadReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.setHeroTalentStyleStatRequest(slot0, slot1)
+	slot2 = HeroModule_pb.HeroTalentStyleStatRequest()
+	slot2.heroId = slot1
+
+	slot0:sendMsg(slot2)
+end
+
+function slot0.onReceiveHeroTalentStyleStatReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		TalentStyleModel.instance:setHeroTalentStyleStatInfo(slot2)
+		CharacterController.instance:dispatchEvent(CharacterEvent.onHeroTalentStyleStatReply, slot2)
+	end
+end
+
 function slot0.setMarkHeroFavorRequest(slot0, slot1, slot2)
 	slot3 = HeroModule_pb.MarkHeroFavorRequest()
 	slot3.heroId = slot1
@@ -399,6 +413,85 @@ function slot0.onReceiveMarkHeroFavorReply(slot0, slot1, slot2)
 	end
 
 	CharacterController.instance:dispatchEvent(CharacterEvent.OnMarkFavorSuccess, slot2.heroId)
+end
+
+function slot0.setDestinyLevelUpRequest(slot0, slot1, slot2)
+	slot3 = HeroModule_pb.DestinyLevelUpRequest()
+	slot3.heroId = slot1
+	slot3.level = slot2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveDestinyLevelUpReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	CharacterDestinyController.instance:onLevelUpReply(slot2.heroId, slot2.level)
+end
+
+function slot0.setDestinyRankUpRequest(slot0, slot1)
+	slot2 = HeroModule_pb.DestinyRankUpRequest()
+	slot2.heroId = slot1
+
+	slot0:sendMsg(slot2)
+end
+
+function slot0.onReceiveDestinyRankUpReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	CharacterDestinyController.instance:onRankUpReply(slot2.heroId)
+end
+
+function slot0.setDestinyStoneUnlockRequest(slot0, slot1, slot2)
+	slot3 = HeroModule_pb.DestinyStoneUnlockRequest()
+	slot3.heroId = slot1
+	slot3.stoneId = slot2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveDestinyStoneUnlockReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	CharacterDestinyController.instance:onUnlockStoneReply(slot2.heroId, slot2.stoneId)
+end
+
+function slot0.setDestinyStoneUseRequest(slot0, slot1, slot2)
+	slot3 = HeroModule_pb.DestinyStoneUseRequest()
+	slot3.heroId = slot1
+	slot3.stoneId = slot2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveDestinyStoneUseReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	CharacterDestinyController.instance:onUseStoneReply(slot2.heroId, slot2.stoneId)
+end
+
+function slot0.setHeroRedDotReadRequest(slot0, slot1, slot2)
+	slot3 = HeroModule_pb.HeroRedDotReadRequest()
+	slot3.heroId = slot1
+	slot3.redDotType = slot2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveHeroRedDotReadReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	CharacterDestinyController.instance:onHeroRedDotReadReply(slot2.heroId, slot2.redDot)
 end
 
 slot0.instance = slot0.New()

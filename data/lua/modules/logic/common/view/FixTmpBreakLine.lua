@@ -1,7 +1,8 @@
 module("modules.logic.common.view.FixTmpBreakLine", package.seeall)
 
 slot0 = class("FixTmpBreakLine", LuaCompBase)
-slot1 = {
+slot1 = typeof(ZProj.LangFont)
+slot2 = {
 	"en",
 	"de",
 	"fr",
@@ -32,6 +33,8 @@ function slot0.refreshTmpContent(slot0, slot1)
 	if not slot0:startsWith(slot0.textMeshPro.text, "<nobr>") then
 		slot2 = string.format("<nobr>%s", slot2)
 	end
+
+	GameGlobalMgr.instance:getLangFont():refreshFontAsset(slot0.textMeshPro)
 
 	slot0.textMeshPro.text = slot0:replaceContent(slot2)
 

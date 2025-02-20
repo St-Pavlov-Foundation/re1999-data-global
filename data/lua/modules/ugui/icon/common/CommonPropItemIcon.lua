@@ -19,7 +19,8 @@ function slot0._editableInitView(slot0)
 	slot0._goitem = gohelper.findChild(slot0.viewGO, "go_item")
 	slot0._goequip = gohelper.findChild(slot0.viewGO, "go_equip")
 	slot0._gogold = gohelper.findChild(slot0.viewGO, "#go_gold")
-	slot0._nameTxt = gohelper.findChildText(slot0.viewGO, "txt")
+	slot4 = "txt"
+	slot0._nameTxt = gohelper.findChildText(slot0.viewGO, slot4)
 	slot0._rareInGos = slot0:getUserDataTb_()
 	slot0._hightQualityEffect = slot0:getUserDataTb_()
 
@@ -116,8 +117,10 @@ function slot0.showHighQualityEffect(slot0, slot1, slot2, slot3)
 		slot3 = slot3 or 5
 	end
 
+	slot8 = slot3
+
 	for slot8, slot9 in pairs(slot0._hightQualityEffect) do
-		if slot8 == slot3 and ItemModel.canShowVfx(slot1, slot2, slot3) then
+		if slot8 == slot3 and ItemModel.canShowVfx(slot1, slot2, slot8) then
 			gohelper.setActive(slot9, false)
 			gohelper.setActive(slot9, true)
 		else
@@ -441,6 +444,16 @@ end
 function slot0.setCanShowDeadLine(slot0, slot1)
 	if slot0._itemIcon then
 		slot0._itemIcon:setCanShowDeadLine(slot1)
+	end
+end
+
+function slot0.isExpiredItem(slot0)
+	if slot0._itemIcon then
+		return slot0._itemIcon:isExpiredItem()
+	end
+
+	if slot0._equipIcon then
+		return slot0._equipIcon:isExpiredItem()
 	end
 end
 

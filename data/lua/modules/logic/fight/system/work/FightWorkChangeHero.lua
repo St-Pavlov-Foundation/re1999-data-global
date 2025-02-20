@@ -20,25 +20,15 @@ function slot0.onStart(slot0)
 	slot0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 	slot0._targetId = slot0._actEffectMO.targetId
 	slot0._targetEntity = FightHelper.getEntity(slot0._targetId)
-	slot0._targetEntityMO = FightEntityModel.instance:getById(slot0._targetId)
 
-	if slot0._targetId ~= "0" then
-		if slot0._targetEntityMO then
-			slot0._targetEntityMO.position = FightEntityModel.instance:getById(slot0._actEffectMO.entityMO.id) and slot2.position or -1
-
-			FightEntityModel.instance:getModel(slot0._targetEntityMO.side):remove(slot0._targetEntityMO)
-			FightEntityModel.instance:getSubModel(slot0._targetEntityMO.side):addAtLast(slot0._targetEntityMO)
-		end
-	else
+	if slot0._targetId == "0" then
 		slot0._targetEntity = nil
-		slot0._targetEntityMO = nil
 	end
 
-	slot0._changedEntityMO = slot0._actEffectMO.entityMO
-	slot0._changedId = slot0._changedEntityMO.id
+	slot0._changedId = slot0._actEffectMO.entityMO.id
 	slot0._changedSubEntity = FightHelper.getEntity(slot0._changedId)
+	slot0._changedEntityMO = FightDataHelper.entityMgr:getById(slot0._changedId)
 
-	FightEntityModel.instance:addEntityMO(slot0._changedEntityMO)
 	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, slot0._targetId, slot0._changedId)
 
 	slot0._seasonUseChangeHero = FightModel.instance:isSeason2() and slot0._actEffectMO.configEffect == 1

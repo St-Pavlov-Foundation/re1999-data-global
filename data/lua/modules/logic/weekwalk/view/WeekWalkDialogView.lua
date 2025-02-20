@@ -40,7 +40,7 @@ function slot0._btnskipOnClick(slot0)
 end
 
 function slot0.OnStoryDialogSelect(slot0, slot1)
-	if slot0._optionBtnList[slot1] then
+	if slot0._optionBtnList[slot1] and slot2[1].gameObject.activeInHierarchy then
 		slot2[2]:Trigger()
 	end
 end
@@ -98,14 +98,6 @@ function slot0._editableInitView(slot0)
 
 	slot0._conMark:SetMarkTopGo(slot0._txtmarktop.gameObject)
 	slot0._conMark:SetTopOffset(0, -2)
-end
-
-function slot0.addKeyTips(slot0, slot1, slot2)
-	if PlayerPrefsHelper.getNumber("keyTips", 0) == 0 then
-		return
-	end
-
-	PCInputController.instance:showkeyTips(slot0._gopcbtn, nil, , slot2)
 end
 
 function slot0.onOpen(slot0)
@@ -310,11 +302,15 @@ function slot0._showOptionByConfig(slot0, slot1)
 				gohelper.setActive(slot9[1], false)
 			end
 
-			for slot8 = #slot3, 1, -1 do
-				slot0:_addDialogOption(slot8, slot4[slot8], slot3[slot8])
+			for slot8, slot9 in ipairs(slot3) do
+				slot0:_addDialogOption(slot8, slot4[slot8], slot3[slot8], #slot3)
 			end
 
 			gohelper.setActive(slot0._nexticon, false)
+		end
+
+		for slot8, slot9 in ipairs(slot0._optionBtnList) do
+			PCInputController.instance:showkeyTips(gohelper.findChild(slot9[1], "#go_pcbtn"), nil, , "Alpha" .. slot8)
 		end
 
 		slot2 = true
@@ -418,15 +414,15 @@ function slot0._sendFinishDialog(slot0)
 	WeekwalkRpc.instance:sendWeekwalkDialogRequest(slot0._config.id, slot1)
 end
 
-function slot0._addDialogOption(slot0, slot1, slot2, slot3)
-	slot4 = slot0._optionBtnList[slot1] and slot0._optionBtnList[slot1][1] or gohelper.cloneInPlace(slot0._gotalkitem)
+function slot0._addDialogOption(slot0, slot1, slot2, slot3, slot4)
+	slot5 = slot0._optionBtnList[slot1] and slot0._optionBtnList[slot1][1] or gohelper.cloneInPlace(slot0._gotalkitem)
 
-	gohelper.setActive(slot4, true)
+	slot5.gameObject.transform:SetSiblingIndex(slot4 - slot1)
+	gohelper.setActive(slot5, true)
 
-	gohelper.findChildText(slot4, "txt_talkitem").text = slot3
+	gohelper.findChildText(slot5, "txt_talkitem").text = slot3
 
-	slot0:addKeyTips(gohelper.findChild(slot4, "#go_pcbtn"), slot1)
-	gohelper.findChildButtonWithAudio(slot4, "btn_talkitem", AudioEnum.WeekWalk.play_artificial_ui_talkchoose):AddClickListener(slot0._onOptionClick, slot0, {
+	gohelper.findChildButtonWithAudio(slot5, "btn_talkitem", AudioEnum.WeekWalk.play_artificial_ui_talkchoose):AddClickListener(slot0._onOptionClick, slot0, {
 		slot2,
 		slot3,
 		slot1
@@ -434,7 +430,7 @@ function slot0._addDialogOption(slot0, slot1, slot2, slot3)
 
 	if not slot0._optionBtnList[slot1] then
 		slot0._optionBtnList[slot1] = {
-			slot4,
+			slot5,
 			slot7
 		}
 	end
@@ -446,13 +442,13 @@ function slot0._addDialogOption(slot0, slot1, slot2, slot3)
 	if slot1 == 1 then
 		slot10 = WeekWalkModel.instance:getCurMapConfig().type ~= 1
 
-		gohelper.setActive(gohelper.findChild(slot4, "mask"), slot10)
-		gohelper.setActive(gohelper.findChild(slot4, "chaticon"), not slot10)
+		gohelper.setActive(gohelper.findChild(slot5, "mask"), slot10)
+		gohelper.setActive(gohelper.findChild(slot5, "chaticon"), not slot10)
 		gohelper.setActive(slot7.gameObject, not slot10)
 	end
 
 	if slot1 == 2 then
-		gohelper.setActive(slot4, slot8.type ~= 1)
+		gohelper.setActive(slot5, slot8.type ~= 1)
 	end
 end
 

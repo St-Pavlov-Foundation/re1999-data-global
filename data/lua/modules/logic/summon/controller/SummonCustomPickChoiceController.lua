@@ -35,13 +35,22 @@ function slot0.trySendChoice(slot0)
 		return false
 	end
 
+	slot5 = slot0:getSelectHeroNameStr(slot3)
 	slot6, slot7 = slot0:getConfirmParam(slot3)
 
-	GameFacade.showMessageBox(slot6, MsgBoxEnum.BoxType.Yes_No, slot0.realSendChoice, nil, , slot0, nil, , slot0:getSelectHeroNameStr(slot3), slot7)
+	if SummonConfig.instance:isStrongCustomChoice(slot1) then
+		slot0:realSendChoice()
+	else
+		GameFacade.showMessageBox(slot6, MsgBoxEnum.BoxType.Yes_No, slot0.realSendChoice, nil, , slot0, nil, , slot5, slot7)
+	end
 end
 
 function slot0.realSendChoice(slot0)
-	SummonRpc.instance:sendChooseDoubleUpHeroRequest(SummonCustomPickChoiceListModel.instance:getPoolId(), SummonCustomPickChoiceListModel.instance:getSelectIds())
+	if SummonConfig.instance:isStrongCustomChoice(SummonCustomPickChoiceListModel.instance:getPoolId()) then
+		SummonRpc.instance:sendChooseEnhancedPoolHeroRequest(slot1, SummonCustomPickChoiceListModel.instance:getSelectIds()[1])
+	else
+		SummonRpc.instance:sendChooseDoubleUpHeroRequest(slot1, SummonCustomPickChoiceListModel.instance:getSelectIds())
+	end
 end
 
 function slot0.getSelectHeroNameStr(slot0, slot1)
@@ -56,7 +65,11 @@ function slot0.getSelectHeroNameStr(slot0, slot1)
 end
 
 function slot0.getConfirmParam(slot0, slot1)
-	return MessageBoxIdDefine.SummonCustomPickConfirm, SummonConfig.instance:getSummonPool(SummonCustomPickChoiceListModel.instance:getPoolId()).nameCn
+	if SummonConfig.instance:getSummonPool(SummonCustomPickChoiceListModel.instance:getPoolId()).type == SummonEnum.Type.StrongCustomOnePick then
+		return MessageBoxIdDefine.SummonStrongCustomPickConfirm, slot3.nameCn
+	else
+		return MessageBoxIdDefine.SummonCustomPickConfirm, slot3.nameCn
+	end
 end
 
 function slot0.setSelect(slot0, slot1)

@@ -51,10 +51,10 @@ function slot0._onClickDel(slot0)
 	slot2 = GMFightEntityModel.instance.entityMO
 
 	GMRpc.instance:sendGMRequest(string.format("fightDelBuff %s %s", tostring(slot2.id), tostring(slot0._mo.uid)))
-	slot2:delBuff(slot0._mo)
+	slot2:delBuff(slot0._mo.uid)
 
 	if FightHelper.getEntity(slot2.id) and slot3.buff then
-		slot3.buff:delBuff(slot0._mo)
+		slot3.buff:delBuff(slot0._mo.uid)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot2.id, FightEnum.EffectType.BUFFDEL, slot0._mo.buffId, slot0._mo.uid, 0)

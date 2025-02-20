@@ -169,7 +169,7 @@ function slot0.getMatItem(slot0, slot1)
 		slot2.txtunitNum = gohelper.findChildText(slot2.go, "#simage_productionIcon/#txt_unitNum")
 		slot2.txthasNum = gohelper.findChildText(slot2.go, "#txt_hasNum")
 		slot2.goline = gohelper.findChild(slot2.go, "#go_line")
-		slot2.btnClick = gohelper.findChildClickWithAudio(slot2.go, "#btn_click")
+		slot2.btnClick = gohelper.findChildClickWithAudio(slot2.go, "#btn_click", AudioEnum.UI.Store_Good_Click)
 
 		table.insert(slot0.matItemList, slot2)
 	end

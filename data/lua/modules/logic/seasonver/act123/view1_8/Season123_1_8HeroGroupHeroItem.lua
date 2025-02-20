@@ -10,8 +10,7 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0._goheroitem = gohelper.findChild(slot1, "heroitemani")
 	slot0.anim = slot0._goheroitem:GetComponent(typeof(UnityEngine.Animator))
-	slot5 = typeof
-	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", slot5(UnityEngine.Transform))
+	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", typeof(UnityEngine.Transform))
 	slot0._subGO = gohelper.findChild(slot1, "heroitemani/tags/aidtag")
 	slot0._aidGO = gohelper.findChild(slot1, "heroitemani/tags/storytag")
 	slot0._trialTagGO = gohelper.findChild(slot1, "heroitemani/tags/trialtag")
@@ -23,14 +22,16 @@ function slot0.init(slot0, slot1)
 	slot0._simagecharactericon = gohelper.findChildSingleImage(slot1, "heroitemani/hero/charactericon")
 	slot0._imagecareericon = gohelper.findChildImage(slot1, "heroitemani/hero/career")
 	slot0._goblackmask = gohelper.findChild(slot1, "heroitemani/hero/blackmask")
-	slot0._gostarroot = gohelper.findChild(slot1, "heroitemani/equipcard/#go_starList")
+	slot5 = "heroitemani/equipcard/#go_starList"
+	slot0._gostarroot = gohelper.findChild(slot1, slot5)
 	slot0._gostars = slot0:getUserDataTb_()
 
 	for slot5 = 1, 6 do
 		slot0._gostars[slot5] = gohelper.findChild(slot1, "heroitemani/equipcard/#go_starList/star" .. slot5)
 	end
 
-	slot0._txtlvnum = gohelper.findChildText(slot1, "heroitemani/equipcard/vertical/layout/lv/lvnum")
+	slot5 = "heroitemani/equipcard/vertical/layout/lv/lvnum"
+	slot0._txtlvnum = gohelper.findChildText(slot1, slot5)
 	slot0._goranks = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -96,7 +97,9 @@ function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
 			gohelper.setActive(slot0._goranks[slot14], slot14 == slot8 - 1)
 		end
 
-		gohelper.setActive(slot0._gostarroot, true)
+		slot14 = true
+
+		gohelper.setActive(slot0._gostarroot, slot14)
 
 		for slot14 = 1, 6 do
 			gohelper.setActive(slot0._gostars[slot14], slot14 <= CharacterEnum.Star[slot10.rare])
@@ -104,9 +107,9 @@ function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
 	elseif slot0._monsterCo then
 		slot0._simagecharactericon:LoadImage(ResUrl.getHeadIconMiddle(FightConfig.instance:getSkinCO(slot0._monsterCo.skinId).retangleIcon))
 
-		slot12 = slot0._monsterCo.career
+		slot12 = tostring(slot0._monsterCo.career)
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareericon, "lssx_" .. tostring(slot12))
+		UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareericon, "lssx_" .. slot12)
 
 		slot0._txtlvnum.text, slot8 = HeroConfig.instance:getShowLevel(slot0._monsterCo.level)
 

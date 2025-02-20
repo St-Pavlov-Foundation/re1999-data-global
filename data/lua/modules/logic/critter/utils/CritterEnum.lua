@@ -116,5 +116,10 @@ slot0.TrainOPState = {
 	PairOP = 2,
 	Normal = 1
 }
+slot0.OppenFuncGuide = {
+	RoomManufacture = 414,
+	RoomTrade = 414,
+	Critter = 414
+}
 
 return slot0

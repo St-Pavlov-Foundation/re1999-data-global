@@ -14,10 +14,10 @@ function slot0.onSceneStart(slot0, slot1, slot2)
 end
 
 function slot0._onLevelLoaded(slot0, slot1, slot2)
-	slot6 = slot0.initMapDone
-	slot7 = slot0
+	slot6 = ExploreEvent.InitMapDone
+	slot7 = slot0.initMapDone
 
-	ExploreController.instance:registerCallback(ExploreEvent.InitMapDone, slot6, slot7)
+	ExploreController.instance:registerCallback(slot6, slot7, slot0)
 
 	slot0._comps = {}
 
@@ -46,10 +46,10 @@ end
 function slot0.onSceneClose(slot0, slot1, slot2)
 	slot0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
 
-	slot6 = slot0.initMapDone
-	slot7 = slot0
+	slot6 = ExploreEvent.InitMapDone
+	slot7 = slot0.initMapDone
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, slot6, slot7)
+	ExploreController.instance:unregisterCallback(slot6, slot7, slot0)
 
 	for slot6, slot7 in pairs(slot0._comps) do
 		if slot7.unloadMap then

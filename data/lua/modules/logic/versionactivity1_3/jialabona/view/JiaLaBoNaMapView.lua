@@ -225,7 +225,8 @@ function slot0._initStages(slot0)
 		end
 	end
 
-	slot0._episodeCfgList, slot0._chapterIdList = Activity120Config.instance:getEpisodeList(VersionActivity1_3Enum.ActivityId.Act306)
+	slot7 = VersionActivity1_3Enum.ActivityId.Act306
+	slot0._episodeCfgList, slot0._chapterIdList = Activity120Config.instance:getEpisodeList(slot7)
 
 	for slot7, slot8 in ipairs(slot0._episodeCfgList) do
 		slot0._stageItemList[slot7]:setCfg(slot8)

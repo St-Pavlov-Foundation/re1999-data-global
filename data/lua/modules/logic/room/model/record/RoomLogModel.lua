@@ -19,9 +19,11 @@ function slot0.setInfos(slot0, slot1)
 	slot0._list = {}
 	slot0._newLog = nil
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot6(slot0, slot1)
 		return slot1.time < slot0.time
-	end)
+	end
+
+	table.sort(slot1, slot6)
 
 	for slot6, slot7 in ipairs(slot1) do
 		slot0:setConfigByType(slot7, {

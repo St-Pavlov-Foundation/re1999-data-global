@@ -11,7 +11,7 @@ function slot0.init(slot0, slot1)
 end
 
 function slot0.updateSkillGrowUp(slot0, slot1)
-	slot0.currGrowUpTime = slot0.currGrowUpTime + slot1
+	slot0.currGrowUpTime = math.max(slot0.currGrowUpTime + slot1, 0)
 end
 
 function slot0.needShowGrowUp(slot0)

@@ -51,7 +51,9 @@ function slot0.init(slot0, slot1)
 		slot0.groupInfoMap[slot7.id] = slot7
 	end
 
-	slot0:updateGroupBoxStar(slot1.groupBoxStar)
+	slot5 = slot1.groupBoxStar
+
+	slot0:updateGroupBoxStar(slot5)
 
 	slot0.equipUids = {}
 	slot0.equipUidsMap = {}

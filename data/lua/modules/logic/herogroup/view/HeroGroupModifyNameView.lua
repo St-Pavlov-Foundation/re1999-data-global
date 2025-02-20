@@ -56,7 +56,7 @@ function slot0._onBtnSure(slot0)
 		return
 	end
 
-	HeroGroupRpc.instance:sendUpdateHeroGroupNameRequest(HeroGroupModel.instance.curGroupSelectIndex, slot1, slot0.onReq, slot0)
+	HeroGroupRpc.instance:sendUpdateHeroGroupNameRequest(HeroGroupModel.instance:getHeroGroupSnapshotType(), HeroGroupModel.instance:getHeroGroupSelectIndex(), slot1, slot0.onReq, slot0)
 end
 
 function slot0.onReq(slot0, slot1, slot2, slot3)
@@ -64,7 +64,7 @@ function slot0.onReq(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	HeroGroupModel.instance:setCommonGroupName(slot3.currentSelect, slot3.name)
+	HeroGroupModel.instance:setCommonGroupName(slot3.currentSelect, slot3.name, slot3.id)
 	slot0:closeThis()
 end
 

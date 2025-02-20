@@ -62,7 +62,7 @@ function slot0._addSkinRes(slot0, slot1, slot2)
 
 	ResSplitModel.instance:setExclude(ResSplitEnum.Path, string.sub(slot6, 1, string.len(slot6) - 1), slot2)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.format("roles/%s/", string.split(slot1.spine, "/")[1]), slot2)
-	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.format("roles/%s/", slot1.alternateSpine), slot2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.format("roles/%s/", string.split(slot1.alternateSpine, "/")[1]), slot2)
 
 	if slot2 == false then
 		FightConfig.instance:_checkskinSkill()

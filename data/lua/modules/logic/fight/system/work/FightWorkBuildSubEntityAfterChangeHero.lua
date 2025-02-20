@@ -8,16 +8,16 @@ end
 
 function slot0.onStart(slot0)
 	if not FightHelper.getSubEntity(FightEnum.EntitySide.MySide) then
-		slot3 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()
+		slot2 = FightDataHelper.entityMgr:getMySubList()
 
-		table.sort(slot3, FightEntityModel.sortSubEntityList)
+		table.sort(slot2, FightEntityDataHelper.sortSubEntityList)
 
-		if slot3[1] then
+		if slot2[1] then
 			slot0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-			slot0._entityId = slot4.id
+			slot0._entityId = slot3.id
 
 			slot0:com_registFightEvent(FightEvent.OnSpineLoaded, slot0._onNextSubSpineLoaded)
-			slot0._entityMgr:buildSubSpine(slot4)
+			slot0._entityMgr:buildSubSpine(slot3)
 
 			return
 		end

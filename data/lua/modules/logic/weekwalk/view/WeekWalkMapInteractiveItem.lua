@@ -208,10 +208,13 @@ function slot0._onHide(slot0)
 	UIBlockMgr.instance:startBlock("dungeonmap_interactive_out")
 	slot0:_playAnim(slot0._gonext, "dungeonmap_interactive_btn_out")
 
-	slot4 = "dungeonmap_interactive_btn_out"
+	slot5 = "dungeonmap_interactive_btn_out"
 
-	slot0:_playAnim(slot0._gofinishtalk, slot4)
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
+	slot0:_playAnim(slot0._gofinishtalk, slot5)
+
+	slot4 = AudioEnum.UI.play_ui_checkpoint_continuedisappear
+
+	AudioMgr.instance:trigger(slot4)
 
 	for slot4, slot5 in pairs(slot0._optionBtnList) do
 		slot0:_playAnim(slot5[1], "dungeonmap_interactive_btn_out")

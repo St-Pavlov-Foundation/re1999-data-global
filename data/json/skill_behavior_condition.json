@@ -15506,5 +15506,2345 @@
   {
     "id": 73209,
     "type": "TeammateAliveNum"
+  },
+  {
+    "id": 660,
+    "type": "PerDecrExPoint"
+  },
+  {
+    "id": 660008,
+    "type": "PerDecrExPoint"
+  },
+  {
+    "id": 661301,
+    "type": "NoActionUnit"
+  },
+  {
+    "id": 661302,
+    "type": "NoActionUnit"
+  },
+  {
+    "id": 661303,
+    "type": "NoActionUnit"
+  },
+  {
+    "id": 661304,
+    "type": "NoActionUnit"
+  },
+  {
+    "id": 661307,
+    "type": "NoActionUnit"
+  },
+  {
+    "id": 662201,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662202,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662203,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662204,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662205,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662206,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662207,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662208,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662209,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662210,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662211,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662212,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662213,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662214,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 662215,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 6622032,
+    "type": "ActiveUseSkillId"
+  },
+  {
+    "id": 192032,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 663100,
+    "type": "IndicatorCompare"
+  },
+  {
+    "id": 664017,
+    "type": "AssistBossPerLostPower"
+  },
+  {
+    "id": 664201,
+    "type": "AssistBossPerLostPower"
+  },
+  {
+    "id": 665017,
+    "type": "AssistBossLostPowerCompare"
+  },
+  {
+    "id": 665201,
+    "type": "AssistBossLostPowerCompare"
+  },
+  {
+    "id": 665210,
+    "type": "AssistBossLostPowerCompare"
+  },
+  {
+    "id": 665212,
+    "type": "AssistBossLostPowerCompare"
+  },
+  {
+    "id": 73210,
+    "type": "TeammateAliveNum"
+  },
+  {
+    "id": 51212999,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 51213999,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 18302,
+    "type": "HasBuff"
+  },
+  {
+    "id": 18303,
+    "type": "HasBuff"
+  },
+  {
+    "id": 666,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666002,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666004,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666100,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666101,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666102,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666103,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666104,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666105,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666106,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666201,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666202,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666203,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666204,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666205,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666206,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666207,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666208,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666209,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666210,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666211,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666212,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666213,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666301,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666302,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666303,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666304,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666305,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666306,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666307,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666401,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 666402,
+    "type": "PerBuffByTeamX"
+  },
+  {
+    "id": 667,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667002,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667004,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667100,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667101,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667102,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667103,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667104,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667105,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667106,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667201,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667202,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667203,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667204,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667205,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667206,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667207,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667208,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667209,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667210,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667211,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667212,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667213,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667301,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667302,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667303,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667304,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667305,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667306,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667307,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667401,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 667402,
+    "type": "PerBuffLayerByTeamX"
+  },
+  {
+    "id": 678,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 678402,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 678212,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 678213,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 519002,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519004,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519100,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519101,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519102,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519103,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519104,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519105,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519106,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519201,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519202,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519203,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519204,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519205,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519206,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519207,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519208,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519209,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519210,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519211,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519212,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519213,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519303,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519304,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519305,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519306,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519307,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519401,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 519402,
+    "type": "PerSelfTeamHasBuffTypeLayer"
+  },
+  {
+    "id": 668002,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668004,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668100,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668101,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668102,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668103,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668104,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668105,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668106,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668201,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668202,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668203,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668204,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668205,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668206,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668207,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668208,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668209,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668210,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668211,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668212,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668213,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668301,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668302,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668303,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668304,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668305,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668306,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668307,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668401,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 668402,
+    "type": "HasBuffGroupIdMoreThan"
+  },
+  {
+    "id": 669002,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669004,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669100,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669101,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669102,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669103,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669104,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669105,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669106,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669201,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669202,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669203,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669204,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669205,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669206,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669207,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669208,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669209,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669210,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669211,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669212,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669213,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669301,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669302,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669303,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669304,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669305,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669306,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669307,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669401,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 669402,
+    "type": "PerBuffGroupCount"
+  },
+  {
+    "id": 77002,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77004,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77100,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77101,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77102,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77103,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77104,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77105,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77106,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77201,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77202,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77204,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77205,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77206,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77207,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77209,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77210,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77211,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77212,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77213,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77301,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77302,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77303,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77304,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77305,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77306,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77307,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77401,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 77402,
+    "type": "HasBuffGroup"
+  },
+  {
+    "id": 78002,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78004,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78100,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78101,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78103,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78104,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78105,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78106,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78201,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78202,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78203,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78204,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78205,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78206,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78207,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78208,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78209,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78210,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78211,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78212,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78213,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78301,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78302,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78303,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78304,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78305,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78306,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78307,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78401,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 78402,
+    "type": "NoBuffGroup"
+  },
+  {
+    "id": 681017,
+    "type": "OwnerPerPowerChange"
+  },
+  {
+    "id": 507203,
+    "type": "UseSkillId"
+  },
+  {
+    "id": 552017,
+    "type": "Random"
+  },
+  {
+    "id": 12100,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12101,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12102,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12103,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12104,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12105,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 12106,
+    "type": "LostLifePer"
+  },
+  {
+    "id": 1100,
+    "type": "LifeLess"
+  },
+  {
+    "id": 61307,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 61304,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 679002,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679004,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679100,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679101,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679103,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679104,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679105,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679106,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679201,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679202,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679203,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679204,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679205,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679206,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679207,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679208,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679209,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679210,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679211,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679212,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679213,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679301,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679302,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679303,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679304,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679305,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679306,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679307,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679401,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 679402,
+    "type": "PerCardDeckHasSkillEffectTag"
+  },
+  {
+    "id": 680002,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680004,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680100,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680101,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680103,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680104,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680105,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680106,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680201,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680202,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680203,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680204,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680205,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680206,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680207,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680208,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680209,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680210,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680211,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680212,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680213,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680301,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680302,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680303,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680304,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680305,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680306,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680307,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680401,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 680402,
+    "type": "TeamUseSkillEffectTag"
+  },
+  {
+    "id": 552402,
+    "type": "Random"
+  },
+  {
+    "id": 513104,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 513102,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 66211,
+    "type": "UseSpecificSkill"
+  },
+  {
+    "id": 57307,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 30012,
+    "type": "AttackCrit"
+  },
+  {
+    "id": 512204,
+    "type": "HasTypeBuffIdsLessThan"
+  },
+  {
+    "id": 551212,
+    "type": "BeAttackedByEffectTag"
+  },
+  {
+    "id": 510304,
+    "type": "MultiHpXIn"
+  },
+  {
+    "id": 681002,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681004,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681100,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681101,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681103,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681104,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681105,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681106,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681201,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681202,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681203,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681204,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681205,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681206,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681207,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681208,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681209,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681210,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681211,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681212,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681213,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681301,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681302,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681303,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681304,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681305,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681306,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681307,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681401,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 681402,
+    "type": "Act174HeroStar"
+  },
+  {
+    "id": 682002,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682004,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682100,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682101,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682103,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682104,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682105,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682106,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682201,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682202,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682203,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682204,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682205,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682206,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682207,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682208,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682209,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682210,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682211,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682212,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682213,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682301,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682302,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682303,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682304,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682305,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682306,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682307,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682401,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 682402,
+    "type": "Act174HeroCareer"
+  },
+  {
+    "id": 683002,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683004,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683005,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683100,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683101,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683103,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683104,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683105,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683106,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683201,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683202,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683203,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683204,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683205,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683206,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683207,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683208,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683209,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683210,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683211,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683212,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683213,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683301,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683302,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683303,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683304,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683305,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683306,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683307,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683401,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 683402,
+    "type": "Act174PerStarHeroCount"
+  },
+  {
+    "id": 684002,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684004,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684100,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684101,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684103,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684104,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684105,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684106,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684201,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684202,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684203,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684204,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684205,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684206,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684207,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684208,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684209,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684210,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684211,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684212,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684213,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684301,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684302,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684303,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684304,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684305,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684306,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684307,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684401,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 684402,
+    "type": "Act174PerItemGroupCount"
+  },
+  {
+    "id": 685002,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685004,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685100,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685101,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685103,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685104,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685105,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685106,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685201,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685202,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685203,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685204,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685205,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685206,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685207,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685208,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685209,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685210,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685211,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685212,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685213,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685301,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685302,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685303,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685304,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685305,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685306,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685307,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685401,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 685402,
+    "type": "Act174TeamItemQualityCountGE"
+  },
+  {
+    "id": 686002,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686004,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686100,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686101,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686103,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686104,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686105,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686106,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686201,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686202,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686203,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686204,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686205,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686206,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686207,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686208,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686209,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686210,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686211,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686212,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686213,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686301,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686302,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686303,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686304,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686305,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686306,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686307,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686401,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 686402,
+    "type": "Act174TeamItemIdCountGE"
+  },
+  {
+    "id": 687002,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687004,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687100,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687101,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687103,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687104,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687105,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687106,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687201,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687202,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687203,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687204,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687205,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687206,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687207,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687208,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687209,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687210,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687211,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687212,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687213,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687301,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687302,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687303,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687304,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687305,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687306,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687307,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687401,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 687402,
+    "type": "Act174TeamTotalQualityCountGE"
+  },
+  {
+    "id": 688002,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688004,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688100,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688101,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688103,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688104,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688105,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688106,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688201,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688202,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688203,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688204,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688205,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688206,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688207,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688208,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688209,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688210,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688211,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688212,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688213,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688301,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688302,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688303,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688304,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688305,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688306,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688307,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688401,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 688402,
+    "type": "Act174AfterAct"
+  },
+  {
+    "id": 517002,
+    "type": "PerHasTargetCareer"
+  },
+  {
+    "id": 517101,
+    "type": "PerHasTargetCareer"
+  },
+  {
+    "id": 24101,
+    "type": "TeammateAlive"
+  },
+  {
+    "id": 60202,
+    "type": "PerBuff"
+  },
+  {
+    "id": 6212,
+    "type": "UseSkillStar"
+  },
+  {
+    "id": 18211,
+    "type": "HasBuff"
+  },
+  {
+    "id": 511208,
+    "type": "HasTypeBuffIdsMoreThan"
+  },
+  {
+    "id": 93005,
+    "type": "BuffGroupDel"
   }
 ]

@@ -43,5 +43,50 @@
     "itemId": 0,
     "jumpId": 6,
     "bonus": "1#510010#1"
+  },
+  {
+    "id": 1231801,
+    "activityId": 12318,
+    "isOnline": 1,
+    "minType": "language_10062049",
+    "name": "language_10058300",
+    "desc": "language_10058301",
+    "openLimit": "",
+    "listenerType": "HeroRankCount",
+    "listenerParam": "2",
+    "maxProgress": 1,
+    "itemId": 489092,
+    "jumpId": 6,
+    "bonus": "24#489092#1"
+  },
+  {
+    "id": 1231802,
+    "activityId": 12318,
+    "isOnline": 1,
+    "minType": "language_10062049",
+    "name": "language_10058302",
+    "desc": "language_10058303",
+    "openLimit": "",
+    "listenerType": "HeroRankCount",
+    "listenerParam": "3",
+    "maxProgress": 2,
+    "itemId": 489093,
+    "jumpId": 6,
+    "bonus": "24#489093#1"
+  },
+  {
+    "id": 1231803,
+    "activityId": 12318,
+    "isOnline": 1,
+    "minType": "language_10062049",
+    "name": "language_10058304",
+    "desc": "language_10058305",
+    "openLimit": "",
+    "listenerType": "HeroRankCount",
+    "listenerParam": "4",
+    "maxProgress": 1,
+    "itemId": 0,
+    "jumpId": 6,
+    "bonus": "1#510010#1"
   }
 ]

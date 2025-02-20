@@ -50,7 +50,9 @@ slot1 = {
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.ORIGINDAMAGE] = true,
-	[FightEnum.EffectType.ORIGINCRIT] = true
+	[FightEnum.EffectType.ORIGINCRIT] = true,
+	[FightEnum.EffectType.ADDITIONALDAMAGE] = true,
+	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = true
 }
 slot2 = {
 	[FightEnum.EffectType.SHIELD] = true,

@@ -45,6 +45,8 @@ function slot0.addEvents(slot0)
 	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
 	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, slot0._btnnoOnClick, slot0)
+	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, slot0._onKeyExit, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -57,6 +59,8 @@ function slot0.removeEvents(slot0)
 	slot0._btnno:RemoveClickListener()
 	slot0._btncloserule:RemoveClickListener()
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, slot0._btnnoOnClick, slot0)
+	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, slot0._onKeyExit, slot0)
 end
 
 function slot0._onOpenView(slot0, slot1)
@@ -127,8 +131,22 @@ function slot0._setQuitText(slot0)
 	slot0._descTxt.text = luaLang("confirm_quit")
 end
 
+function slot0._onKeyExit(slot0)
+	if slot0._goquitshowview and not ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
+		slot0:_btnsureOnClick()
+	end
+end
+
 function slot0._btnsureOnClick(slot0)
 	slot0:closeThis()
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		FightSystem.instance:dispose()
+		FightModel.instance:clearRecordMO()
+		FightController.instance:exitFightScene()
+
+		return
+	end
 
 	if FightModel.instance:getCurStage() ~= FightEnum.Stage.EndRound and slot1 ~= FightEnum.Stage.End then
 		if not FightModel.instance:getFightParam().isTestFight then
@@ -179,7 +197,10 @@ function slot0._editableInitView(slot0)
 	end
 
 	gohelper.setActive(slot0._goruleitem, false)
-	gohelper.setActive(slot0._goadditiondetail, false)
+
+	slot5 = false
+
+	gohelper.setActive(slot0._goadditiondetail, slot5)
 
 	slot0._ruleItemsImage = slot0:getUserDataTb_()
 	slot0._ruleItemsDescImage = slot0:getUserDataTb_()
@@ -192,6 +213,8 @@ function slot0._editableInitView(slot0)
 	gohelper.addUIClickAudio(slot0._btncontinuegame.gameObject, AudioEnum.UI.Play_UI_Tags)
 	gohelper.addUIClickAudio(slot0._btnsure.gameObject, AudioEnum.UI.Play_UI_Rolesout)
 	gohelper.addUIClickAudio(slot0._btnno.gameObject, AudioEnum.UI.Play_UI_Tags)
+	PCInputController.instance:showkeyTips(gohelper.findChild(slot0._btnsure.gameObject, "#go_pcbtn"), nil, , "Return")
+	PCInputController.instance:showkeyTips(gohelper.findChild(slot0._btnno.gameObject, "#go_pcbtn"), nil, , "Esc")
 end
 
 function slot0.onUpdateParam(slot0)
@@ -316,7 +339,7 @@ function slot0._getPlatinumProgress7(slot0)
 
 	for slot7, slot8 in ipairs(slot1) do
 		for slot13, slot14 in ipairs(slot8.fightStepMOs) do
-			if slot14.hasPlay and slot14.actType == FightEnum.ActType.SKILL and (FightEntityModel.instance:getById(slot14.fromId) or FightEntityModel.instance:getDeadById(slot14.fromId)) and slot15.side == FightEnum.EntitySide.MySide and slot15:isUniqueSkill(slot14.actId) then
+			if slot14.hasPlay and slot14.actType == FightEnum.ActType.SKILL and FightDataHelper.entityMgr:getById(slot14.fromId) and slot15.side == FightEnum.EntitySide.MySide and slot15:isUniqueSkill(slot14.actId) then
 				slot9 = 0 + 1
 			end
 		end
@@ -345,11 +368,11 @@ function slot0._getPlatinumProgress8(slot0)
 
 	for slot7, slot8 in ipairs(slot1) do
 		for slot12, slot13 in ipairs(slot8.fightStepMOs) do
-			slot14 = FightEntityModel.instance:getById(slot13.fromId) or FightEntityModel.instance:getDeadById(slot13.fromId)
+			slot14 = FightDataHelper.entityMgr:getById(slot13.fromId)
 
 			if slot13.hasPlay and slot14 and slot14.side == FightEnum.EntitySide.MySide then
 				for slot19, slot20 in ipairs(slot13.actEffectMOs) do
-					if (FightEntityModel.instance:getById(slot20.targetId) or FightEntityModel.instance:getDeadById(slot20.targetId)) and slot21.side == FightEnum.EntitySide.EnemySide then
+					if FightDataHelper.entityMgr:getById(slot20.targetId) and slot21.side == FightEnum.EntitySide.EnemySide then
 						if uv0[slot20.effectType] then
 							slot15 = 0 + slot20.effectNum
 						elseif slot20.effectType == FightEnum.EffectType.SHIELDDEL then
@@ -369,9 +392,9 @@ function slot0._getPlatinumProgress8(slot0)
 end
 
 function slot0._getPlatinumProgress9(slot0)
-	slot2 = FightEntityModel.instance:getMySideDeadListLength()
+	slot2 = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
 
-	for slot7, slot8 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot3 = 0 + slot8.currentHp / slot8.attrMO.hp
 	end
 
@@ -407,7 +430,7 @@ function slot0.checkPlatCondition(slot0, slot1)
 	slot4 = FightModel.instance:getCurRoundId()
 
 	if tonumber(slot2.type) == 1 then
-		return FightEntityModel.instance:getMySideDeadListLength() < tonumber(slot2.attr)
+		return #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide) < tonumber(slot2.attr)
 	elseif tonumber(slot2.type) == 2 then
 		return slot4 <= tonumber(slot2.attr)
 	elseif tonumber(slot2.type) == 3 then

@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkCardRemove", package.seeall)
 slot0 = class("FightWorkCardRemove", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return
@@ -16,7 +16,7 @@ function slot0.onStart(slot0)
 	if #string.splitToNumber(slot0._actEffectMO.reserveStr, "#") > 0 then
 		table.sort(slot1, FightWorkCardRemove2.sort)
 
-		slot3 = FightCardMOHelper.calcRemoveCardTime(tabletool.copy(FightCardModel.instance:getHandCards()), slot1)
+		slot3 = FightCardDataHelper.calcRemoveCardTime(tabletool.copy(FightCardModel.instance:getHandCards()), slot1)
 
 		for slot7, slot8 in ipairs(slot1) do
 			table.remove(slot2, slot8)

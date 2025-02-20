@@ -261,7 +261,10 @@ function slot0.getHeroMoList(slot0)
 	if string.nilorempty(slot0.filterText) then
 		slot1 = HeroModel.instance:getList()
 	else
-		for slot5, slot6 in ipairs(HeroModel.instance:getList()) do
+		slot4 = HeroModel.instance
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getList(slot6)) do
 			if string.match(slot6.config.name, slot0.filterText) then
 				table.insert(slot1, slot6)
 			end
@@ -275,11 +278,17 @@ function slot0.getEquipMoList(slot0)
 	slot1 = {}
 
 	if string.nilorempty(slot0.filterText) then
-		for slot5, slot6 in ipairs(EquipModel.instance:getEquips()) do
+		slot4 = EquipModel.instance
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getEquips(slot6)) do
 			table.insert(slot1, slot6)
 		end
 	else
-		for slot5, slot6 in ipairs(EquipModel.instance:getEquips()) do
+		slot4 = EquipModel.instance
+		slot6 = slot4
+
+		for slot5, slot6 in ipairs(slot4.getEquips(slot6)) do
 			if string.match(slot6.config.name, slot0.filterText) then
 				table.insert(slot1, slot6)
 			end

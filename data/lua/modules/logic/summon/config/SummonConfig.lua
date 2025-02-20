@@ -227,6 +227,14 @@ function slot0.getSummonDetailIdByHeroId(slot0, slot1)
 	end
 end
 
+function slot0.isStrongCustomChoice(slot0, slot1)
+	if uv0.instance:getSummonPool(slot1) then
+		return slot2.type == SummonEnum.Type.StrongCustomOnePick
+	end
+
+	return false
+end
+
 slot0.instance = slot0.New()
 
 return slot0

@@ -39,7 +39,9 @@ function slot0._editableInitView(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.delayInitScrollAudio, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0.delayInitScrollAudio, slot4)
 
 	for slot4, slot5 in pairs(slot0._heroItems) do
 		if slot5.icon then

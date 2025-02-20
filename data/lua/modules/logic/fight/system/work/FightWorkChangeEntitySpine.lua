@@ -29,6 +29,7 @@ function slot0._onLoaded(slot0)
 			end
 		end
 
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, slot0._entity.spine)
 		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, slot0._entity.spine)
 	end
 

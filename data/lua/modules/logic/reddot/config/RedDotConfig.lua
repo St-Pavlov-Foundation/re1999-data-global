@@ -26,6 +26,10 @@ function slot0.getRedDotCO(slot0, slot1)
 	return slot0._dotConfig.configDict[slot1]
 end
 
+function slot0.getParentRedDotId(slot0, slot1)
+	return slot0:getRedDotCO(slot1) and slot2.parent or 0
+end
+
 slot0.instance = slot0.New()
 
 return slot0

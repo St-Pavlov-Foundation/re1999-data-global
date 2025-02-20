@@ -329,7 +329,7 @@ end
 function slot0._startDownload(slot0)
 	logNormal("HotUpdateMgr:_startDownload, 开始下载！")
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_download)
-	slot0:_setUseReserveDomain()
+	SLFramework.GameUpdate.HotUpdate.Instance:SetUseReserveDomain(slot0:getUseBackup())
 	slot0._eventMgrInst:DoRetryAction()
 end
 

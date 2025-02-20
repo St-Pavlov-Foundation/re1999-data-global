@@ -27,7 +27,9 @@ function slot0.getAct154Co(slot0, slot1, slot2)
 end
 
 function slot0.getPuzzleCo(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._actCfgDict[ActivityEnum.Activity.LanternFestival]) do
+	slot5 = ActivityEnum.Activity.LanternFestival
+
+	for slot5, slot6 in pairs(slot0._actCfgDict[slot5]) do
 		if slot6.puzzleId == slot1 then
 			return slot6
 		end

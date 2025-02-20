@@ -1,9 +1,21 @@
 module("modules.common.global.gamestate.GameLangFont", package.seeall)
 
 slot0 = class("GameLangFont")
-slot1 = 1
-slot2 = 2
-slot3 = 3
+slot1 = typeof(ZProj.LangFont)
+
+function slot0.refreshFontAsset(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	if slot0._id2TmpFontAssetDict[slot1:GetComponent(uv0).id] then
+		slot1.font = slot4
+	end
+end
+
+slot2 = 1
+slot3 = 2
+slot4 = 3
 
 function slot0.ctor(slot0)
 	slot0._loadStatus = uv0

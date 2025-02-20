@@ -41,7 +41,7 @@ function slot0.updateByBeginRoundOp(slot0, slot1)
 		return slot0:hideResistanceGo()
 	end
 
-	if not FightEntityModel.instance:getById(slot2) then
+	if not FightDataHelper.entityMgr:getById(slot2) then
 		return slot0:hideResistanceGo()
 	end
 
@@ -71,7 +71,7 @@ function slot0.updateByCardInfo(slot0, slot1)
 		return slot0:hideResistanceGo()
 	end
 
-	if not FightEntityModel.instance:getById(slot3) then
+	if not FightDataHelper.entityMgr:getById(slot3) then
 		return slot0:hideResistanceGo()
 	end
 
@@ -87,7 +87,7 @@ function slot0.updateBySkillDisplayMo(slot0, slot1)
 		return slot0:hideResistanceGo()
 	end
 
-	if not FightEntityModel.instance:getById(slot2) then
+	if not FightDataHelper.entityMgr:getById(slot2) then
 		return slot0:hideResistanceGo()
 	end
 

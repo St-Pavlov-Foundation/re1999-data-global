@@ -156,11 +156,13 @@ function slot0.getToastMsg(slot0, slot1, ...)
 end
 
 function slot0.getToastMsgWithTableParam(slot0, slot1, slot2)
-	if slot2 then
-		return slot0:getToastMsg(slot1, unpack(slot2))
-	else
-		return slot0:getToastMsg(slot1)
+	if not (slot1 and ToastConfig.instance:getToastCO(slot1)) then
+		logError("[ToastController] P飘字表.xlsx - export_飘字表 sheet error 不存在 toastId = " .. tostring(slot1))
+
+		return ""
 	end
+
+	return slot2 and #slot2 > 0 and GameUtil.getSubPlaceholderLuaLang(slot3.tips, slot2) or slot3.tips
 end
 
 function slot0.isExpire(slot0, slot1)

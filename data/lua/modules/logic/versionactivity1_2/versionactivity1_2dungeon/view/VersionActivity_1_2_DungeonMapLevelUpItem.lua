@@ -74,11 +74,13 @@ end
 function slot0.onOpen(slot0)
 	slot0._simagebgimag:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg_neirongdi_2"))
 
-	slot0._elementData = VersionActivity1_2DungeonModel.instance:getElementData(slot0._config.id)
-	slot0._levelList = {}
 	slot4 = slot0._config.id
+	slot0._elementData = VersionActivity1_2DungeonModel.instance:getElementData(slot4)
+	slot0._levelList = {}
+	slot3 = VersionActivity1_2DungeonConfig.instance
+	slot5 = slot3
 
-	for slot4, slot5 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot4)) do
+	for slot4, slot5 in pairs(slot3.getBuildingConfigsByElementID(slot5, slot0._config.id)) do
 		table.insert(slot0._levelList, slot5)
 	end
 

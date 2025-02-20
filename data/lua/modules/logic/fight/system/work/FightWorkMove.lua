@@ -19,48 +19,44 @@ function slot0.onStart(slot0)
 	slot0._cacheEntityIds = {}
 
 	if #string.split(slot0._actEffectMO.reserveStr, "|") > 0 then
-		AudioMgr.instance:trigger(410000090)
+		slot5 = 410000090
+
+		AudioMgr.instance:trigger(slot5)
 
 		for slot5, slot6 in ipairs(slot1) do
-			slot7 = string.split(slot6, "#")
+			if FightDataHelper.entityMgr:getById(string.split(slot6, "#")[1]) and FightHelper.getEntity(slot8) and slot10.mover then
+				slot11, slot12, slot13, slot14 = FightHelper.getEntityStandPos(slot9)
+				slot15 = FlowParallel.New()
 
-			if FightEntityModel.instance:getById(slot7[1]) then
-				slot10.position = tonumber(slot7[2]) or 1
-
-				if FightHelper.getEntity(slot8) and slot11.mover then
-					slot12, slot13, slot14, slot15 = FightHelper.getEntityStandPos(slot10)
-					slot16 = FlowParallel.New()
-
-					slot16:addWork(FunctionWork.New(slot0._playEffect, slot0, slot11))
-					slot16:addWork(TweenWork.New({
-						type = "DOScale",
-						tr = slot11.go.transform,
-						to = slot15,
-						t = slot0._performanceTime,
-						ease = EaseType.InOutQuad
-					}))
-					slot16:addWork(TweenWork.New({
-						from = 0,
-						type = "DOTweenFloat",
-						to = 1,
-						t = slot0._performanceTime,
-						frameCb = slot0._onFloat,
-						cbObj = slot0,
-						param = slot11,
-						ease = EaseType.InOutQuad
-					}))
-					slot16:addWork(TweenWork.New({
-						type = "DOMove",
-						tr = slot11.go.transform,
-						tox = slot12,
-						toy = slot13,
-						toz = slot14,
-						t = slot0._performanceTime,
-						ease = EaseType.InOutQuad
-					}))
-					slot0._flow:addWork(slot16)
-					table.insert(slot0._cacheEntityIds, slot10.id)
-				end
+				slot15:addWork(FunctionWork.New(slot0._playEffect, slot0, slot10))
+				slot15:addWork(TweenWork.New({
+					type = "DOScale",
+					tr = slot10.go.transform,
+					to = slot14,
+					t = slot0._performanceTime,
+					ease = EaseType.InOutQuad
+				}))
+				slot15:addWork(TweenWork.New({
+					from = 0,
+					type = "DOTweenFloat",
+					to = 1,
+					t = slot0._performanceTime,
+					frameCb = slot0._onFloat,
+					cbObj = slot0,
+					param = slot10,
+					ease = EaseType.InOutQuad
+				}))
+				slot15:addWork(TweenWork.New({
+					type = "DOMove",
+					tr = slot10.go.transform,
+					tox = slot11,
+					toy = slot12,
+					toz = slot13,
+					t = slot0._performanceTime,
+					ease = EaseType.InOutQuad
+				}))
+				slot0._flow:addWork(slot15)
+				table.insert(slot0._cacheEntityIds, slot9.id)
 			end
 		end
 	end

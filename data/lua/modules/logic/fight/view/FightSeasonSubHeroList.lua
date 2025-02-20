@@ -1,6 +1,6 @@
 module("modules.logic.fight.view.FightSeasonSubHeroList", package.seeall)
 
-slot0 = class("FightSeasonSubHeroList", BaseViewExtended)
+slot0 = class("FightSeasonSubHeroList", FightBaseView)
 
 function slot0.onInitView(slot0)
 	slot0._scoreText = gohelper.findChildText(slot0.viewGO, "Score/#txt_num")
@@ -14,10 +14,10 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, slot0._onIndicatorChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
+	slot0:com_registFightEvent(FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd)
+	slot0:com_registFightEvent(FightEvent.OnIndicatorChange, slot0._onIndicatorChange)
+	slot0:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView)
+	slot0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView)
 end
 
 function slot0.removeEvents(slot0)
@@ -68,15 +68,15 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._refreshHeroList(slot0)
-	slot2 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()
+	slot1 = FightDataHelper.entityMgr:getMySubList()
 
-	table.sort(slot2, FightEntityModel.sortSubEntityList)
-	slot0:com_createObjList(slot0._onItemShow, slot2, slot0._itemRoot, slot0._goItem)
+	table.sort(slot1, FightEntityDataHelper.sortSubEntityList)
+	gohelper.CreateObjList(slot0, slot0._onItemShow, slot1, slot0._itemRoot, slot0._goItem)
 end
 
 function slot0._onItemShow(slot0, slot1, slot2, slot3)
 	if not slot0._itemClassList[slot3] then
-		slot0._itemClassList[slot3] = slot0:openSubView(FightSeasonSubHeroItem, slot1)
+		slot0._itemClassList[slot3] = slot0:com_openSubView(FightSeasonSubHeroItem, slot1)
 	end
 
 	slot4:refreshData(slot2.id)
@@ -100,14 +100,14 @@ end
 
 function slot0._refreshSubSpine(slot0, slot1)
 	if not slot1 then
-		slot4 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()
+		slot3 = FightDataHelper.entityMgr:getMySubList()
 
-		table.sort(slot4, FightEntityModel.sortSubEntityList)
+		table.sort(slot3, FightEntityDataHelper.sortSubEntityList)
 
-		slot2 = slot4[1] and slot5.id
+		slot2 = slot3[1] and slot4.id
 	end
 
-	if slot2 and FightEntityModel.instance:getById(slot2) then
+	if slot2 and FightDataHelper.entityMgr:getById(slot2) then
 		if FightHelper.getSubEntity(FightEnum.EntitySide.MySide) then
 			if slot4.id ~= slot2 then
 				slot0.entityMgr:removeUnit(slot4:getTag(), slot4.id)

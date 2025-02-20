@@ -23,9 +23,9 @@ function slot0.setIconList(slot0, slot1)
 
 			if not slot5[slot11.effect] then
 				slot13 = {}
-				slot17 = "#"
+				slot18 = slot11.effect
 
-				for slot17, slot18 in ipairs(string.split(slot11.effect, slot17)) do
+				for slot17, slot18 in ipairs(string.split(slot18, "#")) do
 					table.insert(slot13, tonumber(slot18) or 0)
 				end
 

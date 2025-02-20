@@ -1,0 +1,37 @@
+[
+  {
+    "heroId": 3003,
+    "slotsId": 3003,
+    "facetsId": "300301"
+  },
+  {
+    "heroId": 3004,
+    "slotsId": 3004,
+    "facetsId": "300401#300402"
+  },
+  {
+    "heroId": 3009,
+    "slotsId": 3009,
+    "facetsId": "300901"
+  },
+  {
+    "heroId": 3051,
+    "slotsId": 3051,
+    "facetsId": "305101"
+  },
+  {
+    "heroId": 3052,
+    "slotsId": 3052,
+    "facetsId": "305201"
+  },
+  {
+    "heroId": 3072,
+    "slotsId": 3072,
+    "facetsId": "307201"
+  },
+  {
+    "heroId": 3020,
+    "slotsId": 3020,
+    "facetsId": "302001"
+  }
+]

@@ -1981,7 +1981,7 @@
   },
   {
     "id": 841,
-    "type": "TransferAddStress",
+    "type": "AbsorbTeammateAddStress",
     "effectTime": 0,
     "effectCondition": 0,
     "effect": "",
@@ -1992,6 +1992,240 @@
     "id": 842,
     "type": "Charm",
     "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 843,
+    "type": "ShareHp",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 844,
+    "type": "DeadlyPoison",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 845,
+    "type": "UseCardFixExPoint",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "v2a3_ddg/ddg_innate_03",
+    "effectHangPoint": "mountroot",
+    "audioId": 0
+  },
+  {
+    "id": 846,
+    "type": "DuduBoneContinueChannel",
+    "effectTime": 301,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 847,
+    "type": "CureCorrect",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 848,
+    "type": "Confusion",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 849,
+    "type": "AdvancedCure",
+    "effectTime": 102,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 850,
+    "type": "AddBuffBoth",
+    "effectTime": 208,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 851,
+    "type": "AttrWhenAttack",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 852,
+    "type": "AttrWhenHaveShield",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 853,
+    "type": "AttrByLostHp",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 854,
+    "type": "CritRateAlter",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 855,
+    "type": "RetainPetrified",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 856,
+    "type": "AddToBuffEntity2",
+    "effectTime": 208,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 857,
+    "type": "SkillRateFix",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 858,
+    "type": "LockBurn",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 859,
+    "type": "BurnOverflowAddBuff",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 860,
+    "type": "MustCritAndFixTempAttr",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 861,
+    "type": "FixTempAttrByBuffLayer",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 862,
+    "type": "PaperCircleContinueChannel",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 863,
+    "type": "CreateAdditionalDamage",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 864,
+    "type": "FixedAttrByExtraType",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 865,
+    "type": "AddPassiveSkills",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 866,
+    "type": "FixAttrFromSelf",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 867,
+    "type": "ChangeAssistBossSkillCd",
+    "effectTime": 210,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 868,
+    "type": "AddToBuffEntity",
+    "effectTime": 210,
     "effectCondition": 0,
     "effect": "",
     "effectHangPoint": "",

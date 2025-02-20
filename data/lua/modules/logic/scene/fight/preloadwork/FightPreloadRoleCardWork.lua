@@ -68,7 +68,9 @@ function slot0.addSkill(slot0, slot1)
 		return
 	end
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, true)) do
+	slot6 = true
+
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, slot6)) do
 		slot0:addResBySkillId(slot7[2])
 	end
 end

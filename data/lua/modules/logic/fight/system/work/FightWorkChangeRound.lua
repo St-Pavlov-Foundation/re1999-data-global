@@ -13,10 +13,10 @@ function slot0.onStart(slot0)
 
 	FightController.instance:dispatchEvent(FightEvent.ChangeRound)
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getList()) do
-		slot6.subCd = 0
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getMySubList()) do
+		slot7.subCd = 0
 
-		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, slot6.uid)
+		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, slot7.uid)
 	end
 
 	slot0:onDone(true)

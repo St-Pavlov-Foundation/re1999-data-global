@@ -180,8 +180,8 @@ function slot0._btnclickOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot5 = UnityEngine.Animator
-	slot0._containerAnimator = gohelper.findChild(slot0.viewGO, "herogroupcontain"):GetComponent(typeof(slot5))
+	slot5 = typeof
+	slot0._containerAnimator = gohelper.findChild(slot0.viewGO, "herogroupcontain"):GetComponent(slot5(UnityEngine.Animator))
 	slot0._objs = {}
 
 	for slot5 = 1, 4 do

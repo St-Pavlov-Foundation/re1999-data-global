@@ -17,7 +17,7 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		slot6:removeUnit(slot8:getTag(), slot8.id)
 	end
 
-	slot9 = FightEntityModel.instance:getById(slot7) or FightEntityModel.instance:getDeadById(slot7)
+	slot9 = FightDataHelper.entityMgr:getById(slot7)
 
 	if slot3[2] == "1" then
 		FightEntityModel.instance:getModel(slot9.side):remove(slot9)

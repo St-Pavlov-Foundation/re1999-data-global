@@ -73,7 +73,10 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 		slot5 = {}
 
 		tabletool.addValues(slot5, slot0._curDataList)
-		tabletool.addValues(slot5, slot0._actList)
+
+		slot9 = slot0._actList
+
+		tabletool.addValues(slot5, slot9)
 
 		for slot9, slot10 in ipairs(slot5) do
 			for slot14, slot15 in ipairs(slot10) do

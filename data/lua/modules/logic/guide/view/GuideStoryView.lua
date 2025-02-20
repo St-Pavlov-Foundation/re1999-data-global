@@ -29,6 +29,8 @@ function slot0._updateUI(slot0)
 	end
 
 	slot0._txtContent.text = LuaUtil.replaceSpace(slot0.viewParam.storyContent)
+
+	LuaUtil.updateTMPRectHeight(slot0._txtContent)
 end
 
 function slot0.onClose(slot0)

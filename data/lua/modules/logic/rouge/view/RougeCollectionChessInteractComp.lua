@@ -101,7 +101,7 @@ function slot0.try2OpenCollectionTipView(slot0, slot1)
 		useCloseBtn = false,
 		collectionId = slot2,
 		viewPosition = RougeEnum.CollectionTipPos.Slot,
-		source = RougeEnum.OpenCollectionTipSource.SlotArea
+		source = RougeCollectionModel.instance:getCollectionPlaceArea(slot2)
 	})
 end
 

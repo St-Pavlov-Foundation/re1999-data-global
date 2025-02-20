@@ -54,7 +54,10 @@ function slot0._getGroupFightViewName(slot0, slot1)
 			[VersionActivity1_6Enum.ActivityId.DungeonBossRush] = ViewName.V1a6_HeroGroupFightView
 		}
 		slot0.ChapterTypeToHeroGroupView = {
-			[DungeonEnum.ChapterType.WeekWalk] = ViewName.HeroGroupFightWeekwalkView
+			[DungeonEnum.ChapterType.WeekWalk] = ViewName.HeroGroupFightWeekwalkView,
+			[DungeonEnum.ChapterType.TowerPermanent] = ViewName.TowerHeroGroupFightView,
+			[DungeonEnum.ChapterType.TowerBoss] = ViewName.TowerHeroGroupFightView,
+			[DungeonEnum.ChapterType.TowerLimited] = ViewName.TowerHeroGroupFightView
 		}
 	end
 

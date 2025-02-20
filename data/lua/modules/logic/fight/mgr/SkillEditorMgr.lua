@@ -25,7 +25,7 @@ slot0.SelectType = {
 function slot0.start(slot0)
 	slot0.inEditMode = true
 
-	FightDataHelper.startFight()
+	FightMgr.instance:startFight()
 	slot0:InitDefaultData()
 	LuaEventSystem.addEventMechanism(slot0)
 
@@ -158,11 +158,11 @@ function slot0.setEntityMOs(slot0, slot1, slot2, slot3, slot4)
 	if slot2 == uv0.SelectType.Hero then
 		slot5, slot6 = FightHelper.buildHeroEntityMOList(slot1, slot3, slot4)
 
-		FightEntityModel.instance:clientTestSetEntity(slot1, slot5, slot6)
+		FightDataHelper.entityMgr:clientTestSetEntity(slot1, slot5, slot6)
 	else
 		slot5, slot6 = FightHelper.buildMonsterEntityMOList(slot1, slot3)
 
-		FightEntityModel.instance:clientTestSetEntity(slot1, slot5, slot6)
+		FightDataHelper.entityMgr:clientTestSetEntity(slot1, slot5, slot6)
 	end
 end
 
@@ -205,7 +205,7 @@ function slot0.rebuildEntitys(slot0, slot1)
 
 	slot3:removeUnits(slot2)
 
-	for slot9, slot10 in ipairs(FightEntityModel.instance:getModel(slot1):getList()) do
+	for slot9, slot10 in ipairs(FightDataHelper.entityMgr:getNormalList(slot1)) do
 		slot3:buildSpine(slot10)
 	end
 
@@ -225,8 +225,7 @@ function slot0.AddSubHeroModelData(slot0)
 		slot0.select_sub_hero_skin_id
 	})
 
-	FightEntityModel.instance._mySideSubModel:setList(slot2)
-	FightEntityModel.instance:addList(slot2)
+	FightDataHelper.entityMgr:clientSetSubEntityList(FightEnum.EntitySide.MySide, slot2)
 
 	slot0.select_sub_hero_model = slot2[1]
 end
@@ -234,7 +233,7 @@ end
 function slot0._buildSubHero(slot0)
 	slot0:AddSubHeroModelData()
 
-	if FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList() then
+	if FightDataHelper.entityMgr:getMySubList() then
 		for slot5, slot6 in ipairs(slot1) do
 			GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(slot6)
 		end

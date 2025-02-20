@@ -106,9 +106,10 @@ function slot0.readMessageUnread(slot0)
 	slot3 = {}
 
 	if not string.nilorempty(PlayerPrefsHelper.getString(SocialConfig.instance:getMessageUnreadKey(), nil)) then
-		slot8 = "#"
+		slot8 = "|"
+		slot9 = "#"
 
-		for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, false, "|", slot8)) do
+		for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, false, slot8, slot9)) do
 			if #slot9 >= 4 then
 				slot3[tonumber(slot9[1])] = slot3[tonumber(slot9[1])] or {}
 				slot3[tonumber(slot9[1])][slot9[2]] = {

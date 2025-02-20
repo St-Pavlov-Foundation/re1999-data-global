@@ -22,5 +22,17 @@
     "effect": "buff/buff_nuqizengjia",
     "audioId": 410000022,
     "once": false
+  },
+  {
+    "id": 5,
+    "effect": "v2a3_ddg/ddg_innate_02",
+    "audioId": 431040152,
+    "once": false
+  },
+  {
+    "id": 6,
+    "effect": "v2a3_ddg/ddg_innate_03",
+    "audioId": 431040153,
+    "once": false
   }
 ]

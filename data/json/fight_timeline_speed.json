@@ -98,5 +98,17 @@
   {
     "timeline": "610404_change",
     "speed": "1#1"
+  },
+  {
+    "timeline": "620405_born",
+    "speed": "1#1"
+  },
+  {
+    "timeline": "620405_change",
+    "speed": "1#1"
+  },
+  {
+    "timeline": "620406_die",
+    "speed": "1#1"
   }
 ]

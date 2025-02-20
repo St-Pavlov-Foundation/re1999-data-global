@@ -41,7 +41,7 @@ function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
 		slot7 = true
 
 		if slot1 == SpineAnimState.die or slot1 == SpineAnimState.born then
-			if FightEntityModel.instance:isSub(slot4.id) then
+			if FightDataHelper.entityMgr:isSub(slot4.id) then
 				slot7 = false
 			end
 
@@ -68,7 +68,9 @@ function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
 end
 
 function slot0._removeEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._removeEffect, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._removeEffect, slot4)
 
 	for slot4, slot5 in ipairs(slot0._effectWraps) do
 		slot0.entity.effect:removeEffect(slot5)

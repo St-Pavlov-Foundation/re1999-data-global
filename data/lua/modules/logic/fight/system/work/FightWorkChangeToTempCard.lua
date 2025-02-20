@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkChangeToTempCard", package.seea
 slot0 = class("FightWorkChangeToTempCard", FightEffectBase)
 
 function slot0.onStart(slot0)
-	if not FightCardMOHelper.cardChangeIsMySide(slot0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
 		slot0:onDone(true)
 
 		return

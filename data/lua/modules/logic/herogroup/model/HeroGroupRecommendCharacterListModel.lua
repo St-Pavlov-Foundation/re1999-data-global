@@ -12,9 +12,11 @@ function slot0.setCharacterList(slot0, slot1)
 		table.insert(slot2, slot8)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
+	function slot6(slot0, slot1)
 		return slot1.rate < slot0.rate
-	end)
+	end
+
+	table.sort(slot2, slot6)
 
 	for slot6 = #slot1 + 1, 5 do
 		slot7 = HeroGroupRecommendCharacterMO.New()

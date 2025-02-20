@@ -35,6 +35,10 @@ function slot0.getEntityStanceId(slot0, slot1)
 end
 
 function slot0.getEntityStandPos(slot0, slot1)
+	if slot0:isAssistBoss() then
+		return uv0.getAssistBossStandPos(slot0, slot1)
+	end
+
 	if not lua_stance.configDict[uv0.getEntityStanceId(slot0, slot1)] then
 		if slot0.side == FightEnum.EntitySide.MySide then
 			logError("我方用了不存在的站位，战斗id=" .. (FightModel.instance:getFightParam() and slot4.battleId or "nil") .. "， 站位id=" .. slot2)
@@ -45,7 +49,7 @@ function slot0.getEntityStandPos(slot0, slot1)
 
 	slot5 = nil
 
-	if FightEntityModel.instance:isSub(slot0.uid) and not slot3.subPos1 or not slot3["pos" .. slot0.position] or not slot5[1] or not slot5[2] or not slot5[3] then
+	if FightDataHelper.entityMgr:isSub(slot0.uid) and not slot3.subPos1 or not slot3["pos" .. slot0.position] or not slot5[1] or not slot5[2] or not slot5[3] then
 		if isDebugBuild then
 			logError("stance pos nil: stance_" .. (slot2 or "nil") .. " posIndex_" .. (slot0.position or "nil"))
 		end
@@ -54,6 +58,18 @@ function slot0.getEntityStandPos(slot0, slot1)
 	end
 
 	return slot5[1], slot5[2], slot5[3], slot5[4] or 1
+end
+
+function slot0.getAssistBossStandPos(slot0, slot1)
+	if not (lua_assist_boss_stance.configDict[slot0.skin] and slot5[FightModel.instance:getFightParam():getScene(slot1 or FightModel.instance:getCurWaveId())] or slot5 and slot5[0]) then
+		logError(string.format("协助boss站位表未配置 皮肤id：%s, 场景id : %s", slot3, slot4))
+
+		return 9.4, 0, -2.75, 0.9
+	end
+
+	slot7 = slot6.position
+
+	return slot7[1], slot7[2], slot7[3], slot6.scale
 end
 
 function slot0.getSpineLookDir(slot0)
@@ -137,7 +153,7 @@ function slot0.getSideEntitys(slot0, slot1)
 
 	if GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(slot0 == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster) then
 		for slot9, slot10 in pairs(slot5) do
-			if slot1 or not FightEntityModel.instance:isSub(slot10.id) then
+			if not FightDataHelper.entityMgr:isAssistBoss(slot10.id) and (slot1 or not FightDataHelper.entityMgr:isSub(slot10.id)) then
 				table.insert(slot2, slot10)
 			end
 		end
@@ -149,7 +165,7 @@ end
 function slot0.getSubEntity(slot0)
 	if GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(slot0 == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster) then
 		for slot7, slot8 in pairs(slot3) do
-			if not slot8.isDead and FightEntityModel.instance:isSub(slot8.id) then
+			if not slot8.isDead and FightDataHelper.entityMgr:isSub(slot8.id) then
 				return slot8
 			end
 		end
@@ -305,7 +321,7 @@ function slot0.getTargetLimits(slot0, slot1, slot2)
 		for slot11 = 1, FightEnum.MaxBehavior do
 			if FightStrUtil.instance:getSplitCache(slot6["behavior" .. slot11], "#")[1] == "60032" then
 				for slot17 = #slot7, 1, -1 do
-					if FightEntityModel.instance:getById(slot7[slot17]) and (slot18.skillGroup1 == 0 or #slot18.skillGroup2 == 0) then
+					if FightDataHelper.entityMgr:getById(slot7[slot17]) and (slot18.skillGroup1 == 0 or #slot18.skillGroup2 == 0) then
 						table.remove(slot7, slot17)
 					end
 				end
@@ -564,7 +580,9 @@ function slot0.getAttributeCounter(slot0, slot1)
 			slot2 = lua_monster_group.configDict[slot8].bossId
 		end
 
-		for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot8].monster, "#")) do
+		slot13 = "#"
+
+		for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot8].monster, slot13)) do
 			if not lua_monster.configDict[slot14] then
 				logError("怪物表找不到id:" .. slot14)
 			end
@@ -641,7 +659,9 @@ function slot0.setMonsterGuideFocusState(slot0)
 	PlayerPrefsHelper.setNumber(FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(slot0), 1)
 
 	if not string.nilorempty(slot0.completeWithGroup) then
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(slot0.completeWithGroup, "|")) do
+		slot6 = "|"
+
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(slot0.completeWithGroup, slot6)) do
 			slot8 = FightStrUtil.instance:getSplitToNumberCache(slot7, "#")
 
 			if FightConfig.instance:getMonsterGuideFocusConfig(slot8[1], slot8[2], slot8[3], slot8[4]) then
@@ -780,7 +800,7 @@ end
 function slot0.detectEntityIncludeBuffType(slot0, slot1, slot2)
 	slot3 = slot0 and slot0:getMO()
 
-	for slot7, slot8 in ipairs(slot2 or slot3 and slot3.buffModel:getList() or {}) do
+	for slot7, slot8 in ipairs(slot2 or slot3 and slot3:getBuffList() or {}) do
 		if slot1 == lua_skill_bufftype.configDict[lua_skill_buff.configDict[slot8.buffId].typeId].type then
 			return true
 		end
@@ -806,7 +826,9 @@ function slot0.hideDefenderBuffEffect(slot0, slot1)
 				slot8[slot13.id] = true
 
 				if uv0.isAssembledMonster(slot13) then
-					for slot18, slot19 in ipairs(uv0.getSideEntitys(slot13:getSide())) do
+					slot18 = slot13
+
+					for slot18, slot19 in ipairs(uv0.getSideEntitys(slot13.getSide(slot18))) do
 						if uv0.isAssembledMonster(slot19) and not slot8[slot19.id] then
 							slot8[slot19.id] = true
 
@@ -946,7 +968,9 @@ end
 
 function slot0.getEntityDefaultIdleAniName(slot0)
 	if slot0:getMO() and slot1.modelId == 3025 then
-		for slot6, slot7 in ipairs(uv0.getSideEntitys(slot0:getSide(), true)) do
+		slot6 = slot0
+
+		for slot6, slot7 in ipairs(uv0.getSideEntitys(slot0.getSide(slot6), true)) do
 			if slot7:getMO().modelId == 3028 then
 				return SpineAnimState.idle_special
 			end
@@ -987,17 +1011,7 @@ function slot0.detectXingTiSpecialUrl(slot0)
 end
 
 function slot0.isShowTogether(slot0, slot1)
-	slot2 = {}
-
-	tabletool.addValues(slot2, FightEntityModel.instance:getModel(slot0):getList())
-	tabletool.addValues(slot2, FightEntityModel.instance:getSubModel(slot0):getList())
-	tabletool.addValues(slot2, FightEntityModel.instance:getSpModel(slot0):getList())
-
-	slot7 = slot0
-
-	tabletool.addValues(slot2, FightEntityModel.instance:getDeadModel(slot7):getList())
-
-	for slot7, slot8 in ipairs(slot2) do
+	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getSideList(slot0)) do
 		if tabletool.indexOf(slot1, slot8.modelId) then
 			slot3 = 0 + 1
 		end
@@ -1086,7 +1100,9 @@ function slot0.hideAllEntity()
 end
 
 function slot0.isBossId(slot0, slot1)
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot0, "#")) do
+	slot6 = "#"
+
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot0, slot6)) do
 		if slot1 == slot7 then
 			return true
 		end
@@ -1110,7 +1126,7 @@ function slot0.setEffectEntitySide(slot0)
 		return
 	end
 
-	if (FightEntityModel.instance:getById(slot1) or FightEntityModel.instance:getDeadById(slot1)) and slot0.entityMO then
+	if FightDataHelper.entityMgr:getById(slot1) and slot0.entityMO then
 		slot0.entityMO.side = slot2.side
 	end
 end
@@ -1369,7 +1385,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 			table.insert(slot3, slot8)
 		end
 
-		table.sort(slot3, uv0.sortReplaceTimelineConfig)
+		slot7 = uv0.sortReplaceTimelineConfig
+
+		table.sort(slot3, slot7)
 
 		for slot7, slot8 in ipairs(slot3) do
 			slot10 = {}
@@ -1383,7 +1401,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 					slot9 = uv0.getSideEntitys(FightEnum.EntitySide.MySide)
 				elseif slot11 == FightEntityScene.EnemySideId then
 					slot9 = uv0.getSideEntitys(FightEnum.EntitySide.EnemySide)
-				elseif FightEntityModel.instance:getById(slot1.fromId) then
+				elseif FightDataHelper.entityMgr:getById(slot1.fromId) then
 					slot9 = uv0.getSideEntitys(slot12.side)
 				end
 			end
@@ -1405,8 +1423,10 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 					end
 				end
 			elseif slot12 == "3" then
+				slot17 = slot1
+
 				for slot17 = 2, #slot11 do
-					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot11[slot17]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) then
+					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot11[slot17]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot17)) then
 						return slot8.timeline
 					end
 				end
@@ -1418,7 +1438,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				for slot17 = 2, #slot11 do
 				end
 
-				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+				slot18 = slot1
+
+				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot18)) do
 					if slot13[slot19.buffId] then
 						return slot8.timeline
 					end
@@ -1465,7 +1487,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				for slot17 = 2, #slot11 do
 				end
 
-				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+				slot18 = slot1
+
+				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot18)) do
 					if slot13[slot19.buffId] then
 						return slot0
 					end
@@ -1478,7 +1502,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				slot15 = uv0.getEntitysCloneBuff(slot9)
 
 				if slot8.simulate == 1 then
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot1)) do
+					slot20 = slot1
+
+					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot20)) do
 						if slot21.buffId == slot13 and slot14 <= slot21.count then
 							return slot8.timeline
 						end
@@ -1491,7 +1517,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 						return slot8.timeline
 					end
 				else
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+					slot20 = slot1
+
+					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot20)) do
 						if slot21.buffId == slot13 and slot14 <= slot21.count then
 							return slot8.timeline
 						end
@@ -1531,7 +1559,9 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 						end
 
 						if slot14 == slot21 then
-							for slot26, slot27 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+							slot26 = slot1
+
+							for slot26, slot27 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot26)) do
 								if slot13[slot27.buffId] then
 									return slot8.timeline
 								end
@@ -1560,7 +1590,7 @@ function slot0.simulateFightStepMO(slot0, slot1, slot2, slot3)
 
 		if uv0.getEntity(slot8.targetId) and slot10:getMO() and slot12 then
 			if slot8.effectType == FightEnum.EffectType.BUFFADD then
-				if not slot11.buffModel:getById(slot8.buff.uid) then
+				if not slot11:getBuffMO(slot8.buff.uid) then
 					slot14 = FightBuffMO.New()
 
 					slot14:init(slot8.buff, slot8.targetId)
@@ -1622,7 +1652,7 @@ function slot0.sortReplaceTimelineConfig(slot0, slot1)
 end
 
 function slot0.getMagicSide(slot0)
-	if FightEntityModel.instance:getById(slot0) or FightEntityModel.instance:getDeadById(slot0) then
+	if FightDataHelper.entityMgr:getById(slot0) then
 		return slot1.side
 	elseif slot0 == FightEntityScene.MySideId then
 		return FightEnum.EntitySide.MySide
@@ -1664,7 +1694,7 @@ function slot0.isPlayerCardSkill(slot0)
 		return true
 	end
 
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		return
 	end
 
@@ -1684,35 +1714,34 @@ function slot0.isEnemyCardSkill(slot0)
 		return true
 	end
 
-	if not FightEntityModel.instance:getById(slot1) then
+	if not FightDataHelper.entityMgr:getById(slot1) then
 		return
 	end
 
 	return slot2.teamType == FightEnum.TeamType.EnemySide
 end
 
-function slot0.buildMonsterA2B(slot0, slot1, slot2)
-	slot3 = slot0:getMO()
+function slot0.buildMonsterA2B(slot0, slot1, slot2, slot3)
+	slot2:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.BeforeMonsterA2B, slot1.modelId))
 
-	slot1:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.BeforeMonsterA2B, slot3.modelId))
-
-	if lua_fight_boss_evolution_client.configDict[slot3.skin] then
-		slot1:addWork(Work2FightWork.New(FightWorkPlayTimeline, slot0, slot4.timeline))
+	if lua_fight_boss_evolution_client.configDict[slot1.skin] then
+		slot2:addWork(Work2FightWork.New(FightWorkPlayTimeline, slot0, slot4.timeline))
 
 		if slot4.id ~= slot4.nextSkinId then
-			slot1:registWork(FightWorkFunction, uv0.setBossEvolution, uv0, slot0, slot4)
+			slot2:registWork(FightWorkFunction, uv0.setBossEvolution, uv0, slot0, slot4)
 		end
 	end
 
-	if slot2 then
-		slot1:addWork(slot2)
+	if slot3 then
+		slot2:addWork(slot3)
 	end
 
-	slot1:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.AfterMonsterA2B, slot3.modelId))
+	slot2:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.AfterMonsterA2B, slot1.modelId))
 end
 
 function slot0.setBossEvolution(slot0, slot1, slot2)
 	FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, slot1, slot2.nextSkinId)
+	FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, slot1, slot2.nextSkinId)
 	GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(slot1:getTag(), slot1.id)
 end
 
@@ -1843,7 +1872,7 @@ function slot0.deepCopySimpleWithMeta(slot0, slot1)
 end
 
 function slot0.getPassiveSkill(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot0) then
+	if not FightDataHelper.entityMgr:getById(slot0) then
 		return slot1
 	end
 
@@ -1875,7 +1904,7 @@ function slot0.curIsRougeFight()
 end
 
 function slot0.processSkinByStepMO(slot0, slot1)
-	slot1 = slot1 or FightEntityModel.instance:getById(slot0.fromId)
+	slot1 = slot1 or FightDataHelper.entityMgr:getById(slot0.fromId)
 
 	if slot0.supportHeroId ~= 0 and slot1 and slot1.modelId ~= slot2 then
 		if uv0.curIsRougeFight() and RougeModel.instance:getTeamInfo() and slot3:getAssistHeroMo(slot2) then
@@ -1931,13 +1960,15 @@ function slot0.processNextSkillId(slot0)
 end
 
 function slot0.isTimelineStep(slot0)
-	if slot0 and slot0.actType == FightEnum.ActType.SKILL and not string.nilorempty(FightConfig.instance:getSkinSkillTimeline(FightEntityModel.instance:getById(slot0.fromId) and slot1.skin, slot0.actId)) then
+	if slot0 and slot0.actType == FightEnum.ActType.SKILL and not string.nilorempty(FightConfig.instance:getSkinSkillTimeline(FightDataHelper.entityMgr:getById(slot0.fromId) and slot1.skin, slot0.actId)) then
 		return true
 	end
 end
 
 function slot0.getClickEntity(slot0, slot1, slot2)
-	table.sort(slot0, uv0.sortEntityList)
+	slot6 = uv0.sortEntityList
+
+	table.sort(slot0, slot6)
 
 	for slot6, slot7 in ipairs(slot0) do
 		if slot7:getMO() then
@@ -2046,7 +2077,9 @@ function slot0.getNextRoundGetCardList()
 				table.insert(slot10, slot15)
 			end
 
-			table.sort(slot10, uv0.sortNextRoundGetCardConfig)
+			slot14 = uv0.sortNextRoundGetCardConfig
+
+			table.sort(slot10, slot14)
 
 			for slot14, slot15 in ipairs(slot10) do
 				if uv0.checkNextRoundCardCondition(slot7, slot15.condition) then
@@ -2199,9 +2232,9 @@ end
 function slot0.buildHeroEntityMOList(slot0, slot1, slot2, slot3, slot4)
 	slot7 = {}
 
-	for slot11 = 1, SkillEditorMgr.instance.stance_count_limit do
-		if slot1[slot11] and slot12 ~= 0 then
-			if lua_character.configDict[slot12] then
+	for slot12 = 1, slot1 and #slot1 or SkillEditorMgr.instance.stance_count_limit do
+		if slot1[slot12] and slot13 ~= 0 then
+			if lua_character.configDict[slot13] then
 				function (slot0, slot1)
 					slot2 = FightEntityMO.New()
 					slot2.id = tostring(uv0)
@@ -2232,25 +2265,25 @@ function slot0.buildHeroEntityMOList(slot0, slot1, slot2, slot3, slot4)
 					uv0 = uv0 + 1
 
 					return slot2
-				end(slot12, slot13).position = slot11
-				slot14.skin = slot2 and slot2[slot11] or slot13.skinId
+				end(slot13, slot14).position = slot12
+				slot15.skin = slot2 and slot2[slot12] or slot14.skinId
 
-				table.insert({}, slot14)
+				table.insert({}, slot15)
 			else
-				logError(string.format("%s%d号站位的角色配置已被删除，角色id=%d", slot0 == FightEnum.EntitySide.MySide and "我方" or "敌方", slot11, slot12))
+				logError(string.format("%s%d号站位的角色配置已被删除，角色id=%d", slot0 == FightEnum.EntitySide.MySide and "我方" or "敌方", slot12, slot13))
 			end
 		end
 	end
 
 	if slot3 then
-		for slot11, slot12 in ipairs(slot3) do
-			if lua_character.configDict[slot12] then
-				slot5(slot12, slot13).position = -1
-				slot14.skin = slot4 and slot4[slot11] or slot13.skinId
+		for slot12, slot13 in ipairs(slot3) do
+			if lua_character.configDict[slot13] then
+				slot5(slot13, slot14).position = -1
+				slot15.skin = slot4 and slot4[slot12] or slot14.skinId
 
-				table.insert(slot7, slot14)
+				table.insert(slot7, slot15)
 			else
-				logError((slot0 == FightEnum.EntitySide.MySide and "我方" or "敌方") .. "替补角色的配置已被删除，角色id=" .. slot12)
+				logError((slot0 == FightEnum.EntitySide.MySide and "我方" or "敌方") .. "替补角色的配置已被删除，角色id=" .. slot13)
 			end
 		end
 	end
@@ -2377,10 +2410,10 @@ function slot0._buildMonsterSkills(slot0)
 	slot1 = {}
 
 	if not string.nilorempty(slot0.activeSkill) then
-		slot6 = "|"
-		slot7 = "#"
+		slot6 = true
+		slot7 = "|"
 
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot0.activeSkill, true, slot6, slot7)) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot0.activeSkill, slot6, slot7, "#")) do
 			for slot11, slot12 in ipairs(slot7) do
 				if lua_skill.configDict[slot12] then
 					table.insert(slot1, slot12)
@@ -2448,13 +2481,14 @@ function slot0.getBattleRecommendLevel(slot0, slot1)
 	slot4 = {}
 	slot5 = {}
 	slot6, slot7 = nil
-	slot11 = slot3.monsterGroupIds
-	slot12 = "#"
+	slot10 = FightStrUtil.instance
+	slot12 = slot10
 
-	for slot11, slot12 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot11, slot12)) do
-		slot16 = "#"
+	for slot11, slot12 in ipairs(slot10.getSplitToNumberCache(slot12, slot3.monsterGroupIds, "#")) do
+		slot16 = lua_monster_group.configDict[slot12].monster
+		slot17 = "#"
 
-		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot12].monster, slot16)) do
+		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot16, slot17)) do
 			if uv0.isBossId(lua_monster_group.configDict[slot12].bossId, slot17) then
 				table.insert(slot5, slot17)
 			else
@@ -2620,7 +2654,7 @@ function slot0.isSameCardMo(slot0, slot1)
 end
 
 function slot0.getAssitHeroInfoByUid(slot0, slot1)
-	if FightEntityModel.instance:getDeadById(slot0) or ((not slot1 or FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide)) and FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide)):getById(slot0) then
+	if FightDataHelper.entityMgr:getDeadById(slot0) then
 		return {
 			skin = slot2.skin,
 			level = slot2.level,
@@ -2634,7 +2668,7 @@ function slot0.canSelectEnemyEntity(slot0)
 		return false
 	end
 
-	if not FightEntityModel.instance:getById(slot0) then
+	if not FightDataHelper.entityMgr:getById(slot0) then
 		return false
 	end
 
@@ -2651,6 +2685,14 @@ function slot0.canSelectEnemyEntity(slot0)
 	end
 
 	return true
+end
+
+function slot0.clearNoUseEffect()
+	for slot4, slot5 in pairs(FightEffectPool.releaseUnuseEffect()) do
+		FightPreloadController.instance:releaseAsset(slot4)
+	end
+
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC)
 end
 
 return slot0

@@ -29,15 +29,31 @@ function slot0._createAllComps(slot0)
 	slot0:_addComp("magicCircle", FightSceneMagicCircleComp)
 	slot0:_addComp("deadEntityMgr", FightSceneDeadEntityMgrComp)
 	slot0:_addComp("tempEntityMgr", FightSceneTempEntityMgrComp)
-	slot0:_addComp("bossEntityEvolutionMgr", FightSceneBossEntityEvolutionMgrComp)
 	slot0:_addComp("fightStatus", FightSceneFightStatusComp)
 
 	if SLFramework.FrameworkSettings.IsEditor then
 		slot0:_addComp("fightLog", FightSceneFightLogComp)
 	end
+
+	slot0:_addComp("mgr", FightSceneMgrComp)
+	slot0:addLowPhoneMemoryComp()
+end
+
+function slot0.addLowPhoneMemoryComp(slot0)
+	if not SLFramework.FrameworkSettings.IsIOSPlayer() then
+		return
+	end
+
+	if UnityEngine.SystemInfo.systemMemorySize / 1024 > 2 then
+		return
+	end
+
+	logNormal(string.format("add FightSceneLowPhoneMemoryComp, memory : %G", slot1))
+	slot0:_addComp("lowPhoneMemoryMgr", FightSceneLowPhoneMemoryComp)
 end
 
 function slot0.onClose(slot0)
+	slot0.mgr:onSceneClose()
 	uv0.super.onClose(slot0)
 	FightTLEventPool.dispose()
 	FightSkillBehaviorMgr.instance:dispose()

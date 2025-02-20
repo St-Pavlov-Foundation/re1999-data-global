@@ -25,8 +25,9 @@ end
 
 function slot0._onAssetLoad(slot0)
 	slot0._goSelect = gohelper.findChild(slot0._iconLoader:getInstGO(), "root/select")
+	slot5 = false
 
-	gohelper.setActive(slot0._goSelect, false)
+	gohelper.setActive(slot0._goSelect, slot5)
 
 	slot0._diban = {}
 

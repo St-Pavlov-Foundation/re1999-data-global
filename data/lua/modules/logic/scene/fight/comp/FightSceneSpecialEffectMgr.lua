@@ -145,7 +145,7 @@ function slot0._detectShiSiHangShiGoodEffect(slot0, slot1, slot2)
 
 		slot6 = false
 
-		for slot11, slot12 in ipairs(slot3.buffModel:getList()) do
+		for slot11, slot12 in pairs(slot3:getBuffDic()) do
 			for slot18, slot19 in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
 				if lua_skill_bufftype.configDict[lua_skill_buff.configDict[slot12.buffId].typeId].type == slot19 then
 					slot6 = true

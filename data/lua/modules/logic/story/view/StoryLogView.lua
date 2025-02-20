@@ -31,7 +31,6 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	StoryTool.enablePostProcess(false)
 	slot0:_refreshView()
 end
 
@@ -43,7 +42,6 @@ end
 
 function slot0.onClose(slot0)
 	AudioEffectMgr.instance:stopAudio(StoryLogListModel.instance:getPlayingLogAudioId(), 0)
-	StoryTool.enablePostProcess(true)
 end
 
 function slot0.onDestroyView(slot0)

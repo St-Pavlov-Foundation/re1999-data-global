@@ -9,8 +9,8 @@ function slot0._onResLoaded(slot0)
 		return
 	end
 
-	slot0:setAllMeshRenderOrderInLayer(slot0._unitMo:getOrder())
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_put)
+	slot0:refreshMeshOrder()
 	slot0:playAnimator("in")
 	slot0:setActive(true)
 end

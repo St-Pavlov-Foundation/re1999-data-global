@@ -45,6 +45,15 @@ function slot0.onInitView(slot0)
 	slot0._txtDailyReleaseDesc1 = gohelper.findChildText(slot0._godailyrelease, "desc/info/txt")
 	slot0._txtDailyReleaseDesc2 = gohelper.findChildText(slot0._godailyrelease, "desc/info/txt (1)")
 	slot0._gonewbiePick = gohelper.findChild(slot0.viewGO, "view/propinfo/#simage_icon/#txt_pickdesc")
+	slot0._golittlemonthcard = gohelper.findChild(slot0.viewGO, "view/littlemonthcard")
+	slot0._littlemonthcardreward = gohelper.findChild(slot0._golittlemonthcard, "reward")
+	slot0._littlemonthcardtxtleft = gohelper.findChildText(slot0._littlemonthcardreward, "left/txt")
+	slot0._littlemonthcardtxtright = gohelper.findChildText(slot0._littlemonthcardreward, "right/txt")
+	slot0._littlemonthcardiconleft = gohelper.findChild(slot0._littlemonthcardreward, "left/#go_lefticon")
+	slot0._littlemonthcardiconleft2 = gohelper.findChild(slot0._littlemonthcardreward, "left/#go_lefticon2")
+	slot0._littlemonthcardiconright = gohelper.findChild(slot0._littlemonthcardreward, "right/#go_righticon")
+	slot0._littlemonthcardiconpower = gohelper.findChild(slot0._littlemonthcardreward, "right/#go_powericon")
+	slot0._golittlemonthcardicon2new = gohelper.findChild(slot0._littlemonthcardreward, "left/#go_lefticon2/new")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -128,7 +137,7 @@ function slot0.onOpen(slot0)
 		recthelper.setAnchor(slot0._simageicon.transform, uv1, uv2)
 	end
 
-	if slot0._mo.config.id == uv0 or slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage then
+	if slot0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId or slot0._mo.config.id == uv0 or slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage then
 		recthelper.setAnchor(slot0._btnbuy.transform, 280.63, -232.8)
 	end
 
@@ -136,22 +145,27 @@ function slot0.onOpen(slot0)
 	slot0:_refreshPriceArea()
 	slot0:_refreshTagArea()
 
-	slot2 = slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
-	slot3 = slot0._mo.id == StoreEnum.NewbiePackId
-	slot4 = not string.nilorempty(slot0._mo.config.detailDesc)
+	slot2 = slot0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId
+	slot3 = slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
+	slot4 = slot0._mo.id == StoreEnum.NewbiePackId
+	slot5 = not string.nilorempty(slot0._mo.config.detailDesc)
 
 	gohelper.setActive(slot0._gonormal, false)
 	gohelper.setActive(slot0._goDetailDescNormal, false)
 	gohelper.setActive(slot0._goyueka, false)
 	gohelper.setActive(slot0._godailyrelease, false)
+	gohelper.setActive(slot0._golittlemonthcard, false)
 
 	if slot0._mo.goodsId == StoreEnum.MonthCardGoodsId then
 		gohelper.setActive(slot0._goyueka, true)
 		slot0:_updateMonthCard()
 	elseif slot2 then
+		gohelper.setActive(slot0._golittlemonthcard, true)
+		slot0:_updateLittleMonthCard()
+	elseif slot3 then
 		gohelper.setActive(slot0._godailyrelease, true)
 		slot0:_updateDailyReleasePackage()
-	elseif slot4 then
+	elseif slot5 then
 		gohelper.setActive(slot0._goDetailDescNormal, true)
 		slot0:_updateDetailDescNormalPack()
 	else
@@ -159,7 +173,7 @@ function slot0.onOpen(slot0)
 		slot0:_updateNormal()
 	end
 
-	gohelper.setActive(slot0._gonewbiePick, slot3)
+	gohelper.setActive(slot0._gonewbiePick, slot4)
 end
 
 function slot0._refreshPriceArea(slot0)
@@ -359,6 +373,34 @@ function slot0._updateMonthCard(slot0)
 	slot0:_setIcon(slot0._monthCardPowerItemIcon, slot8[1], slot8[2], slot8[3])
 end
 
+function slot0._updateLittleMonthCard(slot0)
+	gohelper.setActive(slot0._btnbuy.gameObject, true)
+	gohelper.setActive(slot0._gotips, false)
+	gohelper.setActive(slot0._golittlemonthcardicon2new, false)
+
+	slot2 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
+	slot4 = string.splitToNumber(string.split(StoreConfig.instance:getMonthCardAddConfig(StoreEnum.LittleMonthCardGoodsId).onceBonus, "|")[1], "#")
+	slot0._littleMonthCardItemIcon = slot0._littleMonthCardItemIcon or IconMgr.instance:getCommonItemIcon(slot0._littlemonthcardiconleft)
+
+	slot0:_setIcon(slot0._littleMonthCardItemIcon, slot4[1], slot4[2], slot4[3])
+
+	slot4 = string.splitToNumber(string.split(slot1.onceBonus, "|")[2], "#")
+	slot0._littleMonthCardItemIcon2 = slot0._littleMonthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(slot0._littlemonthcardiconleft2)
+
+	gohelper.setAsFirstSibling(slot0._littleMonthCardItemIcon2.go)
+	slot0:_setIcon(slot0._littleMonthCardItemIcon2, slot4[1], slot4[2], slot4[3])
+
+	slot4 = string.splitToNumber(string.split(slot2.dailyBonus, "|")[1], "#")
+	slot0._littleMonthCardDailyItemIcon = slot0._littleMonthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(slot0._littlemonthcardiconright)
+
+	slot0:_setIcon(slot0._littleMonthCardDailyItemIcon, slot4[1], slot4[2], slot4[3])
+
+	slot4 = string.splitToNumber(string.split(slot2.dailyBonus, "|")[2], "#")
+	slot0._littleMonthCardPowerItemIcon = slot0._littleMonthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(slot0._littlemonthcardiconpower)
+
+	slot0:_setIcon(slot0._littleMonthCardPowerItemIcon, slot4[1], slot4[2], slot4[3])
+end
+
 function slot0._updateDailyReleasePackage(slot0, slot1)
 	gohelper.setActive(slot0._btnbuy.gameObject, true)
 	gohelper.setActive(slot0._gotips, false)
@@ -415,7 +457,7 @@ function slot0._setIcon(slot0, slot1, slot2, slot3, slot4)
 		slot1:SetCountLocalY(43.6)
 		slot1:SetCountBgHeight(25)
 		slot1:setItemIconScale(1.1)
-		recthelper.setAnchor(slot1:getIcon().transform, -7.2, 19.5)
+		recthelper.setAnchor(slot1:getIcon().transform, -7.2, 3.5)
 
 		slot6 = slot1:getDeadline1()
 

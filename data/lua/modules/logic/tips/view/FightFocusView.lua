@@ -220,14 +220,14 @@ function slot0._editableInitView(slot0)
 
 	gohelper.setActive(slot0._godetailView, false)
 	slot0:initScrollEnemyNode()
-
-	slot4 = "fightfocus/full/bg_bossjieshao_mengban.png"
-
-	slot0._simagebg:LoadImage(ResUrl.getFightImage(slot4))
+	slot0._simagebg:LoadImage(ResUrl.getFightImage("fightfocus/full/bg_bossjieshao_mengban.png"))
 	gohelper.setActive(slot0._goenemypassiveitem, false)
 	gohelper.setActive(slot0._goexitem, false)
 	gohelper.setActive(slot0._gobuffitem, false)
-	gohelper.setActive(slot0._godetailpassiveitem, false)
+
+	slot4 = false
+
+	gohelper.setActive(slot0._godetailpassiveitem, slot4)
 
 	slot0._passiveSkillGOs = {}
 	slot0._exItemTables = {}
@@ -313,12 +313,12 @@ function slot0.createSkillItem(slot0)
 end
 
 function slot0._getEntityList(slot0)
-	for slot6, slot7 in ipairs(FightEntityModel.instance:getSpModel(slot0._curSelectSide):getList()) do
-		table.insert(tabletool.copy(FightEntityModel.instance:getModel(slot0._curSelectSide):getList()), slot7)
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getSpList(slot0._curSelectSide)) do
+		table.insert(FightDataHelper.entityMgr:getNormalList(slot0._curSelectSide), slot7)
 	end
 
 	if FightModel.instance:isSeason2() and slot0._curSelectSide == FightEnum.EntitySide.MySide then
-		for slot7, slot8 in ipairs(tabletool.copy(FightEntityModel.instance:getSubModel(slot0._curSelectSide):getList())) do
+		for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getSubList(slot0._curSelectSide)) do
 			table.insert(slot1, slot8)
 		end
 	end
@@ -356,7 +356,7 @@ function slot0.sortFightEntityList(slot0, slot1)
 			return false
 		elseif uv0.bossIdDict[slot0.modelId] and uv0.bossIdDict[slot1.modelId] then
 			return slot0.modelId < slot1.modelId
-		elseif FightEntityModel.instance:isSub(slot0.id) and not FightEntityModel.instance:isSub(slot1.id) then
+		elseif FightDataHelper.entityMgr:isSub(slot0.id) and not FightDataHelper.entityMgr:isSub(slot1.id) then
 			return false
 		elseif not slot2 and slot3 then
 			return true
@@ -380,10 +380,12 @@ function slot0.onOpen(slot0)
 	slot0._setEquipInfo = slot0.viewParam and slot0.viewParam.setEquipInfo
 	slot0._balanceHelper = slot0.viewParam and slot0.viewParam.balanceHelper or HeroGroupBalanceHelper
 
+	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, true)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, true)
 	FightController.instance:dispatchEvent(FightEvent.SetSkillEditorViewVisible, false)
 	FightController.instance:dispatchEvent(FightEvent.OnHideSkillEditorUIEvent, 0)
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, false)
+	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, true)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, true)
 
 	if slot0.viewParam and slot0.viewParam.entityId and FightHelper.getEntity(slot0.viewParam.entityId) then
@@ -412,7 +414,7 @@ function slot0._refreshEntityList(slot0)
 end
 
 function slot0._refreshUI(slot0)
-	if slot0._entityMO ~= FightEntityModel.instance:getById(slot0._curSelectId) then
+	if slot0._entityMO ~= FightDataHelper.entityMgr:getById(slot0._curSelectId) then
 		slot0:_focusEntity(slot1)
 	end
 
@@ -481,7 +483,8 @@ function slot0._refreshInfo(slot0, slot1)
 	slot10, slot11 = nil
 
 	for slot15, slot16 in pairs(slot5) do
-		slot10 = string.splitToNumber(slot16, "#")
+		slot20 = "#"
+		slot10 = string.splitToNumber(slot16, slot20)
 
 		for slot20 = 2, #slot10 do
 			table.insert(slot9[slot11], slot10[slot20])
@@ -746,9 +749,9 @@ end
 
 function slot0._getMontBaseAttr(slot0, slot1)
 	slot3 = string.splitToNumber(lua_monster_skill_template.configDict[slot1.skillTemplate].template, "#")
-	slot9 = 4
+	slot10 = slot3
 
-	table.insert(slot3, 2, table.remove(slot3, slot9))
+	table.insert(slot3, 2, table.remove(slot10, 4))
 
 	slot5 = {}
 
@@ -849,7 +852,9 @@ function slot0.getPassiveSkillList(slot0, slot1)
 			table.insert(slot2, slot10)
 		end
 	else
-		for slot11, slot12 in ipairs(SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(slot1:getCO().id, slot1.exSkillLevel)) do
+		slot11 = slot1.exSkillLevel
+
+		for slot11, slot12 in ipairs(SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(slot1:getCO().id, slot11)) do
 			table.insert(slot2, slot12.skillPassive)
 		end
 	end
@@ -971,9 +976,9 @@ end
 
 function slot0._refreshEnemyPassiveSkill(slot0, slot1)
 	slot0._bossSkillInfos = {}
-	slot6 = true
+	slot6 = FightConfig.instance:getPassiveSkillsAfterUIFilter(slot1.id)
 
-	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(FightConfig.instance:getPassiveSkillsAfterUIFilter(slot1.id), slot6) do
+	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(slot6, true) do
 		if lua_skill_specialbuff.configDict[slot2[slot6]] then
 			if not slot0._enemypassiveiconGOs[slot6] then
 				slot9 = slot0:getUserDataTb_()
@@ -1095,7 +1100,7 @@ function slot0._refreshHp(slot0, slot1)
 end
 
 function slot0._refreshBuff(slot0, slot1)
-	slot2 = FightBuffHelper.filterBuffType(tabletool.copy(slot1.buffModel and slot1.buffModel:getList()), FightBuffTipsView.filterTypeKey)
+	slot2 = FightBuffHelper.filterBuffType(slot1:getBuffList(), FightBuffTipsView.filterTypeKey)
 
 	FightSkillBuffMgr.instance:dealStackerBuff(slot2)
 	table.sort(slot2, function (slot0, slot1)
@@ -1216,7 +1221,7 @@ function slot0.refreshScrollEnemySelectStatus(slot0)
 				end
 			end
 
-			gohelper.setActive(slot5.subTag, FightEntityModel.instance:isSub(slot5.entityMo.uid))
+			gohelper.setActive(slot5.subTag, FightDataHelper.entityMgr:isSub(slot5.entityMo.uid))
 		end
 	end
 end
@@ -1279,7 +1284,10 @@ function slot0._hideDetail(slot0)
 end
 
 function slot0._refreshPassiveDetail(slot0)
-	for slot6 = 1, #slot0._passiveSkillIds do
+	slot6 = slot0._passiveSkillIds
+	slot1 = slot0:_checkDestinyEffect(slot6)
+
+	for slot6 = 1, #slot1 do
 		if lua_skill.configDict[tonumber(slot1[slot6])] then
 			if not slot0._detailPassiveTables[slot6] then
 				slot10 = gohelper.cloneInPlace(slot0._godetailpassiveitem, "item" .. slot6)
@@ -1310,6 +1318,14 @@ function slot0._refreshPassiveDetail(slot0)
 	for slot6 = slot2 + 1, #slot0._detailPassiveTables do
 		gohelper.setActive(slot0._detailPassiveTables[slot6].go, false)
 	end
+end
+
+function slot0._checkDestinyEffect(slot0, slot1)
+	if slot1 and slot0._entityMO and HeroModel.instance:getByHeroId(slot0._entityMO:getCO().id) and slot3.destinyStoneMo then
+		slot1 = slot3.destinyStoneMo:_replaceSkill(slot1)
+	end
+
+	return slot1
 end
 
 function slot0.onClickHyperLink(slot0, slot1, slot2)
@@ -1384,7 +1400,7 @@ end
 function slot0.onDestroyView(slot0)
 	slot4 = 1
 
-	FightWorkFocusMonster.setVirtualCameDamping(1, 1, slot4)
+	FightWorkFocusMonster.setVirtualCameDamping(1, slot4, 1)
 	slot0._simagebg:UnLoadImage()
 
 	for slot4 = 1, #slot0._skillGOs do
@@ -1491,7 +1507,7 @@ function slot0._setEntityPosAndActive(slot0, slot1)
 
 	slot8 = FightHelper.getEntity(slot2)
 
-	if FightEntityModel.instance:isSub(slot2) then
+	if FightDataHelper.entityMgr:isSub(slot2) then
 		slot8 = nil
 
 		for slot13, slot14 in ipairs(slot0.subEntityList) do
@@ -1511,7 +1527,7 @@ function slot0._setEntityPosAndActive(slot0, slot1)
 		slot11, slot12, slot13 = transformhelper.getPos(slot8:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle).transform)
 		slot14 = nil
 
-		if #((not slot9 or FightConfig.instance:getSkinCO(FightEntityModel.instance:getById(slot2).skin)) and FightConfig.instance:getSkinCO(slot8:getMO().skin)).focusOffset == 3 then
+		if #((not slot9 or FightConfig.instance:getSkinCO(FightDataHelper.entityMgr:getById(slot2).skin)) and FightConfig.instance:getSkinCO(slot8:getMO().skin)).focusOffset == 3 then
 			slot11 = slot11 + 2.7 + slot15[1]
 			slot12 = slot12 - 2 + slot15[2]
 			slot13 = slot13 + 5.4 + slot15[3]

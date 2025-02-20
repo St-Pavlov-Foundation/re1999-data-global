@@ -16,12 +16,12 @@ function slot0.onInitView(slot0)
 	slot0._goppt = gohelper.findChild(slot0.viewGO, "#go_mechine/#go_ppt")
 	slot0._controlHandleAni = gohelper.findChild(slot0._slidercontrol.gameObject, "Handle"):GetComponent(typeof(UnityEngine.Animator))
 	slot0._pptAni = slot0._goppt:GetComponent(typeof(UnityEngine.Animator))
-	slot4 = UnityEngine.Animator
-	slot0._viewAni = slot0.viewGO:GetComponent(typeof(slot4))
+	slot0._viewAni = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	slot0._simagepptpic1 = gohelper.findChildSingleImage(slot0._goppt, "#simage_pic1")
 	slot0._simagepptpic2 = gohelper.findChildSingleImage(slot0._goppt, "#simage_pic2")
 	slot0._imagepptpic1 = gohelper.findChildImage(slot0._goppt, "#simage_pic1")
-	slot0._imagepptpic2 = gohelper.findChildImage(slot0._goppt, "#simage_pic2")
+	slot4 = "#simage_pic2"
+	slot0._imagepptpic2 = gohelper.findChildImage(slot0._goppt, slot4)
 	slot0._egg2Items = {}
 
 	for slot4 = 1, 4 do

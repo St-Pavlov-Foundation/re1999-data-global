@@ -31,8 +31,9 @@ function slot0._removeCard(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
 	slot3 = #tabletool.copy(FightCardModel.instance:getHandCards())
+	slot7 = FightWorkCardRemove2.sort
 
-	table.sort(slot1, FightWorkCardRemove2.sort)
+	table.sort(slot1, slot7)
 
 	for slot7, slot8 in ipairs(slot1) do
 		table.remove(slot2, slot8)

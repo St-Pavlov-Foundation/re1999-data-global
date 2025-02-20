@@ -24,8 +24,9 @@ function slot0._editableInitView(slot0)
 	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
 
 	slot0._btncancelcharacter = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_confirm/go_container/btn_cancelcharacter")
+	slot5 = slot0
 
-	slot0._btncancelcharacter:AddClickListener(slot0._btncancelOnClick, slot0)
+	slot0._btncancelcharacter:AddClickListener(slot0._btncancelOnClick, slot5)
 
 	slot0._gocancelpos = gohelper.findChild(slot0.viewGO, "go_confirm/go_container/go_cancelpos")
 	slot0._goconfirmpos = gohelper.findChild(slot0.viewGO, "go_confirm/go_container/go_confirmpos")

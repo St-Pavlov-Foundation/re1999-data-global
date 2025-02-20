@@ -37,7 +37,8 @@ function slot0._editableInitView(slot0)
 		[AergusiEnum.DialogType.NormalRight] = slot0._gorightdialogueitem,
 		[AergusiEnum.DialogType.SystemMsg] = slot0._gosystemmessageitem
 	}
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "#go_dialoguecontainer/Scroll View")
+	slot4 = "#go_dialoguecontainer/Scroll View"
+	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, slot4)
 	slot0._contentMinHeight = recthelper.getHeight(slot0._scrollcontent.transform)
 	slot0._nextStepClick = gohelper.getClickWithDefaultAudio(slot0._gonextstep)
 	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollcontent.gameObject)
@@ -249,7 +250,9 @@ end
 function slot0._onEndEpisode(slot0, slot1, slot2)
 	UIBlockMgr.instance:endBlock("waitEndEpisode")
 
-	for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, true)) do
+	slot8 = true
+
+	for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, slot8)) do
 		table.insert({}, slot9.clueName)
 	end
 

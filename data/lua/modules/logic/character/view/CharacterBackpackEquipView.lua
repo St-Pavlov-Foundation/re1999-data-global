@@ -42,9 +42,9 @@ function slot0._editableInitView(slot0)
 	gohelper.addUIClickAudio(slot0._btnequiptime.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 	gohelper.addUIClickAudio(slot0._btncompose.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
 
-	slot4 = "bg_beijingwenli_xinzang"
+	slot4 = ResUrl.getCharacterIcon
 
-	slot0._simageheart:LoadImage(ResUrl.getCharacterIcon(slot4))
+	slot0._simageheart:LoadImage(slot4("bg_beijingwenli_xinzang"))
 
 	slot0._equipLvBtns = slot0:getUserDataTb_()
 	slot0._equipLvArrow = slot0:getUserDataTb_()

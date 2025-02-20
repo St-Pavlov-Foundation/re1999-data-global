@@ -41,7 +41,8 @@ end
 function slot0.initItem(slot0)
 	slot0.rewardTab = {}
 	slot0.curTurnbackId = TurnbackModel.instance:getCurTurnbackId()
-	slot0.config = TurnbackConfig.instance:getTurnbackTaskBonusCo(slot0.curTurnbackId, slot0.index)
+	slot5 = slot0.index
+	slot0.config = TurnbackConfig.instance:getTurnbackTaskBonusCo(slot0.curTurnbackId, slot5)
 	slot0.bonusPointType, slot0.bonusPointId = TurnbackConfig.instance:getBonusPointCo(slot0.curTurnbackId)
 
 	for slot5 = 1, #string.split(slot0.config.bonus, "|") do

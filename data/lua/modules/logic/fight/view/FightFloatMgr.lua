@@ -42,6 +42,7 @@ end
 function slot0._onLoadCallback(slot0)
 	slot2 = slot0._loader:getFirstAssetItem():GetResource()
 	slot0._floatParent = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Hud), "Float")
+	slot0._floatParentRectTr = slot0._floatParent:GetComponent(gohelper.Type_RectTransform)
 	slot4 = slot0._floatParent.transform
 	slot5 = Vector2.zero
 	slot4.anchorMin = slot5
@@ -65,6 +66,8 @@ function slot0._onLoadCallback(slot0)
 	slot0:_initPrefab(FightEnum.FloatType.crit_damage_origin, gohelper.findChild(slot2, "crit_damage_origin"), 0)
 	slot0:_initPrefab(FightEnum.FloatType.total_origin, gohelper.findChild(slot2, "total_damage_origin"), 0)
 	slot0:_initPrefab(FightEnum.FloatType.stress, gohelper.findChild(slot2, "stress"), 0)
+	slot0:_initPrefab(FightEnum.FloatType.additional_damage, gohelper.findChild(slot2, "additional_damage"), 0)
+	slot0:_initPrefab(FightEnum.FloatType.crit_additional_damage, gohelper.findChild(slot2, "crit_additional_damage"), 0)
 end
 
 function slot0.dispose(slot0)
@@ -97,7 +100,9 @@ function slot0.dispose(slot0)
 end
 
 function slot0.clearFloatItem(slot0)
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._onTick, slot4)
 
 	for slot4, slot5 in pairs(slot0._id2PlayingItem) do
 		slot5:stopFloat()
@@ -108,6 +113,10 @@ function slot0.clearFloatItem(slot0)
 end
 
 function slot0.float(slot0, slot1, slot2, slot3, slot4)
+	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
+		return
+	end
+
 	if not slot0._classEnabled then
 		return
 	end
@@ -120,7 +129,7 @@ function slot0.float(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	if FightEntityModel.instance:getById(slot1) and slot5:hasBuffFeature(FightEnum.BuffType_HideLife) then
+	if FightDataHelper.entityMgr:getById(slot1) and slot5:hasBuffFeature(FightEnum.BuffType_HideLife) then
 		return
 	end
 
@@ -215,6 +224,7 @@ function slot0._doShowTip(slot0, slot1, slot2, slot3, slot4)
 		table.remove(slot5, #slot5):stopFloat()
 	end
 
+	slot6 = FightHelper.getEntity(slot1)
 	slot7 = slot0._type2ItemPool[slot2]:getObject()
 	slot7.id = uv1
 	uv1 = uv1 + 1
@@ -222,7 +232,9 @@ function slot0._doShowTip(slot0, slot1, slot2, slot3, slot4)
 
 	table.insert(slot5, 1, slot7)
 
-	if FightHelper.getEntity(slot1) and slot6.nameUI then
+	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
+		gohelper.addChild(slot0._floatParent, slot7:getGO())
+	elseif slot6 and slot6.nameUI then
 		gohelper.addChild(slot6.nameUI:getFloatContainerGO(), slot7:getGO())
 	end
 
@@ -249,8 +261,18 @@ function slot0._doShowTip(slot0, slot1, slot2, slot3, slot4)
 		end
 	end
 
+	slot10 = slot9
+
+	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
+		slot12, slot13 = recthelper.worldPosToAnchorPos2((slot6:getHangPoint(ModuleEnum.SpineHangPoint.mounttop) or slot6:getHangPoint(ModuleEnum.SpineHangPointRoot)).transform.position, slot0._floatParentRectTr, nil, CameraMgr.instance:getUnitCamera())
+
+		slot7:setPos(slot12, slot13)
+
+		slot10 = slot13
+	end
+
 	for slot14, slot15 in ipairs(slot5) do
-		slot15:tweenPosY(50 + slot9)
+		slot15:tweenPosY(50 + slot10)
 
 		if slot15.type == FightEnum.FloatType.total or slot15.type == FightEnum.FloatType.total_origin then
 			slot10 = slot10 + 50

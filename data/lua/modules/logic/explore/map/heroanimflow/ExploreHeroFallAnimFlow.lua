@@ -10,10 +10,13 @@ function slot0.begin(slot0, slot1, slot2)
 	slot0.toPos = slot1
 	slot0.sourceUnitId = slot2
 	slot3 = ExploreController.instance:getMap()
+	slot7 = ExploreEnum.MapStatus.Normal
 
-	slot3:setMapStatus(ExploreEnum.MapStatus.Normal)
+	slot3:setMapStatus(slot7)
 
-	for slot7, slot8 in pairs(slot3:getAllUnit()) do
+	slot8 = slot3
+
+	for slot7, slot8 in pairs(slot3.getAllUnit(slot8)) do
 		if slot8:getUnitType() == ExploreEnum.ItemType.Spike then
 			slot8:pauseTriggerSpike()
 		end
@@ -36,12 +39,15 @@ function slot0.onOpenViewFinish(slot0, slot1)
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
+	slot7 = slot0
+
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot7)
 
 	slot2 = ExploreController.instance:getMap()
 	slot3 = slot2:getHero()
+	slot8 = slot2
 
-	for slot7, slot8 in pairs(slot2:getAllUnit()) do
+	for slot7, slot8 in pairs(slot2.getAllUnit(slot8)) do
 		if slot8:getUnitType() == ExploreEnum.ItemType.Spike then
 			slot8:beginTriggerSpike()
 		end

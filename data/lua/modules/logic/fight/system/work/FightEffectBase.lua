@@ -24,15 +24,12 @@ function slot0.start(slot0, slot1)
 
 			return
 		else
-			slot0:setDataIsDone()
+			xpcall(slot0.beforePlayEffectData, __G__TRACKBACK__, slot0)
+			slot0:playEffectData()
 		end
 	end
 
 	return uv0.super.start(slot0, slot1)
-end
-
-function slot0.setDataIsDone(slot0)
-	slot0._actEffectMO:setDone()
 end
 
 function slot0.getEffectMO(slot0)
@@ -45,6 +42,13 @@ function slot0.beforeStart(slot0)
 	end
 
 	FightSkillBehaviorMgr.instance:playSkillEffectBehavior(slot0._fightStepMO, slot0._actEffectMO)
+end
+
+function slot0.playEffectData(slot0)
+	FightDataHelper.playEffectData(slot0._actEffectMO)
+end
+
+function slot0.beforePlayEffectData(slot0)
 end
 
 function slot0.beforeClearWork(slot0)

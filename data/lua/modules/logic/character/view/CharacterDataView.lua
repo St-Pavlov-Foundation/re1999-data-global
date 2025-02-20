@@ -97,6 +97,21 @@ function slot0.onUpdateParam(slot0)
 	slot0:onOpen()
 end
 
+function slot0.onOpenFinish(slot0)
+	gohelper.addChild(gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUP_SECOND"), slot0.viewGO)
+
+	slot0._heroId = CharacterDataModel.instance:getCurHeroId()
+	slot2 = slot0._heroId and HeroModel.instance:getByHeroId(slot0._heroId)
+
+	if not (slot2 and SkinConfig.instance:getSkinCo(slot2.skin)) then
+		return
+	end
+
+	if slot3.id and lua_skin_ui_bloom.configDict[slot4] and slot5[CharacterVoiceEnum.UIBloomView.CharacterDataView] == 1 then
+		PostProcessingMgr.instance:setUIBloom(true)
+	end
+end
+
 function slot0.onOpen(slot0)
 	UnityEngine.Shader.EnableKeyword("_TRANSVERSEALPHA_ON")
 
@@ -124,6 +139,8 @@ end
 
 function slot0.onClose(slot0)
 	UnityEngine.Shader.DisableKeyword("_TRANSVERSEALPHA_ON")
+	PostProcessingMgr.instance:setUIBloom(false)
+	gohelper.addChild(gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUP_TOP"), slot0.viewGO)
 end
 
 function slot0.onDestroyView(slot0)

@@ -15,7 +15,7 @@ function slot0.onStart(slot0, slot1)
 		slot5 = false
 
 		for slot9, slot10 in ipairs(FightCardModel.instance:getHandCards()) do
-			if FightEntityModel.instance:getById(slot10.uid) then
+			if FightDataHelper.entityMgr:getById(slot10.uid) then
 				if not slot11:isUniqueSkill(slot10.skillId) then
 					slot5 = true
 
@@ -60,7 +60,7 @@ function slot0._playDiscard(slot0, slot1)
 
 	table.sort(slot3, FightWorkCardRemove2.sort)
 
-	slot4 = FightCardMOHelper.calcRemoveCardTime2(slot2, slot3)
+	slot4 = FightCardDataHelper.calcRemoveCardTime2(slot2, slot3)
 
 	table.remove(slot2, slot1)
 	FightController.instance:dispatchEvent(FightEvent.CancelAutoPlayCardFinishEvent)

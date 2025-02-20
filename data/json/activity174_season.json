@@ -1,0 +1,23 @@
+[
+  {
+    "season": 1,
+    "activityId": 12304,
+    "openTime": "2024-9-1 5:00:00",
+    "name": "",
+    "desc": ""
+  },
+  {
+    "season": 2,
+    "activityId": 12304,
+    "openTime": "2024-11-21 5:00:00",
+    "name": "",
+    "desc": ""
+  },
+  {
+    "season": 3,
+    "activityId": 12304,
+    "openTime": "2024-12-5 5:00:00",
+    "name": "",
+    "desc": ""
+  }
+]

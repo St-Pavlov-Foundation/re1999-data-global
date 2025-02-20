@@ -186,14 +186,29 @@ end
 
 function slot0.getAdditionAttr(slot0)
 	slot1 = {}
+	slot6 = slot0
 
-	for slot5, slot6 in pairs(slot0:getAttributeInfos()) do
+	for slot5, slot6 in pairs(slot0.getAttributeInfos(slot6)) do
 		if slot6:getIsAddition() then
 			table.insert(slot1, slot5)
 		end
 	end
 
 	return slot1
+end
+
+function slot0.isAddition(slot0, slot1)
+	slot2 = false
+
+	if slot0:getAttributeInfoByType(slot1) then
+		slot2 = slot3:getIsAddition()
+	end
+
+	return slot2
+end
+
+function slot0.getTotalAttrValue(slot0)
+	return slot0.efficiency + slot0.patience + slot0.lucky
 end
 
 function slot0.getMoodValue(slot0)

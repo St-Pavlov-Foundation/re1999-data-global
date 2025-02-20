@@ -108,10 +108,9 @@ end
 
 function slot0.initStoryShowData(slot0)
 	slot0._taskConfigDataTab = slot0:getUserDataTb_()
-	slot4 = ActivityConfig.instance
-	slot5 = slot4
+	slot5 = ActivityConfig.instance.getActivityShowTaskCount
 
-	for slot5 = 1, GameUtil.getTabLen(slot4.getActivityShowTaskCount(slot5, ActivityEnum.Activity.StoryShow)) do
+	for slot5 = 1, GameUtil.getTabLen(slot5(slot5, ActivityEnum.Activity.StoryShow)) do
 		table.insert(slot0._taskConfigDataTab, ActivityConfig.instance:getActivityShowTaskList(slot1, slot5))
 	end
 end
@@ -205,7 +204,8 @@ function slot0._btnInfoOnClick(slot0)
 end
 
 function slot0._initTipsView(slot0)
-	slot0._goSchedule = gohelper.findChild(slot0.viewGO, "Root/Card1/#go_Normal/#go_Schedule")
+	slot4 = "Root/Card1/#go_Normal/#go_Schedule"
+	slot0._goSchedule = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._progressGoList = slot0:getUserDataTb_()
 
 	for slot4 = 1, 3 do

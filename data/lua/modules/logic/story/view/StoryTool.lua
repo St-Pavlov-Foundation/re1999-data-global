@@ -40,7 +40,9 @@ function StoryTool.getMarkTextIndexs(slot0)
 		return {}
 	end
 
-	table.insert({}, GameUtil.utf8len(slot2[1]))
+	slot8 = GameUtil.utf8len(slot2[1])
+
+	table.insert({}, slot8)
 
 	for slot8 = 2, #slot2 do
 		slot9 = string.split(slot2[slot8], "</em>")

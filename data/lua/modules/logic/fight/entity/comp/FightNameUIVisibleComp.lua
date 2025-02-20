@@ -31,7 +31,7 @@ function slot0.beforeDestroy(slot0)
 end
 
 function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.FightQuitTipView then
+	if slot1 == ViewName.FightQuitTipView and slot0.entity.nameUI then
 		slot0.entity.nameUI:setActive(false)
 	end
 end
@@ -114,20 +114,22 @@ function slot0._setNameUIVisibleByTimeline(slot0, slot1, slot2, slot3)
 end
 
 function slot0._checkVisible(slot0)
-	if FightSkillMgr.instance:isPlayingAnyTimeline() then
-		if #slot0._hideByEntity > 0 then
-			slot0.entity.nameUI:setActive(false)
-		elseif #slot0._showByTimeline > 0 then
-			slot0.entity.nameUI:setActive(true)
-		elseif #slot0._hideByTimeline > 0 then
-			slot0.entity.nameUI:setActive(false)
-		elseif #slot0._showBySkillStart > 0 then
-			slot0.entity.nameUI:setActive(true)
+	if slot0.entity.nameUI then
+		if FightSkillMgr.instance:isPlayingAnyTimeline() then
+			if #slot0._hideByEntity > 0 then
+				slot0.entity.nameUI:setActive(false)
+			elseif #slot0._showByTimeline > 0 then
+				slot0.entity.nameUI:setActive(true)
+			elseif #slot0._hideByTimeline > 0 then
+				slot0.entity.nameUI:setActive(false)
+			elseif #slot0._showBySkillStart > 0 then
+				slot0.entity.nameUI:setActive(true)
+			else
+				slot0.entity.nameUI:setActive(false)
+			end
 		else
-			slot0.entity.nameUI:setActive(false)
+			slot0.entity.nameUI:setActive(true)
 		end
-	else
-		slot0.entity.nameUI:setActive(true)
 	end
 end
 

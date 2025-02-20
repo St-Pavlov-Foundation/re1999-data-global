@@ -17,6 +17,7 @@ function slot0.onInitView(slot0)
 	slot0._txtname2 = gohelper.findChildText(slot0.viewGO, "content/title/#go_hascollect/#txt_name2")
 	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "content/desc/#txt_desc")
 	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "content/go_scroll/#scroll_item")
+	slot0._gocobrand = gohelper.findChild(slot0.viewGO, "content/#go_cobrand")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -58,6 +59,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(gohelper.findChild(slot0.viewGO, "content/themeitem"), false)
 
 	slot0._gocollecticonanimator = slot0._gocollecticon:GetComponent(typeof(UnityEngine.Animator))
+	slot0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocobrand, RoomSourcesCobrandLogoItem, slot0)
 end
 
 function slot0._refreshUI(slot0)
@@ -73,6 +75,8 @@ function slot0._refreshUI(slot0)
 		slot0._txtname2.text = slot1.name
 		slot0._txtdesc.text = slot1.desc
 	end
+
+	slot0.cobrandLogoItem:setSourcesTypeStr(slot1 and slot1.sourcesType)
 
 	slot3 = slot0._hasCollectionReward and RoomModel.instance:isGetThemeRewardById(slot0._themeId) or RoomModel.instance:isFinshThemeById(slot0._themeId)
 
@@ -135,6 +139,7 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._simageblockpackageicon:UnLoadImage()
 	slot0._simagebuildingicon:UnLoadImage()
+	slot0.cobrandLogoItem:onDestroy()
 end
 
 return slot0

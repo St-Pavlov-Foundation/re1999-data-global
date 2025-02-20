@@ -8128,5 +8128,25 @@
     "type": "meltdown",
     "pressParam": "1#1",
     "rule": "5220024"
+  },
+  {
+    "id": 6230001,
+    "identity": 6230001,
+    "desc": "",
+    "title": "2.3赛季白朗姆",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 6230002,
+    "identity": 6230001,
+    "desc": "",
+    "title": "2.3赛季白朗姆",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "6230002"
   }
 ]

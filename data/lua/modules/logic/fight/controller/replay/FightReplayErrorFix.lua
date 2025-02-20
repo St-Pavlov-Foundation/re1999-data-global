@@ -25,9 +25,10 @@ function slot0._startReplay(slot0)
 	slot0._lostConnect = false
 	slot0._hasStartErrorCheck = true
 	slot0._startTime = Time.time
-	slot4 = 1
+	slot4 = slot0
+	slot5 = 1
 
-	TaskDispatcher.runRepeat(slot0._onSecond, slot0, slot4)
+	TaskDispatcher.runRepeat(slot0._onSecond, slot4, slot5)
 
 	slot0._callbackDict = {}
 

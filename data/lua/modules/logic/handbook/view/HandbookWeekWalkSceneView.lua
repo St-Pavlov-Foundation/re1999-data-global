@@ -69,12 +69,15 @@ end
 function slot0.refreshScene(slot0, slot1)
 	slot0.elementIdList = {}
 	slot0.handbookElementIdList = {}
+	slot6 = slot0.mapBranchCoList[slot1].handbookPath
 
-	for slot5, slot6 in ipairs(string.splitToNumber(slot0.mapBranchCoList[slot1].handbookPath)) do
+	for slot5, slot6 in ipairs(string.splitToNumber(slot6)) do
 		table.insert(slot0.handbookElementIdList, slot6)
 	end
 
-	for slot5, slot6 in ipairs(string.splitToNumber(slot0.mapBranchCoList[slot1].nodePath)) do
+	slot6 = slot0.mapBranchCoList[slot1].nodePath
+
+	for slot5, slot6 in ipairs(string.splitToNumber(slot6)) do
 		table.insert(slot0.elementIdList, slot6)
 	end
 

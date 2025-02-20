@@ -34,7 +34,8 @@ function slot0.onInit(slot0)
 		checkCurBgmGearStateEqual = GuideExceptionChecker.checkCurBgmGearStateEqual,
 		checkCurBgmDeviceNotShowingPPT = GuideExceptionChecker.checkCurBgmDeviceNotShowingPPT,
 		checkReturnFalse = GuideExceptionChecker.checkReturnFalse,
-		checkMaterialNotEnough = GuideExceptionChecker.checkMaterialNotEnough
+		checkMaterialNotEnough = GuideExceptionChecker.checkMaterialNotEnough,
+		checkCan174EnoughHpToBet = GuideExceptionChecker.checkCan174EnoughHpToBet
 	}
 	slot0.handlerFuncDict = {
 		finishStep = GuideExceptionHandler.finishStep,
@@ -118,9 +119,7 @@ function slot0._startCheck(slot0)
 			end
 
 			if not slot0.checkFuncDict[slot10](slot1, slot2, slot11) then
-				slot17 = slot1
-
-				logNormal(string.format("<color=#FF0000>guide_%d_%d exception-> %s</color>", slot17, slot2, slot4[slot8]))
+				logNormal(string.format("<color=#FF0000>guide_%d_%d exception-> %s</color>", slot1, slot2, slot4[slot8]))
 
 				for slot17 = 1, #slot12 do
 					slot0:handle(slot1, slot2, slot12[slot17], slot13[slot17])

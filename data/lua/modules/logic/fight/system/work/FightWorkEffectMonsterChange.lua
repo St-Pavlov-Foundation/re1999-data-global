@@ -1,103 +1,60 @@
 module("modules.logic.fight.system.work.FightWorkEffectMonsterChange", package.seeall)
 
 slot0 = class("FightWorkEffectMonsterChange", FightEffectBase)
-slot0.needWaitBeforeChange = nil
+
+function slot0.beforePlayEffectData(slot0)
+	slot0._entityId = slot0._actEffectMO.entityMO.id
+	slot0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(slot0._entityId)
+end
 
 function slot0.onStart(slot0)
-	slot0:cancelFightWorkSafeTimer()
+	slot0._newEntityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
 
-	uv0.needWaitBeforeChange = nil
+	if not slot0._newEntityMO then
+		slot0:onDone(true)
 
-	if slot0._actEffectMO.entityMO and slot0._actEffectMO.entityMO.modelId then
-		slot0:com_sendFightEvent(FightEvent.BeforeMonsterChange, slot0._actEffectMO.entityMO.modelId)
+		return
 	end
 
-	if uv0.needWaitBeforeChange then
-		slot0:com_registFightEvent(FightEvent.ContinueMonsterChange, slot0._continueMonsterChange)
-	else
-		slot0:_continueMonsterChange()
-	end
-end
+	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
+		slot0:_buildNewEntity()
+		slot0:onDone(true)
 
-function slot0._replaceEntity(slot0, slot1)
-	FightEntityModel.instance:replaceEntityMO(slot0._actEffectMO.entityMO)
-
-	if GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._actEffectMO.entityMO) and slot3.buff then
-		xpcall(slot4.dealStartBuff, __G__TRACKBACK__, slot4)
+		return
 	end
 
-	slot0:com_sendFightEvent(FightEvent.OnMonsterChange, slot1, slot0._actEffectMO.entityMO)
-end
+	slot0._newEntityMO.custom_refreshNameUIOp = true
 
-function slot0._continueMonsterChange(slot0)
-	slot0:com_cancelFightEvent(FightEvent.ContinueMonsterChange, slot0._continueMonsterChange)
-	FightHelper.setEffectEntitySide(slot0._actEffectMO)
+	slot0:com_registWorkDoneFlowSequence():addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.MonsterChangeBefore, slot0._oldEntityMO.modelId))
 
-	slot2 = FightHelper.getEntity(slot0._actEffectMO.targetId) and slot1:getMO()
+	if lua_fight_boss_evolution_client.configDict[slot0._oldEntityMO.skin] then
+		slot4 = FightWorkFlowSequence.New()
 
-	if slot0._actEffectMO.entityMO then
-		slot0._actEffectMO.entityMO.custom_refreshNameUIOp = true
-	end
-
-	if slot2 and lua_fight_boss_evolution_client.configDict[slot2.skin] and slot1 and slot2 and slot0._actEffectMO.entityMO then
-		slot4 = slot0:com_registFlowSequence()
-
-		FightHelper.buildMonsterA2B(slot1, slot4, FightWorkFunction.New(slot0._replaceEntity, slot0, slot2))
+		FightHelper.buildMonsterA2B(slot1, slot0._oldEntityMO, slot4, FightWorkFunction.New(slot0._buildNewEntity, slot0))
 		slot4:registWork(FightWorkDelayTimer, 0.01)
-		slot4:registFinishCallback(slot0.finishWork, slot0)
-		slot4:start()
+		slot2:addWork(slot4)
 	else
-		slot4 = nil
+		slot2:registWork(FightWorkFunction, slot0._removeOldEntity, slot0, slot1)
+		slot2:registWork(FightWorkFunction, slot0._buildNewEntity, slot0)
+	end
 
-		if GameSceneMgr.instance:getCurScene().entityMgr then
-			if FightHelper.getEntity(slot0._actEffectMO.targetId) then
-				slot2 = slot6:getMO()
+	slot2:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.MonsterChangeAfter, slot0._newEntityMO.modelId))
+	slot2:registWork(FightWorkFunction, slot0._dispatchChangeEvent, slot0)
+	slot2:start()
+end
 
-				slot5:removeUnit(slot6:getTag(), slot6.id)
-			end
+function slot0._removeOldEntity(slot0, slot1)
+	GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(slot1:getTag(), slot1.id)
+end
 
-			if slot0._actEffectMO.entityMO then
-				FightEntityModel.instance:replaceEntityMO(slot0._actEffectMO.entityMO)
-
-				if slot5:buildSpine(slot0._actEffectMO.entityMO) and slot4.buff then
-					xpcall(slot7.dealStartBuff, __G__TRACKBACK__, slot7)
-				end
-			elseif slot6 then
-				FightEntityModel.instance:removeEntityById(slot6.id)
-			end
-		end
-
-		if slot4 then
-			slot0._newEntityMO = slot4:getMO()
-			uv0.needWaitBeforeChange = nil
-
-			if slot0._actEffectMO.entityMO and slot0._actEffectMO.entityMO.modelId then
-				slot0:com_sendFightEvent(FightEvent.AfterMonsterChange, slot0._actEffectMO.entityMO.modelId)
-			end
-
-			if slot2 and slot0._newEntityMO then
-				slot0:com_sendFightEvent(FightEvent.OnMonsterChange, slot2, slot0._newEntityMO)
-			end
-
-			if uv0.needWaitBeforeChange then
-				slot0:com_registFightEvent(FightEvent.ContinueMonsterChange, slot0._continueMonsterChangeAfter)
-			else
-				slot0:_continueMonsterChangeAfter()
-			end
-		else
-			if slot5 then
-				logError("MonsterChange error, no actEffectMO.entityMO")
-			else
-				logError("MonsterChange error, not in fight scene")
-			end
-
-			slot0:onDone(true)
-		end
+function slot0._buildNewEntity(slot0)
+	if GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._newEntityMO) and slot2.buff then
+		xpcall(slot3.dealStartBuff, __G__TRACKBACK__, slot3)
 	end
 end
 
-function slot0._continueMonsterChangeAfter(slot0)
-	slot0:onDone(true)
+function slot0._dispatchChangeEvent(slot0)
+	slot0:com_sendFightEvent(FightEvent.OnMonsterChange, slot0._oldEntityMO, slot0._newEntityMO)
 end
 
 function slot0.clearWork(slot0)

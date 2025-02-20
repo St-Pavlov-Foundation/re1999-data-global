@@ -31,7 +31,7 @@ function slot0.onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	if not slot8.buffModel:getById(slot4) then
+	if not slot8:getBuffMO(slot4) then
 		return
 	end
 

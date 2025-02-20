@@ -13,10 +13,6 @@ function slot0.isDone(slot0)
 end
 
 function slot0.setDone(slot0)
-	if SLFramework.FrameworkSettings.IsEditor then
-		FightDataHelper.playEffectData(slot0)
-	end
-
 	slot0.CUSTOM_ISDONE = true
 end
 
@@ -48,6 +44,7 @@ function slot0.init(slot0, slot1, slot2)
 	slot0.cardInfoList = slot1.cardInfoList
 	slot0.teamType = slot1.teamType
 	slot0.fightStep = slot1.fightStep
+	slot0.assistBossInfo = slot1.assistBossInfo
 
 	if slot0.effectType == FightEnum.EffectType.FIGHTSTEP then
 		slot0.cus_stepMO = FightStepMO.New()

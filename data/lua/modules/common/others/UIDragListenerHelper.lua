@@ -1,18 +1,65 @@
 module("modules.common.others.UIDragListenerHelper", package.seeall)
 
 slot0 = class("UIDragListenerHelper", UserDataDispose)
-slot1 = ZProj.TweenHelper
-slot2 = SLFramework.UGUI.UIDragListener
+slot1 = math.pi
+slot2 = 1e-05
+slot3 = math.abs
+slot4 = math.sqrt
+slot5 = math.acos
+slot6 = 180
+slot7 = ZProj.TweenHelper
+slot8 = SLFramework.UGUI.UIDragListener
 slot0.EventBegin = 1
 slot0.EventDragging = 2
 slot0.EventEnd = 3
-slot3 = {
+slot9 = {
 	Down = -1,
 	Up = 1,
 	Right = -1,
 	Left = 1,
 	None = 0
 }
+
+function slot10(slot0)
+	return slot0 * uv0 / uv1
+end
+
+function slot11(slot0)
+	return uv0 / uv1 * slot0
+end
+
+function slot12(slot0)
+	return uv0(slot0) <= uv1
+end
+
+function slot13(slot0, slot1)
+	return slot0.x * slot1.x + slot0.y * slot1.y
+end
+
+function slot14(slot0, slot1)
+	return slot0.x * slot1.x + slot0.y * slot1.y + slot0.z * slot1.z
+end
+
+function _crossV3(slot0, slot1)
+	return Vector3.New(slot0.y * slot1.z - slot0.z * slot1.y, slot0.z * slot1.x - slot0.x * slot1.z, slot0.x * slot1.y - slot0.y * slot1.x)
+end
+
+function slot15(slot0, slot1)
+	slot3 = uv0(slot1, slot1)
+
+	if uv1(uv0(slot0, slot0)) or uv1(slot3) then
+		return 0
+	end
+
+	return uv3(uv0(slot0, slot1) / uv2(slot2 * slot3))
+end
+
+function slot16(slot0, slot1)
+	slot2 = Mathf.Cos(slot1)
+	slot3 = Mathf.Sin(slot1)
+
+	return Vector2.New(slot0.x * slot2 - slot0.y * slot3, slot0.x * slot3 + slot0.y * slot2)
+end
 
 function slot0.ctor(slot0)
 	slot0:__onInit()
@@ -73,8 +120,14 @@ function slot0.clear(slot0)
 	slot1.hasBegin = false
 	slot1.isDragging = false
 	slot1.hasEnd = false
-	slot1.delta.x = 0
-	slot1.delta.y = 0
+end
+
+function slot0.dragInfo(slot0)
+	return slot0._dragInfo
+end
+
+function slot0.transform(slot0)
+	return slot0._transform
 end
 
 function slot0._refreshSwipeDir(slot0)
@@ -105,8 +158,8 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 	slot3.screenPos = slot2.position
 	slot3.hasBegin = true
 	slot3.isDragging = true
-	slot3.delta.x = slot2.delta.x
-	slot3.delta.y = slot2.delta.y
+	slot3.delta = slot2.delta
+	slot3.screenPos_st = slot3.screenPos
 
 	slot0:_refreshSwipeDir()
 	slot0:dispatchEvent(uv0.EventBegin, slot0, slot1)
@@ -116,8 +169,7 @@ function slot0._onDragging(slot0, slot1, slot2)
 	slot3 = slot0._dragInfo
 	slot3.screenPos = slot2.position
 	slot3.isDragging = true
-	slot3.delta.x = slot2.delta.x
-	slot3.delta.y = slot2.delta.y
+	slot3.delta = slot2.delta
 
 	slot0:_refreshSwipeDir()
 	slot0:dispatchEvent(uv0.EventDragging, slot0, slot1)
@@ -126,8 +178,10 @@ end
 function slot0._onDragEnd(slot0, slot1, slot2)
 	slot3 = slot0._dragInfo
 	slot3.screenPos = slot2.position
+	slot3.delta = slot2.delta
 	slot3.hasEnd = true
 	slot3.isDragging = false
+	slot3.screenPos_ed = slot3.screenPos
 
 	slot0:dispatchEvent(uv0.EventEnd, slot0, slot1)
 end
@@ -213,10 +267,6 @@ function slot0.tweenToScreenPos(slot0, slot1, slot2, slot3, slot4, slot5)
 	slot0:tweenToAnchorPos(slot1, recthelper.screenPosToAnchorPos(slot2 or slot0._dragInfo.screenPos, slot1.parent), slot3, slot4, slot5)
 end
 
-function slot4(slot0, slot1)
-	return slot0.x * slot1.x + slot0.y * slot1.y
-end
-
 function slot0.tweenToMousePos(slot0)
 	slot0:tweenToScreenPos(slot0._transform, slot0._dragInfo.screenPos)
 end
@@ -239,12 +289,44 @@ function slot0.tweenToMousePosWithConstrainedDirV2(slot0, slot1, slot2)
 	slot0:tweenToAnchorPos(slot3, slot5)
 end
 
-function slot0.dragInfo(slot0)
-	return slot0._dragInfo
+function slot0.quaternionToMouse(slot0, slot1, slot2)
+	slot2 = slot2 or recthelper.uiPosToScreenPos(slot1)
+	slot3 = slot0._dragInfo
+	slot4 = slot3.screenPos
+	slot6 = slot4 - slot3.delta - slot2
+	slot7 = slot4 - slot2
+	slot11, slot12 = Quaternion.FromToRotation(Vector3.New(slot6.x, slot6.y, 0), Vector3.New(slot7.x, slot7.y, 0)):ToAngleAxis()
+
+	if slot12.z < 0 then
+		isClockWise = true
+	elseif slot13 > 0 then
+		isClockWise = false
+	else
+		isClockWise = nil
+	end
+
+	return slot10, slot11, isClockWise
 end
 
-function slot0.transform(slot0)
-	return slot0._transform
+function slot0.rotateZToMousePos(slot0, slot1, slot2)
+	slot3, slot4, slot5 = slot0:quaternionToMouse(slot1, slot2)
+	slot1.rotation = slot1.rotation * slot3
+
+	return slot3, slot4, slot5
+end
+
+function slot0.rotateZToMousePosWithCenterTrans(slot0, slot1, slot2)
+	slot0:rotateZToMousePos(slot1, recthelper.uiPosToScreenPos(slot2))
+end
+
+function slot0.degreesFromBeginDrag(slot0, slot1, slot2)
+	if not slot0._dragInfo.screenPos_st then
+		return 0
+	end
+
+	slot2 = slot2 or recthelper.uiPosToScreenPos(slot1 or slot0:transform())
+
+	return uv0(uv1(slot3.screenPos_st - slot2, slot3.screenPos - slot2))
 end
 
 return slot0

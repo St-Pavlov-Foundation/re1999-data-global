@@ -18,10 +18,10 @@ function slot0.startPreload(slot0, slot1)
 	slot7 = {}
 	slot8 = {}
 	slot9 = {}
-	slot11 = FightEntityModel.instance:getEnemySideList()
-	slot12 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()
+	slot11 = FightDataHelper.entityMgr:getEnemyNormalList()
+	slot12 = FightDataHelper.entityMgr:getMySubList()
 
-	for slot16, slot17 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot16, slot17 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		table.insert({}, slot17.modelId)
 		table.insert({}, slot17.skin)
 	end

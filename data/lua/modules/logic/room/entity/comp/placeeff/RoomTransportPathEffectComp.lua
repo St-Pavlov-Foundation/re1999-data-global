@@ -132,8 +132,9 @@ function slot0._getBlackIndexDict(slot0)
 	for slot9 = 1, #slot2 do
 		if slot4:getAreaMOByBType(slot2[slot9]) and slot11.mainBuildingMO then
 			slot12 = slot11.mainBuildingMO.hexPoint
+			slot17 = slot11.mainBuildingMO.rotate
 
-			for slot17, slot18 in ipairs(RoomMapModel.instance:getBuildingPointList(slot11.mainBuildingMO.buildingId, slot11.mainBuildingMO.rotate)) do
+			for slot17, slot18 in ipairs(RoomMapModel.instance:getBuildingPointList(slot11.mainBuildingMO.buildingId, slot17)) do
 				slot0:_addParamDict(slot3, slot5:getHexPoint(slot18.x + slot12.x, slot18.y + slot12.y), slot0._buildingType2IdMap[slot10], true)
 			end
 		end

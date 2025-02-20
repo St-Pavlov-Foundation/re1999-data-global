@@ -12,8 +12,8 @@ end
 function slot0.onStart(slot0)
 	VersionActivity1_2DungeonController.instance:registerCallback(VersionActivity1_2DungeonEvent.skipLineWork, slot0._skipLineWork, slot0)
 
-	slot5 = slot0._onTweenEnd
-	slot0._tweenId = ZProj.TweenHelper.DOWidth(slot0._lineTransform, slot0._toValue, slot0._duration, slot5, slot0)
+	slot5 = slot0._duration
+	slot0._tweenId = ZProj.TweenHelper.DOWidth(slot0._lineTransform, slot0._toValue, slot5, slot0._onTweenEnd, slot0)
 	slot1 = nil
 
 	for slot5 = 1, 4 do

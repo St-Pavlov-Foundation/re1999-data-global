@@ -124,7 +124,8 @@ function slot0._onHyperLinkClick(slot0, slot1, slot2)
 		ViewMgr.instance:openView(ViewName.SkillTipView, {
 			super = slot0._skillIndex == 3,
 			skillIdList = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(slot0._heroId, slot0.parentView:getShowAttributeOption(), slot0.parentView.viewParam.heroMo)[slot0._skillIndex],
-			monsterName = HeroConfig.instance:getHeroCO(slot0._heroId).name
+			monsterName = HeroConfig.instance:getHeroCO(slot0._heroId).name,
+			heroMo = slot0.parentView.viewParam.heroMo
 		})
 	end
 end

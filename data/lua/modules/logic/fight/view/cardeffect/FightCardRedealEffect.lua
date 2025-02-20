@@ -72,8 +72,9 @@ function slot0._setupDissolveMat(slot0)
 
 	for slot4, slot5 in ipairs(slot0.context.newCards) do
 		slot8 = {}
+		slot12 = slot8
 
-		uv0._getChildActiveImage(gohelper.findChild(slot0.context.handCardItemList[slot4].go, "foranim"), slot8)
+		uv0._getChildActiveImage(gohelper.findChild(slot0.context.handCardItemList[slot4].go, "foranim"), slot12)
 
 		for slot12, slot13 in ipairs(slot8) do
 			if slot13.material == slot13.defaultMaterial then

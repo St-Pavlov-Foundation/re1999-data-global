@@ -227,7 +227,9 @@ function slot0._getNotFinishTaskLevel(slot0, slot1)
 			return
 		end
 
-		for slot5 = slot0._curShowLevel + 1, slot0:_getCurLevel() do
+		slot5 = slot0
+
+		for slot5 = slot0._curShowLevel + 1, slot0._getCurLevel(slot5) do
 			if RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(slot5, false) then
 				return slot5
 			end

@@ -16,6 +16,7 @@ slot0.CurrencyType = {
 	DryForest = 1202,
 	Gold = 3,
 	RoomTrade = 2202,
+	V2a3DouQuQu = 2302,
 	V2a2Dungeon = 2201,
 	FreeDiamondCoupon = 2,
 	BlueSoul = 10,
@@ -37,6 +38,7 @@ slot0.CurrencyType = {
 	LeiMiTeBei = 111,
 	V1a5Dungeon = 1501,
 	V1a8FactoryRawMat = 1811,
+	V2a3Dungeon = 2301,
 	RoleStory = 24
 }
 slot0.AllCurrency = {

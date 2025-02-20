@@ -49,9 +49,9 @@ function slot0._editableInitView(slot0)
 	slot0.rewardClick:AddClickListener(slot0.onRewardClick, slot0)
 
 	slot0.goRedDot = gohelper.findChild(slot0.viewGO, "window/righttop/reward/reddot")
-	slot4 = RedDotEnum.DotNode.YaXianReward
+	slot4 = slot0.goRedDot
 
-	RedDotController.instance:addRedDot(slot0.goRedDot, slot4)
+	RedDotController.instance:addRedDot(slot4, RedDotEnum.DotNode.YaXianReward)
 
 	slot0.chapterNodeList = {}
 	slot0.chapterAnimatorList = slot0:getUserDataTb_()

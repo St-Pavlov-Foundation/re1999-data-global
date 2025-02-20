@@ -5,6 +5,7 @@ slot1 = {
 	name = 2,
 	storyId = 11,
 	nameen = 3,
+	effect = 13,
 	title = 7,
 	desc = 9,
 	titleen = 8,

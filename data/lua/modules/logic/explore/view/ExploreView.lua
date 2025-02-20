@@ -145,9 +145,9 @@ function slot0._editableInitView(slot0)
 	slot0._touchEventMgr:SetIgnoreUI(true)
 	slot0._touchEventMgr:SetOnMultiDragCb(slot0.onScaleHandler, slot0)
 
-	slot4 = slot0
+	slot4 = slot0.onMouseScrollWheelChange
 
-	slot0._touchEventMgr:SetScrollWheelCb(slot0.onMouseScrollWheelChange, slot4)
+	slot0._touchEventMgr:SetScrollWheelCb(slot4, slot0)
 
 	slot0._progressItems = {}
 

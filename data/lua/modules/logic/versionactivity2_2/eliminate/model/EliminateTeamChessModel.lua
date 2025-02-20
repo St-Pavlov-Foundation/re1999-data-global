@@ -271,9 +271,9 @@ function slot0.canUseChess(slot0, slot1)
 end
 
 function slot0.getSoliderIdEffectParam(slot0, slot1)
-	slot7 = "#"
+	slot8 = EliminateConfig.instance:getSoldierChessConfig(slot1) and slot2.skillId or ""
 
-	for slot7, slot8 in ipairs(string.splitToNumber(EliminateConfig.instance:getSoldierChessConfig(slot1) and slot2.skillId or "", slot7)) do
+	for slot7, slot8 in ipairs(string.splitToNumber(slot8, "#")) do
 		if EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[string.split(EliminateConfig.instance:getSoldierSkillConfig(slot8) and slot9.effect or "", "#")[1]] and EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[slot11][slot10[2]] then
 			return slot13.teamType, slot13.count, slot13.limitStrongHold
 		end

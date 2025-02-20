@@ -1,0 +1,20 @@
+[
+  {
+    "level": 1,
+    "rank": "1#2",
+    "upWin": 3,
+    "downLost": 0
+  },
+  {
+    "level": 2,
+    "rank": "3#4",
+    "upWin": 3,
+    "downLost": 1
+  },
+  {
+    "level": 3,
+    "rank": "5#6",
+    "upWin": 3,
+    "downLost": 1
+  }
+]

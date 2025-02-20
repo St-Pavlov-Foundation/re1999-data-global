@@ -78,25 +78,26 @@ function slot0._getSortFunction(slot0)
 			return slot3 < slot2
 		end
 
-		if uv0:_getAttrValue(slot0, uv0._sortAttrId) ~= uv0:_getAttrValue(slot1, uv0._sortAttrId) then
+		slot2, slot3 = uv0:_getAttrValue(slot0, uv0._sortAttrId)
+		slot4, slot5 = uv0:_getAttrValue(slot1, uv0._sortAttrId)
+
+		if slot3 ~= slot5 then
 			if uv0._isSortHightToLow then
-				return slot3 < slot2
+				return slot5 < slot3
 			end
 
-			return slot2 < slot3
+			return slot3 < slot5
 		end
 
-		if slot0:getDefineCfg().rare ~= slot1:getDefineCfg().rare then
-			return slot5.rare < slot4.rare
+		if slot2 ~= slot4 then
+			if uv0._isSortHightToLow then
+				return slot4 < slot2
+			end
+
+			return slot2 < slot4
 		end
 
-		if slot4.id ~= slot4.id then
-			return slot4.id < slot4.id
-		end
-
-		if slot0.createTime ~= slot1.createTime then
-			return slot1.createTime < slot0.createTime
-		end
+		return CritterHelper.sortByTotalAttrValue(slot0, slot1)
 	end
 
 	return slot0._sortFunc
@@ -120,11 +121,11 @@ end
 
 function slot0._getAttrValue(slot0, slot1, slot2)
 	if slot2 == CritterEnum.AttributeType.Efficiency then
-		return slot1.efficiency
+		return slot1.efficiency, slot1.efficiencyIncrRate
 	elseif slot2 == CritterEnum.AttributeType.Patience then
-		return slot1.patience
+		return slot1.patience, slot1.patienceIncrRate
 	elseif slot2 == CritterEnum.AttributeType.Lucky then
-		return slot1.lucky
+		return slot1.lucky, slot1.luckyIncrRate
 	end
 
 	return 0

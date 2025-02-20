@@ -27,10 +27,10 @@ function slot0.removeEvents(slot0)
 	slot0:removeClickCb(slot0._btnMulSkill, slot0._showThis, slot0)
 	slot0:removeClickCb(slot0._btnClose, slot0._hideThis, slot0)
 
-	slot4 = slot0._onClickStart
-	slot5 = slot0
+	slot4 = slot0._btnStart
+	slot5 = slot0._onClickStart
 
-	slot0:removeClickCb(slot0._btnStart, slot4, slot5)
+	slot0:removeClickCb(slot4, slot5, slot0)
 
 	for slot4, slot5 in ipairs(slot0._items) do
 		gohelper.findChildButtonWithAudio(slot5, "imgRemove"):RemoveClickListener()
@@ -67,7 +67,7 @@ function slot0._updateItems(slot0)
 
 		gohelper.setActive(slot6, true)
 
-		if FightEntityModel.instance:getByPosId(slot5.side, slot5.stancePos) then
+		if FightDataHelper.entityMgr:getByPosId(slot5.side, slot5.stancePos) then
 			slot11 = string.split(FightConfig.instance:getSkinSkillTimeline(slot7.skin, slot5.skillId), "_")
 			gohelper.findChildText(slot6, "Text").text = string.format("%s-%s", slot7:getEntityName(), slot11[#slot11])
 		end
@@ -105,7 +105,7 @@ function slot0._onClickStart(slot0)
 	for slot5, slot6 in ipairs(slot0._infos) do
 		slot7 = slot6.skillId
 
-		if FightEntityModel.instance:getByPosId(slot6.side, slot6.stancePos) then
+		if FightDataHelper.entityMgr:getByPosId(slot6.side, slot6.stancePos) then
 			slot9 = slot8.id
 			slot12 = slot6.side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
 

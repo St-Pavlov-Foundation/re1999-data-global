@@ -96,7 +96,8 @@ function slot0._btncardOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_critter/txt_crittername")
+	slot4 = "#go_critter/txt_crittername"
+	slot0._txtname = gohelper.findChildText(slot0.viewGO, slot4)
 	slot0._star = slot0:getUserDataTb_()
 
 	for slot4 = 1, slot0._gostarList.transform.childCount do
@@ -149,11 +150,12 @@ function slot0._showGetCritter(slot0)
 
 	slot0._rare = slot0._critterMo:getDefineCfg().rare
 	slot0._rareCo = CritterConfig.instance:getCritterRareCfg(slot0._rare)
-	slot5 = "#go_egg/bg/ssr"
+	slot5 = slot0.viewGO
+	slot6 = "#go_egg/bg/ssr"
 	slot0._eggRareVX = {
 		[3] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/r"),
 		[4] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/sr"),
-		[5] = gohelper.findChild(slot0.viewGO, slot5)
+		[5] = gohelper.findChild(slot5, slot6)
 	}
 
 	for slot5, slot6 in pairs(slot0._eggRareVX) do
@@ -243,7 +245,9 @@ end
 function slot0.refreshCritter(slot0)
 	slot0._simagecard:LoadImage(ResUrl.getRoomCritterIcon(slot0._rareCo.cardRes))
 
-	slot0._txtname.text = slot0._critterMo:getName()
+	slot3 = slot0._critterMo
+	slot5 = slot3
+	slot0._txtname.text = slot3.getName(slot5)
 
 	for slot5 = 1, #slot0._star do
 		gohelper.setActive(slot0._star[slot5].gameObject, slot5 <= slot0._rare + 1)

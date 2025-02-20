@@ -231,9 +231,11 @@ function slot0._showBirthdayRewardDetail(slot0)
 		slot4 = slot0._curDate.year == slot0._targetDate[1] and (slot5 and slot3 or slot3 + 1) or slot5 and slot3 - 1 or slot3
 	end
 
+	slot10 = slot2
+
 	slot0:_hideAllRewardTipsItem()
 
-	for slot10, slot11 in ipairs(string.split(string.split(HeroConfig.instance:getHeroCO(slot2).birthdayBonus, ";")[slot4], "|")) do
+	for slot10, slot11 in ipairs(string.split(string.split(HeroConfig.instance:getHeroCO(slot10).birthdayBonus, ";")[slot4], "|")) do
 		if not slot0._rewardTipItems[slot10] then
 			slot13 = {
 				go = gohelper.clone(slot0._gorewarddetailitem, slot0._gorewardcontent, "item" .. slot10)
@@ -417,10 +419,7 @@ function slot0._editableInitView(slot0)
 	table.insert(slot0._gonomonthgets, slot0._gonomonthget3)
 	slot0._simagebg:LoadImage(ResUrl.getSignInBg("bg_white"))
 	slot0._simageorangebg:LoadImage(ResUrl.getSignInBg("img_bcard3"))
-
-	slot4 = "img_di"
-
-	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg(slot4))
+	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg("img_di"))
 
 	slot0._rewardTipItems = {}
 	slot0._nodeItems = {}
@@ -430,7 +429,10 @@ function slot0._editableInitView(slot0)
 
 	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim1)
 	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim2)
-	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim3)
+
+	slot4 = slot0._gomonthgetlightanim3
+
+	table.insert(slot0._monthgetlightanimTab, slot4)
 
 	for slot4, slot5 in ipairs(slot0._monthgetlightanimTab) do
 		gohelper.setActive(slot5, false)
@@ -1154,7 +1156,10 @@ function slot0.onDestroyView(slot0)
 	TaskDispatcher.cancelTask(slot0._onLineAniStart, slot0)
 	TaskDispatcher.cancelTask(slot0._calendarBtnEffect, slot0)
 	TaskDispatcher.cancelTask(slot0._delaySignInRequest, slot0)
-	TaskDispatcher.cancelTask(slot0._showGetRewards, slot0)
+
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._showGetRewards, slot4)
 
 	for slot4, slot5 in pairs(slot0._delayAnimTab) do
 		TaskDispatcher.cancelTask(slot5, slot0)

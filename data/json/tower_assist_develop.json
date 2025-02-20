@@ -1,0 +1,242 @@
+[
+  {
+    "bossId": 1,
+    "level": 1,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 2,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 3,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 4,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 5,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "",
+    "extraRule": "2#370001020"
+  },
+  {
+    "bossId": 1,
+    "level": 6,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 7,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 8,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "370001030",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 9,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 1,
+    "level": 10,
+    "attribute": "102#100",
+    "talentPoint": 3,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 1,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 2,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 3,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 4,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 5,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "4700109",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 6,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 7,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 8,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "4700110",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 9,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 2,
+    "level": 10,
+    "attribute": "102#100",
+    "talentPoint": 3,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 1,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 2,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 3,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 4,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 5,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "12310016",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 6,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 7,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 8,
+    "attribute": "102#100",
+    "talentPoint": 2,
+    "passiveSkills": "12310017",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 9,
+    "attribute": "",
+    "talentPoint": 1,
+    "passiveSkills": "",
+    "extraRule": ""
+  },
+  {
+    "bossId": 3,
+    "level": 10,
+    "attribute": "102#100",
+    "talentPoint": 3,
+    "passiveSkills": "",
+    "extraRule": ""
+  }
+]

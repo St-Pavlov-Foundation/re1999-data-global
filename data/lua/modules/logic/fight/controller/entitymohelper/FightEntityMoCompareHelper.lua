@@ -3,21 +3,19 @@ module("modules.logic.fight.controller.entitymohelper.FightEntityMoCompareHelper
 slot0 = _M
 slot0.DeepMaxStack = 100
 slot0.CompareFilterAttrDict = {
-	_combineCardAddExpoint = true,
-	playCardExPoint = true,
-	skillList = true,
-	_playCardAddExpoint = true,
 	stanceDic = true,
+	playCardExPoint = true,
+	buffFeaturesSplit = true,
+	_playCardAddExpoint = true,
+	isOnlyData = true,
 	_last_clone_mo = true,
 	moveCardExPoint = true,
 	passiveSkillDic = true,
-	_afterUniqueCombineCount = true,
+	_combineCardAddExpoint = true,
 	custom_refreshNameUIOp = true,
 	stanceIndex = true,
 	__cname = true,
-	isOnlyData = true,
-	_afterUniqueMoveCount = true,
-	buffFeaturesSplit = true,
+	skillList = true,
 	_moveCardAddExpoint = true
 }
 
@@ -25,7 +23,7 @@ function slot0.compareEntityMo(slot0, slot1)
 	uv0.initCompareHandleDict()
 
 	for slot5, slot6 in pairs(slot0) do
-		if not uv0.CompareFilterAttrDict[slot5] and not uv0.compareHandleDict[slot5] or uv0.defaultCompare(slot6, slot1[slot5]) then
+		if not uv0.CompareFilterAttrDict[slot5] and not uv0.compareHandleDict[slot5] or uv0.defaultTableDeepCompare(slot6, slot1[slot5]) then
 			return false
 		end
 	end
@@ -36,7 +34,7 @@ end
 function slot0.initCompareHandleDict()
 	if not uv0.compareHandleDict then
 		uv0.compareHandleDict = {
-			buffModel = uv0.buffModelCompare,
+			buffModel = uv0.defaultTableDeepCompare,
 			_powerInfos = uv0.defaultTableDeepCompare,
 			summonedInfo = uv0.summonedInfoCompare,
 			attrMO = uv0.attrMoCompare
@@ -133,16 +131,6 @@ function slot0.defaultTableDeepCompare(slot0, slot1, slot2, slot3)
 	end
 
 	return true
-end
-
-function slot0.buffModelCompare(slot0, slot1)
-	slot2, slot3 = uv0._innerTableCompare(slot0, slot1)
-
-	if slot2 == uv0.CompareStatus.CompareFinish then
-		return slot3
-	end
-
-	return uv0.defaultTableDeepCompare(slot0.getDict and slot0:getDict(), slot1.getDict and slot1:getDict())
 end
 
 function slot0.summonedInfoCompare(slot0, slot1)

@@ -76,8 +76,8 @@ function slot0.onAvatarLoaded(slot0)
 	end
 
 	if not gohelper.isNil(slot1:getInstGO()) then
-		slot6 = UnityEngine.Animator
-		slot0._animator = slot2:GetComponent(typeof(slot6))
+		slot6 = typeof
+		slot0._animator = slot2:GetComponent(slot6(UnityEngine.Animator))
 
 		for slot6, slot7 in ipairs(Va3ChessInteractObject.DirectionList) do
 			slot0._target.avatar["arraw" .. slot7] = gohelper.findChild(slot2, "icon/icon_direction/dir_" .. slot7)

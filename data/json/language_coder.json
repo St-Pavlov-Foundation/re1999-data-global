@@ -5032,6 +5032,162 @@
     "lang": "language_10055678"
   },
   {
+    "id": "towerpermanent_stageunlocktip",
+    "lang": "language_10061065"
+  },
+  {
+    "id": "towerpermanent_timeunlocktip",
+    "lang": "language_10061066"
+  },
+  {
+    "id": "towerpermanent_stage",
+    "lang": "language_10061067"
+  },
+  {
+    "id": "mopup_layer",
+    "lang": "language_10061068"
+  },
+  {
+    "id": "mopup_tipdesc",
+    "lang": "language_10061069"
+  },
+  {
+    "id": "mopup_rewardtip",
+    "lang": "language_10061070"
+  },
+  {
+    "id": "mopup_rewardtip_max",
+    "lang": "language_10061071"
+  },
+  {
+    "id": "mopup_times",
+    "lang": "language_10061072"
+  },
+  {
+    "id": "buff_tip_duration",
+    "lang": "language_10061073"
+  },
+  {
+    "id": "buff_tip_round_and_layer",
+    "lang": "language_10061074"
+  },
+  {
+    "id": "towermain_permanentprogress",
+    "lang": "language_10061075"
+  },
+  {
+    "id": "towerboss_nexttime",
+    "lang": "language_10061076"
+  },
+  {
+    "id": "towerboss_passlayer",
+    "lang": "language_10061077"
+  },
+  {
+    "id": "towertask_timelimited_name",
+    "lang": "language_10058589"
+  },
+  {
+    "id": "towertask_timelimited_nameEn",
+    "lang": "language_10061078"
+  },
+  {
+    "id": "towertask_currenthighscore",
+    "lang": "language_10061079"
+  },
+  {
+    "id": "towertask_updatetime",
+    "lang": "language_10061080"
+  },
+  {
+    "id": "towertask_passlayer",
+    "lang": "language_10061081"
+  },
+  {
+    "id": "percent",
+    "lang": "language_10055625"
+  },
+  {
+    "id": "room_interactbuilding_slotnum_txt",
+    "lang": "language_10061082"
+  },
+  {
+    "id": "room_interactbuilding_visit_txt",
+    "lang": "language_10061083"
+  },
+  {
+    "id": "room_interactbuilding_herogoing_txt",
+    "lang": "language_10061084"
+  },
+  {
+    "id": "character_talentstyle_unlockpercent",
+    "lang": "language_10061085"
+  },
+  {
+    "id": "towertimelimit_curtotalscore",
+    "lang": "language_10061086"
+  },
+  {
+    "id": "towertimelimit_refreshtime",
+    "lang": "language_10061087"
+  },
+  {
+    "id": "towertimelimit_multiindex",
+    "lang": "language_10061088"
+  },
+  {
+    "id": "character_destinyslot_unlockrank",
+    "lang": "language_10061089"
+  },
+  {
+    "id": "character_destiny_preview_effect",
+    "lang": "language_10061090"
+  },
+  {
+    "id": "character_destiny_slot_title_1",
+    "lang": "language_10058794"
+  },
+  {
+    "id": "character_destiny_slot_title_2",
+    "lang": "language_10061091"
+  },
+  {
+    "id": "towertalent_already_light",
+    "lang": "language_10061092"
+  },
+  {
+    "id": "towerboss_skill_get",
+    "lang": "language_10061093"
+  },
+  {
+    "id": "towerboss_skill_order",
+    "lang": "language_10061094"
+  },
+  {
+    "id": "fight_charge_monster_energy",
+    "lang": "language_10061095"
+  },
+  {
+    "id": "towerpermanent_defaultlayer",
+    "lang": "language_10061096"
+  },
+  {
+    "id": "settings_fullscreen",
+    "lang": "language_10030161"
+  },
+  {
+    "id": "summonpooldetail_up_probability_StrongCustomOnePick",
+    "lang": "language_10061097"
+  },
+  {
+    "id": "character_destiny_slot_level",
+    "lang": "language_10061098"
+  },
+  {
+    "id": "towerpermanentresultview_schedule",
+    "lang": "language_10061099"
+  },
+  {
     "id": "room_no_produce_building",
     "lang": "language_10055679"
   },
@@ -5046,6 +5202,78 @@
   {
     "id": "room_place_building_to_unlock",
     "lang": "language_10055682"
+  },
+  {
+    "id": "room_trade_progress_wrong",
+    "lang": "language_10055703"
+  },
+  {
+    "id": "act174_endless_tip1",
+    "lang": "language_10061100"
+  },
+  {
+    "id": "act174_team_unlocktip",
+    "lang": "language_10061101"
+  },
+  {
+    "id": "summon_strong_custompick_desc",
+    "lang": "language_10061102"
+  },
+  {
+    "id": "towermain_entranceUnlock",
+    "lang": "language_10061103"
+  },
+  {
+    "id": "towermain_entranceTimeUnlock",
+    "lang": "language_10061104"
+  },
+  {
+    "id": "towermain_entrancelock",
+    "lang": "language_10019776"
+  },
+  {
+    "id": "towertalent_txt_Locked1",
+    "lang": "language_10061105"
+  },
+  {
+    "id": "towertalent_txt_Locked2",
+    "lang": "language_10061106"
+  },
+  {
+    "id": "towertalent_txt_Locked3",
+    "lang": "language_10061107"
+  },
+  {
+    "id": "act174_enhance_player",
+    "lang": "language_10061108"
+  },
+  {
+    "id": "act174_enhance_enemy",
+    "lang": "language_10061109"
+  },
+  {
+    "id": "act174_endless_multiple",
+    "lang": "language_10061110"
+  },
+  {
+    "id": "act174_endless_tip3",
+    "lang": "language_10061111"
+  },
+  {
+    "id": "act174_rotation_rule2",
+    "lang": "language_10061112"
+  },
+  {
+    "id": "act174_enhance_overduea",
+    "lang": "language_10061113"
+  },
+  {
+    "id": "SkillDescComp_buildSkillNameLinkTag_overseas",
+    "lang": "language_10053330"
+  },
+  {
+    "id": "ShortenAct_TaskItem_remain_open",
+    "lang": "language_10062113"
   },
   {
     "id": "EliminateChessTipView_1",
@@ -5336,10 +5564,6 @@
     "lang": "language_10055702"
   },
   {
-    "id": "room_trade_progress_wrong",
-    "lang": "language_10055703"
-  },
-  {
     "id": "CharacterSkillTipView_chess_residue_round_fmt",
     "lang": "language_10055704"
   },
@@ -5462,10 +5686,6 @@
   {
     "id": "skin_name_line",
     "lang": "language_10030160"
-  },
-  {
-    "id": "settings_fullscreen",
-    "lang": "language_10030161"
   },
   {
     "id": "versionactivity_1_2_yaxian_not_found_tooth_title",

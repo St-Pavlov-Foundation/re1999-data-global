@@ -4,9 +4,10 @@ slot0 = class("FightBuffTipsView", BaseView)
 slot1 = 635
 slot2 = 597
 slot3 = 300
+slot4 = 141
 
 function slot0._updateBuffDesc_overseas(slot0, slot1, slot2, slot3, slot4)
-	slot5 = FightBuffHelper.filterBuffType(tabletool.copy(slot0.buffModel and slot0.buffModel:getList() or {}), uv0.filterTypeKey)
+	slot5 = FightBuffHelper.filterBuffType(tabletool.copy(slot0 and slot0:getBuffList() or {}), uv0.filterTypeKey)
 
 	FightSkillBuffMgr.instance:dealStackerBuff(slot5)
 	table.sort(slot5, function (slot0, slot1)
@@ -45,7 +46,6 @@ function slot0._updateBuffDesc_overseas(slot0, slot1, slot2, slot3, slot4)
 
 			slot23 = gohelper.findChild(slot19, "title")
 			slot25 = gohelper.findChildText(slot23, "txt_name")
-			slot26 = gohelper.findChildImage(slot19, "title/simage_icon")
 			slot29 = gohelper.findChildText(gohelper.findChild(slot23, "txt_name/go_tag"), "bg/txt_tagname")
 
 			gohelper.setActive(slot19, true)
@@ -57,63 +57,29 @@ function slot0._updateBuffDesc_overseas(slot0, slot1, slot2, slot3, slot4)
 			slot11[#slot11 + 1] = slot21
 			slot11[#slot11 + 1] = slot16
 			slot32 = lua_skill_buff_desc.configDict[lua_skill_bufftype.configDict[slot17.typeId].type]
-			slot33, slot34 = FightSkillBuffMgr.instance:buffIsStackerBuff(slot17)
 
-			if slot33 then
-				if slot34 == FightEnum.BuffIncludeTypes.Stacked12 then
-					gohelper.findChildText(slot19, "title/txt_time").text = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(slot0.id, slot17.id)) .. " " .. string.format(luaLang("enemytip_buff_time"), slot16.duration)
-				else
-					slot20.text = slot35
-				end
-			elseif FightBuffHelper.isCountContinueChanelBuff(slot16) then
-				slot20.text = string.format(luaLang("enemytip_buff_time"), slot16.exInfo)
-			elseif slot16.duration == 0 then
-				if slot16.count == 0 then
-					slot20.text = luaLang("forever")
-				else
-					slot35 = slot16.count
-					slot36 = "enemytip_buff_count"
-
-					if string.split(slot31 and slot31.includeTypes or "", "#")[1] == "11" then
-						slot36 = "enemytip_buff_stacked_count"
-						slot35 = slot16.layer
-					end
-
-					slot20.text = string.format(luaLang(slot36), slot35)
-				end
-			elseif slot16.count == 0 then
-				slot20.text = string.format(luaLang("enemytip_buff_time"), slot16.duration)
-			else
-				slot35 = slot16.count
-				slot36 = "round_or_times"
-
-				if string.split(slot31 and slot31.includeTypes or "", "#")[1] == "11" then
-					slot36 = "round_or_stacked_count"
-					slot35 = slot16.layer
-				end
-
-				slot20.text = GameUtil.getSubPlaceholderLuaLang(luaLang(slot36), {
-					slot16.duration,
-					slot35
-				})
-			end
+			uv0.showBuffTime(gohelper.findChildText(slot19, "title/txt_time"), slot16, slot17, slot0)
 
 			slot25.text = slot17.name
-			slot35 = slot25.preferredWidth
+			slot33 = slot25.preferredWidth
 
-			if slot26 then
+			if gohelper.findChildImage(slot19, "title/simage_icon") then
 				UISpriteSetMgr.instance:setBuffSprite(slot26, slot17.iconId)
 			end
 
 			if slot32 then
 				slot29.text = slot32.name
-				slot35 = slot35 + slot29.preferredWidth
+				slot33 = slot33 + slot29.preferredWidth
 			end
 
-			if uv3 < slot35 then
-				slot37 = uv2 + slot35 - uv3
-				slot9 = math.max(slot9, slot37)
-				slot10 = math.max(slot10, slot37)
+			if uv3 < slot20.preferredWidth then
+				slot33 = slot33 + math.max(0, slot34 - uv3)
+			end
+
+			if uv4 < slot33 then
+				slot36 = uv2 + slot33 - uv4
+				slot9 = math.max(slot9, slot36)
+				slot10 = math.max(slot10, slot36)
 			end
 
 			gohelper.setActive(slot28, slot32)
@@ -217,7 +183,7 @@ end
 
 function slot0.onOpen(slot0)
 	gohelper.setActive(gohelper.findChild(slot0.viewGO, "root/tips"), true)
-	slot0:_updateBuffs(FightEntityModel.instance:getById(slot0.viewParam.entityId))
+	slot0:_updateBuffs(FightDataHelper.entityMgr:getById(slot0.viewParam.entityId or slot0.viewParam))
 
 	if slot0.viewParam.viewname and slot0.viewParam.viewname == "FightView" then
 		slot0:_setPos(slot1)
@@ -243,7 +209,7 @@ slot0.filterTypeKey = {
 }
 
 function slot0.updateBuffDesc(slot0, slot1, slot2, slot3, slot4)
-	slot5 = FightBuffHelper.filterBuffType(tabletool.copy(slot0 and slot0.buffModel and slot0.buffModel:getList() or {}), uv0.filterTypeKey)
+	slot5 = FightBuffHelper.filterBuffType(tabletool.copy(slot0 and slot0:getBuffList() or {}), uv0.filterTypeKey)
 
 	FightSkillBuffMgr.instance:dealStackerBuff(slot5)
 	table.sort(slot5, function (slot0, slot1)
@@ -277,72 +243,32 @@ function slot0.updateBuffDesc(slot0, slot1, slot2, slot3, slot4)
 			slot16 = slot15.go
 
 			gohelper.setActive(slot16, true)
+			uv0.showBuffTime(gohelper.findChildText(slot16, "title/txt_time"), slot12, slot13, slot0)
 
-			slot18, slot19 = FightSkillBuffMgr.instance:buffIsStackerBuff(slot13)
+			slot18 = gohelper.findChildText(slot16, "txt_desc")
 
-			if slot18 then
-				if slot19 == FightEnum.BuffIncludeTypes.Stacked12 then
-					gohelper.findChildText(slot16, "title/txt_time").text = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(slot0.id, slot13.id)) .. " " .. string.format(luaLang("enemytip_buff_time"), slot12.duration)
-				else
-					slot17.text = slot20
-				end
-			elseif FightBuffHelper.isCountContinueChanelBuff(slot12) then
-				slot17.text = string.format(luaLang("enemytip_buff_time"), slot12.exInfo)
-			elseif slot12.duration == 0 then
-				if slot12.count == 0 then
-					slot17.text = luaLang("forever")
-				else
-					slot20 = slot12.count
-					slot21 = "enemytip_buff_count"
-
-					if string.split(slot14 and slot14.includeTypes or "", "#")[1] == "11" then
-						slot21 = "enemytip_buff_stacked_count"
-						slot20 = slot12.layer
-					end
-
-					slot17.text = string.format(luaLang(slot21), slot20)
-				end
-			elseif slot12.count == 0 then
-				slot17.text = string.format(luaLang("enemytip_buff_time"), slot12.duration)
-			else
-				slot20 = slot12.count
-				slot21 = "round_or_times"
-
-				if string.split(slot14 and slot14.includeTypes or "", "#")[1] == "11" then
-					slot21 = "round_or_stacked_count"
-					slot20 = slot12.layer
-				end
-
-				slot17.text = GameUtil.getSubPlaceholderLuaLang(luaLang(slot21), {
-					slot12.duration,
-					slot20
-				})
-			end
-
-			slot20 = gohelper.findChildText(slot16, "txt_desc")
-
-			SkillHelper.addHyperLinkClick(slot20, uv0.onClickBuffHyperLink, slot15)
+			SkillHelper.addHyperLinkClick(slot18, uv0.onClickBuffHyperLink, slot15)
 
 			gohelper.findChildText(slot16, "title/txt_name").text = slot13.name
-			slot21 = FightBuffGetDescHelper.getBuffDesc(slot12)
+			slot19 = FightBuffGetDescHelper.getBuffDesc(slot12)
 
-			recthelper.setHeight(slot16.transform, GameUtil.getTextHeightByLine(slot20, slot21, 52.1) + 62)
+			recthelper.setHeight(slot16.transform, GameUtil.getTextHeightByLine(slot18, slot19, 52.1) + 62)
 
-			slot20.text = slot21
+			slot18.text = slot19
 
 			if gohelper.findChildImage(slot16, "title/simage_icon") then
-				UISpriteSetMgr.instance:setBuffSprite(slot23, slot13.iconId)
+				UISpriteSetMgr.instance:setBuffSprite(slot21, slot13.iconId)
 			end
 
-			slot24 = gohelper.findChild(slot16, "txt_desc/image_line")
-			slot25 = gohelper.findChild(slot16, "title/txt_name/go_tag")
+			slot22 = gohelper.findChild(slot16, "txt_desc/image_line")
+			slot23 = gohelper.findChild(slot16, "title/txt_name/go_tag")
 
 			if lua_skill_buff_desc.configDict[slot14.type] then
-				gohelper.findChildText(slot16, "title/txt_name/go_tag/bg/txt_tagname").text = slot27.name
+				gohelper.findChildText(slot16, "title/txt_name/go_tag/bg/txt_tagname").text = slot25.name
 			end
 
-			gohelper.setActive(slot25, slot27)
-			gohelper.setActive(slot24, slot7 ~= slot6)
+			gohelper.setActive(slot23, slot25)
+			gohelper.setActive(slot22, slot7 ~= slot6)
 
 			slot3._scrollbuff.verticalNormalizedPosition = 1
 		end
@@ -351,6 +277,66 @@ end
 
 function slot0.onClickBuffHyperLink(slot0, slot1, slot2)
 	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(slot1, slot0.getAnchorFunc, slot0.viewClass)
+end
+
+function slot0.showBuffTime(slot0, slot1, slot2, slot3)
+	if FightBuffHelper.isCountContinueChanelBuff(slot1) then
+		slot0.text = string.format(luaLang("enemytip_buff_time"), slot1.exInfo)
+
+		return
+	end
+
+	if FightBuffHelper.isDuduBoneContinueChannelBuff(slot1) then
+		slot0.text = string.format(luaLang("buff_tip_duration"), slot1.exInfo)
+
+		return
+	end
+
+	if FightBuffHelper.isDeadlyPoisonBuff(slot1) then
+		slot0.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("buff_tip_round_and_layer"), slot1.duration, FightSkillBuffMgr.instance:getStackedCount(slot1.entityId, slot1))
+
+		return
+	end
+
+	slot4 = lua_skill_bufftype.configDict[slot2.typeId]
+	slot5, slot6 = FightSkillBuffMgr.instance:buffIsStackerBuff(slot2)
+
+	if slot5 then
+		if slot6 == FightEnum.BuffIncludeTypes.Stacked12 then
+			slot0.text = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(slot3.id, slot1)) .. " " .. string.format(luaLang("enemytip_buff_time"), slot1.duration)
+		else
+			slot0.text = slot7
+		end
+	elseif slot1.duration == 0 then
+		if slot1.count == 0 then
+			slot0.text = luaLang("forever")
+		else
+			slot7 = slot1.count
+			slot8 = "enemytip_buff_count"
+
+			if string.split(slot4 and slot4.includeTypes or "", "#")[1] == "11" then
+				slot8 = "enemytip_buff_stacked_count"
+				slot7 = slot1.layer
+			end
+
+			slot0.text = string.format(luaLang(slot8), slot7)
+		end
+	elseif slot1.count == 0 then
+		slot0.text = string.format(luaLang("enemytip_buff_time"), slot1.duration)
+	else
+		slot7 = slot1.count
+		slot8 = "round_or_times"
+
+		if string.split(slot4 and slot4.includeTypes or "", "#")[1] == "11" then
+			slot8 = "round_or_stacked_count"
+			slot7 = slot1.layer
+		end
+
+		slot0.text = GameUtil.getSubPlaceholderLuaLang(luaLang(slot8), {
+			slot1.duration,
+			slot7
+		})
+	end
 end
 
 return slot0

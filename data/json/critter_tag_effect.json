@@ -186,10 +186,10 @@
   {
     "id": "xianjingdudu_01",
     "target": 2,
-    "catalogue": 131314,
+    "catalogue": 131300,
     "condition": "",
     "type": 2,
-    "parameter": "131314#rateEfficiency#1500"
+    "parameter": "131300#rateEfficiency#1500"
   },
   {
     "id": "fubingliequan",
@@ -646,69 +646,5 @@
     "condition": "",
     "type": 2,
     "parameter": "131315#baseLucky#500"
-  },
-  {
-    "id": "xianjingdudu_02",
-    "target": 2,
-    "catalogue": 131321,
-    "condition": "",
-    "type": 2,
-    "parameter": "131314#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_03",
-    "target": 2,
-    "catalogue": 131315,
-    "condition": "",
-    "type": 2,
-    "parameter": "131314#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_04",
-    "target": 2,
-    "catalogue": 131314,
-    "condition": "",
-    "type": 2,
-    "parameter": "131321#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_05",
-    "target": 2,
-    "catalogue": 131321,
-    "condition": "",
-    "type": 2,
-    "parameter": "131321#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_06",
-    "target": 2,
-    "catalogue": 131315,
-    "condition": "",
-    "type": 2,
-    "parameter": "131321#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_07",
-    "target": 2,
-    "catalogue": 131314,
-    "condition": "",
-    "type": 2,
-    "parameter": "131315#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_08",
-    "target": 2,
-    "catalogue": 131321,
-    "condition": "",
-    "type": 2,
-    "parameter": "131315#rateEfficiency#1500"
-  },
-  {
-    "id": "xianjingdudu_09",
-    "target": 2,
-    "catalogue": 131315,
-    "condition": "",
-    "type": 2,
-    "parameter": "131315#rateEfficiency#1500"
   }
 ]

@@ -1,4 +1,34 @@
 return {
+	Activity189 = {
+		model = {
+			"Activity189Model",
+			"ShortenActModel"
+		},
+		config = {
+			"Activity189Config",
+			"ShortenActConfig"
+		},
+		controller = {
+			"Activity189Controller"
+		},
+		rpc = {
+			"Activity189Rpc"
+		}
+	},
+	Activity174 = {
+		model = {
+			"Activity174Model"
+		},
+		controller = {
+			"Activity174Controller"
+		},
+		rpc = {
+			"Activity174Rpc"
+		},
+		config = {
+			"Activity174Config"
+		}
+	},
 	Activity170 = {
 		model = {
 			"SummonSimulationPickModel"
@@ -732,10 +762,10 @@ return {
 			"StressConfig"
 		},
 		model = {
+			"FightDataModel",
 			"FightDataMgr",
-			"FightPerformanceDataMgr",
+			"FightLocalDataMgr",
 			"FightModel",
-			"FightEntityModel",
 			"FightCardModel",
 			"FightStatModel",
 			"FightResultModel",
@@ -832,11 +862,13 @@ return {
 			"HeroModel",
 			"HeroSkillModel",
 			"CharacterSwitchListModel",
-			"CharacterEquipSettingListModel"
+			"CharacterEquipSettingListModel",
+			"CharacterDestinyModel"
 		},
 		controller = {
 			"CharacterController",
-			"CharacterVoiceController"
+			"CharacterVoiceController",
+			"CharacterDestinyController"
 		},
 		rpc = {
 			"HeroRpc"
@@ -847,7 +879,8 @@ return {
 			"SkinConfig",
 			"CharacterDataConfig",
 			"HeroResonanceConfig",
-			"EffectivenessConfig"
+			"EffectivenessConfig",
+			"CharacterDestinyConfig"
 		}
 	},
 	GM = {
@@ -882,7 +915,8 @@ return {
 			"HeroSingleGroupModel",
 			"HeroGroupEditListModel",
 			"HeroGroupRecommendCharacterListModel",
-			"HeroGroupRecommendGroupListModel"
+			"HeroGroupRecommendGroupListModel",
+			"HeroGroupSnapshotModel"
 		},
 		rpc = {
 			"HeroGroupRpc"
@@ -1688,7 +1722,7 @@ return {
 	},
 	Activity171 = {
 		model = {
-			"TurnbackModel"
+			"TurnBackInvitationModel"
 		},
 		controller = {
 			"TurnBackInvitationController"
@@ -2216,6 +2250,48 @@ return {
 		},
 		controller = {
 			"SummonNewCustomPickViewController"
+		}
+	},
+	Tower = {
+		model = {
+			"TowerModel",
+			"TowerAssistBossModel",
+			"TowerPermanentModel",
+			"TowerTaskModel",
+			"TowerTimeLimitLevelModel"
+		},
+		rpc = {
+			"TowerRpc"
+		},
+		config = {
+			"TowerConfig"
+		},
+		controller = {
+			"TowerController"
+		}
+	},
+	VersionActivity2_3Dungeon = {
+		model = {
+			"VersionActivity2_3DungeonModel"
+		},
+		controller = {
+			"VersionActivity2_3DungeonController"
+		}
+	},
+	ZhiXinQuanEr = {
+		config = {
+			"Activity176Config"
+		},
+		controller = {
+			"PuzzleMazeDrawController"
+		},
+		model = {
+			"PuzzleMazeDrawModel"
+		}
+	},
+	DuDuGu = {
+		model = {
+			"ActDuDuGuModel"
 		}
 	},
 	Timer = {

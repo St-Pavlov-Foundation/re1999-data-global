@@ -159,7 +159,11 @@ function slot0.resetCurSelectEntityIdDefault(slot0)
 			slot0:setCurSelectEntityId(0)
 		end
 	else
-		if FightEntityModel.instance:getById(slot0.curSelectEntityId) and slot1.side == FightEnum.EntitySide.MySide then
+		if FightDataHelper.entityMgr:getById(slot0.curSelectEntityId) and slot1:isStatusDead() then
+			slot1 = nil
+		end
+
+		if slot1 and slot1.side == FightEnum.EntitySide.MySide then
 			slot0.curSelectEntityId = 0
 			slot1 = nil
 		end
@@ -168,7 +172,7 @@ function slot0.resetCurSelectEntityIdDefault(slot0)
 			return
 		end
 
-		for slot9 = #FightEntityModel.instance:getEnemySideList(), 1, -1 do
+		for slot9 = #FightDataHelper.entityMgr:getEnemyNormalList(), 1, -1 do
 			if slot5[slot9]:hasBuffFeature(FightEnum.BuffType_CantSelect) or slot10:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
 				table.remove(slot5, slot9)
 			end
@@ -184,16 +188,18 @@ function slot0.resetCurSelectEntityIdDefault(slot0)
 end
 
 function slot0.getSelectEnemyPosLOrR(slot0, slot1)
-	for slot6 = #FightEntityModel.instance:getEnemySideList(), 1, -1 do
+	for slot6 = #FightDataHelper.entityMgr:getEnemyNormalList(), 1, -1 do
 		if slot2[slot6]:hasBuffFeature(FightEnum.BuffType_CantSelect) or slot7:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
 			table.remove(slot2, slot6)
 		end
 	end
 
 	if #slot2 > 0 then
-		table.sort(slot2, function (slot0, slot1)
+		function slot6(slot0, slot1)
 			return slot0.position < slot1.position
-		end)
+		end
+
+		table.sort(slot2, slot6)
 
 		for slot6 = 1, #slot2 do
 			if slot2[slot6].id == slot0.curSelectEntityId then
@@ -225,11 +231,13 @@ end
 function slot0.resetCardOps(slot0)
 	slot0._cardOps = {}
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getMySideList()) do
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot6:resetSimulateExPoint()
 	end
 
-	for slot5, slot6 in ipairs(FightEntityModel.instance:getSpModel(FightEnum.EntitySide.MySide):getList()) do
+	slot5 = FightEnum.EntitySide.MySide
+
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getSpList(slot5)) do
 		slot6:resetSimulateExPoint()
 	end
 end
@@ -430,7 +438,7 @@ function slot0.isCardOpEnd(slot0)
 		return true
 	end
 
-	if FightCardMOHelper.allFrozenCard(slot2) then
+	if FightCardDataHelper.allFrozenCard(slot2) then
 		return true
 	end
 
@@ -461,7 +469,7 @@ function slot0.combineTwoCard(slot0, slot1, slot2)
 	slot3.skillId = uv0.getCombineSkillId(slot0, slot1, slot2)
 	slot3.tempCard = false
 
-	FightCardMOHelper.enchantsAfterCombine(slot3, slot1)
+	FightCardDataHelper.enchantsAfterCombine(slot3, slot1)
 
 	if not slot3.uid or tonumber(slot3.uid) == 0 then
 		slot3.uid = slot1.uid
@@ -524,7 +532,7 @@ function slot0.getCombineIndexOnce(slot0, slot1, slot2)
 			elseif slot2 == slot0[slot6] and slot1 == slot0[slot6 + 1] then
 				return slot6
 			end
-		elseif FightCardMOHelper.canCombineCard(slot0[slot6], slot0[slot6 + 1]) then
+		elseif FightCardDataHelper.canCombineCard(slot0[slot6], slot0[slot6 + 1]) then
 			return slot6
 		end
 	end
@@ -569,6 +577,19 @@ function slot0.playHandCardOp(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	table.insert(slot0._cardOps, slot7)
 
 	return slot7
+end
+
+function slot0.playAssistBossHandCardOp(slot0, slot1, slot2)
+	slot3 = FightBeginRoundOp.New()
+
+	if (slot2 or slot0.curSelectEntityId) == 0 and #FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot1) > 0 then
+		slot4 = slot5[1]
+	end
+
+	slot3:playAssistBossHandCard(slot1, slot4)
+	table.insert(slot0._cardOps, slot3)
+
+	return slot3
 end
 
 function slot0.simulateDissolveCard(slot0, slot1)
@@ -618,7 +639,7 @@ function slot0.getHandCardContainerScale(slot0, slot1, slot2)
 end
 
 function slot0.getSkillLv(slot0, slot1, slot2)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		return slot3:getSkillLv(slot2)
 	end
 
@@ -626,7 +647,7 @@ function slot0.getSkillLv(slot0, slot1, slot2)
 end
 
 function slot0.getSkillNextLvId(slot0, slot1, slot2)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		return slot3:getSkillNextLvId(slot2)
 	end
 
@@ -634,7 +655,7 @@ function slot0.getSkillNextLvId(slot0, slot1, slot2)
 end
 
 function slot0.getSkillPrevLvId(slot0, slot1, slot2)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		return slot3:getSkillPrevLvId(slot2)
 	end
 
@@ -642,7 +663,7 @@ function slot0.getSkillPrevLvId(slot0, slot1, slot2)
 end
 
 function slot0.isUniqueSkill(slot0, slot1, slot2)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		return slot3:isUniqueSkill(slot2)
 	end
 
@@ -650,7 +671,7 @@ function slot0.isUniqueSkill(slot0, slot1, slot2)
 end
 
 function slot0.isActiveSkill(slot0, slot1, slot2)
-	if FightEntityModel.instance:getById(slot1) then
+	if FightDataHelper.entityMgr:getById(slot1) then
 		return slot3:isActiveSkill(slot2)
 	end
 

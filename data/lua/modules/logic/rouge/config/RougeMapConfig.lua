@@ -94,9 +94,9 @@ function slot0.pointPosHandle(slot0, slot1, slot2)
 		rawset(slot0, "pointPosList", {})
 
 		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+			slot9 = slot4
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
+			for slot8, slot9 in ipairs(string.split(slot9, "|")) do
 				slot10 = string.splitToNumber(slot9, "#")
 
 				table.insert(slot3, Vector3.New(slot10[1], slot10[2], slot10[3]))
@@ -112,9 +112,9 @@ function slot0.pathPointPosHandle(slot0, slot1, slot2)
 		rawset(slot0, "pathPointPos", {})
 
 		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+			slot9 = slot4
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
+			for slot8, slot9 in ipairs(string.split(slot9, "|")) do
 				slot10 = string.splitToNumber(slot9, "#")
 
 				table.insert(slot3, Vector2.New(slot10[1], slot10[2]))
@@ -130,9 +130,9 @@ function slot0.pathHandle(slot0, slot1, slot2)
 		rawset(slot0, "pathList", {})
 
 		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+			slot9 = slot4
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
+			for slot8, slot9 in ipairs(string.split(slot9, "|")) do
 				slot10 = string.splitToNumber(slot9, "#")
 
 				table.insert(slot3, Vector2.New(slot10[1], slot10[2]))
@@ -148,9 +148,9 @@ function slot0.pathDictHandle(slot0, slot1, slot2)
 		rawset(slot0, "pathDict", {})
 
 		if not string.nilorempty(slot2(slot0, "path")) then
-			slot8 = "|"
+			slot9 = slot4
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
+			for slot8, slot9 in ipairs(string.split(slot9, "|")) do
 				slot10 = string.splitToNumber(slot9, "#")
 				slot12 = slot10[2]
 				slot3[slot11] = slot3[slot10[1]] or {}

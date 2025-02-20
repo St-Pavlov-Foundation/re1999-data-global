@@ -8,7 +8,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "308108",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110403#1|9#1003#2"
+    "bonus": "2#2#80|1#110403#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -19,7 +20,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660201",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -30,7 +32,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660202",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -41,7 +44,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660203",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -52,7 +56,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660204",
     "maxProgress": 1,
-    "bonus": "1#110303#1|2#5#5000"
+    "bonus": "1#110303#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -63,7 +68,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660205",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -74,7 +80,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660206",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -85,7 +92,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660207",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11605,
@@ -96,7 +104,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660208",
     "maxProgress": 1,
-    "bonus": "1#110303#1|2#5#5000"
+    "bonus": "1#110303#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -107,7 +116,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "308408",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110203#1|9#1003#2"
+    "bonus": "2#2#80|1#110203#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -118,7 +128,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660401",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -129,7 +140,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660402",
     "maxProgress": 1,
-    "bonus": "1#110703#1|2#5#5000"
+    "bonus": "1#110703#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -140,7 +152,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660403",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -151,7 +164,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660404",
     "maxProgress": 1,
-    "bonus": "1#111002#1|2#5#5000"
+    "bonus": "1#111002#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -162,7 +176,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660405",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -173,7 +188,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660406",
     "maxProgress": 1,
-    "bonus": "1#110703#1|2#5#5000"
+    "bonus": "1#110703#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -184,7 +200,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660407",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11606,
@@ -195,7 +212,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1660408",
     "maxProgress": 1,
-    "bonus": "1#111002#1|2#5#5000"
+    "bonus": "1#111002#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -206,7 +224,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770201",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -217,7 +236,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770202",
     "maxProgress": 1,
-    "bonus": "1#111012#1|2#5#5000"
+    "bonus": "1#111012#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -228,7 +248,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770203",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -239,7 +260,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770204",
     "maxProgress": 1,
-    "bonus": "1#110203#1|2#5#5000"
+    "bonus": "1#110203#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -250,7 +272,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770205",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -261,7 +284,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770206",
     "maxProgress": 1,
-    "bonus": "1#111012#1|2#5#5000"
+    "bonus": "1#111012#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -272,7 +296,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770207",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -283,7 +308,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770208",
     "maxProgress": 1,
-    "bonus": "1#110203#1|2#5#5000"
+    "bonus": "1#110203#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11706,
@@ -294,7 +320,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "308308",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110303#1|9#1003#2"
+    "bonus": "2#2#80|1#110303#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -305,7 +332,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770401",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -316,7 +344,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770402",
     "maxProgress": 1,
-    "bonus": "1#110503#1|2#5#5000"
+    "bonus": "1#110503#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -327,7 +356,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770403",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -338,7 +368,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770404",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -349,7 +380,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770405",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -360,7 +392,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770406",
     "maxProgress": 1,
-    "bonus": "1#110503#1|2#5#5000"
+    "bonus": "1#110503#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -371,7 +404,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770407",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -382,7 +416,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1770408",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11707,
@@ -393,7 +428,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "306508",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110403#1|9#1003#2"
+    "bonus": "2#2#80|1#110403#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -404,7 +440,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860201",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -415,7 +452,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860202",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -426,7 +464,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860203",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -437,7 +476,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860204",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -448,7 +488,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860205",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -459,7 +500,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860206",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -470,7 +512,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860207",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -481,7 +524,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860208",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11806,
@@ -492,7 +536,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "308708",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110203#1|9#1003#2"
+    "bonus": "2#2#80|1#110203#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -503,7 +548,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860401",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -514,7 +560,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860402",
     "maxProgress": 1,
-    "bonus": "1#110403#1|2#5#5000"
+    "bonus": "1#110403#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -525,7 +572,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860403",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -536,7 +584,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860404",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -547,7 +596,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860405",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -558,7 +608,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860406",
     "maxProgress": 1,
-    "bonus": "1#110403#1|2#5#5000"
+    "bonus": "1#110403#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -569,7 +620,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860407",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -580,7 +632,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1860408",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11807,
@@ -591,7 +644,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "307708",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110303#1|9#1003#2"
+    "bonus": "2#2#80|1#110303#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -602,7 +656,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960201",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -613,7 +668,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960202",
     "maxProgress": 1,
-    "bonus": "1#110703#1|2#5#5000"
+    "bonus": "1#110703#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -624,7 +680,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960203",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -635,7 +692,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960204",
     "maxProgress": 1,
-    "bonus": "1#111002#1|2#5#5000"
+    "bonus": "1#111002#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -646,7 +704,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960205",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -657,7 +716,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960206",
     "maxProgress": 1,
-    "bonus": "1#110703#1|2#5#5000"
+    "bonus": "1#110703#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -668,7 +728,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960207",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -679,7 +740,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960208",
     "maxProgress": 1,
-    "bonus": "1#111002#1|2#5#5000"
+    "bonus": "1#111002#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11908,
@@ -690,7 +752,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "308608",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110303#1|9#1003#2"
+    "bonus": "2#2#80|1#110303#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -701,7 +764,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960401",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -712,7 +776,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960402",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -723,7 +788,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960403",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -734,7 +800,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960404",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -745,7 +812,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960405",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -756,7 +824,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960406",
     "maxProgress": 1,
-    "bonus": "1#110103#1|2#5#5000"
+    "bonus": "1#110103#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -767,7 +836,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960407",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -778,7 +848,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "1960408",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 11909,
@@ -789,7 +860,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "307408",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110703#1|9#1003#2"
+    "bonus": "2#2#80|1#110703#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -800,7 +872,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060201",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -811,7 +884,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060202",
     "maxProgress": 1,
-    "bonus": "1#110403#1|2#5#5000"
+    "bonus": "1#110403#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -822,7 +896,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060203",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -833,7 +908,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060204",
     "maxProgress": 1,
-    "bonus": "1#110303#1|2#5#5000"
+    "bonus": "1#110303#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -844,7 +920,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060205",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -855,7 +932,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060206",
     "maxProgress": 1,
-    "bonus": "1#110703#1|2#5#5000"
+    "bonus": "1#110703#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -866,7 +944,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060207",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -877,7 +956,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060208",
     "maxProgress": 1,
-    "bonus": "1#110303#1|2#5#5000"
+    "bonus": "1#110303#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12008,
@@ -888,7 +968,8 @@
     "listenerType": "StoryFinish",
     "listenerParam": "309408",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110703#1|9#1003#2"
+    "bonus": "2#2#80|1#110703#1|9#1003#2",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -899,7 +980,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060401",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -910,7 +992,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060402",
     "maxProgress": 1,
-    "bonus": "1#110203#1|2#5#5000"
+    "bonus": "1#110203#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -921,7 +1004,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060403",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -932,7 +1016,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060404",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -943,7 +1028,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060405",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -954,7 +1040,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060406",
     "maxProgress": 1,
-    "bonus": "1#110203#1|2#5#5000"
+    "bonus": "1#110203#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -965,7 +1052,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060407",
     "maxProgress": 1,
-    "bonus": "2#2#40|9#1003#4|2#3#5000"
+    "bonus": "2#2#40|9#1003#4|2#3#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -976,7 +1064,8 @@
     "listenerType": "EpisodeFinish",
     "listenerParam": "2060408",
     "maxProgress": 1,
-    "bonus": "1#110603#1|2#5#5000"
+    "bonus": "1#110603#1|2#5#5000",
+    "jumpid": 0
   },
   {
     "activityId": 12009,
@@ -987,6 +1076,223 @@
     "listenerType": "StoryFinish",
     "listenerParam": "309508",
     "maxProgress": 1,
-    "bonus": "2#2#80|1#110503#1|9#1003#2"
+    "bonus": "2#2#80|1#110503#1|9#1003#2",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302301,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060967",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350101",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302302,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060968",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350102",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110503#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302303,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060969",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350103",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302304,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060970",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350104",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110403#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302305,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060971",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350105",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302306,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060972",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350106",
+    "maxProgress": 1,
+    "bonus": "2#2#40|1#110503#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302307,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060973",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350107",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302308,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060974",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2350108",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12305,
+    "id": 302309,
+    "minType": "language_10060966",
+    "name": "language_10058586",
+    "taskDesc": "language_10060975",
+    "listenerType": "EpisodePassIncr",
+    "listenerParam": "239001",
+    "maxProgress": 1,
+    "bonus": "2#2#40|1#110603#1|2#5#10000",
+    "jumpid": 10012314
+  },
+  {
+    "activityId": 12306,
+    "id": 302310,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060977",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360101",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302311,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060978",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360102",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302312,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060979",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360103",
+    "maxProgress": 1,
+    "bonus": "2#2#20|1#110303#2|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302313,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060980",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360104",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110603#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302314,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060981",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360105",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110303#2|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302315,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060982",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360106",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110603#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302316,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060983",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360107",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110303#2|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302317,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060984",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "2360108",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 12306,
+    "id": 302318,
+    "minType": "language_10060976",
+    "name": "language_10058587",
+    "taskDesc": "language_10060985",
+    "listenerType": "EpisodePassIncr",
+    "listenerParam": "239101",
+    "maxProgress": 1,
+    "bonus": "2#2#40|1#110703#1|2#5#10000",
+    "jumpid": 10012312
   }
 ]

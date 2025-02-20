@@ -106,6 +106,7 @@ function slot0._editableInitView(slot0)
 	slot0._curAudio = 0
 	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
 
+	slot0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
 	CharacterController.instance:registerCallback(CharacterEvent.PlayVoice, slot0._onPlayVoice, slot0)
 	CharacterController.instance:registerCallback(CharacterEvent.StopVoice, slot0._onStopVoice, slot0)
 

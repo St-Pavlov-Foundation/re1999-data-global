@@ -48,5 +48,15 @@
     "activityId": 12009,
     "storyGroupId": 20603,
     "episodeGroupId": 20604
+  },
+  {
+    "activityId": 12305,
+    "storyGroupId": 23501,
+    "episodeGroupId": 0
+  },
+  {
+    "activityId": 12306,
+    "storyGroupId": 23601,
+    "episodeGroupId": 0
   }
 ]

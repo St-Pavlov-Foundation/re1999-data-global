@@ -34,7 +34,7 @@ function slot0._onEntityDead(slot0, slot1)
 end
 
 function slot0._getBossEntityMO(slot0)
-	return FightEntityModel.instance:getById(slot0._entityId)
+	return FightDataHelper.entityMgr:getById(slot0._entityId)
 end
 
 return slot0

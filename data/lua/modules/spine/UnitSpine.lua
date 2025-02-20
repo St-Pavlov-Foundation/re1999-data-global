@@ -105,14 +105,12 @@ function slot0._clear(slot0)
 end
 
 function slot0._onResLoaded(slot0, slot1)
+	if gohelper.isNil(slot0._gameObj) then
+		return
+	end
+
 	if slot1:getFirstAssetItem() then
-		slot4 = gohelper.clone(slot2:GetResource(), slot0._gameObj)
-
-		if gohelper.isNil(slot0._gameObj) then
-			logError("try clone spine, but parent is nil, spine name : " .. tostring(slot4 and slot4.name or "nil"))
-		end
-
-		slot0:_initSpine(slot4)
+		slot0:_initSpine(gohelper.clone(slot2:GetResource(), slot0._gameObj))
 	end
 end
 

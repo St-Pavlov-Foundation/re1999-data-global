@@ -1,15 +1,20 @@
 module("modules.logic.fight.model.data.FightStageMgr", package.seeall)
 
-slot0 = class("FightStageMgr")
+slot0 = FightDataBase("FightStageMgr")
 slot0.StageType = {
 	Normal = GameUtil.getEnumId(),
-	Replay = GameUtil.getEnumId(),
 	Enter = GameUtil.getEnumId(),
 	Play = GameUtil.getEnumId(),
 	End = GameUtil.getEnumId()
 }
+slot0.PlayType = {
+	ClothSkill = 2,
+	Normal = 1
+}
 slot0.FightStateType = {
-	Auto = GameUtil.getEnumId()
+	Auto = GameUtil.getEnumId(),
+	Replay = GameUtil.getEnumId(),
+	DouQuQu = GameUtil.getEnumId()
 }
 slot0.OperateStateType = {
 	Discard = GameUtil.getEnumId(),
@@ -27,9 +32,11 @@ end
 
 function slot0.ctor(slot0)
 	slot0.stages = {}
+	slot0.stageParam = {}
 	slot0.operateStates = {}
 	slot0.operateParam = {}
 	slot0.fightStates = {}
+	slot0.fightStateParam = {}
 	slot0.enterFinish = false
 end
 
@@ -49,15 +56,23 @@ function slot0.getCurOperateParam(slot0)
 	return slot0.operateParam[#slot0.operateParam]
 end
 
-function slot0.enterStage(slot0, slot1)
-	for slot5 = #slot0.stages, 1, -1 do
-		if slot1 == slot0.stages[slot5] then
+function slot0.enterStage(slot0, slot1, slot2)
+	for slot6 = #slot0.stages, 1, -1 do
+		if slot1 == slot0.stages[slot6] then
+			logError("重复进入stage:" .. uv0[slot1] .. "请检查代码")
+
+			slot0.stageParam[slot6] = slot2 or 0
+
 			return
 		end
 	end
 
 	table.insert(slot0.stages, slot1)
-	FightController.instance:dispatchEvent(FightEvent.EnterStage, slot1)
+
+	slot2 = slot2 or 0
+
+	table.insert(slot0.stageParam, slot2)
+	FightController.instance:dispatchEvent(FightEvent.EnterStage, slot1, slot2)
 end
 
 function slot0.exitStage(slot0, slot1)
@@ -81,16 +96,22 @@ function slot0.exitStage(slot0, slot1)
 
 	table.remove(slot0.stages, slot2)
 
+	slot3 = table.remove(slot0.stageParam, slot2)
+
 	if slot1 == uv1.StageType.Enter then
 		slot0.enterFinish = true
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ExitStage, slot1)
+	FightController.instance:dispatchEvent(FightEvent.ExitStage, slot1, slot3)
 end
 
-function slot0.enterFightState(slot0, slot1)
+function slot0.enterFightState(slot0, slot1, slot2)
 	table.insert(slot0.fightStates, slot1)
-	FightController.instance:dispatchEvent(FightEvent.EnterFightState, slot1)
+
+	slot2 = slot2 or 0
+
+	table.insert(slot0.fightStateParam, slot2)
+	FightController.instance:dispatchEvent(FightEvent.EnterFightState, slot1, slot2)
 end
 
 function slot0.exitFightState(slot0, slot1)
@@ -107,13 +128,16 @@ function slot0.exitFightState(slot0, slot1)
 	end
 
 	table.remove(slot0.fightStates, slot2)
-	FightController.instance:dispatchEvent(FightEvent.ExitFightState, slot1)
+	FightController.instance:dispatchEvent(FightEvent.ExitFightState, slot1, table.remove(slot0.fightStateParam, slot2))
 end
 
 function slot0.enterOperateState(slot0, slot1, slot2)
 	table.insert(slot0.operateStates, slot1)
-	table.insert(slot0.operateParam, slot2 or 0)
-	FightController.instance:dispatchEvent(FightEvent.EnterOperateState, slot1)
+
+	slot2 = slot2 or 0
+
+	table.insert(slot0.operateParam, slot2)
+	FightController.instance:dispatchEvent(FightEvent.EnterOperateState, slot1, slot2)
 end
 
 function slot0.exitOperateState(slot0, slot1)
@@ -130,8 +154,7 @@ function slot0.exitOperateState(slot0, slot1)
 	end
 
 	table.remove(slot0.operateStates, slot2)
-	table.remove(slot0.operateParam, slot2)
-	FightController.instance:dispatchEvent(FightEvent.ExitOperateState, slot1)
+	FightController.instance:dispatchEvent(FightEvent.ExitOperateState, slot1, table.remove(slot0.operateParam, slot2))
 end
 
 function slot0.isEmptyOperateState(slot0)
@@ -147,7 +170,7 @@ function slot0.inFightState(slot0, slot1)
 end
 
 function slot0.isNormalStage(slot0)
-	return slot0.stages[#slot0.stages] == uv0.StageType.Normal
+	return slot0:getCurStage() == uv0.StageType.Normal
 end
 
 function slot0.inAutoFightState(slot0)
@@ -163,6 +186,14 @@ function slot0.isFree(slot0)
 		return
 	end
 
+	if slot0:inFightState(uv0.FightStateType.DouQuQu) then
+		return
+	end
+
+	if slot0:inReplay() then
+		return
+	end
+
 	if not slot0:isEmptyOperateState() then
 		return
 	end
@@ -174,8 +205,8 @@ function slot0.enterFinished(slot0)
 	return slot0.enterFinish
 end
 
-function slot0.isBaseStage(slot0)
-	return slot0:getCurStage() == uv0.StageType.Normal or slot1 == uv0.StageType.Replay
+function slot0.inReplay(slot0)
+	return slot0:inFightState(uv0.FightStateType.Replay)
 end
 
 return slot0

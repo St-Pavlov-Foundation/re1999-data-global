@@ -33,6 +33,7 @@ function slot0.onInitFinish(slot0)
 	slot0:_addTrigger(GuideTriggerElementFinish.New("ElementFinish"))
 	slot0:_addTrigger(GuideTriggerRoomLv.New("RoomLv"))
 	slot0:_addTrigger(GuideTriggerRoomTradeLv.New("RoomTradeLv"))
+	slot0:_addTrigger(GuideTriggerDestinyStone.New("DestinyStone"))
 end
 
 function slot0._addTrigger(slot0, slot1)

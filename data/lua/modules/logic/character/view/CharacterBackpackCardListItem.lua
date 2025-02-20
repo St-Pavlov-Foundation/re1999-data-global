@@ -37,7 +37,7 @@ function slot0.onUpdateMO(slot0, slot1)
 end
 
 function slot0._refreshRedDot(slot0)
-	if CharacterModel.instance:isHeroCouldExskillUp(slot0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(slot0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(slot0._mo.heroId) then
+	if CharacterModel.instance:isHeroCouldExskillUp(slot0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(slot0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(slot0._mo.heroId) or slot0:_isShowDestinyReddot() then
 		slot0._heroItem:setRedDotShow(true)
 	else
 		slot0._heroItem:setRedDotShow(false)
@@ -50,6 +50,10 @@ end
 function slot0._onItemClick(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	CharacterController.instance:openCharacterView(slot0._mo)
+
+	if slot0:_isShowDestinyReddot() then
+		HeroRpc.instance:setHeroRedDotReadRequest(slot0._mo.heroId, 1)
+	end
 end
 
 function slot0._onItemClickDown(slot0)
@@ -127,6 +131,12 @@ end
 
 function slot0.getAnimator(slot0)
 	return slot0._animator
+end
+
+function slot0._isShowDestinyReddot(slot0)
+	if slot0._mo and slot0._mo.destinyStoneMo then
+		return slot0._mo:isCanOpenDestinySystem() and slot0._mo.destinyStoneMo:getRedDot() < 1
+	end
 end
 
 return slot0

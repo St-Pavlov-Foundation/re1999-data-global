@@ -224,7 +224,10 @@ slot1 = {
 	"V2a1_MoonFestival_PanelView",
 	"V2a2_Role_PanelSignView_Part1",
 	"V2a2_Role_PanelSignView_Part2",
-	"V2a2_RedLeafFestival_PanelView"
+	"V2a2_RedLeafFestival_PanelView",
+	"V2a3_Role_PanelSignView_Part1",
+	"V2a3_Role_PanelSignView_Part2",
+	"V2a3_Special_PanelsView"
 }
 
 function slot0.jumpTo(slot0, slot1, slot2, slot3, slot4)
@@ -454,14 +457,17 @@ function slot0.getCurrentOpenedView(slot0, slot1)
 			[ViewName.MaterialTipView] = true,
 			[SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.HeroGroupFightView)] = true,
 			[Season123Controller.instance:getHeroGroupFightViewName()] = true,
-			[Season123Controller.instance:getHeroGroupEditViewName()] = true
+			[Season123Controller.instance:getHeroGroupEditViewName()] = true,
+			[ViewName.TowerHeroGroupFightView] = true
 		}
 	end
 
 	slot2 = {}
 	slot3, slot4 = nil
+	slot7 = ViewMgr.instance
+	slot9 = slot7
 
-	for slot8, slot9 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
+	for slot8, slot9 in ipairs(slot7.getOpenViewNameList(slot9)) do
 		if slot9 ~= slot1 and not slot0.ignoreViewName[slot9] then
 			table.insert(slot2, {
 				viewName = slot9,

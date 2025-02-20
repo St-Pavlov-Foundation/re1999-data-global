@@ -203,7 +203,11 @@ function slot0._refreshSoldCount(slot0)
 end
 
 function slot0._onValueChanged(slot0)
-	slot0._mo:setSoldCount(tonumber(slot0._inputvalue:GetText() or 0))
+	if string.nilorempty(slot0._inputvalue:GetText()) then
+		slot1 = 0
+	end
+
+	slot0._mo:setSoldCount(tonumber(slot1))
 	slot0:_refreshSoldCount()
 end
 

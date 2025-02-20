@@ -243,7 +243,7 @@ function slot0._logBuildingCharacterCameraParam(slot0)
 	end
 
 	if slot2 and not string.nilorempty(slot3.heroAnimState) then
-		slot2.characterspine:play(slot3.heroAnimState, false, true)
+		slot2.characterspine:play(string.split(slot3.heroAnimState, "#") and #slot10 > 1 and slot10[1] or slot3.heroAnimState, false, true)
 	end
 end
 

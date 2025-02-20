@@ -207,7 +207,9 @@ function slot0.getCollects(slot0, slot1)
 		return {}
 	end
 
-	for slot10, slot11 in pairs(Activity130Config.instance:getActivity130OperateGroupCos(VersionActivity1_4Enum.ActivityId.Role37, slot4)) do
+	slot10 = slot4
+
+	for slot10, slot11 in pairs(Activity130Config.instance:getActivity130OperateGroupCos(VersionActivity1_4Enum.ActivityId.Role37, slot10)) do
 		if slot0:isCollectUnlock(slot3, slot11.operType) then
 			table.insert(slot2, slot11.operType)
 		end

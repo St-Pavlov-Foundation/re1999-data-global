@@ -119,6 +119,12 @@ function slot0.ctor(slot0)
 	slot0._season166 = slot0:newSpriteSetUnit("ui/spriteassets/season166.asset")
 	slot0._season166_info = slot0:newSpriteSetUnit("ui/spriteassets/season166_info.asset")
 	slot0._v2a2_lopera = slot0:newSpriteSetUnit("ui/spriteassets/v2a2_lopera_spriteset.asset")
+	slot0._v2a3_main_activity = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_mainactivity_spriteset.asset")
+	slot0._v2a3_dungeon_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_dungeon.asset")
+	slot0._v2a3_zhixinquaner = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_zhixinquaner_spriteset.asset")
+	slot0._tower = slot0:newSpriteSetUnit("ui/spriteassets/tower.asset")
+	slot0._tower_permanent = slot0:newSpriteSetUnit("ui/spriteassets/tower_permanent.asset")
+	slot0._act174 = slot0:newSpriteSetUnit("ui/spriteassets/act174.asset")
 end
 
 function slot0.newSpriteSetUnit(slot0, slot1)
@@ -592,6 +598,30 @@ end
 
 function slot0.setLoperaItemSprite(slot0, slot1, slot2, slot3)
 	slot0._v2a2_lopera:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a3MainActivitySprite(slot0, slot1, slot2, slot3)
+	slot0._v2a3_main_activity:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a3DungeonSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a3_dungeon_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setTowerSprite(slot0, slot1, slot2, slot3)
+	slot0._tower:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setTowerPermanentSprite(slot0, slot1, slot2, slot3)
+	slot0._tower_permanent:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setAct174Sprite(slot0, slot1, slot2, slot3)
+	slot0._act174:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a3ZhiXinQuanErSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a3_zhixinquaner:setSprite(slot1, slot2, slot3)
 end
 
 function slot0.tryDispose(slot0)

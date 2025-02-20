@@ -48,47 +48,51 @@ function slot0.addConstEvents(slot0)
 end
 
 function slot0.onOpenViewCallBack(slot0, slot1)
-	if slot1 == ViewName.MainView then
-		if slot0.Adapters[PCInputModel.Activity.MainActivity] == nil then
-			slot0.Adapters[PCInputModel.Activity.MainActivity] = MainActivityAdapter.New()
+	TaskDispatcher.runDelay(function ()
+		if uv0 == ViewName.MainView then
+			if uv1.Adapters[PCInputModel.Activity.MainActivity] == nil then
+				uv1.Adapters[PCInputModel.Activity.MainActivity] = MainActivityAdapter.New()
+			end
+		elseif uv0 == ViewName.ExploreView then
+			if uv1.Adapters[PCInputModel.Activity.thrityDoor] == nil then
+				uv1.Adapters[PCInputModel.Activity.thrityDoor] = ThirdDoorActivtiyAdapter.New()
+			end
+		elseif uv0 == ViewName.FightView then
+			if uv1.Adapters[PCInputModel.Activity.battle] == nil then
+				uv1.Adapters[PCInputModel.Activity.battle] = BattleActivityAdapter.New()
+			end
+		elseif uv0 == ViewName.RoomView then
+			if uv1.Adapters[PCInputModel.Activity.room] == nil then
+				uv1.Adapters[PCInputModel.Activity.room] = RoomActivityAdapter.New()
+			end
+		elseif uv0 == ViewName.WeekWalkDialogView or uv0 == ViewName.StoryFrontView or uv0 == ViewName.ExploreInteractView or uv0 == ViewName.RoomBranchView or uv0.StoryBranchView then
+			if uv1.Adapters[PCInputModel.Activity.storyDialog] == nil then
+				uv1.Adapters[PCInputModel.Activity.storyDialog] = StoryDialogAdapter.New()
+			end
+		elseif (uv0 == ViewName.MessageBoxView or uv0 == ViewName.TopMessageBoxView or uv0 == ViewName.SDKExitGameView or uv0 == ViewName.FightQuitTipView) and uv1.Adapters[PCInputModel.Activity.CommonDialog] == nil then
+			uv1.Adapters[PCInputModel.Activity.CommonDialog] = CommonActivityAdapter.New()
 		end
-	elseif slot1 == ViewName.ExploreView then
-		if slot0.Adapters[PCInputModel.Activity.thrityDoor] == nil then
-			slot0.Adapters[PCInputModel.Activity.thrityDoor] = ThirdDoorActivtiyAdapter.New()
-		end
-	elseif slot1 == ViewName.FightView then
-		if slot0.Adapters[PCInputModel.Activity.battle] == nil then
-			slot0.Adapters[PCInputModel.Activity.battle] = BattleActivityAdapter.New()
-		end
-	elseif slot1 == ViewName.RoomView then
-		if slot0.Adapters[PCInputModel.Activity.room] == nil then
-			slot0.Adapters[PCInputModel.Activity.room] = RoomActivityAdapter.New()
-		end
-	elseif slot1 == ViewName.WeekWalkDialogView or slot1 == ViewName.StoryFrontView then
-		if slot0.Adapters[PCInputModel.Activity.storyDialog] == nil then
-			slot0.Adapters[PCInputModel.Activity.storyDialog] = StoryDialogAdapter.New()
-		end
-	elseif slot1 == ViewName.MessageBoxView and slot0.Adapters[PCInputModel.Activity.CommonDialog] == nil then
-		slot0.Adapters[PCInputModel.Activity.CommonDialog] = CommonActivityAdapter.New()
-	end
+	end, slot0, 0.01)
 end
 
 function slot0.onCloseViewCallBack(slot0, slot1)
-	if slot1 == ViewName.MainView then
-		slot0:_removeAdapter(PCInputModel.Activity.MainActivity)
-	elseif slot1 == ViewName.ExploreView then
-		slot0:_removeAdapter(PCInputModel.Activity.thrityDoor)
-	elseif slot1 == ViewName.FightView then
-		slot0:_removeAdapter(PCInputModel.Activity.battle)
-	elseif slot1 == ViewName.RoomView then
-		slot0:_removeAdapter(PCInputModel.Activity.room)
-	elseif slot1 == ViewName.WeekWalkDialogView or slot1 == ViewName.StoryFrontView then
-		slot0:_removeAdapter(PCInputModel.Activity.storyDialog)
-	elseif slot1 == ViewName.MessageBoxView then
-		slot0:_removeAdapter(PCInputModel.Activity.CommonDialog)
-	elseif slot1 == ViewName.SettingsView then
-		slot0:ReRegisterKeys()
-	end
+	TaskDispatcher.runDelay(function ()
+		if uv0 == ViewName.MainView then
+			uv1:_removeAdapter(PCInputModel.Activity.MainActivity)
+		elseif uv0 == ViewName.ExploreView then
+			uv1:_removeAdapter(PCInputModel.Activity.thrityDoor)
+		elseif uv0 == ViewName.FightView then
+			uv1:_removeAdapter(PCInputModel.Activity.battle)
+		elseif uv0 == ViewName.RoomView then
+			uv1:_removeAdapter(PCInputModel.Activity.room)
+		elseif uv0 == ViewName.WeekWalkDialogView or uv0 == ViewName.StoryFrontView or uv0 == ViewName.ExploreInteractView or uv0 == ViewName.RoomBranchView or uv0.StoryBranchView then
+			uv1:_removeAdapter(PCInputModel.Activity.storyDialog)
+		elseif uv0 == ViewName.MessageBoxView or uv0 == ViewName.TopMessageBoxView or uv0 == ViewName.SDKExitGameView or uv0 == ViewName.FightQuitTipView then
+			uv1:_removeAdapter(PCInputModel.Activity.CommonDialog)
+		elseif uv0 == ViewName.SettingsView then
+			uv1:ReRegisterKeys()
+		end
+	end, slot0, 0.01)
 end
 
 function slot0.ReRegisterKeys(slot0)
@@ -213,11 +217,17 @@ function slot0.showkeyTips(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	return MonoHelper.addLuaComOnceToGo(slot1, keyTipsView, {
-		keyname = slot4,
-		activityId = slot2,
-		keyid = slot3
-	})
+	if not slot4 then
+		MonoHelper.addLuaComOnceToGo(slot1, keyTipsView, {
+			keyname = slot4,
+			activityId = slot2,
+			keyid = slot3
+		}):Refresh(slot2, slot3)
+	else
+		slot6:RefreshByKeyName(slot4)
+	end
+
+	return slot6
 end
 
 function slot0.KeyNameToDescName(slot0, slot1)

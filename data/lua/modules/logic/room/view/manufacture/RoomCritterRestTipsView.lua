@@ -86,11 +86,10 @@ end
 
 function slot0.refreshCost(slot0)
 	slot2 = ManufactureConfig.instance
-	slot3 = slot2
 	slot2 = slot2.getRestBuildingSeatSlotCost
 	slot3 = true
 
-	for slot7, slot8 in ipairs(slot2(slot3, RoomMapBuildingModel.instance:getBuildingMOById(slot0.buildingUid) and slot1.buildingId)) do
+	for slot7, slot8 in ipairs(slot2(slot2, RoomMapBuildingModel.instance:getBuildingMOById(slot0.buildingUid) and slot1.buildingId)) do
 		slot13 = slot8.quantity <= ItemModel.instance:getItemQuantity(slot8.type, slot8.id)
 
 		if not slot0._costItemList[slot7] then

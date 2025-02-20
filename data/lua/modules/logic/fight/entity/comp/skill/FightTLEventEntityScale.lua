@@ -58,7 +58,9 @@ function slot0._getScale(slot0, slot1)
 	end
 
 	if slot2 and not string.nilorempty(slot0._paramsArr[6]) then
-		for slot7, slot8 in ipairs(FightStrUtil.instance:getSplitCache(slot0._paramsArr[6], "|")) do
+		slot7 = "|"
+
+		for slot7, slot8 in ipairs(FightStrUtil.instance:getSplitCache(slot0._paramsArr[6], slot7)) do
 			if slot2.skin == FightStrUtil.instance:getSplitToNumberCache(slot8, "_")[1] then
 				return slot9[2]
 			end

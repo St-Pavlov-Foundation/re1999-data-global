@@ -147,9 +147,10 @@ function slot0._refreshUI(slot0)
 end
 
 function slot0._btnclickOnClick(slot0, slot1)
-	slot7 = slot1.storyChapterId
+	slot7 = HandbookConfig.instance:getStoryGroupList()
+	slot8 = slot1.storyChapterId
 
-	HandbookStoryListModel.instance:setStoryList(HandbookConfig.instance:getStoryGroupList(), slot7)
+	HandbookStoryListModel.instance:setStoryList(slot7, slot8)
 
 	for slot7, slot8 in ipairs(slot0._chapterItemList) do
 		gohelper.setActive(slot8.gobeselected, slot2 == slot8.storyChapterId)
@@ -192,7 +193,9 @@ function slot0._cloneStoryItem(slot0)
 end
 
 function slot0._stopStoryItemEnterAnim(slot0)
-	TaskDispatcher.cancelTask(slot0._showStoryItemEnterAnim, slot0)
+	slot4 = slot0
+
+	TaskDispatcher.cancelTask(slot0._showStoryItemEnterAnim, slot4)
 
 	for slot4, slot5 in ipairs(slot0._storyItemList) do
 		slot5.anim.enabled = false

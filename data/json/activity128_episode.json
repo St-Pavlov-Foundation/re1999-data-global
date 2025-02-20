@@ -1042,5 +1042,113 @@
     "recommendLevelDesc": "language_10000908",
     "openDay": 15,
     "evaluate": "10506#10601#10701#10806"
+  },
+  {
+    "activityId": 12313,
+    "stage": 1,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500101,
+    "desc": "language_10027237",
+    "recommendLevelDesc": "language_10027238",
+    "openDay": 1,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 1,
+    "layer": 2,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500102,
+    "desc": "language_10027239",
+    "recommendLevelDesc": "language_10027240",
+    "openDay": 1,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 1,
+    "layer": 3,
+    "type": 1,
+    "enhanceRole": 0,
+    "episodeId": 13500201,
+    "desc": "language_10027241",
+    "recommendLevelDesc": "language_10000908",
+    "openDay": 1,
+    "evaluate": "10101#10201#10301#10401"
+  },
+  {
+    "activityId": 12313,
+    "stage": 2,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500103,
+    "desc": "language_10057768",
+    "recommendLevelDesc": "language_10027238",
+    "openDay": 8,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 2,
+    "layer": 2,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500104,
+    "desc": "language_10057769",
+    "recommendLevelDesc": "language_10027240",
+    "openDay": 8,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 2,
+    "layer": 3,
+    "type": 1,
+    "enhanceRole": 0,
+    "episodeId": 13500202,
+    "desc": "language_10057770",
+    "recommendLevelDesc": "language_10000908",
+    "openDay": 8,
+    "evaluate": "10101#10201#10301#10401"
+  },
+  {
+    "activityId": 12313,
+    "stage": 3,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500105,
+    "desc": "language_10027251",
+    "recommendLevelDesc": "language_10027238",
+    "openDay": 15,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 3,
+    "layer": 2,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500106,
+    "desc": "language_10027252",
+    "recommendLevelDesc": "language_10027240",
+    "openDay": 15,
+    "evaluate": ""
+  },
+  {
+    "activityId": 12313,
+    "stage": 3,
+    "layer": 3,
+    "type": 1,
+    "enhanceRole": 0,
+    "episodeId": 13500203,
+    "desc": "language_10027253",
+    "recommendLevelDesc": "language_10000908",
+    "openDay": 15,
+    "evaluate": "10101#10201#10301#10401"
   }
 ]

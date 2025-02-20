@@ -58,9 +58,9 @@ function slot0._editableInitView(slot0)
 			slotType = RoomBuildingEnum.BuildingType.Manufacture
 		}
 	}
-	slot4 = slot0._godecitem
+	slot4 = slot0
 	slot0._tbItemList = {
-		slot0:_createTB(slot4)
+		slot0._createTB(slot4, slot0._godecitem)
 	}
 
 	for slot4 = 1, #slot0._slotDataList do

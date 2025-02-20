@@ -87,15 +87,16 @@ function slot0._editableInitView(slot0)
 
 	gohelper.setActive(slot0._gospecialitem, false)
 
-	slot4 = "guang_027"
+	slot4 = ResUrl.getHeroGroupBg
 
-	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
+	slot0._simageredlight:LoadImage(slot4("guang_027"))
 
 	for slot4 = 1, 6 do
 		slot0["_gostar" .. slot4] = gohelper.findChild(slot0._gostarList, "star" .. slot4)
 	end
 
-	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, CharacterSkillContainer)
+	slot4 = CharacterSkillContainer
+	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, slot4)
 	slot0._attributevalues = {}
 
 	for slot4 = 1, 5 do
@@ -124,9 +125,10 @@ end
 
 function slot0._getSkinId(slot0)
 	for slot5 = CharacterModel.instance:getMaxRank(slot0._heroId), 1, -1 do
-		slot10 = "#"
+		slot10 = "|"
+		slot11 = "#"
 
-		for slot10, slot11 in pairs(GameUtil.splitString2(SkillConfig.instance:getherorankCO(slot0._heroId, slot5).effect, true, "|", slot10)) do
+		for slot10, slot11 in pairs(GameUtil.splitString2(SkillConfig.instance:getherorankCO(slot0._heroId, slot5).effect, true, slot10, slot11)) do
 			if tonumber(slot11[1]) == 3 then
 				return tonumber(slot11[2])
 			end

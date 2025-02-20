@@ -13,7 +13,8 @@ function slot0.onInitView(slot0)
 	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
 	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
 	slot0._finish = gohelper.findChild(slot0.viewGO, "#go_finish")
-	slot0._txtgetname = gohelper.findChildTextMesh(slot0.viewGO, "#go_finish/#txt_getname")
+	slot4 = "#go_finish/#txt_getname"
+	slot0._txtgetname = gohelper.findChildTextMesh(slot0.viewGO, slot4)
 	slot0._items = {}
 
 	for slot4 = 1, 4 do

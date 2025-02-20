@@ -5,7 +5,8 @@
     "order": 1,
     "bgIcon": "themesource_1",
     "nameColor": "#ead59f",
-    "bgColor": "#ffffff"
+    "bgColor": "#ffffff",
+    "showType": 0
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "order": 2,
     "bgIcon": "themesource_2",
     "nameColor": "#ff702b",
-    "bgColor": "#ffffff"
+    "bgColor": "#ffffff",
+    "showType": 0
   },
   {
     "id": 3,
@@ -21,6 +23,25 @@
     "order": 3,
     "bgIcon": "themesource_3",
     "nameColor": "#7fc8ff",
-    "bgColor": "#5492c1"
+    "bgColor": "#5492c1",
+    "showType": 0
+  },
+  {
+    "id": 101,
+    "name": "",
+    "order": 0,
+    "bgIcon": "cobrand_logo_1",
+    "nameColor": "",
+    "bgColor": "",
+    "showType": 1
+  },
+  {
+    "id": 102,
+    "name": "",
+    "order": 0,
+    "bgIcon": "cobrand_logo_2",
+    "nameColor": "",
+    "bgColor": "",
+    "showType": 1
   }
 ]

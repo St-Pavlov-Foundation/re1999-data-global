@@ -334,11 +334,11 @@ function slot0._editableInitView(slot0)
 	gohelper.addUIClickAudio(slot0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(slot0._btnfaithrank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(slot0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	slot0._simagebgimg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
 
-	slot4 = "full/juesebeibao_005"
+	slot4 = 0
 
-	slot0._simagebgimg:LoadImage(ResUrl.getCommonViewBg(slot4))
-	CharacterModel.instance:setCardListByCareerIndex(0)
+	CharacterModel.instance:setCardListByCareerIndex(slot4)
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()

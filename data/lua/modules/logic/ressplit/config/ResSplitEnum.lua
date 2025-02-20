@@ -17,6 +17,7 @@ slot0.ExportConfigPath = "Assets/ZResourcesLib/configs/ressplit.json"
 slot0.VersionResSplitCfgPath = "Assets/ZResourcesLib/configs/versionressplit.json"
 slot0.VersionResSplitDebugCfgPath = "versionressplitdebug.json"
 slot0.SingleBgAbCfgPath = "Assets/ZProj/Editor/Settings/singlebgabcfg.json"
+slot0.VersionResWhiteListPath = "Assets/ZProj/Editor/Settings/versionreswhitelistcfg.json"
 slot0.SplitAllScene = true
 slot0.VersionResEnum = {
 	StoryBg = "StoryBg",

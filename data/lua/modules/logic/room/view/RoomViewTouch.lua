@@ -24,6 +24,9 @@ function slot0._editableInitView(slot0)
 		[RoomEnum.CameraState.Overlook] = true,
 		[RoomEnum.CameraState.Normal] = true
 	}
+	slot0._isNotCanClickEeventMap = {
+		[RoomEnum.CameraState.InteractBuilding] = true
+	}
 end
 
 function slot0._isInitBlockById(slot0, slot1)
@@ -34,6 +37,10 @@ function slot0._onClick(slot0, slot1)
 	if RoomMapController.instance:isUIHide() then
 		RoomMapController.instance:setUIHide(false)
 
+		return
+	end
+
+	if slot0._isNotCanClickEeventMap[slot0._scene.camera:getCameraState()] then
 		return
 	end
 

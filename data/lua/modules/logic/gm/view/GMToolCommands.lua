@@ -17,10 +17,10 @@ function slot4(slot0)
 			return
 		end
 
-		slot8 = math.floor(slot3 / slot0._curRate)
-		slot9 = true
+		slot8 = slot3
+		slot9 = math.floor(slot3 / slot0._curRate)
 
-		slot0:_appendResolutionData(slot3, slot8, slot9)
+		slot0:_appendResolutionData(slot8, slot9, true)
 
 		for slot8, slot9 in ipairs(SettingsModel.ResolutionRatioWidthList) do
 			if slot1 < slot8 then

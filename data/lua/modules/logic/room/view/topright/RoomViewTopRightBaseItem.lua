@@ -15,8 +15,9 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0._resourceItem = slot0:getUserDataTb_()
 	slot0._resourceItem.go = slot0.go
-	slot5 = typeof
-	slot0._resourceItem.canvasGroup = slot0._resourceItem.go:GetComponent(slot5(UnityEngine.CanvasGroup))
+	slot3 = slot0._resourceItem.go
+	slot5 = slot3
+	slot0._resourceItem.canvasGroup = slot3.GetComponent(slot5, typeof(UnityEngine.CanvasGroup))
 
 	for slot5 = 1, 2 do
 		gohelper.setActive(gohelper.findChild(slot0._resourceItem.go, "bg" .. slot5), slot5 == slot0._bgType)

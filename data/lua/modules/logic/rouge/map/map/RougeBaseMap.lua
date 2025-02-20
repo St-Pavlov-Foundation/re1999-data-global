@@ -167,10 +167,10 @@ function slot0.clearFlow(slot0)
 end
 
 function slot0.destroy(slot0)
-	slot4 = slot0.onScreenSizeChanged
-	slot5 = slot0
+	slot4 = GameStateEvent.OnScreenResize
+	slot5 = slot0.onScreenSizeChanged
 
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot4, slot5)
+	GameGlobalMgr.instance:unregisterCallback(slot4, slot5, slot0)
 
 	for slot4, slot5 in ipairs(slot0.mapItemList) do
 		slot5:destroy()

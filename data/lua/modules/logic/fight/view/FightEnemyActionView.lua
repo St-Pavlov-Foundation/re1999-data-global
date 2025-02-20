@@ -140,7 +140,7 @@ end
 
 function slot0.filterValidCard(slot0)
 	for slot5 = #slot0.cardList, 1, -1 do
-		if not FightEntityModel.instance:getById(slot0.cardList[slot5].uid) then
+		if not FightDataHelper.entityMgr:getById(slot0.cardList[slot5].uid) then
 			table.remove(slot0.cardList, slot5)
 		end
 	end
@@ -160,7 +160,7 @@ end
 
 function slot0.refreshCardList(slot0)
 	for slot4, slot5 in ipairs(slot0.cardList) do
-		if FightEntityModel.instance:getById(slot5.uid) then
+		if FightDataHelper.entityMgr:getById(slot5.uid) then
 			slot0:refreshCardItem(slot0:getCardItem(slot5))
 		end
 	end
@@ -192,7 +192,7 @@ function slot0.getCardItem(slot0, slot1)
 end
 
 function slot0.refreshCardItem(slot0, slot1)
-	if not FightEntityModel.instance:getById(slot1.cardMo.uid) then
+	if not FightDataHelper.entityMgr:getById(slot1.cardMo.uid) then
 		logError("刷新卡牌未找到entity 数据 : " .. tostring(slot2.uid))
 
 		return
@@ -263,7 +263,7 @@ function slot0.refreshSelectText(slot0)
 	end
 
 	slot0._txtskillname.text = slot1.name
-	slot0._txtskilldec.text = SkillHelper.getSkillDesc(FightEntityModel.instance:getById(slot0.selectCardMo.uid) and slot2:getEntityName() or nil, slot1)
+	slot0._txtskilldec.text = SkillHelper.getSkillDesc(FightDataHelper.entityMgr:getById(slot0.selectCardMo.uid) and slot2:getEntityName() or nil, slot1)
 end
 
 function slot0.refreshSelectLine(slot0)

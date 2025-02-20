@@ -78,7 +78,7 @@ function slot0.checkHeroIsDead(slot0)
 
 	slot2 = nil
 
-	for slot6, slot7 in ipairs(FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide):getList()) do
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)) do
 		if slot7.trialId == slot0._trialId then
 			slot2 = slot7
 

@@ -58,7 +58,7 @@ function slot0.onReceiveGetTaskInfoReply(slot0, slot1, slot2)
 	if slot1 == 0 then
 		TaskModel.instance:setTaskMOList(slot2.taskInfo, slot2.typeIds)
 		TaskModel.instance:setTaskActivityMOList(slot2.activityInfo)
-		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
+		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList, slot2.typeIds)
 	end
 end
 
@@ -151,8 +151,16 @@ function slot0.onReceiveFinishAllTaskReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.sendFinishReadTaskRequest(slot0, slot1, slot2, slot3)
+	slot4 = TaskModule_pb.FinishReadTaskRequest()
+	slot4.taskId = slot1
+
+	return slot0:sendMsg(slot4, slot2, slot3)
+end
+
 function slot0.onReceiveFinishReadTaskReply(slot0, slot1, slot2)
 	if slot1 == 0 then
+		TaskController.instance:dispatchEvent(TaskEvent.onReceiveFinishReadTaskReply, slot2.taskId)
 		SportsNewsController.instance:dispatchEvent(SportsNewsEvent.OnReadEnd, slot2.taskId)
 	end
 end

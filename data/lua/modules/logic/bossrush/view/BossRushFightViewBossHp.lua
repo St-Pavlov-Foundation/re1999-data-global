@@ -163,10 +163,10 @@ function slot0._onMultiHpItemShow(slot0, slot1, slot2, slot3)
 end
 
 function slot0._changeUnlimitedHpColor(slot0, slot1, slot2)
-	slot3, slot4, slot5 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(slot1)
+	slot3, slot9, slot5 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(slot1)
 
 	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgHp, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgunlimited, slot4)
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgunlimited, slot9)
 
 	for slot9, slot10 in ipairs(slot0._vxColor) do
 		gohelper.setActive(slot10, slot9 == slot5)

@@ -374,7 +374,9 @@ function slot0._onUnitNodeChange(slot0, slot1, slot2, slot3)
 	end
 
 	if slot3 then
-		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot3)) do
+		slot9 = slot3
+
+		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot9)) do
 			if slot1 ~= slot10 and slot10:isEnable() and tabletool.indexOf(slot5, slot10) == nil then
 				slot10:onRoleLeave(slot2 or slot3, slot3, slot1)
 			end
@@ -454,7 +456,9 @@ function slot0._onCharacterNodeChange(slot0, slot1, slot2, slot3)
 	slot5 = slot0:getUnitByPos(slot1)
 
 	if slot2 then
-		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot2)) do
+		slot9 = slot2
+
+		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot9)) do
 			if slot10:isEnable() and tabletool.indexOf(slot5, slot10) == nil then
 				slot10:onRoleLeave(slot1, slot2, slot0._hero)
 			end
@@ -638,17 +642,17 @@ function slot0._initMap(slot0)
 	slot0._mapGo:SetActive(true)
 
 	slot0._cameraComponent = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreCamera)
+	slot4 = slot0
 
-	slot0._cameraComponent:setMap(slot0)
+	slot0._cameraComponent:setMap(slot4)
 
 	slot0._nowStatus = ExploreEnum.MapStatus.Normal
 	slot0._compDict = {
 		[ExploreEnum.MapStatus.UseItem] = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapUseItemComp),
 		[ExploreEnum.MapStatus.MoveUnit] = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapUnitMoveComp)
 	}
-	slot4 = slot0._mapGo
-	slot5 = ExploreMapUnitRotateComp
-	slot0._compDict[ExploreEnum.MapStatus.RotateUnit] = MonoHelper.addLuaComOnceToGo(slot4, slot5)
+	slot5 = slot0._mapGo
+	slot0._compDict[ExploreEnum.MapStatus.RotateUnit] = MonoHelper.addLuaComOnceToGo(slot5, ExploreMapUnitRotateComp)
 
 	for slot4, slot5 in pairs(slot0._compDict) do
 		slot5:setMap(slot0)
@@ -675,7 +679,10 @@ function slot0._initMap(slot0)
 	end
 
 	slot0._fovComponent:setMap(slot0)
-	slot0._catchComponent:setMap(slot0)
+
+	slot4 = slot0
+
+	slot0._catchComponent:setMap(slot4)
 	ExploreCounterModel.instance:reCalcCount()
 
 	for slot4, slot5 in pairs(slot0._unitDic) do

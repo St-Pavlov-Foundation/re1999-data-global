@@ -180,20 +180,22 @@ function slot0._onItemShow(slot0, slot1, slot2, slot3)
 		slot7.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_capacity_up")
 		slot7.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(slot0.old_model_config.allShape, ",", luaLang("multiple"))
 		slot7.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(slot2.value, ",", luaLang("multiple"))
+		slot19 = slot0.target_lv
 
 		for slot19 = 1, HeroResonanceConfig.instance:getTalentModelShapeMaxLevel(slot0.hero_mo_data.heroId) do
 			({
 				[slot19] = {}
-			})[slot19].cur_level = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(slot0.hero_mo_data.heroId, slot0.target_lv)
+			})[slot19].cur_level = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(slot0.hero_mo_data.heroId, slot19)
 		end
 	else
 		if not HeroConfig.instance:getTalentCubeAttrConfig(slot2.cube_id, slot2.target_value_tab[2]) then
 			logError(slot2.cube_id, slot2.target_value_tab[2])
 		end
 
-		slot18 = slot2.cube_id
+		slot16 = HeroConfig.instance
+		slot18 = slot16
 
-		for slot18 = 1, HeroConfig.instance:getTalentCubeMaxLevel(slot18) do
+		for slot18 = 1, slot16.getTalentCubeMaxLevel(slot18, slot2.cube_id) do
 			({
 				[slot18] = {}
 			})[slot18].cur_level = slot13.level

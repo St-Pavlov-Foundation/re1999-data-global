@@ -65,9 +65,10 @@ function slot0._refreshItem(slot0)
 	ActivityType101Model.instance:setCurIndex(slot0._index)
 
 	if slot0._index ~= uv0.finalday then
-		slot5 = slot0._index
+		slot3 = ActivityConfig.instance
+		slot5 = slot3
 
-		for slot5 = 1, #string.split(ActivityConfig.instance:getNorSignActivityCo(ActivityEnum.Activity.NoviceSign, slot5).bonus, "|") do
+		for slot5 = 1, #string.split(slot3.getNorSignActivityCo(slot5, ActivityEnum.Activity.NoviceSign, slot0._index).bonus, "|") do
 			slot6 = string.splitToNumber(slot1[slot5], "#")
 
 			if not slot0._rewardTab[slot5] then

@@ -18,7 +18,9 @@
     "systemJumpCode": "202#1",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10002,
@@ -39,7 +41,9 @@
     "systemJumpCode": "202#10111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10004,
@@ -60,7 +64,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10010,
@@ -81,7 +87,9 @@
     "systemJumpCode": "202#10121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10011,
@@ -102,7 +110,9 @@
     "systemJumpCode": "202#11111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10012,
@@ -123,7 +133,9 @@
     "systemJumpCode": "202#11121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10013,
@@ -144,7 +156,9 @@
     "systemJumpCode": "10011122",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10014,
@@ -165,7 +179,9 @@
     "systemJumpCode": "10011123",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10015,
@@ -186,7 +202,9 @@
     "systemJumpCode": "10011121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10016,
@@ -207,7 +225,9 @@
     "systemJumpCode": "202#11131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10018,
@@ -228,7 +248,9 @@
     "systemJumpCode": "202#11151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10019,
@@ -249,7 +271,9 @@
     "systemJumpCode": "10011125",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10020,
@@ -270,7 +294,9 @@
     "systemJumpCode": "10011126",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10201,
@@ -291,7 +317,9 @@
     "systemJumpCode": "202#12111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10202,
@@ -312,7 +340,9 @@
     "systemJumpCode": "202#12121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10203,
@@ -333,7 +363,9 @@
     "systemJumpCode": "202#12131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10204,
@@ -354,7 +386,9 @@
     "systemJumpCode": "202#12141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10205,
@@ -375,7 +409,9 @@
     "systemJumpCode": "202#12151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10206,
@@ -396,7 +432,9 @@
     "systemJumpCode": "10011124",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10207,
@@ -417,7 +455,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10208,
@@ -438,7 +478,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20001,
@@ -459,7 +501,9 @@
     "systemJumpCode": "10011101",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20002,
@@ -480,7 +524,9 @@
     "systemJumpCode": "10011102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20003,
@@ -501,7 +547,9 @@
     "systemJumpCode": "10011103",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20004,
@@ -522,7 +570,9 @@
     "systemJumpCode": "10011113",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20005,
@@ -543,7 +593,9 @@
     "systemJumpCode": "10011114",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20006,
@@ -564,7 +616,9 @@
     "systemJumpCode": "10011100",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20011,
@@ -585,7 +639,9 @@
     "systemJumpCode": "10011207",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20012,
@@ -606,7 +662,9 @@
     "systemJumpCode": "10011203",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20013,
@@ -627,7 +685,9 @@
     "systemJumpCode": "10011202",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20014,
@@ -648,7 +708,9 @@
     "systemJumpCode": "10011206",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20015,
@@ -669,7 +731,9 @@
     "systemJumpCode": "10011205",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20016,
@@ -690,7 +754,9 @@
     "systemJumpCode": "10011212",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 711,
@@ -711,7 +777,9 @@
     "systemJumpCode": "10170",
     "type": 0,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 712,
@@ -732,7 +800,9 @@
     "systemJumpCode": "10170#811461",
     "type": 0,
     "isCustomLoad": 0,
-    "className": "StoreNewbieChooseView"
+    "className": "StoreNewbieChooseView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 713,
@@ -753,7 +823,9 @@
     "systemJumpCode": "10170",
     "type": 0,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 714,
@@ -765,8 +837,8 @@
     "order": 3,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-01-09 05:00:00",
-    "offlineTime": "2025-02-17 04:59:59",
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-24 04:59:59",
     "showOnlineTime": "",
     "showOfflineTime": "",
     "relations": "4",
@@ -774,91 +846,101 @@
     "systemJumpCode": "48",
     "type": 0,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 801,
-    "name": "language_10056494",
+    "name": "language_10061466",
     "res": "store/storeroleskinview",
     "prefab": 5,
-    "nameEn": "PAULISTANA HEAT WAVE ",
+    "nameEn": "VICTORY IN THE BIG SMOKE!",
     "des": "",
-    "order": 19,
+    "order": 20,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-01-09 05:00:00",
-    "offlineTime": "2025-02-20 04:59:59",
-    "showOnlineTime": "2025-01-09 05:00:00",
-    "showOfflineTime": "2025-02-20 04:59:59",
-    "relations": "2#820019|2#820020|5#510025|5#510026",
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "2025-02-20 10:00:00",
+    "showOfflineTime": "2025-03-27 04:59:59",
+    "relations": "2#820025|2#820026|5#510029|5#510030",
     "country": [],
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "StoreRoleSkinView"
+    "className": "StoreRoleSkinView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 802,
-    "name": "language_10056495",
+    "name": "language_10061467",
     "res": "store/storeblockpackageview",
     "prefab": 6,
-    "nameEn": "TROPICAL SPLENDOR",
+    "nameEn": "FOGGY TOWN",
     "des": "",
     "order": 40,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-01-09 05:00:00",
-    "offlineTime": "2025-02-20 04:59:59",
-    "showOnlineTime": "2025-01-09 05:00:00",
-    "showOfflineTime": "2025-02-20 04:59:59",
-    "relations": "5#171300",
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "2025-02-20 05:00:00",
+    "showOfflineTime": "2025-03-27 04:59:59",
+    "relations": "5#171400",
     "country": [],
-    "systemJumpCode": "10012244",
+    "systemJumpCode": "10012317",
     "type": 0,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 803,
-    "name": "language_10056496",
-    "res": "store/v2a2_giftrecommendview",
+    "name": "language_10061468",
+    "res": "store/v2a3_giftrecommendview",
     "prefab": 7,
-    "nameEn": "CANOE IN THE RAINFOREST",
+    "nameEn": "UNDER THE CLEAR SKY",
     "des": "",
     "order": 17,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-01-09 05:00:00",
-    "offlineTime": "2025-01-30 04:59:59",
-    "showOnlineTime": "2025-01-09 10:00:00",
-    "showOfflineTime": "2025-02-20 04:59:59",
-    "relations": "2#811485|2#811486|2#811495",
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-06 04:59:59",
+    "showOnlineTime": "2025-02-20 10:00:00",
+    "showOfflineTime": "2025-03-06 04:59:59",
+    "relations": "2#811511|2#811509|2#811506",
     "country": [],
-    "systemJumpCode": "10011444#811485 10011444#811486 10011444#811495",
+    "systemJumpCode": "10011444#811511 10011444#811509 10011444#811506",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "GiftrecommendView1"
+    "className": "GiftrecommendView1",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 804,
-    "name": "language_10056496",
-    "res": "store/v2a2_giftrecommendview2",
+    "name": "language_10061468",
+    "res": "store/v2a3_giftrecommendview2",
     "prefab": 8,
-    "nameEn": "CANOE IN THE RAINFOREST",
+    "nameEn": "UNDER THE CLEAR SKY",
     "des": "",
     "order": 18,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-01-30 05:00:00",
-    "offlineTime": "2025-02-20 04:59:59",
-    "showOnlineTime": "2025-01-30 05:00:00",
-    "showOfflineTime": "2025-02-20 04:59:59",
-    "relations": "2#811489|2#811487|2#811493",
+    "onlineTime": "2025-03-06 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "2025-03-06 05:00:00",
+    "showOfflineTime": "2025-03-27 04:59:59",
+    "relations": "2#811505|2#811513|2#811507",
     "country": [],
-    "systemJumpCode": "10011444#811489 10011444#811487 10011444#811493",
+    "systemJumpCode": "10011444#811505 10011444#811513 10011444#811507",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "GiftrecommendView2"
+    "className": "GiftrecommendView2",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10301,
@@ -879,7 +961,9 @@
     "systemJumpCode": "202#13111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10302,
@@ -900,7 +984,9 @@
     "systemJumpCode": "202#13121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10303,
@@ -921,7 +1007,9 @@
     "systemJumpCode": "202#12161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10304,
@@ -942,7 +1030,9 @@
     "systemJumpCode": "202#13141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10305,
@@ -963,7 +1053,9 @@
     "systemJumpCode": "202#13151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10306,
@@ -984,7 +1076,9 @@
     "systemJumpCode": "10011315",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10307,
@@ -1005,7 +1099,9 @@
     "systemJumpCode": "10011316",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10170,
@@ -1026,7 +1122,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10308,
@@ -1047,7 +1145,9 @@
     "systemJumpCode": "10011317",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20021,
@@ -1068,7 +1168,9 @@
     "systemJumpCode": "10011302",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20022,
@@ -1089,7 +1191,9 @@
     "systemJumpCode": "10011305",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20023,
@@ -1110,7 +1214,9 @@
     "systemJumpCode": "10011306",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20024,
@@ -1131,7 +1237,9 @@
     "systemJumpCode": "10011307",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20025,
@@ -1152,7 +1260,9 @@
     "systemJumpCode": "10011308",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20026,
@@ -1173,7 +1283,9 @@
     "systemJumpCode": "10011311",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20027,
@@ -1194,7 +1306,9 @@
     "systemJumpCode": "10011310",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10408,
@@ -1215,7 +1329,9 @@
     "systemJumpCode": "10011409",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20420,
@@ -1236,7 +1352,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20421,
@@ -1257,7 +1375,9 @@
     "systemJumpCode": "11",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20422,
@@ -1278,7 +1398,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20423,
@@ -1299,7 +1421,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20424,
@@ -1320,7 +1444,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20426,
@@ -1341,7 +1467,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20427,
@@ -1362,7 +1490,9 @@
     "systemJumpCode": "102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20428,
@@ -1383,7 +1513,9 @@
     "systemJumpCode": "102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20429,
@@ -1404,7 +1536,9 @@
     "systemJumpCode": "440001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20430,
@@ -1425,7 +1559,9 @@
     "systemJumpCode": "10011401",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10411,
@@ -1446,7 +1582,9 @@
     "systemJumpCode": "10011441",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10412,
@@ -1467,7 +1605,9 @@
     "systemJumpCode": "10011442",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10199,
@@ -1488,7 +1628,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10401,
@@ -1509,7 +1651,9 @@
     "systemJumpCode": "202#14111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10402,
@@ -1530,7 +1674,9 @@
     "systemJumpCode": "202#14121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10403,
@@ -1551,7 +1697,9 @@
     "systemJumpCode": "202#14131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10404,
@@ -1572,7 +1720,9 @@
     "systemJumpCode": "202#14181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10405,
@@ -1593,7 +1743,9 @@
     "systemJumpCode": "202#14191",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10406,
@@ -1614,7 +1766,9 @@
     "systemJumpCode": "202#14161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 805,
@@ -1635,7 +1789,9 @@
     "systemJumpCode": "10011444#811403 10011444#811404 10011444#811402",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "GiftrecommendView2"
+    "className": "GiftrecommendView2",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10120,
@@ -1656,7 +1812,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10501,
@@ -1677,7 +1835,9 @@
     "systemJumpCode": "10011511",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10502,
@@ -1698,7 +1858,9 @@
     "systemJumpCode": "10011501",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10503,
@@ -1719,7 +1881,9 @@
     "systemJumpCode": "10011508",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10504,
@@ -1740,7 +1904,9 @@
     "systemJumpCode": "460001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10505,
@@ -1761,7 +1927,9 @@
     "systemJumpCode": "10011212",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10506,
@@ -1782,7 +1950,9 @@
     "systemJumpCode": "10011509",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10507,
@@ -1803,7 +1973,9 @@
     "systemJumpCode": "102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10508,
@@ -1824,7 +1996,9 @@
     "systemJumpCode": "102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10509,
@@ -1845,7 +2019,9 @@
     "systemJumpCode": "10011551",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10510,
@@ -1866,7 +2042,9 @@
     "systemJumpCode": "10011552",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10511,
@@ -1887,7 +2065,9 @@
     "systemJumpCode": "202#15011",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10512,
@@ -1908,7 +2088,9 @@
     "systemJumpCode": "202#15111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10555,
@@ -1929,7 +2111,9 @@
     "systemJumpCode": "202#15131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10513,
@@ -1950,7 +2134,9 @@
     "systemJumpCode": "202#15121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10514,
@@ -1971,7 +2157,9 @@
     "systemJumpCode": "202#15141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10556,
@@ -1992,7 +2180,9 @@
     "systemJumpCode": "202#15151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10601,
@@ -2013,7 +2203,9 @@
     "systemJumpCode": "10011602",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10602,
@@ -2034,7 +2226,9 @@
     "systemJumpCode": "10011212",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10603,
@@ -2055,7 +2249,9 @@
     "systemJumpCode": "460001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10604,
@@ -2076,7 +2272,9 @@
     "systemJumpCode": "440001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10605,
@@ -2097,7 +2295,9 @@
     "systemJumpCode": "10011604",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10606,
@@ -2118,7 +2318,9 @@
     "systemJumpCode": "10011662",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10607,
@@ -2139,7 +2341,9 @@
     "systemJumpCode": "10011661",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10608,
@@ -2160,7 +2364,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10613,
@@ -2181,7 +2387,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10609,
@@ -2202,7 +2410,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10610,
@@ -2223,7 +2433,9 @@
     "systemJumpCode": "202#16111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10611,
@@ -2244,7 +2456,9 @@
     "systemJumpCode": "202#16121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10612,
@@ -2265,7 +2479,9 @@
     "systemJumpCode": "202#16161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10614,
@@ -2286,7 +2502,9 @@
     "systemJumpCode": "202#16131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10615,
@@ -2307,7 +2525,9 @@
     "systemJumpCode": "202#16141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10616,
@@ -2328,7 +2548,9 @@
     "systemJumpCode": "202#16151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10711,
@@ -2349,7 +2571,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10712,
@@ -2370,7 +2594,9 @@
     "systemJumpCode": "10011771",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10713,
@@ -2391,7 +2617,9 @@
     "systemJumpCode": "10011772",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10714,
@@ -2412,7 +2640,9 @@
     "systemJumpCode": "202#17111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10701,
@@ -2433,7 +2663,9 @@
     "systemJumpCode": "10011702",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10702,
@@ -2454,7 +2686,9 @@
     "systemJumpCode": "10011700",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10703,
@@ -2475,7 +2709,9 @@
     "systemJumpCode": "202#17131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10704,
@@ -2496,7 +2732,9 @@
     "systemJumpCode": "202#17121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10705,
@@ -2517,7 +2755,9 @@
     "systemJumpCode": "202#17141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10706,
@@ -2538,7 +2778,9 @@
     "systemJumpCode": "202#17151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10811,
@@ -2559,7 +2801,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10812,
@@ -2580,7 +2824,9 @@
     "systemJumpCode": "10011881",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10813,
@@ -2601,7 +2847,9 @@
     "systemJumpCode": "10011882",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10814,
@@ -2622,7 +2870,9 @@
     "systemJumpCode": "202#18111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10815,
@@ -2643,7 +2893,9 @@
     "systemJumpCode": "202#18121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10816,
@@ -2664,7 +2916,9 @@
     "systemJumpCode": "10011803",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10817,
@@ -2685,7 +2939,9 @@
     "systemJumpCode": "10011816",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10818,
@@ -2706,7 +2962,9 @@
     "systemJumpCode": "202#18131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10819,
@@ -2727,7 +2985,9 @@
     "systemJumpCode": "202#18141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10820,
@@ -2748,7 +3008,9 @@
     "systemJumpCode": "202#18151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10911,
@@ -2769,7 +3031,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10912,
@@ -2790,7 +3054,9 @@
     "systemJumpCode": "10011918",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10913,
@@ -2811,7 +3077,9 @@
     "systemJumpCode": "10011919",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10914,
@@ -2832,7 +3100,9 @@
     "systemJumpCode": "10011920",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10915,
@@ -2853,7 +3123,9 @@
     "systemJumpCode": "202#19111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10916,
@@ -2874,7 +3146,9 @@
     "systemJumpCode": "202#19121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10917,
@@ -2895,7 +3169,9 @@
     "systemJumpCode": "202#19131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10918,
@@ -2916,7 +3192,9 @@
     "systemJumpCode": "202#19141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10919,
@@ -2937,7 +3215,9 @@
     "systemJumpCode": "202#19151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10901,
@@ -2958,7 +3238,9 @@
     "systemJumpCode": "10011901",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10902,
@@ -2979,7 +3261,9 @@
     "systemJumpCode": "10011922",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10903,
@@ -3000,7 +3284,9 @@
     "systemJumpCode": "440001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10904,
@@ -3021,7 +3307,9 @@
     "systemJumpCode": "10011915",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 806,
@@ -3042,7 +3330,9 @@
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "StoreRoleSkinView"
+    "className": "StoreRoleSkinView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 807,
@@ -3063,7 +3353,9 @@
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "StoreRoleSkinView"
+    "className": "StoreRoleSkinView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 11011,
@@ -3084,7 +3376,9 @@
     "systemJumpCode": "10012008",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 11012,
@@ -3105,7 +3399,9 @@
     "systemJumpCode": "10012009",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 11013,
@@ -3126,7 +3422,9 @@
     "systemJumpCode": "10012010",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20192,
@@ -3147,7 +3445,9 @@
     "systemJumpCode": "202#20121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20193,
@@ -3168,7 +3468,9 @@
     "systemJumpCode": "202#20131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20194,
@@ -3189,7 +3491,9 @@
     "systemJumpCode": "202#20141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20111,
@@ -3210,7 +3514,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20196,
@@ -3231,7 +3537,9 @@
     "systemJumpCode": "202#20111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20201,
@@ -3252,7 +3560,9 @@
     "systemJumpCode": "10012001",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20202,
@@ -3273,7 +3583,9 @@
     "systemJumpCode": "10012006",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20195,
@@ -3294,7 +3606,9 @@
     "systemJumpCode": "202#20151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21111,
@@ -3315,7 +3629,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21112,
@@ -3336,7 +3652,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21113,
@@ -3357,7 +3675,9 @@
     "systemJumpCode": "202#21121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 814,
@@ -3378,7 +3698,9 @@
     "systemJumpCode": "10011444#811496 10011444#811499 10011444#811497",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "GiftrecommendView2"
+    "className": "GiftrecommendView2",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21114,
@@ -3399,7 +3721,9 @@
     "systemJumpCode": "10012101",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21115,
@@ -3420,7 +3744,9 @@
     "systemJumpCode": "10012102",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21116,
@@ -3441,7 +3767,9 @@
     "systemJumpCode": "202#21131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21119,
@@ -3462,7 +3790,9 @@
     "systemJumpCode": "202#21111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21118,
@@ -3483,7 +3813,9 @@
     "systemJumpCode": "202#21151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21201,
@@ -3504,7 +3836,9 @@
     "systemJumpCode": "10012113",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21202,
@@ -3525,7 +3859,9 @@
     "systemJumpCode": "10012119",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21203,
@@ -3546,7 +3882,9 @@
     "systemJumpCode": "",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21117,
@@ -3567,7 +3905,9 @@
     "systemJumpCode": "202#21141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22000,
@@ -3588,7 +3928,9 @@
     "systemJumpCode": "10012204",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22001,
@@ -3609,7 +3951,9 @@
     "systemJumpCode": "10012205",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22002,
@@ -3630,7 +3974,9 @@
     "systemJumpCode": "10012206",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22003,
@@ -3651,7 +3997,9 @@
     "systemJumpCode": "10012207",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 808,
@@ -3672,7 +4020,9 @@
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "StoreRoleSkinView"
+    "className": "StoreRoleSkinView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22016,
@@ -3693,7 +4043,9 @@
     "systemJumpCode": "202#22161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22011,
@@ -3714,7 +4066,9 @@
     "systemJumpCode": "202#22111",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22012,
@@ -3735,7 +4089,9 @@
     "systemJumpCode": "202#22121",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22013,
@@ -3756,7 +4112,9 @@
     "systemJumpCode": "10012201",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22014,
@@ -3777,7 +4135,9 @@
     "systemJumpCode": "10012238",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 816,
@@ -3798,7 +4158,9 @@
     "systemJumpCode": "10011444#811482",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "StoreRoleSkinView"
+    "className": "StoreRoleSkinView",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22015,
@@ -3819,7 +4181,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22018,
@@ -3840,7 +4204,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22019,
@@ -3861,7 +4227,9 @@
     "systemJumpCode": "202#22131",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22020,
@@ -3882,7 +4250,9 @@
     "systemJumpCode": "202#22141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22021,
@@ -3903,7 +4273,448 @@
     "systemJumpCode": "202#22151",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23000,
+    "name": "language_10061469",
+    "res": "v2a3_shop_skin1",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 550,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#820025|5#510029",
+    "country": [],
+    "systemJumpCode": "10012304",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23001,
+    "name": "language_10061470",
+    "res": "v2a3_shop_skin2",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 551,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#820026|5#510030",
+    "country": [],
+    "systemJumpCode": "10012305",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23002,
+    "name": "language_10048405",
+    "res": "v2a3_shop_skin3",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 548,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2024-11-14 05:00:00",
+    "offlineTime": "2024-12-12 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#820025|5#510031",
+    "country": [],
+    "systemJumpCode": "10012306",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23003,
+    "name": "language_10048406",
+    "res": "v2a3_shop_skin4",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 549,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2024-11-14 05:00:00",
+    "offlineTime": "2024-12-12 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#820026|5#510032",
+    "country": [],
+    "systemJumpCode": "10012307",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23004,
+    "name": "language_10061471",
+    "res": "v2a3_summon_selfselectsix",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 313,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-20 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23161",
+    "country": [],
+    "systemJumpCode": "202#23161",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23005,
+    "name": "language_10061472",
+    "res": "v2a3_summon_dudugu",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 10,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-06 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23111",
+    "country": [],
+    "systemJumpCode": "202#23111",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23006,
+    "name": "language_10061473",
+    "res": "v2a3_summon_zhixinquaner",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 11,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-03-06 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23121",
+    "country": [],
+    "systemJumpCode": "202#23121",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23101,
+    "name": "language_10058585",
+    "res": "v2a3_act_1",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 310,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [],
+    "systemJumpCode": "10012308",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23102,
+    "name": "language_10058591",
+    "res": "v2a3_act_2",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 560,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [],
+    "systemJumpCode": "10012310",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 4,
+    "topType": 0
+  },
+  {
+    "id": 23103,
+    "name": "language_10058488",
+    "res": "v2a3_act_3",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 555,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-03-06 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [],
+    "systemJumpCode": "10012316",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23007,
+    "name": "language_10003011",
+    "res": "v2a3_shop_1",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 450,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#811500|2#811501|2#811502|2#811503|2#811504|2#811505|2#811506|2#811507|2#811508|2#811509|2#811510|2#811511|2#811512|2#811513",
+    "country": [],
+    "systemJumpCode": "10170",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23201,
+    "name": "",
+    "res": "v2a3_goodsstore_en",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 502,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-20 05:00:00",
+    "offlineTime": "2025-03-27 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [
+      "en"
+    ],
+    "systemJumpCode": "",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23008,
+    "name": "",
+    "res": "v1a9_summon_kakaniya",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 316,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2024-11-12 05:00:00",
+    "offlineTime": "2024-11-26 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23131",
+    "country": [],
+    "systemJumpCode": "202#23131",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23009,
+    "name": "",
+    "res": "v2a0_joe",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 317,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2024-11-26 05:00:00",
+    "offlineTime": "2024-12-10 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23141",
+    "country": [],
+    "systemJumpCode": "202#23141",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23010,
+    "name": "",
+    "res": "v2a0_mercury",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 318,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2024-12-10 05:00:00",
+    "offlineTime": "2024-12-24 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23151",
+    "country": [],
+    "systemJumpCode": "202#23151",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 2,
+    "topType": 0
+  },
+  {
+    "id": 23011,
+    "name": "language_10061475",
+    "res": "yisuerde",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 325,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-02-25 05:00:00",
+    "offlineTime": "2025-03-11 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23171",
+    "country": [],
+    "systemJumpCode": "202#23171",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23012,
+    "name": "language_10061476",
+    "res": "xingti",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 326,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-03-11 05:00:00",
+    "offlineTime": "2025-03-25 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23181",
+    "country": [],
+    "systemJumpCode": "202#23181",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23013,
+    "name": "language_10061477",
+    "res": "weixiukai",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 327,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-03-25 05:00:00",
+    "offlineTime": "2025-04-08 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23191",
+    "country": [],
+    "systemJumpCode": "202#23191",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
+  },
+  {
+    "id": 23014,
+    "name": "language_10022157",
+    "res": "v2a3_hopelake",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 311,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2025-03-01 00:00:00",
+    "offlineTime": "2025-03-15 00:00:00",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#23101",
+    "country": [],
+    "systemJumpCode": "202#23101",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22022,
@@ -3924,7 +4735,9 @@
     "systemJumpCode": "202#22171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22023,
@@ -3945,7 +4758,9 @@
     "systemJumpCode": "202#22181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22098,
@@ -3968,7 +4783,9 @@
     "systemJumpCode": "",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22099,
@@ -3991,7 +4808,9 @@
     "systemJumpCode": "",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 22024,
@@ -4012,7 +4831,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21210,
@@ -4033,7 +4854,9 @@
     "systemJumpCode": "202#21191",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21211,
@@ -4054,7 +4877,9 @@
     "systemJumpCode": "202#21161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21212,
@@ -4075,7 +4900,9 @@
     "systemJumpCode": "202#21171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21213,
@@ -4096,7 +4923,9 @@
     "systemJumpCode": "202#21181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21214,
@@ -4117,7 +4946,9 @@
     "systemJumpCode": "202#21101",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 21215,
@@ -4138,7 +4969,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20210,
@@ -4159,7 +4992,9 @@
     "systemJumpCode": "202#20191",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20211,
@@ -4180,7 +5015,9 @@
     "systemJumpCode": "202#20171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20212,
@@ -4201,7 +5038,9 @@
     "systemJumpCode": "202#20181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 20213,
@@ -4222,49 +5061,9 @@
     "systemJumpCode": "202#20161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
-  },
-  {
-    "id": 23002,
-    "name": "language_10048405",
-    "res": "v2a3_shop_skin3",
-    "prefab": 0,
-    "nameEn": "",
-    "des": "",
-    "order": 548,
-    "adjustOrder": "",
-    "isOffline": 0,
-    "onlineTime": "2024-11-14 05:00:00",
-    "offlineTime": "2024-12-12 04:59:59",
-    "showOnlineTime": "",
-    "showOfflineTime": "",
-    "relations": "2#820025|5#510031",
-    "country": [],
-    "systemJumpCode": "10012306",
-    "type": 1,
-    "isCustomLoad": 0,
-    "className": ""
-  },
-  {
-    "id": 23003,
-    "name": "language_10048406",
-    "res": "v2a3_shop_skin4",
-    "prefab": 0,
-    "nameEn": "",
-    "des": "",
-    "order": 549,
-    "adjustOrder": "",
-    "isOffline": 0,
-    "onlineTime": "2024-11-14 05:00:00",
-    "offlineTime": "2024-12-12 04:59:59",
-    "showOnlineTime": "",
-    "showOfflineTime": "",
-    "relations": "2#820026|5#510032",
-    "country": [],
-    "systemJumpCode": "10012307",
-    "type": 1,
-    "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 815,
@@ -4285,7 +5084,9 @@
     "systemJumpCode": "10011444#811437",
     "type": 0,
     "isCustomLoad": 1,
-    "className": "GiftrecommendView815"
+    "className": "GiftrecommendView815",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10920,
@@ -4306,7 +5107,9 @@
     "systemJumpCode": "202#19161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10921,
@@ -4327,7 +5130,9 @@
     "systemJumpCode": "202#19171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10922,
@@ -4348,7 +5153,9 @@
     "systemJumpCode": "202#19181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10923,
@@ -4369,7 +5176,9 @@
     "systemJumpCode": "202#19101",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10821,
@@ -4390,7 +5199,9 @@
     "systemJumpCode": "202#18161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10822,
@@ -4411,7 +5222,9 @@
     "systemJumpCode": "202#18171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10823,
@@ -4432,7 +5245,9 @@
     "systemJumpCode": "202#18181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10824,
@@ -4453,7 +5268,9 @@
     "systemJumpCode": "202#18191",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10716,
@@ -4474,7 +5291,9 @@
     "systemJumpCode": "202#17191",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10717,
@@ -4495,7 +5314,9 @@
     "systemJumpCode": "202#17101",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10718,
@@ -4516,7 +5337,9 @@
     "systemJumpCode": "202#17161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10719,
@@ -4537,7 +5360,9 @@
     "systemJumpCode": "202#17181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10620,
@@ -4558,7 +5383,9 @@
     "systemJumpCode": "202#16171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10621,
@@ -4579,7 +5406,9 @@
     "systemJumpCode": "202#16181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10525,
@@ -4600,7 +5429,9 @@
     "systemJumpCode": "202#15183",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10521,
@@ -4621,7 +5452,9 @@
     "systemJumpCode": "202#15161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10522,
@@ -4642,7 +5475,9 @@
     "systemJumpCode": "202#15171",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10523,
@@ -4663,7 +5498,9 @@
     "systemJumpCode": "202#15181",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10524,
@@ -4684,7 +5521,9 @@
     "systemJumpCode": "202#15182",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 90002,
@@ -4707,7 +5546,9 @@
     "systemJumpCode": "19",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 90003,
@@ -4730,7 +5571,9 @@
     "systemJumpCode": "19",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10320,
@@ -4751,7 +5594,9 @@
     "systemJumpCode": "202#13161",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10180,
@@ -4772,7 +5617,9 @@
     "systemJumpCode": "10170",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 90001,
@@ -4795,7 +5642,9 @@
     "systemJumpCode": "19",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10005,
@@ -4816,7 +5665,9 @@
     "systemJumpCode": "99",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10006,
@@ -4837,7 +5688,9 @@
     "systemJumpCode": "99",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10007,
@@ -4858,7 +5711,9 @@
     "systemJumpCode": "99",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   },
   {
     "id": 10017,
@@ -4879,6 +5734,8 @@
     "systemJumpCode": "202#11141",
     "type": 1,
     "isCustomLoad": 0,
-    "className": ""
+    "className": "",
+    "topDay": 0,
+    "topType": 0
   }
 ]

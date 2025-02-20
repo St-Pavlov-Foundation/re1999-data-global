@@ -37,7 +37,6 @@ function slot0._playEffect(slot0, slot1)
 			slot7 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[slot1], slot0._fightStepMO, slot6)
 
 			slot7:onStart()
-			slot6:setDone()
 			table.insert(slot0._list, slot7)
 		end
 	end

@@ -171,6 +171,10 @@ function slot0.checkCurBgmDeviceNotShowingPPT(slot0, slot1, slot2)
 	return not BGMSwitchModel.instance:getEggIsTrigger()
 end
 
+function slot0.checkCan174EnoughHpToBet(slot0, slot1, slot2)
+	return Activity174Model.instance:getActInfo():getGameInfo().hp > 1
+end
+
 function slot0.checkReturnFalse()
 	return false
 end

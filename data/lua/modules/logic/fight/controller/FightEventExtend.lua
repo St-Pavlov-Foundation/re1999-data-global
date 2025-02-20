@@ -12,7 +12,7 @@ function slot0._onStageChange(slot0, slot1)
 	end
 
 	for slot6, slot7 in ipairs(FightCardModel.instance:getHandCards()) do
-		if FightEntityModel.instance:getById(slot7.uid) and FightConfig:isUniqueSkill(slot7.skillId, slot8.modelId) then
+		if FightDataHelper.entityMgr:getById(slot7.uid) and FightConfig:isUniqueSkill(slot7.skillId, slot8.modelId) then
 			FightController.instance:dispatchEvent(FightEvent.OnGuideGetUniqueCard)
 
 			return

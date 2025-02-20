@@ -32,17 +32,26 @@ end
 
 function slot0._playDefHeal(slot0, slot1, slot2)
 	if slot2.effectType == FightEnum.EffectType.HEAL or slot2.effectType == FightEnum.EffectType.HEALCRIT then
-		slot2:setDone()
-		slot1.nameUI:addHp(slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio))
+		FightDataHelper.playEffectData(slot2)
+
+		slot3 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio)
+
+		if slot1.nameUI then
+			slot1.nameUI:addHp(slot3)
+		end
+
 		FightFloatMgr.instance:float(slot2.targetId, slot2.effectType == FightEnum.EffectType.HEAL and FightEnum.FloatType.heal or FightEnum.FloatType.crit_heal, slot3)
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, slot3)
 	elseif slot2.effectType == FightEnum.EffectType.AVERAGELIFE and not slot2.hasDoAverageLiveEffect then
-		slot2:setDone()
+		FightDataHelper.playEffectData(slot2)
 
 		slot2.hasDoAverageLiveEffect = true
-		slot5 = slot2.effectNum - slot1.nameUI:getHp()
+		slot5 = slot2.effectNum - (slot1.nameUI and slot1.nameUI:getHp() or 0)
 
-		slot1.nameUI:addHp(slot5)
+		if slot1.nameUI then
+			slot1.nameUI:addHp(slot5)
+		end
+
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, slot5)
 	end
 
@@ -68,8 +77,9 @@ end
 
 function slot0._buildSkillEffect(slot0, slot1)
 	slot0._behaviorTypeDict = nil
+	slot6 = "#"
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1, "#")) do
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1, slot6)) do
 		if lua_skill_effect.configDict[slot7] then
 			for slot12 = 1, FightEnum.MaxBehavior do
 				slot14 = FightStrUtil.instance:getSplitToNumberCache(slot8["behavior" .. slot12], "#")

@@ -181,9 +181,12 @@ function slot0.deletePoint(slot0, slot1, slot2)
 
 	if slot0:getPathPointIndex(slot1) then
 		table.remove(slot0.pathPointList, slot3)
-		table.sort(slot0.pathPointList, function (slot0, slot1)
+
+		function slot7(slot0, slot1)
 			return slot0.id < slot1.id
-		end)
+		end
+
+		table.sort(slot0.pathPointList, slot7)
 
 		for slot7, slot8 in pairs(slot0.pointId2PathIdDict) do
 			if slot8 == slot1 then

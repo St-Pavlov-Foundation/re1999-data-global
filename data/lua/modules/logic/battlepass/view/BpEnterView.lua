@@ -52,7 +52,9 @@ function slot0._editableInitView(slot0)
 	elseif slot6 == 0 then
 		gohelper.setActive(slot0._addReward, false)
 	else
-		gohelper.setActive(slot0._addReward, true)
+		slot10 = true
+
+		gohelper.setActive(slot0._addReward, slot10)
 
 		for slot10 = 1, 3 do
 			if slot6 < slot10 then

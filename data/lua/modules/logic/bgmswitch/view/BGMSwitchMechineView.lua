@@ -16,8 +16,9 @@ function slot0.onInitView(slot0)
 	slot0._goplay = gohelper.findChild(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play")
 	slot0._playAni = slot0._goplay:GetComponent(typeof(UnityEngine.Animator))
 	slot0._txtplaytitle = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#txt_playtitle")
-	slot0._txtplayname = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#txt_playname")
-	slot0._txtplaynameen = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#txt_playname/#txt_playnameen")
+	slot0._goplayname = gohelper.findChild(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname")
+	slot0._txtplayname = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname")
+	slot0._txtplaynameen = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname/#txt_playnameen")
 	slot0._sliderplay = gohelper.findChildSlider(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play")
 	slot0._imgEffect = gohelper.findChildImage(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#playeffect")
 	slot0._txtplayprogresstime = gohelper.findChildText(slot0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play/#txt_playprogresstime")
@@ -457,12 +458,11 @@ function slot0._showAudioProgress(slot0)
 		slot0._txtplaytitle.text = slot0._bgmCo.id == slot2 and luaLang("bgmswitchview_play") or luaLang("bgmswitchview_listentest")
 	end
 
-	slot0._txtplayname.text = slot0._bgmCo.audioName
-	slot0._txtplaynameen.text = slot0._bgmCo.audioNameEn
+	slot0:_playNameAnim()
 
 	if not slot0:getOnlyUpdateInfo() then
 		slot0:setOnlyUpdateInfo(true)
-		slot0:_playBgm()
+		slot0:_forcePlayBgm()
 	end
 
 	slot3 = BGMSwitchModel.instance:getReportBgmAudioLength(slot0._bgmCo)
@@ -473,6 +473,39 @@ function slot0._showAudioProgress(slot0)
 
 	slot0:_stopProgressTask()
 	TaskDispatcher.runRepeat(slot0._progressUpdate, slot0, 0.03)
+end
+
+function slot0._playNameAnim(slot0)
+	slot0._txtplayname.text = slot0._bgmCo.audioName
+	slot0._txtplaynameen.text = slot0._bgmCo.audioNameEn
+
+	if slot0._moveTweenId then
+		ZProj.TweenHelper.KillById(slot0._moveTweenId)
+
+		slot0._moveTweenId = nil
+	end
+
+	TaskDispatcher.cancelTask(slot0._playNameAnimOnce, slot0)
+	TaskDispatcher.runDelay(slot0._playNameAnimOnce, slot0, 0.01)
+end
+
+function slot0._playNameAnimOnce(slot0)
+	slot3, slot4, slot5 = transformhelper.getLocalPos(slot0._txtplayname.transform)
+
+	if recthelper.getWidth(slot0._goplayname.transform) <= recthelper.getWidth(slot0._txtplayname.transform) then
+		slot6 = 0.5 * (slot1 + slot2)
+		slot7 = -0.5 * (slot1 + slot2)
+
+		transformhelper.setLocalPos(slot0._txtplayname.transform, slot6, slot4, 0)
+
+		slot0._moveTweenId = ZProj.TweenHelper.DOLocalMoveX(slot0._txtplayname.transform, slot7, 0.01 * (slot6 - slot7), slot0._playNameAnimFinished, slot0, nil, EaseType.Linear)
+	else
+		transformhelper.setLocalPos(slot0._txtplayname.transform, 0, slot4, 0)
+	end
+end
+
+function slot0._playNameAnimFinished(slot0)
+	TaskDispatcher.runDelay(slot0._playNameAnimOnce, slot0, 0.5)
 end
 
 function slot0.resetBgmProgressShow(slot0)
@@ -507,6 +540,10 @@ end
 
 function slot0._playBgm(slot0)
 	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio)
+end
+
+function slot0._forcePlayBgm(slot0)
+	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio, true)
 end
 
 function slot0._progressFinished(slot0)

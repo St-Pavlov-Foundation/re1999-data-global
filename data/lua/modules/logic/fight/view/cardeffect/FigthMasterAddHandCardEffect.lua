@@ -17,7 +17,9 @@ function slot0._onLoaded(slot0)
 end
 
 function slot0._onAllLoaded(slot0)
-	gohelper.setActive(slot0.context.card.go, true)
+	slot4 = true
+
+	gohelper.setActive(slot0.context.card.go, slot4)
 
 	for slot4, slot5 in ipairs(uv0) do
 		if slot0._loader:getAssetItem(slot5) then

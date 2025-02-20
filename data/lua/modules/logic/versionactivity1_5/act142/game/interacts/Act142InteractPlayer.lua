@@ -17,7 +17,9 @@ function slot0.onAvatarLoaded(slot0)
 	end
 
 	if not gohelper.isNil(slot1:getInstGO()) then
-		gohelper.setActive(gohelper.findChild(slot2, "fireball"), true)
+		slot7 = true
+
+		gohelper.setActive(gohelper.findChild(slot2, "fireball"), slot7)
 
 		for slot7 = 1, Activity142Enum.MAX_FIRE_BALL_NUM do
 			if not gohelper.isNil(gohelper.findChild(slot2, "fireball/fireball" .. slot7)) then

@@ -3,7 +3,8 @@ module("modules.logic.versionactivity2_4.act181.model.Activity181MO", package.se
 slot0 = pureTable("Activity181MO")
 
 function slot0.setInfo(slot0, slot1)
-	slot0.config = Activity181Config.instance:getBoxConfig(slot1.activityId)
+	slot5 = slot1.activityId
+	slot0.config = Activity181Config.instance:getBoxConfig(slot5)
 	slot0.id = slot1.activityId
 	slot0.rewardInfo = {}
 	slot0.bonusIdDic = {}

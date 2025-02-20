@@ -21,8 +21,10 @@ function slot0.refresh(slot0)
 	BackpackModel.instance:setBackpackItemList(BackpackModel.instance:getBackpackList())
 
 	slot2 = {}
+	slot5 = BackpackModel.instance
+	slot7 = slot5
 
-	for slot6, slot7 in pairs(BackpackModel.instance:getBackpackItemList()) do
+	for slot6, slot7 in pairs(slot5.getBackpackItemList(slot7)) do
 		if slot7.subType == 15 then
 			table.insert(slot2, slot7)
 		end

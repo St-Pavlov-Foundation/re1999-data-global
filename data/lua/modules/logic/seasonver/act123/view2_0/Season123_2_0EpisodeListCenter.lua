@@ -21,7 +21,8 @@ function slot0.initComponent(slot0)
 	slot0._txtmapname = gohelper.findChildText(slot0.viewGO, "#txt_mapname")
 	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_time")
 	slot0._tftime = slot0._gotime.transform
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "progress")
+	slot4 = "progress"
+	slot0._goprogress = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._progressActives = slot0:getUserDataTb_()
 	slot0._progressDeactives = slot0:getUserDataTb_()
 	slot0._progressHard = slot0:getUserDataTb_()

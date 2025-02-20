@@ -182,7 +182,10 @@ function slot0._endGame(slot0)
 		AiZiLaHelper.getItemMOListByBonusStr(slot3.bonus, slot5)
 	end
 
-	tabletool.addValues(slot5, AiZiLaGameModel.instance:getResultItemList())
+	slot9 = AiZiLaGameModel.instance
+	slot11 = slot9
+
+	tabletool.addValues(slot5, slot9.getResultItemList(slot11))
 
 	for slot10, slot11 in ipairs(slot5) do
 		if slot11:getConfig() then

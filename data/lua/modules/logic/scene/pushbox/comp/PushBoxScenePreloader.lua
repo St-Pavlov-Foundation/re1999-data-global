@@ -8,11 +8,13 @@ end
 
 function slot0.startPreload(slot0, slot1)
 	slot0.loader = MultiAbLoader.New()
-	slot5 = "pushboxmainpre"
+	slot5 = ResUrl.getPushBoxPre
 
-	slot0.loader:addPath(ResUrl.getPushBoxPre(slot5))
+	slot0.loader:addPath(slot5("pushboxmainpre"))
 
-	for slot5, slot6 in pairs(slot0:getElementType2Url()) do
+	slot6 = slot0
+
+	for slot5, slot6 in pairs(slot0.getElementType2Url(slot6)) do
 		if not tabletool.indexOf(slot0.loader._pathList, slot6) then
 			slot0.loader:addPath(slot6)
 		end
@@ -25,11 +27,12 @@ function slot0._onAssetLoaded(slot0)
 	slot0._scene_obj = gohelper.clone(slot0.loader:getAssetItem(ResUrl.getPushBoxPre("pushboxmainpre")):GetResource(), slot0._scene:getSceneContainerGO())
 	slot0._scene_obj.name = "Root"
 	slot4 = 0
-	slot5 = -5
 
-	transformhelper.setLocalPos(slot0._scene_obj.transform, 0, slot4, slot5)
+	transformhelper.setLocalPos(slot0._scene_obj.transform, slot4, 0, -5)
 
-	for slot4, slot5 in pairs(slot0:getElementType2Url()) do
+	slot5 = slot0
+
+	for slot4, slot5 in pairs(slot0.getElementType2Url(slot5)) do
 		gohelper.clone(slot0.loader:getAssetItem(slot5):GetResource(), gohelper.findChild(slot0._scene_obj, "OriginElement")).name = slot4
 	end
 

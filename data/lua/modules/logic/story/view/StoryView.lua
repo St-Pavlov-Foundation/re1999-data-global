@@ -485,6 +485,10 @@ function slot0._updateConversation(slot0)
 end
 
 function slot0._conShowIn(slot0)
+	if not slot0._stepCo then
+		return
+	end
+
 	slot0._diatxt = StoryTool.getFilterDia(slot0._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
 	slot0._dialogItem:hideDialog()
@@ -523,6 +527,10 @@ function slot0._conShowIn(slot0)
 end
 
 function slot0._startShowText(slot0)
+	if not slot0._stepCo then
+		return
+	end
+
 	slot0._conCanvasGroup.alpha = 1
 
 	if slot0._stepCo.conversation.effType ~= StoryEnum.ConversationEffectType.Shake then
@@ -747,6 +755,10 @@ function slot0._startShake(slot0)
 end
 
 function slot0._shakeStop(slot0)
+	if not slot0._stepCo then
+		return
+	end
+
 	StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, slot0._stepCo, false, slot0._stepCo.conversation.effLv + 1)
 
 	slot0._contentAnimator.speed = slot0._stepCo.conversation.effRate
@@ -1251,6 +1263,12 @@ function slot0._clearItems(slot0, slot1)
 	slot0:_clearAllTimers()
 	TaskDispatcher.cancelTask(slot0._viewFadeIn, slot0)
 	TaskDispatcher.cancelTask(slot0._enterNextStep, slot0)
+	TaskDispatcher.cancelTask(slot0._startShowText, slot0)
+	TaskDispatcher.cancelTask(slot0._startShake, slot0)
+
+	slot5 = slot0
+
+	TaskDispatcher.cancelTask(slot0._shakeStop, slot5)
 
 	for slot5, slot6 in pairs(slot0._pictures) do
 		slot6:onDestroy()

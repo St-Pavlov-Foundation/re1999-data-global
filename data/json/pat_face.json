@@ -231,11 +231,25 @@
     "patFaceOrder": 20208
   },
   {
-    "id": 20206,
-    "patFaceActivityId": 12244,
-    "patFaceViewName": "V2a2_SpringFestival_PanelView",
+    "id": 20300,
+    "patFaceActivityId": 12311,
+    "patFaceViewName": "VersionActivity2_3NewCultivationGiftFullView",
     "patFaceStoryId": 0,
-    "patFaceOrder": 20299
+    "patFaceOrder": 4
+  },
+  {
+    "id": 20301,
+    "patFaceActivityId": 12308,
+    "patFaceViewName": "V2a3_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 20302,
+    "patFaceActivityId": 12309,
+    "patFaceViewName": "V2a3_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
   },
   {
     "id": 20303,
@@ -243,5 +257,26 @@
     "patFaceViewName": "LinkageActivity_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 7
+  },
+  {
+    "id": 20304,
+    "patFaceActivityId": 12321,
+    "patFaceViewName": "V2a3_Special_PanelsView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 8
+  },
+  {
+    "id": 20602,
+    "patFaceActivityId": 12607,
+    "patFaceViewName": "ShortenAct_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20602
+  },
+  {
+    "id": 20206,
+    "patFaceActivityId": 12244,
+    "patFaceViewName": "V2a2_SpringFestival_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20299
   }
 ]

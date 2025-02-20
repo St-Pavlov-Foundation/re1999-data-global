@@ -18,8 +18,9 @@ function slot0.setSortType(slot0, slot1)
 end
 
 function slot0.refreshRenderOrder(slot0, slot1)
-	slot5 = slot1
-	slot0._entityId2OrderSort = uv0.sortOrder(slot0._renderOrderType, slot0._registIdList, slot5)
+	slot5 = slot0._registIdList
+	slot6 = slot1
+	slot0._entityId2OrderSort = uv0.sortOrder(slot0._renderOrderType, slot5, slot6)
 
 	for slot5, slot6 in ipairs(slot0._registIdList) do
 		slot0:_resetRenderOrder(slot6)
@@ -170,6 +171,12 @@ function slot0.sortOrder(slot0, slot1, slot2)
 	for slot10, slot11 in pairs(slot3) do
 		if FightHelper.isAssembledMonster(FightHelper.getEntity(slot10)) then
 			slot3[slot10] = nil or slot11
+		end
+	end
+
+	for slot10, slot11 in pairs(slot3) do
+		if FightDataHelper.entityMgr:isAssistBoss(slot10) then
+			slot3[slot10] = 0
 		end
 	end
 

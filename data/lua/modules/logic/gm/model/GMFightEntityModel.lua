@@ -14,27 +14,33 @@ end
 function slot0.onOpen(slot0)
 	slot1 = {}
 
-	slot0:_addList(slot1, FightEntityModel.instance:getModel(FightEnum.EntitySide.MySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getSpModel(FightEnum.EntitySide.MySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getDeadModel(FightEnum.EntitySide.MySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getModel(FightEnum.EntitySide.EnemySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getSubModel(FightEnum.EntitySide.EnemySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getSpModel(FightEnum.EntitySide.EnemySide))
-	slot0:_addList(slot1, FightEntityModel.instance:getDeadModel(FightEnum.EntitySide.EnemySide))
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, slot1, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, slot1, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, slot1, true)
+
+	if FightDataHelper.entityMgr:getAssistBoss() then
+		table.insert(slot1, slot2)
+	end
+
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, slot1, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, slot1, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, slot1, true)
 	slot0:setList(slot1)
 end
 
 function slot0._addList(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2:getList()) do
+	slot7 = slot2
+
+	for slot6, slot7 in ipairs(slot2.getList(slot7)) do
 		table.insert(slot1, slot7)
 	end
 end
 
 function slot0.setEntityMO(slot0, slot1)
 	slot0.entityMO = slot1
+	slot7 = slot1
 
-	slot0.buffModel:setList(slot1.buffModel:getList())
+	slot0.buffModel:setList(slot1.getBuffList(slot7))
 
 	slot2 = {}
 

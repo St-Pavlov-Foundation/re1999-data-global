@@ -131,12 +131,14 @@ function slot0._onResLoaded(slot0)
 end
 
 function slot0._initSkinUiEffect(slot0)
+	slot0._tempVec2 = slot0._tempVec2 or Vector2.New()
 	slot0._uiEffectGos = nil
 	slot0._uiEffectGosClone = nil
 	slot0._uiEffectList = nil
 	slot0._uiEffectConfig = nil
 	slot0._uiEffectInitVisible = nil
 	slot0._uiEffectRealtime = nil
+	slot0._hasProcessModelEffect = nil
 
 	for slot4, slot5 in ipairs(lua_skin_ui_effect.configList) do
 		if not slot0:_skip(slot5.id) and string.find(slot0._resPath, slot5.id) then
@@ -179,6 +181,8 @@ function slot0.showModelEffect(slot0)
 end
 
 function slot0.processModelEffect(slot0)
+	slot0._hasProcessModelEffect = true
+
 	slot0:_doProcessEffect()
 end
 
@@ -209,6 +213,7 @@ function slot0._doProcessEffect(slot0)
 		return
 	end
 
+	slot0._hasProcessModelEffect = false
 	slot0._uiEffectGos = slot0:getUserDataTb_()
 	slot0._uiEffectGosClone = slot0:getUserDataTb_()
 
@@ -224,6 +229,10 @@ function slot0._doProcessEffect(slot0)
 end
 
 function slot0._onBodyEffectShow(slot0, slot1)
+	if slot0._hasProcessModelEffect then
+		slot0:_doProcessEffect()
+	end
+
 	TaskDispatcher.cancelTask(slot0._realtimeAdjustPos, slot0)
 
 	if slot1 and slot0._uiEffectGosClone and next(slot0._uiEffectGosClone) then
@@ -234,11 +243,13 @@ end
 function slot0._realtimeAdjustPos(slot0)
 	slot1 = false
 
-	for slot5, slot6 in ipairs(slot0._uiEffectGos) do
-		if slot0._uiEffectGosClone[slot5] and slot6.activeSelf then
-			slot1 = true
+	if slot0._uiEffectGos then
+		for slot5, slot6 in ipairs(slot0._uiEffectGos) do
+			if slot0._uiEffectGosClone[slot5] and slot6.activeSelf then
+				slot1 = true
 
-			slot0:_adjustPos(slot7, slot6)
+				slot0:_adjustPos(slot7, slot6)
+			end
 		end
 	end
 
@@ -268,32 +279,34 @@ function slot0._initSkinUiEffectGo(slot0, slot1, slot2, slot3)
 		gohelper.setActive(slot4.gameObject, true)
 	end
 
-	for slot9 = 0, slot4.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.MaskableGraphic), true).Length - 1 do
-		slot10 = slot5[slot9]
-		slot10.enabled = true
+	slot10 = true
 
-		gohelper.setLayer(slot10.gameObject, LayerMask.NameToLayer("UI"))
+	for slot10 = 0, slot4.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.MaskableGraphic), slot10).Length - 1 do
+		slot11 = slot6[slot10]
+		slot11.enabled = true
+
+		gohelper.setLayer(slot11.gameObject, LayerMask.NameToLayer("UI"))
 	end
 
 	if slot0._uiEffectRealtime and slot0._uiEffectRealtime[slot3] == 1 then
-		slot7 = slot4.transform
-		slot8 = gohelper.create3d(slot7.parent.gameObject, slot4.name .. "_Clone")
-		slot8.transform.localPosition = slot7.localPosition
+		slot8 = slot4.transform
+		slot9 = gohelper.create3d(slot8.parent.gameObject, slot4.name .. "_Clone")
+		slot9.transform.localPosition = slot8.localPosition
 
-		gohelper.setActive(slot8, false)
+		gohelper.setActive(slot9, false)
 
-		slot9 = slot0:_getEffectScale()
+		slot10 = slot0:_getEffectScale()
 
-		transformhelper.setLocalScale(slot4.transform, slot9, slot9, slot9)
+		transformhelper.setLocalScale(slot4.transform, slot10, slot10, slot10)
 
-		return slot4, slot8
+		return slot4, slot9
 	end
 
 	slot0:_adjustPos(slot4, slot4)
 
-	slot7 = slot0:_getEffectScale()
+	slot8 = slot0:_getEffectScale()
 
-	transformhelper.setLocalScale(slot4.transform, slot7, slot7, slot7)
+	transformhelper.setLocalScale(slot4.transform, slot8, slot8, slot8)
 
 	return slot4
 end
@@ -312,8 +325,10 @@ end
 
 function slot0._adjustPos(slot0, slot1, slot2)
 	slot3 = slot0._camera:WorldToViewportPoint(slot1.transform.position)
+	slot0._tempVec2.x = slot3.x
+	slot0._tempVec2.y = slot3.y
 	slot5 = slot0._rawImageGo.transform
-	slot7 = slot5.position + slot5:TransformVector((Vector2.New(slot3.x, slot3.y) - slot5.pivot):Scale(slot5.rect.size))
+	slot7 = slot5.position + slot5:TransformVector((slot0._tempVec2 - slot5.pivot):Scale(slot5.rect.size))
 
 	transformhelper.setPosXY(slot2.transform, slot7.x, slot7.y)
 end
@@ -345,8 +360,24 @@ function slot0._initCamera(slot0)
 	slot0._guiL2dLoader:startLoad(slot0._loadL2dResFinish, slot0)
 end
 
+function slot0.setSkinId(slot0, slot1)
+	slot0._skinId = slot1
+end
+
+function slot0.openBloomView(slot0, slot1)
+	slot0._openBloomView = slot1
+end
+
 function slot0.getTextureSizeByCameraSize(slot0)
 	return math.floor(slot0 / uv0.DefaultLive2dCameraSize * 1600)
+end
+
+function slot0._getRT(slot0, slot1)
+	if slot0._openBloomView and slot0._skinId and lua_skin_ui_bloom.configDict[slot0._skinId] and slot2[slot0._openBloomView] == 1 then
+		return UnityEngine.RenderTexture.GetTemporary(slot1, slot1, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
+	end
+
+	return UnityEngine.RenderTexture.GetTemporary(slot1, slot1, 0, UnityEngine.RenderTextureFormat.ARGB32)
 end
 
 function slot0._loadL2dResFinish(slot0)
@@ -362,12 +393,10 @@ function slot0._loadL2dResFinish(slot0)
 	end
 
 	if uv2.maxTextureSize < uv1.getTextureSizeByCameraSize(slot2.orthographicSize) * slot0._adapterScaleOnCreate * slot0._qualityScale then
-		logError(string.format("GuiLive2d GetTemporary too large maxTextureSize:%s textureSize:%s textureSizeByCamera:%s adapterScaleOnCreate:%s qualityScale:%s", slot5, slot4, slot3, slot0._adapterScaleOnCreate, slot0._qualityScale))
-
 		slot4 = slot5
 	end
 
-	slot0._rt = slot0._rt or UnityEngine.RenderTexture.GetTemporary(slot4, slot4, 0, UnityEngine.RenderTextureFormat.ARGB32)
+	slot0._rt = slot0._rt or slot0:_getRT(slot4)
 	slot2.targetTexture = slot0._rt
 	slot0._rawImageGo = UnityEngine.GameObject.New("live2d_rawImage")
 	slot0._rawImageTransform = slot0._rawImageGo.transform

@@ -62,6 +62,8 @@ function slot0.onDestroy(slot0)
 	if slot0.loader then
 		slot0.loader:dispose()
 	end
+
+	uv0.super.onDestroy(slot0)
 end
 
 return slot0

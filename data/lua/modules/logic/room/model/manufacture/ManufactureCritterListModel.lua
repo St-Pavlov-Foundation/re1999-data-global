@@ -56,7 +56,11 @@ function slot4(slot0, slot1)
 		end
 	end
 
-	return slot16 < slot17
+	if slot16 ~= slot17 then
+		return slot16 < slot17
+	end
+
+	return slot2 < slot3
 end
 
 function slot0.setCritterNewList(slot0, slot1, slot2, slot3)

@@ -30,9 +30,10 @@ function slot0.init(slot0, slot1)
 
 	if GuideConfig.instance:getStepCO(slot0.id, slot0.currStepId) ~= nil and string.nilorempty(slot2.againSteps) == false then
 		slot0._againStepCOs = {}
-		slot7 = "#"
+		slot7 = "|"
+		slot8 = "#"
 
-		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2.againSteps, true, "|", slot7)) do
+		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2.againSteps, true, slot7, slot8)) do
 			if GuideConfig.instance:getStepCO(#slot8 == 1 and slot0.id or slot8[1], #slot8 == 1 and slot8[1] or slot8[2]) then
 				table.insert(slot0._againStepCOs, slot11)
 			else

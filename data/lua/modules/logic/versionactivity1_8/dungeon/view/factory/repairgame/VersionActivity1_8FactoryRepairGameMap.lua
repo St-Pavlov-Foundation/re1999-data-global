@@ -138,7 +138,9 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
+	slot4 = AudioEnum.Meilanni.play_ui_mln_unlock
+
+	AudioMgr.instance:trigger(slot4)
 
 	slot0._gridItemDict = {}
 	slot0._gridItemList = {}

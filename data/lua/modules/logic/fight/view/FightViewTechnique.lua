@@ -97,7 +97,7 @@ function slot0._beforePlaySkill(slot0, slot1, slot2, slot3)
 	slot0._rejectTypes = nil
 	slot0._rejectIds = nil
 
-	for slot8, slot9 in ipairs(slot1:getMO().buffModel:getList()) do
+	for slot8, slot9 in pairs(slot1:getMO():getBuffDic()) do
 		if not string.nilorempty(lua_skill_bufftype.configDict[lua_skill_buff.configDict[slot9.buffId].typeId].rejectTypes) then
 			slot12 = string.split(slot11.rejectTypes, "#")
 			slot13 = string.split(slot12[2], ",")
@@ -133,7 +133,10 @@ function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot4 = lua_skill.configDict[slot2]
+	if not lua_skill.configDict[slot2] then
+		return
+	end
+
 	slot5 = {
 		[slot10.buff.buffId] = true
 	}
@@ -174,8 +177,10 @@ end
 
 function slot0._udpateAnchorY(slot0)
 	slot1 = {}
+	slot4 = FightViewTechniqueModel.instance
+	slot6 = slot4
 
-	for slot5, slot6 in ipairs(FightViewTechniqueModel.instance:getList()) do
+	for slot5, slot6 in ipairs(slot4.getList(slot6)) do
 		if lua_fight_technique.configDict[slot6.id] and slot7.iconShow == "1" then
 			table.insert(slot1, slot6)
 

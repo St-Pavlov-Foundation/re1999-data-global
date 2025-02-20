@@ -128,9 +128,11 @@ function slot0._logByBuildingId(slot0, slot1, slot2)
 		return
 	end
 
+	slot8 = slot1
+
 	for slot8, slot9 in ipairs(slot2) do
 		if slot9 then
-			slot4 = string.format("%s (%s,%s)", string.format("name:%s id:%s -->", slot3.name, slot1), slot9.x, slot9.y)
+			slot4 = string.format("%s (%s,%s)", string.format("name:%s id:%s -->", slot3.name, slot8), slot9.x, slot9.y)
 		end
 	end
 

@@ -56,7 +56,7 @@ function slot1(slot0, slot1)
 		return slot4 < slot5
 	end
 
-	return slot2 < slot2
+	return slot2 < slot3
 end
 
 function slot0.setBackpackCritterList(slot0, slot1)

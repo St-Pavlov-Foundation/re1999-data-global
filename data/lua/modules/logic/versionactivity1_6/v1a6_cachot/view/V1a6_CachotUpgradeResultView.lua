@@ -124,7 +124,8 @@ function slot0._initDetailItem(slot0, slot1, slot2, slot3)
 	slot4.lv1 = gohelper.findChildText(slot1, "txt_level1")
 	slot4.lv2 = gohelper.findChildText(slot1, "txt_level2")
 	slot4.lvnum = gohelper.findChildText(slot1, "#txt_num")
-	slot4.lvnum.text = tostring(slot2)
+	slot8 = slot2
+	slot4.lvnum.text = tostring(slot8)
 	slot4._rankList1 = slot0:getUserDataTb_()
 	slot4._rankList2 = slot0:getUserDataTb_()
 
@@ -159,8 +160,9 @@ function slot0.onOpen(slot0)
 	for slot6 = 1, slot0._goqualityeffect2.transform.childCount do
 		slot7 = slot1:GetChild(slot6 - 1)
 		slot0._qualityEffectList[slot7.name] = slot7
+		slot12 = true
 
-		for slot12 = 0, slot7:GetComponentsInChildren(gohelper.Type_Image, true).Length - 1 do
+		for slot12 = 0, slot7:GetComponentsInChildren(gohelper.Type_Image, slot12).Length - 1 do
 			slot8[slot12].maskable = true
 		end
 	end
@@ -175,9 +177,10 @@ function slot0._showSeatInfo(slot0)
 	slot0._txtorder.text = formatLuaLang("cachot_seat_name", GameUtil.getRomanNums(slot0._seatIndex))
 	slot2 = V1a6_CachotTeamModel.instance:getSeatLevel(slot0._seatIndex)
 	slot3 = lua_rogue_field.configDict[slot2]
-	slot8 = slot2
+	slot9 = slot2
+	slot8 = "v1a6_cachot_quality_0" .. slot9
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imagequality2, "v1a6_cachot_quality_0" .. slot8)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imagequality2, slot8)
 
 	for slot8, slot9 in pairs(slot0._qualityEffectList) do
 		gohelper.setActive(slot9, slot8 == "effect_0" .. slot2)
@@ -191,16 +194,17 @@ function slot0._showSeatInfo(slot0)
 		slot6 = CharacterEnum.Star[slot5.config.rare]
 	end
 
-	slot0._roleStarNum.text = tostring(slot6)
+	slot10 = slot6
+	slot0._roleStarNum.text = tostring(slot10)
 
 	for slot10, slot11 in ipairs(slot0._roleStarList) do
 		gohelper.setActive(slot11, slot10 <= slot6)
 	end
 
-	slot11 = slot0._txtlevel2
-	slot12 = slot0._rankList2
+	slot11 = slot3[slot0:_getLevelKey(slot6)]
+	slot12 = slot0._txtlevel2
 
-	slot0:_showDetailLevel(slot3[slot0:_getLevelKey(slot6)], slot11, slot12)
+	slot0:_showDetailLevel(slot11, slot12, slot0._rankList2)
 
 	for slot11, slot12 in ipairs(slot0._detailItemList) do
 		slot0:_updateDetailItem(slot12, slot3, nil, slot0:_getLevelKey(slot12.starNum))

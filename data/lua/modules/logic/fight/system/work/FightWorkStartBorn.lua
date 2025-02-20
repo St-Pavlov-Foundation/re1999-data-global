@@ -9,19 +9,31 @@ function slot0.onStart(slot0)
 	slot0._flowParallel = FlowParallel.New()
 
 	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
-		FightWorkStartBornNormal.New(slot6, true).dontDealBuff = true
+		slot8 = false
 
-		if FightEntityModel.instance:isSub(slot6.id) then
-			slot7:onStart()
-		else
-			slot0._flowParallel:addWork(slot7)
+		if slot6:getMO():isAssistBoss() then
+			slot8 = true
+		end
+
+		if not slot7:isCharacter() then
+			slot8 = true
+		end
+
+		if not slot8 then
+			FightWorkStartBornNormal.New(slot6, true).dontDealBuff = true
+
+			if FightDataHelper.entityMgr:isSub(slot6.id) then
+				slot9:onStart()
+			else
+				slot0._flowParallel:addWork(slot9)
+			end
 		end
 	end
 
-	slot0._flowParallel:registerDoneListener(slot0._onBornEnd, slot0)
-	slot0._flowParallel:start()
 	TaskDispatcher.runDelay(slot0._onBornTimeout, slot0, uv0)
 	FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBorn)
+	slot0._flowParallel:registerDoneListener(slot0._onBornEnd, slot0)
+	slot0._flowParallel:start()
 end
 
 function slot0._playEnterVoice(slot0)

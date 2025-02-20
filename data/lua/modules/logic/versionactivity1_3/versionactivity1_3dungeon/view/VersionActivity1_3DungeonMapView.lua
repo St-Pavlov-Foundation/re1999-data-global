@@ -181,9 +181,10 @@ end
 
 function slot0.getFinishTaskCount(slot0)
 	slot2 = nil
-	slot6 = VersionActivity1_3Enum.ActivityId.Dungeon
+	slot5 = VersionActivityConfig.instance
+	slot7 = slot5
 
-	for slot6, slot7 in ipairs(VersionActivityConfig.instance:getAct113TaskList(slot6)) do
+	for slot6, slot7 in ipairs(slot5.getAct113TaskList(slot7, VersionActivity1_3Enum.ActivityId.Dungeon)) do
 		if TaskModel.instance:getTaskById(slot7.id) and slot7.maxFinishCount <= slot2.finishCount then
 			slot1 = 0 + 1
 		end

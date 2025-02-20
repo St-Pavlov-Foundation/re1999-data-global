@@ -752,7 +752,8 @@ function slot0.copyPackageJson(slot0, slot1, slot2, slot3)
 		end
 
 		slot1.packageName = uv1
-		slot2 = uv2:_getNextBlockId(true, uv3)
+		slot6 = uv3
+		slot2 = uv2:_getNextBlockId(true, slot6)
 
 		for slot6, slot7 in ipairs(slot1.infos) do
 			slot7.mainRes = -1
@@ -960,13 +961,15 @@ function slot0.savePackageDataParam(slot0, slot1)
 	end
 
 	for slot6, slot7 in ipairs(slot2) do
-		table.sort(slot7.infos, function (slot0, slot1)
+		function slot11(slot0, slot1)
 			if slot0.packageOrder ~= slot1.packageOrder then
 				return slot0.packageOrder < slot1.packageOrder
 			end
 
 			return slot0.blockId < slot1.blockId
-		end)
+		end
+
+		table.sort(slot7.infos, slot11)
 
 		for slot11, slot12 in ipairs(slot7.infos) do
 			slot12.packageOrder = nil

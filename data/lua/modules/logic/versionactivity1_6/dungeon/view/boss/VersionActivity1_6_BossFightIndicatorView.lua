@@ -52,6 +52,8 @@ function slot0.onDestroy(slot0)
 	end
 
 	slot0._abLoader = nil
+
+	uv0.super.onDestroy(slot0)
 end
 
 return slot0

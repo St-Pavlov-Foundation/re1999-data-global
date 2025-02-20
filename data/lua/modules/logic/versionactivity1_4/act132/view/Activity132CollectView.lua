@@ -86,9 +86,9 @@ function slot0.refreshChapterList(slot0)
 	end
 
 	slot2 = slot1:getSelectCollectId()
-	slot7 = #slot0.chapterItemList
+	slot7 = #slot1:getCollectList()
 
-	for slot7 = 1, math.max(#slot1:getCollectList(), slot7) do
+	for slot7 = 1, math.max(slot7, #slot0.chapterItemList) do
 		if not slot0.chapterItemList[slot7] then
 			slot0.chapterItemList[slot7] = slot0:createChapterItem(slot7)
 		end
@@ -129,10 +129,9 @@ function slot0.refreshClueList(slot0, slot1)
 
 	recthelper.setAnchor(slot0._goContent.transform, 0, 0)
 
-	slot6 = slot2:getCollectMo(slot1) and slot5:getClueList() or {}
-	slot10 = #slot0.clueItemList
+	slot10 = #(slot2:getCollectMo(slot1) and slot5:getClueList() or {})
 
-	for slot10 = 1, math.max(#slot6, slot10) do
+	for slot10 = 1, math.max(slot10, #slot0.clueItemList) do
 		if not slot0.clueItemList[slot10] then
 			slot0.clueItemList[slot10] = slot0:createClueItem(slot10)
 		end
@@ -238,9 +237,9 @@ function slot0.playDoFade(slot0, slot1, slot2)
 		slot0._fadeTweenId = nil
 	end
 
-	slot8 = slot1
-	slot9 = slot2
-	slot0._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(slot0.goCanvas, slot0.goCanvas:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha, slot8, slot9, nil, , , EaseType.OutQuart)
+	slot8 = slot0.goCanvas:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha
+	slot9 = slot1
+	slot0._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(slot0.goCanvas, slot8, slot9, slot2, nil, , , EaseType.OutQuart)
 
 	for slot8, slot9 in ipairs(slot0.clueItemList) do
 		if slot0.selectIndex then

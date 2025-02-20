@@ -127,15 +127,15 @@ function slot0.getProbUpItem(slot0, slot1)
 		slot2 = slot0:getUserDataTb_()
 		slot2.heroIcons = {}
 		slot2.equipIcons = {}
-		slot7 = tostring(slot1)
-		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. slot7)
+		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. tostring(slot1))
 		slot2.go = slot3
 		slot2.starList = slot0:getUserDataTb_()
 		slot2.iconContainerGo = gohelper.findChild(slot3, "heroshowlist")
 		slot2.iconEquipContainerGo = gohelper.findChild(slot3, "equipshowlist")
 		slot2.iconTemplateGo = gohelper.findChild(slot3, "heroshowlist/summonpooldetailheroitem")
 		slot2.iconEquipTemplateGo = gohelper.findChild(slot3, "equipshowlist/summonpooldetailequipitem")
-		slot2.starContainerGo = gohelper.findChild(slot3, "#go_starList")
+		slot7 = "#go_starList"
+		slot2.starContainerGo = gohelper.findChild(slot3, slot7)
 
 		for slot7 = 1, uv0 + 1 do
 			slot2.starList[slot7] = gohelper.findChild(slot2.starContainerGo, "star" .. tostring(slot7))

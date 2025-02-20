@@ -94,6 +94,8 @@ function slot0.onDestroy(slot0)
 
 	slot0._abLoader = nil
 	slot0._assessLevel = nil
+
+	uv0.super.onDestroy(slot0)
 end
 
 function slot0.playVX(slot0)

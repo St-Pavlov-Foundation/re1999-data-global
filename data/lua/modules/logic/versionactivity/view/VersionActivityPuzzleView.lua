@@ -210,9 +210,9 @@ function slot0.buildOptions(slot0, slot1)
 	slot3 = nil
 	slot4 = {}
 	slot5 = {}
-	slot9 = "|"
+	slot10 = string.trim(slot1)
 
-	for slot9, slot10 in ipairs(string.split(string.trim(slot1), slot9)) do
+	for slot9, slot10 in ipairs(string.split(slot10, "|")) do
 		slot2 = Mathf.Max(0, GameUtil.utf8len(string.split(slot10, "#")[2]))
 
 		if slot9 % 4 == 0 then
@@ -233,8 +233,9 @@ end
 
 function slot0.buildText(slot0, slot1)
 	slot0.placeholderDict = {}
+	slot6 = "{(%d+)}"
 
-	for slot6 in string.gmatch(slot1, "{(%d+)}") do
+	for slot6 in string.gmatch(slot1, slot6) do
 		slot7 = tonumber(slot6)
 
 		table.insert(slot0.needAnswerList, slot7)
@@ -249,7 +250,9 @@ function slot0.buildText(slot0, slot1)
 end
 
 function slot0.buildFinishText(slot0, slot1)
-	for slot5 in string.gmatch(slot1, "{(%d+)}") do
+	slot5 = "{(%d+)}"
+
+	for slot5 in string.gmatch(slot1, slot5) do
 		slot1 = string.gsub(slot1, "{(%d+)}", slot0:addUnderlineTag(string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, slot0.options[tonumber(slot5)])), 1)
 	end
 
@@ -520,8 +523,7 @@ function slot0.calculateLinksRectAnchor(slot0)
 		elseif slot10.lineNumber == slot4[slot8.linkTextfirstCharacterIndex + slot8.linkTextLength - 1].lineNumber then
 			slot0:addCenterPos(slot9, slot5, slot1:TransformPoint(Vector3.New(slot11.topRight.x, slot11.ascender, 0)))
 		else
-			slot16 = slot10.ascender
-			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot16, 0))
+			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot10.ascender, 0))
 
 			for slot16 = 1, slot8.linkTextLength - 1 do
 				if slot4[slot8.linkTextfirstCharacterIndex + slot16].lineNumber == slot10.lineNumber then
@@ -566,8 +568,7 @@ function slot0.getFirstAnswerAnchorPos(slot0)
 		elseif slot10.lineNumber == slot4[slot9.linkTextfirstCharacterIndex + slot9.linkTextLength - 1].lineNumber then
 			slot7 = slot0:getAnchorPos(slot5, slot1:TransformPoint(Vector3.New(slot11.topRight.x, slot11.ascender, 0)), slot0.goGuideAnimationContainer.transform)
 		else
-			slot16 = slot10.ascender
-			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot16, 0))
+			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot10.ascender, 0))
 
 			for slot16 = 1, slot9.linkTextLength - 1 do
 				if slot4[slot9.linkTextfirstCharacterIndex + slot16].lineNumber == slot10.lineNumber then
@@ -599,8 +600,8 @@ function slot0.getShowAdsorbRectAnswerIndex(slot0)
 	slot2 = 99999
 
 	for slot6, slot7 in pairs(slot0.answerToAnchorPosDict) do
-		slot12 = slot6
-		slot8 = slot0:getAnswerWidth(slot0:getAnswerGroupIndex(slot12)) / 2
+		slot13 = slot0
+		slot8 = slot0:getAnswerWidth(slot0.getAnswerGroupIndex(slot13, slot6)) / 2
 
 		for slot12, slot13 in ipairs(slot7) do
 			if slot0.dragOptionAnchor.x >= slot13.x - (slot8 + uv0.AbsorbOffsetX) and slot0.dragOptionAnchor.x <= slot13.x + slot8 + uv0.AbsorbOffsetX and slot0.dragOptionAnchor.y >= slot13.y - (slot0.halfAnsWerHeight + uv0.AbsorbOffsetY) and slot0.dragOptionAnchor.y <= slot13.y + slot0.halfAnsWerHeight + uv0.AbsorbOffsetY and Vector2.Distance(slot13, slot0.dragOptionAnchor) < slot2 then

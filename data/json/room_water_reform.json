@@ -33,5 +33,10 @@
     "blockType": 6,
     "blockId": -10001,
     "itemId": 232202
+  },
+  {
+    "blockType": 7,
+    "blockId": -10002,
+    "itemId": 0
   }
 ]

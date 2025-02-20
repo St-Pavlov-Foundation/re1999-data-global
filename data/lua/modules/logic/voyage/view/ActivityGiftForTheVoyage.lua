@@ -64,8 +64,9 @@ function slot0._createItemList(slot0)
 	end
 
 	slot0._itemList = {}
+	slot5 = true
 
-	gohelper.setActive(slot0._gotaskitem, true)
+	gohelper.setActive(slot0._gotaskitem, slot5)
 
 	for slot5, slot6 in ipairs(VoyageConfig.instance:getTaskList()) do
 		slot7 = slot0:_createItem(ActivityGiftForTheVoyageItem)

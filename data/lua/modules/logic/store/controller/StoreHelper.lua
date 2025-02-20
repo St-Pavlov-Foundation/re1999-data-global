@@ -47,6 +47,18 @@ function slot0._inOpenTime(slot0)
 	return slot0.isOffline == 0 and (string.nilorempty(slot0.onlineTime) and slot1 or TimeUtil.stringToTimestamp(slot0.onlineTime)) <= slot1 and slot1 <= (string.nilorempty(slot0.offlineTime) and slot1 or TimeUtil.stringToTimestamp(slot0.offlineTime))
 end
 
+function slot0._inRecommendGroupBTopTime(slot0)
+	if (string.nilorempty(slot0.onlineTime) and ServerTime.now() or TimeUtil.stringToTimestamp(slot0.onlineTime) - ServerTime.clientToServerOffset()) <= ServerTime.timeInLocal(PlayerModel.instance:getPlayerRegisterTime() / 1000) then
+		return false
+	end
+
+	if TurnbackModel.instance:getCurTurnbackMo() and slot4:isInOpenTime() and slot2 <= ServerTime.timeInLocal(slot4.startTime) then
+		return false
+	end
+
+	return slot0.isOffline == 0 and slot2 <= slot1 and slot1 <= slot2 + (slot0.topDay == nil and 0 or slot0.topDay * TimeUtil.OneDaySecond)
+end
+
 function slot0.getRecommendStoreGroup(slot0, slot1)
 	if slot1 then
 		if slot0.topType == StoreEnum.AdjustOrderType.MonthCard then

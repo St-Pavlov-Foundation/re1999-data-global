@@ -88,9 +88,10 @@ function slot0.onStart(slot0, slot1, slot2)
 			slot0:_addComp("level", NewbieSceneLevelComp)
 			slot0:_addComp("camera", CommonSceneCameraComp)
 
-			slot6 = MainSceneYearAnimationComp
+			slot6 = "yearAnimation"
+			slot7 = MainSceneYearAnimationComp
 
-			slot0:_addComp("yearAnimation", slot6)
+			slot0:_addComp(slot6, slot7)
 
 			for slot6, slot7 in ipairs(slot0._allComps) do
 				if slot7.onInit then

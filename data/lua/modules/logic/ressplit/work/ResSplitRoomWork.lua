@@ -74,13 +74,47 @@ function slot0.onStart(slot0, slot1)
 		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
 	end
 
-	slot14 = SLFramework.FileHelper.GetUnityPath(SLFramework.FrameworkSettings.FullAssetRootDir)
+	for slot17, slot18 in pairs(RoomConfig.instance:getBuildingConfigList()) do
+		if not tabletool.indexOf(slot4, slot18.id) then
+			slot19 = ResUrl.getRoomRes(slot18.path)
+			slot11[slot19] = true
 
-	for slot18 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.FullAssetRootDir .. "/scenes/m_s07_xiaowu/prefab", true).Length - 1 do
-		if not string.find(slot13[slot18], ".meta") and not string.find(slot19, "scenes/m_s07_xiaowu/prefab/block/") and slot11[string.sub(slot19, string.find(slot19, "scenes/m_s07_xiaowu/prefab"), string.len(slot19))] == nil then
-			slot10[slot19] = true
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+		end
+	end
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, slot19, true)
+	for slot17, slot18 in pairs(RoomConfig.instance:getAllBuildingSkinList()) do
+		if not tabletool.indexOf(slot4, slot18.buildingId) then
+			slot19 = ResUrl.getRoomRes(slot18.path)
+			slot11[slot19] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+		end
+	end
+
+	for slot17, slot18 in pairs(RoomConfig.instance:getVehicleConfigList()) do
+		slot19 = ResUrl.getRoomRes(slot18.path)
+		slot11[slot19] = true
+
+		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+	end
+
+	for slot17, slot18 in pairs(lua_room_skin.configList) do
+		if slot18.itemId ~= 0 then
+			slot19 = slot18.model
+			slot11[slot19] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+		end
+	end
+
+	slot15 = SLFramework.FileHelper.GetUnityPath(SLFramework.FrameworkSettings.FullAssetRootDir)
+
+	for slot19 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.FullAssetRootDir .. "/scenes/m_s07_xiaowu/prefab", true).Length - 1 do
+		if not string.find(slot14[slot19], ".meta") and not string.find(slot20, "scenes/m_s07_xiaowu/prefab/block/") and slot11[string.sub(slot20, string.find(slot20, "scenes/m_s07_xiaowu/prefab"), string.len(slot20))] == nil then
+			slot10[slot20] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, slot20, true)
 		end
 	end
 

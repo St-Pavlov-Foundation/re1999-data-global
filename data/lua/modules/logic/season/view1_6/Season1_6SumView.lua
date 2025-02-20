@@ -110,16 +110,15 @@ function slot0.showReviewView(slot0, slot1)
 		slot7,
 		slot8
 	})
-	slot13 = GameUtil.splitString2(SeasonConfig.instance:getSeasonConstCo(slot2, Activity104Enum.ConstEnum.SumReviewChapter) and slot11.value2 or "", true) or {}
-	slot17 = #slot0.chapterItems
+	slot17 = #(GameUtil.splitString2(SeasonConfig.instance:getSeasonConstCo(slot2, Activity104Enum.ConstEnum.SumReviewChapter) and slot11.value2 or "", true) or {})
 
-	for slot17 = 1, math.max(#slot13, slot17) do
+	for slot17 = 1, math.max(slot17, #slot0.chapterItems) do
 		slot0:refreshChapter(slot17, slot13[slot17], #slot13)
 	end
 
-	slot20 = #slot0.chapterItems
+	slot20 = #string.splitToNumber(SeasonConfig.instance:getSeasonConstCo(slot2, Activity104Enum.ConstEnum.SumReviewCard) and slot14.value2 or "", "#")
 
-	for slot20 = 1, math.max(#string.splitToNumber(SeasonConfig.instance:getSeasonConstCo(slot2, Activity104Enum.ConstEnum.SumReviewCard) and slot14.value2 or "", "#"), slot20) do
+	for slot20 = 1, math.max(slot20, #slot0.chapterItems) do
 		slot0:refreshCard(slot20, slot16[slot20])
 	end
 end

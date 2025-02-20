@@ -37,7 +37,7 @@ function slot0._isBossRushBossShieldBroken(slot0, slot1)
 		return false
 	end
 
-	for slot10, slot11 in ipairs(slot1:getMO():getBuffList()) do
+	for slot10, slot11 in pairs(slot1:getMO():getBuffDic()) do
 		if uv0[slot11.buffId] then
 			return true
 		end

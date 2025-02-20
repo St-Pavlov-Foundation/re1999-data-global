@@ -77,8 +77,9 @@ end
 
 function slot0.onSceneClose(slot0)
 	slot0._initialized = false
+	slot4 = slot0
 
-	TaskDispatcher.cancelTask(slot0._delayStartLoad, slot0)
+	TaskDispatcher.cancelTask(slot0._delayStartLoad, slot4)
 
 	for slot4, slot5 in ipairs(slot0._loaderList) do
 		slot5:dispose()

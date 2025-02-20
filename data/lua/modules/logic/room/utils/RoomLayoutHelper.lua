@@ -217,8 +217,9 @@ return {
 			return false
 		end
 
-		slot7 = slot0.uid
-		slot3 = RoomBuildingHelper.getOccupyDict(slot0.defineId, HexPoint(slot0.x, slot0.y), slot0.rotate, slot7)
+		slot7 = slot0.rotate
+		slot8 = slot0.uid
+		slot3 = RoomBuildingHelper.getOccupyDict(slot0.defineId, HexPoint(slot0.x, slot0.y), slot7, slot8)
 
 		for slot7, slot8 in ipairs(slot1) do
 			if slot3[slot8.x] and slot3[slot8.x][slot8.y] then

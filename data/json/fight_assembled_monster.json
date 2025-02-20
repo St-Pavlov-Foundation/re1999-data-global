@@ -79,5 +79,59 @@
       2.26,
       4.81
     ]
+  },
+  {
+    "id": 620406,
+    "part": 1,
+    "virtualStance": [
+      2,
+      3,
+      0
+    ],
+    "virtualSpinePos": [
+      -3.5,
+      2.4,
+      0
+    ],
+    "virtualSpineSize": [
+      8,
+      8
+    ],
+    "clickIndex": 10,
+    "selectPos": [
+      2,
+      3.53
+    ],
+    "hpPos": [
+      -5,
+      -0.5
+    ]
+  },
+  {
+    "id": 6204061,
+    "part": 2,
+    "virtualStance": [
+      4.7,
+      7.5,
+      0
+    ],
+    "virtualSpinePos": [
+      2.7,
+      6.2,
+      0
+    ],
+    "virtualSpineSize": [
+      9,
+      14
+    ],
+    "clickIndex": 1,
+    "selectPos": [
+      5.14,
+      8.3
+    ],
+    "hpPos": [
+      -3.5,
+      3
+    ]
   }
 ]

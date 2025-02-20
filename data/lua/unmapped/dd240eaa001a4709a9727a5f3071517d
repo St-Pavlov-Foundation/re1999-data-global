@@ -206,6 +206,15 @@ return {
 			table.insert(slot0, slot2)
 		end
 	end,
+	V2a3_WarmUp = function (slot0)
+		if not ViewMgr.instance:getContainer(ViewName.V2a3_WarmUp) then
+			return
+		end
+
+		for slot6 = 1, slot1:getEpisodeCount() do
+			table.insert(slot0, slot1:getImgResUrl(slot6))
+		end
+	end,
 	_startLoad = function (slot0, slot1, slot2)
 		slot3 = MultiAbLoader.New()
 		uv0[slot3] = true

@@ -12,8 +12,8 @@ function slot0.init(slot0, slot1)
 
 	slot0._btnclick:AddClickListener(slot0._click, slot0)
 
-	slot5 = UnityEngine.Animator
-	slot0._anim = slot1:GetComponent(typeof(slot5))
+	slot5 = typeof
+	slot0._anim = slot1:GetComponent(slot5(UnityEngine.Animator))
 	slot0._progressItems = {}
 
 	for slot5 = 1, 3 do
@@ -132,9 +132,9 @@ end
 function slot0.destroy(slot0)
 	TaskDispatcher.cancelTask(slot0._hideUnlockEffect, slot0)
 
-	slot4 = slot0.onLevelClick
+	slot4 = ExploreEvent.OnLevelClick
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnLevelClick, slot4, slot0)
+	ExploreController.instance:unregisterCallback(slot4, slot0.onLevelClick, slot0)
 	slot0._btnclick:RemoveClickListener()
 
 	slot0._index = 0

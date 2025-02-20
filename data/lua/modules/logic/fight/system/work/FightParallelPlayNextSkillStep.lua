@@ -19,7 +19,7 @@ function slot0._parallelPlayNextSkillCheck(slot0, slot1)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot0.prevStepMO.fromId) then
+	if not FightDataHelper.entityMgr:getById(slot0.prevStepMO.fromId) then
 		return
 	end
 
@@ -27,7 +27,7 @@ function slot0._parallelPlayNextSkillCheck(slot0, slot1)
 		return
 	end
 
-	if not FightEntityModel.instance:getById(slot0.stepMO.fromId) then
+	if not FightDataHelper.entityMgr:getById(slot0.stepMO.fromId) then
 		return
 	end
 
@@ -43,7 +43,7 @@ function slot0._parallelPlayNextSkillCheck(slot0, slot1)
 		return
 	end
 
-	if FightEntityModel.instance:getById(slot0.stepMO.fromId).side ~= FightEntityModel.instance:getById(slot0.prevStepMO.fromId).side then
+	if FightDataHelper.entityMgr:getById(slot0.stepMO.fromId).side ~= FightDataHelper.entityMgr:getById(slot0.prevStepMO.fromId).side then
 		return
 	end
 

@@ -185,8 +185,9 @@ end
 
 function slot0._raycast(slot0, slot1)
 	slot2 = slot0._cameraTrs.position
-	slot8 = slot0._occlusionLayerMask
-	slot4 = UnityEngine.Physics.RaycastAll(slot2, slot1 - slot2, Vector3.Distance(slot2, slot1), slot8)
+	slot8 = Vector3.Distance(slot2, slot1)
+	slot9 = slot0._occlusionLayerMask
+	slot4 = UnityEngine.Physics.RaycastAll(slot2, slot1 - slot2, slot8, slot9)
 
 	for slot8, slot9 in pairs(slot0._clipObjs) do
 		slot9:markClip(false)

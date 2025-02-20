@@ -14,12 +14,13 @@ slot0.RoleMoveRotateDirIndex = {
 	[slot0.RoleMoveDir.Down] = 2,
 	[slot0.RoleMoveDir.Left] = 3
 }
-slot4 = 0
+slot4 = -1
+slot5 = 0
 slot0.RoleMoveRotateDir = {
 	[0] = Vector2.New(0, 1),
 	Vector2.New(1, 0),
 	Vector2.New(0, -1),
-	Vector2.New(-1, slot4)
+	Vector2.New(slot4, slot5)
 }
 slot0.ItemType = {
 	PipePot = 224,
@@ -192,13 +193,12 @@ slot0.PipeColor = {
 	Color1 = 1,
 	None = 0
 }
-slot4 = 0.16775
-slot5 = 0.61
+slot5 = 0.16775
 slot0.PipeColorDef = {
 	[slot0.PipeColor.None] = Color.New(),
 	[slot0.PipeColor.Color1] = Color.New(0.7735849, 0.2799217, 0.2152901),
 	[slot0.PipeColor.Color2] = Color.New(0.199134, 0.4504557, 0.851),
-	[slot0.PipeColor.Color3] = Color.New(slot4, slot5, 0.2614471)
+	[slot0.PipeColor.Color3] = Color.New(slot5, 0.61, 0.2614471)
 }
 slot0.PipeGoNode = {
 	Pipe4 = 5,

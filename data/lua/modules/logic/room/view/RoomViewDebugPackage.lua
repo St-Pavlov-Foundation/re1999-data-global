@@ -102,9 +102,11 @@ end
 function slot0._initPackageId(slot0)
 	slot1 = lua_block_package.configList
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return slot0.id < slot1.id
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if not slot0._packageIdItemList[slot5] then
@@ -143,7 +145,9 @@ function slot0._refreshPackageId(slot0)
 end
 
 function slot0._initMainRes(slot0)
-	table.insert({}, -1)
+	slot5 = -1
+
+	table.insert({}, slot5)
 
 	for slot5, slot6 in pairs(RoomResourceEnum.ResourceId) do
 		if slot6 >= 0 then
@@ -151,9 +155,11 @@ function slot0._initMainRes(slot0)
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
+	function slot5(slot0, slot1)
 		return slot0 < slot1
-	end)
+	end
+
+	table.sort(slot1, slot5)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if not slot0._mainResItemList[slot5] then

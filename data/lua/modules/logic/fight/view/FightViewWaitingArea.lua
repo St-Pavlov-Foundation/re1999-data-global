@@ -130,7 +130,7 @@ function slot0._saveCantUseStatus(slot0)
 	end
 
 	for slot5, slot6 in ipairs(slot1) do
-		if FightEntityModel.instance:getDeadById(slot6.entityId) or slot8 and FightCardModel.instance:isUniqueSkill(slot6.entityId, slot6.skillId) and (FightEntityModel.instance:getById(slot6.entityId) and slot8.exPoint or 0) < (slot8 and slot8:getUniqueSkillPoint() or 5) or not FightViewHandCardItemLock.canUseCardSkill(slot6.entityId, slot6.skillId) then
+		if FightDataHelper.entityMgr:getById(slot6.entityId) and slot7:isStatusDead() or slot7 and FightCardModel.instance:isUniqueSkill(slot6.entityId, slot6.skillId) and (slot7 and slot7.exPoint or 0) < (slot7 and slot7:getUniqueSkillPoint() or 5) or not FightViewHandCardItemLock.canUseCardSkill(slot6.entityId, slot6.skillId) then
 			slot0._cardCantUseDict[slot6] = true
 		end
 	end
@@ -158,7 +158,7 @@ function slot0._delayPlayCardDisappear(slot0)
 		slot7 = FightPlayCardModel.instance:getClientLeftSkillOpList()
 		slot9 = slot7[#slot7]
 		slot11 = slot9.skillId
-		slot12 = FightEntityModel.instance:getById(slot9.entityId)
+		slot12 = FightDataHelper.entityMgr:getById(slot9.entityId)
 
 		if slot0._cardCantUseDict and slot0._cardCantUseDict[slot9] then
 			slot13 = slot0._cardItemList[slot8].go
@@ -307,7 +307,7 @@ function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
 end
 
 function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if not FightEntityModel.instance:getById(slot1) or slot4.side ~= FightEnum.EntitySide.MySide then
+	if not FightDataHelper.entityMgr:getById(slot1) or slot4.side ~= FightEnum.EntitySide.MySide then
 		return
 	end
 
