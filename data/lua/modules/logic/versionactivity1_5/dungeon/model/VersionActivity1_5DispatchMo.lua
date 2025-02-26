@@ -10,8 +10,7 @@ function slot0.init(slot0, slot1)
 end
 
 function slot0.update(slot0, slot1)
-	slot6 = slot1.endTime
-	slot0.endTime = Mathf.Floor(tonumber(slot6) / 1000)
+	slot0.endTime = Mathf.Floor(tonumber(slot1.endTime) / 1000)
 	slot0.heroIdList = {}
 
 	for slot5, slot6 in ipairs(slot1.heroIds) do

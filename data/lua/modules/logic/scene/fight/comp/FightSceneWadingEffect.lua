@@ -69,15 +69,15 @@ function slot0._setAllSpineEffect(slot0)
 	if slot0._side then
 		slot1 = FightHelper.getSideEntitys(slot0._side, true)
 	else
-		slot6 = FightEnum.EntitySide.MySide
+		slot5 = true
 
-		for slot5, slot6 in ipairs(FightHelper.getSideEntitys(slot6, true)) do
+		for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, slot5)) do
 			table.insert({}, slot6)
 		end
 
-		slot6 = FightEnum.EntitySide.EnemySide
+		slot5 = true
 
-		for slot5, slot6 in ipairs(FightHelper.getSideEntitys(slot6, true)) do
+		for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, slot5)) do
 			table.insert(slot1, slot6)
 		end
 	end

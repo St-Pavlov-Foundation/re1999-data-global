@@ -8,10 +8,10 @@ end
 
 function slot0.init(slot0, slot1, slot2)
 	slot0._scene = slot0:getCurScene()
-	slot6 = ViewEvent.OnOpenView
-	slot7 = slot0._onOpenView
+	slot6 = slot0._onOpenView
+	slot7 = slot0
 
-	ViewMgr.instance:registerCallback(slot6, slot7, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot6, slot7)
 
 	slot0._views = {
 		[ViewName.RoomView] = false
@@ -50,10 +50,10 @@ function slot0._check(slot0)
 end
 
 function slot0.onSceneClose(slot0)
-	slot4 = ViewEvent.OnOpenView
-	slot5 = slot0._onOpenView
+	slot4 = slot0._onOpenView
+	slot5 = slot0
 
-	ViewMgr.instance:unregisterCallback(slot4, slot5, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot4, slot5)
 
 	for slot4, slot5 in pairs(slot0._views) do
 		ViewMgr.instance:closeView(slot4, true)

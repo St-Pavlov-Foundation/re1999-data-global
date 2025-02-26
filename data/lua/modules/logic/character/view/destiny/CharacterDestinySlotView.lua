@@ -141,8 +141,8 @@ function slot0._editableInitView(slot0)
 	}
 	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#go_main/middle/#go_slot/title/txt_title")
 	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot4 = typeof
-	slot0._animEvent = slot0.viewGO:GetComponent(slot4(ZProj.AnimationEventWrap))
+	slot4 = ZProj.AnimationEventWrap
+	slot0._animEvent = slot0.viewGO:GetComponent(typeof(slot4))
 	slot0._slotmats = slot0:getUserDataTb_()
 
 	for slot4 = 1, CharacterDestinyEnum.EffectItemCount do

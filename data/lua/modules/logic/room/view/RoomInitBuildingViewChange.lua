@@ -16,10 +16,7 @@ function slot0.addEvents(slot0)
 	slot0._inputvalue:AddOnValueChanged(slot0._onValueChanged, slot0)
 	slot0._btnnoformula:AddClickListener(slot0._btnnoformulaOnClick, slot0)
 	slot0._btncombine:AddClickListener(slot0._btncombineOnClick, slot0)
-
-	slot5 = slot0
-
-	slot0._btnproduct:AddClickListener(slot0._btnproductOnClick, slot5)
+	slot0._btnproduct:AddClickListener(slot0._btnproductOnClick, slot0)
 
 	slot1 = {
 		0.5
@@ -369,12 +366,10 @@ function slot0._editableInitView(slot0)
 	slot0._txtNeed = gohelper.findChildText(slot0._gochange, "go_product/#txt_NeedProp")
 	slot0._gobgvx = gohelper.findChild(slot0._gochange, "combine/go_combine3/#bgvx")
 	slot0._gohechengeffect = gohelper.findChild(slot0._gochange, "combine/#hechengeffect")
+	slot4 = "bg_hechengdiban"
 
-	slot0._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
-
-	slot4 = AudioEnum.UI.UI_transverse_tabs_click
-
-	gohelper.addUIClickAudio(slot0._btnproduct.gameObject, slot4)
+	slot0._simagecombinebg:LoadImage(ResUrl.getRoomImage(slot4))
+	gohelper.addUIClickAudio(slot0._btnproduct.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 
 	slot0._materialItemList = {}
 
@@ -468,9 +463,9 @@ end
 
 function slot0._refreshCostMaterial(slot0)
 	slot2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
-	slot7 = #RoomProductionHelper.getCostMaterialItemList(RoomFormulaListModel.instance:getSelectFormulaId())
+	slot7 = #slot0._materialItemList
 
-	for slot7 = 1, math.min(slot7, #slot0._materialItemList) do
+	for slot7 = 1, math.min(#RoomProductionHelper.getCostMaterialItemList(RoomFormulaListModel.instance:getSelectFormulaId()), slot7) do
 		slot8 = slot3[slot7]
 
 		if slot0._materialItemList[slot7] then
@@ -502,9 +497,7 @@ function slot0._refreshCostMaterial(slot0)
 		end
 	end
 
-	slot7 = #slot0._materialItemList
-
-	for slot7 = math.min(#slot3, slot7) + 1, #slot0._materialItemList do
+	for slot7 = math.min(#slot3, #slot0._materialItemList) + 1, #slot0._materialItemList do
 		slot8 = slot0._materialItemList[slot7]
 		slot8.isEmpty = true
 
@@ -530,13 +523,12 @@ function slot0._refreshProduce(slot0)
 end
 
 function slot0._refreshEmpty(slot0)
-	slot0._inputvalue:SetText(tostring(0))
+	slot4 = 0
+
+	slot0._inputvalue:SetText(tostring(slot4))
 	gohelper.setActive(slot0._simageproducticon.gameObject, false)
 	gohelper.setActive(slot0._imageproductrare.gameObject, false)
-
-	slot4 = true
-
-	gohelper.setActive(slot0._goproductadd, slot4)
+	gohelper.setActive(slot0._goproductadd, true)
 
 	for slot4, slot5 in ipairs(slot0._materialItemList) do
 		gohelper.setActive(slot5.go, true)
@@ -676,13 +668,10 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	slot5 = false
+	slot4 = false
 
-	PopupController.instance:setPause("roominitbuildingview_changestart", slot5)
-
-	slot4 = "roominitbuildingview_changestart"
-
-	UIBlockMgr.instance:endBlock(slot4)
+	PopupController.instance:setPause("roominitbuildingview_changestart", slot4)
+	UIBlockMgr.instance:endBlock("roominitbuildingview_changestart")
 
 	for slot4, slot5 in ipairs(slot0._materialItemList) do
 		slot5.btnitem:RemoveClickListener()

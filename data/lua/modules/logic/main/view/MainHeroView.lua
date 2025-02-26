@@ -945,10 +945,7 @@ function slot0._isViewGOActive(slot0)
 end
 
 function slot0._hasOpenFullView(slot0)
-	slot3 = ViewMgr.instance
-	slot5 = slot3
-
-	for slot4, slot5 in ipairs(slot3.getOpenViewNameList(slot5)) do
+	for slot4, slot5 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
 		if ViewMgr.instance:getSetting(slot5) and (slot6.viewType == ViewType.Full or slot6.bgBlur) then
 			return true
 		end
@@ -1100,10 +1097,9 @@ function slot0.getWelcomeLikeVoice(slot0, slot1, slot2)
 	slot5 = os.time()
 
 	return uv0.getHeightWeight(HeroModel.instance:getVoiceConfig(slot1, slot0, function (slot0)
-		slot5 = "|"
-		slot6 = "#"
+		slot5 = "#"
 
-		for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.time, false, slot5, slot6)) do
+		for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.time, false, "|", slot5)) do
 			if uv0._checkTime(slot6, uv1, uv2) then
 				return true
 			end

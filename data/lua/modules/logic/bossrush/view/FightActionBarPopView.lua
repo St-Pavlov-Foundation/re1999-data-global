@@ -50,10 +50,10 @@ function slot0._onLoadFinish(slot0, slot1)
 
 	table.insert(slot0.viewParam.dataList, 1, 0)
 
-	slot7 = slot0._onItemShow
-	slot8 = slot0.viewParam.dataList
+	slot7 = slot0.viewParam.dataList
+	slot8 = slot0._content
 
-	slot0:com_createObjList(slot7, slot8, slot0._content, slot0._itemModel)
+	slot0:com_createObjList(slot0._onItemShow, slot7, slot8, slot0._itemModel)
 
 	for slot7, slot8 in ipairs(slot0._cardObjList) do
 		if tonumber(slot8.name) ~= 0 then
@@ -115,9 +115,7 @@ function slot0._onCardItemShow(slot0, slot1, slot2, slot3)
 	slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, FightViewCardItem)
 
 	if slot4 ~= 0 then
-		slot14 = slot4
-
-		slot9:updateItem(slot0.viewParam.entityId, slot14)
+		slot9:updateItem(slot0.viewParam.entityId, slot4)
 
 		for slot14, slot15 in ipairs(slot9._lvImgComps) do
 			SLFramework.UGUI.GuiHelper.SetColor(slot15, slot2.isChannelSkill and "#666666" or "#FFFFFF")

@@ -73,9 +73,7 @@ function slot1(slot0)
 			end
 		end
 
-		slot11 = false
-
-		gohelper.setActive(slot0._categoryItemContainer[#slot5].go_line, slot11)
+		gohelper.setActive(slot0._categoryItemContainer[#slot5].go_line, false)
 
 		for slot11 = #slot5 + 1, #slot0._categoryItemContainer do
 			gohelper.setActive(slot0._categoryItemContainer[slot11].go, false)
@@ -167,11 +165,9 @@ function slot5()
 				slot2[#slot2 + 1] = slot3[slot9].id
 			end
 
-			slot10 = {
+			GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {
 				[slot11] = true
-			}
-
-			GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", slot10)
+			})
 
 			slot6 = ServerTime.now()
 

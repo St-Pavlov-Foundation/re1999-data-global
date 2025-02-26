@@ -239,10 +239,7 @@ end
 
 function slot0.onClose(slot0)
 	TaskDispatcher.cancelTask(slot0._delayDealTouch, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._setState, slot4)
+	TaskDispatcher.cancelTask(slot0._setState, slot0)
 
 	for slot4, slot5 in ipairs(slot0._detailClick) do
 		slot5:RemoveClickListener()

@@ -85,9 +85,8 @@ return {
 		end
 
 		slot1 = {}
-		slot5 = "[%z-\\xc2-\\xf4][\\x80-\\xbf ]*"
 
-		for slot5 in string.gmatch(slot0, slot5) do
+		for slot5 in string.gmatch(slot0, "[%z-\\xc2-\\xf4][\\x80-\\xbf ]*") do
 			if not uv0.isEmptyStr(slot5) then
 				table.insert(slot1, slot5)
 			end
@@ -120,10 +119,10 @@ return {
 		return slot1
 	end,
 	stringToVector3 = function (slot0)
-		slot6 = "%]"
+		slot6 = ""
 		slot2 = {}
 
-		for slot6 = 1, #string.split(string.gsub(string.gsub(slot0, "%[", ""), slot6, ""), ",") do
+		for slot6 = 1, #string.split(string.gsub(string.gsub(slot0, "%[", slot6), "%]", ""), ",") do
 			table.insert(slot2, tonumber(slot1[slot6]))
 		end
 
@@ -211,8 +210,8 @@ return {
 
 		print(slot0, "======hot update finish!")
 	end,
-	replaceSpace = function (slot0)
-		if string.nilorempty(slot0) or LangSettings.instance:isEn() then
+	replaceSpace = function (slot0, slot1)
+		if string.nilorempty(slot0) or not slot1 and LangSettings.instance:isEn() then
 			return slot0
 		end
 
@@ -367,9 +366,8 @@ return {
 	end,
 	full2HalfWidth = function (slot0)
 		slot1 = {}
-		slot5 = "[%z-\\xc2-\\xf4][\\x80-\\xbf]*"
 
-		for slot5 in slot0:gmatch(slot5) do
+		for slot5 in slot0:gmatch("[%z-\\xc2-\\xf4][\\x80-\\xbf]*") do
 			if slot5:byte(3) then
 				if slot5:byte(2) * 64 + slot5:byte(3) - 12193 + 65 > 32 and slot6 < 126 then
 					table.insert(slot1, string.char(slot6))

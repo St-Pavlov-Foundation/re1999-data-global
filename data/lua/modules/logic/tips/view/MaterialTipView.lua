@@ -1126,10 +1126,7 @@ end
 function slot0.onClose(slot0)
 	TaskDispatcher.cancelTask(slot0._onRefreshPowerPotionDeadline, slot0)
 	TaskDispatcher.cancelTask(slot0._onRefreshNewInsightDeadline, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._onRefreshItemDeadline, slot4)
+	TaskDispatcher.cancelTask(slot0._onRefreshItemDeadline, slot0)
 
 	slot0.viewContainer._isCloseImmediate = true
 

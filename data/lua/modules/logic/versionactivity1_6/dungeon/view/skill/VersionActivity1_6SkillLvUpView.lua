@@ -136,8 +136,7 @@ function slot0.initCenterSkillNodes(slot0)
 
 	slot2 = gohelper.findChild(slot0.viewGO, "#go_Paint" .. slot0._skillType)
 	slot0._imageSkillNodeLine = gohelper.findChildImage(slot2, "image_PaintLineFG")
-	slot8 = UnityEngine.Animator
-	slot0._animatorSkillNodeLine = slot0._imageSkillNodeLine:GetComponent(typeof(slot8))
+	slot0._animatorSkillNodeLine = slot0._imageSkillNodeLine:GetComponent(typeof(UnityEngine.Animator))
 
 	for slot8 = 1, VersionActivity1_6DungeonEnum.skillPointMaxNum do
 		slot10 = gohelper.clone(gohelper.findChild(slot2, "#go_Lv"), gohelper.findChild(slot2, "#go_Lv" .. slot8), "node")

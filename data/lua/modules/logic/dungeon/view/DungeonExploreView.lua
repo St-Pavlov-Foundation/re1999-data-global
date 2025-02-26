@@ -300,10 +300,7 @@ end
 function slot0.onDestroyView(slot0)
 	TaskDispatcher.cancelTask(slot0._onCloseAnimEnd, slot0)
 	UIBlockMgr.instance:endBlock("DungeonExploreView_Close")
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._delayRefreshView, slot4)
+	TaskDispatcher.cancelTask(slot0._delayRefreshView, slot0)
 
 	for slot4, slot5 in pairs(slot0._chapterList) do
 		slot5:destroy()

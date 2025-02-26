@@ -89,9 +89,7 @@ function slot0.tryCorrectAllCharacter(slot0, slot1)
 	slot2 = RoomCharacterModel.instance:getList()
 
 	if slot1 == true then
-		slot6 = slot2
-
-		slot0:_tryRandomByCharacterList(slot6)
+		slot0:_tryRandomByCharacterList(slot2)
 
 		for slot6, slot7 in ipairs(slot2) do
 			slot0:interruptInteraction(slot7:getCurrentInteractionId())
@@ -124,10 +122,8 @@ end
 function slot0.checkCharacterMax(slot0)
 	if RoomCharacterModel.instance:getMaxCharacterCount() < RoomCharacterModel.instance:getPlaceCount() then
 		slot3 = {}
-		slot7 = RoomCharacterModel.instance
-		slot9 = slot7
 
-		tabletool.tabletool.addValues(slot3, slot7.getList(slot9))
+		tabletool.tabletool.addValues(slot3, RoomCharacterModel.instance:getList())
 
 		slot4 = GameSceneMgr.instance:getCurScene()
 

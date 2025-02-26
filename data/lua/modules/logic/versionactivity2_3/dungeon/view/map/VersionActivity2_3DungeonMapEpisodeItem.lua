@@ -277,9 +277,9 @@ function slot0.refreshUnlockContent(slot0)
 end
 
 function slot0.refreshHardModeStar(slot0)
-	slot4 = slot0.starItemList[1]
+	slot4 = slot0._config.id
 
-	slot0:refreshEpisodeStar(slot4, slot0._config.id)
+	slot0:refreshEpisodeStar(slot0.starItemList[1], slot4)
 
 	for slot4 = 2, #slot0.starItemList do
 		gohelper.setActive(slot0.starItemList[slot4].goStar, false)
@@ -333,8 +333,14 @@ function slot0.endShowRewardView(slot0)
 	slot0:_showAllElementTipView()
 end
 
+slot1 = 388.9144
+
 function slot0.calculatePosInContent(slot0)
-	slot0._maxWidth = math.max(math.max(recthelper.getAnchorX(slot0._txtsectionname.transform) + slot0._txtsectionname.preferredWidth, recthelper.getAnchorX(slot0._txtnameen.transform) + slot0._txtsectionname.preferredWidth) * 2, VersionActivity2_3DungeonEnum.EpisodeItemMinWidth) + 30
+	if VersionActivity2_3DungeonEnum.EpisodeItemMinWidth < math.max(recthelper.getAnchorX(slot0._txtsectionname.transform) + slot0._txtsectionname.preferredWidth, recthelper.getAnchorX(slot0._txtnameen.transform) + slot0._txtsectionname.preferredWidth) then
+		slot5 = (uv0 + slot5 - VersionActivity2_3DungeonEnum.EpisodeItemMinWidth) / 2
+	end
+
+	slot0._maxWidth = math.max(slot5 * 2, VersionActivity2_3DungeonEnum.EpisodeItemMinWidth) + 30
 
 	recthelper.setWidth(slot0._goclickarea.transform, slot0._maxWidth)
 	recthelper.setWidth(slot0._goraycast.transform, slot0._maxWidth + slot0._layout._constDungeonNormalDeltaX)

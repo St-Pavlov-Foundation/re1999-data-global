@@ -68,9 +68,9 @@ function slot0._initEquipItems(slot0)
 			slot6.go = slot5
 			slot6.txtName = gohelper.findChildText(slot5, "name")
 			slot6.btnDetail = gohelper.findChildButtonWithAudio(slot5, "btn_detail")
-			slot10 = slot0.onClickItem
+			slot10 = slot0
 
-			slot6.btnDetail:AddClickListener(slot10, slot0, slot4)
+			slot6.btnDetail:AddClickListener(slot0.onClickItem, slot10, slot4)
 
 			for slot10 = 1, uv0 do
 				slot6["star" .. slot10] = gohelper.findChild(slot5, "stars/go_star" .. tostring(slot10))

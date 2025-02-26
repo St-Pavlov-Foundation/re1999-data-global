@@ -67,10 +67,8 @@ function slot0.initHeroList(slot0)
 
 	slot0.heroList = {}
 	slot0.heroDict = {}
-	slot3 = HeroModel.instance
-	slot5 = slot3
 
-	for slot4, slot5 in ipairs(slot3.getList(slot5)) do
+	for slot4, slot5 in ipairs(HeroModel.instance:getList()) do
 		if not slot0.heroDict[slot5.heroId] then
 			slot6 = RoleStoryDispatchHeroMo.New()
 
@@ -234,9 +232,7 @@ function slot0.deselectMo(slot0, slot1)
 		return
 	end
 
-	slot6 = slot2
-
-	table.remove(slot0.selectedHeroList, slot6)
+	table.remove(slot0.selectedHeroList, slot2)
 
 	slot0.selectedHeroIndexDict[slot1.heroId] = nil
 

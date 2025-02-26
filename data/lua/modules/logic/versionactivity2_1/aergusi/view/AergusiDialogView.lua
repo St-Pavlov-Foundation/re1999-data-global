@@ -152,9 +152,8 @@ function slot0._onShowBubbleFinished(slot0)
 		})
 
 		slot3 = {}
-		slot8 = true
 
-		for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, slot8)) do
+		for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, true)) do
 			table.insert(slot3, slot9.clueName)
 		end
 

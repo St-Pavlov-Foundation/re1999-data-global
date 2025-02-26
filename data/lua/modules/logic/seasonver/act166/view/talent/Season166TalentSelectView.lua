@@ -91,8 +91,7 @@ function slot0._initLeftArea(slot0)
 end
 
 function slot0._initMiddleArea(slot0)
-	slot6 = slot0.talentConfig.sortIndex
-	slot2 = gohelper.findChild(slot0.viewGO, "root/middle/talent" .. slot6)
+	slot2 = gohelper.findChild(slot0.viewGO, "root/middle/talent" .. slot0.talentConfig.sortIndex)
 	slot0.equipSlotList = slot0:getUserDataTb_()
 	slot0.equipSlotLightList = slot0:getUserDataTb_()
 

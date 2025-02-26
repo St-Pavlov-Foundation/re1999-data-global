@@ -119,9 +119,7 @@ function slot0._refreshAddition(slot0)
 		return
 	end
 
-	slot7 = true
-
-	gohelper.setActive(slot0._goadditionRule, slot7)
+	gohelper.setActive(slot0._goadditionRule, true)
 
 	for slot7, slot8 in ipairs(slot3) do
 		slot9 = slot8[1]

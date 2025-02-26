@@ -3,10 +3,9 @@ module("modules.ugui.icon.common.CommonRedDotIcon", package.seeall)
 slot0 = class("CommonRedDotIcon", ListScrollCell)
 
 function slot0.init(slot0, slot1)
-	slot6 = slot1
-	slot0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot6)
-	slot5 = "type2/#txt_count"
-	slot0._txtCount = gohelper.findChildText(slot0.go, slot5)
+	slot5 = slot1
+	slot0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot5)
+	slot0._txtCount = gohelper.findChildText(slot0.go, "type2/#txt_count")
 	slot0.typeGoDict = slot0:getUserDataTb_()
 
 	for slot5, slot6 in pairs(RedDotEnum.Style) do

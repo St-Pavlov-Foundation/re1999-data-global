@@ -624,8 +624,7 @@ end
 
 function slot0._getConfig(slot0, slot1, slot2, slot3)
 	slot5 = {}
-	slot10 = slot2
-	slot6 = slot0:_getStepId(slot1, slot10)
+	slot6 = slot0:_getStepId(slot1, slot2)
 
 	for slot10, slot11 in pairs(slot3) do
 		slot13 = {}
@@ -668,9 +667,9 @@ function slot0._getConfig(slot0, slot1, slot2, slot3)
 	slot10 = {}
 
 	for slot14, slot15 in pairs(slot5) do
-		slot20 = ""
-		slot21 = slot9
-		slot8 = slot0:_getStr(slot20, slot21, slot14 .. "#" .. slot0:_getListStr(slot15, "#"), "|")
+		slot20 = slot9
+		slot21 = slot14 .. "#" .. slot0:_getListStr(slot15, "#")
+		slot8 = slot0:_getStr("", slot20, slot21, "|")
 		slot9 = slot9 + 1
 
 		for slot20, slot21 in pairs(slot15) do

@@ -52,10 +52,9 @@ function slot0._editableInitView(slot0)
 	slot0.enemyGroupPoolTr = slot0._goenemygrouppool:GetComponent(gohelper.Type_Transform)
 	slot0.enemyItemPoolTr = slot0._goenemyitempool:GetComponent(gohelper.Type_Transform)
 	slot0.ruleClick = gohelper.getClickWithDefaultAudio(slot0._gorulecontainer, slot0)
-	slot4 = slot0.onClickRule
-	slot5 = slot0
+	slot4 = slot0
 
-	slot0.ruleClick:AddClickListener(slot4, slot5)
+	slot0.ruleClick:AddClickListener(slot0.onClickRule, slot4)
 
 	slot0.ruleLineCount = 0
 	slot0.ruleItemPool = {}
@@ -125,11 +124,10 @@ function slot0.refreshRule(slot0)
 
 	gohelper.setActive(slot0._gorulecontainer, true)
 
-	slot7 = "#"
-	slot2 = GameUtil.splitString2(slot1, true, "|", slot7)
-	slot6 = slot2
+	slot6 = "#"
+	slot2 = GameUtil.splitString2(slot1, true, "|", slot6)
 
-	slot0:filterRule(slot6)
+	slot0:filterRule(slot2)
 
 	for slot6, slot7 in ipairs(slot2) do
 		if lua_rule.configDict[slot7[2]] then
@@ -366,9 +364,8 @@ function slot0.addGroupItem(slot0, slot1, slot2)
 	end
 
 	slot6 = slot0:getEnemyGroupItem()
-	slot10 = slot0.trScrollContent
 
-	slot6.tr:SetParent(slot10)
+	slot6.tr:SetParent(slot0.trScrollContent)
 
 	slot6.txtTitleNum.text = slot2
 

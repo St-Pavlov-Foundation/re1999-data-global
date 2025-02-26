@@ -40,9 +40,8 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot4 = {}
-	slot8 = slot4
 
-	RoomHelper.cArrayToLuaTable(gohelper.findChild(slot0.viewGO, "Left/ItemBG"):GetComponentsInChildren(gohelper.Type_Image, true), slot8)
+	RoomHelper.cArrayToLuaTable(gohelper.findChild(slot0.viewGO, "Left/ItemBG"):GetComponentsInChildren(gohelper.Type_Image, true), slot4)
 
 	for slot8, slot9 in ipairs(slot4) do
 		table.insert(slot0._grayGoList, slot9.gameObject)

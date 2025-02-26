@@ -4,7 +4,8 @@ slot0 = class("Activity130LevelViewStageItem", LuaCompBase)
 
 function slot0.init(slot0, slot1)
 	slot0.viewGO = slot1
-	slot0._animator = slot1:GetComponent(typeof(UnityEngine.Animator))
+	slot5 = UnityEngine.Animator
+	slot0._animator = slot1:GetComponent(typeof(slot5))
 	slot0._imagepoint = gohelper.findChildImage(slot0.viewGO, "#image_point")
 	slot0._gounlock = gohelper.findChild(slot0.viewGO, "unlock")
 	slot0._imagestageline = gohelper.findChildImage(slot0.viewGO, "unlock/#image_stageline")
@@ -13,8 +14,7 @@ function slot0.init(slot0, slot1)
 	slot0._imageline = gohelper.findChildImage(slot0.viewGO, "unlock/#image_line")
 	slot0._imageangle = gohelper.findChildImage(slot0.viewGO, "unlock/#image_angle")
 	slot0._txtstagename = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stagename")
-	slot5 = "unlock/info/#txt_stagename/#txt_stageNum"
-	slot0._txtstagenum = gohelper.findChildText(slot0.viewGO, slot5)
+	slot0._txtstagenum = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stagename/#txt_stageNum")
 	slot0._stars = slot0:getUserDataTb_()
 
 	for slot5 = 1, 2 do

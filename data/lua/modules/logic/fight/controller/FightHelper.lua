@@ -580,9 +580,7 @@ function slot0.getAttributeCounter(slot0, slot1)
 			slot2 = lua_monster_group.configDict[slot8].bossId
 		end
 
-		slot13 = "#"
-
-		for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot8].monster, slot13)) do
+		for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot8].monster, "#")) do
 			if not lua_monster.configDict[slot14] then
 				logError("怪物表找不到id:" .. slot14)
 			end
@@ -659,9 +657,7 @@ function slot0.setMonsterGuideFocusState(slot0)
 	PlayerPrefsHelper.setNumber(FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(slot0), 1)
 
 	if not string.nilorempty(slot0.completeWithGroup) then
-		slot6 = "|"
-
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(slot0.completeWithGroup, slot6)) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(slot0.completeWithGroup, "|")) do
 			slot8 = FightStrUtil.instance:getSplitToNumberCache(slot7, "#")
 
 			if FightConfig.instance:getMonsterGuideFocusConfig(slot8[1], slot8[2], slot8[3], slot8[4]) then
@@ -826,9 +822,7 @@ function slot0.hideDefenderBuffEffect(slot0, slot1)
 				slot8[slot13.id] = true
 
 				if uv0.isAssembledMonster(slot13) then
-					slot18 = slot13
-
-					for slot18, slot19 in ipairs(uv0.getSideEntitys(slot13.getSide(slot18))) do
+					for slot18, slot19 in ipairs(uv0.getSideEntitys(slot13:getSide())) do
 						if uv0.isAssembledMonster(slot19) and not slot8[slot19.id] then
 							slot8[slot19.id] = true
 
@@ -968,9 +962,7 @@ end
 
 function slot0.getEntityDefaultIdleAniName(slot0)
 	if slot0:getMO() and slot1.modelId == 3025 then
-		slot6 = slot0
-
-		for slot6, slot7 in ipairs(uv0.getSideEntitys(slot0.getSide(slot6), true)) do
+		for slot6, slot7 in ipairs(uv0.getSideEntitys(slot0:getSide(), true)) do
 			if slot7:getMO().modelId == 3028 then
 				return SpineAnimState.idle_special
 			end
@@ -1100,9 +1092,7 @@ function slot0.hideAllEntity()
 end
 
 function slot0.isBossId(slot0, slot1)
-	slot6 = "#"
-
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot0, slot6)) do
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot0, "#")) do
 		if slot1 == slot7 then
 			return true
 		end
@@ -1385,9 +1375,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 			table.insert(slot3, slot8)
 		end
 
-		slot7 = uv0.sortReplaceTimelineConfig
-
-		table.sort(slot3, slot7)
+		table.sort(slot3, uv0.sortReplaceTimelineConfig)
 
 		for slot7, slot8 in ipairs(slot3) do
 			slot10 = {}
@@ -1423,10 +1411,8 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 					end
 				end
 			elseif slot12 == "3" then
-				slot17 = slot1
-
 				for slot17 = 2, #slot11 do
-					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot11[slot17]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot17)) then
+					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot11[slot17]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) then
 						return slot8.timeline
 					end
 				end
@@ -1438,9 +1424,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				for slot17 = 2, #slot11 do
 				end
 
-				slot18 = slot1
-
-				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot18)) do
+				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
 					if slot13[slot19.buffId] then
 						return slot8.timeline
 					end
@@ -1487,9 +1471,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				for slot17 = 2, #slot11 do
 				end
 
-				slot18 = slot1
-
-				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot18)) do
+				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
 					if slot13[slot19.buffId] then
 						return slot0
 					end
@@ -1502,9 +1484,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 				slot15 = uv0.getEntitysCloneBuff(slot9)
 
 				if slot8.simulate == 1 then
-					slot20 = slot1
-
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot20)) do
+					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot1)) do
 						if slot21.buffId == slot13 and slot14 <= slot21.count then
 							return slot8.timeline
 						end
@@ -1517,9 +1497,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 						return slot8.timeline
 					end
 				else
-					slot20 = slot1
-
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot20)) do
+					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
 						if slot21.buffId == slot13 and slot14 <= slot21.count then
 							return slot8.timeline
 						end
@@ -1559,9 +1537,7 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 						end
 
 						if slot14 == slot21 then
-							slot26 = slot1
-
-							for slot26, slot27 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot26)) do
+							for slot26, slot27 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
 								if slot13[slot27.buffId] then
 									return slot8.timeline
 								end
@@ -1966,9 +1942,7 @@ function slot0.isTimelineStep(slot0)
 end
 
 function slot0.getClickEntity(slot0, slot1, slot2)
-	slot6 = uv0.sortEntityList
-
-	table.sort(slot0, slot6)
+	table.sort(slot0, uv0.sortEntityList)
 
 	for slot6, slot7 in ipairs(slot0) do
 		if slot7:getMO() then
@@ -2077,9 +2051,7 @@ function slot0.getNextRoundGetCardList()
 				table.insert(slot10, slot15)
 			end
 
-			slot14 = uv0.sortNextRoundGetCardConfig
-
-			table.sort(slot10, slot14)
+			table.sort(slot10, uv0.sortNextRoundGetCardConfig)
 
 			for slot14, slot15 in ipairs(slot10) do
 				if uv0.checkNextRoundCardCondition(slot7, slot15.condition) then
@@ -2410,10 +2382,10 @@ function slot0._buildMonsterSkills(slot0)
 	slot1 = {}
 
 	if not string.nilorempty(slot0.activeSkill) then
-		slot6 = true
-		slot7 = "|"
+		slot6 = "|"
+		slot7 = "#"
 
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot0.activeSkill, slot6, slot7, "#")) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot0.activeSkill, true, slot6, slot7)) do
 			for slot11, slot12 in ipairs(slot7) do
 				if lua_skill.configDict[slot12] then
 					table.insert(slot1, slot12)
@@ -2481,14 +2453,13 @@ function slot0.getBattleRecommendLevel(slot0, slot1)
 	slot4 = {}
 	slot5 = {}
 	slot6, slot7 = nil
-	slot10 = FightStrUtil.instance
-	slot12 = slot10
+	slot11 = slot3.monsterGroupIds
+	slot12 = "#"
 
-	for slot11, slot12 in ipairs(slot10.getSplitToNumberCache(slot12, slot3.monsterGroupIds, "#")) do
-		slot16 = lua_monster_group.configDict[slot12].monster
-		slot17 = "#"
+	for slot11, slot12 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot11, slot12)) do
+		slot16 = "#"
 
-		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot16, slot17)) do
+		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot12].monster, slot16)) do
 			if uv0.isBossId(lua_monster_group.configDict[slot12].bossId, slot17) then
 				table.insert(slot5, slot17)
 			else

@@ -89,10 +89,9 @@ function slot0._btnAltitudeItemClick(slot0, slot1)
 
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_tab_switch)
 
-	slot5 = slot1.index
-	slot6 = slot0.mo.stage
+	slot5 = slot0.mo.stage
 
-	TowerPermanentModel.instance:setCurSelectLayer(slot5, slot6)
+	TowerPermanentModel.instance:setCurSelectLayer(slot1.index, slot5)
 
 	for slot5, slot6 in pairs(slot0.altitudeItemTab) do
 		slot0.altitudeItemTab[slot5].isSelect = slot5 == slot1.index

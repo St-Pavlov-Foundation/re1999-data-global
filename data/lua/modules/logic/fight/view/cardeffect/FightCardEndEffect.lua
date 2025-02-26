@@ -155,9 +155,7 @@ function slot0._playCardFlow(slot0)
 		end
 	end
 
-	slot14 = #slot0._playCardItemGOs
-
-	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, slot14)
+	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #slot0._playCardItemGOs)
 
 	for slot14, slot15 in ipairs(slot0._playCardItemGOs) do
 		slot16 = slot0._cloneItemGOs[slot14].transform

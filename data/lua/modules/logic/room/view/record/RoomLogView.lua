@@ -663,18 +663,14 @@ function slot0.calculateHeight(slot0, slot1)
 
 	if slot1 then
 		if slot0._leftItemList[slot0._bookPage] and #slot0._leftItemList[slot0._bookPage] > 0 then
-			slot8 = slot0._bookPage
-
-			for slot8, slot9 in ipairs(slot0._leftItemList[slot8]) do
+			for slot8, slot9 in ipairs(slot0._leftItemList[slot0._bookPage]) do
 				slot2 = slot2 + slot9.preferredHeight
 			end
 
 			slot2 = slot2 + slot0._itemspace * (#slot0._leftItemList[slot0._bookPage] - 1)
 		end
 	elseif slot0._rightItemList[slot0._bookPage] and #slot0._rightItemList[slot0._bookPage] > 0 then
-		slot8 = slot0._bookPage
-
-		for slot8, slot9 in ipairs(slot0._rightItemList[slot8]) do
+		for slot8, slot9 in ipairs(slot0._rightItemList[slot0._bookPage]) do
 			slot2 = slot2 + slot9.preferredHeight
 		end
 

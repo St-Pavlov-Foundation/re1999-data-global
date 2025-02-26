@@ -242,9 +242,7 @@ function slot0._refreshTabsItem(slot0)
 		end
 	end
 
-	slot8 = false
-
-	gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, slot8)
+	gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, false)
 
 	for slot8 = #slot1 + 1, #slot0._categoryItemContainer do
 		slot0._categoryItemContainer[slot8].btn:RemoveClickListener()

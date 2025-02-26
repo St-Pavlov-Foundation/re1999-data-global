@@ -114,10 +114,8 @@ function slot0.createRedDot(slot0)
 		return
 	end
 
-	slot5 = slot0.goRedDot
-
 	for slot5, slot6 in pairs(RedDotEnum.Style) do
-		gohelper.setActive(gohelper.findChild(IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot5), "type" .. slot6), false)
+		gohelper.setActive(gohelper.findChild(IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot0.goRedDot), "type" .. slot6), false)
 
 		if slot6 == RedDotEnum.Style.Normal then
 			slot0.goRedDotIcon = slot7

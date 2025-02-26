@@ -126,9 +126,7 @@ function slot0._editableInitView(slot0)
 end
 
 function slot0.onOpen(slot0)
-	slot5 = slot0
-	slot4 = 1
-	slot0._currentSelectLevel = PlayerPrefsHelper.getNumber(slot0._getPlayerPrefKeyDifficulty(slot5), slot4)
+	slot0._currentSelectLevel = PlayerPrefsHelper.getNumber(slot0:_getPlayerPrefKeyDifficulty(), 1)
 	slot0._levelCount = V1a6_CachotConfig.instance:getDifficultyCount()
 	slot0.stateMo = V1a6_CachotModel.instance:getRogueStateInfo()
 	slot0.unlocklevelcount = #slot0.stateMo.passDifficulty

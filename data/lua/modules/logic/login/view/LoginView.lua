@@ -11,8 +11,7 @@ end
 function slot0.onInitView(slot0)
 	slot0._serverGO = gohelper.findChild(slot0.viewGO, "server")
 	slot0._txtServerName = gohelper.findChildText(slot0._serverGO, "Text")
-	slot4 = "#txt_version"
-	slot0._txt_version = gohelper.findChildText(slot0.viewGO, slot4)
+	slot0._txt_version = gohelper.findChildText(slot0.viewGO, "#txt_version")
 	slot0._serverStateGOList = {}
 
 	for slot4 = 0, 2 do
@@ -613,9 +612,7 @@ end
 
 function slot0._toSelectEditorLastLoginServer(slot0, slot1, slot2)
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.LastLoginServerForPC, nil) then
-		slot7 = slot2.zoneInfos
-
-		ServerListModel.instance:setServerList(slot7)
+		ServerListModel.instance:setServerList(slot2.zoneInfos)
 
 		for slot7, slot8 in ipairs(slot2.zoneInfos) do
 			if slot8.id == slot3 then
@@ -635,9 +632,7 @@ function slot0._toSelectEditorLastLoginServer(slot0, slot1, slot2)
 end
 
 function slot0._toSelectDefaultLoginServer(slot0, slot1, slot2)
-	slot6 = slot2.zoneInfos
-
-	ServerListModel.instance:setServerList(slot6)
+	ServerListModel.instance:setServerList(slot2.zoneInfos)
 
 	for slot6, slot7 in ipairs(slot2.zoneInfos) do
 		if slot7.default == true then

@@ -108,9 +108,7 @@ function slot0._showDailyBtn(slot0)
 	slot1 = false
 
 	if slot0._dailyEpisodeItems then
-		slot5 = uv0.sortDailyEpisode
-
-		table.sort(slot0._dailyEpisodeItems, slot5)
+		table.sort(slot0._dailyEpisodeItems, uv0.sortDailyEpisode)
 
 		for slot5, slot6 in ipairs(slot0._dailyEpisodeItems) do
 			if slot6.viewGO.activeInHierarchy then

@@ -79,9 +79,9 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.refreshBg(slot0)
-	slot4 = ResUrl.getYaXianImage
+	slot4 = "img_map_" .. string.format("%02d", slot0.chapterId)
 
-	slot0._simagebg:LoadImage(slot4("img_map_" .. string.format("%02d", slot0.chapterId)))
+	slot0._simagebg:LoadImage(ResUrl.getYaXianImage(slot4))
 
 	for slot4 = 1, 3 do
 		gohelper.setActive(slot0.goChapterNodeList[slot4], slot4 == slot0.chapterId)
@@ -99,7 +99,8 @@ end
 function slot0.createNodeItem(slot0, slot1)
 	slot2 = slot0:getUserDataTb_()
 	slot2.episodeMo = slot1
-	slot2.go = gohelper.findChild(slot0.goChapterNodeList[slot0.chapterId], "node" .. slot1.id)
+	slot6 = slot1.id
+	slot2.go = gohelper.findChild(slot0.goChapterNodeList[slot0.chapterId], "node" .. slot6)
 	slot2.goPath = gohelper.findChild(slot2.go, "xian")
 	slot2.txtNodeIndex = gohelper.findChildText(slot2.go, "info/txtnodenum/#txt_node_num")
 	slot2.txtNodeName = gohelper.findChildText(slot2.go, "info/#txt_node_name")
@@ -108,10 +109,7 @@ function slot0.createNodeItem(slot0, slot1)
 	slot2.goSelect = gohelper.findChildClick(slot2.go, "#icon")
 
 	gohelper.setActive(slot2.goToothItem, false)
-
-	slot6 = false
-
-	gohelper.setActive(slot2.goSelect, slot6)
+	gohelper.setActive(slot2.goSelect, false)
 
 	slot2.toothList = {}
 

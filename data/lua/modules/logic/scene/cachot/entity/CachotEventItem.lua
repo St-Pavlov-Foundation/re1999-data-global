@@ -114,9 +114,7 @@ function slot0.updateMo(slot0, slot1)
 	gohelper.setActive(slot0._goFrameBoss, slot9 == V1a6_CachotEnum.BossType.Boss)
 
 	if slot8[1] then
-		slot16 = true
-
-		gohelper.setActive(slot0._gobattle, slot16)
+		gohelper.setActive(slot0._gobattle, true)
 
 		for slot16 = 1, 6 do
 			if slot8[slot16] then

@@ -10,9 +10,9 @@ function slot0.onStart(slot0, slot1)
 		TaskDispatcher.runDelay(slot0._delayDone, slot0, 20)
 		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, slot0._onRespUseClothSkillFail, slot0)
 
-		slot6 = FightEvent.OnClothSkillRoundSequenceFinish
+		slot6 = slot0._onClothSkillRoundSequenceFinish
 
-		FightController.instance:registerCallback(slot6, slot0._onClothSkillRoundSequenceFinish, slot0)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot6, slot0)
 
 		slot0._count = #slot2
 

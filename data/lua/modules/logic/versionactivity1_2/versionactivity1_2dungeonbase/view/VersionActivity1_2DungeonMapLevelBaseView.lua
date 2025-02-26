@@ -293,10 +293,9 @@ function slot0.initMode(slot0)
 	slot0._episode_list = {}
 	slot0._playUnlockAniIndex = nil
 	slot2 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot0.showEpisodeCo.id)
-	slot5 = DungeonConfig.instance
-	slot7 = slot5
+	slot6 = slot0.showEpisodeCo.id
 
-	for slot6, slot7 in ipairs(slot5.get1_2VersionActivityEpisodeCoList(slot7, slot0.showEpisodeCo.id)) do
+	for slot6, slot7 in ipairs(DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot6)) do
 		table.insert(slot0._episode_list, DungeonConfig.instance:getEpisodeCO(slot7))
 	end
 

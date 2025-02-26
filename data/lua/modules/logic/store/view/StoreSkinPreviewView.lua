@@ -528,10 +528,7 @@ function slot0._onItemClick(slot0, slot1)
 	slot0._currentSelectSkinIndex = slot1
 
 	slot0:_reallyRefreshView(slot0._itemObjects[slot0._currentSelectSkinIndex].skinCo)
-
-	slot6 = AudioEnum.UI.play_ui_character_skin_switch
-
-	AudioMgr.instance:trigger(slot6)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
 
 	for slot6, slot7 in ipairs(slot0._itemObjects) do
 		slot8 = slot0._currentSelectSkinIndex == slot6 and 1 or 0.8

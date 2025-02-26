@@ -137,10 +137,9 @@ function slot0.isUnlockState(slot0, slot1)
 end
 
 function slot0.ishaveUnGetReward(slot0)
-	slot8 = slot0
 	slot4 = {}
 
-	for slot8, slot9 in ipairs(Activity161Config.instance:getAllRewardCos(slot0.getActId(slot8))) do
+	for slot8, slot9 in ipairs(Activity161Config.instance:getAllRewardCos(slot0:getActId())) do
 		if not slot0.curHasGetRewardMap[slot9.rewardId] and slot9.paintedNum <= slot0:getCurPaintedNum() then
 			table.insert(slot4, slot9)
 		end

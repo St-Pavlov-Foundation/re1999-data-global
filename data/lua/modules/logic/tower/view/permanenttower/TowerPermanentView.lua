@@ -111,8 +111,9 @@ function slot0._editableInitView(slot0)
 	slot0._viewportMask2D = slot0._goViewport:GetComponent(gohelper.Type_RectMask2D)
 	slot0.scrollCategoryRect = slot0._scrollcategory:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 	slot0._animEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	slot4 = slot0.refreshUI
 
-	slot0._animEventWrap:AddEventListener("switch", slot0.refreshUI, slot0)
+	slot0._animEventWrap:AddEventListener("switch", slot4, slot0)
 
 	slot0._bgAnim = gohelper.findChild(slot0.viewGO, "Bg"):GetComponent(gohelper.Type_Animator)
 	slot0.eliteItemTab = slot0:getUserDataTb_()
@@ -121,10 +122,7 @@ function slot0._editableInitView(slot0)
 	slot0.eliteBgAnimTab = slot0:getUserDataTb_()
 
 	gohelper.setActive(slot0._goeliteItem, false)
-
-	slot4 = false
-
-	gohelper.setActive(slot0._gorewardItem, slot4)
+	gohelper.setActive(slot0._gorewardItem, false)
 
 	for slot4 = 1, uv0.maxStageCount do
 		slot5 = {
@@ -138,10 +136,10 @@ function slot0._editableInitView(slot0)
 
 	for slot4 = 2, uv0.maxStageCount do
 		slot5 = {
-			go = gohelper.findChild(slot0.viewGO, slot9),
+			go = gohelper.findChild(slot0.viewGO, "episode/#go_eliteEpisode/#go_elite" .. slot9),
 			posTab = {}
 		}
-		slot9 = "episode/#go_eliteEpisode/#go_elite" .. slot4
+		slot9 = slot4
 
 		for slot9 = 1, slot4 do
 			slot5.posTab[slot9] = gohelper.findChild(slot5.go, "go_pos" .. slot9)
@@ -379,9 +377,9 @@ function slot0.refreshEpisode(slot0)
 	end
 
 	if slot4 then
-		slot11 = luaLang("towerpermanentresultview_schedule")
-		slot12 = TowerModel.instance:getCurPermanentMo():getSubEpisodePassCount(slot0.layerConfig.layerId)
-		slot0._txtschedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(slot11, slot12, #slot0.episodeIdList)
+		slot11 = TowerModel.instance:getCurPermanentMo():getSubEpisodePassCount(slot0.layerConfig.layerId)
+		slot12 = #slot0.episodeIdList
+		slot0._txtschedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), slot11, slot12)
 
 		for slot11, slot12 in ipairs(slot0.episodeIdList) do
 			slot13 = slot0.viewContainer:getTowerPermanentPoolView():createOrGetEliteEpisodeItem(slot11, slot0._btnEliteEpisodeItemClick, slot0)
@@ -411,9 +409,7 @@ function slot0.refreshEpisode(slot0)
 			UISpriteSetMgr.instance:setTowerPermanentSprite(slot13.imageFinishIcon, slot0:getEliteEpisodeIconName(slot11, TowerEnum.PermanentEliteEpisodeState.Finish), true)
 		end
 
-		slot11 = slot0.episodeIdList
-
-		slot0.viewContainer:getTowerPermanentPoolView():recycleEliteEpisodeItem(slot11)
+		slot0.viewContainer:getTowerPermanentPoolView():recycleEliteEpisodeItem(slot0.episodeIdList)
 
 		for slot11 = 2, 5 do
 			gohelper.setActive(slot0.eliteItemPosTab[slot11].go, slot11 == slot3)

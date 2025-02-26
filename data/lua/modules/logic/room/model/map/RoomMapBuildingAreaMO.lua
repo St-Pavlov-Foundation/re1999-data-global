@@ -111,9 +111,8 @@ end
 
 function slot0._findBuildingInRanges(slot0, slot1, slot2, slot3, slot4)
 	slot6 = {}
-	slot11 = slot3 or 0
 
-	for slot11 = 1, #RoomMapModel.instance:getBuildingPointList(slot1, slot11) do
+	for slot11 = 1, #RoomMapModel.instance:getBuildingPointList(slot1, slot3 or 0) do
 		slot12 = (slot2 or HexPoint(0, 0)) + slot7[slot11]
 
 		table.insert({}, slot12)

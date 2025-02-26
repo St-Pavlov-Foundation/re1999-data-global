@@ -221,10 +221,9 @@ function slot0._refreshAllConnectionStatus(slot0)
 	slot0:_refreshItemsStatus(slot0._rule:getCircuitList(), DungeonPuzzleCircuitEnum.status.correct)
 	slot0:_refreshItemsStatus(slot0._rule:getCapacitanceList(), DungeonPuzzleCircuitEnum.status.correct)
 
-	slot4 = slot0._rule:getWrongList()
-	slot5 = DungeonPuzzleCircuitEnum.status.error
+	slot4 = DungeonPuzzleCircuitEnum.status.error
 
-	slot0:_refreshItemsStatus(slot4, slot5)
+	slot0:_refreshItemsStatus(slot0._rule:getWrongList(), slot4)
 
 	for slot4, slot5 in pairs(slot0._capacitanceEffectList) do
 		gohelper.setActive(slot5.capacitanceEffect, false)

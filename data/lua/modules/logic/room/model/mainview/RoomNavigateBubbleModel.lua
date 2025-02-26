@@ -159,9 +159,7 @@ function slot0.updateCritterEvent(slot0)
 	slot3:clear()
 
 	if slot4 then
-		slot8 = CritterHelper.sortEvent
-
-		table.sort(slot4, slot8)
+		table.sort(slot4, CritterHelper.sortEvent)
 
 		for slot8, slot9 in ipairs(slot4) do
 			slot3:addBubbleData(slot9.id)

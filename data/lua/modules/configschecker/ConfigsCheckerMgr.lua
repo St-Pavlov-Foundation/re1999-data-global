@@ -17,10 +17,9 @@ function slot0.checkVoiceEndTime()
 
 	for slot3, slot4 in ipairs(lua_character_voice.configList) do
 		slot5 = {}
-		slot9 = slot5
-		slot10 = slot4.content
+		slot9 = slot4.content
 
-		SpineVoiceText:_initContent(slot9, slot10)
+		SpineVoiceText:_initContent(slot5, slot9)
 
 		for slot9, slot10 in ipairs(slot5) do
 			if slot10[1] and not slot10[2] then
@@ -29,10 +28,9 @@ function slot0.checkVoiceEndTime()
 		end
 
 		slot5 = {}
-		slot9 = slot5
-		slot10 = slot4.encontent
+		slot9 = slot4.encontent
 
-		SpineVoiceText:_initContent(slot9, slot10)
+		SpineVoiceText:_initContent(slot5, slot9)
 
 		for slot9, slot10 in ipairs(slot5) do
 			if slot10[1] and not slot10[2] then
@@ -129,15 +127,13 @@ function slot0.checkCachotConfig()
 		end
 	end
 
-	slot5 = {
-		__index = slot6
-	}
-
-	function slot6()
+	function slot5()
 		return 0
 	end
 
-	setmetatable({}, slot5)
+	setmetatable({}, {
+		__index = slot5
+	})
 
 	for slot5, slot6 in pairs(lua_rogue_goods.configDict) do
 		if slot6.creator > 0 then

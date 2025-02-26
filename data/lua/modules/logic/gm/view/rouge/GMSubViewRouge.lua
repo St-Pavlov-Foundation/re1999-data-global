@@ -238,10 +238,7 @@ function slot0._onClickFinishRougeStories(slot0)
 end
 
 function slot0._onClickClearStory(slot0)
-	slot3 = slot0._inpClearStoryValue
-	slot5 = slot3
-
-	for slot5, slot6 in ipairs(string.splitToNumber(slot3.GetText(slot5), "#")) do
+	for slot5, slot6 in ipairs(string.splitToNumber(slot0._inpClearStoryValue:GetText(), "#")) do
 		GMRpc.instance:sendGMRequest(string.format("delete story %s", slot6))
 	end
 
@@ -249,10 +246,7 @@ function slot0._onClickClearStory(slot0)
 end
 
 function slot0._onClickFinishStory(slot0)
-	slot3 = slot0._inpFinishStoryValue
-	slot5 = slot3
-
-	for slot5, slot6 in ipairs(string.splitToNumber(slot3.GetText(slot5), "#")) do
+	for slot5, slot6 in ipairs(string.splitToNumber(slot0._inpFinishStoryValue:GetText(), "#")) do
 		StoryRpc.instance:sendUpdateStoryRequest(slot6, -1, 0)
 	end
 

@@ -152,9 +152,9 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._strengthenattrs = slot0:getUserDataTb_()
-	slot4 = ResUrl.getEquipBg
+	slot4 = "bg_xinxiang_wuzhuangtai.png"
 
-	slot0._simagenoequiptip:LoadImage(slot4("bg_xinxiang_wuzhuangtai.png"))
+	slot0._simagenoequiptip:LoadImage(ResUrl.getEquipBg(slot4))
 
 	slot0._equipLvBtns = slot0:getUserDataTb_()
 	slot0._equipLvArrow = slot0:getUserDataTb_()

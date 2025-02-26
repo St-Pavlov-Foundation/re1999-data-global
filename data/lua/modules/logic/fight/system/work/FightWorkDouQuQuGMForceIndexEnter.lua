@@ -44,9 +44,9 @@ function slot0._onFightAct174Reply(slot0, slot1)
 	else
 		slot0:com_removeMsg(slot0._msgItem)
 
-		slot8 = FightMsgId.FightAct174Reply
+		slot8 = slot0._onFightAct174ReplyRound
 
-		slot0:com_registMsg(slot8, slot0._onFightAct174ReplyRound)
+		slot0:com_registMsg(FightMsgId.FightAct174Reply, slot8)
 
 		slot0._endRound = slot4.isGMStartRound - 1
 

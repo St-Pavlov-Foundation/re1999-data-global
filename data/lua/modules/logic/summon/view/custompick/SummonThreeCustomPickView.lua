@@ -89,8 +89,8 @@ function slot0._editableInitView(slot0)
 		slot6.btndetail = gohelper.findChildButtonWithAudio(slot6.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
 		slot6.gorole = gohelper.findChild(slot0.viewGO, "#go_ui/current/#go_selected/#go_role" .. slot7)
 		slot6.simagehero = gohelper.findChildSingleImage(slot6.gorole, "#simage_role" .. slot7)
-		slot12 = string.format
-		slot6.simageroleoutline = gohelper.findChildSingleImage(slot6.gorole, slot12("#simage_role%s_outline", slot7))
+		slot12 = "#simage_role%s_outline"
+		slot6.simageroleoutline = gohelper.findChildSingleImage(slot6.gorole, string.format(slot12, slot7))
 		slot6.tfimagehero = slot6.simagehero.transform
 		slot6.rares = {}
 
@@ -331,9 +331,9 @@ function slot0.refreshPickHero(slot0, slot1, slot2, slot3)
 			gohelper.setActive(slot4.simagehero, true)
 
 			slot5 = HeroConfig.instance:getHeroCO(slot3)
-			slot9 = slot4.imagecareer
+			slot9 = "lssx_" .. tostring(slot5.career)
 
-			UISpriteSetMgr.instance:setCommonSprite(slot9, "lssx_" .. tostring(slot5.career))
+			UISpriteSetMgr.instance:setCommonSprite(slot4.imagecareer, slot9)
 
 			slot4.txtnamecn.text = slot5.name
 

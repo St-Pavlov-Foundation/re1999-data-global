@@ -22,9 +22,7 @@ function slot0.initActivityMgrList(slot0)
 	for slot4, slot5 in ipairs(slot0.actMgrInstanceList) do
 		slot5:init()
 
-		slot10 = slot5
-
-		for slot9, slot10 in pairs(slot5.getActId2ViewList(slot10)) do
+		for slot9, slot10 in pairs(slot5:getActId2ViewList()) do
 			if slot0.actId2ViewList[slot9] then
 				logWarn(string.format("act : %s config multiple, please check!"))
 			end

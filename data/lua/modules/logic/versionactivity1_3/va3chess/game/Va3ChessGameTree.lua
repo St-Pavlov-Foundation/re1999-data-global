@@ -19,9 +19,8 @@ function slot0.buildTree(slot0, slot1)
 		end
 
 		slot5 = table.remove(slot3)
-		slot9 = slot5
 
-		table.insert(slot0.allNodes, slot9)
+		table.insert(slot0.allNodes, slot5)
 
 		for slot9, slot10 in pairs(slot5.nodes) do
 			slot0:processChildNode(slot5, slot10, slot10.x, slot10.y, true)

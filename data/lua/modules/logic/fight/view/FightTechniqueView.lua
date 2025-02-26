@@ -277,9 +277,7 @@ end
 
 function slot0._detectSubBtnState(slot0)
 	if slot0.btn_sub_list then
-		slot4 = slot0.cur_select_main_index
-
-		for slot4, slot5 in ipairs(slot0.btn_sub_list[slot4]) do
+		for slot4, slot5 in ipairs(slot0.btn_sub_list[slot0.cur_select_main_index]) do
 			slot6 = slot5 == slot0.btn_sub_list[slot0.cur_select_main_index][slot0.cur_select_sub_index]
 			slot7 = slot5.transform
 
@@ -302,9 +300,7 @@ function slot0._refreshContentData(slot0)
 		FightViewTechniqueModel.instance:readTechnique(slot0.cur_select_data.id)
 	end
 
-	slot7 = slot0.cur_select_data.picture1
-
-	slot0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(slot7))
+	slot0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(slot0.cur_select_data.picture1))
 
 	slot2 = string.split(slot0.cur_select_data.content1, "|")
 
@@ -314,11 +310,11 @@ function slot0._refreshContentData(slot0)
 
 			if slot0.cur_select_data.id == slot7.id then
 				for slot12, slot13 in ipairs(slot2) do
-					slot18 = "</color>"
+					slot18 = "<color=%s>"
 
 					for slot18 = 0, slot8:GetComponentsInChildren(gohelper.Type_TextMesh).Length - 1 do
 						if slot14[slot18].gameObject.name == "txt_" .. slot12 then
-							slot14[slot18].text = string.gsub(string.gsub(slot13, "%{", string.format("<color=%s>", "#ff906a")), "%}", slot18)
+							slot14[slot18].text = string.gsub(string.gsub(slot13, "%{", string.format(slot18, "#ff906a")), "%}", "</color>")
 						end
 					end
 				end

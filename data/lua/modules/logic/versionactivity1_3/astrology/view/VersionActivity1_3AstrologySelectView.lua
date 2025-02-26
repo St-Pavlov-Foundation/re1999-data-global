@@ -111,9 +111,7 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._sortItems(slot0)
-	slot4 = uv0._sort
-
-	table.sort(slot0._planetMoList, slot4)
+	table.sort(slot0._planetMoList, uv0._sort)
 
 	for slot4, slot5 in ipairs(slot0._planetMoList) do
 		gohelper.setAsLastSibling(slot0._itemList[slot5.id].viewGO)
@@ -161,9 +159,7 @@ function slot0.setSelected(slot0, slot1)
 
 	slot0._selectedItem = slot1
 	slot0._planetMo = slot0._selectedItem:getPlanetMo()
-	slot3 = slot0._planetMo
-	slot5 = slot3
-	slot0._txtStarName.text = slot3.getItemName(slot5)
+	slot0._txtStarName.text = slot0._planetMo:getItemName()
 
 	for slot5, slot6 in pairs(slot0._itemList) do
 		slot6:setSelected(slot6 == slot1)

@@ -56,9 +56,10 @@ end
 function slot0._playTimeline(slot0)
 	slot0._count = 0
 	slot0.flow = FlowSequence.New()
-	slot5 = FunctionWork.New
+	slot5 = slot0._closeview
+	slot6 = slot0
 
-	slot0.flow:addWork(slot5(slot0._closeview, slot0))
+	slot0.flow:addWork(FunctionWork.New(slot5, slot6))
 
 	for slot5, slot6 in ipairs(SkillEditorToolAutoPlaySkillSelectModel.instance:getList()) do
 		slot0.flow:addWork(FunctionWork.New(slot0.switchEntity, slot0, slot6))

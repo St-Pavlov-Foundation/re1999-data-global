@@ -68,8 +68,7 @@ function slot0.refresh(slot0)
 		logError(tostring(slot0.elementId) .. " no resGo:" .. tostring(slot1))
 	end
 
-	slot7 = slot1
-	slot0.resItemGo = gohelper.clone(slot2, slot0.go, slot7)
+	slot0.resItemGo = gohelper.clone(slot2, slot0.go, slot1)
 
 	slot0:_loadEffectRes()
 

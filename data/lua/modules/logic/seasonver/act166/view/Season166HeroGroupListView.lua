@@ -18,9 +18,8 @@ function slot0._editableInitView(slot0)
 	slot0._playerMax = slot2.playerMax
 	slot0._roleNum = slot2.roleNum
 	slot0._heroItemList = {}
-	slot7 = false
 
-	gohelper.setActive(slot0._goheroitem, slot7)
+	gohelper.setActive(slot0._goheroitem, false)
 
 	slot0.heroPosTrList = slot0:getUserDataTb_()
 	slot0._heroItemPosList = slot0:getUserDataTb_()
@@ -283,9 +282,7 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 				slot6:onItemCompleteDrag(uv0, uv1, slot1)
 			end
 
-			slot5 = true
-
-			CommonDragHelper.instance:setGlobalEnabled(slot5)
+			CommonDragHelper.instance:setGlobalEnabled(true)
 
 			for slot5, slot6 in ipairs(slot0._heroItemList) do
 				slot6:flowCurrentParent()
@@ -370,9 +367,8 @@ function slot0._onEndDrag(slot0, slot1, slot2)
 		slot0.equips[slot2].equipUid = {
 			slot0:getPosEquips(slot1).equipUid[1]
 		}
-		slot9 = uv5
 
-		Season166HeroSingleGroupModel.instance:swap(uv4, slot9)
+		Season166HeroSingleGroupModel.instance:swap(uv4, uv5)
 
 		for slot9, slot10 in ipairs(slot0.heroList) do
 			if Season166HeroSingleGroupModel.instance:getHeroUids()[slot9] ~= slot10 then
@@ -416,9 +412,7 @@ function slot0._setHeroItemPos(slot0, slot1, slot2, slot3, slot4, slot5)
 end
 
 function slot0._onHeroGroupExit(slot0)
-	slot4 = AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear
-
-	AudioMgr.instance:trigger(slot4)
+	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear)
 
 	slot0._closeTweenIdList = {}
 
@@ -457,9 +451,7 @@ function slot0._closeTweenFinish(slot0, slot1)
 end
 
 function slot0.onDestroyView(slot0)
-	slot4 = true
-
-	CommonDragHelper.instance:setGlobalEnabled(slot4)
+	CommonDragHelper.instance:setGlobalEnabled(true)
 
 	for slot4 = 1, slot0._roleNum do
 		CommonDragHelper.instance:unregisterDragObj(slot0._heroItemList[slot4].go)

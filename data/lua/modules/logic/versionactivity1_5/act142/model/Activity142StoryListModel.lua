@@ -4,9 +4,8 @@ slot0 = class("Activity142StoryListModel", ListScrollModel)
 
 function slot0.init(slot0, slot1, slot2)
 	slot3 = {}
-	slot8 = slot2
 
-	for slot8, slot9 in ipairs(Activity142Config.instance:getEpisodeStoryList(slot1, slot8)) do
+	for slot8, slot9 in ipairs(Activity142Config.instance:getEpisodeStoryList(slot1, slot2)) do
 		table.insert(slot3, {
 			index = slot8,
 			storyId = slot9.id

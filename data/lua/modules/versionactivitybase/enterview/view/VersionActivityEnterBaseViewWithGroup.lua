@@ -356,9 +356,7 @@ function slot0.refreshActivityUI(slot0)
 		gohelper.setActive(slot5, slot4 == slot0.showGroupIndex)
 	end
 
-	slot4 = slot0.showGroupIndex
-
-	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot4]) do
+	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot0.showGroupIndex]) do
 		slot0:refreshActivityItem(slot5)
 	end
 end
@@ -479,9 +477,7 @@ function slot0.getLockText(slot0, slot1, slot2)
 end
 
 function slot0.refreshAllNewActOpenTagUI(slot0)
-	slot4 = slot0.showGroupIndex
-
-	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot4]) do
+	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot0.showGroupIndex]) do
 		slot7 = ActivityHelper.getActivityStatus(slot5.actId) == ActivityEnum.ActivityStatus.Normal
 
 		gohelper.setActive(slot5.goRedPointTag, slot7)

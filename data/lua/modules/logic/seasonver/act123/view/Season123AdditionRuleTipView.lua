@@ -31,9 +31,9 @@ function slot0.onOpen(slot0)
 		table.insert(slot4, slot8)
 	end
 
-	slot8 = #slot4
+	slot8 = #slot0._itemList
 
-	for slot8 = 1, math.max(slot8, #slot0._itemList) do
+	for slot8 = 1, math.max(#slot4, slot8) do
 		slot0:updateItem(slot0:getOrCreateItem(slot8), slot4[slot8])
 	end
 

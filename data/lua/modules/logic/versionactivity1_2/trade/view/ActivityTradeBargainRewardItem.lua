@@ -49,9 +49,9 @@ function slot0.setData(slot0, slot1)
 end
 
 function slot0.refreshRewardIcons(slot0, slot1)
-	slot6 = #slot1.rewardItems
+	slot6 = #slot0.rewardIcons
 
-	for slot6 = 1, math.max(slot6, #slot0.rewardIcons) do
+	for slot6 = 1, math.max(#slot1.rewardItems, slot6) do
 		slot0:refreshRewardIcon(slot0:getOrCreateRewardIcon(slot6), slot2[slot6])
 	end
 end

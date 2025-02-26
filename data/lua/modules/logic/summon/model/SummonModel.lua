@@ -58,9 +58,7 @@ function slot0.updateSummonResult(slot0, slot1, slot2)
 			table.insert(slot4, slot0._summonResult[slot8])
 		end
 
-		slot8 = slot2
-
-		uv0.sortResult(slot4, slot8)
+		uv0.sortResult(slot4, slot2)
 
 		slot0._orderedSummonResult = {}
 
@@ -125,9 +123,7 @@ function slot0.sortResultByHeroIds(slot0)
 		table.insert(slot2, slot0[slot6])
 	end
 
-	slot6 = uv0.sortHeroIsResultByRare
-
-	table.sort(slot0, slot6)
+	table.sort(slot0, uv0.sortHeroIsResultByRare)
 
 	slot0 = {
 		[slot1[slot6]] = slot2[slot6]

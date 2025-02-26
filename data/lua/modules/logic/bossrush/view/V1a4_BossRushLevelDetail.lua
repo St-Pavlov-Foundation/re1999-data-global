@@ -175,9 +175,8 @@ end
 
 function slot0._tweenUnlockTabs(slot0)
 	slot2 = slot0:_getTabUnlockStates()
-	slot6 = slot2
 
-	slot0:_refreshTabs(slot6)
+	slot0:_refreshTabs(slot2)
 
 	for slot6, slot7 in ipairs(slot2) do
 		if slot7 then
@@ -368,9 +367,8 @@ end
 
 function slot0._refreshMonster(slot0)
 	slot1 = slot0:_getStage()
-	slot8 = #BossRushConfig.instance:getMonsterSkinIdList(slot1)
 
-	slot0:_initMonsterSpines(slot8)
+	slot0:_initMonsterSpines(#BossRushConfig.instance:getMonsterSkinIdList(slot1))
 
 	for slot8, slot9 in ipairs(slot0._uiSpineList) do
 		slot12 = BossRushConfig.instance:getMonsterSkinOffsetXYs(slot1)[slot8]

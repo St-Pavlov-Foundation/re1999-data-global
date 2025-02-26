@@ -86,9 +86,9 @@ function slot0.selectSelfChoiceCard(slot0, slot1)
 		slot0._skillItems = {}
 	end
 
-	slot8 = #slot0._skillItems
+	slot8 = #slot3
 
-	for slot8 = 1, math.max(slot8, #slot3) do
+	for slot8 = 1, math.max(#slot0._skillItems, slot8) do
 		slot9 = slot0:getOrCreateSkillText(slot8)
 
 		if slot3[slot8] then

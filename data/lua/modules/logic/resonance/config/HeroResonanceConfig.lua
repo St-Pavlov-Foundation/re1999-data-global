@@ -105,9 +105,9 @@ function slot0.getCubeMatrix(slot0, slot1)
 	end
 
 	for slot8 = 0, #string.split(slot0:getCubeConfig(slot1).shape, "#") - 1 do
-		slot13 = slot4[slot8 + 1]
+		slot12 = ","
 
-		for slot12, slot13 in ipairs(string.split(slot13, ",")) do
+		for slot12, slot13 in ipairs(string.split(slot4[slot8 + 1], slot12)) do
 			slot3[slot8][slot12 - 1] = tonumber(slot13)
 		end
 	end

@@ -22,10 +22,7 @@ end
 
 function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gocollectionitem, false)
-
-	slot4 = false
-
-	gohelper.setActive(slot0._txtTitleEn, slot4)
+	gohelper.setActive(slot0._txtTitleEn, false)
 
 	slot0._itemList = slot0:getUserDataTb_()
 

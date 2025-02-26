@@ -445,10 +445,10 @@ function slot0._refreshBlockByIds(slot0, slot1)
 					table.insert(slot2, slot10)
 				end
 
-				slot15 = 1
-				slot16 = false
+				slot15 = false
+				slot16 = true
 
-				for slot15, slot16 in ipairs(RoomBlockHelper.getNearBlockEntity(false, slot8.hexPoint, slot15, slot16, true)) do
+				for slot15, slot16 in ipairs(RoomBlockHelper.getNearBlockEntity(false, slot8.hexPoint, 1, slot15, slot16)) do
 					if slot16 and not tabletool.indexOf(slot2, slot16) then
 						table.insert(slot2, slot16)
 					end

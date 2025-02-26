@@ -60,10 +60,7 @@ end
 function slot0.removeEvents(slot0)
 	TaskDispatcher.cancelTask(slot0._delayDealTouch, slot0)
 	TaskDispatcher.cancelTask(slot0._sendUseClothSkillRequest, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._setState, slot4)
+	TaskDispatcher.cancelTask(slot0._setState, slot0)
 	slot0._click:RemoveClickListener()
 
 	for slot4, slot5 in ipairs(slot0.skillItemList) do

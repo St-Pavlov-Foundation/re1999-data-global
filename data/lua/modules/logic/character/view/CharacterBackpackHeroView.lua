@@ -35,14 +35,12 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot0._ani = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	slot4 = UnityEngine.Animator
+	slot0._ani = slot0.viewGO:GetComponent(typeof(slot4))
 
 	gohelper.addUIClickAudio(slot0._btnlvrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 	gohelper.addUIClickAudio(slot0._btnrarerank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-
-	slot4 = AudioEnum.UI.UI_transverse_tabs_click
-
-	gohelper.addUIClickAudio(slot0._btnfaithrank.gameObject, slot4)
+	gohelper.addUIClickAudio(slot0._btnfaithrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()

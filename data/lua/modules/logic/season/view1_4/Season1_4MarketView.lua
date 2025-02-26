@@ -292,9 +292,9 @@ function slot0._setInfo(slot0)
 	slot0._simagestageicon:LoadImage(SeasonViewHelper.getSeasonIcon(string.format("icon/a_chatu_%s.png", slot1.stagePicture)))
 	gohelper.setActive(slot0._gorewarditem, false)
 
-	slot11 = #slot0._rewardItems - 1
+	slot11 = #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)
 
-	for slot11 = 2, math.max(slot11, #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)) + 1 do
+	for slot11 = 2, math.max(#slot0._rewardItems - 1, slot11) + 1 do
 		slot0:refreshRewardItem(slot0._rewardItems[slot11] or slot0:createRewardItem(slot11), slot7[slot11 - 1])
 	end
 
@@ -453,9 +453,9 @@ function slot0.updateLeftDesc(slot0)
 	end
 
 	slot0._curDescItem = nil
-	slot6 = #Activity104Model.instance:getStageEpisodeList(Activity104Model.instance:getAct104CurStage(Activity104Model.instance:getCurSeasonId(), slot0._layer))
+	slot6 = #slot0.descItems
 
-	for slot6 = 1, math.max(slot6, #slot0.descItems) do
+	for slot6 = 1, math.max(#Activity104Model.instance:getStageEpisodeList(Activity104Model.instance:getAct104CurStage(Activity104Model.instance:getCurSeasonId(), slot0._layer)), slot6) do
 		if not slot0.descItems[slot6] then
 			slot0.descItems[slot6] = slot0:createLeftDescItem(slot6)
 		end

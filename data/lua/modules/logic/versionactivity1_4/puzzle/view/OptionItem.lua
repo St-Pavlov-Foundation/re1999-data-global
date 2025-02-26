@@ -107,7 +107,7 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 	slot0._isDrag = false
 	slot7 = 0
 
-	slot0.anim:Play("put", slot7, 0)
+	slot0.anim:Play("put", 0, slot7)
 	ZProj.TweenHelper.KillByObj(slot0.go)
 
 	slot3 = recthelper.screenPosToAnchorPos(slot2.position, slot0.viewRootTrans)

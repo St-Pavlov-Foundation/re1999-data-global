@@ -64,9 +64,7 @@ function slot0.refresh(slot0, slot1)
 		end
 	end
 
-	slot5 = uv0.sortResistance
-
-	table.sort(slot0.showResistanceList, slot5)
+	table.sort(slot0.showResistanceList, uv0.sortResistance)
 
 	for slot5, slot6 in ipairs(slot0.showResistanceList) do
 		gohelper.setActive((slot0.resistanceItemList[slot5] or slot0:createResistanceItem()).go, true)

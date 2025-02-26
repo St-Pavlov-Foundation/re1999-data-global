@@ -51,9 +51,7 @@ function slot0._cloneStoryItem(slot0)
 end
 
 function slot0._stopStoryItemEnterAnim(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._showStoryItemEnterAnim, slot4)
+	TaskDispatcher.cancelTask(slot0._showStoryItemEnterAnim, slot0)
 
 	for slot4, slot5 in ipairs(slot0._storyItemList) do
 		slot5.anim.enabled = false

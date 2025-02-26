@@ -365,9 +365,7 @@ end
 function slot0.onDestroyView(slot0)
 	slot0._scrollAreaList:RemoveOnValueChanged()
 
-	slot4 = slot0.operGroupCfg
-
-	for slot4 = 1, tabletool.len(slot4) do
+	for slot4 = 1, tabletool.len(slot0.operGroupCfg) do
 		slot5 = slot0.optionItemList[slot4]
 
 		slot5.button:RemoveClickListener()
@@ -419,9 +417,8 @@ function slot0._optionDragEnd(slot0, slot1, slot2)
 	end
 
 	slot0.optionDrag = false
-	slot8 = 0
 
-	slot0.dragAnim:Play("put", 0, slot8)
+	slot0.dragAnim:Play("put", 0, 0)
 
 	slot3 = recthelper.screenPosToAnchorPos(slot2.position, slot0.transform)
 	slot4 = nil
@@ -773,9 +770,7 @@ function slot0.setScrollValue(slot0, slot1)
 end
 
 function slot0.refreshNum(slot0)
-	slot5 = slot0.answerList
-
-	for slot5 = 1, tabletool.len(slot5) do
+	for slot5 = 1, tabletool.len(slot0.answerList) do
 		while slot0.answerList[slot5 + 0] == nil do
 			slot6 = slot0.answerList[slot5 + slot1 + 1]
 		end

@@ -38,18 +38,16 @@ function slot0.setCameraPos(slot0)
 		if slot0._renderers[0].isVisible ~= slot0._isMarkOutLight then
 			if slot1 then
 				slot0._isMarkOutLight = true
-				slot5 = 1
 
-				ExploreMapModel.instance:changeOutlineNum(slot5)
+				ExploreMapModel.instance:changeOutlineNum(1)
 
 				for slot5 = 0, slot0._renderers.Length - 1 do
 					slot0._renderers[slot5].renderingLayerMask = ExploreHelper.setBit(slot0._renderers[slot5].renderingLayerMask, uv0, true)
 				end
 			else
 				slot0._isMarkOutLight = false
-				slot5 = -1
 
-				ExploreMapModel.instance:changeOutlineNum(slot5)
+				ExploreMapModel.instance:changeOutlineNum(-1)
 
 				for slot5 = 0, slot0._renderers.Length - 1 do
 					slot0._renderers[slot5].renderingLayerMask = ExploreHelper.setBit(slot0._renderers[slot5].renderingLayerMask, uv0, false)
@@ -106,9 +104,8 @@ function slot0.setOutLight(slot0, slot1)
 	if not slot4 then
 		if slot0._isMarkOutLight then
 			slot0._isMarkOutLight = false
-			slot8 = -1
 
-			ExploreMapModel.instance:changeOutlineNum(slot8)
+			ExploreMapModel.instance:changeOutlineNum(-1)
 
 			for slot8 = 0, slot0._renderers.Length - 1 do
 				slot0._renderers[slot8].renderingLayerMask = ExploreHelper.setBit(slot0._renderers[slot8].renderingLayerMask, uv0, false)

@@ -124,9 +124,8 @@ function slot0._refreshItemList(slot0)
 
 		for slot8, slot9 in ipairs(slot1) do
 			slot10 = slot9.hexPoint
-			slot15 = slot9.rotate
 
-			for slot15, slot16 in ipairs(slot4:getBuildingPointList(slot9.buildingId, slot15)) do
+			for slot15, slot16 in ipairs(slot4:getBuildingPointList(slot9.buildingId, slot9.rotate)) do
 				if not slot0._uiitemTBList[slot2 + 1] then
 					slot0._uiitemTBList[slot2] = slot0:_createTB(gohelper.cloneInPlace(slot0._gomapuiitem))
 				end

@@ -116,9 +116,7 @@ function slot0._playDeadWork(slot0)
 		slot0._deadEntity.spine:play(slot2, false, false)
 	end
 
-	slot7 = slot1
-
-	for slot6, slot7 in pairs(slot1.getBuffDic(slot7)) do
+	for slot6, slot7 in pairs(slot1:getBuffDic()) do
 		slot0._deadEntity.buff:delBuff(slot7.uid, true)
 	end
 

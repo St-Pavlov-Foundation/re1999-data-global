@@ -22,9 +22,7 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._btnopenallOnClick(slot0)
-	slot4 = AudioEnum.UI.play_ui_checkpoint_click
-
-	AudioMgr.instance:trigger(slot4)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_click)
 
 	for slot4 = 1, 10 do
 		slot0:openSummonResult(slot4, true)

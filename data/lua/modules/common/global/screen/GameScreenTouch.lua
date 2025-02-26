@@ -66,8 +66,7 @@ function slot0._loadEffect(slot0)
 end
 
 function slot0._createEffect(slot0, slot1)
-	slot6 = slot0._effectUrl
-	slot0._effectPrefab = slot1:getAssetItem(slot0._effectUrl):GetResource(slot6)
+	slot0._effectPrefab = slot1:getAssetItem(slot0._effectUrl):GetResource(slot0._effectUrl)
 
 	for slot6 = 1, slot0._effectNum do
 		slot0:_create(slot0._effectPrefab)

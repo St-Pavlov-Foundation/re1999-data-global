@@ -71,10 +71,9 @@ function slot0.addPathCollider(slot0, slot1)
 
 	if not gohelper.isNil(slot1) then
 		slot2 = {}
-		slot6 = "#collider"
-		slot7 = slot2
+		slot6 = slot2
 
-		ZProj.AStarPathBridge.FindChildrenByName(slot1, slot6, slot7)
+		ZProj.AStarPathBridge.FindChildrenByName(slot1, "#collider", slot6)
 
 		for slot6, slot7 in ipairs(slot2) do
 			gohelper.setLayer(slot7, UnityLayer.Scene, true)

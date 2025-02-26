@@ -114,10 +114,12 @@ function slot0._editableInitView(slot0)
 	slot0._simageredcirclebg:LoadImage(ResUrl.getCharacterGetIcon("bg_yuan"))
 	slot0._simagecircle:LoadImage(ResUrl.getCharacterGetIcon("bg_yuanchuan"))
 	slot0._simageblackbg:LoadImage(ResUrl.getCharacterGetIcon("heisedi"))
-	slot0._simagebgleft:LoadImage(ResUrl.getCharacterGetIcon("bg_wz"))
 
-	slot4 = true
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, slot4)
+	slot4 = "bg_wz"
+
+	slot0._simagebgleft:LoadImage(ResUrl.getCharacterGetIcon(slot4))
+
+	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
 	slot0._starList = slot0:getUserDataTb_()
 
 	for slot4 = 1, 6 do
@@ -127,8 +129,7 @@ function slot0._editableInitView(slot0)
 	slot0._txttalkcn.text = ""
 	slot0._txttalken.text = ""
 	slot0._rankList = slot0:getUserDataTb_()
-	slot4 = "#go_bg/xingxing"
-	slot0._goeffectstarList = gohelper.findChild(slot0.viewGO, slot4)
+	slot0._goeffectstarList = gohelper.findChild(slot0.viewGO, "#go_bg/xingxing")
 	slot0._effectstarList = slot0:getUserDataTb_()
 
 	for slot4 = 1, 6 do

@@ -9,9 +9,8 @@ function slot0.onInitView(slot0)
 	slot0.tipAnim = SLFramework.AnimatorPlayer.Get(slot0._shapeGO)
 	slot0._shapeTrs = slot0._shapeGO.transform
 	slot0._goImageShape = gohelper.findChild(slot0._shapeGO, "image_shape")
-	slot4 = slot0._goImageShape
 
-	slot0:addDrag(slot4)
+	slot0:addDrag(slot0._goImageShape)
 
 	slot0.itemList = slot0:getUserDataTb_()
 

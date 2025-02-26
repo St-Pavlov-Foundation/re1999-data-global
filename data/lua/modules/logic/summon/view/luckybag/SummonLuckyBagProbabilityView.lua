@@ -41,8 +41,7 @@ function slot0._refreshUI(slot0)
 
 	slot4 = SummonConfig.instance:getSummonPool(slot0._poolId)
 	slot0._rareHeroNames = slot0:buildRareNameDict(slot4)
-	slot8 = slot4
-	slot0._rareRates = slot0:buildRateRareDict(slot8)
+	slot0._rareRates = slot0:buildRateRareDict(slot4)
 
 	for slot8, slot9 in ipairs(string.split(slot2, "#")) do
 		if not slot0._infoItemTab[slot8] then
@@ -56,9 +55,9 @@ function slot0._refreshUI(slot0)
 
 		gohelper.setActive(slot10.go, true)
 
-		slot14 = slot10
+		slot14 = slot9
 
-		slot0:_refreshSummonDesc(slot14, slot9)
+		slot0:_refreshSummonDesc(slot10, slot14)
 
 		for slot14 = 1, 6 do
 			gohelper.setActive(gohelper.findChild(slot10.go, "desctitle/#go_starList/star" .. slot14), slot14 <= slot0._rate)
@@ -70,9 +69,9 @@ function slot0._refreshSummonDesc(slot0, slot1, slot2)
 	slot1.txthero.text = ""
 	slot1.txtprobability.text = ""
 	slot0._rate = 0
-	slot8 = "%[heroname=.-%]"
+	slot8 = slot0._maxAwardTime
 
-	for slot8 in string.format(slot2, slot0._maxAwardTime - 1, slot0._maxAwardTime):gmatch(slot8) do
+	for slot8 in string.format(slot2, slot0._maxAwardTime - 1, slot8):gmatch("%[heroname=.-%]") do
 		slot9, slot10, slot11, slot12, slot13 = string.find(slot8, "(%[heroname=)(.*)(%])")
 		slot15 = ""
 		slot16 = {}
@@ -86,9 +85,7 @@ function slot0._refreshSummonDesc(slot0, slot1, slot2)
 		slot3.text = string.format(slot15)
 	end
 
-	slot8 = "%[rate=.-%]"
-
-	for slot8 in slot2:gmatch(slot8) do
+	for slot8 in slot2:gmatch("%[rate=.-%]") do
 		slot9, slot10, slot11, slot12, slot13 = string.find(slot8, "(%[rate=)(.*)(%])")
 
 		for slot19, slot20 in ipairs(string.splitToNumber(slot12, "#")) do

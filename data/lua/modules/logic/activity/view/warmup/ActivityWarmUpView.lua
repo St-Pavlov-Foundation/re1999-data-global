@@ -43,8 +43,8 @@ function slot0._editableInitView(slot0)
 	slot0._bgMaterial:loadMaterial(slot0._simagebg3, "ui_black2transparent")
 	slot0._simagebg4:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi7"))
 
-	slot4 = typeof
-	slot0._animtorSelf = slot0.viewGO:GetComponent(slot4(UnityEngine.Animator))
+	slot4 = UnityEngine.Animator
+	slot0._animtorSelf = slot0.viewGO:GetComponent(typeof(slot4))
 	slot0._posListX = {}
 	slot0._posListY = {}
 

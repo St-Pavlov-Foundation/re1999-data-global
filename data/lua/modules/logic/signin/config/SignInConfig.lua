@@ -47,9 +47,7 @@ function slot0.getSignDesc(slot0, slot1)
 end
 
 function slot0.getGoldReward(slot0, slot1)
-	slot5 = ActivityEnum.Activity.DailyAllowance
-
-	for slot5, slot6 in pairs(slot0._goldRewards.configDict[slot5]) do
+	for slot5, slot6 in pairs(slot0._goldRewards.configDict[ActivityEnum.Activity.DailyAllowance]) do
 		if slot6.day == slot1 then
 			return slot6.bonus
 		end

@@ -11,9 +11,9 @@ end
 
 function slot0.packPosList(slot0, slot1)
 	slot2 = {}
-	slot6 = slot0._xCache
+	slot6 = slot0._yCache
 
-	ZProj.AStarPathBridge.PosListToLuaTable(slot1, slot6, slot0._yCache, slot0._zCache)
+	ZProj.AStarPathBridge.PosListToLuaTable(slot1, slot0._xCache, slot6, slot0._zCache)
 
 	for slot6 = 1, #slot0._xCache do
 		slot7 = slot0:get()

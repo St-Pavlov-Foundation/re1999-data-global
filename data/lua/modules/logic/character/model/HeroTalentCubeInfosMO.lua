@@ -40,10 +40,8 @@ function slot0.setOwnData(slot0, slot1, slot2)
 			end
 		end
 
-		slot8 = slot2
-
 		for slot8 = 10, 20 do
-			if string.splitToNumber(HeroResonanceConfig.instance:getTalentModelConfig(slot1, slot8)["type" .. slot8], "#") and #slot9 > 0 then
+			if string.splitToNumber(HeroResonanceConfig.instance:getTalentModelConfig(slot1, slot2)["type" .. slot8], "#") and #slot9 > 0 then
 				if not slot0.own_cube_dic[slot8] then
 					slot0.own_cube_dic[slot8] = {}
 				end

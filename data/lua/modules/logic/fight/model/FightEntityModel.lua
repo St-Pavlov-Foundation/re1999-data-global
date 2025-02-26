@@ -77,9 +77,9 @@ function slot0._setEntityMOList(slot0, slot1, slot2, slot3)
 
 	slot1:setList(slot4)
 
-	slot8 = slot1.getList
+	slot8 = slot1
 
-	slot0:addList(slot8(slot1))
+	slot0:addList(slot1.getList(slot8))
 
 	for slot8, slot9 in ipairs(slot2) do
 		if slot9.currentHp <= 0 then

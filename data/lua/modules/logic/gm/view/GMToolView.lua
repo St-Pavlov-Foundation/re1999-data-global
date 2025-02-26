@@ -417,9 +417,8 @@ function slot0._onClickBtnOK1(slot0)
 
 	slot2 = 0
 	slot3 = nil
-	slot7 = "[^\r\n]+"
 
-	for slot7 in slot1:gmatch(slot7) do
+	for slot7 in slot1:gmatch("[^\r\n]+") do
 		if not string.nilorempty(slot7) then
 			if string.find(slot7, "set dungeon") then
 				slot3 = slot7
@@ -709,9 +708,8 @@ function slot0._onClickTestFightId(slot0)
 		slot6, slot7 = slot5:getMainList()
 		slot8, slot9 = slot5:getSubList()
 		slot10 = slot5:getAllHeroEquips()
-		slot14 = slot1
 
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot14)
+		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
 		slot0:closeThis()
 
 		for slot14, slot15 in ipairs(lua_episode.configList) do
@@ -1134,14 +1132,10 @@ function slot0._initHaveHeroNameList(slot0)
 	end
 
 	slot0.haveHeroList = {}
-	slot4 = "英雄选择"
 
-	table.insert(slot0.haveHeroList, slot4)
+	table.insert(slot0.haveHeroList, "英雄选择")
 
-	slot3 = HeroModel.instance
-	slot5 = slot3
-
-	for slot4, slot5 in ipairs(slot3.getList(slot5)) do
+	for slot4, slot5 in ipairs(HeroModel.instance:getList()) do
 		table.insert(slot0.haveHeroList, slot5.config.name .. "#" .. tostring(slot5.heroId))
 	end
 end
@@ -1187,9 +1181,8 @@ function slot0._initCharacterInteractionSelect(slot0)
 		[RoomCharacterEnum.InteractionType.Dialog] = "对话",
 		[RoomCharacterEnum.InteractionType.Building] = "建筑"
 	}
-	slot6 = "英雄-交互#id选择"
 
-	table.insert({}, slot6)
+	table.insert({}, "英雄-交互#id选择")
 
 	for slot6, slot7 in ipairs(slot0.characterInteractionList) do
 		if slot2[slot7.behaviour] then

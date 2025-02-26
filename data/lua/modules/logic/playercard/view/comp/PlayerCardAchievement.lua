@@ -136,9 +136,9 @@ end
 function slot0.refreshSingleInGroup(slot0, slot1, slot2)
 	slot3 = AchievementConfig.instance:getAchievementsByGroupId(slot1)
 	slot5 = {}
-	slot11 = #slot0._iconItems
+	slot11 = AchievementConfig.instance:getGroupParamIdTab(slot1, AchievementEnum.GroupParamType.List) and #slot6 or 0
 
-	for slot11 = 1, math.max(slot11, AchievementConfig.instance:getGroupParamIdTab(slot1, AchievementEnum.GroupParamType.List) and #slot6 or 0) do
+	for slot11 = 1, math.max(#slot0._iconItems, slot11) do
 		slot12 = slot0:_getOrCreateGroupItem(slot11)
 		slot13 = slot3 and slot3[slot6[slot11]]
 

@@ -182,9 +182,10 @@ function slot0.buildStepWorkList(slot0)
 		if slot8.actType == FightEnum.ActType.SKILL then
 			slot1 = uv0._buildSkillWork(slot0, slot8, nil, slot0[slot7 + 1], slot2, slot3)
 		elseif slot8.actType == FightEnum.ActType.EFFECT then
-			slot12 = uv0._buildEffectWorks
+			slot12 = slot8
+			slot13 = nil
 
-			tabletool.addValues(slot2, slot12(slot8, nil))
+			tabletool.addValues(slot2, uv0._buildEffectWorks(slot12, slot13))
 
 			for slot12, slot13 in ipairs(slot8.actEffectMOs) do
 				if slot13.effectType == FightEnum.EffectType.DEALCARD1 or slot13.effectType == FightEnum.EffectType.DEALCARD2 or slot13.effectType == FightEnum.EffectType.ROUNDEND then

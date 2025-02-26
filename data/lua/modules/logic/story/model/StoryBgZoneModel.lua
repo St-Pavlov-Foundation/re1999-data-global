@@ -26,11 +26,10 @@ function slot0.getZoneList(slot0)
 end
 
 function slot0.getBgZoneByPath(slot0, slot1)
-	slot6 = ".jpg"
-	slot7 = ""
+	slot6 = ""
 
 	for slot6, slot7 in pairs(slot0._zoneList) do
-		if slot7.path == string.gsub(string.gsub(string.gsub(slot1, "_zone", ""), ".png", ""), slot6, slot7) .. "_zone.png" then
+		if slot7.path == string.gsub(string.gsub(string.gsub(slot1, "_zone", ""), ".png", ""), ".jpg", slot6) .. "_zone.png" then
 			return slot7
 		end
 	end

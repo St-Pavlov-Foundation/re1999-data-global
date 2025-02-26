@@ -603,9 +603,7 @@ function slot0._showRewards(slot0)
 		return
 	end
 
-	slot7 = true
-
-	gohelper.setActive(slot1, slot7)
+	gohelper.setActive(slot1, true)
 
 	for slot7, slot8 in ipairs(slot3) do
 		gohelper.setActive(gohelper.cloneInPlace(slot0._gorewarditem), true)

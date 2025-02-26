@@ -38,9 +38,7 @@ function slot0.getSeparateContent(slot0, slot1, slot2)
 		slot4 = string.gsub(slot4, "(#%d+%.?%d?%d?)", "<sep>" .. slot9 .. "</sep>", 1)
 	end
 
-	slot10 = "<sep>%d+</sep>"
-
-	for slot10 in string.gmatch(slot4, slot10) do
+	for slot10 in string.gmatch(slot4, "<sep>%d+</sep>") do
 		slot4 = string.gsub(slot4, "<sep>" .. slot6 .. "</sep>", slot3[slot2][0 + 1] or "#0")
 	end
 
@@ -49,9 +47,8 @@ end
 
 function slot0.getSeparateMarks(slot0)
 	slot1 = {}
-	slot6 = "(#%d+%.?%d?)"
 
-	for slot6 in string.gmatch(slot0, slot6) do
+	for slot6 in string.gmatch(slot0, "(#%d+%.?%d?)") do
 		table.insert(slot1, slot6)
 	end
 

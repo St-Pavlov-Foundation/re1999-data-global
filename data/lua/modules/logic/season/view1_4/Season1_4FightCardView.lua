@@ -28,9 +28,9 @@ function slot0.onOpen(slot0)
 		slot0.itemList = {}
 	end
 
-	slot5 = #slot0.itemList
+	slot5 = #slot1
 
-	for slot5 = 1, math.max(slot5, #slot1) do
+	for slot5 = 1, math.max(#slot0.itemList, slot5) do
 		slot0:updateItem(slot0.itemList[slot5] or slot0:createItem(slot5), slot1[slot5])
 	end
 end

@@ -7,13 +7,13 @@ slot2 = 3409
 function slot0.onInitView(slot0)
 	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_task")
 	slot0._txtlimittime = gohelper.findChildText(slot0.viewGO, "#go_title/#go_time/#txt_limittime")
-	slot0._taskAnimator = gohelper.findChild(slot0.viewGO, "#btn_task/ani"):GetComponent(typeof(UnityEngine.Animator))
+	slot4 = UnityEngine.Animator
+	slot0._taskAnimator = gohelper.findChild(slot0.viewGO, "#btn_task/ani"):GetComponent(typeof(slot4))
 	slot0._gored = gohelper.findChild(slot0.viewGO, "#btn_task/#go_reddotreward")
 	slot0._gopath = gohelper.findChild(slot0.viewGO, "#go_path")
 	slot0._goscrollcontent = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent")
 	slot0._gostages = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent/#go_stages")
-	slot4 = "#go_path/#go_scrollcontent/#go_stages/#go_StageItem"
-	slot0._gostageitem = gohelper.findChild(slot0.viewGO, slot4)
+	slot0._gostageitem = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent/#go_stages/#go_StageItem")
 	slot0._pathAnims = slot0:getUserDataTb_()
 
 	for slot4 = 1, 10 do
@@ -72,10 +72,7 @@ function slot0.onOpen(slot0)
 	end
 
 	slot0:refreshTime()
-
-	slot8 = 60
-
-	TaskDispatcher.runRepeat(slot0.refreshTime, slot0, slot8)
+	TaskDispatcher.runRepeat(slot0.refreshTime, slot0, 60)
 
 	for slot8 = 1, 10 do
 		if slot8 <= TianShiNaNaModel.instance:getUnLockMaxIndex() and slot1[slot8 + 1] then

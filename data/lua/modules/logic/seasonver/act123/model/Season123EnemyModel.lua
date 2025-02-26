@@ -53,9 +53,7 @@ function slot0.getCurrentBattleGroupIds(slot0)
 		if string.nilorempty(lua_battle.configDict[slot1].monsterGroupIds) then
 			slot2 = {}
 		else
-			slot7 = "#"
-
-			for slot7, slot8 in ipairs(string.splitToNumber(slot3.monsterGroupIds, slot7)) do
+			for slot7, slot8 in ipairs(string.splitToNumber(slot3.monsterGroupIds, "#")) do
 				slot9 = lua_monster_group.configDict[slot8]
 				slot0._monsterGroupMap[slot8] = slot9
 

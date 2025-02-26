@@ -176,10 +176,9 @@ function slot0.onReceiveChapterMapElementUpdatePush(slot0, slot1, slot2)
 	DungeonMapModel.instance:setNewElements(slot3)
 	DungeonMapModel.instance:addElements(slot3)
 
-	slot7 = DungeonEvent.OnAddElements
-	slot8 = slot3
+	slot7 = slot3
 
-	DungeonController.instance:dispatchEvent(slot7, slot8)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddElements, slot7)
 
 	for slot7, slot8 in ipairs(slot3) do
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, lua_chapter_map_element.configDict[slot8].mapId)

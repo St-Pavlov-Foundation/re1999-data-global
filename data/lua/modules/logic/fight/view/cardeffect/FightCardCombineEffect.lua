@@ -260,9 +260,9 @@ function slot0.onStart(slot0, slot1)
 
 	table.remove(slot2, slot3 + 1)
 	slot0._sequence:addWork(FunctionWork.New(function ()
-		slot4 = FightEvent.UpdateHandCards
+		slot4 = uv2
 
-		FightController.instance:dispatchEvent(slot4, uv2)
+		FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, slot4)
 
 		for slot4 = 1, #uv1.handCardItemList - 1 do
 			recthelper.setAnchorX(uv1.handCardItemList[slot4].tr, uv0.getCardPosXList(uv1.handCardItemList)[slot4 <= uv3 and slot4 or slot4 + 1])

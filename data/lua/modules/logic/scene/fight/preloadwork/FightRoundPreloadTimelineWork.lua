@@ -110,10 +110,10 @@ end
 
 function slot0._checkBattleRuleSkill(slot0, slot1)
 	if not string.nilorempty(slot1) then
-		slot6 = true
-		slot7 = "|"
+		slot6 = "|"
+		slot7 = "#"
 
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, slot6, slot7, "#")) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, true, slot6, slot7)) do
 			slot8 = slot7[1]
 
 			if lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.FightSkill then

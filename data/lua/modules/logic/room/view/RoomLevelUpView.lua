@@ -109,9 +109,8 @@ end
 
 function slot0._refreshLevelUpInfo(slot0)
 	slot1 = RoomMapModel.instance:getRoomLevel()
-	slot6 = false
 
-	for slot6, slot7 in ipairs(RoomProductionHelper.getRoomLevelUpParams(slot1, slot1 + 1, slot6)) do
+	for slot6, slot7 in ipairs(RoomProductionHelper.getRoomLevelUpParams(slot1, slot1 + 1, false)) do
 		if not slot0._levelUpInfoItemList[slot6] then
 			slot8 = slot0:getUserDataTb_()
 			slot8.go = gohelper.cloneInPlace(slot0._golevelupInfoItem, "item" .. slot6)
@@ -146,13 +145,12 @@ function slot0._refreshCost(slot0)
 		})
 	end
 
-	slot9 = {
-		type = "block",
-		count = slot10
-	}
-	slot10 = slot4.needBlockCount
+	slot9 = slot4.needBlockCount
 
-	table.insert(slot1, slot9)
+	table.insert(slot1, {
+		type = "block",
+		count = slot9
+	})
 
 	slot0._isCostLack = false
 

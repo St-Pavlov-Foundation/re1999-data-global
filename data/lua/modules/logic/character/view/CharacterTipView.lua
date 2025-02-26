@@ -101,10 +101,10 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0.goTotalTitle, false)
 	slot0:_setTitleText(slot0.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
 
-	slot0.goDescTitle = gohelper.clone(slot0.godescitem, slot0.gocontent, "descitem")
-	slot4 = false
+	slot4 = "descitem"
+	slot0.goDescTitle = gohelper.clone(slot0.godescitem, slot0.gocontent, slot4)
 
-	gohelper.setActive(slot0.goDescTitle, slot4)
+	gohelper.setActive(slot0.goDescTitle, false)
 
 	slot0._attnormalitems = {}
 
@@ -125,7 +125,8 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.clone(slot0.goattrnormalwithdescitem, slot0.gocontent, "attrnormal" .. #slot0._attnormalitems + 1)
+	slot5 = "attrnormal" .. #slot0._attnormalitems + 1
+	slot1.go = gohelper.clone(slot0.goattrnormalwithdescitem, slot0.gocontent, slot5)
 
 	gohelper.setActive(slot1.go, true)
 
@@ -134,8 +135,7 @@ function slot0._editableInitView(slot0)
 	slot1.name = gohelper.findChildText(slot1.go, "attr/namelayout/name")
 	slot1.icon = gohelper.findChildImage(slot1.go, "attr/icon")
 	slot1.detail = gohelper.findChild(slot1.go, "attr/btndetail")
-	slot5 = "desc/#txt_desc"
-	slot1.desc = gohelper.findChildText(slot1.go, slot5)
+	slot1.desc = gohelper.findChildText(slot1.go, "desc/#txt_desc")
 	slot1.withDesc = true
 	slot0._attnormalitems[#slot0._attnormalitems + 1] = slot1
 	slot0._attrupperitems = {}
@@ -430,9 +430,7 @@ function slot0.getTalentValues(slot0, slot1)
 			slot2 = slot3:getTalentGain(slot0._level or slot3.level, slot0._rank, nil, slot0._talentCubeInfos)
 		end
 
-		slot7 = slot2
-
-		for slot7, slot8 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot7)) do
+		for slot7, slot8 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot2)) do
 			if HeroConfig.instance:getHeroAttributeCO(slot7).type ~= 1 then
 				slot2[slot7].value = slot2[slot7].value / 10
 			else
@@ -592,14 +590,12 @@ function slot0._setPassiveSkill(slot0, slot1, slot2, slot3, slot4)
 			slot20 = slot18 <= slot14
 		end
 
-		slot27 = lua_skill.configDict[slot19]
-
 		for slot27, slot28 in ipairs(slot11[slot18]) do
 			if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot28).name, true) and not slot12[slot30] then
 				slot12[slot30] = true
 
 				if slot29.isSpecialCharacter == 1 then
-					slot23 = string.format("%s", FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, slot27))
+					slot23 = string.format("%s", FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot19]))
 
 					table.insert(slot13, {
 						desc = SkillHelper.buildDesc(slot29.desc),
@@ -788,10 +784,10 @@ function slot0.showDetail(slot0, slot1)
 
 	slot3 = HeroConfig.instance:getHeroAttributeCO(slot1.attributeId)
 	slot0._txtDetailItemName.text = slot3.name
-	slot8 = slot1.icon
-	slot9 = GameUtil.parseColor
+	slot8 = GameUtil.parseColor
+	slot9 = "#975129"
 
-	CharacterController.instance:SetAttriIcon(slot0._txtDetailItemIcon, slot8, slot9("#975129"))
+	CharacterController.instance:SetAttriIcon(slot0._txtDetailItemIcon, slot1.icon, slot8(slot9))
 
 	for slot8, slot9 in ipairs(string.split(slot3.desc, "|")) do
 		if not slot0._detailDescTab[slot8] then

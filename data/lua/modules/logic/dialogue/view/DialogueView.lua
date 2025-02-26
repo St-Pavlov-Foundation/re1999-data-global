@@ -60,10 +60,9 @@ function slot0._editableInitView(slot0)
 	slot0.drag:AddDragEndListener(slot0.onEndDrag, slot0)
 
 	slot0.nextStepClick2 = gohelper.getClickWithDefaultAudio(slot0.scrollContent.gameObject)
-	slot4 = slot0.onClickNextStep
-	slot5 = slot0
+	slot4 = slot0
 
-	slot0.nextStepClick2:AddClickListener(slot4, slot5)
+	slot0.nextStepClick2:AddClickListener(slot0.onClickNextStep, slot4)
 
 	slot0.rectTrContent = slot0._gocontent.transform
 

@@ -60,9 +60,7 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	slot5 = slot0.viewGO
-
-	gohelper.addChild(slot0.viewParam.parent, slot5)
+	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
 
 	slot0._roleItems = {}
 

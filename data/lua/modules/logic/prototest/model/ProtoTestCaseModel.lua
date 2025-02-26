@@ -4,9 +4,8 @@ slot0 = class("ProtoTestCaseModel", MixScrollModel)
 
 function slot0.getInfoList(slot0, slot1)
 	slot2 = {}
-	slot7 = slot0
 
-	for slot6, slot7 in ipairs(slot0.getList(slot7)) do
+	for slot6, slot7 in ipairs(slot0:getList()) do
 		slot8 = #slot7.value
 		slot9 = 45 + slot8 * 27.5
 

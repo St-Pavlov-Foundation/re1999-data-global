@@ -270,9 +270,8 @@ function slot0.checkReddotHasNewUpdateTower(slot0)
 	slot4 = slot1 and slot2 and (not slot3 or slot3 == TowerEnum.LockKey)
 	slot5 = slot0:isBossTowerOpen()
 	slot6 = false
-	slot11 = TowerEnum.TowerStatus.Open
 
-	for slot11, slot12 in ipairs(TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, slot11)) do
+	for slot11, slot12 in ipairs(TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)) do
 		if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, slot12.towerId, slot12, TowerEnum.LockKey) == TowerEnum.LockKey and TowerEnum.UnlockKey == TowerEnum.UnlockKey then
 			slot6 = true
 

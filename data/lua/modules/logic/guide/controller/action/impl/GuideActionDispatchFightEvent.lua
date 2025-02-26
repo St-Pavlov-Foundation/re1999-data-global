@@ -3,9 +3,7 @@ module("modules.logic.guide.controller.action.impl.GuideActionDispatchFightEvent
 slot0 = class("GuideActionDispatchFightEvent", BaseGuideAction)
 
 function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot9 = slot3
-
-	uv0.super.ctor(slot0, slot1, slot2, slot9)
+	uv0.super.ctor(slot0, slot1, slot2, slot3)
 
 	slot4 = string.split(slot3, "#")
 	slot0._evtId = FightEvent[slot4[1]]

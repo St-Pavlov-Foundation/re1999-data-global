@@ -29,10 +29,7 @@ end
 
 function slot0.setRedDotInfo(slot0, slot1)
 	slot0:_setDotTree()
-
-	slot6 = SocialMessageModel.instance:getMessageUnreadRedDotGroup()
-
-	table.insert(slot1, slot6)
+	table.insert(slot1, SocialMessageModel.instance:getMessageUnreadRedDotGroup())
 
 	slot0._latestExpireTime = 0
 

@@ -98,8 +98,7 @@ function slot0.onOpen(slot0)
 		slot0._curBossEpisodeOrder = slot3
 	end
 
-	slot10 = slot0._curBossEpisodeOrder
-	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot10)
+	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
 	slot0._curMaxOrder = slot3
 	slot0._lvIcons = slot0:getUserDataTb_()
 

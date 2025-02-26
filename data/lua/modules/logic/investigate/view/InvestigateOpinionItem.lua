@@ -147,9 +147,7 @@ function slot0.setInExtendView(slot0, slot1)
 end
 
 function slot0._updateStatus(slot0, slot1)
-	slot5 = slot0
-
-	TaskDispatcher.cancelTask(slot0._frameUpdateLine, slot5)
+	TaskDispatcher.cancelTask(slot0._frameUpdateLine, slot0)
 
 	for slot5, slot6 in ipairs(slot0._statusGoList) do
 		gohelper.setActive(slot6, slot5 == slot1)

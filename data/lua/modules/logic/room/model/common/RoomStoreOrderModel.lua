@@ -19,9 +19,9 @@ function slot0.addByStoreItemMOList(slot0, slot1, slot2, slot3)
 		slot0:addAtLast(RoomStoreOrderMO.New())
 	end
 
-	slot8 = slot2
+	slot8 = slot3
 
-	slot4:init(slot8, slot3)
+	slot4:init(slot2, slot8)
 
 	for slot8 = 1, #slot1 do
 		if slot1[slot8]:getCanBuyNum() > 0 then

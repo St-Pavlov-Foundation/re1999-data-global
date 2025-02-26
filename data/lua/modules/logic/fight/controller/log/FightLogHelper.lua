@@ -16,10 +16,9 @@ function slot0.getMoListString(slot0, slot1, slot2, slot3)
 	end
 
 	slot5 = {
-		string.format("%s %s : [", slot9, slot10)
+		string.format("%s %s : [", slot4, slot9)
 	}
-	slot9 = slot4
-	slot10 = slot2
+	slot9 = slot2
 
 	for slot9, slot10 in ipairs(slot0) do
 		table.insert(slot5, slot1(slot10, slot3 + 1, slot9))
@@ -39,16 +38,15 @@ function slot0.getMoDictString(slot0, slot1, slot2, slot3, slot4)
 		return string.format("%s %s : []", slot5, slot2)
 	end
 
-	slot11 = slot4
+	slot10 = slot4
+	slot11 = slot2
 
 	uv0.addStack({
 		string.format("%s %s : [", slot5, slot2)
-	}, uv0.getPrefix(slot3 + 1), slot11, slot2)
-
-	slot10 = slot2
+	}, uv0.getPrefix(slot3 + 1), slot10, slot11)
 
 	for slot10, slot11 in pairs(slot0) do
-		table.insert(slot6, slot1(slot11, slot3 + 1, tostring(slot10), uv0.getStack(slot4, slot10)))
+		table.insert(slot6, slot1(slot11, slot3 + 1, tostring(slot10), uv0.getStack(slot4, slot2)))
 	end
 
 	table.insert(slot6, slot5 .. "]")

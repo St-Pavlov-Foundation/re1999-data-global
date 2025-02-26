@@ -6,9 +6,7 @@ function slot0.onResLoaded(slot0)
 	uv0.super.onResLoaded(slot0)
 
 	if gohelper.findChild(slot0._displayGo, "#go_rotate/effect2/root") then
-		slot6 = true
-
-		for slot6 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), slot6).Length - 1 do
+		for slot6 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true).Length - 1 do
 			slot7 = ExploreEnum.PipeColorDef[slot0.mo:getNeedColor()]
 
 			ZProj.ParticleSystemHelper.SetStartColor(slot2[slot6], slot7.r, slot7.g, slot7.b, 1)

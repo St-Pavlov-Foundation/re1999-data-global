@@ -171,8 +171,7 @@ return {
 		end
 
 		slot4 = GameSceneMgr.instance:getCurScene().camera.camera.transform
-		slot10 = slot4.forward.z
-		slot5 = Vector2.Normalize(Vector2(slot4.forward.x, slot10))
+		slot5 = Vector2.Normalize(Vector2(slot4.forward.x, slot4.forward.z))
 		slot6 = 0
 
 		for slot10 = 1, #slot0 - 1 do
@@ -248,10 +247,7 @@ return {
 
 					table.insert(slot13, Vector2(0, slot14))
 					table.insert(slot13, Vector2(-slot15, slot14))
-
-					slot22 = Vector2(slot15, slot14)
-
-					table.insert(slot13, slot22)
+					table.insert(slot13, Vector2(slot15, slot14))
 
 					for slot22 = 0, 5 do
 						slot23 = slot22 * math.pi / 3
@@ -304,11 +300,9 @@ return {
 			table.insert({}, RoomHelper.vector3Distance2(slot16, slot3))
 		end
 
-		function slot15(slot0, slot1)
+		table.sort(slot10, function (slot0, slot1)
 			return uv0[slot0] < uv0[slot1]
-		end
-
-		table.sort(slot10, slot15)
+		end)
 
 		for slot15, slot16 in ipairs(slot10) do
 			if uv0.canConfirmPlace(slot0, slot9[slot16], slot1) then
@@ -510,10 +504,9 @@ return {
 		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
 		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
 
-		slot5 = slot0.buildingmgr
-		slot7 = slot5
+		slot6 = SceneTag.RoomPartBuilding
 
-		LuaUtil.insertDict(slot1, slot5.getTagUnitDict(slot7, SceneTag.RoomPartBuilding))
+		LuaUtil.insertDict(slot1, slot0.buildingmgr:getTagUnitDict(slot6))
 
 		slot2 = {}
 
@@ -542,10 +535,10 @@ return {
 				return false
 			end
 
-			slot10 = slot3:GetSize() + Vector3(0, 0.2, 0)
+			slot10 = Vector3(0, 0.2, 0)
 
 			for slot10 = 1, #slot0 do
-				if uv0.testAABB(slot0[slot10], slot1[slot10], Bounds(RoomBendingHelper.worldToBendingSimple(slot5), slot10)) then
+				if uv0.testAABB(slot0[slot10], slot1[slot10], Bounds(RoomBendingHelper.worldToBendingSimple(slot5), slot3:GetSize() + slot10)) then
 					return true
 				end
 			end
@@ -592,10 +585,11 @@ return {
 		slot1 = {}
 		slot3 = {}
 		slot4 = {}
-		slot8 = GameSceneMgr.instance:getCurScene().mapmgr
-		slot8 = slot8.getTagUnitDict
+		slot7 = GameSceneMgr.instance:getCurScene().mapmgr
+		slot8 = slot7
+		slot9 = SceneTag.RoomMapBlock
 
-		LuaUtil.insertDict(slot4, slot8(slot8, SceneTag.RoomMapBlock))
+		LuaUtil.insertDict(slot4, slot7.getTagUnitDict(slot8, slot9))
 
 		for slot8, slot9 in ipairs(slot4) do
 			tabletool.addValues(slot3, slot9:getGameObjectListByName("characterPathPoint"))

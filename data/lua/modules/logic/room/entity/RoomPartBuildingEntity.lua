@@ -148,12 +148,14 @@ function slot0.beforeDestroy(slot0)
 	RoomController.instance:unregisterCallback(RoomEvent.ProduceLineLevelUp, slot0.refreshBuilding, slot0)
 	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, slot0._refreshWorkingState, slot0)
 	RoomController.instance:unregisterCallback(RoomEvent.OnLateInitDone, slot0._onLateInitDone, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot0)
 
-	slot4 = slot0._onSwithMode
 	slot5 = slot0
 
-	RoomController.instance:unregisterCallback(slot4, slot5)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot5)
+
+	slot4 = slot0
+
+	RoomController.instance:unregisterCallback(slot0._onSwithMode, slot4)
 
 	for slot4, slot5 in ipairs(slot0._compList) do
 		if slot5.beforeDestroy then

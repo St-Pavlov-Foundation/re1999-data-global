@@ -11,10 +11,12 @@ function slot0.getPerformanceGrade()
 
 		logNormal("DeviceName: " .. (UnityEngine.SystemInfo.deviceModel or "nil") .. "\nCPU: " .. (slot1 or "nil") .. "\n" .. "GPU: " .. (slot2 or "nil") .. "\n" .. "Memory: " .. (UnityEngine.SystemInfo.systemMemorySize or "nil"))
 
+		slot4 = CommonConfig.instance
+		slot5 = slot4
 		slot5 = CommonConfig.instance:getGPULevel(slot2 or "")
 		uv0 = ModuleEnum.Performance.High
 
-		if CommonConfig.instance:getCPULevel(slot1 or "") ~= ModuleEnum.Performance.Undefine then
+		if slot4.getCPULevel(slot5, slot1 or "") ~= ModuleEnum.Performance.Undefine then
 			uv0 = slot4
 			uv1 = "cpu"
 		elseif slot5 ~= ModuleEnum.Performance.Undefine then

@@ -140,7 +140,9 @@ function slot0._onHyperLinkClick(slot0, slot1, slot2)
 		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(slot1), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
 	elseif slot0._skillIndex == 0 then
 		slot4 = HeroMo.New()
-		slot9 = {
+		slot9 = HeroConfig.instance:getHeroCO(slot0._heroId)
+
+		slot4:init({
 			tag = "passiveskill",
 			heroid = slot0._heroId,
 			tipPos = Vector2.New(-292, -51.1),
@@ -149,9 +151,7 @@ function slot0._onHyperLinkClick(slot0, slot1, slot2)
 				Vector2.New(1, 0.5)
 			},
 			buffTipsX = -776
-		}
-
-		slot4:init(slot9, HeroConfig.instance:getHeroCO(slot0._heroId))
+		}, slot9)
 
 		slot4.passiveSkillLevel = {}
 

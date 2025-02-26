@@ -114,9 +114,8 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._drag = UIDragListenerHelper.New()
-	slot4 = slot0._scrollclueitems.gameObject
 
-	slot0._drag:createByScrollRect(slot4)
+	slot0._drag:createByScrollRect(slot0._scrollclueitems.gameObject)
 	slot0:_addEvents()
 
 	slot0._clueLines = {}
@@ -125,10 +124,10 @@ function slot0._editableInitView(slot0)
 		slot5 = gohelper.findChild(slot0._scrollclueitems.gameObject, "viewport/content/Line" .. slot4)
 		slot6 = {
 			go = slot5,
-			anim = slot5:GetComponent(slot10(UnityEngine.Animator)),
+			anim = slot5:GetComponent(typeof(slot10)),
 			items = {}
 		}
-		slot10 = typeof
+		slot10 = UnityEngine.Animator
 
 		for slot10 = 1, 3 do
 			slot6.items[slot10] = {
@@ -183,10 +182,10 @@ function slot0._refreshClueRoots(slot0)
 			slot7 = gohelper.cloneInPlace(slot0._clueLines[slot5 % 3 == 0 and 3 or slot5 % 3].go, "Line" .. tostring(slot5))
 			slot8 = {
 				go = slot7,
-				anim = slot7:GetComponent(slot12(UnityEngine.Animator)),
+				anim = slot7:GetComponent(typeof(slot12)),
 				items = {}
 			}
-			slot12 = typeof
+			slot12 = UnityEngine.Animator
 
 			for slot12 = 1, 3 do
 				slot8.items[slot12] = {

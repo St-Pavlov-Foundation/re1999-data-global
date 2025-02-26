@@ -159,9 +159,9 @@ function slot0._editableInitView(slot0)
 	slot0:_initSortNode(EliminateMapEnum.SortType.Rare, "#btn_lvrank")
 	slot0:_initSortNode(EliminateMapEnum.SortType.Power, "#btn_rarerank")
 
-	slot4 = EliminateMapEnum.SortType.Resource
+	slot4 = "#btn_faithrank"
 
-	slot0:_initSortNode(slot4, "#btn_faithrank")
+	slot0:_initSortNode(EliminateMapEnum.SortType.Resource, slot4)
 
 	slot0._levelList = {}
 

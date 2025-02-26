@@ -26,8 +26,7 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot0.goHeroGroupContain = gohelper.findChild(slot0.viewGO, "herogroupcontain")
-	slot4 = gohelper.Type_RectTransform
-	slot0.heroGroupContainRectTr = slot0.goHeroGroupContain:GetComponent(slot4)
+	slot0.heroGroupContainRectTr = slot0.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
 	slot0.maxHeroCount = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
 
 	slot0:initItemName()

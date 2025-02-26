@@ -77,9 +77,9 @@ slot0.UnLockedGroupBgColor = "#FFFFFF"
 
 function slot0.refreshSingle(slot0)
 	slot1 = AchievementEnum.MainListLineCount
-	slot5 = slot1
+	slot5 = slot0._gosingle
 
-	slot0:checkInitIcon(slot5, slot0._gosingle)
+	slot0:checkInitIcon(slot1, slot5)
 
 	for slot5 = 1, slot1 do
 		slot6 = slot0._iconItems[slot5]

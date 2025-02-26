@@ -38,9 +38,7 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 end
 
 function slot0.InitCSByConfig(slot0, slot1)
-	slot6 = slot0
-
-	for slot5, slot6 in pairs(slot0.getAudioCO(slot6)) do
+	for slot5, slot6 in pairs(slot0:getAudioCO()) do
 		slot0:_InitCS(slot1, slot6)
 	end
 end

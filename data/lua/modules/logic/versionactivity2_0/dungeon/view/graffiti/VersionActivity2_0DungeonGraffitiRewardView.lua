@@ -69,8 +69,7 @@ end
 function slot0.createRewardItem(slot0)
 	slot0.rewardsConfig = tabletool.copy(slot0.allRewardConfig)
 	slot0.rewardCount = GameUtil.getTabLen(slot0.rewardsConfig)
-	slot4 = #slot0.rewardsConfig
-	slot0.lastStageRewardConfig = table.remove(slot0.rewardsConfig, slot4)
+	slot0.lastStageRewardConfig = table.remove(slot0.rewardsConfig, #slot0.rewardsConfig)
 
 	for slot4, slot5 in pairs(slot0.rewardsConfig) do
 		if not slot0.rewardItemTab[slot4] then

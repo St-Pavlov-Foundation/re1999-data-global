@@ -180,8 +180,7 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.refreshEpisode(slot0)
-	slot5 = slot0.seasonId
-	slot1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot5)
+	slot1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot0.seasonId)
 	slot0.totalScore = 0
 
 	for slot5, slot6 in ipairs(slot0.episodeTab) do
@@ -269,10 +268,10 @@ function slot0.bossItemShow(slot0, slot1, slot2, slot3)
 
 	slot4.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(slot5.skinId).headIcon))
 
-	slot12 = tostring(slot5.career)
-	slot11 = "sxy_" .. slot12
+	slot12 = slot5.career
+	slot11 = tostring(slot12)
 
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot4.imageCareer, slot11)
+	UISpriteSetMgr.instance:setEnemyInfoSprite(slot4.imageCareer, "sxy_" .. slot11)
 
 	slot7 = 0
 
@@ -341,10 +340,10 @@ function slot0.playOpenAndSwitchItemAnim(slot0, slot1)
 end
 
 function slot0.playCloseItemAnim(slot0)
-	slot4 = UIAnimationName.Close
+	slot4 = 0
 	slot5 = 0
 
-	slot0.episodeTab[slot0.lastSelectEntranceId].anim:Play(slot4, slot5, 0)
+	slot0.episodeTab[slot0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, slot4, slot5)
 
 	for slot4, slot5 in pairs(slot0.episodeTab) do
 		if slot4 ~= slot0.lastSelectEntranceId then

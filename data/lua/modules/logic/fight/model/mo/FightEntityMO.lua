@@ -548,9 +548,8 @@ end
 
 function slot0.updateStoredExPoint(slot0)
 	slot0.storedExPoint = 0
-	slot5 = slot0
 
-	for slot4, slot5 in ipairs(slot0.getBuffList(slot5)) do
+	for slot4, slot5 in ipairs(slot0:getBuffList()) do
 		if not string.nilorempty(slot5.actCommonParams) and (lua_buff_act.configDict[FightStrUtil.instance:getSplitToNumberCache(slot6, "#")[1]] and slot9.type) == FightEnum.BuffType_ExPointOverflowBank then
 			slot0.storedExPoint = slot0.storedExPoint + slot7[2]
 		end

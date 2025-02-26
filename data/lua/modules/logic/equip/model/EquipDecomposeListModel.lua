@@ -61,10 +61,7 @@ function slot0.getEquipData(slot0)
 		slot0.equipList = {}
 	end
 
-	slot3 = EquipModel.instance
-	slot5 = slot3
-
-	for slot4, slot5 in ipairs(slot3.getEquips(slot5)) do
+	for slot4, slot5 in ipairs(EquipModel.instance:getEquips()) do
 		if slot0:checkEquipCanDecompose(slot5) then
 			table.insert(slot0.equipList, slot5)
 		end

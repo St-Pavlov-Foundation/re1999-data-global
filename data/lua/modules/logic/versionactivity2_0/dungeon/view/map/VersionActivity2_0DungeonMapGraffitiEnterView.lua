@@ -152,8 +152,7 @@ function slot0.initDialog(slot0)
 	slot0.dialogState, slot0.recentFinishDialogMO = Activity161Controller.instance:checkRencentGraffitiHasDialog()
 
 	if slot0:canDialog() then
-		slot5 = slot0.recentFinishDialogMO.config.dialogGroupId
-		slot0.dialogMap = Activity161Config.instance:getAllDialogMapCoByGraoupId(slot5)
+		slot0.dialogMap = Activity161Config.instance:getAllDialogMapCoByGraoupId(slot0.recentFinishDialogMO.config.dialogGroupId)
 
 		for slot5, slot6 in pairs(slot0.dialogMap) do
 			if Activity161Enum.npcRole <= slot6.chessId then

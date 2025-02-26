@@ -79,10 +79,9 @@ function slot0._getRewardList(slot0)
 
 	for slot5, slot6 in ipairs(lua_task_weekwalk.configList) do
 		if slot6.minTypeId == 4 and WeekWalkTaskListModel.instance:checkPeriods(slot6) then
-			slot11 = "|"
-			slot12 = "#"
+			slot11 = "#"
 
-			for slot11, slot12 in ipairs(GameUtil.splitString2(slot6.bonus, true, slot11, slot12)) do
+			for slot11, slot12 in ipairs(GameUtil.splitString2(slot6.bonus, true, "|", slot11)) do
 				slot15 = slot12[3]
 
 				if not slot1[string.format("%s_%s", slot12[1], slot12[2])] then
@@ -151,10 +150,9 @@ function slot0.onOpen(slot0)
 		return
 	end
 
-	slot15 = "|"
-	slot16 = "#"
+	slot15 = "#"
 
-	for slot15, slot16 in ipairs(GameUtil.splitString2(slot10, true, slot15, slot16)) do
+	for slot15, slot16 in ipairs(GameUtil.splitString2(slot10, true, "|", slot15)) do
 		slot0:_setRuleDescItem(lua_rule.configDict[slot16[2]], slot16[1])
 
 		break

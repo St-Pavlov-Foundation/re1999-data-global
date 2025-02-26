@@ -76,10 +76,7 @@ function slot0.addEpisodeRes(slot0)
 		slot3 = {}
 
 		if DungeonConfig.instance:getBattleCo(slot1.id) then
-			slot9 = slot2.id
-			slot8 = slot2.sceneIds
-
-			uv0.checkConfigEmpty(string.format("Character:%d", slot9), "sceneIds", slot8)
+			uv0.checkConfigEmpty(string.format("Character:%d", slot2.id), "sceneIds", slot2.sceneIds)
 
 			for slot8, slot9 in ipairs(string.splitToNumber(slot2.sceneIds, "#")) do
 				if SceneConfig.instance:getSceneLevelCOs(slot9) then

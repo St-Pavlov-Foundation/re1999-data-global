@@ -36,9 +36,8 @@ function slot0._evidenceFinished(slot0, slot1, slot2, slot3)
 	end
 
 	slot4 = 0
-	slot10 = true
 
-	for slot10, slot11 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, slot10)) do
+	for slot10, slot11 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, true)) do
 		table.insert({}, slot11.clueName)
 	end
 
@@ -114,9 +113,9 @@ function slot0._refreshDetail(slot0)
 	gohelper.setActive(slot0._btnevidence.gameObject, slot1)
 
 	slot3 = AergusiConfig.instance:getClueConfig(AergusiModel.instance:getCurClueId())
-	slot7 = ResUrl.getV2a1AergusiSingleBg
+	slot7 = slot3.clueIcon
 
-	slot0._simageclueitem:LoadImage(slot7(slot3.clueIcon))
+	slot0._simageclueitem:LoadImage(ResUrl.getV2a1AergusiSingleBg(slot7))
 
 	slot0._txtcluename.text = slot3.clueName
 

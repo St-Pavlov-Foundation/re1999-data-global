@@ -77,9 +77,8 @@ end
 
 function slot0._buildSkillEffect(slot0, slot1)
 	slot0._behaviorTypeDict = nil
-	slot6 = "#"
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1, slot6)) do
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1, "#")) do
 		if lua_skill_effect.configDict[slot7] then
 			for slot12 = 1, FightEnum.MaxBehavior do
 				slot14 = FightStrUtil.instance:getSplitToNumberCache(slot8["behavior" .. slot12], "#")

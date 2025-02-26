@@ -264,10 +264,9 @@ end
 
 function slot0._getAmountLimit(slot0, slot1)
 	if LuaUtil.isEmptyStr(slot1) == false then
-		slot6 = "|"
-		slot7 = "#"
+		slot6 = "#"
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, slot6, slot7)) do
+		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, "|", slot6)) do
 			if slot7[1] == FightEnum.EntitySide.MySide and lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.AmountLimit then
 				return tonumber(slot10.effect)
 			end

@@ -195,10 +195,7 @@ end
 function slot0.deletePoint(slot0, slot1, slot2)
 	if slot1 == RougeMapEnum.MiddleLayerPointType.Leave then
 		RougeMapEditModel.instance:deleteLeavePoint()
-
-		slot6 = false
-
-		gohelper.setActive(slot0.goLeave, slot6)
+		gohelper.setActive(slot0.goLeave, false)
 
 		for slot6 = #slot0.mapLineList, 1, -1 do
 			if slot0.mapLineList[slot6].startId == slot2 then

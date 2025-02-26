@@ -215,10 +215,9 @@ function slot0.initFromTrial(slot0, slot1, slot2, slot3)
 
 	if CharacterEnum.TalentRank <= slot6.rank and slot6.talent > 0 then
 		slot11 = lua_character_talent.configDict[slot6.heroId][slot6.talent]
-		slot20 = ","
 		HeroDef_pb.TalentTemplateInfo().id = 1
 
-		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot6.talent][slot11.talentMould][string.splitToNumber(slot11.exclusive, "#")[1]].talenScheme, true, "#", slot20)) do
+		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot6.talent][slot11.talentMould][string.splitToNumber(slot11.exclusive, "#")[1]].talenScheme, true, "#", ",")) do
 			HeroDef_pb.TalentCubeInfo().cubeId = slot21[1]
 			slot22.direction = slot21[2] or 0
 			slot22.posX = slot21[3] or 0
@@ -514,9 +513,8 @@ function slot0.getHeroLevelConfig(slot0, slot1)
 			end
 		end
 
-		slot12 = slot6
 		slot2 = {
-			[slot13] = slot0:lerpAttr(SkillConfig.instance:getherolevelCO(slot0.heroId, slot5)[slot13], SkillConfig.instance:getherolevelCO(slot0.heroId, slot12)[slot13], slot5, slot6, slot1)
+			[slot13] = slot0:lerpAttr(SkillConfig.instance:getherolevelCO(slot0.heroId, slot5)[slot13], SkillConfig.instance:getherolevelCO(slot0.heroId, slot6)[slot13], slot5, slot6, slot1)
 		}
 
 		for slot12, slot13 in pairs(CharacterEnum.AttrIdToAttrName) do
@@ -615,10 +613,10 @@ function slot0.getTotalBaseAttrDict(slot0, slot1, slot2, slot3, slot4, slot5, sl
 	end
 
 	if slot3 > 1 and slot14 then
-		slot19 = slot3
-		slot18 = slot0:getTalentGain(slot2, slot19, nil, slot7)
+		slot18 = slot3
+		slot19 = nil
 
-		for slot18, slot19 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot18)) do
+		for slot18, slot19 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot0:getTalentGain(slot2, slot18, slot19, slot7))) do
 			if HeroConfig.instance:getHeroAttributeCO(slot18).type ~= 1 then
 				slot12[slot18].value = slot12[slot18].value / 10
 			else
@@ -651,10 +649,9 @@ end
 function slot0.getTalentCubeInfos(slot0, slot1)
 	slot2 = {}
 	slot3 = lua_character_talent.configDict[slot0][slot1]
-	slot11 = "#"
-	slot12 = ","
+	slot11 = ","
 
-	for slot11, slot12 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot1][slot3.talentMould][string.splitToNumber(slot3.exclusive, "#")[1]].talenScheme, true, slot11, slot12)) do
+	for slot11, slot12 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot1][slot3.talentMould][string.splitToNumber(slot3.exclusive, "#")[1]].talenScheme, true, "#", slot11)) do
 		HeroDef_pb.TalentCubeInfo().cubeId = slot12[1]
 		slot13.direction = slot12[2] or 0
 		slot13.posX = slot12[3] or 0
@@ -702,10 +699,10 @@ function slot0.getCachotTotalBaseAttrDict(slot0, slot1, slot2, slot3, slot4, slo
 	slot12 = {}
 
 	if slot3 > 1 then
-		slot17 = slot3
-		slot16 = slot0:getTalentGain(slot2, slot17, slot4, slot5)
+		slot16 = slot3
+		slot17 = slot4
 
-		for slot16, slot17 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot16)) do
+		for slot16, slot17 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot0:getTalentGain(slot2, slot16, slot17, slot5))) do
 			if HeroConfig.instance:getHeroAttributeCO(slot16).type ~= 1 then
 				slot12[slot16].value = slot12[slot16].value / 10
 			else
@@ -749,11 +746,10 @@ function slot0._calcEquipAttr(slot0, slot1, slot2, slot3, slot4)
 end
 
 function slot0.getTotalBaseAttrList(slot0, slot1, slot2, slot3)
-	slot9 = slot3
 	slot5 = {}
 
 	for slot9, slot10 in ipairs(CharacterEnum.BaseAttrIdList) do
-		table.insert(slot5, slot0:getTotalBaseAttrDict(slot1, slot2, slot9)[slot10])
+		table.insert(slot5, slot0:getTotalBaseAttrDict(slot1, slot2, slot3)[slot10])
 	end
 
 	return slot5

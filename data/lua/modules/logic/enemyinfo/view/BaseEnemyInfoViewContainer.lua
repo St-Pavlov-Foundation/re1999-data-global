@@ -3,15 +3,13 @@ module("modules.logic.enemyinfo.view.BaseEnemyInfoViewContainer", package.seeall
 slot0 = class("BaseEnemyInfoViewContainer", BaseViewContainer)
 
 function slot0.buildViews(slot0)
-	slot7 = "#go_btns"
-
 	for slot7, slot8 in ipairs({
 		EnemyInfoEnterView.New(),
 		EnemyInfoLayoutView.New(),
 		EnemyInfoLeftView.New(),
 		EnemyInfoRightView.New(),
 		EnemyInfoTipView.New(),
-		TabViewGroup.New(1, slot7)
+		TabViewGroup.New(1, "#go_btns")
 	}) do
 		slot8.layoutMo = EnemyInfoLayoutMo.New()
 		slot8.enemyInfoMo = EnemyInfoMo.New()

@@ -559,7 +559,10 @@ function slot0._editableInitView(slot0)
 	slot0._simagebg:LoadImage(ResUrl.getSignInBg("bg_white2"))
 	slot0._simagebg1:LoadImage(ResUrl.getSignInBg("bg_zs"))
 	slot0._simageorangebg:LoadImage(ResUrl.getSignInBg("img_bcard3"))
-	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg("img_di"))
+
+	slot4 = "img_di"
+
+	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg(slot4))
 
 	slot0._rewardTipItems = {}
 	slot0._nodeItems = {}
@@ -570,10 +573,7 @@ function slot0._editableInitView(slot0)
 
 	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim1)
 	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim2)
-
-	slot4 = slot0._gomonthgetlightanim3
-
-	table.insert(slot0._monthgetlightanimTab, slot4)
+	table.insert(slot0._monthgetlightanimTab, slot0._gomonthgetlightanim3)
 
 	for slot4, slot5 in ipairs(slot0._monthgetlightanimTab) do
 		gohelper.setActive(slot5, false)
@@ -846,9 +846,7 @@ function slot0._setRewardItems(slot0)
 		end
 	end
 
-	slot7 = slot3
-
-	gohelper.setActive(slot0._goqiehuan, slot7)
+	gohelper.setActive(slot0._goqiehuan, slot3)
 
 	for slot7, slot8 in pairs(slot0._nodeItems) do
 		gohelper.setActive(slot8.go, false)
@@ -1206,13 +1204,12 @@ end
 
 function slot0._setPropItems(slot0)
 	slot2 = {}
-	slot6 = os.date("%d", os.time({
+
+	for slot6 = 1, tonumber(os.date("%d", os.time({
 		day = 0,
 		year = slot0._targetDate[1],
 		month = slot0._targetDate[2] + 1
-	}))
-
-	for slot6 = 1, tonumber(slot6) do
+	}))) do
 		slot7 = string.splitToNumber(SignInConfig.instance:getSignRewards(slot6).signinBonus, "#")
 
 		table.insert(slot2, {
@@ -1298,11 +1295,9 @@ function slot0._showBirthdayRewardDetail(slot0)
 		slot5 = slot0._droptimes:GetValue() + 1
 	end
 
-	slot11 = slot3
-
 	slot0:_hideAllRewardTipsItem()
 
-	for slot11, slot12 in ipairs(string.split(string.split(HeroConfig.instance:getHeroCO(slot11).birthdayBonus, ";")[slot5], "|")) do
+	for slot11, slot12 in ipairs(string.split(string.split(HeroConfig.instance:getHeroCO(slot3).birthdayBonus, ";")[slot5], "|")) do
 		if not slot0._rewardTipItems[slot11] then
 			slot14 = {
 				go = gohelper.clone(slot0._gorewarddetailitem, slot0._gorewardContent, "item" .. slot11)
@@ -1378,10 +1373,7 @@ function slot0.onDestroyView(slot0)
 	TaskDispatcher.cancelTask(slot0._onLineAniStart, slot0)
 	TaskDispatcher.cancelTask(slot0._delaySignInRequest, slot0)
 	TaskDispatcher.cancelTask(slot0._showGetRewards, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._onWaitSwitchBirthFinished, slot4)
+	TaskDispatcher.cancelTask(slot0._onWaitSwitchBirthFinished, slot0)
 
 	for slot4, slot5 in pairs(slot0._delayAnimTab) do
 		TaskDispatcher.cancelTask(slot5, slot0)

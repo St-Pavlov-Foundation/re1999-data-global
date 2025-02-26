@@ -51,8 +51,7 @@ function slot0._editableInitView(slot0)
 	slot0:addChildView(slot0._scrollView)
 
 	slot0._toggleGroupGO = gohelper.findChild(slot0.viewGO, "toggleGroup")
-	slot9 = UnityEngine.UI.ToggleGroup
-	slot0._toggleGroup = slot0._toggleGroupGO:GetComponent(typeof(slot9))
+	slot0._toggleGroup = slot0._toggleGroupGO:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
 	slot0._redDotGO = gohelper.findChild(slot0.viewGO, "redDot")
 	slot0._toggleWraps = slot0:getUserDataTb_()
 	slot0._toggleRedDots = slot0:getUserDataTb_()
@@ -132,10 +131,7 @@ function slot0.finishAllTask(slot0)
 	slot2 = nil
 
 	if BpModel.instance:isWeeklyScoreFull() then
-		slot5 = BpTaskModel.instance.serverTaskModel
-		slot7 = slot5
-
-		for slot6, slot7 in pairs(slot5.getList(slot7)) do
+		for slot6, slot7 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
 			if slot7.config.loopType ~= 1 and slot8 ~= 2 and slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 and slot7.config.bpId == BpModel.instance.id then
 				table.insert({}, slot7.config.id)
 			end
@@ -200,9 +196,9 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.onOpen(slot0)
-	slot5 = slot0._onClickbtnGetAll
+	slot5 = slot0
 
-	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, slot5, slot0)
+	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, slot0._onClickbtnGetAll, slot5)
 
 	slot1 = 1
 

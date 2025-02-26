@@ -24,8 +24,7 @@ function slot0._editableInitView(slot0)
 	slot0._gocameraexpand = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_cameraexpand")
 	slot0._gocameritem = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_cameraexpand/go_cameritem")
 	slot0._txtcamera = gohelper.findChildText(slot0.viewGO, "go_normalroot/btn_camera/txt_camera")
-	slot4 = "go_normalroot/btn_camera/image_icon"
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, slot4)
+	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "go_normalroot/btn_camera/image_icon")
 	slot0._scene = GameSceneMgr.instance:getCurScene()
 	slot0._cameraStateDataList = {
 		{

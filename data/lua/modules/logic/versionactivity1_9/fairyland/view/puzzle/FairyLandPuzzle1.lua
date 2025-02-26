@@ -10,9 +10,8 @@ function slot0.onInitView(slot0)
 	slot0._shapeTrs = slot0._shapeGO.transform
 	slot0._goImageShape = gohelper.findChild(slot0._shapeGO, "image_shape")
 	slot0._dragTrs = slot0._goImageShape.transform
-	slot4 = slot0._goImageShape
 
-	slot0:addDrag(slot4)
+	slot0:addDrag(slot0._goImageShape)
 
 	slot0.itemList = slot0:getUserDataTb_()
 
@@ -48,10 +47,7 @@ function slot0.onStart(slot0)
 	slot0._canDrag = not slot1
 
 	gohelper.setActive(slot0._puzzleGO, not slot1)
-
-	slot5 = not slot1
-
-	gohelper.setActive(slot0._shapeGO, slot5)
+	gohelper.setActive(slot0._shapeGO, not slot1)
 
 	slot0.finishDict = {}
 

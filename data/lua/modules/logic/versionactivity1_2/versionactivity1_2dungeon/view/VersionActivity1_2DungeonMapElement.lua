@@ -218,9 +218,7 @@ function slot0._onResLoaded(slot0)
 				slot19:SetVector("_Frame", slot20)
 			end
 
-			slot20 = slot14
-
-			table.insert(slot0._wenhaoGo, slot20)
+			table.insert(slot0._wenhaoGo, slot14)
 
 			for slot20 = 1, 2 do
 				if gohelper.findChild(slot14, string.format("ani/icon%d/anim/biaoti/txt", slot20)) then

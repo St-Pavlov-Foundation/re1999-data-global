@@ -15,10 +15,10 @@ end
 function slot0._onPlayDouQuQu(slot0, slot1)
 	if FightDataModel.instance.douQuQuMgr.isGM then
 		slot3 = slot2.gmProto
-		slot8 = FightWorkDouQuQuGMEnter
-		slot9 = slot3.fight
+		slot8 = slot3.fight
+		slot9 = slot3.startRound
 
-		slot0:com_registFlowSequence():registWork(slot8, slot9, slot3.startRound, slot3.index)
+		slot0:com_registFlowSequence():registWork(FightWorkDouQuQuGMEnter, slot8, slot9, slot3.index)
 
 		for slot8, slot9 in ipairs(slot3.round) do
 			slot4:registWork(FightWorkDouQuQuOneRound, slot9)

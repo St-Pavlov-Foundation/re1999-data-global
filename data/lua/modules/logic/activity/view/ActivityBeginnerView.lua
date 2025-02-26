@@ -121,9 +121,7 @@ function slot0._refreshView(slot0)
 		slot0:closeThis()
 	end
 
-	slot5 = slot1
-
-	ActivityModel.instance:removeFinishedCategory(slot5)
+	ActivityModel.instance:removeFinishedCategory(slot1)
 
 	slot0.data = {}
 

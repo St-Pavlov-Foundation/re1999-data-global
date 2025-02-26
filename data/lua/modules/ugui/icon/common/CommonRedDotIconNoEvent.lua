@@ -3,9 +3,8 @@ module("modules.ugui.icon.common.CommonRedDotIconNoEvent", package.seeall)
 slot0 = class("CommonRedDotIconNoEvent", LuaCompBase)
 
 function slot0.init(slot0, slot1)
-	slot5 = IconMgrConfig.UrlRedDotIcon
-	slot6 = slot1
-	slot0.go = IconMgr.instance:_getIconInstance(slot5, slot6)
+	slot5 = slot1
+	slot0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot5)
 	slot0.typeGoDict = slot0:getUserDataTb_()
 	slot0.isShowRedDot = false
 

@@ -49,9 +49,7 @@ function slot0.distribute(slot0, slot1, slot2)
 		table.insert(slot3, slot9)
 	end
 
-	slot7 = slot0.handCard
-
-	FightDataHelper.coverData(slot3, slot7)
+	FightDataHelper.coverData(slot3, slot0.handCard)
 
 	for slot7, slot8 in ipairs(slot2) do
 		slot9 = FightCardInfoMO.New()

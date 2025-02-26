@@ -10,7 +10,8 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0._goheroitem = gohelper.findChild(slot1, "heroitemani")
 	slot0.anim = slot0._goheroitem:GetComponent(typeof(UnityEngine.Animator))
-	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", typeof(UnityEngine.Transform))
+	slot5 = typeof
+	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", slot5(UnityEngine.Transform))
 	slot0._subGO = gohelper.findChild(slot1, "heroitemani/tags/aidtag")
 	slot0._aidGO = gohelper.findChild(slot1, "heroitemani/tags/storytag")
 	slot0._trialTagGO = gohelper.findChild(slot1, "heroitemani/tags/trialtag")
@@ -22,16 +23,14 @@ function slot0.init(slot0, slot1)
 	slot0._simagecharactericon = gohelper.findChild(slot1, "heroitemani/hero/charactericon")
 	slot0._imagecareericon = gohelper.findChildImage(slot1, "heroitemani/hero/career")
 	slot0._goblackmask = gohelper.findChild(slot1, "heroitemani/hero/blackmask")
-	slot5 = "heroitemani/equipcard/#go_starList"
-	slot0._gostarroot = gohelper.findChild(slot1, slot5)
+	slot0._gostarroot = gohelper.findChild(slot1, "heroitemani/equipcard/#go_starList")
 	slot0._gostars = slot0:getUserDataTb_()
 
 	for slot5 = 1, 6 do
 		slot0._gostars[slot5] = gohelper.findChild(slot1, "heroitemani/equipcard/#go_starList/star" .. slot5)
 	end
 
-	slot5 = "heroitemani/equipcard/vertical/layout/lv/lvnum"
-	slot0._txtlvnum = gohelper.findChildText(slot1, slot5)
+	slot0._txtlvnum = gohelper.findChildText(slot1, "heroitemani/equipcard/vertical/layout/lv/lvnum")
 	slot0._goranks = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -104,9 +103,9 @@ function slot0.onUpdateMO(slot0, slot1)
 
 		slot0._commonHeroCard:onUpdateMO(slot3)
 
-		slot10 = tostring(slot0._monsterCo.career)
+		slot10 = slot0._monsterCo.career
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareericon, "lssx_" .. slot10)
+		UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareericon, "lssx_" .. tostring(slot10))
 
 		slot0._txtlvnum.text, slot6 = HeroConfig.instance:getShowLevel(slot0._monsterCo.level)
 

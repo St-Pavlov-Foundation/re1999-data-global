@@ -13,22 +13,21 @@ function slot0.onStart(slot0, slot1)
 	slot0._loader = SequenceAbLoader.New()
 
 	slot0._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightfloat"))
-	slot0._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightname"))
+
+	slot6 = "fightname"
+
+	slot0._loader:addPath(ResUrl.getSceneUIPrefab("fight", slot6))
 	slot0._loader:addPath(ResUrl.getUIEffect(uv0.ui_chupai_01))
 	slot0._loader:addPath(ResUrl.getUIEffect(uv0.ui_chupai_02))
 	slot0._loader:addPath(ResUrl.getUIEffect(uv0.ui_chupai_03))
 	slot0._loader:addPath(ResUrl.getUIEffect(uv0.ui_kapaituowei))
-
-	slot7 = uv0.ui_dazhaoka
-
-	slot0._loader:addPath(ResUrl.getUIEffect(slot7))
+	slot0._loader:addPath(ResUrl.getUIEffect(uv0.ui_dazhaoka))
 	slot0._loader:addPath(uv0.FightSpriteAssets)
 	slot0._loader:addPath(uv0.ui_effect_dna_c)
 
 	slot2 = ViewMgr.instance:getSetting(ViewName.FightView)
-	slot6 = slot2.mainRes
 
-	slot0._loader:addPath(slot6)
+	slot0._loader:addPath(slot2.mainRes)
 
 	for slot6, slot7 in ipairs(slot2.otherRes) do
 		slot0._loader:addPath(slot7)

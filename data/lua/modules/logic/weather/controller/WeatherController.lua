@@ -195,8 +195,7 @@ function slot0.initSceneGo(slot0, slot1, slot2, slot3)
 	slot4 = slot0:getSceneNode("s01_obj_a/Anim/Effect")
 	slot0._effectRoot = slot4.transform
 	slot0._effectLightPs = gohelper.findChildComponent(slot4, "m_s01_effect_light", uv0.TypeOfParticleSystem)
-	slot9 = uv0.TypeOfParticleSystem
-	slot0._effectAirPs = gohelper.findChildComponent(slot4, "m_s01_effect_air", slot9)
+	slot0._effectAirPs = gohelper.findChildComponent(slot4, "m_s01_effect_air", uv0.TypeOfParticleSystem)
 	slot0._lightSwitch = slot1:GetComponent(uv0.TypeOfLightSwitch)
 	slot0._callback = slot2
 	slot0._callbackTarget = slot3

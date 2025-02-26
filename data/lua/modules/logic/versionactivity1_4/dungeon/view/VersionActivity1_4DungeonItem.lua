@@ -9,8 +9,7 @@ function slot0.init(slot0, slot1)
 	slot0._goUnlock = gohelper.findChild(slot0.viewGO, "unlock")
 	slot0._imagestagefinish = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stagefinish")
 	slot0._txtstagename = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stagename")
-	slot5 = "unlock/info/#txt_stageNum"
-	slot0._txtstagenum = gohelper.findChildText(slot0.viewGO, slot5)
+	slot0._txtstagenum = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stageNum")
 	slot0._stars = {}
 
 	for slot5 = 1, 1 do

@@ -68,9 +68,7 @@ function slot0._initConst(slot0)
 end
 
 function slot0._initRoleCapacity(slot0, slot1)
-	slot8 = "#"
-
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0:getConstValueByID(slot1), true, "|", slot8)) do
+	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0:getConstValueByID(slot1), true, "|", "#")) do
 		-- Nothing
 	end
 

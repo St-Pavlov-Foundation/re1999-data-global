@@ -277,9 +277,9 @@ function slot0._getAttributeDataList(slot0, slot1)
 	slot3 = TalentStyleModel.instance:getHeroMainCubeMo(slot0._heroId).level
 	slot4 = HeroConfig.instance:getTalentCubeAttrConfig(slot1, slot3)
 	slot5 = {}
-	slot10 = slot5
+	slot10, slot11 = nil
 
-	slot0._heroMo:getTalentAttrGainSingle(slot1, slot10, slot11, nil, slot3)
+	slot0._heroMo:getTalentAttrGainSingle(slot1, slot5, slot10, slot11, slot3)
 
 	slot6 = {}
 

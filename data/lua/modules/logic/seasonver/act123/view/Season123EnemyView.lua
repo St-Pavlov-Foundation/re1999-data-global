@@ -55,8 +55,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._imageSelectEnemy = gohelper.findChildImage(slot0.viewGO, "enemyinfo/#simage_icon")
 	slot0._gosupers = gohelper.findChild(slot0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/supers")
+	slot4 = "bg_battledetail"
 
-	slot0._simagerightbg:LoadImage(ResUrl.getDungeonIcon("bg_battledetail"))
+	slot0._simagerightbg:LoadImage(ResUrl.getDungeonIcon(slot4))
 
 	slot0._enemyGroupItemGOs = {}
 	slot0._passiveSkillGOs = {}
@@ -75,10 +76,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gonormalicon, not slot0._isShowAttributeInfo)
 	gohelper.setActive(slot0._godescscrollview, not slot0._isShowAttributeInfo)
 	gohelper.setActive(slot0._goselecticon, slot0._isShowAttributeInfo)
-
-	slot4 = slot0._isShowAttributeInfo
-
-	gohelper.setActive(slot0._goattribute, slot4)
+	gohelper.setActive(slot0._goattribute, slot0._isShowAttributeInfo)
 
 	for slot4 = 1, 6 do
 		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot0._gocareercontent, "career" .. slot4), "lssx_" .. slot4)
@@ -297,9 +295,9 @@ function slot0.refreshEnemyInfo(slot0)
 end
 
 function slot0._refreshSpeicalSkillIcon(slot0, slot1)
-	slot6 = FightConfig.instance:getPassiveSkillsAfterUIFilter(slot1.id)
+	slot6 = true
 
-	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(slot6, true) do
+	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(FightConfig.instance:getPassiveSkillsAfterUIFilter(slot1.id), slot6) do
 		if lua_skill_specialbuff.configDict[slot2[slot6]] then
 			if not slot0._specialskillIconGOs[slot6] then
 				slot9 = slot0:getUserDataTb_()
@@ -465,9 +463,7 @@ function slot0._refreshSkill(slot0, slot1)
 	slot2 = {}
 
 	if not string.nilorempty(slot1.activeSkill) then
-		slot6 = "|"
-
-		for slot6 = 1, #string.split(slot1.activeSkill, slot6) do
+		for slot6 = 1, #string.split(slot1.activeSkill, "|") do
 			if not slot0._skillGOs[slot6] then
 				slot8 = gohelper.cloneInPlace(slot0._goskillitem, "item" .. slot6)
 				slot7 = slot0:getUserDataTb_()
@@ -552,9 +548,9 @@ end
 
 function slot0._refreshAttribute(slot0, slot1)
 	slot3 = string.splitToNumber(lua_monster_skill_template.configDict[slot1.skillTemplate].template, "#")
-	slot10 = slot3
+	slot9 = 4
 
-	table.insert(slot3, 2, table.remove(slot10, 4))
+	table.insert(slot3, 2, table.remove(slot3, slot9))
 
 	slot5 = {}
 

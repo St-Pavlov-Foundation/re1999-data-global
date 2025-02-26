@@ -196,10 +196,7 @@ function slot0.setCardPreRemove(slot0, slot1, slot2, slot3)
 	slot5 = FightCardModel.instance:getSkillLv(slot0, slot1)
 
 	gohelper.setActive(gohelper.findChild(slot2, "normal"), not slot4)
-
-	slot11 = slot4
-
-	gohelper.setActive(gohelper.findChild(slot2, "bigskill"), slot11)
+	gohelper.setActive(gohelper.findChild(slot2, "bigskill"), slot4)
 
 	for slot11 = 1, 4 do
 		gohelper.setActive(gohelper.findChild(slot11 == FightEnum.UniqueSkillCardLv and slot7 or slot6, tostring(slot11)), slot11 == slot5)
@@ -360,9 +357,7 @@ function slot0.isLockByLockBuffType(slot0, slot1, slot2)
 				return true
 			end
 		elseif slot5.UseSkillHasBuffCond then
-			slot10 = "#"
-
-			for slot10 = 3, #FightStrUtil.instance:getSplitToNumberCache(slot0.featureStr, slot10) do
+			for slot10 = 3, #FightStrUtil.instance:getSplitToNumberCache(slot0.featureStr, "#") do
 				if slot6[slot10] == slot1.id and FightHelper.getEntity(slot2) and slot11.buff and not slot11.buff:haveBuffTypeId(slot6[2]) then
 					return true
 				end

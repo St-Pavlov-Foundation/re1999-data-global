@@ -58,10 +58,8 @@ function slot0.initNodeInfo(slot0, slot1)
 	slot5 = slot3 + 1
 	slot0.endNodeId = slot4 + 1
 	slot6 = {}
-	slot7 = slot0.episodeList[slot3]
-	slot12 = slot7
 
-	for slot11, slot12 in ipairs(slot7.getNodeMoList(slot12)) do
+	for slot11, slot12 in ipairs(slot0.episodeList[slot3]:getNodeMoList()) do
 		table.insert(slot6, slot12.nodeId)
 	end
 
@@ -74,13 +72,11 @@ function slot0.initNodeInfo(slot0, slot1)
 
 	slot8:addNode(slot9)
 
-	slot14 = slot5
+	slot13 = slot5
+	slot14 = slot0.endNodeId
 
-	slot9:initEnd(slot0.layerId, slot14, slot0.endNodeId, slot6)
-
-	slot13 = slot8
-
-	table.insert(slot0.episodeList, slot13)
+	slot9:initEnd(slot0.layerId, slot13, slot14, slot6)
+	table.insert(slot0.episodeList, slot8)
 
 	slot0.nodeDict[slot0.endNodeId] = slot9
 

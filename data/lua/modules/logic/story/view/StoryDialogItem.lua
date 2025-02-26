@@ -713,8 +713,7 @@ function slot0._conUpdate(slot0, slot1)
 		if slot10[2] <= slot1 and slot1 <= slot13 then
 			slot14 = slot0._textInfo.characterInfo
 			slot16 = slot14[slot11.lastVisibleCharacterIndex]
-			slot23 = slot14[slot11.firstVisibleCharacterIndex].bottomLeft
-			slot17 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot23))
+			slot17 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot14[slot11.firstVisibleCharacterIndex].bottomLeft))
 			slot18 = slot17
 
 			for slot23 = slot11.firstVisibleCharacterIndex, slot11.lastVisibleCharacterIndex do
@@ -724,8 +723,7 @@ function slot0._conUpdate(slot0, slot1)
 			end
 
 			slot18.y = slot19
-			slot26 = slot15.topLeft
-			slot20 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot26))
+			slot20 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot15.topLeft))
 			slot21 = slot20
 
 			for slot26 = slot11.firstVisibleCharacterIndex, slot11.lastVisibleCharacterIndex do
@@ -735,8 +733,8 @@ function slot0._conUpdate(slot0, slot1)
 			end
 
 			slot21.y = slot22
-			slot28 = slot3
-			slot23 = slot4:WorldToScreenPoint(slot3.TransformPoint(slot28, slot16.bottomRight))
+			slot27 = slot16.bottomRight
+			slot23 = slot4:WorldToScreenPoint(slot3:TransformPoint(slot27))
 
 			for slot27, slot28 in pairs(slot0._subMeshs) do
 				if slot28.sharedMaterial then

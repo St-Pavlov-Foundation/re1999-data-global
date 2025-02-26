@@ -36,9 +36,7 @@ function slot0.setData(slot0, slot1)
 		gohelper.setActive(slot9, false)
 	end
 
-	slot8 = true
-
-	gohelper.setActive(slot0._goNumList[slot4], slot8)
+	gohelper.setActive(slot0._goNumList[slot4], true)
 
 	for slot8, slot9 in ipairs(slot0._goBgList) do
 		gohelper.setActive(slot9, false)

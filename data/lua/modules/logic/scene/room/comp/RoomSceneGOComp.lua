@@ -41,8 +41,8 @@ function slot0.init(slot0, slot1, slot2)
 		slot0.sceneCulling.enabled = false
 	end
 
-	slot6 = typeof
-	slot0.sceneShadow = slot0.ambientGO:GetComponent(slot6(SceneShadow))
+	slot6 = SceneShadow
+	slot0.sceneShadow = slot0.ambientGO:GetComponent(typeof(slot6))
 	slot0._effectParamList = {}
 	slot0.sceneAmbientData = slot0.sceneAmbient.data
 	slot0._partGODict = {}

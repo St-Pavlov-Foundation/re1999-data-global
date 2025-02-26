@@ -31,9 +31,8 @@ function slot0.onOpen(slot0)
 
 	slot0.actId = slot0.viewParam.activityId
 	slot0.stage = slot0.viewParam.stage
-	slot5 = slot0.stage
 
-	for slot5, slot6 in ipairs(Season123Config.instance:getSeasonEpisodeByStage(slot0.actId, slot5)) do
+	for slot5, slot6 in ipairs(Season123Config.instance:getSeasonEpisodeByStage(slot0.actId, slot0.stage)) do
 		slot7 = slot0:getLayerItem()
 		slot7.layer = slot6.layer
 		slot7.txt.text = string.format("%02d", slot5)

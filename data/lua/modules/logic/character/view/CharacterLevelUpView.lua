@@ -47,10 +47,7 @@ function slot0.addEvents(slot0)
 	slot0._scrolldrag:AddDragBeginListener(slot0._onLevelScrollDragBegin, slot0)
 	slot0._scrolldrag:AddDragEndListener(slot0._onLevelScrollDragEnd, slot0)
 	slot0._scrolllv:AddOnValueChanged(slot0._onLevelScrollChange, slot0)
-
-	slot5 = slot0
-
-	slot0._btnmax:AddClickListener(slot0._onMaxLevelClick, slot5)
+	slot0._btnmax:AddClickListener(slot0._onMaxLevelClick, slot0)
 
 	slot1 = {
 		0.5
@@ -398,8 +395,7 @@ function slot0._editableInitView(slot0)
 		slot0._tips[slot4] = gohelper.findChild(slot0._gotips, "tips" .. tostring(slot4))
 	end
 
-	slot4 = "full"
-	slot0._txtfulllevel = gohelper.findChild(slot0._tips[1], slot4)
+	slot0._txtfulllevel = gohelper.findChild(slot0._tips[1], "full")
 	slot0._tipitems = {}
 
 	for slot4 = 1, uv0 do
@@ -525,10 +521,9 @@ function slot0._refreshConsume(slot0, slot1)
 	end
 
 	slot7 = true
-	slot13 = slot5
 	slot9 = slot0:getLocalCost()
 
-	for slot13, slot14 in ipairs(HeroConfig.instance:getLevelUpItems(slot2, slot3, slot13)) do
+	for slot13, slot14 in ipairs(HeroConfig.instance:getLevelUpItems(slot2, slot3, slot5)) do
 		if slot0._tipitems[slot13] then
 			if slot15.type ~= tonumber(slot14.type) or not (slot15.id == tonumber(slot14.id)) then
 				slot20, slot21 = ItemModel.instance:getItemConfigAndIcon(slot16, slot17)
@@ -621,14 +616,12 @@ function slot0._refreshMaxCanUpLevel(slot0)
 
 	if slot0._heroMO then
 		slot2 = slot0:getLocalCost()
-		slot8 = slot0._heroMO.rank
 
-		for slot8 = slot0:getHeroLevel() + 1, CharacterModel.instance:getrankEffects(slot0._heroMO.heroId, slot8)[1] do
+		for slot8 = slot0:getHeroLevel() + 1, CharacterModel.instance:getrankEffects(slot0._heroMO.heroId, slot0._heroMO.rank)[1] do
 			slot9 = true
-			slot14 = slot3
-			slot15 = slot8
+			slot14 = slot8
 
-			for slot14, slot15 in ipairs(HeroConfig.instance:getLevelUpItems(slot1, slot14, slot15)) do
+			for slot14, slot15 in ipairs(HeroConfig.instance:getLevelUpItems(slot1, slot3, slot14)) do
 				slot18 = tonumber(slot15.quantity)
 
 				if slot2 and slot2[slot16] and slot2[slot16][slot17] then
@@ -711,9 +704,9 @@ function slot0.getLocalCost(slot0)
 	slot1 = {}
 
 	if slot0._heroMO then
-		slot8 = slot0:getHeroLevel(true)
+		slot8 = slot0:getHeroLevel()
 
-		for slot8 = 1, #HeroConfig.instance:getLevelUpItems(slot0._heroMO.heroId, slot8, slot0:getHeroLevel()) do
+		for slot8 = 1, #HeroConfig.instance:getLevelUpItems(slot0._heroMO.heroId, slot0:getHeroLevel(true), slot8) do
 			slot9 = slot4[slot8]
 			slot1[slot9.type] = slot1[slot9.type] or {}
 			slot1[slot9.type][slot9.id] = (slot1[slot9.type][slot9.id] or 0) + slot9.quantity

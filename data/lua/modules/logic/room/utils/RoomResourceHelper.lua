@@ -52,10 +52,9 @@ return {
 		for slot10, slot11 in pairs(slot0 or RoomMapBlockModel.instance:getBlockMODict()) do
 			for slot15, slot16 in pairs(slot11) do
 				for slot20 = 0, 6 do
-					slot25 = slot10
-					slot26 = slot15
+					slot25 = slot15
 
-					for slot25, slot26 in ipairs(uv0._getResourceIds(slot16, slot20, slot25, slot26)) do
+					for slot25, slot26 in ipairs(uv0._getResourceIds(slot16, slot20, slot10, slot25)) do
 						if not uv0._getFromClosePointDict(slot3, ResourcePoint(HexPoint(slot10, slot15), slot20), slot26) then
 							slot28, slot29 = uv0.getResourceArea(slot0, {
 								slot27
@@ -99,9 +98,8 @@ return {
 			slot9 = {}
 
 			for slot13, slot14 in ipairs(slot8) do
-				slot20 = slot4
-				slot21 = slot5
-				slot15, slot16 = uv0._getConnectResourcePoints(slot0, slot14, slot2, slot20, slot21)
+				slot20 = slot5
+				slot15, slot16 = uv0._getConnectResourcePoints(slot0, slot14, slot2, slot4, slot20)
 
 				for slot20, slot21 in ipairs(slot16) do
 					table.insert(slot7, slot21)

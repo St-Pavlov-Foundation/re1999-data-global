@@ -14,9 +14,7 @@ function slot0.initList(slot0)
 
 	table.sort(slot3, uv0.sort)
 
-	slot8 = 1
-
-	for slot8 = #slot3 + 1, math.max(math.ceil(#slot3 / 4), slot8) * 4 do
+	for slot8 = #slot3 + 1, math.max(math.ceil(#slot3 / 4), 1) * 4 do
 		table.insert(slot3, HeroSingleGroupMO.New())
 	end
 

@@ -7,15 +7,13 @@ function slot0.init(slot0, slot1)
 	slot0._imagerare = gohelper.findChildImage(slot1, "Role/#image_Rare")
 	slot0._imagecareer = gohelper.findChildImage(slot1, "Role/#image_Career")
 	slot0._simageheroicon = gohelper.findChildSingleImage(slot1, "Role/#simage_HeroIcon")
-	slot5 = "Lv/#txt_Lv"
-	slot0._txtlv = gohelper.findChildTextMesh(slot1, slot5)
+	slot0._txtlv = gohelper.findChildTextMesh(slot1, "Lv/#txt_Lv")
 
 	for slot5 = 1, 5 do
 		slot0["_goexSkillFull" .. slot5] = gohelper.findChild(slot1, "Lv/SuZao/" .. slot5 .. "/FG")
 	end
 
-	slot5 = "Rank"
-	slot0._gorank = gohelper.findChild(slot1, slot5)
+	slot0._gorank = gohelper.findChild(slot1, "Rank")
 
 	for slot5 = 1, 3 do
 		slot0["_gorank" .. slot5] = gohelper.findChild(slot0._gorank, "rank" .. slot5)
@@ -46,9 +44,7 @@ function slot0.updateMo(slot0, slot1)
 	if slot8 == 1 then
 		gohelper.setActive(slot0._gorank, false)
 	else
-		slot12 = true
-
-		gohelper.setActive(slot0._gorank, slot12)
+		gohelper.setActive(slot0._gorank, true)
 
 		for slot12 = 1, 3 do
 			gohelper.setActive(slot0["_gorank" .. slot12], slot12 == slot8 - 1)

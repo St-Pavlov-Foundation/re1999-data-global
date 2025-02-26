@@ -77,9 +77,8 @@ function slot0.getReachTable(slot0)
 	slot3 = {}
 	slot4 = {}
 	slot5 = ArmPuzzlePipeModel.instance:getEntryList()
-	slot9 = uv0._sortOrderList
 
-	table.sort(slot5, slot9)
+	table.sort(slot5, uv0._sortOrderList)
 
 	for slot9, slot10 in ipairs(slot5) do
 		table.insert(slot3, slot10)

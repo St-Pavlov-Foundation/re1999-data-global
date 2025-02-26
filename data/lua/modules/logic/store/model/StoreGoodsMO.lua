@@ -98,11 +98,9 @@ function slot0.getBuyMaxQuantity(slot0)
 					break
 				end
 
-				slot18 = slot12
-
 				for slot18, slot19 in pairs(slot6) do
 					if slot19.type == slot11 and slot19.id == slot12 then
-						slot14 = ItemModel.instance:getItemQuantity(slot11, slot18) - slot19.quantity
+						slot14 = ItemModel.instance:getItemQuantity(slot11, slot12) - slot19.quantity
 					end
 				end
 
@@ -174,11 +172,9 @@ function slot0.canAffordQuantity(slot0)
 					return -1
 				end
 
-				slot14 = slot8
-
 				for slot14, slot15 in pairs(slot2) do
 					if slot15.type == slot7 and slot15.id == slot8 then
-						slot10 = ItemModel.instance:getItemQuantity(slot7, slot14) - slot15.quantity
+						slot10 = ItemModel.instance:getItemQuantity(slot7, slot8) - slot15.quantity
 					end
 				end
 

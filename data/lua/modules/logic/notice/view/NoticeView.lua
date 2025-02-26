@@ -110,9 +110,7 @@ function slot0._removeEvent(slot0)
 end
 
 function slot0.updateUI(slot0)
-	slot5 = slot0.viewContainer:getFirstShowNoticeType()
-
-	NoticeModel.instance:switchNoticeType(slot5)
+	NoticeModel.instance:switchNoticeType(slot0.viewContainer:getFirstShowNoticeType())
 
 	for slot5, slot6 in ipairs(slot0.toggleItemList) do
 		gohelper.setActive(slot6.goToggle, #NoticeModel.instance:getNoticesByType(slot6.type) > 0)

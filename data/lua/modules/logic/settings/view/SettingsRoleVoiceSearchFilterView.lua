@@ -246,9 +246,9 @@ function slot0._charTypeBtnOnClick(slot0, slot1)
 end
 
 function slot0.onOpen(slot0)
-	slot4 = SettingsRoleVoiceController.instance
+	slot4 = SettingsEvent.OnCharVoiceTypeChanged
 
-	slot0:addEventCb(slot4, SettingsEvent.OnCharVoiceTypeChanged, slot0._onCharVoiceTypeChanged, slot0)
+	slot0:addEventCb(SettingsRoleVoiceController.instance, slot4, slot0._onCharVoiceTypeChanged, slot0)
 
 	slot0._selectAttrs = {}
 	slot0._selectCharTypes = {}
@@ -373,9 +373,8 @@ function slot0.initOptions(slot0)
 		LangSettings.kr,
 		LangSettings.jp
 	}
-	slot4 = #slot0._languageOptions * 70
 
-	recthelper.setHeight(slot0._dropfilterTemplateTrans, slot4)
+	recthelper.setHeight(slot0._dropfilterTemplateTrans, #slot0._languageOptions * 70)
 
 	slot0._optionsName = {}
 

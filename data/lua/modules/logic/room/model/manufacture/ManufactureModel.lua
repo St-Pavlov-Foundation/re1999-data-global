@@ -392,9 +392,8 @@ function slot0.getManufactureLevelUpParam(slot0, slot1)
 
 	slot11 = {}
 	slot12 = {}
-	slot17 = slot7
 
-	for slot17, slot18 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot5, slot17)) do
+	for slot17, slot18 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot5, slot7)) do
 		if not slot12[ManufactureConfig.instance:getItemId(slot18)] then
 			slot11[#slot11 + 1] = {
 				type = MaterialEnum.MaterialType.Item,

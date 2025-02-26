@@ -221,8 +221,7 @@ function slot0.refreshTabProducts(slot0, slot1)
 		end
 	end
 
-	slot8 = slot1
-	slot4 = Activity168Config.instance:getGameItemListCfg(uv0, slot8)
+	slot4 = Activity168Config.instance:getGameItemListCfg(uv0, slot1)
 
 	for slot8 = 1, uv1 do
 		slot9 = gohelper.findChild(slot0.viewGO, string.format("Right/Output/Prop%s/#go_Have", slot8))
@@ -255,9 +254,7 @@ function slot0._refreshGoodItemTips(slot0, slot1)
 end
 
 function slot0._refreshBtnState(slot0)
-	slot5 = not LoperaController.instance:checkCanCompose(slot0._selectTabIdx)
-
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnSmelt.gameObject, slot5)
+	ZProj.UGUIHelper.SetGrayscale(slot0._btnSmelt.gameObject, not LoperaController.instance:checkCanCompose(slot0._selectTabIdx))
 
 	for slot5, slot6 in ipairs(slot0._tabStateGroup) do
 		gohelper.setActive(slot6.select, slot5 == slot0._selectTabIdx)

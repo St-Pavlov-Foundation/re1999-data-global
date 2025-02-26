@@ -54,7 +54,7 @@ function slot0.getFocusEntityId()
 		return
 	end
 
-	function slot6(slot0, slot1)
+	table.sort(slot0, function (slot0, slot1)
 		slot3 = slot1:getMO()
 
 		if slot0:getMO() and slot3 and slot2.position ~= slot3.position then
@@ -62,9 +62,7 @@ function slot0.getFocusEntityId()
 		end
 
 		return tonumber(slot2.id) < tonumber(slot3.id)
-	end
-
-	table.sort(slot0, slot6)
+	end)
 
 	for slot6, slot7 in ipairs(slot0) do
 		if FightConfig.instance:getMonsterGuideFocusConfig(slot1.episodeId, uv0.invokeType.Enter, FightModel.instance:getCurWaveId(), slot7:getMO() and slot8.modelId) and not PlayerPrefsHelper.hasKey(FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(slot10)) then

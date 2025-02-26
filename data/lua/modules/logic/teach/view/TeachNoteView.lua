@@ -248,10 +248,7 @@ function slot0._refreshFinishItem(slot0)
 	gohelper.setActive(slot0._btngetall.gameObject, slot1)
 	gohelper.setActive(slot0._goreceivetip, not slot1)
 
-	slot4 = CommonConfig.instance
-	slot6 = slot4
-	slot7 = ConstEnum.TeachBounds
-	slot2 = string.split(slot4.getConstStr(slot6, slot7), "|")
+	slot2 = string.split(CommonConfig.instance:getConstStr(ConstEnum.TeachBounds), "|")
 
 	for slot6, slot7 in pairs(slot0._rewardIcons) do
 		gohelper.setActive(slot7.go, false)
@@ -593,10 +590,9 @@ function slot0._refreshLevel(slot0)
 		end
 
 		slot0._rightDescItems = {}
-		slot25 = slot6.id
 		slot21 = nil
 
-		for slot25 = 1, #string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot25).desc, "#") do
+		for slot25 = 1, #string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot6.id).desc, "#") do
 			slot26 = gohelper.cloneInPlace(slot0._gorightdescitem)
 
 			gohelper.setActive(slot26, true)
@@ -702,10 +698,8 @@ function slot0._refreshLevel(slot0)
 
 		slot0._leftDescItems = {}
 		slot20 = nil
-		slot23 = TeachNoteConfig.instance
-		slot25 = slot23
 
-		for slot25 = 1, #string.split(slot23.getInstructionLevelCO(slot25, slot7.id).desc, "#") do
+		for slot25 = 1, #string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot7.id).desc, "#") do
 			slot26 = gohelper.cloneInPlace(slot0._goleftdescitem)
 
 			gohelper.setActive(slot26, true)

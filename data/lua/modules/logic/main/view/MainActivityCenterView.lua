@@ -222,15 +222,13 @@ function slot0._sortBtns(slot0)
 		end
 	end
 
-	function slot5(slot0, slot1)
+	table.sort(slot1, function (slot0, slot1)
 		if (uv0._sortBtnList[slot0]:isShowRedDot() and 1 or 0) ~= (uv0._sortBtnList[slot1]:isShowRedDot() and 1 or 0) then
 			return slot5 < slot4
 		end
 
 		return (ActivityEnum.ActivitySortWeight[slot0] or 100) < (ActivityEnum.ActivitySortWeight[slot1] or 100)
-	end
-
-	table.sort(slot1, slot5)
+	end)
 
 	slot0._index2Id = slot1
 

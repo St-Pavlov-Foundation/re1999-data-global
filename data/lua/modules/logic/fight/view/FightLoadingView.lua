@@ -102,9 +102,7 @@ function slot0._getFitTips(slot0)
 	slot3 = {}
 
 	for slot7, slot8 in pairs(lua_loading_text.configList) do
-		slot13 = "#"
-
-		for slot13, slot14 in pairs(FightStrUtil.instance:getSplitToNumberCache(slot8.scenes, slot13)) do
+		for slot13, slot14 in pairs(FightStrUtil.instance:getSplitToNumberCache(slot8.scenes, "#")) do
 			if slot14 == slot1 then
 				if slot2 == 0 then
 					table.insert(slot3, slot8)

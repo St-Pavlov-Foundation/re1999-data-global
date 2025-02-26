@@ -14,8 +14,7 @@ function slot0.init(slot0, slot1)
 	slot0.goTime = gohelper.findChild(slot0.viewGO, "root/timebg")
 	slot0.txtTime = gohelper.findChildTextMesh(slot0.viewGO, "root/timebg/#txt_time")
 	slot0.goLev = gohelper.findChild(slot0.viewGO, "root/level")
-	slot5 = "root/level/levelbg/#txt_level"
-	slot0.txtLev = gohelper.findChildTextMesh(slot0.viewGO, slot5)
+	slot0.txtLev = gohelper.findChildTextMesh(slot0.viewGO, "root/level/levelbg/#txt_level")
 	slot0.spNodeList = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do

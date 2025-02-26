@@ -46,9 +46,8 @@ end
 function slot0.reset(slot0, slot1)
 	slot0.activityId = slot1.activityId
 	slot0.trialId = slot1.trial.id
-	slot5 = slot1.unlockEquipIndexs
 
-	slot0:_addUnlockEquipIndexs(slot5)
+	slot0:_addUnlockEquipIndexs(slot1.unlockEquipIndexs)
 
 	slot0.optionalEquipCount = slot1.optionalEquipCount
 
@@ -62,8 +61,7 @@ function slot0.reset(slot0, slot1)
 		end
 	end
 
-	slot5 = slot1.retails
-	slot0.retails = slot0:_buildRetails(slot5)
+	slot0.retails = slot0:_buildRetails(slot1.retails)
 
 	for slot5, slot6 in ipairs(slot1.updateSpecials) do
 		if not slot0.specials[slot6.layer] then

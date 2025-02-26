@@ -499,9 +499,7 @@ function slot0.showAddResourceView(slot0, slot1, slot2, slot3)
 
 	gohelper.setActive(slot0._goResourceTips, true)
 	TaskDispatcher.runDelay(function ()
-		slot3 = false
-
-		gohelper.setActive(uv0._goResourceTips, slot3)
+		gohelper.setActive(uv0._goResourceTips, false)
 
 		for slot3 = 1, #uv0._addResourceItem do
 			gohelper.setActive(uv0._addResourceItem[slot3].item, false)

@@ -33,8 +33,7 @@ end
 function slot0.initInteraction(slot0)
 	slot0:_clearData()
 
-	slot5 = 2
-	slot0.hexPointRanges = HexPoint.Zero:getInRanges(slot5)
+	slot0.hexPointRanges = HexPoint.Zero:getInRanges(2)
 
 	for slot5 = 1, #RoomConfig.instance:getCharacterInteractionConfigList() do
 		if slot1[slot5].behaviour == RoomCharacterEnum.InteractionType.Building then
@@ -81,9 +80,8 @@ end
 function slot0._getBuildingRangeIndex(slot0, slot1, slot2, slot3, slot4)
 	slot5 = {}
 	slot6 = RoomResourceModel.instance
-	slot11 = slot3
 
-	for slot11, slot12 in pairs(RoomBuildingHelper.getOccupyDict(slot1, slot2, slot11)) do
+	for slot11, slot12 in pairs(RoomBuildingHelper.getOccupyDict(slot1, slot2, slot3)) do
 		for slot16, slot17 in pairs(slot12) do
 			for slot21 = 1, #slot4 do
 				slot22 = slot4[slot21]

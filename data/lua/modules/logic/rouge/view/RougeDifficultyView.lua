@@ -623,11 +623,11 @@ function slot0._getIndexFactorInbetween(slot0)
 	end
 
 	slot5 = slot4 / (slot1 * 0.5) > 1 and 1 or 0
-	slot10 = slot5 == 1 and slot3 or slot3 + 1
+	slot8 = slot0
 	slot8 = GameUtil.saturate(GameUtil.remap01(slot4, 0, slot1))
 	slot10 = 1 - (slot5 == 1 and slot8 or 1 - slot8)
 
-	if slot0:_validateIndex(slot3 + slot5) == slot0:_validateIndex(slot10) then
+	if slot0:_validateIndex(slot3 + slot5) == slot0._validateIndex(slot8, slot5 == 1 and slot3 or slot3 + 1) then
 		slot10 = 1
 		slot9 = 1
 	end
@@ -830,7 +830,6 @@ function slot0._setBalance(slot0, slot1)
 
 		if slot10 > #slot0._golevelitemList then
 			slot12 = gohelper.cloneInPlace(slot0._golevelitem)
-			slot16 = "#txt_level"
 
 			for slot16 = 1, uv1 do
 				gohelper.setActive(gohelper.findChild(slot12, "#txt_level/rank" .. slot16), false)
@@ -840,7 +839,7 @@ function slot0._setBalance(slot0, slot1)
 			table.insert(slot0._golevelitemList, {
 				go = slot12,
 				txtTitle = gohelper.findChildText(slot12, "#txt_smalltitle"),
-				txtLevel = gohelper.findChildText(slot12, slot16),
+				txtLevel = gohelper.findChildText(slot12, "#txt_level"),
 				["rankGO" .. slot16] = slot17
 			})
 		else

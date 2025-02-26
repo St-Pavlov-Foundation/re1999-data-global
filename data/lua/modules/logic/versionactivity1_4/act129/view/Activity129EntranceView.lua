@@ -123,9 +123,8 @@ end
 
 function slot0.refreshPoolItem(slot0, slot1, slot2)
 	slot1.txtItemTitle.text = slot2.name
-	slot7 = Activity129Model.instance:checkPoolIsEmpty(slot0.actId, slot2.poolId)
 
-	gohelper.setActive(slot1.goGet, slot7)
+	gohelper.setActive(slot1.goGet, Activity129Model.instance:checkPoolIsEmpty(slot0.actId, slot2.poolId))
 
 	for slot7, slot8 in ipairs(slot1.graphics) do
 		SLFramework.UGUI.GuiHelper.SetColor(slot8.comp, slot3 and "#808080" or slot8.color)

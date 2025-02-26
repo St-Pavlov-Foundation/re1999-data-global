@@ -128,10 +128,9 @@ function slot0._initParams(slot0)
 
 	slot0._blessingLimit = slot0._prayConfig.blessingLimit == "1"
 	slot0._effectMap = {}
-	slot6 = "|"
-	slot7 = "#"
+	slot6 = "#"
 
-	for slot6, slot7 in ipairs(GameUtil.splitString2(slot0._prayConfig.effect, true, slot6, slot7)) do
+	for slot6, slot7 in ipairs(GameUtil.splitString2(slot0._prayConfig.effect, true, "|", slot6)) do
 		slot10 = slot7[3]
 
 		if slot7[1] == WeekWalkEnum.SacrificeEffectType.BaseAttr then
@@ -176,10 +175,10 @@ function slot0._verifyHero2(slot0)
 		return
 	end
 
-	slot8 = 0
-	slot9 = slot0._hero1Info
+	slot8 = slot0._hero1Info
+	slot9 = nil
 
-	for slot8, slot9 in ipairs(WeekWalkCardListModel.instance:getCardList(slot0._blessingLimit and slot0._hero1Info.config.career or 0, slot8, slot9, nil, 0)) do
+	for slot8, slot9 in ipairs(WeekWalkCardListModel.instance:getCardList(slot0._blessingLimit and slot0._hero1Info.config.career or 0, 0, slot8, slot9, 0)) do
 		if slot9 == slot0._hero2Info then
 			return
 		end

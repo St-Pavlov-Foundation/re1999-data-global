@@ -250,9 +250,8 @@ end
 function slot0.setBatchEnabled(slot0, slot1)
 	if slot0.go:GetComponentsInChildren(typeof(UrpCustom.BatchRendererEntity), true) then
 		slot3 = {}
-		slot7 = slot3
 
-		RoomHelper.cArrayToLuaTable(slot2, slot7)
+		RoomHelper.cArrayToLuaTable(slot2, slot3)
 
 		for slot7 = 1, #slot3 do
 			slot3[slot7].enabled = slot1

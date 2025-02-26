@@ -107,9 +107,7 @@ function slot0.getGraffitiRelevantElementMap(slot0, slot1)
 		slot10 = {}
 
 		if not string.nilorempty(slot9.subElementIds) then
-			slot14 = "#"
-
-			for slot14, slot15 in pairs(string.splitToNumber(slot9.subElementIds, slot14)) do
+			for slot14, slot15 in pairs(string.splitToNumber(slot9.subElementIds, "#")) do
 				slot3[slot15] = slot9
 			end
 		end

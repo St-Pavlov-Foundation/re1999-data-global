@@ -120,8 +120,7 @@ function slot0._setGetBonusItem(slot0, slot1, slot2)
 	end
 
 	slot3 = slot0:_getInfoItem(slot2)
-	slot7 = slot2
-	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot7)
+	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot2)
 	slot3.descTxt.text = slot3.co.levelupDes
 	slot3.type = slot2
 
@@ -164,8 +163,7 @@ function slot0._setNewBuildingItem(slot0, slot1, slot2)
 	end
 
 	slot3 = slot0:_getInfoItem(slot2)
-	slot7 = slot2
-	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot7)
+	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot2)
 	slot3.descTxt.text = slot3.co.levelupDes
 	slot3.type = slot2
 
@@ -241,8 +239,7 @@ function slot0.setNormalItem(slot0, slot1, slot2)
 
 	slot3 = slot0:_getInfoItem(slot2)
 	slot3.type = slot2
-	slot7 = slot2
-	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot7)
+	slot3.co = RoomTradeConfig.instance:getLevelUnlockCo(slot2)
 	slot3.type = slot2
 
 	for slot7, slot8 in ipairs(slot1) do

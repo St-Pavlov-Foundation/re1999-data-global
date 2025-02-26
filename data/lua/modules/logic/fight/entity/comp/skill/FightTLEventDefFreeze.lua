@@ -59,17 +59,11 @@ function slot0._getDefenders(slot0, slot1, slot2)
 					slot4[slot12.id] = slot12
 				end
 			elseif slot3 == 3 then
-				slot11 = FightHelper.getEntity(slot1.fromId)
-				slot16 = slot11
-
-				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(slot11.getSide(slot16))) do
+				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide())) do
 					slot4[slot17.id] = slot17
 				end
 			elseif slot3 == 4 then
-				slot11 = FightHelper.getEntity(slot1.toId)
-				slot16 = slot11
-
-				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(slot11.getSide(slot16))) do
+				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.toId):getSide())) do
 					slot4[slot17.id] = slot17
 				end
 			elseif slot3 == 5 then

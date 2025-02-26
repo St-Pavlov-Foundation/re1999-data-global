@@ -63,9 +63,7 @@ function slot0.showReward(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7
 		return
 	end
 
-	slot15 = true
-
-	gohelper.setActive(slot11, slot15)
+	gohelper.setActive(slot11, true)
 
 	for slot15, slot16 in ipairs(slot2) do
 		slot17 = gohelper.clone(slot0._goitem, slot1)
@@ -196,9 +194,7 @@ function slot0.onOpen(slot0)
 		slot0:showReward(slot0._gocontent0, DungeonModel.instance:getEpisodeRewardList(slot0._episodeId), DungeonEnum.StarType.None, false, true)
 	end
 
-	slot12 = true
-
-	for slot12 = #DungeonModel.instance:getEpisodeBonus(slot0._episodeId, slot12), 1, -1 do
+	for slot12 = #DungeonModel.instance:getEpisodeBonus(slot0._episodeId, true), 1, -1 do
 		if slot6[slot8[slot12][1]] and slot6[slot13[1]][slot13[2]] then
 			table.remove(slot8, slot12)
 		end

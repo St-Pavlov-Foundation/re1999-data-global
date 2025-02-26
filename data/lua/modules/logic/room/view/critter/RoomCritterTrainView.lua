@@ -296,9 +296,8 @@ function slot0._initSortFilter(slot0)
 	slot0._selectAttrId = RoomTrainCritterListModel.instance:getSortAttrId()
 	slot0._isHightToLow = true
 	slot2 = 0
-	slot6 = lua_critter_attribute.configList
 
-	tabletool.addValues(slot0._critterOptions, slot6)
+	tabletool.addValues(slot0._critterOptions, lua_critter_attribute.configList)
 
 	for slot6, slot7 in ipairs(slot0._critterOptions) do
 		if slot7.id == slot0._selectAttrId then

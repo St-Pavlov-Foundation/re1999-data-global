@@ -11,10 +11,9 @@ function slot0.onStart(slot0, slot1)
 	end
 
 	slot0._playVictoryList = {}
-	slot6 = slot0
-	slot7 = uv0
+	slot6 = uv0
 
-	TaskDispatcher.runDelay(slot0._onVictoryEnd, slot6, slot7)
+	TaskDispatcher.runDelay(slot0._onVictoryEnd, slot0, slot6)
 
 	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
 		if slot7.spine:hasAnimation(SpineAnimState.victory) then

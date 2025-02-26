@@ -117,10 +117,7 @@ function slot0._updateClickPos(slot0)
 	slot1 = {}
 
 	FightDataHelper.entityMgr:getNormalList(slot0._side, slot1)
-
-	slot6 = slot1
-
-	FightDataHelper.entityMgr:getSubList(slot0._side, slot6)
+	FightDataHelper.entityMgr:getSubList(slot0._side, slot1)
 
 	slot2 = {}
 
@@ -171,9 +168,7 @@ function slot0.sortAssembledMonster(slot0, slot1)
 end
 
 function slot0._dealAssembledMonsterClick(slot0, slot1)
-	slot5 = uv0.sortAssembledMonster
-
-	table.sort(slot1, slot5)
+	table.sort(slot1, uv0.sortAssembledMonster)
 
 	for slot5, slot6 in ipairs(slot1) do
 		gohelper.setAsLastSibling(slot6.clickGO)

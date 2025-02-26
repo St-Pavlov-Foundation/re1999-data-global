@@ -38,10 +38,8 @@ function slot0.saveRecord()
 		slot0:initFromProto(-12599, GMBattleModel.instance.fightRecordMsg)
 
 		slot0:serialize().struct = "FightWithRecordAllRequest"
-		slot5 = FightModel.instance
-		slot7 = slot5
 
-		for slot6, slot7 in pairs(slot5.getFightParam(slot7)) do
+		for slot6, slot7 in pairs(FightModel.instance:getFightParam()) do
 			if type(slot7) ~= "table" then
 				-- Nothing
 			end

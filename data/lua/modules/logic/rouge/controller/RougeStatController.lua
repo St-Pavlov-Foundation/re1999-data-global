@@ -573,9 +573,7 @@ function slot0.getCollectionInfo(slot0)
 			end
 		end
 
-		slot18 = slot14
-
-		table.insert(slot2, slot18)
+		table.insert(slot2, slot14)
 
 		for slot18, slot19 in pairs(RougeEnum.EffectActiveType) do
 			if slot9:isEffectActive(slot19) then

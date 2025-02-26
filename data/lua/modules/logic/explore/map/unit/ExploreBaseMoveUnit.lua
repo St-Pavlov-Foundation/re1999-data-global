@@ -267,10 +267,7 @@ slot0.ExploreMoveRequest = 13574
 function slot0._checkInUIBlock(slot0)
 	for slot4, slot5 in pairs(UIBlockMgr.instance._blockKeyDict) do
 		if slot4 == UIBlockKey.MsgLock then
-			slot8 = GameGlobalMgr.instance
-			slot10 = slot8
-
-			for slot9, slot10 in pairs(slot8.getMsgLockState(slot10)._blockCmdDict) do
+			for slot9, slot10 in pairs(GameGlobalMgr.instance:getMsgLockState()._blockCmdDict) do
 				if uv0.ExploreMoveRequest ~= slot9 then
 					return true
 				end

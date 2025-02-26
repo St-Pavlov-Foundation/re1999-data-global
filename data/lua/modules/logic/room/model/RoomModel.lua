@@ -284,9 +284,8 @@ end
 
 function slot0.setSpecialBlockInfoList(slot0, slot1)
 	slot2 = {}
-	slot6 = slot1
 
-	tabletool.addValues(slot2, slot6)
+	tabletool.addValues(slot2, slot1)
 
 	slot0._specialBlockInfoList = slot2
 	slot0._specialBlockIds = {}

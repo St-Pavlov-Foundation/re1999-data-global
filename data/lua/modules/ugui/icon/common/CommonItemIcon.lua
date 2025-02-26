@@ -62,8 +62,8 @@ function slot0.LoadEffect(slot0)
 		return
 	end
 
-	slot5 = slot0._iconbg.gameObject
-	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot5, "itemEffect")
+	slot5 = "itemEffect"
+	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot0._iconbg.gameObject, slot5)
 
 	for slot5 = 4, 5 do
 		slot0._effectGos[slot5] = gohelper.findChild(slot0._effect, "effect" .. tostring(slot5))

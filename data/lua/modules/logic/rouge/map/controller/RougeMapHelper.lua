@@ -107,9 +107,7 @@ function slot0.addMapOtherRes(slot0, slot1)
 		slot1:addPath(RougeMapEnum.LineResPath)
 		slot1:addPath(RougeMapEnum.MiddleLayerLeavePath)
 	elseif slot0 == RougeMapEnum.MapType.Normal then
-		slot5 = RougeMapEnum.LinePrefabRes
-
-		slot1:addPath(slot5)
+		slot1:addPath(RougeMapEnum.LinePrefabRes)
 
 		for slot5, slot6 in pairs(RougeMapEnum.LineIconRes) do
 			slot1:addPath(slot6)

@@ -73,9 +73,9 @@ function slot0.showReward(slot0, slot1)
 
 		Activity129ResultModel.instance:setList(slot4)
 	else
-		slot7 = slot2
+		slot7 = #slot0.rewardItems
 
-		for slot7 = 1, math.max(slot7, #slot0.rewardItems) do
+		for slot7 = 1, math.max(slot2, slot7) do
 			if not slot0.rewardItems[slot7] then
 				slot0.rewardItems[slot7] = IconMgr.instance:getCommonPropItemIcon(slot3.goContent)
 			end

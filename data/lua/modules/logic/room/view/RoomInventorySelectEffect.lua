@@ -63,9 +63,7 @@ function slot0.onClose(slot0)
 end
 
 function slot0._onBackBlockChanged(slot0, slot1, slot2, slot3)
-	slot7 = slot1
-
-	tabletool.addValues(slot0._backBlockIds, slot7)
+	tabletool.addValues(slot0._backBlockIds, slot1)
 
 	for slot7 = 1, #slot1 do
 		if RoomConfig.instance:getBlock(slot1[slot7]) then

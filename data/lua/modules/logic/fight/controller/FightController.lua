@@ -269,9 +269,7 @@ function slot0.handleJump(slot0)
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, uv0.openedViewNameList[#uv0.openedViewNameList].viewName)
 
 			if RoomController.instance:isRoomScene() then
-				slot4 = uv0.openedViewNameList
-
-				RoomController.instance:popUpSourceView(slot4)
+				RoomController.instance:popUpSourceView(uv0.openedViewNameList)
 
 				for slot4, slot5 in ipairs(uv0.openedViewNameList) do
 					if slot5.viewName ~= ViewName.RoomInitBuildingView and slot5.viewName ~= ViewName.RoomFormulaView then
@@ -498,9 +496,9 @@ function slot0.setFightHeroSingleGroup(slot0)
 		end
 	end
 
-	slot13 = #slot3 + #slot5
+	slot13 = #slot7
 
-	for slot13 = #slot3 + 1, math.min(slot13, #slot7) do
+	for slot13 = #slot3 + 1, math.min(#slot3 + #slot5, slot13) do
 		if slot5[slot13 - #slot3] ~= slot7[slot13].heroUid then
 			slot5[slot13 - #slot3] = "0"
 			slot6 = slot6 - 1

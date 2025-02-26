@@ -45,9 +45,7 @@ function slot0.refreshView(slot0)
 end
 
 function slot0.refreshAttr(slot0)
-	slot8 = slot0.bossMo and slot0.bossMo.level or 1
-
-	for slot8 = 1, math.max(#TowerConfig.instance:getHeroGroupAddAttr(slot0.bossId, 0, slot8), #slot0.items) do
+	for slot8 = 1, math.max(#TowerConfig.instance:getHeroGroupAddAttr(slot0.bossId, 0, slot0.bossMo and slot0.bossMo.level or 1), #slot0.items) do
 		slot0:updateAttrItem(slot0:getAttrItem(slot8), slot3[slot8])
 	end
 end

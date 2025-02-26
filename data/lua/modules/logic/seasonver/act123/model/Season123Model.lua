@@ -189,10 +189,8 @@ end
 
 function slot0.addCardGetData(slot0, slot1)
 	slot3 = ViewName[Season123ViewHelper.getViewName(slot0._curSeasonId, "CelebrityCardGetView")]
-	slot5 = PopupController.instance._popupList
-	slot7 = slot5
 
-	for slot7 = 1, slot5.getSize(slot7) do
+	for slot7 = 1, PopupController.instance._popupList:getSize() do
 		if PopupController.instance._popupList._dataList[slot7][2] == slot3 then
 			slot8 = PopupController.instance._popupList._dataList[slot7][3].data
 

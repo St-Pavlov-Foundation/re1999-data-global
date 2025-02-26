@@ -449,9 +449,7 @@ function slot0._onMainViewFrameOpen(slot0, slot1)
 end
 
 function slot0.showTrigger(slot0)
-	slot4 = true
-
-	gohelper.setActive(slot0._gotrigger, slot4)
+	gohelper.setActive(slot0._gotrigger, true)
 
 	for slot4 = 1, uv0 do
 		slot0:updateTrigger(slot4)
@@ -459,12 +457,12 @@ function slot0.showTrigger(slot0)
 end
 
 function slot0.updateTrigger(slot0, slot1)
-	slot6 = "triggerArea" .. slot1
+	slot6 = slot1
 
 	for slot6 = 1, 4 do
 		slot7 = slot0["_gotrigger" .. slot1 .. slot6]
 
-		if SkinOffsetAdjustModel.instance:getTrigger(slot0._curSkinInfo, slot6)[slot6] then
+		if SkinOffsetAdjustModel.instance:getTrigger(slot0._curSkinInfo, "triggerArea" .. slot6)[slot6] then
 			gohelper.setActive(slot7, true)
 
 			slot9, slot10, slot11, slot12 = unpack(slot8)
@@ -1321,9 +1319,9 @@ function slot0.onClose(slot0)
 	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsetx.gameObject))
 	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsety.gameObject))
 
-	slot4 = SLFramework.UGUI.UIDragListener.Get
+	slot4 = slot0._slideroffsetscale.gameObject
 
-	slot0:removeDragListener(slot4(slot0._slideroffsetscale.gameObject))
+	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot4))
 
 	for slot4, slot5 in ipairs(slot0._btnList) do
 		slot5:RemoveClickListener()

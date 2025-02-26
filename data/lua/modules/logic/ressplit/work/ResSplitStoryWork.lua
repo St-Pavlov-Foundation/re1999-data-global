@@ -130,10 +130,10 @@ function slot0._addStoryRes(slot0)
 			end
 		end
 
-		slot14 = ResSplitEnum.Path
-		slot15 = string.format("singlebg/headicon_small/%s", slot9.conversation.heroIcon)
+		slot14 = string.format("singlebg/headicon_small/%s", slot9.conversation.heroIcon)
+		slot15 = slot2
 
-		ResSplitModel.instance:setExclude(slot14, slot15, slot2)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, slot14, slot15)
 
 		for slot14, slot15 in pairs(slot9.picList) do
 			ResSplitModel.instance:setExclude(ResSplitEnum.Path, ResUrl.getStoryItem(slot15.picture), slot2)

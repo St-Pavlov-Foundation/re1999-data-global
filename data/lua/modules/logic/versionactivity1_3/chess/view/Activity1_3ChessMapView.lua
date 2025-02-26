@@ -149,8 +149,7 @@ function slot0._initMapNodeItems(slot0)
 	end
 
 	slot0._nodeItemDict = {}
-	slot5 = VersionActivity1_3Enum.ActivityId.Act304
-	slot0._episodeCfgList = Activity122Config.instance:getEpisodeList(slot5)
+	slot0._episodeCfgList = Activity122Config.instance:getEpisodeList(VersionActivity1_3Enum.ActivityId.Act304)
 
 	for slot5, slot6 in ipairs(slot0._episodeCfgList) do
 		slot0:_createMapNodeItem(slot6)

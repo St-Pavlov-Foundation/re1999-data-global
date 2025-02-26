@@ -21,9 +21,8 @@ function slot0.updateItem(slot0, slot1)
 	slot0._index = slot1.index
 	slot0._id = slot1.id
 	slot6 = 0
-	slot7 = 0
 
-	transformhelper.setLocalPos(slot0.go.transform, slot1.pos, slot6, slot7)
+	transformhelper.setLocalPos(slot0.go.transform, slot1.pos, 0, slot6)
 
 	slot2 = lua_fight_technique.configDict[slot0._id]
 	slot0._txtBottomDesc1.text = slot2.content1

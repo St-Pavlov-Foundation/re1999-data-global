@@ -28,9 +28,7 @@ function slot0.createHeroMOByAssistMO(slot0, slot1)
 			table.insert(slot3.passiveSkillLevel, slot0.passiveSkillLevel[slot11])
 		end
 	else
-		slot12 = slot4
-
-		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot12) do
+		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot4) do
 			table.insert(slot3.passiveSkillLevel, slot12)
 		end
 	end

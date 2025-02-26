@@ -23,9 +23,7 @@ function slot0.getCanSelectCount(slot0)
 end
 
 function slot0._getNullSelect(slot0)
-	slot4 = slot0
-
-	for slot4 = 1, slot0.getCanSelectCount(slot4) do
+	for slot4 = 1, slot0:getCanSelectCount() do
 		if not slot0._selectParentCrittersIds[slot4] then
 			return slot4
 		end

@@ -171,10 +171,7 @@ function slot0._getRandomEntityMO(slot0)
 
 	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyNormalList())
 	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMySubList())
-
-	slot8 = FightDataHelper.entityMgr:getMyDeadList()
-
-	tabletool.addValues(slot4, slot8)
+	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyDeadList())
 
 	for slot8 = #slot4, 1, -1 do
 		if not slot0:_getSkin(slot4[slot8]) then
@@ -183,9 +180,8 @@ function slot0._getRandomEntityMO(slot0)
 	end
 
 	slot5 = {}
-	slot9 = slot4
 
-	tabletool.addValues(slot5, slot9)
+	tabletool.addValues(slot5, slot4)
 
 	for slot9 = #slot5, 1, -1 do
 		if FightAudioMgr.instance:_getHeroVoiceCOs(slot4[slot9].modelId, CharacterEnum.VoiceType.FightResult) and #slot11 > 0 then
@@ -259,9 +255,7 @@ function slot0._playSpineVoice(slot0)
 end
 
 function slot0._getSayContent(slot0, slot1)
-	slot7 = "#"
-
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, false, "|", slot7)) do
+	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, false, "|", "#")) do
 		slot3 = "" .. slot8[1]
 	end
 

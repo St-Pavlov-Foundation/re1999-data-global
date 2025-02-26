@@ -152,8 +152,7 @@ function slot0._handleReplacePassiveSkill(slot0, slot1, slot2)
 	slot4, slot5, slot6 = nil
 
 	for slot10, slot11 in ipairs(string.split(slot1, "|")) do
-		slot15 = "#"
-		slot4 = string.splitToNumber(slot11, slot15)
+		slot4 = string.splitToNumber(slot11, "#")
 
 		for slot15, slot16 in pairs(slot2) do
 			if slot16.skillPassive == slot4[1] then
@@ -337,11 +336,9 @@ function slot0.getBaseAttr(slot0, slot1, slot2)
 			table.insert(slot8, slot13)
 		end
 
-		function slot12(slot0, slot1)
+		table.sort(slot8, function (slot0, slot1)
 			return slot0.level < slot1.level
-		end
-
-		table.sort(slot8, slot12)
+		end)
 
 		for slot12, slot13 in ipairs(slot8) do
 			if slot13.level < slot2 then
@@ -560,9 +557,10 @@ function slot0.getRankLevelByLevel(slot0, slot1, slot2)
 
 	for slot9, slot10 in ipairs(slot4) do
 		slot11 = 0
-		slot16 = slot10.effect
+		slot15 = true
+		slot16 = "|"
 
-		for slot15, slot16 in pairs(GameUtil.splitString2(slot16, true, "|", "#")) do
+		for slot15, slot16 in pairs(GameUtil.splitString2(slot10.effect, slot15, slot16, "#")) do
 			if slot16[1] == 1 then
 				slot11 = slot16[2]
 

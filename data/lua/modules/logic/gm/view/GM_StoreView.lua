@@ -57,11 +57,9 @@ function slot0.StoreView_register(slot0)
 				end
 			end
 		else
-			slot5 = true
-
 			for slot5, slot6 in ipairs(slot0._tabsContainer) do
 				if slot6 then
-					slot7 = StoreModel.instance:getFirstTabs(true, slot5)[slot5]
+					slot7 = StoreModel.instance:getFirstTabs(true, true)[slot5]
 
 					if slot6 then
 						slot6.txtnamecn1.text = slot7.name

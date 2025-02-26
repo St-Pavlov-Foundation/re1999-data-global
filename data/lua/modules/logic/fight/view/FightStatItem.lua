@@ -6,8 +6,7 @@ function slot0.init(slot0, slot1)
 	slot0._heroIcon = gohelper.findChildSingleImage(slot1, "heroinfo/hero/icon")
 	slot0._career = gohelper.findChildImage(slot1, "heroinfo/career")
 	slot0._rare = gohelper.findChildImage(slot1, "heroinfo/rare")
-	slot5 = "heroinfo/layout/rankobj"
-	slot0._gorankobj = gohelper.findChild(slot1, slot5)
+	slot0._gorankobj = gohelper.findChild(slot1, "heroinfo/layout/rankobj")
 	slot0._rankGOs = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -179,8 +178,8 @@ function slot0._refreshInfoUI(slot0, slot1)
 		for slot9, slot10 in ipairs(slot0._mo.cards) do
 			if not slot0._skillItems[slot9] then
 				slot11 = slot0:getUserDataTb_()
-				slot15 = slot0._goskillContent
-				slot11.go = gohelper.clone(slot0._goskillItem, slot15, "skillitem" .. slot9)
+				slot15 = "skillitem" .. slot9
+				slot11.go = gohelper.clone(slot0._goskillItem, slot0._goskillContent, slot15)
 				slot11.skillIconGo = slot0:getUserDataTb_()
 
 				for slot15 = 1, 4 do

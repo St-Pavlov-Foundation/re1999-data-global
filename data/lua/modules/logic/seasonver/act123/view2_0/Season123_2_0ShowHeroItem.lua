@@ -53,8 +53,7 @@ function slot0.initComponent(slot0)
 		slot0._rankList[slot5] = gohelper.findChild(slot0._gorank, "rank" .. tostring(slot5))
 	end
 
-	slot5 = "rare"
-	slot0._gorare = gohelper.findChild(slot0._gohero, slot5)
+	slot0._gorare = gohelper.findChild(slot0._gohero, "rare")
 	slot0._rareList = slot0:getUserDataTb_()
 
 	for slot5 = 1, CharacterEnum.MaxRare + 1 do

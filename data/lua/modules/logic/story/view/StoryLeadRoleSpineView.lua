@@ -131,9 +131,8 @@ function slot0._showLeadHero(slot0, slot1, slot2, slot3, slot4)
 		slot0._animator:Play(UIAnimationName.Idle)
 
 		slot0._animator.enabled = false
-		slot9 = false
 
-		gohelper.setActive(slot0._gospineroot, slot9)
+		gohelper.setActive(slot0._gospineroot, false)
 
 		for slot9, slot10 in pairs(slot0._goSpines) do
 			gohelper.setActive(slot10, false)
@@ -172,8 +171,8 @@ function slot0._playHeroLeadSpineVoice(slot0, slot1)
 		face = slot0._stepCo.mainRole.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 	}
 	slot4 = GameLanguageMgr.instance
-	slot6 = slot4
-	slot0._mainheroco.mouth = slot0._stepCo.mainRole.mouses[slot4.getVoiceTypeStoryIndex(slot6)]
+	slot5 = slot4
+	slot0._mainheroco.mouth = slot0._stepCo.mainRole.mouses[slot4.getVoiceTypeStoryIndex(slot5)]
 
 	for slot5, slot6 in ipairs(slot0._heroSpines) do
 		slot6:stopVoice()
@@ -236,12 +235,12 @@ end
 
 function slot0._setHeroFadeMat(slot0)
 	slot0._bgGo = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO, "#go_upbg/#simage_bgimg")
-	slot2, slot11 = transformhelper.getLocalPos(slot0._bgGo.transform)
+	slot2, slot3 = transformhelper.getLocalPos(slot0._bgGo.transform)
 	slot4, slot5 = transformhelper.getLocalScale(slot0._bgGo.transform)
 
 	for slot11, slot12 in ipairs(slot0._heroSkeletonGraphics) do
 		slot12.materialForRendering:SetTexture("_SceneMask", slot0._blitEff.capturedTexture)
-		slot12.materialForRendering:SetVector("_SceneMask_ST", Vector4.New(slot4, slot5, slot2, slot11))
+		slot12.materialForRendering:SetVector("_SceneMask_ST", Vector4.New(slot4, slot5, slot2, slot3))
 	end
 end
 

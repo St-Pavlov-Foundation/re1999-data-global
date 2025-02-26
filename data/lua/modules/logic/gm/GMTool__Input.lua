@@ -70,9 +70,7 @@ _G.getGlobal("Partial_GMTool")._input = ({
 	end,
 	_showOpeningViewName = function (slot0)
 		if #slot0:_getOpeningViewNameList() > 0 then
-			slot6 = "GM [正在打开的UI]:"
-
-			table.insert({}, slot6)
+			table.insert({}, "GM [正在打开的UI]:")
 
 			for slot6, slot7 in ipairs(slot1) do
 				table.insert(slot2, uv0.util.setColorDesc(slot6, uv1) .. " " .. uv0.util.setColorDesc(slot7, uv2))

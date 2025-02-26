@@ -257,9 +257,7 @@ function slot0._doChangeVoiceTypeAction(slot0)
 		slot0._curVoiceIndex = slot1
 
 		if slot2 then
-			slot8 = "in_settings"
-
-			SettingsVoicePackageController.instance:switchVoiceType(slot2, slot8)
+			SettingsVoicePackageController.instance:switchVoiceType(slot2, "in_settings")
 			slot0:_refreshVoiceDropDownStr()
 
 			for slot8, slot9 in pairs(HeroModel.instance:getAllHero()) do

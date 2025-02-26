@@ -74,10 +74,7 @@ function slot0.dispose(slot0)
 end
 
 function slot0._calcCelebrityCharm(slot0)
-	slot4 = slot0.entity:getMO()
-	slot6 = slot4
-
-	for slot5, slot6 in pairs(slot4.getBuffDic(slot6)) do
+	for slot5, slot6 in pairs(slot0.entity:getMO():getBuffDic()) do
 		if (lua_skill_buff.configDict[slot6.buffId] and lua_skill_bufftype.configDict[slot7.typeId]).id == FightEnum.BuffTypeId_CelebrityCharm then
 			slot1 = 0 + 1
 		end

@@ -27,10 +27,10 @@ function slot0.removeEvents(slot0)
 	slot0:removeClickCb(slot0._btnMulSkill, slot0._showThis, slot0)
 	slot0:removeClickCb(slot0._btnClose, slot0._hideThis, slot0)
 
-	slot4 = slot0._btnStart
-	slot5 = slot0._onClickStart
+	slot4 = slot0._onClickStart
+	slot5 = slot0
 
-	slot0:removeClickCb(slot4, slot5, slot0)
+	slot0:removeClickCb(slot0._btnStart, slot4, slot5)
 
 	for slot4, slot5 in ipairs(slot0._items) do
 		gohelper.findChildButtonWithAudio(slot5, "imgRemove"):RemoveClickListener()

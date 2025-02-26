@@ -199,11 +199,11 @@ function slot0._editableInitView(slot0)
 	slot0._characteritem.imagecareer = gohelper.findChildImage(slot0._characteritem.go, "image_career")
 	slot0._characteritem.txtnamecn = gohelper.findChildText(slot0._characteritem.go, "txt_namecn")
 	slot0._characteritem.btndetail = gohelper.findChildButtonWithAudio(slot0._characteritem.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
-	slot0._characteritem.gorole = gohelper.findChild(slot0.viewGO, "#go_ui/current/#go_selected/#go_role1")
+	slot4 = "#go_ui/current/#go_selected/#go_role1"
+	slot0._characteritem.gorole = gohelper.findChild(slot0.viewGO, slot4)
 	slot0._characteritem.simagehero = slot0._simagerole1selected
 	slot0._characteritem.simageheroRefresh = slot0._simagerolerefresh
-	slot4 = slot0
-	slot0._characteritem.rares = slot0.getUserDataTb_(slot4)
+	slot0._characteritem.rares = slot0:getUserDataTb_()
 
 	for slot4 = 1, 6 do
 		table.insert(slot0._characteritem.rares, gohelper.findChild(slot0._characteritem.go, "rare/go_rare" .. slot4))
@@ -320,9 +320,9 @@ end
 function slot0.refreshPickHero(slot0, slot1)
 	if (slot0:getPickHeroIds(slot1) and slot2[1] or nil) ~= nil and slot0._characteritem then
 		slot4 = HeroConfig.instance:getHeroCO(slot3)
-		slot8 = slot0._characteritem.imagecareer
+		slot8 = "lssx_" .. tostring(slot4.career)
 
-		UISpriteSetMgr.instance:setCommonSprite(slot8, "lssx_" .. tostring(slot4.career))
+		UISpriteSetMgr.instance:setCommonSprite(slot0._characteritem.imagecareer, slot8)
 
 		slot0._characteritem.txtnamecn.text = slot4.name
 

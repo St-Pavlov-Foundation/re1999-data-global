@@ -121,10 +121,9 @@ function slot0.refresh(slot0)
 	end
 
 	slot4 = true
-	slot11 = slot3.level
-	slot12 = slot0._mo.level
+	slot11 = slot0._mo.level
 
-	for slot11, slot12 in ipairs(HeroConfig.instance:getLevelUpItems(slot2, slot11, slot12)) do
+	for slot11, slot12 in ipairs(HeroConfig.instance:getLevelUpItems(slot2, slot3.level, slot11)) do
 		if ItemModel.instance:getItemQuantity(tonumber(slot12.type), tonumber(slot12.id)) < tonumber(slot12.quantity) then
 			slot4 = false
 

@@ -152,10 +152,7 @@ end
 function slot0._hidePreview(slot0)
 	gohelper.setActive(slot0._btnoverview.gameObject, false)
 	gohelper.setActive(slot0._imageselect.gameObject, true)
-
-	slot4 = true
-
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, slot4)
+	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, true)
 
 	for slot4, slot5 in ipairs(slot0._tipItem) do
 		gohelper.setActive(slot5.go, false)

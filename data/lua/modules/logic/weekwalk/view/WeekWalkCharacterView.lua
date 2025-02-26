@@ -84,9 +84,9 @@ function slot0._editableInitView(slot0)
 	WeekWalkCharacterModel.instance:setCardListByCareerIndex(0)
 	slot0._dropclassify:SetValue(WeekWalkCharacterModel.instance:getRankIndex())
 
-	slot4 = slot0._onValueChanged
+	slot4 = slot0
 
-	slot0._dropclassify:AddOnValueChanged(slot4, slot0)
+	slot0._dropclassify:AddOnValueChanged(slot0._onValueChanged, slot4)
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()

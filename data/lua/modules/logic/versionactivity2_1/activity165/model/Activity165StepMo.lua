@@ -26,9 +26,7 @@ function slot0.onInit(slot0, slot1, slot2, slot3)
 		slot0.isEndingStep = slot0.stepCo.answersKeywordIds == "-1"
 
 		if not slot0.isEndingStep then
-			slot8 = "|"
-
-			for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.answersKeywordIds, "#", slot8)) do
+			for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.answersKeywordIds, "#", "|")) do
 				if LuaUtil.tableNotEmpty(slot9) then
 					slot12 = (slot0.nextSteps[slot9[1]] or {
 						nextId = slot10
@@ -52,9 +50,7 @@ function slot0.onInit(slot0, slot1, slot2, slot3)
 	slot0.roundSteps = {}
 
 	if not string.nilorempty(slot0.stepCo.nextStepConditionIds) then
-		slot8 = "|"
-
-		for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.nextStepConditionIds, "#", slot8)) do
+		for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.nextStepConditionIds, "#", "|")) do
 			if LuaUtil.tableNotEmpty(slot9) then
 				slot10 = {}
 

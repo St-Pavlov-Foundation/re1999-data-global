@@ -90,9 +90,7 @@ function slot0.refreshRoomEvents(slot0)
 		end
 	end
 
-	slot8 = 3
-
-	for slot8 = 1, math.min(#slot1.currentEvents, slot8) do
+	for slot8 = 1, math.min(#slot1.currentEvents, 3) do
 		slot9 = slot1.currentEvents[slot8]
 
 		if not slot2 or slot3[slot9.eventId] then

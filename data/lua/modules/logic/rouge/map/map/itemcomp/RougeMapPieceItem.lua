@@ -81,10 +81,9 @@ function slot0.refreshDirection(slot0)
 
 	slot1 = RougeMapModel.instance:getMiddleLayerPathPos(slot0.pieceMo.index + 1)
 	slot2, slot3 = slot0:getMapPos()
-	slot9 = slot1.y
 
 	for slot9, slot10 in pairs(slot0.directionGoMap) do
-		gohelper.setActive(slot10, slot9 == RougeMapHelper.getPieceDir(RougeMapHelper.getAngle(slot2, slot3, slot1.x, slot9)))
+		gohelper.setActive(slot10, slot9 == RougeMapHelper.getPieceDir(RougeMapHelper.getAngle(slot2, slot3, slot1.x, slot1.y)))
 	end
 end
 

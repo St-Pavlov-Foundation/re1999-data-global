@@ -14,11 +14,7 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	elseif slot4 == "4" then
 		slot5 = FightHelper.getSideEntitys(FightHelper.getEntity(slot1.toId):getSide(), true)
 	elseif slot4 == "5" then
-		slot6 = FightHelper.getEntity(slot1.fromId)
-		slot11 = slot6
-		slot10 = true
-
-		for slot10, slot11 in ipairs(FightHelper.getSideEntitys(slot6.getSide(slot11), slot10)) do
+		for slot10, slot11 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide(), true)) do
 			if slot11.id == slot1.fromId then
 				table.remove(slot5, slot10)
 

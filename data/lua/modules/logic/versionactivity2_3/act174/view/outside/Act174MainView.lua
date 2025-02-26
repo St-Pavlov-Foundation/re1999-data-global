@@ -221,9 +221,7 @@ function slot0.initRule(slot0)
 		table.insert(slot3, slot1[#slot0.actInfo:getRuleHeroCoList() - slot7])
 	end
 
-	slot7 = Activity174Helper.sortActivity174RoleCo
-
-	table.sort(slot3, slot7)
+	table.sort(slot3, Activity174Helper.sortActivity174RoleCo)
 
 	slot0.ruleHeroIconList = {}
 

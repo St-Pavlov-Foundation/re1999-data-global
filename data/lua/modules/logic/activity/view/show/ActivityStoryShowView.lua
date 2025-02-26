@@ -59,9 +59,10 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.refreshData(slot0)
-	slot4 = ActivityConfig.instance.getActivityShowTaskCount
+	slot3 = ActivityConfig.instance
+	slot4 = slot3
 
-	for slot4 = 1, GameUtil.getTabLen(slot4(slot4, slot0._actId)) do
+	for slot4 = 1, GameUtil.getTabLen(slot3.getActivityShowTaskCount(slot4, slot0._actId)) do
 		table.insert(slot0._taskConfigDataTab, ActivityConfig.instance:getActivityShowTaskList(slot0._actId, slot4))
 	end
 end

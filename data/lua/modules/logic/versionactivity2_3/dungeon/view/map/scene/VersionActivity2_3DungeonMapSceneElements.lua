@@ -238,9 +238,9 @@ function slot0._showElementAnim(slot0, slot1, slot2)
 	slot0:_stopShowSequence()
 
 	slot0._showSequence = FlowSequence.New()
-	slot6 = TimerWork.New
+	slot6 = uv1
 
-	slot0._showSequence:addWork(slot6(uv1))
+	slot0._showSequence:addWork(TimerWork.New(slot6))
 	table.sort(slot1)
 
 	for slot6, slot7 in ipairs(slot1) do

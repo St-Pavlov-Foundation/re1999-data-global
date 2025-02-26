@@ -68,9 +68,9 @@ end
 slot0.LevelNum = 3
 
 function slot0.refreshLevelCollect(slot0)
-	slot4 = AchievementEntryModel.instance
-	slot4 = slot4.getTotalFinishedCount
-	slot0._txttotal.text = tostring(slot4(slot4))
+	slot3 = AchievementEntryModel.instance
+	slot4 = slot3
+	slot0._txttotal.text = tostring(slot3.getTotalFinishedCount(slot4))
 
 	for slot4 = 1, uv0.LevelNum do
 		slot0["_txtlevel" .. tostring(slot4)].text = string.format("%s", AchievementEntryModel.instance:getLevelCount(slot4))

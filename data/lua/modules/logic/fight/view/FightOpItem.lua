@@ -6,8 +6,7 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0.tr = slot1.transform
 	slot0._imgMat = gohelper.findChildImage(slot1, "imgMat")
-	slot5 = "imgTag"
-	slot0._imgTag = gohelper.findChildImage(slot1, slot5)
+	slot0._imgTag = gohelper.findChildImage(slot1, "imgTag")
 	slot0._imgBgs = slot0:getUserDataTb_()
 	slot0._imgBgGos = slot0:getUserDataTb_()
 
@@ -77,10 +76,10 @@ function slot0.updateCardInfoMO(slot0, slot1)
 		slot3 = 1
 	end
 
-	slot9 = slot0._imgTag
-	slot10 = "jnk_gj" .. slot2.showTag
+	slot10 = slot2.showTag
+	slot9 = "jnk_gj" .. slot10
 
-	UISpriteSetMgr.instance:setFightSprite(slot9, slot10)
+	UISpriteSetMgr.instance:setFightSprite(slot0._imgTag, slot9)
 
 	for slot9, slot10 in ipairs(slot0._imgBgs) do
 		gohelper.setActive(slot10.gameObject, slot9 == slot3)

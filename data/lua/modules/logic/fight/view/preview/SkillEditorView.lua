@@ -219,9 +219,8 @@ function slot0._onBuffClick(slot0, slot1, slot2, slot3, slot4)
 
 	if isDebugBuild then
 		slot6 = {}
-		slot11 = slot5
 
-		for slot10, slot11 in pairs(slot5.getBuffDic(slot11)) do
+		for slot10, slot11 in pairs(slot5:getBuffDic()) do
 			table.insert(slot6, string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", slot11.buffId, slot11.count, slot11.duration, slot12.name, slot12.desc, slot12.isGoodBuff == 1 and "good" or "bad", lua_skill_buff.configDict[slot11.buffId].isNoShow == 0 and "show" or "noShow"))
 		end
 

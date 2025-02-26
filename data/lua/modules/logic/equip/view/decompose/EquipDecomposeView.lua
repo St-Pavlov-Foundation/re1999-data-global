@@ -145,9 +145,9 @@ function slot0.initFilterDrop(slot0)
 	slot0.dropArrowTr = gohelper.findChildComponent(slot0._goDrop, "Arrow", gohelper.Type_Transform)
 	slot0.dropClick = gohelper.getClick(slot0._goDrop)
 	slot0.dropExtend = DropDownExtend.Get(slot0._goDrop)
-	slot4 = slot0.onDropShow
+	slot4 = slot0.onDropHide
 
-	slot0.dropExtend:init(slot4, slot0.onDropHide, slot0)
+	slot0.dropExtend:init(slot0.onDropShow, slot4, slot0)
 
 	slot0.filterRareList = {}
 

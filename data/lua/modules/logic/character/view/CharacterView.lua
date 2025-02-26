@@ -142,10 +142,12 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._btnskin.gameObject, CharacterEnum.SkinOpen)
 	gohelper.setActive(slot0._btnhelp.gameObject, HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character))
 	slot0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/juese_bj"))
-	slot0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon("guangyun"))
 
-	slot5 = true
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, slot5)
+	slot5 = "guangyun"
+
+	slot0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon(slot5))
+
+	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
 	slot0._rareStars = slot0:getUserDataTb_()
 
 	for slot5 = 1, 6 do
@@ -185,8 +187,8 @@ function slot0._editableInitView(slot0)
 
 	for slot5 = 1, 3 do
 		slot6 = slot0:getUserDataTb_()
-		slot10 = "light" .. slot5
-		slot6.go = gohelper.findChild(slot0._goranklights, slot10)
+		slot10 = slot5
+		slot6.go = gohelper.findChild(slot0._goranklights, "light" .. slot10)
 		slot6.lights = slot0:getUserDataTb_()
 
 		for slot10 = 1, slot5 do
@@ -196,8 +198,7 @@ function slot0._editableInitView(slot0)
 		slot0._ranklights[slot5] = slot6
 	end
 
-	slot5 = CharacterSkillContainer
-	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, slot5)
+	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, CharacterSkillContainer)
 	slot0._passiveskillitems = {}
 
 	for slot5 = 1, 3 do
@@ -1153,10 +1154,9 @@ function slot0._refreshAttributeTips(slot0, slot1)
 	if slot2:hasDefaultEquip() then
 		slot11 = EquipModel.instance:getEquip(slot2.defaultEquipUid)
 		slot9[CharacterEnum.AttrId.Hp], slot9[CharacterEnum.AttrId.Attack], slot9[CharacterEnum.AttrId.Defense], slot9[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot11)
-		slot20 = slot11.breakLv
 
 		for slot20, slot21 in ipairs(uv0.AttrIdList) do
-			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot11.config, slot20)[slot21] ~= 0 then
+			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot11.config, slot11.breakLv)[slot21] ~= 0 then
 				slot9[slot21] = slot9[slot21] + math.floor(slot22 / 100 * slot5[slot21])
 			end
 		end

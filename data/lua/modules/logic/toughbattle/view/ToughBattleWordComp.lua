@@ -7,10 +7,10 @@ function slot2(slot0)
 	slot1 = nil
 
 	if LangSettings.instance:isEn() then
-		slot5 = slot0
+		slot5 = 1
 
 		for slot5 = 1, #{
-			string.byte(slot5, 1, -1)
+			string.byte(slot0, slot5, -1)
 		} do
 			if slot1[slot5] == 32 then
 				slot1[slot5] = uv0
@@ -42,9 +42,8 @@ end
 function slot0.createTxt(slot0)
 	slot0._allAnimWork = {}
 	slot2, slot3 = slot0:getRes(slot0._sign, true)
-	slot9 = slot0._co.sign
 
-	slot3:LoadImage(ResUrl.getSignature(slot9))
+	slot3:LoadImage(ResUrl.getSignature(slot0._co.sign))
 
 	for slot9 = 1, #uv0(string.split(slot0._co.desc, "\n")[1]) do
 		slot10, slot11 = slot0:getRes(slot0._line1, false)

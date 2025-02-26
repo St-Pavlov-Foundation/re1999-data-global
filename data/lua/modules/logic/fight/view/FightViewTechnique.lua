@@ -177,10 +177,8 @@ end
 
 function slot0._udpateAnchorY(slot0)
 	slot1 = {}
-	slot4 = FightViewTechniqueModel.instance
-	slot6 = slot4
 
-	for slot5, slot6 in ipairs(slot4.getList(slot6)) do
+	for slot5, slot6 in ipairs(FightViewTechniqueModel.instance:getList()) do
 		if lua_fight_technique.configDict[slot6.id] and slot7.iconShow == "1" then
 			table.insert(slot1, slot6)
 

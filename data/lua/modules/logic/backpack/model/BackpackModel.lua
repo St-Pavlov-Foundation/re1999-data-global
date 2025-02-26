@@ -70,35 +70,23 @@ function slot0.getBackpackItemList(slot0)
 end
 
 function slot0.getBackpackList(slot0)
-	slot4 = ItemModel.instance
-	slot6 = slot4
-
-	for slot5, slot6 in pairs(slot4.getList(slot6)) do
+	for slot5, slot6 in pairs(ItemModel.instance:getList()) do
 		table.insert({}, slot6)
 	end
 
-	slot4 = CurrencyModel.instance
-	slot6 = slot4
-
-	for slot5, slot6 in pairs(slot4.getCurrencyList(slot6)) do
+	for slot5, slot6 in pairs(CurrencyModel.instance:getCurrencyList()) do
 		if slot6.quantity > 0 then
 			table.insert(slot1, slot6)
 		end
 	end
 
-	slot4 = ItemPowerModel.instance
-	slot6 = slot4
-
-	for slot5, slot6 in pairs(slot4.getPowerItemList(slot6)) do
+	for slot5, slot6 in pairs(ItemPowerModel.instance:getPowerItemList()) do
 		if slot6.quantity > 0 then
 			table.insert(slot1, slot6)
 		end
 	end
 
-	slot4 = ItemInsightModel.instance
-	slot6 = slot4
-
-	for slot5, slot6 in pairs(slot4.getInsightItemList(slot6)) do
+	for slot5, slot6 in pairs(ItemInsightModel.instance:getInsightItemList()) do
 		if slot6.quantity > 0 then
 			table.insert(slot1, slot6)
 		end
@@ -195,9 +183,7 @@ function slot0.getCategoryItemlist(slot0, slot1)
 end
 
 function slot0._getItemBelong(slot0, slot1, slot2)
-	slot7 = ItemEnum.CategoryType.All
-
-	table.insert({}, slot7)
+	table.insert({}, ItemEnum.CategoryType.All)
 
 	for slot7, slot8 in pairs(slot0._categoryList) do
 		slot9, slot10 = nil

@@ -304,8 +304,7 @@ function slot0._loadSceneFinish(slot0)
 	slot0._gorole3 = gohelper.findChild(slot0._goroles, "m_sjwf_xingti_R")
 	slot0._gorole4 = gohelper.findChild(slot0._goroles, "m_sjwf_meilanni_L")
 	slot0._gorole5 = gohelper.findChild(slot0._goroles, "m_sjwf_xingti_L")
-	slot5 = "m_sjwf_xiaogou_R"
-	slot0._gorole6 = gohelper.findChild(slot0._goroles, slot5)
+	slot0._gorole6 = gohelper.findChild(slot0._goroles, "m_sjwf_xiaogou_R")
 
 	for slot5 = 1, 6 do
 		slot0[string.format("_aniRole%s", slot5)] = slot0[string.format("_gorole%s", slot5)]:GetComponent(typeof(UnityEngine.Animator))

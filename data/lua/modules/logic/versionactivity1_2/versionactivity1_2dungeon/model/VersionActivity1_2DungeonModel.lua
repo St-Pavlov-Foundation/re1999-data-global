@@ -155,10 +155,9 @@ function slot0.haveNextLevel(slot0, slot1)
 	end
 
 	slot3 = {}
-	slot6 = VersionActivity1_2DungeonConfig.instance
-	slot8 = slot6
+	slot7 = slot1
 
-	for slot7, slot8 in pairs(slot6.getBuildingConfigsByElementID(slot8, slot1)) do
+	for slot7, slot8 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot7)) do
 		table.insert(slot3, slot8)
 	end
 
@@ -209,10 +208,7 @@ function slot0.jump2DailyEpisode(slot0, slot1)
 					end)
 				end
 			else
-				slot11 = VersionActivity1_2DungeonConfig.instance
-				slot13 = slot11
-
-				for slot12, slot13 in ipairs(slot11.getType4List(slot13)) do
+				for slot12, slot13 in ipairs(VersionActivity1_2DungeonConfig.instance:getType4List()) do
 					if slot0:getDailyEpisodeConfigByElementId(slot13.elementId) then
 						GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function ()
 							ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)

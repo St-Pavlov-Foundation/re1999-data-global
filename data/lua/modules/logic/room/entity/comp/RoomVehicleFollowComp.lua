@@ -36,9 +36,9 @@ function slot0._initPathList(slot0)
 		return
 	end
 
-	slot6 = slot0._getPostionByNode
+	slot6 = slot0
 
-	table.insert(slot0._initPosList, slot6(slot0, slot2[1], 0))
+	table.insert(slot0._initPosList, slot0._getPostionByNode(slot6, slot2[1], 0))
 
 	for slot6 = 2, #slot2 do
 		slot7 = slot2[slot6 - 1]
@@ -165,10 +165,7 @@ function slot0._initFollower(slot0, slot1, slot2)
 	end
 
 	slot0:_refreshFollowDistance()
-
-	slot10 = slot0._followerList
-
-	tabletool.addValues(slot0._forwardList, slot10)
+	tabletool.addValues(slot0._forwardList, slot0._followerList)
 
 	for slot10, slot11 in ipairs(slot0._followerList) do
 		table.insert(slot0._backwardList, 1, slot11)
@@ -185,10 +182,8 @@ end
 
 function slot0._addFollerPathPos(slot0, slot1, slot2, slot3)
 	if #slot0._followerList > 0 then
-		slot8 = slot3
-
 		for slot8 = 2, #slot0._followerList do
-			slot0._followerList[slot8]:addPathPos(Vector3(slot1, slot2, slot8))
+			slot0._followerList[slot8]:addPathPos(Vector3(slot1, slot2, slot3))
 		end
 	end
 end

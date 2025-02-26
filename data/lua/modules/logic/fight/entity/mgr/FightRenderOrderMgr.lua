@@ -18,9 +18,8 @@ function slot0.setSortType(slot0, slot1)
 end
 
 function slot0.refreshRenderOrder(slot0, slot1)
-	slot5 = slot0._registIdList
-	slot6 = slot1
-	slot0._entityId2OrderSort = uv0.sortOrder(slot0._renderOrderType, slot5, slot6)
+	slot5 = slot1
+	slot0._entityId2OrderSort = uv0.sortOrder(slot0._renderOrderType, slot0._registIdList, slot5)
 
 	for slot5, slot6 in ipairs(slot0._registIdList) do
 		slot0:_resetRenderOrder(slot6)

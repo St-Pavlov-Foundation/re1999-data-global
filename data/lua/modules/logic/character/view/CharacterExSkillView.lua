@@ -76,10 +76,12 @@ function slot0._editableInitView(slot0)
 	slot0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
 	slot0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
 	slot0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	slot0._simagefulllevel:LoadImage(ResUrl.getCharacterExskill("zs_02"))
 
-	slot4 = "go_skills"
-	slot0.skillContainerGo = gohelper.findChild(slot0.viewGO, slot4)
+	slot4 = "zs_02"
+
+	slot0._simagefulllevel:LoadImage(ResUrl.getCharacterExskill(slot4))
+
+	slot0.skillContainerGo = gohelper.findChild(slot0.viewGO, "go_skills")
 	slot0.skillCardGoDict = slot0:getUserDataTb_()
 
 	for slot4 = 1, 3 do
@@ -95,15 +97,15 @@ function slot0._editableInitView(slot0)
 	slot0._buffBgClick:AddClickDownListener(slot0.hideBuffContainer, slot0)
 
 	slot0._jumpAnimationClick = gohelper.getClick(slot0._goJumpAnimationMask)
+	slot4 = slot0
 
-	slot0._jumpAnimationClick:AddClickListener(slot0.onJumpAnimationClick, slot0)
+	slot0._jumpAnimationClick:AddClickListener(slot0.onJumpAnimationClick, slot4)
 
 	slot0._goBuffItem = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem")
 	slot0._txtBuffName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
 	slot0._goBuffTag = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
 	slot0._txtBuffTagName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	slot4 = "#go_buffContainer/#go_buffitem/txt_desc"
-	slot0._txtBuffDesc = gohelper.findChildText(slot0.viewGO, slot4)
+	slot0._txtBuffDesc = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
 	slot0.golvList = slot0:getUserDataTb_()
 
 	for slot4 = 1, CharacterEnum.MaxSkillExLevel do

@@ -191,10 +191,7 @@ function slot0._setLevels(slot0)
 
 	if slot0._layer <= 4 then
 		gohelper.setActive(slot0._gofront, true)
-
-		slot7 = false
-
-		gohelper.setActive(slot0._gorear, slot7)
+		gohelper.setActive(slot0._gorear, false)
 
 		for slot7 = 1, 6 do
 			slot0._showLvItems[slot7] = SeasonMarketShowLevelItem.New()
@@ -203,10 +200,7 @@ function slot0._setLevels(slot0)
 		end
 	elseif slot0._layer >= slot2 - 3 then
 		gohelper.setActive(slot0._gofront, false)
-
-		slot7 = true
-
-		gohelper.setActive(slot0._gorear, slot7)
+		gohelper.setActive(slot0._gorear, true)
 
 		for slot7 = slot2 - 5, slot2 do
 			slot0._showLvItems[slot7] = SeasonMarketShowLevelItem.New()
@@ -230,13 +224,10 @@ end
 
 function slot0._delayShowItem(slot0)
 	slot1, slot2 = transformhelper.getPos(slot0._showLvItems[slot0._layer].point.transform)
-	slot8 = 0
+	slot7 = 0
 
-	transformhelper.setPos(slot0._goScrollRoot.transform, -slot1, 0, slot8)
-
-	slot7 = recthelper.getAnchorX(slot0._goScrollRoot.transform) + 115.2
-
-	recthelper.setAnchorX(slot0._goScrollRoot.transform, slot7)
+	transformhelper.setPos(slot0._goScrollRoot.transform, -slot1, 0, slot7)
+	recthelper.setAnchorX(slot0._goScrollRoot.transform, recthelper.getAnchorX(slot0._goScrollRoot.transform) + 115.2)
 
 	for slot7, slot8 in pairs(slot0._showLvItems) do
 		slot8:show()
@@ -286,9 +277,9 @@ function slot0._setInfo(slot0)
 	slot0._simagedecorate2:LoadImage(ResUrl.getSeasonMarketIcon(slot1.stagePicture))
 	gohelper.setActive(slot0._gorewarditem, false)
 
-	slot10 = #slot0._rewardItems - 1
+	slot10 = #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)
 
-	for slot10 = 2, math.max(slot10, #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)) + 1 do
+	for slot10 = 2, math.max(#slot0._rewardItems - 1, slot10) + 1 do
 		slot0:refreshRewardItem(slot0._rewardItems[slot10] or slot0:createRewardItem(slot10), slot6[slot10 - 1])
 	end
 

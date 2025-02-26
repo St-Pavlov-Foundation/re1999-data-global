@@ -508,13 +508,12 @@ function slot0._showPopupViewChange(slot0, slot1)
 		RoomStoreOrderModel.instance:remove(slot2)
 
 		if slot2.themeId then
-			slot9 = {
-				itemType = MaterialEnum.MaterialType.RoomTheme,
-				itemId = slot10
-			}
-			slot10 = slot2.themeId
+			slot9 = slot2.themeId
 
-			table.insert({}, slot9)
+			table.insert({}, {
+				itemType = MaterialEnum.MaterialType.RoomTheme,
+				itemId = slot9
+			})
 
 			for slot9, slot10 in ipairs(slot1) do
 				if slot2.themeId ~= slot5:getThemeIdByItem(slot10.materilId, slot10.materilType) then

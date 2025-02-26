@@ -165,10 +165,9 @@ function slot0.refreshRewards(slot0, slot1)
 		slot0.rewardItems = {}
 	end
 
-	slot2 = GameUtil.splitString2(slot1, true) or {}
-	slot6 = #slot0.rewardItems
+	slot6 = #(GameUtil.splitString2(slot1, true) or {})
 
-	for slot6 = 1, math.max(slot6, #slot2) do
+	for slot6 = 1, math.max(#slot0.rewardItems, slot6) do
 		if not slot0.rewardItems[slot6] then
 			slot0.rewardItems[slot6] = IconMgr.instance:getCommonPropItemIcon(slot0.goRewards)
 		end

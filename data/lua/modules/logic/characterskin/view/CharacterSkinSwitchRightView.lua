@@ -362,9 +362,8 @@ function slot0._onItemClick(slot0, slot1)
 
 	slot0._currentSelectSkinIndex = slot2
 	slot0.selectSkinCo = slot0._itemObjects[slot0._currentSelectSkinIndex].skinCo
-	slot7 = AudioEnum.UI.play_ui_character_skin_switch
 
-	AudioMgr.instance:trigger(slot7)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
 
 	for slot7, slot8 in ipairs(slot0._itemObjects) do
 		slot9 = slot0._currentSelectSkinIndex == slot7 and 1 or 0.9
@@ -451,9 +450,7 @@ function slot0.skinHasOnLine(slot0, slot1)
 		return
 	end
 
-	slot7 = slot2
-
-	for slot6, slot7 in ipairs(slot2.getGoodsList(slot7)) do
+	for slot6, slot7 in ipairs(slot2:getGoodsList()) do
 		if string.splitToNumber(slot7.config.product, "#")[1] == MaterialEnum.MaterialType.HeroSkin and slot9[2] == slot1 then
 			return true
 		end

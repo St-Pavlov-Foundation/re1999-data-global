@@ -903,9 +903,7 @@ function slot0._saveQuickGroupInfo(slot0, slot1)
 	slot2 = (not slot0._isInitType or RougeEnum.InitTeamHeroNum) and slot0._heroGroupModel:getBattleRoleNum()
 
 	if slot0._heroGroupQuickEditListModel:getIsDirty() then
-		slot7 = slot0._heroGroupQuickEditListModel:getHeroUids()
-
-		slot0:replaceQuickGroupHeroDefaultEquip(slot7)
+		slot0:replaceQuickGroupHeroDefaultEquip(slot0._heroGroupQuickEditListModel:getHeroUids())
 
 		for slot7 = 1, slot2 do
 			if slot3[slot7] ~= nil then
@@ -1013,9 +1011,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	slot4 = ResUrl.getHeroGroupBg
+	slot4 = "guang_027"
 
-	slot0._simageredlight:LoadImage(slot4("guang_027"))
+	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()
@@ -1068,8 +1066,7 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot0._goBtnEditQuickMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn2")
-	slot4 = "btn1"
-	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, slot4)
+	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn1")
 	slot0._attributevalues = {}
 
 	for slot4 = 1, 5 do
@@ -1177,9 +1174,7 @@ function slot0._initFakeLevelList(slot0, slot1)
 end
 
 function slot0.onOpen(slot0)
-	slot4 = AudioEnum.HeroGroupUI.Play_UI_Team_Open
-
-	AudioMgr.instance:trigger(slot4)
+	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
 	slot0._isShowQuickEdit = false
 	slot0._scrollcard.verticalNormalizedPosition = 1

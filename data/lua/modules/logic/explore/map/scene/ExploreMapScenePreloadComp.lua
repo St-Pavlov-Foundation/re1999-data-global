@@ -198,9 +198,9 @@ function slot0._delayUpdate(slot0)
 
 		LuaProfiler.BeginSample(uv3)
 
-		slot11 = slot1.fieldOfView + uv0
+		slot11 = slot1.aspect
 
-		ZProj.ExploreHelper.RebuildFrustumPlanes(slot1, uv1, uv2, slot11, slot1.aspect)
+		ZProj.ExploreHelper.RebuildFrustumPlanes(slot1, uv1, uv2, slot1.fieldOfView + uv0, slot11)
 		LuaProfiler.EndSample()
 		LuaProfiler.BeginSample(uv4)
 
@@ -223,9 +223,9 @@ function slot0._delayUpdate(slot0)
 			slot0.showObjIdDict[slot4] = 0
 		end
 
-		slot4 = slot0.showRage
+		slot4 = slot0.showObjIdDict
 
-		slot0._tree:triggerMove(slot4, slot0.showObjIdDict)
+		slot0._tree:triggerMove(slot0.showRage, slot4)
 
 		for slot4 in pairs(slot0._allObjDic) do
 			if slot0.showObjIdDict[slot4] == 1 then
@@ -254,10 +254,10 @@ end
 
 function slot0._updateShadow(slot0)
 	if slot0._lights then
-		slot8 = 25
-		slot9 = 0.01
+		slot8 = 0.01
+		slot9 = slot0.camera.fieldOfView + 2
 
-		ZProj.ExploreHelper.RebuildDirectionalCullingPlanes(slot0.camera, slot8, slot9, slot0.camera.fieldOfView + 2, slot0.camera.aspect, slot0._lights)
+		ZProj.ExploreHelper.RebuildDirectionalCullingPlanes(slot0.camera, 25, slot8, slot9, slot0.camera.aspect, slot0._lights)
 
 		for slot8, slot9 in pairs(slot0._allShadowObjDic) do
 			if ZProj.ExploreHelper.CheckBoundIsInDirectionalCullingPlanes(slot9.bounds) then

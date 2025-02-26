@@ -71,9 +71,7 @@ function slot0._onSwitchTab(slot0, slot1)
 		return
 	end
 
-	slot6 = true
-
-	gohelper.setActive(slot0.viewGO, slot6)
+	gohelper.setActive(slot0.viewGO, true)
 
 	for slot6, slot7 in ipairs(slot0._treeLightList) do
 		if slot7.isPlayAnim then

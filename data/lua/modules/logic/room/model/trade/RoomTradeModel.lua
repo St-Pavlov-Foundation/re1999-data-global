@@ -93,9 +93,7 @@ function slot0.getTracedDailyOrdersMaterials(slot0)
 
 	for slot8, slot9 in ipairs(slot0:getDailyOrders()) do
 		if slot9.isTraced then
-			slot14 = slot9
-
-			for slot13, slot14 in ipairs(slot9.getGoodsInfo(slot14)) do
+			for slot13, slot14 in ipairs(slot9:getGoodsInfo()) do
 				if not LuaUtil.tableContains(slot3, ManufactureConfig.instance:getItemId(slot14.productionId)) then
 					table.insert(slot3, slot15)
 				end

@@ -68,9 +68,7 @@ function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
 end
 
 function slot0._removeEffect(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._removeEffect, slot4)
+	TaskDispatcher.cancelTask(slot0._removeEffect, slot0)
 
 	for slot4, slot5 in ipairs(slot0._effectWraps) do
 		slot0.entity.effect:removeEffect(slot5)

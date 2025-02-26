@@ -319,9 +319,8 @@ function slot0.onReceiveGainProductionLineReply(slot0, slot1, slot2)
 
 	if slot1 == 0 then
 		slot4 = slot2.productionLines
-		slot8 = slot4
 
-		RoomProductionModel.instance:updateProductionLines(slot8)
+		RoomProductionModel.instance:updateProductionLines(slot4)
 
 		for slot8, slot9 in ipairs(slot4) do
 			if slot9.id ~= 0 then

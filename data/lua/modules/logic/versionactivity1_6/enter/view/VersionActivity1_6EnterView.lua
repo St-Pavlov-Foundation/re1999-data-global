@@ -229,12 +229,10 @@ function slot0.refreshTabSelectState(slot0, slot1, slot2)
 		return
 	end
 
-	slot9 = "eff/3"
-
 	for slot9, slot10 in ipairs({
 		gohelper.findChild(slot1.go_selected, "eff/1"),
 		gohelper.findChild(slot1.go_selected, "eff/2"),
-		gohelper.findChild(slot1.go_selected, slot9)
+		gohelper.findChild(slot1.go_selected, "eff/3")
 	}) do
 		gohelper.setActive(slot10, slot9 == uv0[slot1.actId])
 	end

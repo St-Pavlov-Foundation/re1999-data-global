@@ -3,8 +3,7 @@ module("modules.logic.versionactivity2_3.act174.view.info.Act174SkillContainer",
 slot0 = class("Act174SkillContainer", LuaCompBase)
 
 function slot0.init(slot0, slot1)
-	slot5 = "line/go_skills"
-	slot0._goskills = gohelper.findChild(slot1, slot5)
+	slot0._goskills = gohelper.findChild(slot1, "line/go_skills")
 	slot0._skillitems = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -40,9 +39,7 @@ end
 
 function slot0._refreshSkillUI(slot0)
 	if slot0._roleId then
-		slot5 = true
-
-		for slot5, slot6 in pairs(Activity174Config.instance:getHeroSkillIdDic(slot0._roleId, slot5)) do
+		for slot5, slot6 in pairs(Activity174Config.instance:getHeroSkillIdDic(slot0._roleId, true)) do
 			if not lua_skill.configDict[slot6] then
 				logError(string.format("heroID : %s, skillId not found : %s", slot0._roleId, slot6))
 			end

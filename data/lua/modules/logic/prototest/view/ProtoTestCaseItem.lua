@@ -85,9 +85,8 @@ end
 
 function slot0._onClickCopy(slot0)
 	slot2 = ProtoTestCaseModel.instance:getList()
-	slot6 = slot0._mo:clone()
 
-	table.insert(slot2, slot6)
+	table.insert(slot2, slot0._mo:clone())
 
 	for slot6, slot7 in ipairs(slot2) do
 		slot7.id = slot6

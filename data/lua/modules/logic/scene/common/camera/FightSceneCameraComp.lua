@@ -281,12 +281,11 @@ slot1 = 60
 slot2 = 1.7777777777777777
 
 function slot0._onScreenResize(slot0, slot1, slot2)
-	slot10 = 60
-	slot11 = 120
+	slot10 = 120
 
 	for slot10, slot11 in ipairs(CameraMgr.instance:getVirtualCameras()) do
 		slot12 = slot11.m_Lens
-		slot11.m_Lens = Cinemachine.LensSettings.New(Mathf.Clamp(2 * Mathf.Atan(Mathf.Tan(uv1 * Mathf.Deg2Rad / 2) / (slot1 / slot2 / uv0)) * Mathf.Rad2Deg, slot10, slot11), slot12.OrthographicSize, slot12.NearClipPlane, slot12.FarClipPlane, slot12.Dutch)
+		slot11.m_Lens = Cinemachine.LensSettings.New(Mathf.Clamp(2 * Mathf.Atan(Mathf.Tan(uv1 * Mathf.Deg2Rad / 2) / (slot1 / slot2 / uv0)) * Mathf.Rad2Deg, 60, slot10), slot12.OrthographicSize, slot12.NearClipPlane, slot12.FarClipPlane, slot12.Dutch)
 	end
 
 	TaskDispatcher.runDelay(slot0._delaySetUnitCameraFov, slot0, 0.01)

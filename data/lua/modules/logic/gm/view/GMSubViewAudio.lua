@@ -104,7 +104,8 @@ function slot0.initViewContent(slot0)
 		align = TMPro.TextAlignmentOptions.TopLeft
 	})
 
-	slot0._charAudioIdInConfig = slot0:addInputText(slot0:getLineGroup(), PlayerPrefsHelper.getString("checkAudioIdInConfigKey", ""), "", slot0._CallAudioInConfig, slot0, {
+	slot8 = slot0
+	slot0._charAudioIdInConfig = slot0:addInputText(slot0:getLineGroup(), PlayerPrefsHelper.getString("checkAudioIdInConfigKey", ""), "", slot0._CallAudioInConfig, slot8, {
 		w = 600,
 		h = 200,
 		align = UnityEngine.TextAnchor.UpperLeft
@@ -125,10 +126,7 @@ function slot0.initViewContent(slot0)
 		fsize = 26
 	})
 	slot0:addLineIndex()
-
-	slot8 = slot0
-
-	slot0:addButton(slot0:getLineGroup(), "释放音效Bnk", slot0._onReleaseAudioResource, slot8)
+	slot0:addButton(slot0:getLineGroup(), "释放音效Bnk", slot0._onReleaseAudioResource, slot0)
 
 	slot0.autoStopPrePlayingId = true
 	slot0.prePlayingId = 0
@@ -555,10 +553,8 @@ end
 
 function slot0._onLoadTimelineDone(slot0)
 	slot1 = {}
-	slot4 = slot0._timelienLoader
-	slot6 = slot4
 
-	for slot5, slot6 in pairs(slot4.getAssetItemDict(slot6)) do
+	for slot5, slot6 in pairs(slot0._timelienLoader:getAssetItemDict()) do
 		if not string.nilorempty(ZProj.SkillTimelineAssetHelper.GeAssetJson(slot6, slot5)) then
 			for slot12 = 1, #cjson.decode(slot7), 2 do
 				if tonumber(slot8[slot12]) == 3 then
@@ -901,10 +897,7 @@ function slot0._onClickCheckAudioResource(slot0)
 	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Android", slot3)
 	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/iOS", slot3)
 	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Mac", slot3)
-
-	slot8 = slot3
-
-	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Windows", slot8)
+	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Windows", slot3)
 
 	slot4 = {}
 
@@ -950,9 +943,7 @@ end
 function slot0._getAudioEventsInResourceDir(slot0, slot1, slot2)
 	for slot7 = 0, SLFramework.FileHelper.GetDirFilePaths(slot1).Length - 1 do
 		if slot3[slot7]:match("[.txt]$") then
-			slot13 = "[^\\]play_[%w_]+"
-
-			for slot13 in SLFramework.FileHelper.ReadText(slot8):gmatch(slot13) do
+			for slot13 in SLFramework.FileHelper.ReadText(slot8):gmatch("[^\\]play_[%w_]+") do
 				slot2[slot13:match("^[%s]*(.-)[%s]*$")] = slot8
 			end
 		end
@@ -1016,10 +1007,10 @@ function slot0._checkAudioResInSoundbanksInfoXml(slot0)
 		slot8[slot14._attr.Id] = true
 	end
 
-	slot15 = "Android"
-	slot16 = "Assets/ZResourcesLib/audios/Android"
+	slot15 = "Assets/ZResourcesLib/audios/Android"
+	slot16 = {}
 
-	slot0:_fillAudioBnkWemFilePath(slot15, slot16, {}, {})
+	slot0:_fillAudioBnkWemFilePath("Android", slot15, slot16, {})
 
 	for slot15, slot16 in pairs(slot7) do
 		if slot10[slot15] then
@@ -1040,11 +1031,9 @@ function slot0._checkAudioResInSoundbanksInfoXml(slot0)
 		slot12[#slot12 + 1] = slot17
 	end
 
-	function slot17(slot0, slot1)
+	table.sort(slot12, function (slot0, slot1)
 		return slot0:sub(1, 1) < slot1:sub(1, 1)
-	end
-
-	table.sort(slot12, slot17)
+	end)
 
 	for slot17, slot18 in pairs(slot11) do
 		slot13[#slot13 + 1] = slot18
@@ -1135,9 +1124,8 @@ end
 
 function slot0._getFolderAndParent(slot0)
 	slot1 = {}
-	slot5 = "[^/]+"
 
-	for slot5 in slot0:gmatch(slot5) do
+	for slot5 in slot0:gmatch("[^/]+") do
 		table.insert(slot1, slot5)
 	end
 

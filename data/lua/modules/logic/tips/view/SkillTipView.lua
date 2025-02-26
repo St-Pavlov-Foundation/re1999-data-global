@@ -60,9 +60,9 @@ end
 function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._goBuffContainer, false)
 
-	slot4 = slot0._refreshArrow
+	slot4 = slot0
 
-	slot0._scrollskilltipScrollview:AddOnValueChanged(slot4, slot0)
+	slot0._scrollskilltipScrollview:AddOnValueChanged(slot0._refreshArrow, slot4)
 
 	slot0._newskillitems = {}
 
@@ -232,9 +232,7 @@ function slot0._refreshSkillSpecial(slot0, slot1)
 	slot2 = {}
 
 	if slot1.battleTag and slot1.battleTag ~= "" then
-		slot6 = "#"
-
-		for slot6 = 1, #string.split(slot1.battleTag, slot6) do
+		for slot6 = 1, #string.split(slot1.battleTag, "#") do
 			if not slot0._skillTagGOs[slot6] then
 				table.insert(slot0._skillTagGOs, gohelper.cloneInPlace(slot0._gospecialitem, "item" .. slot6))
 			end

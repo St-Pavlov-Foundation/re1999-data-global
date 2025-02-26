@@ -119,10 +119,9 @@ function slot0._getBlockMeshRendererDict(slot0, slot1, slot2)
 	end
 
 	if #slot8 > 0 then
-		slot15 = slot10
-		slot16 = {}
+		slot15 = {}
 
-		slot0:_addBuildingMeshRendererIdDict(slot15, slot16)
+		slot0:_addBuildingMeshRendererIdDict(slot10, slot15)
 
 		for slot15, slot16 in ipairs(slot1) do
 			if not slot11[slot2[slot15]] and RoomCharacterHelper.isBlockCharacter(slot8, slot9, slot16) then

@@ -89,10 +89,7 @@ function slot0._initObj(slot0)
 
 	table.insert(slot0._rareEffectGOs, slot0._gorareEffect1)
 	table.insert(slot0._rareEffectGOs, slot0._gorareEffect2)
-
-	slot4 = slot0._gorareEffect3
-
-	table.insert(slot0._rareEffectGOs, slot4)
+	table.insert(slot0._rareEffectGOs, slot0._gorareEffect3)
 
 	for slot4, slot5 in ipairs(slot0._rareEffectGOs) do
 		gohelper.setActive(slot5, false)

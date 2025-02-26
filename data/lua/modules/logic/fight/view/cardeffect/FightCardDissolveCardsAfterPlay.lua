@@ -10,9 +10,8 @@ function slot0.onStart(slot0, slot1)
 		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
 
 		slot3 = slot0.context.cards
-		slot8 = slot3
 
-		slot1.view:_updateHandCards(slot8)
+		slot1.view:_updateHandCards(slot3)
 
 		for slot8, slot9 in ipairs(slot2) do
 			FightController.instance:dispatchEvent(FightEvent.CardRemove, {

@@ -222,11 +222,9 @@ function slot0.getNextScore(slot0, slot1)
 			table.insert(slot4, slot9)
 		end
 
-		function slot8(slot0, slot1)
+		table.sort(slot4, function (slot0, slot1)
 			return slot0.needScore < slot1.needScore
-		end
-
-		table.sort(slot4, slot8)
+		end)
 
 		for slot8, slot9 in ipairs(slot4) do
 			if slot1 < slot9.needScore then

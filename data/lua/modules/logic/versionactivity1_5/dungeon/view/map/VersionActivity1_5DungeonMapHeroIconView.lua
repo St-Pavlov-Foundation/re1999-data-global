@@ -208,10 +208,7 @@ function slot0.refreshHeroIcon(slot0)
 
 		if slot6 then
 			gohelper.setActive(slot0.heroItemDict[slot4].goHeroIcon1, false)
-
-			slot10 = false
-
-			gohelper.setActive(slot0.heroItemDict[slot4].goHeroIcon2, slot10)
+			gohelper.setActive(slot0.heroItemDict[slot4].goHeroIcon2, false)
 
 			for slot10, slot11 in ipairs(slot5) do
 				slot0:refreshHeroItemPos(slot4, slot10, slot11)

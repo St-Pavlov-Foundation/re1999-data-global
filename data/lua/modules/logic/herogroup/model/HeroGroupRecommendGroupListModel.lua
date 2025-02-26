@@ -14,11 +14,9 @@ function slot0.setGroupList(slot0, slot1)
 		table.insert(slot3, slot9)
 	end
 
-	function slot7(slot0, slot1)
+	table.sort(slot3, function (slot0, slot1)
 		return slot1.rate < slot0.rate
-	end
-
-	table.sort(slot3, slot7)
+	end)
 
 	for slot7 = #slot2 + 1, 5 do
 		slot8 = HeroGroupRecommendGroupMO.New()

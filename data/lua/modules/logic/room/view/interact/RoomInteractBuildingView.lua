@@ -100,9 +100,8 @@ function slot0._editableInitView(slot0)
 	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_right/#go_hero/sort/#drop_sort/arrow")
 	slot0._goarrowTrs = slot0._goarrow.transform
 	slot0._dropfilter = gohelper.findChildDropdown(slot0.viewGO, "#go_right/#go_hero/sort/#drop_filter")
-	slot5 = slot0
 
-	slot0._dropfilter:AddOnValueChanged(slot0._onValueChanged, slot5)
+	slot0._dropfilter:AddOnValueChanged(slot0._onValueChanged, slot0)
 
 	slot1 = {
 		luaLang("all_language_filter_option")

@@ -488,10 +488,10 @@ function slot0._updatePassiveSkill(slot0)
 		return
 	end
 
-	slot6 = FightConfig.instance:getPassiveSkillsAfterUIFilter(lua_monster.configDict[slot0._bossEntityMO.modelId].id)
+	slot6 = true
 	slot0.bossSkillInfos = {}
 
-	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(slot6, true) do
+	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(FightConfig.instance:getPassiveSkillsAfterUIFilter(lua_monster.configDict[slot0._bossEntityMO.modelId].id), slot6) do
 		if lua_skill_specialbuff.configDict[slot2[slot6]] then
 			if not slot0._specialSkillGOs[slot6] then
 				slot9 = slot0:getUserDataTb_()

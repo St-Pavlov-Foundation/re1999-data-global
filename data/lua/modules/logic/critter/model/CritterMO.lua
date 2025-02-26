@@ -186,9 +186,8 @@ end
 
 function slot0.getAdditionAttr(slot0)
 	slot1 = {}
-	slot6 = slot0
 
-	for slot5, slot6 in pairs(slot0.getAttributeInfos(slot6)) do
+	for slot5, slot6 in pairs(slot0:getAttributeInfos()) do
 		if slot6:getIsAddition() then
 			table.insert(slot1, slot5)
 		end

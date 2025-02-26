@@ -71,10 +71,9 @@ return {
 
 		for slot5, slot6 in ipairs(slot0 or RoomMapBuildingModel.instance:getBuildingMOList()) do
 			if slot6.buildingState == RoomBuildingEnum.BuildingState.Map then
-				slot11 = slot6.rotate
-				slot12 = slot6.id
+				slot11 = slot6.id
 
-				for slot11, slot12 in pairs(uv0.getOccupyDict(slot6.config.id, slot6.hexPoint, slot11, slot12)) do
+				for slot11, slot12 in pairs(uv0.getOccupyDict(slot6.config.id, slot6.hexPoint, slot6.rotate, slot11)) do
 					for slot16, slot17 in pairs(slot12) do
 						slot1[slot11] = slot1[slot11] or {}
 						slot1[slot11][slot16] = slot17
@@ -93,9 +92,7 @@ return {
 			slot5 = uv0.getOccupyDict(slot6.buildingId, RoomMapBuildingModel.instance:getRevertHexPoint(), RoomMapBuildingModel.instance:getRevertRotate(), slot6.id)
 		end
 
-		slot10 = slot2
-
-		for slot10, slot11 in pairs(uv0.getOccupyDict(slot0, slot1, slot10)) do
+		for slot10, slot11 in pairs(uv0.getOccupyDict(slot0, slot1, slot2)) do
 			for slot15, slot16 in pairs(slot11) do
 				if uv0.isInInitBlock(HexPoint(slot10, slot15)) then
 					return true
@@ -114,9 +111,7 @@ return {
 		return false
 	end,
 	hasNoFoundation = function (slot0, slot1, slot2, slot3, slot4)
-		slot9 = slot2
-
-		for slot9, slot10 in pairs(uv0.getOccupyDict(slot0, slot1, slot9)) do
+		for slot9, slot10 in pairs(uv0.getOccupyDict(slot0, slot1, slot2)) do
 			for slot14, slot15 in pairs(slot10) do
 				if not slot3[slot9] or not slot3[slot9][slot14] or slot16.blockState ~= RoomBlockEnum.BlockState.Map and (not slot4 or slot16.blockState ~= RoomBlockEnum.BlockState.Water) then
 					return true
@@ -127,9 +122,7 @@ return {
 		return false
 	end,
 	checkResource = function (slot0, slot1, slot2)
-		slot7 = slot2
-
-		for slot7, slot8 in pairs(uv0.getOccupyDict(slot0, slot1, slot7)) do
+		for slot7, slot8 in pairs(uv0.getOccupyDict(slot0, slot1, slot2)) do
 			for slot12, slot13 in pairs(slot8) do
 				if RoomMapBlockModel.instance:getBlockMO(slot7, slot12) and not uv0.checkBuildResId(slot0, slot14:getResourceList(true)) then
 					return false
@@ -437,10 +430,9 @@ return {
 			for slot10, slot11 in pairs(slot6) do
 				for slot15 = 1, 6 do
 					slot16 = true
-					slot22 = slot5
-					slot21 = slot15
+					slot21 = slot10
 
-					for slot21, slot22 in pairs(uv0.getOccupyDict(slot1, HexPoint(slot22, slot10), slot21)) do
+					for slot21, slot22 in pairs(uv0.getOccupyDict(slot1, HexPoint(slot5, slot21), slot15)) do
 						for slot26, slot27 in pairs(slot22) do
 							if not slot0[slot21] or not slot0[slot21][slot26] then
 								slot16 = false

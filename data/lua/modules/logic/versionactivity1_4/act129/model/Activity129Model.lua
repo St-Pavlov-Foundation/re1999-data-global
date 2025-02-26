@@ -20,12 +20,12 @@ function slot0.onLotterySuccess(slot0, slot1)
 
 	for slot9 = 1, #slot1.rewards do
 		slot10 = slot2[slot9]
-		slot11 = Activity129Config.instance:getRewardConfig(slot1.poolId, slot10.rare, slot10.rewardType, slot10.rewardId)
-		slot16 = slot1.poolId
+		slot16 = slot10.rewardId
+		slot11 = Activity129Config.instance:getRewardConfig(slot1.poolId, slot10.rare, slot10.rewardType, slot16)
 
 		for slot16 = 1, slot10.num do
 			if slot10.rare == 5 then
-				if Activity129Config.instance:getPoolConfig(slot1.activityId, slot16).type ~= Activity129Enum.PoolType.Unlimite then
+				if Activity129Config.instance:getPoolConfig(slot1.activityId, slot1.poolId).type ~= Activity129Enum.PoolType.Unlimite then
 					table.insert(slot4, slot11)
 				end
 

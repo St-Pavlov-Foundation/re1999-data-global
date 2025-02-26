@@ -54,9 +54,8 @@ function slot0.initActivityDrop(slot0)
 	slot0.activityIdList = {}
 	slot0.activityShowStrList = {}
 	slot2 = {}
-	slot6 = VersionActivity1_7Enum.ActivityId
 
-	tabletool.addValues(slot2, slot6)
+	tabletool.addValues(slot2, VersionActivity1_7Enum.ActivityId)
 
 	slot0.activityAll = {
 		["1_7all"] = slot2

@@ -41,9 +41,9 @@ end
 function slot0._editableInitView(slot0)
 	slot0._simagebg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("score/img_bg.png"))
 
-	slot4 = ResUrl.getAct114Icon
+	slot4 = "bg1"
 
-	slot0._simagebg2:LoadImage(slot4("bg1"))
+	slot0._simagebg2:LoadImage(ResUrl.getAct114Icon(slot4))
 
 	slot0._scoreIcons = slot0:getUserDataTb_()
 

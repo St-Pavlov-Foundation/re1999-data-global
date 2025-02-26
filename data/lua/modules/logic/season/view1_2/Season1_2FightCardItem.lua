@@ -114,9 +114,9 @@ function slot0._setDesc(slot0, slot1)
 		slot0.itemList = slot0:getUserDataTb_()
 	end
 
-	slot9 = #slot0.itemList
+	slot9 = #slot5
 
-	for slot9 = 1, math.max(slot9, #slot5) do
+	for slot9 = 1, math.max(#slot0.itemList, slot9) do
 		slot0:updateDescItem(slot0.itemList[slot9] or slot0:createDescItem(slot9), slot5[slot9])
 	end
 end

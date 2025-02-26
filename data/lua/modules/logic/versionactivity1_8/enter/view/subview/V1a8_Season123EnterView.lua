@@ -62,8 +62,7 @@ function slot0._btnStoreOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = slot0
-	slot0.animComp = VersionActivitySubAnimatorComp.get(slot0.viewGO, slot4)
+	slot0.animComp = VersionActivitySubAnimatorComp.get(slot0.viewGO, slot0)
 	slot0.descTab = slot0:getUserDataTb_()
 
 	for slot4 = 1, 4 do

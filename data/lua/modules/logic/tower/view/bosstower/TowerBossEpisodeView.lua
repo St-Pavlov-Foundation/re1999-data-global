@@ -155,10 +155,9 @@ function slot0.refreshRewards(slot0, slot1)
 		slot0.rewardItems = {}
 	end
 
-	slot2 = GameUtil.splitString2(slot1, true) or {}
-	slot6 = #slot0.rewardItems
+	slot6 = #(GameUtil.splitString2(slot1, true) or {})
 
-	for slot6 = 1, math.max(slot6, #slot2) do
+	for slot6 = 1, math.max(#slot0.rewardItems, slot6) do
 		if not slot0.rewardItems[slot6] then
 			slot0.rewardItems[slot6] = IconMgr.instance:getCommonPropItemIcon(slot0.goRewards)
 		end
@@ -182,10 +181,9 @@ function slot0.refreshAttr(slot0)
 	slot6 = TowerConfig.instance:getAssistDevelopConfig(slot0.towerConfig.bossId, slot2) and slot5.talentPoint
 	slot0.txtCurLev.text = string.format("Lv.%s", slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot0.episodeConfig.preLayerId) and slot3.bossLevel or 0)
 	slot0.txtNextLev.text = string.format("Lv.%s", slot2)
-	slot7 = GameUtil.splitString2(slot5 and slot5.attribute, true) or {}
-	slot11 = #slot0.attrItems
+	slot11 = #(GameUtil.splitString2(slot5 and slot5.attribute, true) or {})
 
-	for slot11 = 1, math.max(slot11, #slot7) do
+	for slot11 = 1, math.max(#slot0.attrItems, slot11) do
 		if not slot0.attrItems[slot11] then
 			slot0.attrItems[slot11] = slot0:createAttrItem(slot11)
 		end

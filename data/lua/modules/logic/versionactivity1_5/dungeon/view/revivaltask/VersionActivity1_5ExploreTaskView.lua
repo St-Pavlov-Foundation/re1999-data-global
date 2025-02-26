@@ -49,16 +49,13 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0.animator = slot0._goexploretask:GetComponent(gohelper.Type_Animator)
-	slot4 = false
 
-	gohelper.setActive(slot0._gomapitem, slot4)
+	gohelper.setActive(slot0._gomapitem, false)
 
 	slot0.taskItemList = {}
 	slot0.needRefreshTimeTaskItemList = {}
-	slot3 = VersionActivity1_5DungeonConfig.instance
-	slot5 = slot3
 
-	for slot4, slot5 in ipairs(slot3.getExploreTaskList(slot5)) do
+	for slot4, slot5 in ipairs(VersionActivity1_5DungeonConfig.instance:getExploreTaskList()) do
 		slot0:createTaskItem(slot5)
 	end
 
@@ -158,10 +155,7 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.getFinishCount(slot0)
-	slot4 = VersionActivity1_5DungeonConfig.instance
-	slot6 = slot4
-
-	for slot5, slot6 in ipairs(slot4.getExploreTaskList(slot6)) do
+	for slot5, slot6 in ipairs(VersionActivity1_5DungeonConfig.instance:getExploreTaskList()) do
 		if slot0:checkExploreTaskFinish(slot6) then
 			slot1 = 0 + 1
 		end
@@ -197,10 +191,7 @@ function slot0.refreshMap(slot0)
 end
 
 function slot0.refreshLines(slot0)
-	slot3 = VersionActivity1_5DungeonConfig.instance
-	slot5 = slot3
-
-	for slot4, slot5 in ipairs(slot3.getExploreTaskList(slot5)) do
+	for slot4, slot5 in ipairs(VersionActivity1_5DungeonConfig.instance:getExploreTaskList()) do
 		slot0:refreshLineByTaskCo(slot5)
 	end
 end

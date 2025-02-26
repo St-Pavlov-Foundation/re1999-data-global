@@ -55,9 +55,8 @@ function slot0.setTrialByBattleId(slot0, slot1)
 	slot0._limitNum = slot2.trialLimit
 
 	if ToughBattleModel.instance:getAddTrialHeros() then
-		slot8 = slot0._limitNum
-		slot7 = #slot3 + slot8
-		slot0._limitNum = math.min(4, slot7)
+		slot7 = slot0._limitNum
+		slot0._limitNum = math.min(4, #slot3 + slot7)
 
 		for slot7, slot8 in pairs(slot3) do
 			slot9 = HeroMo.New()
@@ -111,9 +110,8 @@ function slot0.getFilterList(slot0)
 	slot0:checkBattleIdIsVaild()
 
 	slot1 = {}
-	slot6 = slot0
 
-	for slot5, slot6 in ipairs(slot0.getList(slot6)) do
+	for slot5, slot6 in ipairs(slot0:getList()) do
 		if (not slot0._filterCareers or tabletool.indexOf(slot0._filterCareers, slot6.config.career)) and (not slot0._filterDmgs or tabletool.indexOf(slot0._filterDmgs, slot6.config.dmgType)) then
 			table.insert(slot1, slot6)
 		end

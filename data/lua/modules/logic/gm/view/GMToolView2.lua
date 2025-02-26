@@ -203,10 +203,9 @@ function slot0.initActivityDrop(slot0)
 
 	tabletool.addValues(slot4, slot2.ActivityId)
 
-	slot8 = "%sall"
-	slot9 = slot1
+	slot8 = slot1
 	slot0.activityAll = {
-		[string.format(slot8, slot9)] = slot4
+		[string.format("%sall", slot8)] = slot4
 	}
 
 	for slot8, slot9 in ipairs({

@@ -45,13 +45,11 @@ function slot0.getCurOpenTimeLimitTower(slot0)
 end
 
 function slot0.getEntranceBossUsedMap(slot0, slot1)
-	slot7 = slot1
-
 	for slot7 = 1, 3 do
 	end
 
 	return {
-		[slot7] = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot7):getLayerSubEpisodeList(TowerConfig.instance:getTowerLimitedTimeCoList(slot1, slot7)[1].layerId) and slot10[1].assistBossId or 0
+		[slot7] = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot1):getLayerSubEpisodeList(TowerConfig.instance:getTowerLimitedTimeCoList(slot1, slot7)[1].layerId) and slot10[1].assistBossId or 0
 	}
 end
 

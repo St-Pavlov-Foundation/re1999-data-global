@@ -58,9 +58,8 @@ function slot0.markStepData(slot0)
 	end
 
 	slot1.fan_time = {}
-	slot6 = PushBoxGameMgr.ElementType.Fan
 
-	for slot6, slot7 in ipairs(slot0._game_mgr:getElementLogicList(slot6)) do
+	for slot6, slot7 in ipairs(slot0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Fan)) do
 		if slot7._start_time then
 			-- Nothing
 		end

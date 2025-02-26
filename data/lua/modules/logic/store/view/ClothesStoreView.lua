@@ -255,10 +255,11 @@ function slot0._onRefreshRedDot(slot0)
 	for slot4, slot5 in pairs(slot0._categoryItemContainer) do
 		gohelper.setActive(slot5.go_reddot, StoreModel.instance:isTabFirstRedDotShow(slot5.tabId))
 
-		slot9 = StoreModel.instance
-		slot9 = slot9.isTabFirstRedDotShow
+		slot8 = StoreModel.instance
+		slot9 = slot8
+		slot10 = slot5.tabId
 
-		gohelper.setActive(slot5.go_unselectreddot, slot9(slot9, slot5.tabId))
+		gohelper.setActive(slot5.go_unselectreddot, slot8.isTabFirstRedDotShow(slot9, slot10))
 
 		for slot9, slot10 in pairs(slot5.childItemContainer) do
 			gohelper.setActive(slot10.go_subreddot1, StoreModel.instance:isTabSecondRedDotShow(slot10.tabId))

@@ -103,9 +103,9 @@ _G.getGlobal("Partial_GMTool")._LuaConfigHooker = ({
 		end
 	end,
 	toggleSwitchMlString = function (slot0)
-		slot5 = uv0.util.colorBoolStr(not slot0._isEnabledMlString)
+		slot5 = not slot0._isEnabledMlString
 
-		logNormal("Toggle Switch MlString: " .. slot5)
+		logNormal("Toggle Switch MlString: " .. uv0.util.colorBoolStr(slot5))
 
 		for slot5, slot6 in pairs(slot0._sConfigInfo) do
 			slot0:_setActiveLangKey(_G[slot6.name], slot1)

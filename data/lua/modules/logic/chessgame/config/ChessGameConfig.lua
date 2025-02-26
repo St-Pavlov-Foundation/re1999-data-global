@@ -15,9 +15,9 @@ function slot0.getMapCo(slot0, slot1)
 		slot2 = {
 			[slot7] = {}
 		}
-		slot7 = tostring(slot1)
+		slot7 = slot1
 
-		for slot7 = 1, #addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(slot1), "lua_chessgame_group_" .. slot7) do
+		for slot7 = 1, #addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(slot1), "lua_chessgame_group_" .. tostring(slot7)) do
 			slot2[slot7].path = slot3[slot7][1]
 			slot2[slot7].interacts = {}
 

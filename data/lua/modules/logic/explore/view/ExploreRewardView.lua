@@ -45,9 +45,8 @@ function slot0.onOpen(slot0)
 
 	for slot15 = 1, 2 do
 		slot16 = ExploreTaskModel.instance:getTaskList(3 - slot15)
-		slot21 = slot15
 
-		for slot21, slot22 in pairs(ExploreConfig.instance:getTaskList(slot1.id, slot21)) do
+		for slot21, slot22 in pairs(ExploreConfig.instance:getTaskList(slot1.id, slot15)) do
 			if TaskModel.instance:getTaskById(slot22.id) and slot22.maxProgress <= slot23.progress and slot23.finishCount == 0 then
 				table.insert(slot11, slot22.id)
 			end

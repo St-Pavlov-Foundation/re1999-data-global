@@ -84,9 +84,7 @@ function slot0.checkHasOpenRelateAct(slot0, slot1)
 	slot2 = {}
 
 	if not string.nilorempty(slot1.relateActId) then
-		slot7 = "#"
-
-		for slot7, slot8 in ipairs(string.splitToNumber(slot1.relateActId, slot7)) do
+		for slot7, slot8 in ipairs(string.splitToNumber(slot1.relateActId, "#")) do
 			if ActivityHelper.getActivityStatusAndToast(slot8) == ActivityEnum.ActivityStatus.Normal then
 				return true
 			end
@@ -116,11 +114,8 @@ end
 
 function slot0.getCanShowRecommendList(slot0)
 	slot1 = {}
-	slot4 = TurnbackConfig.instance
-	slot6 = slot4
-	slot7 = slot0.turnbackId
 
-	for slot6, slot7 in pairs(tabletool.copy(slot4.getAllRecommendCo(slot6, slot7))) do
+	for slot6, slot7 in pairs(tabletool.copy(TurnbackConfig.instance:getAllRecommendCo(slot0.turnbackId))) do
 		if slot0:checkRecommendCanShow(slot7) then
 			table.insert(slot1, slot7)
 		end

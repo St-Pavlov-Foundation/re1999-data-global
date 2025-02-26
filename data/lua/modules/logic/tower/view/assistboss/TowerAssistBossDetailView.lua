@@ -9,8 +9,7 @@ function slot0.onInitView(slot0)
 	slot0.btnTalent = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/btnTalent")
 	slot0.btnBossTower = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/btnBossTower")
 	slot0.simageBoss = gohelper.findChildSingleImage(slot0.viewGO, "root/left/boss/icon")
-	slot4 = "root/right/info/passiveskill/bg/#txt_passivename"
-	slot0.txtPassiveName = gohelper.findChildTextMesh(slot0.viewGO, slot4)
+	slot0.txtPassiveName = gohelper.findChildTextMesh(slot0.viewGO, "root/right/info/passiveskill/bg/#txt_passivename")
 	slot0.passiveSkillItems = {}
 
 	for slot4 = 1, 3 do

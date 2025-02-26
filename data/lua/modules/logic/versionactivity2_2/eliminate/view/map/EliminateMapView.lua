@@ -21,8 +21,8 @@ slot0.MapMaxOffsetX = 150
 slot0.AnimationDuration = 1
 
 function slot0._editableInitView(slot0)
-	slot4 = 0.05
-	slot0._vec4 = Vector4(0, slot4, 0, 0)
+	slot4 = 0
+	slot0._vec4 = Vector4(0, 0.05, slot4, 0)
 	slot0.goChapterNodeList = {}
 	slot0.nodeItemDict = {}
 
@@ -83,9 +83,7 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.refreshBg(slot0)
-	slot5 = lua_eliminate_chapter.configDict[slot0.chapterId].map
-
-	slot0._simagebg:LoadImage(slot5)
+	slot0._simagebg:LoadImage(lua_eliminate_chapter.configDict[slot0.chapterId].map)
 
 	for slot5 = 1, EliminateMapModel.getChapterNum() do
 		gohelper.setActive(slot0.goChapterNodeList[slot5], slot5 == slot0.chapterId)

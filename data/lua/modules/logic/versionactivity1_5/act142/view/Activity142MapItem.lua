@@ -85,9 +85,7 @@ function slot0.setEpisodeId(slot0, slot1, slot2)
 		gohelper.setActive(slot12.go, false)
 	end
 
-	slot12 = slot0._episodeId
-
-	for slot12 = 1, Activity142Config.instance:getEpisodeMaxStar(slot3, slot12) do
+	for slot12 = 1, Activity142Config.instance:getEpisodeMaxStar(slot3, slot0._episodeId) do
 		slot13 = slot0._starItemList[slot12] or slot0:_addStarItem()
 
 		gohelper.setActive(slot13.go, true)

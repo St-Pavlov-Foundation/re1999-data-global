@@ -125,10 +125,10 @@ function slot0._initBoss(slot0)
 	if slot0._curStage then
 		slot0._simageFullBG:LoadImage(BossRushConfig.instance:getResultViewFullBgSImage(slot0._curStage))
 
-		slot4 = BossRushConfig.instance
-		slot4 = slot4.getResultViewNameSImage
+		slot3 = BossRushConfig.instance
+		slot4 = slot3
 
-		slot0._simageTitle:LoadImage(slot4(slot4, slot0._curStage))
+		slot0._simageTitle:LoadImage(slot3.getResultViewNameSImage(slot4, slot0._curStage))
 
 		for slot4 = 1, 3 do
 			gohelper.setActive(gohelper.findChild(slot0.viewGO, "boss_topbg" .. slot4), slot4 == slot0._curStage)

@@ -185,10 +185,9 @@ function slot0.getWeekTaskProgress()
 
 	for slot7, slot8 in ipairs(WeekWalkTaskListModel.instance:getList()) do
 		if WeekWalkTaskListModel.instance:getTaskMo(slot8.id) and (slot9.finishCount > 0 or slot9.hasFinished) then
-			slot14 = "|"
-			slot15 = "#"
+			slot14 = "#"
 
-			for slot14, slot15 in ipairs(GameUtil.splitString2(slot8.bonus, true, slot14, slot15)) do
+			for slot14, slot15 in ipairs(GameUtil.splitString2(slot8.bonus, true, "|", slot14)) do
 				slot18 = slot15[3]
 
 				if not slot2[string.format("%s_%s", slot15[1], slot15[2])] then
@@ -233,9 +232,8 @@ function slot0._showBonus(slot0)
 		return
 	end
 
-	slot8, slot2, slot3 = uv0.getWeekTaskProgress()
-	slot7 = "%s/%s"
-	slot0._txttaskprogress.text = string.format(slot7, slot8, slot2)
+	slot7, slot8, slot3 = uv0.getWeekTaskProgress()
+	slot0._txttaskprogress.text = string.format("%s/%s", slot7, slot8)
 
 	gohelper.destroyAllChildren(slot0._gorewards)
 

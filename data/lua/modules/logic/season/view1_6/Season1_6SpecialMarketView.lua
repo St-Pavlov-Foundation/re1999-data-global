@@ -202,9 +202,9 @@ function slot0._refreshInfo(slot0)
 
 	gohelper.setActive(slot0._gorewarditem, false)
 
-	slot8 = #slot0._rewardItems
+	slot8 = #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)
 
-	for slot8 = 1, math.max(slot8, #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)) do
+	for slot8 = 1, math.max(#slot0._rewardItems, slot8) do
 		slot0:refreshRewardItem(slot0._rewardItems[slot8] or slot0:createRewardItem(slot8), slot4[slot8])
 	end
 
@@ -268,9 +268,9 @@ function slot0.updateLeftDesc(slot0)
 	end
 
 	slot0._curDescItem = nil
-	slot6 = #slot2
+	slot6 = #slot0.descItems
 
-	for slot6 = 1, math.max(slot6, #slot0.descItems) do
+	for slot6 = 1, math.max(#slot2, slot6) do
 		if not slot0.descItems[slot6] then
 			slot0.descItems[slot6] = slot0:createLeftDescItem(slot6)
 		end

@@ -203,9 +203,8 @@ function slot0.OnFightItemClick(slot0, slot1)
 	end
 
 	slot0.latestfightItem = slot1
-	slot5 = AudioEnum.UI.play_ui_shuori_story_click
 
-	AudioMgr.instance:trigger(slot5)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_story_click)
 
 	for slot5, slot6 in ipairs(slot0.fightItemList) do
 		slot6:refreshSelect(slot1)

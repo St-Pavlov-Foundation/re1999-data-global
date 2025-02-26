@@ -147,8 +147,7 @@ end
 function slot0._getRect(slot0, slot1, slot2)
 	slot2:GetComponent(typeof(UnityEngine.RectTransform)):GetWorldCorners(System.Array.CreateInstance(typeof(Vector3), 4))
 
-	slot10 = Vector2
-	slot6 = System.Array.CreateInstance(typeof(slot10), 4)
+	slot6 = System.Array.CreateInstance(typeof(Vector2), 4)
 
 	for slot10 = 0, 3 do
 		slot6[slot10] = UnityEngine.RectTransformUtility.WorldToScreenPoint(gohelper.find("UICamera"):GetComponent(typeof(UnityEngine.Camera)), slot5[slot10])
@@ -199,9 +198,7 @@ function slot0.onDestroyView(slot0)
 		coroutine.stop(slot0._co)
 	end
 
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._overTime, slot4)
+	TaskDispatcher.cancelTask(slot0._overTime, slot0)
 
 	for slot4, slot5 in ipairs(slot0._listenerList) do
 		slot5:RemoveClickListener()

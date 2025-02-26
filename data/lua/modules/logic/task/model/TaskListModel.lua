@@ -39,20 +39,15 @@ function slot0.getTaskList(slot0, slot1)
 				return slot0.config.id < slot1.config.id
 			end
 		end)
-
-		function slot12(slot0, slot1)
+		table.sort(slot7, function (slot0, slot1)
 			return slot1.config.sortId < slot0.config.sortId
-		end
-
-		table.sort(slot7, slot12)
+		end)
 
 		for slot12, slot13 in ipairs(slot7) do
 			table.insert(slot2, 1, slot13)
 		end
 
-		slot12 = slot3
-
-		for slot12, slot13 in ipairs(slot0:_getCurMainTaskMo(slot12)) do
+		for slot12, slot13 in ipairs(slot0:_getCurMainTaskMo(slot3)) do
 			if JumpConfig.instance:isOpenJumpId(slot13.config.jumpId) then
 				table.insert(slot2, 1, slot13)
 			end
@@ -113,11 +108,9 @@ function slot0._getCurMainTaskMo(slot0, slot1)
 		end
 	end
 
-	function slot6(slot0, slot1)
+	table.sort(slot2, function (slot0, slot1)
 		return slot0.config.sortId < slot1.config.sortId
-	end
-
-	table.sort(slot2, slot6)
+	end)
 
 	for slot6, slot7 in ipairs(slot2) do
 		if not slot7.config.prepose or slot7.config.prepose == "" then

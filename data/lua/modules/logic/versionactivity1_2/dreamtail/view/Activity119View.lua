@@ -311,15 +311,17 @@ function slot0._editableInitView(slot0)
 	slot0._simagebookrightpagenormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_righttop"))
 	slot0._simagebookrightbghard:LoadImage(ResUrl.getDreamTailImage("bg_book_dificult_right"))
 	slot0._simagebookrightpagehard:LoadImage(ResUrl.getDreamTailImage("bg_book_dif_righttop"))
-	slot0._simagerightpageline:LoadImage(ResUrl.getDreamTailImage("deco_right"))
+
+	slot4 = "deco_right"
+
+	slot0._simagerightpageline:LoadImage(ResUrl.getDreamTailImage(slot4))
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_swath_open)
 	gohelper.addUIClickAudio(slot0._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 	gohelper.addUIClickAudio(slot0._btnstartnormal.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 
 	slot0._openDt = os.clock()
-	slot4 = false
 
-	gohelper.setActive(slot0._gocategoryItem, slot4)
+	gohelper.setActive(slot0._gocategoryItem, false)
 
 	slot0.tabs = {}
 
@@ -333,9 +335,7 @@ function slot0._editableInitView(slot0)
 		slot0.tabs[slot4] = slot5
 	end
 
-	slot4 = false
-
-	gohelper.setActive(slot0._goreward, slot4)
+	gohelper.setActive(slot0._goreward, false)
 
 	slot0.rewards = {}
 
@@ -483,10 +483,7 @@ function slot0.onDestroyView(slot0)
 	slot0._simagerightpageline:UnLoadImage()
 	slot0._simageicon:UnLoadImage()
 	UIBlockMgr.instance:endBlock("Activity119ViewSwitch")
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0.playUnLockAnim, slot4)
+	TaskDispatcher.cancelTask(slot0.playUnLockAnim, slot0)
 
 	for slot4 = 1, #slot0.tabs do
 		slot0.tabs[slot4]:dispose()

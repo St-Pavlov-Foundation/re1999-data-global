@@ -84,15 +84,14 @@ function slot0.sortEntityId(slot0, slot1)
 end
 
 function slot0.initCareerBindBuff(slot0)
-	slot6 = "|"
 	slot0.careerDict = {}
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(lua_fight_const.configDict[31].value, slot6)) do
+	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(lua_fight_const.configDict[31].value, "|")) do
 		slot8 = string.split(slot7, "%")
 		slot9 = tonumber(slot8[1])
-		slot14 = slot8[2]
+		slot13 = ","
 
-		for slot13, slot14 in ipairs(string.split(slot14, ",")) do
+		for slot13, slot14 in ipairs(string.split(slot8[2], slot13)) do
 			slot15 = string.splitToNumber(slot14, ":")
 			slot17 = slot15[2]
 

@@ -146,9 +146,7 @@ function slot0.createContentItem(slot0)
 end
 
 function slot0.onClose(slot0)
-	slot4 = AudioEnum.UI.UI_Common_Click
-
-	AudioMgr.instance:trigger(slot4)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
 	for slot4, slot5 in ipairs(slot0.contentItemList) do
 		slot5.simageIcon:UnLoadImage()

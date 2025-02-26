@@ -655,10 +655,7 @@ function slot0._saveQuickGroupInfo(slot0)
 		Season123HeroGroupController.instance:replaceHeroesDefaultEquip(Season123HeroGroupQuickEditModel.instance:getHeroUids())
 
 		if HeroSingleGroupModel.instance:isTemp() then
-			slot4 = HeroGroupModel.instance
-			slot6 = slot4
-
-			for slot6 = 1, slot4.getBattleRoleNum(slot6) do
+			for slot6 = 1, HeroGroupModel.instance:getBattleRoleNum() do
 				if slot1[slot6] ~= nil then
 					HeroSingleGroupModel.instance:addTo(slot7, slot6)
 				end
@@ -741,9 +738,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	slot4 = ResUrl.getHeroGroupBg
+	slot4 = "guang_027"
 
-	slot0._simageredlight:LoadImage(slot4("guang_027"))
+	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()
@@ -796,8 +793,7 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot0._goBtnEditQuickMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn2")
-	slot4 = "btn1"
-	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, slot4)
+	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn1")
 	slot0._attributevalues = {}
 
 	for slot4 = 1, 5 do

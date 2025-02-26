@@ -46,9 +46,7 @@ function slot0.onOpen(slot0)
 	elseif slot3 == 1 then
 		gohelper.setActive(slot0._mainTarget, true)
 	else
-		slot7 = true
-
-		gohelper.setActive(slot0._mainTarget, slot7)
+		gohelper.setActive(slot0._mainTarget, true)
 
 		for slot7 = 2, #slot2 do
 			slot8 = gohelper.cloneInPlace(slot0._subTarget)

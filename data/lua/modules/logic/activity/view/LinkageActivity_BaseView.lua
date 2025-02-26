@@ -65,9 +65,7 @@ function slot0.onSelectedPage(slot0, slot1, slot2)
 		slot0:getPage(slot2):setActive(false)
 	end
 
-	slot8 = true
-
-	slot3:setActive(slot8)
+	slot3:setActive(true)
 
 	for slot8, slot9 in ipairs(slot0._pageItemList) do
 		slot9:onPostSelectedPage(slot3, slot4)

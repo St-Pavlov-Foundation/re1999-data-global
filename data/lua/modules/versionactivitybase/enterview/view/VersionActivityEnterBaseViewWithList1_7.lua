@@ -147,9 +147,7 @@ function slot0.refreshItemSiblingAndActive(slot0)
 		end
 	end
 
-	slot4 = slot0.openActItemSortFunc
-
-	table.sort(slot0.openActIdList, slot4)
+	table.sort(slot0.openActIdList, slot0.openActItemSortFunc)
 
 	for slot4, slot5 in ipairs(slot0.openActIdList) do
 		gohelper.setSibling(slot0.activityTabItemDict[slot5].rootGo, slot4)
@@ -163,10 +161,7 @@ function slot0.refreshItemSiblingAndActive(slot0)
 
 	gohelper.setActive(slot0._goActivityLine, true)
 	gohelper.setSibling(slot0._goActivityLine, #slot0.openActIdList + 1)
-
-	slot5 = slot0.noOpenActItemSortFunc
-
-	table.sort(slot0.noOpenActList, slot5)
+	table.sort(slot0.noOpenActList, slot0.noOpenActItemSortFunc)
 
 	for slot5, slot6 in ipairs(slot0.noOpenActList) do
 		gohelper.setSibling(slot0.activityTabItemDict[slot6].rootGo, slot1 + 1 + slot5)

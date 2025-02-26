@@ -193,9 +193,9 @@ function slot0._initTalentInfo(slot0)
 	if Season166Model.instance:getBattleContext() then
 		slot2 = Season166Model.instance:getCurSeasonId()
 		slot3 = slot1.talentId
-		slot11 = slot0._imagetalent
+		slot11 = "season166_talentree_btn_talen" .. lua_activity166_talent.configDict[slot2][slot3].sortIndex
 
-		UISpriteSetMgr.instance:setSeason166Sprite(slot11, "season166_talentree_btn_talen" .. lua_activity166_talent.configDict[slot2][slot3].sortIndex)
+		UISpriteSetMgr.instance:setSeason166Sprite(slot0._imagetalent, slot11)
 
 		for slot11 = 1, 3 do
 			UISpriteSetMgr.instance:setSeason166Sprite(gohelper.findChildImage(slot0.viewGO, "Right/TalentTree/equipslot/" .. slot11 .. "/light"), "season166_talentree_pointl" .. tostring(slot5.sortIndex))

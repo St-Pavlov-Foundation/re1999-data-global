@@ -5,9 +5,9 @@ slot0 = class("FightSkillEditorFlow", BaseFlow)
 function slot0.ctor(slot0, slot1)
 	slot0._fightStepMO = slot1
 	slot0._skillReleaseFlow = FlowParallel.New()
-	slot7 = slot0._playSkill
+	slot6 = slot0
 
-	slot0._skillReleaseFlow:addWork(FunctionWork.New(slot7, slot0))
+	slot0._skillReleaseFlow:addWork(FunctionWork.New(slot0._playSkill, slot6))
 
 	slot2 = nil
 

@@ -323,9 +323,9 @@ function slot0.isTeamFull(slot0)
 		return false
 	end
 
-	slot5 = slot0._battleRoleNum
+	slot5 = #slot0._inTeamHeroUidList
 
-	for slot5 = 1, math.min(slot5, #slot0._inTeamHeroUidList) do
+	for slot5 = 1, math.min(slot0._battleRoleNum, slot5) do
 		if slot0._inTeamHeroUidList[slot5] == "0" and slot0:isPositionOpen(slot5) and not slot0:_skipAssistPos(slot5) then
 			return false
 		end

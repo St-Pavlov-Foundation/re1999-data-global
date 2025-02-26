@@ -152,9 +152,9 @@ function slot0._showChapters(slot0)
 
 	recthelper.setAnchor(slot0._gograyline.transform, slot0._sliderBasePosx, slot0._posY)
 
-	slot4 = slot0._sliderBasePosx
+	slot4 = slot0._posY
 
-	recthelper.setAnchor(slot0._gonormalline.transform, slot4, slot0._posY)
+	recthelper.setAnchor(slot0._gonormalline.transform, slot0._sliderBasePosx, slot4)
 
 	slot0._prevPointValue = 0
 

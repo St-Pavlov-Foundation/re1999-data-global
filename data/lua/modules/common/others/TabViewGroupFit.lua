@@ -60,10 +60,10 @@ end
 
 function slot0.onClose(slot0)
 	slot0._hasOpenFinish = false
-	slot4 = ViewEvent.ToSwitchTab
-	slot5 = slot0._toSwitchTab
+	slot4 = slot0._toSwitchTab
+	slot5 = slot0
 
-	slot0.viewContainer:unregisterCallback(slot4, slot5, slot0)
+	slot0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, slot4, slot5)
 
 	for slot4, slot5 in pairs(slot0._tabViews) do
 		slot0:_closeTabView(slot4)

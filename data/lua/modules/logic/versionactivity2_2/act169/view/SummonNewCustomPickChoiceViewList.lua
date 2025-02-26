@@ -34,9 +34,7 @@ end
 
 function slot0.refreshItems(slot0, slot1, slot2, slot3)
 	if slot1 and #slot1 > 0 then
-		slot7 = true
-
-		gohelper.setActive(slot3, slot7)
+		gohelper.setActive(slot3, true)
 
 		for slot7, slot8 in ipairs(slot1) do
 			slot0:getOrCreateItem(slot7, slot2, slot3).component:onUpdateMO(slot8)

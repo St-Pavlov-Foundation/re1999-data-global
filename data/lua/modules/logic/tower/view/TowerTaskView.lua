@@ -231,9 +231,8 @@ end
 
 function slot0.refreshSelectState(slot0)
 	slot2 = TowerTaskModel.instance.curSelectToweId
-	slot6 = TowerTaskModel.instance.curSelectTowerType
 
-	TowerTaskModel.instance:refreshList(slot6)
+	TowerTaskModel.instance:refreshList(TowerTaskModel.instance.curSelectTowerType)
 
 	for slot6, slot7 in ipairs(slot0.towerItemList) do
 		slot7.select = slot1 == slot7.data.type and slot2 == slot7.data.towerId

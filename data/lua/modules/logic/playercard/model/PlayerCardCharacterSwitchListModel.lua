@@ -16,10 +16,9 @@ function slot0.initHeroList(slot0)
 	slot0._mainHeroList = {}
 	slot0.curHeroId = nil
 	slot1 = CharacterMainHeroMO.New()
-	slot6 = 0
-	slot7 = true
+	slot6 = true
 
-	slot1:init(nil, slot6, slot7)
+	slot1:init(nil, 0, slot6)
 	table.insert(slot0._mainHeroList, slot1)
 
 	for slot6, slot7 in ipairs(HeroModel.instance:getList()) do

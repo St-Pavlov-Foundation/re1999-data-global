@@ -20,9 +20,8 @@ function slot0.onInitView(slot0, slot1)
 
 	slot0.go = slot1
 	slot0.goStoreGoodsItem = gohelper.findChild(slot0.go, "#go_storegoodsitem")
-	slot5 = false
 
-	gohelper.setActive(slot0.goStoreGoodsItem, slot5)
+	gohelper.setActive(slot0.goStoreGoodsItem, false)
 
 	for slot5 = 1, 3 do
 		gohelper.setActive(gohelper.findChild(slot0.go, "tag" .. slot5), false)
@@ -76,8 +75,7 @@ function slot0.refreshTagClip(slot0, slot1)
 		return
 	end
 
-	slot7 = 1
-	slot0.tagCanvasGroup.alpha = Mathf.Clamp((uv0 - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (uv0 - uv1), 0, slot7)
+	slot0.tagCanvasGroup.alpha = Mathf.Clamp((uv0 - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (uv0 - uv1), 0, 1)
 
 	for slot7, slot8 in ipairs(slot0.tagMaskList) do
 		slot8.maskable = slot2.y <= uv2

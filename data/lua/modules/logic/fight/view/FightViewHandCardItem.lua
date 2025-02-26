@@ -261,9 +261,7 @@ function slot0._onDragHandCardBegin(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot10 = true
-
-	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), slot10)
+	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), true)
 
 	for slot10 = 1, 4 do
 		gohelper.setActive(gohelper.findChild(slot6, "jinengpai_" .. slot10), slot10 == slot5)
@@ -299,10 +297,10 @@ function slot0._updateSpEffect(slot0)
 	slot4 = {
 		[slot9] = true
 	}
-	slot7 = FightStrUtil.instance
-	slot9 = slot7
+	slot8 = slot1.clientIgnoreCondition
+	slot9 = "#"
 
-	for slot8, slot9 in ipairs(slot7.getSplitToNumberCache(slot9, slot1.clientIgnoreCondition, "#")) do
+	for slot8, slot9 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot8, slot9)) do
 		-- Nothing
 	end
 
@@ -325,10 +323,7 @@ function slot0._getConditionTargetUid(slot0, slot1)
 	elseif slot1 == 0 then
 		return FightCardModel.instance.curSelectEntityId
 	elseif slot1 == 202 then
-		slot4 = FightDataHelper.entityMgr
-		slot6 = slot4
-
-		for slot5, slot6 in ipairs(slot4.getEnemyNormalList(slot6)) do
+		for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 			return slot6.id
 		end
 	end
@@ -345,10 +340,8 @@ function slot0._getConditionTargetUids(slot0, slot1)
 		}
 	elseif slot1 == 202 then
 		slot2 = {}
-		slot5 = FightDataHelper.entityMgr
-		slot7 = slot5
 
-		for slot6, slot7 in ipairs(slot5.getEnemyNormalList(slot7)) do
+		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 			table.insert(slot2, slot7.id)
 		end
 
@@ -822,10 +815,7 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	slot5 = FightCardModel.instance
-	slot7 = slot5
-
-	for slot6, slot7 in ipairs(slot5.getPlayCardOpList(slot7)) do
+	for slot6, slot7 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
 		slot2 = 0 + slot7.costActPoint
 	end
 
@@ -1273,12 +1263,10 @@ function slot0.playCardAConvertCardB(slot0)
 				end
 			end
 		else
-			slot9 = slot0.cardInfoMO.skillId
-
 			for slot9 = 0, slot2 - 1 do
 				slot10 = slot1:GetChild(slot9).gameObject
 
-				if slot9 + 1 == FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot9) then
+				if slot9 + 1 == FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId) then
 					gohelper.setActive(slot10, true)
 
 					slot4 = gohelper.onceAddComponent(slot10, typeof(UnityEngine.Animation))

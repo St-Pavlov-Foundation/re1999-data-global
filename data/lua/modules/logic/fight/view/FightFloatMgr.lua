@@ -100,9 +100,7 @@ function slot0.dispose(slot0)
 end
 
 function slot0.clearFloatItem(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._onTick, slot4)
+	TaskDispatcher.cancelTask(slot0._onTick, slot0)
 
 	for slot4, slot5 in pairs(slot0._id2PlayingItem) do
 		slot5:stopFloat()

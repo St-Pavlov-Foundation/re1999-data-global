@@ -52,9 +52,7 @@ function slot0.onClose(slot0)
 end
 
 function slot0._refreshLangTxt(slot0)
-	slot6 = SLFramework.LangTxt
-
-	for slot6 = 0, slot0.viewGO:GetComponentsInChildren(typeof(slot6), true).Length - 1 do
+	for slot6 = 0, slot0.viewGO:GetComponentsInChildren(typeof(SLFramework.LangTxt), true).Length - 1 do
 		SLFramework.LanguageMgr.Instance:ApplyLangTxt(slot1[slot6])
 	end
 end

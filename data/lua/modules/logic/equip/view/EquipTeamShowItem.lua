@@ -277,9 +277,7 @@ end
 
 function slot0._showSkillAdvanceDes(slot0)
 	if EquipHelper.getEquipSkillAdvanceAttrDesTab(slot0._config.id, slot0._equipMO.refineLv, uv0.numColor) and #slot1 > 0 then
-		slot5 = true
-
-		gohelper.setActive(slot0._goadvanceskill, slot5)
+		gohelper.setActive(slot0._goadvanceskill, true)
 
 		for slot5, slot6 in ipairs(slot1) do
 			if not slot0._advanceDesItems[slot5] then
@@ -311,11 +309,10 @@ function slot0._showSkillBaseDes(slot0)
 	else
 		gohelper.setActive(slot0._gobaseskill.gameObject, true)
 
-		slot9 = slot0._config.skillName
-		slot0._txtbasedestitle.text = string.format("<%s>%s</color>", slot3, slot9)
-		slot8 = slot2
+		slot8 = slot0._config.skillName
+		slot0._txtbasedestitle.text = string.format("<%s>%s</color>", slot3, slot8)
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imageskillcarrericon, slot8)
+		UISpriteSetMgr.instance:setCommonSprite(slot0._imageskillcarrericon, slot2)
 
 		slot4 = nil
 
@@ -343,8 +340,8 @@ function slot0.showEquip(slot0, slot1)
 	slot0._mo = slot1
 	slot0._config = EquipConfig.instance:getEquipCo(slot1.equipId)
 	slot0._txtname.text = slot0._config.name
-	slot6 = "<color=#D9A06F>%s</color> /%s"
-	slot0._txtlv.text = string.format(slot6, slot0._mo.level, string.format("%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._mo)))
+	slot6 = slot0._mo.level
+	slot0._txtlv.text = string.format("<color=#D9A06F>%s</color> /%s", slot6, string.format("%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._mo)))
 
 	for slot6 = 1, 5 do
 		UISpriteSetMgr.instance:setEquipSprite(slot0["_image" .. slot6], slot6 <= slot0._mo.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")

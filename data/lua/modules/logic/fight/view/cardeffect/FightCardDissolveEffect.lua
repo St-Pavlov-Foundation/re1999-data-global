@@ -34,9 +34,7 @@ function slot0.onStart(slot0, slot1)
 		table.insert(slot0._cloneItemGOs, slot11)
 		slot0:_hideEffect(slot11)
 
-		slot16 = false
-
-		for slot16 = 0, slot11:GetComponentsInChildren(gohelper.Type_Image, slot16).Length - 1 do
+		for slot16 = 0, slot11:GetComponentsInChildren(gohelper.Type_Image, false).Length - 1 do
 			slot17 = slot12[slot16]
 			slot17.color.a = 1
 			slot17.enabled = false
@@ -50,9 +48,7 @@ function slot0.onStart(slot0, slot1)
 
 		table.insert(slot0._meshGOs, slot13)
 
-		slot18 = false
-
-		for slot18 = 0, slot13:GetComponentsInChildren(typeof(UnityEngine.Renderer), slot18).Length - 1 do
+		for slot18 = 0, slot13:GetComponentsInChildren(typeof(UnityEngine.Renderer), false).Length - 1 do
 			slot19 = slot14[slot18].material
 
 			table.insert(slot0._mats, slot19)

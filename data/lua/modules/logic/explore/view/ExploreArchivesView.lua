@@ -48,9 +48,9 @@ function slot0.onOpen(slot0)
 	ExploreSimpleModel.instance:markArchive(slot1, false)
 
 	slot8 = slot0:getResInst(string.format("ui/viewres/explore/explorearchivechapter%d.prefab", slot1), slot0._content).transform
-	slot12 = recthelper.getWidth
+	slot12 = slot8
 
-	recthelper.setWidth(slot0._content.transform, slot12(slot8))
+	recthelper.setWidth(slot0._content.transform, recthelper.getWidth(slot12))
 
 	slot0._unLockAnims = {}
 
@@ -171,10 +171,7 @@ end
 
 function slot0.onClose(slot0)
 	TaskDispatcher.cancelTask(slot0.beginUnlock, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0.unlockEnd, slot4)
+	TaskDispatcher.cancelTask(slot0.unlockEnd, slot0)
 
 	for slot4, slot5 in pairs(slot0._images) do
 		slot5:UnLoadImage()

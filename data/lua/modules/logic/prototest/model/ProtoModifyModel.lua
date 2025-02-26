@@ -95,10 +95,7 @@ function slot0.removeRepeatedParam(slot0, slot1)
 	if #slot0._depthParamMOs > 0 then
 		if slot0._depthParamMOs[slot2]:isRepeated() then
 			table.remove(slot3.value, slot1)
-
-			slot7 = slot1
-
-			slot0:removeAt(slot7)
+			slot0:removeAt(slot1)
 
 			for slot7, slot8 in ipairs(slot3.value) do
 				slot8.id = slot7

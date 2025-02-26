@@ -7,10 +7,10 @@ function slot2(slot0)
 	slot1 = nil
 
 	if LangSettings.instance:isEn() then
-		slot5 = slot0
+		slot5 = 1
 
 		for slot5 = 1, #{
-			string.byte(slot5, 1, -1)
+			string.byte(slot0, slot5, -1)
 		} do
 			if slot1[slot5] == 32 then
 				slot1[slot5] = uv0

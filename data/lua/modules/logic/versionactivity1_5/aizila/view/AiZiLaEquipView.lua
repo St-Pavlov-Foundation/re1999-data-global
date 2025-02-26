@@ -56,12 +56,11 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._animator = slot0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	slot5 = AiZiLaEnum.ComponentType.Animator
-	slot0._animatorRight = gohelper.findChildComponent(slot0.viewGO, "Right", slot5)
+	slot4 = AiZiLaEnum.ComponentType.Animator
+	slot0._animatorRight = gohelper.findChildComponent(slot0.viewGO, "Right", slot4)
 	slot0._equipItemList = {}
 	slot0._actId = VersionActivity1_5Enum.ActivityId.AiZiLa
-	slot4 = slot0._actId
-	slot0._equipCoTypeList = AiZiLaConfig.instance:getEquipCoTypeList(slot4)
+	slot0._equipCoTypeList = AiZiLaConfig.instance:getEquipCoTypeList(slot0._actId)
 	slot0._upLevelNextTimeDic = {}
 
 	for slot4, slot5 in ipairs(slot0._equipCoTypeList) do

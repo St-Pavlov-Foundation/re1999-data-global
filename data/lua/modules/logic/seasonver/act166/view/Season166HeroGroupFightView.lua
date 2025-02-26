@@ -119,9 +119,9 @@ function slot0._editableInitView(slot0)
 	NavigateMgr.instance:addEscape(ViewName.Season166HeroGroupFightView, slot0._onEscapeBtnClick, slot0)
 
 	slot0._iconGO = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._btncloth.gameObject)
-	slot4 = -100
+	slot4 = 1
 
-	recthelper.setAnchor(slot0._iconGO.transform, slot4, 1)
+	recthelper.setAnchor(slot0._iconGO.transform, -100, slot4)
 
 	slot0.talentSlotTab = slot0:getUserDataTb_()
 
@@ -328,9 +328,9 @@ function slot0.setFightHeroGroup(slot0)
 		end
 	end
 
-	slot12 = #slot3 + #slot5
+	slot12 = #slot7
 
-	for slot12 = #slot3 + 1, math.min(slot12, #slot7) do
+	for slot12 = #slot3 + 1, math.min(#slot3 + #slot5, slot12) do
 		if slot5[slot12 - #slot3] ~= slot7[slot12].heroUid then
 			slot5[slot12 - #slot3] = "0"
 			slot6 = slot6 - 1
@@ -462,9 +462,8 @@ function slot0.refreshTalent(slot0)
 	gohelper.setActive(slot0._btntalentTree.gameObject, not slot0.context.teachId)
 
 	slot2 = Season166Model.instance:getTalentInfo(slot0.actId, slot1)
-	slot10 = true
 
-	UISpriteSetMgr.instance:setSeason166Sprite(slot0._imageTalent, "season166_talentree_btn_talen" .. lua_activity166_talent.configDict[slot0.actId][slot2.config.talentId].sortIndex, slot10)
+	UISpriteSetMgr.instance:setSeason166Sprite(slot0._imageTalent, "season166_talentree_btn_talen" .. lua_activity166_talent.configDict[slot0.actId][slot2.config.talentId].sortIndex, true)
 
 	slot6 = #slot2.skillIds
 

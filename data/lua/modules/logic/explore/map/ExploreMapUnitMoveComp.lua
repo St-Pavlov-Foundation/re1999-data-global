@@ -30,8 +30,8 @@ function slot0.onLoaded(slot0)
 	slot0._useList[2] = gohelper.findChild(slot1, "down")
 	slot0._useList[3] = gohelper.findChild(slot1, "left")
 	slot0._useList[4] = gohelper.findChild(slot1, "right")
-	slot5 = typeof
-	slot0._anim = slot1:GetComponent(slot5(UnityEngine.Animator))
+	slot5 = UnityEngine.Animator
+	slot0._anim = slot1:GetComponent(typeof(slot5))
 
 	for slot5 = 1, 4 do
 		gohelper.setActive(slot0._useList[slot5], false)
@@ -277,10 +277,8 @@ function slot0.doUnitMove(slot0, slot1)
 	end
 
 	slot16 = {}
-	slot17 = ExploreController.instance:getMapLight()
-	slot22 = slot17
 
-	for slot21, slot22 in pairs(slot17.getAllLightMos(slot22)) do
+	for slot21, slot22 in pairs(ExploreController.instance:getMapLight():getAllLightMos()) do
 		if slot22.endEmitUnit == slot0._moveTempUnit and ExploreHelper.getDir(slot22.dir - slot12) % 180 == 0 then
 			table.insert(slot16, slot22)
 		end
@@ -337,10 +335,7 @@ end
 
 function slot0.onDestroy(slot0)
 	TaskDispatcher.cancelTask(slot0._onCloseAnimEnd, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._everyFrameSetLightLen, slot4)
+	TaskDispatcher.cancelTask(slot0._everyFrameSetLightLen, slot0)
 
 	for slot4 = 1, 4 do
 		slot0._useList[slot4] = nil

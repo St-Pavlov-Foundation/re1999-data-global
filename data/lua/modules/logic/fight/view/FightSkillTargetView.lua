@@ -15,9 +15,9 @@ function slot0.addEvents(slot0)
 end
 
 function slot0.removeEvents(slot0)
-	slot4 = FightController.instance
+	slot4 = FightEvent.SimulateSelectSkillTargetInView
 
-	slot0:removeEventCb(slot4, FightEvent.SimulateSelectSkillTargetInView, slot0._simulateSelect, slot0)
+	slot0:removeEventCb(FightController.instance, slot4, slot0._simulateSelect, slot0)
 
 	for slot4 = 1, #slot0._itemList do
 		gohelper.getClick(slot0._itemList[slot4].go):RemoveClickListener()
@@ -38,9 +38,8 @@ function slot0.onOpen(slot0)
 
 	if not slot0._targetLimit then
 		slot0._targetLimit = {}
-		slot6 = slot0.viewParam.fromId
 
-		for slot6, slot7 in ipairs(FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot0.viewParam.skillId, slot6)) do
+		for slot6, slot7 in ipairs(FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot0.viewParam.skillId, slot0.viewParam.fromId)) do
 			if FightDataHelper.entityMgr:getById(slot7).entityType == 3 then
 				-- Nothing
 			elseif not slot8:hasBuffFeature(FightEnum.BuffType_CantSelect) then

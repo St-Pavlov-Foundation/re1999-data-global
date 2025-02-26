@@ -135,9 +135,9 @@ function slot0.refreshContents(slot0)
 		end
 	end
 
-	slot12 = #slot0.contentItemList
+	slot12 = #slot5
 
-	for slot12 = 1, math.max(slot12, #slot5) do
+	for slot12 = 1, math.max(#slot0.contentItemList, slot12) do
 		if not slot0.contentItemList[slot12] then
 			table.insert(slot0.contentItemList, slot0:createContentItem(slot12))
 		end

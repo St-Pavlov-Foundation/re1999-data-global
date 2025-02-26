@@ -76,8 +76,7 @@ function slot0.frameCallback(slot0, slot1)
 		if slot9[2] <= slot1 and slot1 <= slot12 then
 			slot13 = slot0.textInfo.characterInfo
 			slot15 = slot13[slot10.lastVisibleCharacterIndex]
-			slot22 = slot13[slot10.firstVisibleCharacterIndex].bottomLeft
-			slot16 = slot3:WorldToScreenPoint(slot0.transform:TransformPoint(slot22))
+			slot16 = slot3:WorldToScreenPoint(slot0.transform:TransformPoint(slot13[slot10.firstVisibleCharacterIndex].bottomLeft))
 			slot17 = slot16
 
 			for slot22 = slot10.firstVisibleCharacterIndex, slot10.lastVisibleCharacterIndex do
@@ -87,8 +86,7 @@ function slot0.frameCallback(slot0, slot1)
 			end
 
 			slot17.y = slot18
-			slot25 = slot14.topLeft
-			slot19 = slot3:WorldToScreenPoint(slot0.transform:TransformPoint(slot25))
+			slot19 = slot3:WorldToScreenPoint(slot0.transform:TransformPoint(slot14.topLeft))
 			slot20 = slot19
 
 			for slot25 = slot10.firstVisibleCharacterIndex, slot10.lastVisibleCharacterIndex do
@@ -103,10 +101,9 @@ function slot0.frameCallback(slot0, slot1)
 			if slot8 == 1 then
 				slot0._conMat:SetFloat(slot0._LineMinYId, slot17.y)
 
-				slot26 = slot0._LineMaxYId
-				slot27 = slot20.y + 10
+				slot26 = slot20.y + 10
 
-				slot0._conMat:SetFloat(slot26, slot27)
+				slot0._conMat:SetFloat(slot0._LineMaxYId, slot26)
 
 				for slot26, slot27 in pairs(slot0._subMeshs) do
 					if slot27.materialForRendering then
@@ -118,10 +115,9 @@ function slot0.frameCallback(slot0, slot1)
 			else
 				slot0._conMat:SetFloat(slot0._LineMinYId, slot17.y)
 
-				slot26 = slot0._LineMaxYId
-				slot27 = slot20.y
+				slot26 = slot20.y
 
-				slot0._conMat:SetFloat(slot26, slot27)
+				slot0._conMat:SetFloat(slot0._LineMaxYId, slot26)
 
 				for slot26, slot27 in pairs(slot0._subMeshs) do
 					if slot27.materialForRendering then

@@ -136,9 +136,7 @@ function slot0.refreshSubTabItems(slot0)
 			gohelper.setActive(slot0._categoryItemContainer[slot5].go, true)
 		end
 
-		slot5 = false
-
-		gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, slot5)
+		gohelper.setActive(slot0._categoryItemContainer[#slot1].go_line, false)
 
 		for slot5 = #slot1 + 1, #slot0._categoryItemContainer do
 			gohelper.setActive(slot0._categoryItemContainer[slot5].go, false)

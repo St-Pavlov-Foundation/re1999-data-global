@@ -11,9 +11,8 @@ end
 
 function slot0.initList(slot0)
 	slot3 = V1a6_CachotModel.instance:getRogueInfo().teamInfo:getSupportHeros()
-	slot8 = 1
 
-	for slot8 = #slot3 + 1, math.max(math.ceil(#slot3 / 4), slot8) * 4 do
+	for slot8 = #slot3 + 1, math.max(math.ceil(#slot3 / 4), 1) * 4 do
 		table.insert(slot3, HeroSingleGroupMO.New())
 	end
 

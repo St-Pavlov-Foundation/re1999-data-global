@@ -159,9 +159,9 @@ function slot0.setFightHeroSingleGroup(slot0)
 		end
 	end
 
-	slot14 = #slot4 + #slot6
+	slot14 = #slot8
 
-	for slot14 = #slot4 + 1, math.min(slot14, #slot8) do
+	for slot14 = #slot4 + 1, math.min(#slot4 + #slot6, slot14) do
 		if slot6[slot14 - #slot4] ~= slot8[slot14].heroUid then
 			slot6[slot14 - #slot4] = "0"
 			slot7 = slot7 - 1

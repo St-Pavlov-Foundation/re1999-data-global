@@ -278,9 +278,7 @@ function slot0.beforeDestroy(slot0)
 end
 
 function slot0.onDestroy(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0.repeatCheckAtmosphere, slot4)
+	TaskDispatcher.cancelTask(slot0.repeatCheckAtmosphere, slot0)
 
 	slot0.entity = nil
 	slot0.go = nil

@@ -10,8 +10,7 @@ function slot0.onInitView(slot0)
 	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
 	slot0._gomask1 = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
 	slot0._simageshadow = gohelper.findChildSingleImage(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
-	slot4 = "#go_passiveskilltip/#btn_closepassivetip"
-	slot0._btnclosepassivetip = gohelper.findChildButtonWithAudio(slot0.viewGO, slot4)
+	slot0._btnclosepassivetip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
 	slot0._passiveskillitems = {}
 
 	for slot4 = 1, 3 do
@@ -106,8 +105,7 @@ function slot0.refreshPassiveSkill(slot0)
 		if slot1[slot10] and slot1[slot10][1] then
 			gohelper.setActive(slot11.go, true)
 
-			slot18 = slot0.bossMo and slot0.bossMo.level or 0
-			slot13 = TowerConfig.instance:isSkillActive(slot0.bossId, slot12, slot18)
+			slot13 = TowerConfig.instance:isSkillActive(slot0.bossId, slot12, slot0.bossMo and slot0.bossMo.level or 0)
 			slot14 = lua_skill.configDict[slot12]
 
 			for slot18, slot19 in ipairs(slot3[slot10]) do

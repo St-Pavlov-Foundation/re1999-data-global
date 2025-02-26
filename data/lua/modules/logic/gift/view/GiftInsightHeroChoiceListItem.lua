@@ -11,8 +11,7 @@ function slot0.init(slot0, slot1)
 	slot0._txtname = gohelper.findChildText(slot1, "role/name")
 	slot0._goexskill = gohelper.findChild(slot1, "role/#go_exskill")
 	slot0._imageexskill = gohelper.findChildImage(slot1, "role/#go_exskill/#image_exskill")
-	slot5 = "role/Rank"
-	slot0._gorank = gohelper.findChild(slot1, slot5)
+	slot0._gorank = gohelper.findChild(slot1, "role/Rank")
 	slot0._rankGos = {}
 
 	for slot5 = 1, 3 do

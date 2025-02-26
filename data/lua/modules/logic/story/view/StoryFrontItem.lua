@@ -387,8 +387,8 @@ function slot0._startShowLine(slot0, slot1)
 				slot8 = #string.split(uv0[slot7], "\n") or 1
 
 				if slot7 < slot0 then
-					slot12 = slot2
-					slot2 = string.format("%s\n%s", slot12, uv0[slot7])
+					slot12 = uv0[slot7]
+					slot2 = string.format("%s\n%s", slot2, slot12)
 
 					for slot12 = 1, slot8 do
 						slot13, slot14, slot15, slot16 = string.match(string.split(uv0[slot7], "\n")[slot12], "(.*)<size=(%d+)>(.*)</size>(%s*)")

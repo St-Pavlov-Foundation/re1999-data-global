@@ -20,7 +20,8 @@ function slot0.init(slot0, slot1)
 	slot0._addGO = gohelper.findChild(slot1, "heroitemani/none/add")
 	slot0._lockGO = gohelper.findChild(slot1, "heroitemani/none/lock")
 	slot0._heroGO = gohelper.findChild(slot1, "heroitemani/hero")
-	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", typeof(UnityEngine.Transform))
+	slot5 = typeof
+	slot0._tagTr = gohelper.findChildComponent(slot1, "heroitemani/tags", slot5(UnityEngine.Transform))
 	slot0._subGO = gohelper.findChild(slot1, "heroitemani/tags/aidtag")
 	slot0._aidGO = gohelper.findChild(slot1, "heroitemani/tags/storytag")
 	slot0._trialTagGO = gohelper.findChild(slot1, "heroitemani/tags/trialtag")
@@ -34,8 +35,7 @@ function slot0.init(slot0, slot1)
 	slot0._goblackmask = gohelper.findChild(slot1, "heroitemani/hero/blackmask")
 	slot0.level_part = gohelper.findChild(slot1, "heroitemani/hero/vertical/layout")
 	slot0._lvnum = gohelper.findChildText(slot1, "heroitemani/hero/vertical/layout/lv/lvnum")
-	slot5 = "heroitemani/hero/vertical/layout/lv/lvnum/lv"
-	slot0._lvnumen = gohelper.findChildText(slot1, slot5)
+	slot0._lvnumen = gohelper.findChildText(slot1, "heroitemani/hero/vertical/layout/lv/lvnum/lv")
 	slot0._goRankList = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -557,9 +557,7 @@ function slot0.onUpdateMO(slot0, slot1)
 		slot4 = HeroGroupModel.instance:getCurGroupMO().replay_hero_data[slot0.mo.heroUid]
 	end
 
-	slot8 = "#E9E9E9"
-
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._lvnumen, slot8)
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._lvnumen, "#E9E9E9")
 
 	for slot8 = 1, 3 do
 		SLFramework.UGUI.GuiHelper.SetColor(slot0._goRankList[slot8], "#F6F3EC")
@@ -605,9 +603,7 @@ function slot0.onUpdateMO(slot0, slot1)
 			gohelper.setActive(slot0._goRankList[slot16], slot16 == slot12 - 1)
 		end
 
-		slot16 = true
-
-		gohelper.setActive(slot0._goStars, slot16)
+		gohelper.setActive(slot0._goStars, true)
 
 		for slot16 = 1, 6 do
 			gohelper.setActive(slot0._goStarList[slot16], slot16 <= CharacterEnum.Star[slot0._heroMO.config.rare])
@@ -615,9 +611,9 @@ function slot0.onUpdateMO(slot0, slot1)
 	elseif slot0.monsterCO then
 		slot0._commonHeroCard:onUpdateMO(FightConfig.instance:getSkinCO(slot0.monsterCO.skinId))
 
-		slot11 = tostring(slot0.monsterCO.career)
+		slot11 = slot0.monsterCO.career
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._careericon, "lssx_" .. slot11)
+		UISpriteSetMgr.instance:setCommonSprite(slot0._careericon, "lssx_" .. tostring(slot11))
 
 		slot0._lvnum.text, slot7 = HeroConfig.instance:getShowLevel(slot0.monsterCO.level)
 
@@ -638,9 +634,9 @@ function slot0.onUpdateMO(slot0, slot1)
 
 		slot0._commonHeroCard:onUpdateMO(slot6)
 
-		slot12 = tostring(slot5.career)
+		slot12 = slot5.career
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._careericon, "lssx_" .. slot12)
+		UISpriteSetMgr.instance:setCommonSprite(slot0._careericon, "lssx_" .. tostring(slot12))
 
 		slot0._lvnum.text, slot8 = HeroConfig.instance:getShowLevel(slot0.trialCO.level)
 
@@ -648,9 +644,7 @@ function slot0.onUpdateMO(slot0, slot1)
 			gohelper.setActive(slot0._goRankList[slot12], slot12 == slot8 - 1)
 		end
 
-		slot12 = true
-
-		gohelper.setActive(slot0._goStars, slot12)
+		gohelper.setActive(slot0._goStars, true)
 
 		for slot12 = 1, 6 do
 			gohelper.setActive(slot0._goStarList[slot12], slot12 <= CharacterEnum.Star[slot5.rare])

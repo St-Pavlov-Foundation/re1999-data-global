@@ -131,8 +131,8 @@ function slot0.onUpdateParam(slot0)
 	if slot1 then
 		slot0._openTimeValid = false
 		slot2 = ServerTime.weekDayInServerLocal()
-		slot7 = "|"
-		slot3 = GameUtil.splitString2(slot0._chapterCo.openDay, true, slot7, "#")
+		slot7 = "#"
+		slot3 = GameUtil.splitString2(slot0._chapterCo.openDay, true, "|", slot7)
 		slot0._weekTextTab = slot0:getUserDataTb_()
 
 		for slot7 = 1, 4 do

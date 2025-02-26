@@ -194,9 +194,9 @@ function slot0.fillChessBoardBase(slot0)
 	slot0:recycleBaseTiles()
 
 	slot1 = 8
-	slot6 = tostring(slot1)
+	slot6 = ", h = "
 
-	logNormal("fill w = " .. slot6 .. ", h = " .. tostring(8))
+	logNormal("fill w = " .. tostring(slot1) .. slot6 .. tostring(8))
 
 	for slot6 = 1, slot1 do
 		slot0._baseTiles[slot6] = slot0._baseTiles[slot6] or {}

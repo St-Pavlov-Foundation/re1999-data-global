@@ -55,9 +55,8 @@ function slot0.switchPage(slot0, slot1)
 
 	if slot0._chapterSceneUdtbDict then
 		slot0._curChaperId = slot1
-		slot5 = slot1
 
-		slot0:_createChapterScene(slot5)
+		slot0:_createChapterScene(slot1)
 
 		for slot5, slot6 in pairs(slot0._chapterSceneUdtbDict) do
 			gohelper.setActive(slot6.go, slot6.chapterId == slot1)

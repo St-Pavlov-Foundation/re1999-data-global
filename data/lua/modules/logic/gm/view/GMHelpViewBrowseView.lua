@@ -25,10 +25,9 @@ function slot0.addEvents(slot0)
 	slot0._btnShow:AddClickListener(slot0._onClickShow, slot0)
 	slot0._btnHide:AddClickListener(slot0._onClickHide, slot0)
 
-	slot4 = slot0._onSearchValueChanged
-	slot5 = slot0
+	slot4 = slot0
 
-	slot0._inputSearch:AddOnValueChanged(slot4, slot5)
+	slot0._inputSearch:AddOnValueChanged(slot0._onSearchValueChanged, slot4)
 
 	for slot4, slot5 in ipairs(slot0._tabBtnList) do
 		slot5:AddClickListener(slot0._onClickTab, slot0, slot4)

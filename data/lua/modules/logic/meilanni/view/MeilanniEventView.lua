@@ -192,9 +192,9 @@ function slot0._elementFadeIn(slot0)
 	slot0:_stopShowSequence()
 
 	slot0._showSequence = FlowSequence.New()
-	slot5 = TimerWork.New
+	slot5 = 0.5
 
-	slot0._showSequence:addWork(slot5(0.5))
+	slot0._showSequence:addWork(TimerWork.New(slot5))
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0._showSequence:addWork(FunctionWork.New(uv0._oneElementFadeIn, {

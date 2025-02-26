@@ -68,7 +68,6 @@ function slot0._editableInitView(slot0)
 	slot0._drop = gohelper.findChildDropdown(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/text/#dropResolution")
 	slot0._dropClick = gohelper.getClick(slot0._drop.gameObject)
 
-	slot0._simageblur:LoadImage(ResUrl.getCommonIcon("full/bj_zase_tongyong"))
 	slot0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
 	slot0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 

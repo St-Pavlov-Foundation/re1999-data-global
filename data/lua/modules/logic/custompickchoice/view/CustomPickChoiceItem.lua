@@ -27,8 +27,7 @@ function slot0.init(slot0, slot1)
 	slot0._txtname = gohelper.findChildText(slot0._go, "role/name")
 	slot0._goexskill = gohelper.findChild(slot1, "role/#go_exskill")
 	slot0._imageexskill = gohelper.findChildImage(slot1, "role/#go_exskill/#image_exskill")
-	slot5 = "role/Rank"
-	slot0._goRankBg = gohelper.findChild(slot1, slot5)
+	slot0._goRankBg = gohelper.findChild(slot1, "role/Rank")
 	slot0._goranks = slot0:getUserDataTb_()
 
 	for slot5 = 1, 3 do
@@ -90,7 +89,10 @@ function slot0.refreshBaseInfo(slot0, slot1)
 
 	slot0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(slot2.headIcon))
 	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot1.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[slot1.rare]))
+
+	slot9 = slot1.rare
+
+	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[slot9]))
 
 	slot0._txtname.text = slot1.name
 

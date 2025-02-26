@@ -114,9 +114,9 @@ end
 
 function slot0.InitMapCfg(slot0, slot1)
 	slot0._mapId = slot1
-	slot6 = tostring(slot1)
-	slot5 = "lua_act168_map_" .. slot6
-	slot0._mapCfg = addGlobalModule("modules.configs.act168.lua_act168_map_" .. tostring(slot1), slot5)
+	slot6 = slot1
+	slot5 = tostring(slot6)
+	slot0._mapCfg = addGlobalModule("modules.configs.act168.lua_act168_map_" .. tostring(slot1), "lua_act168_map_" .. slot5)
 	slot0._mapRowNum = 0
 	slot0._mapCalNum = 0
 

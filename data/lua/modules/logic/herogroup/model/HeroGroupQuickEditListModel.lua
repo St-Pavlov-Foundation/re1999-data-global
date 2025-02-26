@@ -201,9 +201,9 @@ function slot0.cancelAllSelected(slot0)
 end
 
 function slot0.isTeamFull(slot0)
-	slot5 = HeroGroupModel.instance:getBattleRoleNum() or 0
+	slot5 = #slot0._inTeamHeroUidList
 
-	for slot5 = 1, math.min(slot5, #slot0._inTeamHeroUidList) do
+	for slot5 = 1, math.min(HeroGroupModel.instance:getBattleRoleNum() or 0, slot5) do
 		if slot0._inTeamHeroUidList[slot5] == "0" and HeroGroupModel.instance:isPositionOpen(slot5) then
 			return false
 		end

@@ -14,9 +14,8 @@ function slot0.init(slot0, slot1)
 	slot0.score = slot1.score
 	slot0.sceneId = slot1.sceneId
 	slot0.currencyTotal = slot1.currencyTotal
-	slot5 = slot1.teamInfo
 
-	slot0:updateTeamInfo(slot5)
+	slot0:updateTeamInfo(slot1.teamInfo)
 
 	slot0.currentEvents = {}
 
@@ -36,9 +35,7 @@ function slot0.init(slot0, slot1)
 		table.insert(slot0.nextEvents, slot7)
 	end
 
-	slot5 = slot1.collections
-
-	slot0:updateCollections(slot5)
+	slot0:updateCollections(slot1.collections)
 
 	slot0.selectedEvents = {}
 

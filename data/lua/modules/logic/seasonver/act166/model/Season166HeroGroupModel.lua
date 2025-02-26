@@ -53,9 +53,7 @@ function slot0.onGetCommonGroupList(slot0, slot1)
 		slot0._commonGroups[slot6.groupId]:init(slot6)
 	end
 
-	slot5 = slot0
-
-	for slot5 = 1, slot0.getMaxHeroCountInGroup(slot5) do
+	for slot5 = 1, slot0:getMaxHeroCountInGroup() do
 		if not slot0._commonGroups[slot5] then
 			slot0._commonGroups[slot5] = Season166HeroGroupMO.New()
 
@@ -258,10 +256,9 @@ end
 
 function slot0._getAmountLimit(slot0, slot1)
 	if LuaUtil.isEmptyStr(slot1) == false then
-		slot6 = "|"
-		slot7 = "#"
+		slot6 = "#"
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, slot6, slot7)) do
+		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, "|", slot6)) do
 			if slot7[1] == FightEnum.EntitySide.MySide and lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.AmountLimit then
 				return tonumber(slot10.effect)
 			end

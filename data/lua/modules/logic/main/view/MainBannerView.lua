@@ -130,9 +130,7 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._refreshBanner, slot4)
+	TaskDispatcher.cancelTask(slot0._refreshBanner, slot0)
 
 	for slot4, slot5 in pairs(slot0._iconbag) do
 		slot5:UnLoadImage()

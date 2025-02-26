@@ -41,17 +41,13 @@ function slot0.onGenerateEnding(slot0, slot1, slot2, slot3)
 end
 
 function slot0.setEndingRedDot(slot0, slot1)
-	slot6 = slot1
-
-	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot6).unlockEndings) do
+	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot1).unlockEndings) do
 		GameUtil.playerPrefsSetNumberByUserId(slot0:getEndingRedDotKey(slot6), 1)
 	end
 end
 
 function slot0.isShowEndingRedDot(slot0, slot1)
-	slot6 = slot1
-
-	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot6).unlockEndings) do
+	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot1).unlockEndings) do
 		if GameUtil.playerPrefsGetNumberByUserId(slot0:getEndingRedDotKey(slot6), 0) == 0 then
 			return true
 		end
@@ -59,9 +55,7 @@ function slot0.isShowEndingRedDot(slot0, slot1)
 end
 
 function slot0.getEndingRedDotIndex(slot0)
-	slot4 = slot0
-
-	for slot4 = 1, slot0.getStoryCount(slot4) do
+	for slot4 = 1, slot0:getStoryCount() do
 		if slot0:isShowEndingRedDot(slot4) then
 			return slot4
 		end

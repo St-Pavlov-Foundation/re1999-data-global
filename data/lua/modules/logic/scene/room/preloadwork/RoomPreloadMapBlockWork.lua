@@ -46,9 +46,8 @@ end
 function slot0._getMapBlockUrlList(slot0)
 	slot1 = {}
 	slot2 = {}
-	slot8 = "ground/water/water"
 
-	table.insert(slot1, ResUrl.getRoomRes(slot8))
+	table.insert(slot1, ResUrl.getRoomRes("ground/water/water"))
 	table.insert(slot1, RoomScenePreloader.InitLand)
 
 	slot3, slot4 = slot0:_findDefineBlockAndWaterTypes()

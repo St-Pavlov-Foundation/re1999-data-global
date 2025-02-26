@@ -100,10 +100,11 @@ function slot0._getDLCInfo(slot0, slot1)
 	for slot7, slot8 in ipairs(HotUpdateOptionPackageMgr.instance:getPackageNameList()) do
 		table.insert(slot3, HotUpdateOptionPackageMgr.instance:formatLangPackName("res", slot8))
 
-		slot12 = HotUpdateOptionPackageMgr.instance
-		slot12 = slot12.formatLangPackName
+		slot11 = HotUpdateOptionPackageMgr.instance
+		slot12 = slot11
+		slot13 = "media"
 
-		table.insert(slot3, slot12(slot12, "media", slot8))
+		table.insert(slot3, slot11.formatLangPackName(slot12, slot13, slot8))
 
 		for slot12, slot13 in ipairs(slot1) do
 			table.insert(slot3, HotUpdateOptionPackageMgr.instance:formatLangPackName(slot13, slot8))

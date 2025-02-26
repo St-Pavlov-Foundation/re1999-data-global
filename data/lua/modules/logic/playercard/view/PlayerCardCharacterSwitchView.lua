@@ -44,9 +44,8 @@ end
 function slot0._editableInitView(slot0)
 	slot0._showItemList = slot0:getUserDataTb_()
 	slot0._cacheItemList = slot0:getUserDataTb_()
-	slot4 = true
 
-	slot0._goinfo:SetActive(slot4)
+	slot0._goinfo:SetActive(true)
 
 	slot0._timeBtns = slot0:getUserDataTb_()
 	slot0._timeArrow = slot0:getUserDataTb_()
@@ -265,15 +264,12 @@ function slot0._showSkinList(slot0, slot1, slot2)
 		skin = slot6.config.skinId
 	})
 
-	slot13 = slot8
+	slot12 = slot8
 
-	table.insert(slot7, 1, slot13)
-
-	slot12 = slot7
-
+	table.insert(slot7, 1, slot12)
 	slot0:_hideAllItems()
 
-	for slot12, slot13 in ipairs(slot0:removeDuplicates(slot12)) do
+	for slot12, slot13 in ipairs(slot0:removeDuplicates(slot7)) do
 		slot14 = slot13.skin
 
 		slot0:_showSkinItem(slot3, slot14, slot14 == slot4)

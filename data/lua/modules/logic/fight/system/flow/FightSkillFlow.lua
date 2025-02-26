@@ -5,17 +5,13 @@ slot0 = class("FightSkillFlow", BaseFlow)
 function slot0.ctor(slot0, slot1)
 	slot0._fightStepMO = slot1
 	slot0._sequence = FlowSequence.New()
-	slot7 = slot1
 
-	slot0._sequence:addWork(FightWorkSkillSwitchSpine.New(slot7))
+	slot0._sequence:addWork(FightWorkSkillSwitchSpine.New(slot1))
 
 	slot2 = FlowParallel.New()
 
 	slot0._sequence:addWork(slot2)
-
-	slot8 = slot1
-
-	slot2:addWork(FightWorkStepSkill.New(slot8))
+	slot2:addWork(FightWorkStepSkill.New(slot1))
 
 	slot3 = nil
 
@@ -79,9 +75,9 @@ function slot0.onDestroy(slot0)
 end
 
 function slot0.addAfterSkillEffects(slot0, slot1)
-	slot5 = FightWorkSkillSwitchSpineEnd.New
+	slot5 = slot0._fightStepMO
 
-	slot0._sequence:addWork(slot5(slot0._fightStepMO))
+	slot0._sequence:addWork(FightWorkSkillSwitchSpineEnd.New(slot5))
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0._sequence:addWork(slot6)

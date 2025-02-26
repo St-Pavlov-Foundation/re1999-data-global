@@ -123,9 +123,9 @@ function slot0.refreshReward(slot0, slot1)
 		slot0._rewardItems = {}
 	end
 
-	slot8 = #slot0._rewardItems
+	slot8 = #slot4
 
-	for slot8 = 1, math.max(slot8, #slot4) do
+	for slot8 = 1, math.max(#slot0._rewardItems, slot8) do
 		slot0:refreshRewardItem(slot0._rewardItems[slot8] or slot0:createRewardItem(slot8), slot4[slot8])
 	end
 end

@@ -134,12 +134,11 @@ function slot0.placeCollection2SlotArea(slot0, slot1)
 
 	slot3 = slot1:getRotation()
 	slot5 = slot1:getCenterSlotPos()
-	slot11 = RougeEnum.CollectionEditorParamType.Shape
-	slot10 = slot1.id
+	slot10 = RougeEnum.CollectionEditorParamType.Shape
 
-	slot0:revertCoverCells(slot10)
+	slot0:revertCoverCells(slot1.id)
 
-	for slot10, slot11 in ipairs(RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot3, slot11)) do
+	for slot10, slot11 in ipairs(RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot3, slot10)) do
 		slot12 = Vector2(slot11.x + slot5.x, slot5.y - slot11.y)
 
 		if slot0:getCollectionSlotCell(slot12.x, slot12.y) then

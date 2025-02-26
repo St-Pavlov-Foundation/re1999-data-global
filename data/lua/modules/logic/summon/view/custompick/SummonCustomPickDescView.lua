@@ -101,17 +101,13 @@ function slot0.buildDesc(slot0)
 end
 
 function slot0.parseDesc(slot0, slot1)
-	slot6 = "{(.-)}"
-
-	for slot6 in string.gmatch(slot1, slot6) do
+	for slot6 in string.gmatch(slot1, "{(.-)}") do
 		table.insert({}, {
 			title = slot6
 		})
 	end
 
-	slot7 = "|"
-
-	for slot7 = 2, #string.split(string.gsub(slot1, "{(.-)}", slot7), "|") do
+	for slot7 = 2, #string.split(string.gsub(slot1, "{(.-)}", "|"), "|") do
 		slot2[slot7 - 1].desc = slot3[slot7]
 	end
 
@@ -119,9 +115,7 @@ function slot0.parseDesc(slot0, slot1)
 end
 
 function slot0.checkBuildProbUp(slot0, slot1)
-	slot6 = "%[upname=.-%]"
-
-	for slot6 in slot1.desc:gmatch(slot6) do
+	for slot6 in slot1.desc:gmatch("%[upname=.-%]") do
 		slot7, slot8, slot9, slot10, slot11 = string.find(slot6, "(%[upname=)(.*)(%])")
 		slot6 = string.format("%s%s%s", "%[upname=", slot10, "%]")
 		slot2 = (not slot0._probUpIds[tonumber(slot10)] or string.gsub(slot2, slot6, slot0:getTargetName(slot13))) and string.gsub(string.gsub(slot2, slot6, slot0:getTargetName(slot13)), slot6, "")
@@ -181,9 +175,7 @@ function slot0.createParagraphUI(slot0, slot1, slot2, slot3)
 end
 
 function slot0.descReplace(slot0, slot1, slot2, slot3)
-	slot7 = slot2
-
-	for slot7 in slot1:gmatch(slot7) do
+	for slot7 in slot1:gmatch(slot2) do
 		slot1 = string.gsub(slot1, slot2, slot3)
 	end
 

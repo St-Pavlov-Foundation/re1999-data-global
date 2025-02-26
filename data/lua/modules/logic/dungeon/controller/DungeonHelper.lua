@@ -20,12 +20,10 @@ function slot0.getBattleRecommendLevel(slot0, slot1)
 	slot4 = {}
 	slot5 = {}
 	slot6, slot7 = nil
-	slot12 = slot3.monsterGroupIds
+	slot11 = "#"
 
-	for slot11, slot12 in ipairs(string.splitToNumber(slot12, "#")) do
-		slot16 = "#"
-
-		for slot16, slot17 in ipairs(string.splitToNumber(lua_monster_group.configDict[slot12].monster, slot16)) do
+	for slot11, slot12 in ipairs(string.splitToNumber(slot3.monsterGroupIds, slot11)) do
+		for slot16, slot17 in ipairs(string.splitToNumber(lua_monster_group.configDict[slot12].monster, "#")) do
 			if uv0.isBossId(lua_monster_group.configDict[slot12].bossId, slot17) then
 				table.insert(slot5, slot17)
 			else

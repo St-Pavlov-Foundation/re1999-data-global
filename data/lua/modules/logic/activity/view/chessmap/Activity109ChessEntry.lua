@@ -156,10 +156,9 @@ function slot0.onOpen(slot0)
 	slot0._activity_data = ActivityModel.instance:getActivityInfo()[slot1]
 	slot0._cur_select_stage = 1
 	slot0._episode_list = {}
-	slot4 = Activity109Config.instance
-	slot6 = slot4
+	slot5 = slot1
 
-	for slot5, slot6 in ipairs(slot4.getEpisodeList(slot6, slot1)) do
+	for slot5, slot6 in ipairs(Activity109Config.instance:getEpisodeList(slot5)) do
 		if not slot0._episode_list[slot6.chapterId] then
 			slot0._episode_list[slot6.chapterId] = {}
 		end

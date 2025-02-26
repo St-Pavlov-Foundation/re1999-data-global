@@ -267,10 +267,9 @@ function slot0.onSetDirectionVisible(slot0, slot1)
 		slot2 = slot1.selectType or ChessGameEnum.ChessSelectType.Normal
 
 		for slot6 = 1, #slot1.posXList do
-			slot12 = slot1.posXList[slot6]
-			slot13 = slot1.posYList[slot6]
+			slot12 = slot1.posYList[slot6]
 
-			slot0:addDirectionItem(slot0:createDirItem(), slot12, slot13)
+			slot0:addDirectionItem(slot0:createDirItem(), slot1.posXList[slot6], slot12)
 
 			for slot12, slot13 in pairs(ChessGameEnum.Direction) do
 				gohelper.setActive(slot7["goDir" .. slot13], slot13 == slot1.dirList[slot6])
@@ -325,13 +324,12 @@ function slot0.createDirItem(slot0)
 
 	if not slot1 then
 		slot1 = slot0:getUserDataTb_()
-		slot8 = "dirItem"
-		slot1.go = gohelper.clone(slot0._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem):GetResource(), slot0._sceneGround, slot8)
+		slot7 = "dirItem"
+		slot1.go = gohelper.clone(slot0._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem):GetResource(), slot0._sceneGround, slot7)
 		slot1.sceneTf = slot1.go.transform
 		slot1.goCenter = gohelper.findChild(slot1.go, "#go_center")
 		slot1.goNormal = gohelper.findChild(slot1.go, "#go_normal")
-		slot7 = "#go_item"
-		slot1.goItem = gohelper.findChild(slot1.go, slot7)
+		slot1.goItem = gohelper.findChild(slot1.go, "#go_item")
 
 		for slot7, slot8 in pairs(ChessGameEnum.Direction) do
 			slot1["goDir" .. slot8] = gohelper.findChild(slot1.goItem, "jiantou_" .. slot8)

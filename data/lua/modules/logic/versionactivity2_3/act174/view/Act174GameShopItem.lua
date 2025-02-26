@@ -7,8 +7,7 @@ function slot0.init(slot0, slot1)
 	slot0.anim = slot1:GetComponent(gohelper.Type_Animator)
 	slot0.btnClick = gohelper.findChildButtonWithAudio(slot1, "btn_Click")
 	slot0.txtCost = gohelper.findChildText(slot1, "btn_Buy/txt_Cost")
-	slot5 = "go_SellOut"
-	slot0.goSoldOut = gohelper.findChild(slot1, slot5)
+	slot0.goSoldOut = gohelper.findChild(slot1, "go_SellOut")
 
 	for slot5 = 1, 7 do
 		slot0["goType" .. slot5] = gohelper.findChild(slot1, "type" .. slot5)

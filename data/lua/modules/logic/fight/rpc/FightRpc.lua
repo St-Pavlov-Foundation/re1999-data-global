@@ -29,9 +29,7 @@ function slot0.onReceiveBeginFightReply(slot0, slot1, slot2)
 end
 
 function slot0.sendTestFightRequest(slot0, slot1, slot2, slot3)
-	slot8 = FightModule_pb.TestFightRequest()
-
-	slot1:setReqFightGroup(slot8)
+	slot1:setReqFightGroup(FightModule_pb.TestFightRequest())
 
 	for slot8, slot9 in ipairs(slot2) do
 		table.insert(slot4.groupIds, slot9)

@@ -112,8 +112,8 @@ function slot0.getProbUpItem(slot0, slot1)
 		slot2 = slot0:getUserDataTb_()
 		slot2.heroIcons = {}
 		slot2.equipIcons = {}
-		slot8 = tostring(slot1)
-		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. slot8)
+		slot8 = slot1
+		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. tostring(slot8))
 		slot2.go = slot3
 		slot2.starList = slot0:getUserDataTb_()
 		slot2.iconContainerGo = gohelper.findChild(slot3, "heroshowlist")

@@ -2,6 +2,12 @@ module("modules.logic.commonbufftip.CommonBuffTipView", package.seeall)
 
 slot0 = class("CommonBuffTipView", BaseView)
 
+function slot0._refreshScrollHeight(slot0)
+	recthelper.setHeight(slot0.rectTrScrollTip, math.min(slot0.maxHeight, recthelper.getHeight(slot0.rectTrContent)))
+
+	slot0.scrollTip.verticalNormalizedPosition = 0
+end
+
 function slot0.onInitView(slot0)
 	slot0.goclose = gohelper.findChild(slot0.viewGO, "#go_close")
 	slot0.goscrolltip = gohelper.findChild(slot0.viewGO, "#scroll_tip")
@@ -118,9 +124,11 @@ end
 
 function slot0.refreshScrollHeight(slot0)
 	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
-	recthelper.setHeight(slot0.rectTrScrollTip, math.min(slot0.maxHeight, recthelper.getHeight(slot0.rectTrContent)))
+	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
 
-	slot0.scrollTip.verticalNormalizedPosition = 0
+	slot0._fTimer = FrameTimerController.instance:register(slot0._refreshScrollHeight, slot0, 1)
+
+	slot0._fTimer:Start()
 end
 
 function slot0.getTipItem(slot0)
@@ -159,6 +167,7 @@ function slot0.recycleAllTipItem(slot0)
 end
 
 function slot0.onClose(slot0)
+	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
 	tabletool.clear(slot0.addEffectIdDict)
 	slot0:recycleAllTipItem()
 	slot0:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, slot0.setIsShowUI, slot0)

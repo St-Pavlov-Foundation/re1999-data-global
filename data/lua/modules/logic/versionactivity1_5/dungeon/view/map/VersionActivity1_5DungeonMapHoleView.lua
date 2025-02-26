@@ -22,8 +22,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._goareaitem, false)
 
 	slot0.loadSceneDone = false
-	slot4 = gohelper.Type_RectTransform
-	slot0.transform = slot0._godispatcharea:GetComponent(slot4)
+	slot0.transform = slot0._godispatcharea:GetComponent(gohelper.Type_RectTransform)
 	slot0.tempVector = Vector3.zero
 	slot0.tempVector4 = Vector4.zero
 	slot0.areaItemDict = {}

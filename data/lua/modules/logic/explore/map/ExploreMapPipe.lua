@@ -75,9 +75,8 @@ function slot0.initColors(slot0, slot1, slot2, slot3)
 	end
 
 	slot8 = slot6:getUnitsByType(ExploreEnum.ItemType.PipeSensor)
-	slot12 = uv0.sortUnitById
 
-	table.sort(slot8, slot12)
+	table.sort(slot8, uv0.sortUnitById)
 
 	for slot12, slot13 in ipairs(slot8) do
 		if slot13.mo:getColor() ~= ExploreEnum.PipeColor.None then
@@ -88,9 +87,8 @@ function slot0.initColors(slot0, slot1, slot2, slot3)
 	end
 
 	slot9 = slot6:getUnitsByType(ExploreEnum.ItemType.PipeMemory)
-	slot13 = uv0.sortUnitById
 
-	table.sort(slot9, slot13)
+	table.sort(slot9, uv0.sortUnitById)
 
 	for slot13, slot14 in ipairs(slot9) do
 		if slot14.mo:getColor() ~= ExploreEnum.PipeColor.None then

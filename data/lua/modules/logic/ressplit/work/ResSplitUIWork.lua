@@ -78,9 +78,7 @@ function slot0.onStart(slot0, slot1)
 		slot12 = "Assets/ZResourcesLib" .. slot11 .. "/ui/viewres/"
 
 		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/ui/viewres/") then
-			slot17 = "/ui/viewres/"
-
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. slot17).Length - 1 do
+			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/ui/viewres/").Length - 1 do
 				if not string.find(slot13[slot17], ".meta") then
 					slot19 = false
 
@@ -100,10 +98,9 @@ function slot0.onStart(slot0, slot1)
 		end
 
 		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg/") then
-			slot17 = "/singlebg/"
 			slot12 = "Assets/ZResourcesLib" .. slot11 .. "/singlebg/"
 
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. slot17).Length - 1 do
+			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg/").Length - 1 do
 				if not string.find(slot13[slot17], ".meta") then
 					slot19 = false
 
@@ -123,10 +120,9 @@ function slot0.onStart(slot0, slot1)
 		end
 
 		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg_lang/") then
-			slot17 = "/singlebg_lang/"
 			slot12 = "Assets/ZResourcesLib" .. slot11 .. "/singlebg_lang/"
 
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. slot17).Length - 1 do
+			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg_lang/").Length - 1 do
 				if not string.find(slot13[slot17], ".meta") then
 					slot19 = false
 

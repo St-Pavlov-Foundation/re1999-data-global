@@ -334,9 +334,8 @@ function slot0.fastAddEquip(slot0)
 	slot0._chooseEquipDic = {}
 	slot0._chooseEquipList = {}
 	slot2 = {}
-	slot10 = slot0
 
-	slot0:getEquipList(slot2, false, slot0.getFilterRare(slot10))
+	slot0:getEquipList(slot2, false, slot0:getFilterRare())
 
 	slot4 = {}
 	slot5 = true

@@ -78,9 +78,7 @@ function slot0.createItems(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	slot8 = false
-
-	gohelper.setActive(slot1, slot8)
+	gohelper.setActive(slot1, false)
 
 	for slot8, slot9 in ipairs(slot2) do
 		for slot14, slot15 in ipairs(GameUtil.splitString2(slot9.items, true) or {}) do

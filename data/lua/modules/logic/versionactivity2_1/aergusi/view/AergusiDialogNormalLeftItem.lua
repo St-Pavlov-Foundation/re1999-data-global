@@ -213,9 +213,8 @@ end
 function slot0._btnaskOnClick(slot0)
 	if slot0.stepCo.condition ~= "" and string.splitToNumber(slot0.stepCo.condition, "#")[1] == AergusiEnum.OperationType.NotKeyProbe then
 		slot2 = {}
-		slot8 = true
 
-		for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(AergusiModel.instance:getCurEpisode(), slot8)) do
+		for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(AergusiModel.instance:getCurEpisode(), true)) do
 			table.insert(slot2, slot9.clueName)
 		end
 
@@ -241,9 +240,7 @@ function slot0._onAskFinished(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot10 = true
-
-	for slot10, slot11 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(AergusiModel.instance:getCurEpisode(), slot10)) do
+	for slot10, slot11 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(AergusiModel.instance:getCurEpisode(), true)) do
 		table.insert({}, slot11.clueName)
 	end
 

@@ -166,9 +166,8 @@ function slot0._refreshImageList(slot0)
 	slot2 = slot0._curNum or 0
 	slot0._prevNum = slot2
 	slot5 = slot0._opaqueNum or slot0._maxNum
-	slot9 = #slot0._imageList
 
-	for slot9 = 1, math.max(slot4, slot9) do
+	for slot9 = 1, math.max(slot4, #slot0._imageList) do
 		slot12 = slot9 <= slot0._maxNum
 
 		gohelper.setActive(slot0:_getPointInfo(slot9).image, slot12)

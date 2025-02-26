@@ -126,10 +126,7 @@ end
 function slot0.onDestroyView(slot0)
 	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
 	TaskDispatcher.cancelTask(slot0._delayRefreshActionBtnView, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._playUnLockAnim, slot4)
+	TaskDispatcher.cancelTask(slot0._playUnLockAnim, slot0)
 
 	for slot4 = 1, #slot0.tabs do
 		slot0.tabs[slot4]:dispose()
@@ -162,9 +159,7 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.initTabItems(slot0)
-	slot4 = false
-
-	gohelper.setActive(slot0._goTabItem, slot4)
+	gohelper.setActive(slot0._goTabItem, false)
 
 	slot0.tabs = {}
 
@@ -180,9 +175,7 @@ function slot0.initTabItems(slot0)
 end
 
 function slot0.initRewardItems(slot0)
-	slot4 = false
-
-	gohelper.setActive(slot0._goTaskRewardGroup, slot4)
+	gohelper.setActive(slot0._goTaskRewardGroup, false)
 
 	slot0.rewards = {}
 

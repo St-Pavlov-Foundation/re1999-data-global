@@ -20,9 +20,7 @@ function slot0.ctor(slot0)
 end
 
 function slot0.insertStepList(slot0, slot1)
-	slot5 = slot1
-
-	slot0:beforeBuildStep(slot5)
+	slot0:beforeBuildStep(slot1)
 
 	for slot5, slot6 in ipairs(slot0.stepDataList) do
 		slot0:insertStep(slot6, slot5)

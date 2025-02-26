@@ -67,9 +67,9 @@ function slot0.refreshLeft(slot0)
 
 	if slot0.actInfo:getGameInfo():getTeamMoList() then
 		for slot6, slot7 in ipairs(slot1) do
-			slot13 = gohelper.findChildImage(gohelper.cloneInPlace(slot2), "numbg/image_Num")
+			slot13 = "act174_ready_num_0" .. slot7.index
 
-			UISpriteSetMgr.instance:setAct174Sprite(slot13, "act174_ready_num_0" .. slot7.index)
+			UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(gohelper.cloneInPlace(slot2), "numbg/image_Num"), slot13)
 
 			for slot13 = 1, 4 do
 				slot16 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot8), Act174BattleHeroItem)

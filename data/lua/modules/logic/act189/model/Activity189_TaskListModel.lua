@@ -5,8 +5,7 @@ slot1 = table.sort
 slot2 = table.insert
 
 function slot0.setTaskList(slot0, slot1)
-	slot6 = slot1
-	slot0._taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, slot6)
+	slot0._taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, slot1)
 	slot2 = {}
 
 	for slot6, slot7 in ipairs(slot0._taskMoList) do

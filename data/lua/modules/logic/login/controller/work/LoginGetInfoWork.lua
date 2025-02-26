@@ -162,10 +162,10 @@ function slot0.onStart(slot0, slot1)
 	slot0._leftInfoCount = #slot0.GetInfoFuncList
 	slot0._waitCount = 0
 	slot0._waitCount = slot0._waitCount + 1
-	slot5 = DungeonEvent.OnUpdateDungeonInfo
-	slot6 = slot0._onDungeonInfoUpdateAll
+	slot5 = slot0._onDungeonInfoUpdateAll
+	slot6 = slot0
 
-	DungeonController.instance:registerCallback(slot5, slot6, slot0)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, slot5, slot6)
 
 	for slot5, slot6 in ipairs(slot0.GetInfoFuncList) do
 		slot7 = slot6[1]

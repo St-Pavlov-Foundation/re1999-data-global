@@ -464,10 +464,8 @@ function slot0.getCurrentOpenedView(slot0, slot1)
 
 	slot2 = {}
 	slot3, slot4 = nil
-	slot7 = ViewMgr.instance
-	slot9 = slot7
 
-	for slot8, slot9 in ipairs(slot7.getOpenViewNameList(slot9)) do
+	for slot8, slot9 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
 		if slot9 ~= slot1 and not slot0.ignoreViewName[slot9] then
 			table.insert(slot2, {
 				viewName = slot9,

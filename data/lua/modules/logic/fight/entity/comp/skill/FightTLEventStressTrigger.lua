@@ -17,10 +17,10 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 
 	FightFloatMgr.instance:float(slot4, FightEnum.FloatType.stress, slot8.value2, tonumber(slot8.value))
 
-	slot14 = FightEvent.TriggerStressBehaviour
-	slot15 = slot4
+	slot14 = slot4
+	slot15 = slot6
 
-	FightController.instance:dispatchEvent(slot14, slot15, slot6)
+	FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, slot14, slot15)
 
 	for slot14, slot15 in ipairs(slot1.actEffectMOs) do
 		if slot15.effectType == FightEnum.EffectType.POWERCHANGE and slot15.targetId == slot4 and slot15.configEffect == FightEnum.PowerType.Stress then

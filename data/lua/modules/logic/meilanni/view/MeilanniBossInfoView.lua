@@ -104,10 +104,9 @@ function slot0._showBossDetail(slot0)
 
 	slot0._simagebossicon:LoadImage(ResUrl.getMeilanniIcon(slot0._mapConfig.monsterIcon))
 
-	slot8 = "#"
 	slot4 = nil
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(MeilanniConfig.instance:getLastEvent(slot0._mapId).interactParam, true, "|", slot8)) do
+	for slot8, slot9 in ipairs(GameUtil.splitString2(MeilanniConfig.instance:getLastEvent(slot0._mapId).interactParam, true, "|", "#")) do
 		if slot9[1] == MeilanniEnum.ElementType.Battle then
 			slot4 = slot9[2]
 
@@ -120,10 +119,9 @@ function slot0._showBossDetail(slot0)
 	end
 
 	slot0._battleId = slot4
-	slot10 = "|"
-	slot11 = "#"
+	slot10 = "#"
 
-	for slot10, slot11 in ipairs(GameUtil.splitString2(lua_battle.configDict[slot4].additionRule, true, slot10, slot11)) do
+	for slot10, slot11 in ipairs(GameUtil.splitString2(lua_battle.configDict[slot4].additionRule, true, "|", slot10)) do
 		slot12 = slot11[2]
 		slot13 = lua_rule.configDict[slot12]
 		slot14 = gohelper.cloneInPlace(slot0._gopropertyitem)

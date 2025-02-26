@@ -424,9 +424,7 @@ function slot0._showEnemyList(slot0)
 	slot5 = {}
 
 	for slot9, slot10 in ipairs(FightModel.instance:getFightParam().monsterGroupIds) do
-		slot16 = "#"
-
-		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot10].monster, slot16)) do
+		for slot16, slot17 in ipairs(FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[slot10].monster, "#")) do
 			slot18 = lua_monster.configDict[slot17].career
 
 			if FightHelper.isBossId(lua_monster_group.configDict[slot10].bossId, slot17) then

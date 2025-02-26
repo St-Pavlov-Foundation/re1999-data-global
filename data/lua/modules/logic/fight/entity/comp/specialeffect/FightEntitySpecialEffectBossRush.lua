@@ -137,10 +137,7 @@ end
 function slot0._setTexture(slot0)
 	slot0._entity.spineRenderer:getReplaceMat():SetTexture(uv0, slot0._texture)
 
-	slot4 = slot0._entity
-	slot6 = slot4
-
-	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(slot4.getSide(slot6))) do
+	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(slot0._entity:getSide())) do
 		if slot7 ~= slot0._entity then
 			slot0:_setOtherPartMat(slot7)
 		end

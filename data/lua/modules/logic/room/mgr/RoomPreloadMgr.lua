@@ -80,14 +80,12 @@ end
 
 function slot0._getMapBlockUrlList(slot0)
 	slot1 = {}
+	slot5 = "ground/water/water"
 
-	table.insert(slot1, ResUrl.getRoomRes("ground/water/water"))
+	table.insert(slot1, ResUrl.getRoomRes(slot5))
 	table.insert(slot1, RoomScenePreloader.DefaultLand)
 	table.insert(slot1, RoomScenePreloader.InitLand)
-
-	slot5 = RoomScenePreloader.ReplaceLand
-
-	table.insert(slot1, slot5)
+	table.insert(slot1, RoomScenePreloader.ReplaceLand)
 
 	for slot5, slot6 in pairs(RoomRiverEnum.RiverBlockType) do
 		table.insert(slot1, RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, slot6))

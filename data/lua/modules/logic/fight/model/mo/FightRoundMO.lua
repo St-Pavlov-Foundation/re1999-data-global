@@ -176,9 +176,9 @@ function slot0._calcMultiHpChange(slot0)
 				slot9.actEffectMOs = slot8
 				slot9.stepUid = slot5.stepUid + 1
 				slot11 = slot4 + 1
-				slot15 = slot11
+				slot15 = slot9
 
-				table.insert(slot0.fightStepMOs, slot15, slot9)
+				table.insert(slot0.fightStepMOs, slot11, slot15)
 
 				for slot15 = slot11 + 1, #slot0.fightStepMOs do
 					slot16 = slot0.fightStepMOs[slot15]

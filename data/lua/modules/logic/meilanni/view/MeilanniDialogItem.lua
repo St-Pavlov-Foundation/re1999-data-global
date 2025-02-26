@@ -552,9 +552,7 @@ function slot0._showOptionByConfig(slot0, slot1)
 
 			return
 		else
-			slot8 = MeilanniEvent.startShowDialogOptionBtn
-
-			MeilanniController.instance:dispatchEvent(slot8)
+			MeilanniController.instance:dispatchEvent(MeilanniEvent.startShowDialogOptionBtn)
 
 			for slot8, slot9 in pairs(slot0._optionBtnList) do
 				gohelper.setActive(slot9[1], false)

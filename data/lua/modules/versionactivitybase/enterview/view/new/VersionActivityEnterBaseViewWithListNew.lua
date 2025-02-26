@@ -238,9 +238,7 @@ function slot0.sortTabItemList(slot0)
 		end
 	end
 
-	slot4 = uv0
-
-	table.sort(slot0.openActIdList, slot4)
+	table.sort(slot0.openActIdList, uv0)
 
 	for slot4, slot5 in ipairs(slot0.openActIdList) do
 		gohelper.setSibling(slot0.activityTabItemDict[slot5].go, slot4)
@@ -254,10 +252,7 @@ function slot0.sortTabItemList(slot0)
 
 	gohelper.setActive(slot0._goActivityLine, true)
 	gohelper.setSibling(slot0._goActivityLine, #slot0.openActIdList + 1)
-
-	slot5 = uv1
-
-	table.sort(slot0.noOpenActList, slot5)
+	table.sort(slot0.noOpenActList, uv1)
 
 	for slot5, slot6 in ipairs(slot0.noOpenActList) do
 		gohelper.setSibling(slot0.activityTabItemDict[slot6].go, slot1 + 1 + slot5)

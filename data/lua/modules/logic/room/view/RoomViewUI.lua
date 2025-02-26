@@ -68,11 +68,9 @@ function slot0._sort(slot0)
 		slot6.__distance = Vector3.Distance(slot0._scene.camera:getCameraPosition(), slot6:getUI3DPos())
 	end
 
-	function slot5(slot0, slot1)
+	table.sort(slot0._uiItemList, function (slot0, slot1)
 		return slot1.__distance < slot0.__distance
-	end
-
-	table.sort(slot0._uiItemList, slot5)
+	end)
 
 	for slot5, slot6 in ipairs(slot0._uiItemList) do
 		gohelper.setAsLastSibling(slot6.go)

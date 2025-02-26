@@ -78,9 +78,9 @@ function slot0._refreshUI(slot0)
 
 		gohelper.setActive(slot11.go, true)
 
-		slot15 = slot11
+		slot15 = slot10
 
-		slot0:_refreshSummonDesc(slot15, slot10, slot5)
+		slot0:_refreshSummonDesc(slot11, slot15, slot5)
 
 		for slot15 = 1, 6 do
 			gohelper.setActive(gohelper.findChild(slot11.go, "desctitle/#go_starList/star" .. slot15), slot15 <= slot0._rate)
@@ -92,9 +92,9 @@ function slot0._refreshSummonDesc(slot0, slot1, slot2, slot3)
 	slot1.txthero.text = ""
 	slot1.txtprobability.text = ""
 	slot0._rate = 0
-	slot9 = "%[heroname=.-%]"
+	slot9 = slot0._maxAwardTime
 
-	for slot9 in string.format(slot2, slot0._maxAwardTime - 1, slot0._maxAwardTime):gmatch(slot9) do
+	for slot9 in string.format(slot2, slot0._maxAwardTime - 1, slot9):gmatch("%[heroname=.-%]") do
 		slot10, slot11, slot12, slot13, slot14 = string.find(slot9, "(%[heroname=)(.*)(%])")
 		slot16 = ""
 		slot17 = {}
@@ -108,9 +108,7 @@ function slot0._refreshSummonDesc(slot0, slot1, slot2, slot3)
 		slot4.text = string.format(slot16)
 	end
 
-	slot9 = "%[rate=.-%]"
-
-	for slot9 in slot2:gmatch(slot9) do
+	for slot9 in slot2:gmatch("%[rate=.-%]") do
 		slot10, slot11, slot12, slot13, slot14 = string.find(slot9, "(%[rate=)(.*)(%])")
 
 		for slot20, slot21 in ipairs(string.splitToNumber(slot13, "#")) do

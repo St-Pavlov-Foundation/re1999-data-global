@@ -33,9 +33,7 @@ function slot0._btnmergecloseOnClick(slot0)
 end
 
 function slot0._realCloseClueMerge(slot0)
-	slot4 = false
-
-	AergusiModel.instance:setMergeClueOpen(slot4)
+	AergusiModel.instance:setMergeClueOpen(false)
 	AergusiModel.instance:clearMergePosState()
 
 	for slot4 = 1, 2 do
@@ -74,9 +72,7 @@ function slot0._mergeFinished(slot0)
 	AergusiModel.instance:clearMergePosState()
 	AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayMergeSuccess, slot0._targetClue)
 	TaskDispatcher.runDelay(function ()
-		slot3 = false
-
-		AergusiModel.instance:setMergeClueOpen(slot3)
+		AergusiModel.instance:setMergeClueOpen(false)
 		AergusiModel.instance:clearMergePosState()
 
 		for slot3 = 1, 2 do

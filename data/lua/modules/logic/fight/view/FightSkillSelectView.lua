@@ -91,10 +91,10 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ExitStage, slot0.onExitStage, slot0)
 	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelect, slot0.OnKeySelect, slot0)
 
-	slot4 = FightController.instance
-	slot5 = FightEvent.OnChangeEntity
+	slot4 = FightEvent.OnChangeEntity
+	slot5 = slot0.onChangeEntity
 
-	slot0:removeEventCb(slot4, slot5, slot0.onChangeEntity, slot0)
+	slot0:removeEventCb(FightController.instance, slot4, slot5, slot0)
 	slot0._clickBlock:RemoveClickListener()
 	slot0._clickBlock:RemoveClickDownListener()
 	slot0._clickBlock:RemoveClickUpListener()

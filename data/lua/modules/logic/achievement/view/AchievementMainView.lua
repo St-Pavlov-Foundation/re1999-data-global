@@ -313,10 +313,9 @@ function slot0.getCurRenderCellCountWhileFoldIn(slot0, slot1, slot2, slot3)
 	end
 
 	slot9 = recthelper.getHeight(slot3.transform)
-	slot14 = slot9
 
 	for slot14 = slot6, #slot2 do
-		if Mathf.Clamp(slot9 - slot5 - slot3.VerticalScrollPixel, 0, slot14) - slot2[slot14]:getLineHeight(slot4, false) > 0 then
+		if Mathf.Clamp(slot9 - slot5 - slot3.VerticalScrollPixel, 0, slot9) - slot2[slot14]:getLineHeight(slot4, false) > 0 then
 			slot7 = slot7 + 1
 		else
 			break

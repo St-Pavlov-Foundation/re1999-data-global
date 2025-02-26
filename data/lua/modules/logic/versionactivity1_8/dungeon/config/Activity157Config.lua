@@ -74,9 +74,8 @@ function slot0.initMissionGroupTree(slot0, slot1)
 
 	for slot7, slot8 in ipairs(slot0:getAllMissionGroupIdList(slot1)) do
 		slot2[slot8] = {}
-		slot14 = slot8
 
-		for slot14, slot15 in ipairs(slot0:getAct157MissionList(slot1, slot14)) do
+		for slot14, slot15 in ipairs(slot0:getAct157MissionList(slot1, slot8)) do
 			slot16 = nil
 			slot18 = slot0:getMissionElementId(slot1, slot15) and DungeonConfig.instance:getChapterMapElement(slot17)
 

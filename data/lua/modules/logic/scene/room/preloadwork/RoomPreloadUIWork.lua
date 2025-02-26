@@ -40,9 +40,7 @@ function slot0._getUIUrlList(slot0)
 		table.insert(slot1, RoomScenePreloader.ResDebugPackageUI)
 	end
 
-	slot5 = RoomViewConfirm.prefabPath
-
-	table.insert(slot1, slot5)
+	table.insert(slot1, RoomViewConfirm.prefabPath)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot0.context.poolUIDict[slot6] = true

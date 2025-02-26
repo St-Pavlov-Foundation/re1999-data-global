@@ -229,10 +229,9 @@ function slot0._setRewardItem(slot0)
 	end
 
 	slot0._rewardItems = slot0:getUserDataTb_()
-	slot3 = TaskConfig.instance
-	slot5 = slot3
+	slot5 = slot0._index
 
-	for slot5 = 1, #string.split(slot3.gettaskactivitybonusCO(slot5, slot0._taskType, slot0._index).bonus, "|") do
+	for slot5 = 1, #string.split(TaskConfig.instance:gettaskactivitybonusCO(slot0._taskType, slot5).bonus, "|") do
 		slot0._rewardItems[slot5] = IconMgr.instance:getCommonPropItemIcon(slot0._gorewardcontent)
 		slot6 = string.splitToNumber(slot1[slot5], "#")
 

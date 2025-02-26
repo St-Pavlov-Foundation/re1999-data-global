@@ -229,13 +229,12 @@ function slot0._showTargetItems(slot0)
 
 	if slot0._rootType then
 		slot1 = 2
-		slot6 = {
+
+		table.insert({}, {
 			id = 1,
 			name = "返回",
 			type = 0
-		}
-
-		table.insert({}, slot6)
+		})
 
 		for slot6 = 1, #slot0._allItems do
 			if slot0._allItems[slot6].type == slot0._rootType then

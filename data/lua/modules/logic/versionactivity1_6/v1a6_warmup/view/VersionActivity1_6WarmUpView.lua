@@ -389,9 +389,8 @@ function slot0._onPlayEpisodeDescFinished(slot0)
 	end
 
 	slot0.isGetingReward = true
-	slot4 = slot0._curSelectedLvId
 
-	Activity156Model.instance:setLocalIsPlay(slot4)
+	Activity156Model.instance:setLocalIsPlay(slot0._curSelectedLvId)
 
 	for slot4, slot5 in pairs(slot0._rewardItemTab) do
 		gohelper.setActive(slot5.gocanget, true)

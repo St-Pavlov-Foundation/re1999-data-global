@@ -124,9 +124,9 @@ function slot0.refreshConditions(slot0)
 
 	slot3 = Activity109Config.instance:getEpisodeCo(slot1, slot2)
 	slot7 = #string.split(slot3.extStarCondition, "|") + 1
-	slot11 = tostring(slot7)
+	slot11 = slot7
 
-	logNormal("taskLen : " .. slot11)
+	logNormal("taskLen : " .. tostring(slot11))
 
 	for slot11 = 1, slot7 do
 		if slot11 == 1 then

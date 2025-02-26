@@ -37,9 +37,7 @@ function slot0.afterTimeline(slot0, slot1, slot2)
 	slot0._playingEntityId2StepMO[slot1.id] = nil
 
 	if slot2 and slot0:isUniqueSkill(slot1, slot2) then
-		slot7 = slot1.id
-
-		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, slot7)
+		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, slot1.id)
 
 		for slot7, slot8 in ipairs(FightHelper.getAllEntitys()) do
 			slot8:resetEntity()

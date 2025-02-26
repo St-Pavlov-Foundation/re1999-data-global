@@ -26,9 +26,7 @@ function slot0.sortBaseTile(slot0)
 		end
 	end
 
-	slot5 = uv0.sortTile
-
-	table.sort(slot1, slot5)
+	table.sort(slot1, uv0.sortTile)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot6.rect:SetSiblingIndex(slot5)
@@ -44,9 +42,7 @@ function slot0.sortInteractObjects(slot0)
 		return
 	end
 
-	slot4 = uv0.sortObjects
-
-	table.sort(slot0, slot4)
+	table.sort(slot0, uv0.sortObjects)
 
 	for slot4, slot5 in ipairs(slot0) do
 		slot5.rect:SetSiblingIndex(slot4)

@@ -25,9 +25,8 @@ end
 function slot0.refreshUI(slot0, slot1, slot2)
 	slot4 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(slot2)
 	slot0._txttitle.text = slot4.name
-	slot10 = slot4.icon
 
-	slot0._simagestone:LoadImage(ResUrl.getDestinyIcon(slot10))
+	slot0._simagestone:LoadImage(ResUrl.getDestinyIcon(slot4.icon))
 
 	slot5 = 0
 	slot6 = #slot0._descItemList

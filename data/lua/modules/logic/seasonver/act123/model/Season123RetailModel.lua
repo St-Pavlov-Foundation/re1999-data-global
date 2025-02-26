@@ -42,10 +42,9 @@ function slot0.initRewards(slot0)
 		return
 	end
 
-	slot5 = "|"
-	slot6 = "#"
+	slot5 = "#"
 
-	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.retailCO.bonus, true, slot5, slot6)) do
+	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.retailCO.bonus, true, "|", slot5)) do
 		slot9, slot10 = ItemModel.instance:getItemConfigAndIcon(slot6[1], slot6[2])
 
 		table.insert(slot0.rewardIconCfgs, slot6)

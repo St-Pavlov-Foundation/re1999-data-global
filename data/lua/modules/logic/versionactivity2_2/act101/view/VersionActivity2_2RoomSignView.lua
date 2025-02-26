@@ -60,9 +60,9 @@ function slot0.refreshItemList(slot0)
 		return
 	end
 
-	slot7 = #slot0.itemList
+	slot7 = #Activity125Model.instance:getById(slot0._actId):getEpisodeList()
 
-	for slot7 = 1, math.max(slot7, #Activity125Model.instance:getById(slot0._actId):getEpisodeList()) do
+	for slot7 = 1, math.max(#slot0.itemList, slot7) do
 		if not slot0.itemList[slot7] then
 			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goContent), VersionActivity2_2RoomSignItem)
 			slot8._index = slot7

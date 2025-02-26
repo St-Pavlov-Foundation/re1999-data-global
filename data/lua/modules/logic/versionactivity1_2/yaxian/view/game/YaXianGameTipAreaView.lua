@@ -52,10 +52,7 @@ function slot0.onUpdateEffectInfo(slot0)
 end
 
 function slot0.refreshAllInteractArea(slot0, slot1)
-	slot4 = YaXianGameModel.instance
-	slot6 = slot4
-
-	for slot5, slot6 in ipairs(slot4.getInteractMoList(slot6)) do
+	for slot5, slot6 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
 		slot0:refreshInteractAlertArea(slot6, slot1)
 		slot0:refreshTargetPosArea(slot6, slot1)
 	end
@@ -73,9 +70,8 @@ function slot0.refreshCanWalkGround(slot0, slot1)
 	if slot1 then
 		slot2 = YaXianGameModel.instance:getPlayerInteractMo()
 		slot3 = slot0:getCanWalkTargetPosDict(slot2.posX, slot2.posY)
-		slot7 = slot3
 
-		YaXianGameModel.instance:setCanWalkTargetPosDict(slot7)
+		YaXianGameModel.instance:setCanWalkTargetPosDict(slot3)
 
 		for slot7, slot8 in pairs(slot3) do
 			slot9 = slot0:createCanWalkItem(slot8.x, slot8.y)

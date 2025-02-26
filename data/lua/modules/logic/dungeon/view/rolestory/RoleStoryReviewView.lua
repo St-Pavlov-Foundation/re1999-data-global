@@ -53,9 +53,10 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.refreshDispatchList(slot0)
-	slot5 = #(RoleStoryConfig.instance:getDispatchList(slot0.storyId, RoleStoryEnum.DispatchType.Story) or {})
+	slot1 = RoleStoryConfig.instance:getDispatchList(slot0.storyId, RoleStoryEnum.DispatchType.Story) or {}
+	slot5 = #slot0.storyItems
 
-	for slot5 = 1, math.max(slot5, #slot0.storyItems) do
+	for slot5 = 1, math.max(#slot1, slot5) do
 		slot0:refreshDispatchItem(slot0.storyItems[slot5], slot1[slot5], slot5)
 	end
 end
@@ -64,9 +65,8 @@ function slot0.refreshDispatchView(slot0, slot1)
 	slot2 = RoleStoryConfig.instance:getDispatchConfig(slot1)
 	slot0.txtTitle.text = slot2.name
 	slot0.txtEnd.text = slot2.completeDesc
-	slot6 = slot2
 
-	slot0:refreshTalk(slot6)
+	slot0:refreshTalk(slot2)
 
 	for slot6, slot7 in ipairs(slot0.storyItems) do
 		slot7:updateSelect(slot1)
@@ -97,9 +97,9 @@ function slot0.refreshTalkList(slot0, slot1)
 		table.insert(slot2, RoleStoryConfig.instance:getTalkConfig(slot7))
 	end
 
-	slot6 = #slot2
+	slot6 = #slot0.talkList
 
-	for slot6 = 1, math.max(slot6, #slot0.talkList) do
+	for slot6 = 1, math.max(#slot2, slot6) do
 		slot0:refreshTalkItem(slot0.talkList[slot6], slot2[slot6], slot6)
 	end
 end

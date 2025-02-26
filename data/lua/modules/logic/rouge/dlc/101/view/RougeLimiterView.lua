@@ -147,9 +147,7 @@ function slot0.initLines(slot0, slot1)
 		return
 	end
 
-	slot5 = slot1
-
-	slot0:initUnlockMap(slot5)
+	slot0:initUnlockMap(slot1)
 
 	for slot5, slot6 in pairs(slot0._unlockMap) do
 		for slot10, slot11 in pairs(slot6) do

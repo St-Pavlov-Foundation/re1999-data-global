@@ -73,8 +73,7 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot4 = Activity174Enum.ConstKey.InitHealth
-	slot0.maxHp = tonumber(lua_activity174_const.configDict[slot4].value)
+	slot0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
 	slot0.hpEffList = slot0:getUserDataTb_()
 
 	for slot4 = 1, slot0.maxHp do
@@ -137,8 +136,7 @@ function slot0.refreshBetStatus(slot0)
 		gohelper.setActive(slot0._btnBet, false)
 		gohelper.setActive(slot0._btnBetCancel, false)
 	else
-		slot7 = Activity174Enum.ConstKey.InitHealth
-		slot0.maxHp = tonumber(lua_activity174_const.configDict[slot7].value)
+		slot0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
 
 		for slot7 = 1, slot0.maxHp do
 			gohelper.setActive(slot0.hpEffList[slot7], slot3 and slot7 == slot0.gameInfo.hp)

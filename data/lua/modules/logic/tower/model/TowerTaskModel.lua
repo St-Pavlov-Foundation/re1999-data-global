@@ -48,14 +48,9 @@ function slot0.setTaskInfoList(slot0, slot1)
 		table.insert(slot2, slot7)
 	end
 
-	slot6 = slot2
+	slot0.tempTaskModel:setList(slot2)
 
-	slot0.tempTaskModel:setList(slot6)
-
-	slot5 = slot0.tempTaskModel
-	slot7 = slot5
-
-	for slot6, slot7 in ipairs(slot5.getList(slot7)) do
+	for slot6, slot7 in ipairs(slot0.tempTaskModel:getList()) do
 		slot0:initTaskMap(slot7)
 	end
 

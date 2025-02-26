@@ -61,10 +61,7 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.setRandomTxt(slot0)
-	slot5 = tostring(os.time()):reverse()
-	slot7 = slot5
-
-	math.randomseed(tonumber(slot5.sub(slot7, 1, 7)))
+	math.randomseed(tonumber(tostring(os.time()):reverse():sub(1, 7)))
 
 	for slot7 = 1, uv0 do
 		slot8 = math.random(slot7, #string.split(lua_activity174_const.configDict[Activity174Enum.ConstKey.MatchTxt].value2, "#"))

@@ -155,9 +155,9 @@ end
 
 function slot0.goBackPos(slot0)
 	if #slot0._passedPosX >= 2 then
-		slot5 = slot0._passedPosX[slot1 - 1]
+		slot5 = slot0._passedPosY[slot1 - 1]
 
-		slot0:goPassPos(slot5, slot0._passedPosY[slot1 - 1])
+		slot0:goPassPos(slot0._passedPosX[slot1 - 1], slot5)
 
 		for slot5 = slot1 - 1, 2, -1 do
 			if slot0._modelInst:getObjAtPos(slot0._passedPosX[slot5], slot0._passedPosY[slot5]) then

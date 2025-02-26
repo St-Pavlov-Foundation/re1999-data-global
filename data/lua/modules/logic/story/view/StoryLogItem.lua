@@ -419,10 +419,10 @@ function slot0.onDestroy(slot0)
 	slot0._btnstop:RemoveClickListener()
 	StoryController.instance:unregisterCallback(StoryEvent.LogSelected, slot0._onItemSelected, slot0)
 
-	slot4 = StoryEvent.LogAudioFinished
-	slot5 = slot0._onItemAudioFinished
+	slot4 = slot0._onItemAudioFinished
+	slot5 = slot0
 
-	StoryController.instance:unregisterCallback(slot4, slot5, slot0)
+	StoryController.instance:unregisterCallback(StoryEvent.LogAudioFinished, slot4, slot5)
 
 	for slot4, slot5 in ipairs(slot0._simagebranchs) do
 		slot0._simagebranchs[slot4]:UnLoadImage()

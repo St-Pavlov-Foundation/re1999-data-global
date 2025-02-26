@@ -38,10 +38,9 @@ function slot0.initVehicle(slot0)
 
 	slot0:_initBuildingVehicle(slot2, slot1, slot3)
 
-	slot8 = slot1
-	slot9 = slot3
+	slot8 = slot3
 
-	slot0:_initTransportSiteVehicle(slot2, slot8, slot9)
+	slot0:_initTransportSiteVehicle(slot2, slot1, slot8)
 
 	for slot8, slot9 in ipairs(RoomMapPathPlanModel.instance:getList()) do
 		slot13 = slot11 and slot11.vehicleId or 0

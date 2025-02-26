@@ -87,13 +87,14 @@ function slot0._setInfo(slot0)
 
 	slot2 = Activity104Model.instance:getCurSeasonId()
 	slot0._txtlevelname.text = SeasonConfig.instance:getSeasonTagDesc(slot2, slot0.viewParam.retail.tag).name .. " " .. GameUtil.getRomanNums(math.min(Activity104Model.instance:getAct104CurStage(), 6))
-	slot0._txtenemylevelnum.text = HeroConfig.instance:getCommonLevelDisplay(SeasonConfig.instance:getSeasonRetailCo(slot2, Activity104Model.instance:getRetailStage()).level)
+	slot9 = slot2
+	slot0._txtenemylevelnum.text = HeroConfig.instance:getCommonLevelDisplay(SeasonConfig.instance:getSeasonRetailCo(slot9, Activity104Model.instance:getRetailStage()).level)
 	slot4 = Activity104Model.instance:getRetailEpisodeTag(slot0.viewParam.retail.id)
-
-	gohelper.setActive(slot0._gotag, not string.nilorempty(slot4))
-
 	slot8 = slot4
-	slot0._txttagdesc.text = tostring(slot8)
+
+	gohelper.setActive(slot0._gotag, not string.nilorempty(slot8))
+
+	slot0._txttagdesc.text = tostring(slot4)
 
 	for slot8, slot9 in pairs(slot0._cardItems) do
 		gohelper.setActive(slot9.go, false)

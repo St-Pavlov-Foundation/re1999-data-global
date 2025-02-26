@@ -64,10 +64,9 @@ function slot0.addNormalRuleItem(slot0, slot1, slot2)
 	gohelper.setActive(slot0._goadditionRule, true)
 	gohelper.setActive(slot0._goruleitem, true)
 
-	slot8 = "|"
-	slot9 = "#"
+	slot8 = "#"
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot3, true, slot8, slot9)) do
+	for slot8, slot9 in ipairs(GameUtil.splitString2(slot3, true, "|", slot8)) do
 		if lua_rule.configDict[slot9[2]] then
 			slot13 = slot0:_addRuleItem(slot9, false, slot2)
 			slot13.battleId = slot1
@@ -85,10 +84,9 @@ function slot0.AddExtraRuleItem(slot0, slot1)
 		return
 	end
 
-	slot8 = "|"
-	slot9 = "#"
+	slot8 = "#"
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, true, slot8, slot9)) do
+	for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, true, "|", slot8)) do
 		if lua_rule.configDict[slot9[2]] then
 			slot13 = slot0:_addRuleItem(slot9, true)
 			slot13.battleId = slot1

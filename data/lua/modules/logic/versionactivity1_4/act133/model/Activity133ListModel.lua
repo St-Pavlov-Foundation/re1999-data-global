@@ -13,9 +13,7 @@ function slot0.init(slot0, slot1)
 		table.insert(slot2, slot9)
 	end
 
-	slot7 = uv0._sortFunction
-
-	table.sort(slot2, slot7)
+	table.sort(slot2, uv0._sortFunction)
 
 	for slot7, slot8 in ipairs(slot2) do
 		if not Activity133Model.instance:checkBonusReceived(slot8.id) and tonumber(string.splitToNumber(slot8.config.needTokens, "#")[3]) <= CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity then

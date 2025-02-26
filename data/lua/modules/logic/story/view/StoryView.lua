@@ -1265,10 +1265,7 @@ function slot0._clearItems(slot0, slot1)
 	TaskDispatcher.cancelTask(slot0._enterNextStep, slot0)
 	TaskDispatcher.cancelTask(slot0._startShowText, slot0)
 	TaskDispatcher.cancelTask(slot0._startShake, slot0)
-
-	slot5 = slot0
-
-	TaskDispatcher.cancelTask(slot0._shakeStop, slot5)
+	TaskDispatcher.cancelTask(slot0._shakeStop, slot0)
 
 	for slot5, slot6 in pairs(slot0._pictures) do
 		slot6:onDestroy()

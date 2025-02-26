@@ -67,9 +67,9 @@ function slot0.initMapData(slot0, slot1, slot2)
 		slot0._nodeDic[slot12.walkableKey] = slot12
 	end
 
-	slot10 = slot4
-	slot11 = slot5
-	slot0.mapBound = Vector4(slot3, slot10, slot11, slot6)
+	slot10 = slot5
+	slot11 = slot6
+	slot0.mapBound = Vector4(slot3, slot4, slot10, slot11)
 
 	for slot10, slot11 in ipairs(slot1) do
 		if slot10 > 1 then
@@ -81,9 +81,7 @@ function slot0.initMapData(slot0, slot1, slot2)
 		end
 	end
 
-	slot12 = "(-?%d+)#(-?%d+)"
-
-	for slot12, slot13 in string.gmatch(slot0.moveNodes or "", slot12) do
+	for slot12, slot13 in string.gmatch(slot0.moveNodes or "", "(-?%d+)#(-?%d+)") do
 		slot0:setNodeLightXY(tonumber(slot12), tonumber(slot13))
 	end
 

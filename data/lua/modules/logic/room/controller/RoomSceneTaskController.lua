@@ -141,9 +141,7 @@ function slot0.isTaskOverUnlockLevel(slot0)
 end
 
 function slot0.getTaskUnlockLevel(slot0)
-	slot5 = "(%w+)=(%w+)"
-
-	for slot5, slot6 in string.gmatch(slot0, slot5) do
+	for slot5, slot6 in string.gmatch(slot0, "(%w+)=(%w+)") do
 		-- Nothing
 	end
 

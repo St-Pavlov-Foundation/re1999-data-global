@@ -58,11 +58,11 @@ function slot0._refreshView(slot0)
 
 			if slot0.config.id == slot6.id then
 				for slot11, slot12 in ipairs(slot1) do
-					slot17 = "</color>"
+					slot17 = "<color=%s>"
 
 					for slot17 = 0, slot7:GetComponentsInChildren(gohelper.Type_TextMesh).Length - 1 do
 						if slot13[slot17].gameObject.name == "txt_" .. slot11 then
-							slot13[slot17].text = string.gsub(string.gsub(slot12, "%{", string.format("<color=%s>", "#ff906a")), "%}", slot17)
+							slot13[slot17].text = string.gsub(string.gsub(slot12, "%{", string.format(slot17, "#ff906a")), "%}", "</color>")
 						end
 					end
 				end

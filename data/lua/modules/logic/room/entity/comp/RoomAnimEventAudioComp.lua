@@ -90,9 +90,8 @@ function slot0._addAnimEvent(slot0)
 	end
 
 	slot0._animEventMonoList = {}
-	slot5 = slot1
 
-	tabletool.addValues(slot0._animEventMonoList, slot5)
+	tabletool.addValues(slot0._animEventMonoList, slot1)
 
 	for slot5, slot6 in ipairs(slot0._animEventMonoList) do
 		for slot10 = 1, uv0.AUDIO_MAX do

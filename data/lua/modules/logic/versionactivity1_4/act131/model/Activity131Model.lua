@@ -73,9 +73,7 @@ function slot0.refreshLogDics(slot0)
 						end
 					elseif slot13 == Activity131Enum.ElementType.Dialog then
 						if slot2 ~= 0 and slot0.curMaplogDic[slot2] then
-							slot20 = slot14
-
-							for slot19, slot20 in pairs(Activity131Config.instance:getActivity131DialogGroup(tonumber(slot20))) do
+							for slot19, slot20 in pairs(Activity131Config.instance:getActivity131DialogGroup(tonumber(slot14))) do
 								table.insert(slot0.curMaplogDic[slot2], slot20)
 							end
 						end

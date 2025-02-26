@@ -40,7 +40,7 @@ function slot0._btnstartOnClick(slot0)
 	slot3 = false
 	slot4 = false
 
-	function slot9()
+	slot0._itemList[slot0._lastSelectedIndex]:setOnCloseEndCb(function ()
 		uv0 = true
 
 		if not uv1 then
@@ -49,9 +49,7 @@ function slot0._btnstartOnClick(slot0)
 
 		UIBlockHelper.instance:endBlock(uv2)
 		RougeController.instance:openRougeInitTeamView()
-	end
-
-	slot0._itemList[slot0._lastSelectedIndex]:setOnCloseEndCb(slot9)
+	end)
 
 	for slot9, slot10 in ipairs(slot0._itemList) do
 		slot10:playClose()

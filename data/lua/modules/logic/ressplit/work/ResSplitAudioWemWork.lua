@@ -8,10 +8,9 @@ function slot0.onStart(slot0, slot1)
 	slot2:close()
 	ResSplitXml2lua.parser(ResSplitXmlTree):parse(slot2:read("*a"))
 
-	slot9 = "ResSplitAudioWemWork_temp"
-	slot10 = false
+	slot9 = false
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, slot9, slot10)
+	ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, "ResSplitAudioWemWork_temp", slot9)
 
 	slot5 = {}
 

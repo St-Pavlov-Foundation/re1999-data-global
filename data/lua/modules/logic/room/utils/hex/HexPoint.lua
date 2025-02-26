@@ -134,9 +134,9 @@ function slot0.InRanges(slot0, slot1, slot2)
 	slot1 = math.abs(slot1 or 0)
 
 	for slot7 = -slot1, slot1 do
-		slot11 = slot1
+		slot11 = -slot7 + slot1
 
-		for slot11 = math.max(-slot1, -slot7 - slot1), math.min(slot11, -slot7 + slot1) do
+		for slot11 = math.max(-slot1, -slot7 - slot1), math.min(slot1, slot11) do
 			if not slot2 or slot7 ~= 0 or slot11 ~= 0 then
 				table.insert(slot3, uv0(slot0, uv1(slot7, slot11)))
 			end

@@ -43,16 +43,16 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 	if slot1 == "equip_const" then
 		slot0._baseExpDic = {}
 		slot4, slot5, slot6 = nil
-		slot11 = lua_equip_const.configDict[1].value
+		slot10 = "|"
 
-		for slot10, slot11 in ipairs(string.split(slot11, "|")) do
+		for slot10, slot11 in ipairs(string.split(lua_equip_const.configDict[1].value, slot10)) do
 			slot4 = string.split(slot11, "#")
 			slot0._baseExpDic[tonumber(slot4[1])] = tonumber(slot4[2])
 		end
 
-		slot11 = lua_equip_const.configDict[2].value
+		slot10 = "|"
 
-		for slot10, slot11 in ipairs(string.split(slot11, "|")) do
+		for slot10, slot11 in ipairs(string.split(lua_equip_const.configDict[2].value, slot10)) do
 			slot4 = string.split(slot11, "#")
 			slot0._baseExpDic[tonumber(slot4[1])] = tonumber(slot4[2])
 		end
@@ -220,11 +220,11 @@ function slot0.getIncrementalExp(slot0, slot1)
 	slot6, slot7 = nil
 
 	for slot11 = 0, slot1.breakLv do
-		slot15 = slot2.rare
+		slot15 = slot11
 		slot7 = slot0._expTransfer[slot11]
 		slot4 = 0
 
-		for slot15 = slot5, slot0:_getBreakLevelMaxLevel(slot15, slot11) do
+		for slot15 = slot5, slot0:_getBreakLevelMaxLevel(slot2.rare, slot15) do
 			if slot1.level < slot15 then
 				break
 			end

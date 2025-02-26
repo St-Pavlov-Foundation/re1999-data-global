@@ -258,9 +258,10 @@ end
 
 function slot0.initGroupCo(slot0)
 	slot1 = ActivityStoreConfig.instance:getUnlockGroupList(slot0.actId)
-	slot8 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_7PlayedStoreGroupIdKey), "")
+	slot8 = ""
+	slot7 = uv0.SplitChar
 
-	for slot7, slot8 in ipairs(string.split(slot8, uv0.SplitChar)) do
+	for slot7, slot8 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_7PlayedStoreGroupIdKey), slot8), slot7)) do
 		table.insert({}, tonumber(slot8))
 	end
 

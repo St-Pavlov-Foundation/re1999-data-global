@@ -129,9 +129,11 @@ function slot0._refreshFilter(slot0)
 	gohelper.setActive(slot0._goplacedunselect, not RoomShowBuildingListModel.instance:isFilterUse(1))
 	gohelper.setActive(slot0._gonotplacedselect, RoomShowBuildingListModel.instance:isFilterUse(0))
 
-	slot4 = not RoomShowBuildingListModel.instance:isFilterUse(0)
+	slot3 = RoomShowBuildingListModel.instance
+	slot4 = slot3
+	slot5 = 0
 
-	gohelper.setActive(slot0._gonotplacedunselect, slot4)
+	gohelper.setActive(slot0._gonotplacedunselect, not slot3.isFilterUse(slot4, slot5))
 
 	for slot4, slot5 in ipairs(slot0._rangeItemList) do
 		SLFramework.UGUI.GuiHelper.SetColor(slot5.imageicon, RoomShowBuildingListModel.instance:isFilterOccupy(slot5.occupyId) and "#EC7E4B" or "#E5E5E5")

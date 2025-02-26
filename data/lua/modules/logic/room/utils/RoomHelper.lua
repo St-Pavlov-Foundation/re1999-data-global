@@ -245,9 +245,8 @@ return {
 		if ManufactureConfig.instance:getBuildingUpgradeGroup(RoomMapBuildingModel.instance:getBuildingMOById(slot0).buildingId) and slot4 ~= 0 then
 			slot5 = {}
 			slot6 = {}
-			slot12 = slot3:getLevel()
 
-			for slot12, slot13 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot4, slot12)) do
+			for slot12, slot13 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot4, slot3:getLevel())) do
 				if not slot6[ManufactureConfig.instance:getItemId(slot13)] then
 					slot5[#slot5 + 1] = {
 						type = MaterialEnum.MaterialType.Item,

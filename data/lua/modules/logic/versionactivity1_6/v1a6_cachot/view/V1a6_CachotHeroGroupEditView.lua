@@ -661,12 +661,12 @@ function slot0._refreshAttribute(slot0)
 			slot0._talentCubeInfos = CharacterEnum.TalentRank <= slot4 and HeroMo.getTalentCubeInfos(slot0._heroMO.heroId, slot2) or nil
 		end
 
-		slot10 = slot1
-		slot11 = slot4
+		slot10 = slot4
+		slot11 = nil
 
 		for slot10, slot11 in ipairs(CharacterEnum.BaseAttrIdList) do
 			slot0._attributevalues[slot10].name.text = HeroConfig.instance:getHeroAttributeCO(slot11).name
-			slot0._attributevalues[slot10].value.text = slot0._heroMO:getCachotTotalBaseAttrDict(slot0._equips, slot10, slot11, nil, slot5, slot0._modifyEquipMo, slot0)[slot11]
+			slot0._attributevalues[slot10].value.text = slot0._heroMO:getCachotTotalBaseAttrDict(slot0._equips, slot1, slot10, slot11, slot5, slot0._modifyEquipMo, slot0)[slot11]
 
 			CharacterController.instance:SetAttriIcon(slot0._attributevalues[slot10].icon, slot11)
 		end
@@ -898,10 +898,7 @@ function slot0._saveQuickGroupInfo(slot0)
 
 		slot0:replaceQuickGroupHeroDefaultEquip(slot0._heroGroupQuickEditListModel:getHeroUids())
 
-		slot4 = slot0._heroGroupModel
-		slot6 = slot4
-
-		for slot6 = 1, slot4.getBattleRoleNum(slot6) do
+		for slot6 = 1, slot0._heroGroupModel:getBattleRoleNum() do
 			if slot1[slot6] ~= nil then
 				slot0._heroSingleGroupModel:addTo(slot7, slot6)
 
@@ -995,9 +992,9 @@ function slot0._editableInitView(slot0)
 
 	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	slot4 = ResUrl.getHeroGroupBg
+	slot4 = "guang_027"
 
-	slot0._simageredlight:LoadImage(slot4("guang_027"))
+	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
 
 	slot0._lvBtns = slot0:getUserDataTb_()
 	slot0._lvArrow = slot0:getUserDataTb_()
@@ -1050,8 +1047,7 @@ function slot0._editableInitView(slot0)
 	end
 
 	slot0._goBtnEditQuickMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn2")
-	slot4 = "btn1"
-	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, slot4)
+	slot0._goBtnEditNormalMode = gohelper.findChild(slot0._btnquickedit.gameObject, "btn1")
 	slot0._attributevalues = {}
 
 	for slot4 = 1, 5 do

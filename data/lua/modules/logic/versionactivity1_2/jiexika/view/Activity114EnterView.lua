@@ -49,8 +49,7 @@ slot0.canShowSpineView = {
 
 function slot0._editableInitView(slot0)
 	slot0._taskRed = gohelper.findChild(slot0.viewGO, "#btn_Reward/redPoint")
-	slot4 = "#go_photos/redPoint"
-	slot0._photoRed = gohelper.findChild(slot0.viewGO, slot4)
+	slot0._photoRed = gohelper.findChild(slot0.viewGO, "#go_photos/redPoint")
 	slot0._photoGo = slot0:getUserDataTb_()
 
 	for slot4 = 1, 9 do

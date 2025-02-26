@@ -6,8 +6,7 @@ function slot0.onInitView(slot0)
 	slot0.goElements = gohelper.findChild(slot0.viewGO, "main/#go_Root/#go_Elements")
 	slot0.goPool = gohelper.findChild(slot0.goElements, "pool")
 	slot0.wordRes1 = gohelper.findChild(slot0.goPool, "word1")
-	slot4 = "word2"
-	slot0.wordRes2 = gohelper.findChild(slot0.goPool, slot4)
+	slot0.wordRes2 = gohelper.findChild(slot0.goPool, "word2")
 	slot0.elementDict = {}
 	slot0.textDict = {}
 	slot0.elementTypeDict = {}

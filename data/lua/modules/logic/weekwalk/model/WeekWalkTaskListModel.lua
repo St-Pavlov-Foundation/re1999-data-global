@@ -28,9 +28,8 @@ end
 
 function slot0.getCanGetList(slot0)
 	slot1 = {}
-	slot6 = slot0
 
-	for slot5, slot6 in ipairs(slot0.getList(slot6)) do
+	for slot5, slot6 in ipairs(slot0:getList()) do
 		if slot6.id and slot0:_canGet(slot6.id) then
 			table.insert(slot1, slot6.id)
 		end

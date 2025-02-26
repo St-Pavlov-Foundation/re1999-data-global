@@ -5,7 +5,8 @@ slot0 = class("Season166InformationAnalyView", BaseView)
 function slot0.onInitView(slot0)
 	slot0.simageReportPic = gohelper.findChildSingleImage(slot0.viewGO, "Report/image_Line/image_ReportPic")
 	slot0.goLockedPic = gohelper.findChild(slot0.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
-	slot0.lockedCtrl = slot0.goLockedPic:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	slot4 = ZProj.MaterialPropsCtrl
+	slot0.lockedCtrl = slot0.goLockedPic:GetComponent(typeof(slot4))
 	slot0.simageLockedPic = gohelper.findChildSingleImage(slot0.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
 	slot0.btnLeft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Left")
 	slot0.btnRight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Right")
@@ -21,8 +22,7 @@ function slot0.onInitView(slot0)
 	slot0.goContent = gohelper.findChild(slot0.viewGO, "Detail/#scorll_Details/Viewport/Content")
 	slot0.rectContent = slot0.goContent.transform
 	slot0.goDesc = gohelper.findChild(slot0.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_Descr")
-	slot4 = "Detail/#scorll_Details/Viewport/Content/#go_RevealTips"
-	slot0.goRevealTips = gohelper.findChild(slot0.viewGO, slot4)
+	slot0.goRevealTips = gohelper.findChild(slot0.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_RevealTips")
 	slot0.detailItems = {}
 	slot0.recycleItemsDict = {}
 	slot0.itemClsDict = {

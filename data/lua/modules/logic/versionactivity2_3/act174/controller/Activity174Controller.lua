@@ -121,9 +121,8 @@ end
 
 function slot0.checkTeamDataWrong(slot0, slot1)
 	slot2 = Activity174Model.instance:getActInfo(slot1):getGameInfo()
-	slot8 = slot2.gameCount
 
-	for slot8 = 1, Activity174Config.instance:getTurnCo(slot1, slot8).groupNum do
+	for slot8 = 1, Activity174Config.instance:getTurnCo(slot1, slot2.gameCount).groupNum do
 		if not slot2:getTeamMoList()[slot8] or not slot9:notEmpty() then
 			return true
 		end

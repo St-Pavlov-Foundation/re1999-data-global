@@ -103,8 +103,7 @@ function slot0.onOpen(slot0)
 		AudioMgr.instance:trigger(slot10)
 	end
 
-	slot15 = slot0.gameInfo.gameCount
-	slot0.teamCnt = Activity174Config.instance:getTurnCo(slot0.actId, slot15).groupNum
+	slot0.teamCnt = Activity174Config.instance:getTurnCo(slot0.actId, slot0.gameInfo.gameCount).groupNum
 	slot0.resultItemList = {}
 
 	for slot15 = 1, slot0.teamCnt do
@@ -124,16 +123,15 @@ function slot0.initResultItem(slot0, slot1, slot2)
 	slot4 = gohelper.findChild(slot1, "EnemyGroup")
 	slot3.goEnemyWin = gohelper.findChild(slot1, "simage_enemywin")
 	slot3.goEnemyMask = gohelper.findChild(slot4, "go_mask")
+	slot10 = slot2
 
-	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot4, "numbg/image_Num"), "act174_ready_num_0" .. slot2)
-
-	slot10 = "index"
+	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot4, "numbg/image_Num"), "act174_ready_num_0" .. slot10)
 
 	for slot10 = 4, 1, -1 do
 		slot12 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot4), Act174BattleHeroItem)
 
 		slot12:setIndex(slot10)
-		slot12:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.enemyTeamInfos, slot2, slot10).battleHeroInfo, slot10, "index"), slot2, true)
+		slot12:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.enemyTeamInfos, slot2, "index").battleHeroInfo, slot10, "index"), slot2, true)
 	end
 
 	gohelper.setAsLastSibling(slot3.goEnemyMask)
@@ -141,16 +139,15 @@ function slot0.initResultItem(slot0, slot1, slot2)
 	slot7 = gohelper.findChild(slot1, "PlayerGroup")
 	slot3.goPlayerWin = gohelper.findChild(slot1, "simage_playerwin")
 	slot3.goPlayerMask = gohelper.findChild(slot7, "go_mask")
+	slot13 = slot2
 
-	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot7, "numbg/image_Num"), "act174_ready_num_0" .. slot2)
-
-	slot13 = "index"
+	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot7, "numbg/image_Num"), "act174_ready_num_0" .. slot13)
 
 	for slot13 = 1, 4 do
 		slot15 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot7), Act174BattleHeroItem)
 
 		slot15:setIndex(slot13)
-		slot15:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.playerTeamInfos, slot2, slot13).battleHeroInfo, slot13, "index"), slot2, false)
+		slot15:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.playerTeamInfos, slot2, "index").battleHeroInfo, slot13, "index"), slot2, false)
 	end
 
 	gohelper.setAsLastSibling(slot3.goPlayerMask)

@@ -353,7 +353,7 @@ function slot0._loadScene(slot0)
 
 	slot6 = 0
 
-	transformhelper.setLocalPos(slot0._goroles.transform, slot6, 0, 0)
+	transformhelper.setLocalPos(slot0._goroles.transform, 0, slot6, 0)
 
 	for slot6 = 1, 6 do
 		if slot1.otherRes[string.format("role%s", slot6)] then

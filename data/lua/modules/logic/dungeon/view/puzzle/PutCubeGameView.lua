@@ -70,10 +70,9 @@ end
 function slot0._setDebrisData(slot0)
 	slot0.debris_list = {}
 	slot0.debris_count_dic = {}
-	slot3 = DungeonConfig.instance
-	slot5 = slot3
+	slot4 = slot0.viewParam.id
 
-	for slot4, slot5 in ipairs(slot3.getPuzzleSquareDebrisGroupList(slot5, slot0.viewParam.id)) do
+	for slot4, slot5 in ipairs(DungeonConfig.instance:getPuzzleSquareDebrisGroupList(slot4)) do
 		slot0.debris_count_dic[slot5.id] = slot5.count
 
 		table.insert(slot0.debris_list, slot5)
@@ -187,9 +186,8 @@ function slot0._detectDragResult(slot0, slot1)
 
 	for slot5, slot6 in ipairs(slot0._rabbet_cell_list) do
 		slot7 = slot6
-		slot11 = slot0.drag_data.drag_id
 
-		for slot11, slot12 in ipairs(slot0.drag_cube_child_list[slot11]) do
+		for slot11, slot12 in ipairs(slot0.drag_cube_child_list[slot0.drag_data.drag_id]) do
 			slot13 = slot12.transform
 
 			if slot7:detectPosCover(recthelper.getAnchorX(slot0.drag_container_transform) + recthelper.getAnchorX(slot13), recthelper.getAnchorY(slot0.drag_container_transform) + recthelper.getAnchorY(slot13)) and slot12.rightful and slot7.level < 3 then

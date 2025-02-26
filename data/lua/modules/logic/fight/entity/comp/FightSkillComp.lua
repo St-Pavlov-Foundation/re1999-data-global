@@ -413,9 +413,9 @@ function slot0._beforePlayTimeline(slot0)
 		slot0.entity.buff:hideLoopEffects("before_skill_timeline")
 	end
 
-	slot5 = slot0._fightStepMO
+	slot4 = "before_skill_timeline"
 
-	for slot4, slot5 in pairs(FightHelper.hideDefenderBuffEffect(slot5, "before_skill_timeline")) do
+	for slot4, slot5 in pairs(FightHelper.hideDefenderBuffEffect(slot0._fightStepMO, slot4)) do
 		slot0._hide_defenders_buff_effect = slot0._hide_defenders_buff_effect or {}
 
 		table.insert(slot0._hide_defenders_buff_effect, slot5)
@@ -497,10 +497,7 @@ function slot0._setSideRenderOrder(slot0)
 end
 
 function slot0._cancelSideRenderOrder(slot0)
-	slot3 = slot0.entity
-	slot5 = slot3
-
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys(slot3.getSide(slot5))) do
+	for slot5, slot6 in ipairs(FightHelper.getAllEntitys(slot0.entity:getSide())) do
 		FightRenderOrderMgr.instance:cancelOrder(slot6.id)
 	end
 

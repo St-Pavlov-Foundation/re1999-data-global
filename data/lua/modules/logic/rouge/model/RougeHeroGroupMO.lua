@@ -322,9 +322,9 @@ function slot0.setTrials(slot0, slot1)
 	end
 
 	if not slot1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(slot3.trialEquips) then
-		slot10 = #string.splitToNumber(slot3.trialEquips, "|")
+		slot10 = slot0._maxHeroCount
 
-		for slot10 = 1, math.min(slot10, slot0._maxHeroCount) do
+		for slot10 = 1, math.min(#string.splitToNumber(slot3.trialEquips, "|"), slot10) do
 			slot0:updatePosEquips({
 				index = slot10 - 1,
 				equipUid = {

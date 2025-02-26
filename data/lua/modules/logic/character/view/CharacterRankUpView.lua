@@ -113,10 +113,12 @@ end
 function slot0._editableInitView(slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseView, slot0, LuaEventSystem.Low)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0, LuaEventSystem.High)
-	slot0._simagecenterbg:LoadImage(ResUrl.getCharacterIcon("guang_005"))
 
-	slot4 = true
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, slot4)
+	slot4 = "guang_005"
+
+	slot0._simagecenterbg:LoadImage(ResUrl.getCharacterIcon(slot4))
+
+	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
 
 	slot0._uiSpine:useRT()
 
@@ -127,8 +129,8 @@ function slot0._editableInitView(slot0)
 
 	for slot4 = 1, 3 do
 		slot5 = slot0:getUserDataTb_()
-		slot9 = "insightlight" .. tostring(slot4)
-		slot5.go = gohelper.findChild(slot0._goranknormal, slot9)
+		slot9 = tostring(slot4)
+		slot5.go = gohelper.findChild(slot0._goranknormal, "insightlight" .. slot9)
 		slot5.lights = {}
 
 		for slot9 = 1, slot4 do
@@ -138,8 +140,7 @@ function slot0._editableInitView(slot0)
 		slot0._norrank.insights[slot4] = slot5
 	end
 
-	slot4 = slot0
-	slot0._norrank.eyes = slot0.getUserDataTb_(slot4)
+	slot0._norrank.eyes = slot0:getUserDataTb_()
 
 	for slot4 = 1, 2 do
 		table.insert(slot0._norrank.eyes, gohelper.findChild(slot0._goranknormal, "eyes/eye" .. tostring(slot4)))
@@ -151,8 +152,8 @@ function slot0._editableInitView(slot0)
 
 	for slot4 = 1, 3 do
 		slot5 = slot0:getUserDataTb_()
-		slot9 = "insightlight" .. tostring(slot4)
-		slot5.go = gohelper.findChild(slot0._goranklarge, slot9)
+		slot9 = tostring(slot4)
+		slot5.go = gohelper.findChild(slot0._goranklarge, "insightlight" .. slot9)
 		slot5.lights = {}
 
 		for slot9 = 1, slot4 do
@@ -162,8 +163,7 @@ function slot0._editableInitView(slot0)
 		slot0._uprank.insights[slot4] = slot5
 	end
 
-	slot4 = slot0
-	slot0._uprank.eyes = slot0.getUserDataTb_(slot4)
+	slot0._uprank.eyes = slot0:getUserDataTb_()
 
 	for slot4 = 1, 2 do
 		table.insert(slot0._uprank.eyes, gohelper.findChild(slot0._goranklarge, "eyes/eye" .. tostring(slot4)))
@@ -376,9 +376,8 @@ function slot0._refreshEffect(slot0)
 
 	gohelper.setActive(slot0._goeffect, true)
 
-	slot4 = SkillConfig.instance
-	slot6 = slot4
-	slot2 = string.split(slot4.getherorankCO(slot6, slot0.viewParam.heroId, slot0.viewParam.rank + 1).effect, "|")
+	slot6 = slot0.viewParam.rank + 1
+	slot2 = string.split(SkillConfig.instance:getherorankCO(slot0.viewParam.heroId, slot6).effect, "|")
 
 	for slot6 = 1, 5 do
 		gohelper.setActive(slot0._effects[slot6].go, slot6 <= #slot2)

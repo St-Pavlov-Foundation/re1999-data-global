@@ -195,11 +195,9 @@ function slot0.getSelectEnemyPosLOrR(slot0, slot1)
 	end
 
 	if #slot2 > 0 then
-		function slot6(slot0, slot1)
+		table.sort(slot2, function (slot0, slot1)
 			return slot0.position < slot1.position
-		end
-
-		table.sort(slot2, slot6)
+		end)
 
 		for slot6 = 1, #slot2 do
 			if slot2[slot6].id == slot0.curSelectEntityId then
@@ -235,9 +233,7 @@ function slot0.resetCardOps(slot0)
 		slot6:resetSimulateExPoint()
 	end
 
-	slot5 = FightEnum.EntitySide.MySide
-
-	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getSpList(slot5)) do
+	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)) do
 		slot6:resetSimulateExPoint()
 	end
 end

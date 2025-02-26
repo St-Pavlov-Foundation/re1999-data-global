@@ -134,14 +134,13 @@ function slot0.updateSlotCells(slot0, slot1)
 		return
 	end
 
-	slot15 = slot4
-	slot16 = true
+	slot15 = true
 
 	for slot15, slot16 in ipairs(slot6) do
 		slot17 = RougeCollectionHelper.getCollectionCellSlotPos(slot5, slot16)
 
 		if slot0:getCollectionSlotCell(slot17.x, slot17.y) then
-			if RougeCollectionHelper.checkIsCollectionSlotArea(slot3, slot1:getLeftTopPos(), slot15, slot16) then
+			if RougeCollectionHelper.checkIsCollectionSlotArea(slot3, slot1:getLeftTopPos(), slot4, slot15) then
 				slot18:updateCellState(RougeEnum.LineState.Red)
 				slot18:hideInsideLines(RougeCollectionHelper.getSlotCellInsideLine(slot8, slot16))
 			else
@@ -278,12 +277,11 @@ function slot0.placeCollection2SlotAreaSucc(slot0, slot1)
 	end
 
 	slot3 = slot1:getRotation()
-	slot11 = RougeEnum.CollectionEditorParamType.Shape
-	slot10 = slot1.id
+	slot10 = RougeEnum.CollectionEditorParamType.Shape
 
-	slot0:revertCoverCells(slot10)
+	slot0:revertCoverCells(slot1.id)
 
-	for slot10, slot11 in ipairs(RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot3, slot11)) do
+	for slot10, slot11 in ipairs(RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot3, slot10)) do
 		slot12 = RougeCollectionHelper.getCollectionCellSlotPos(slot1:getCenterSlotPos(), slot11)
 
 		if slot0:getCollectionSlotCell(slot12.x, slot12.y) then

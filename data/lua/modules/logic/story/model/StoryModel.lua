@@ -157,10 +157,8 @@ end
 function slot0.isHeroIconCuts(slot0, slot1)
 	if not next(slot0._herocuts) then
 		slot0._herocuts = {}
-		slot4 = StoryConfig.instance
-		slot6 = slot4
 
-		for slot5, slot6 in pairs(slot4.getStoryCutConfig(slot6)) do
+		for slot5, slot6 in pairs(StoryConfig.instance:getStoryCutConfig()) do
 			slot0._herocuts[slot6.cutName] = 1
 		end
 	end
@@ -468,11 +466,7 @@ function slot0.isTypeSkip(slot0, slot1, slot2)
 		return true
 	end
 
-	slot5 = StoryConfig.instance
-	slot7 = slot5
-	slot8 = slot1
-
-	for slot7, slot8 in pairs(string.splitToNumber(slot5.getStorySkipConfig(slot7, slot8).skipDetail, "#")) do
+	for slot7, slot8 in pairs(string.splitToNumber(StoryConfig.instance:getStorySkipConfig(slot1).skipDetail, "#")) do
 		if slot8 == slot2 then
 			return true
 		end

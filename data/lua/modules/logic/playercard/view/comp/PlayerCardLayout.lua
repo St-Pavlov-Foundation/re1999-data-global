@@ -32,9 +32,7 @@ function slot0.refreshLayout(slot0)
 		return
 	end
 
-	slot6 = "index"
-
-	table.sort(slot0._layoutList, SortUtil.keyLower(slot6))
+	table.sort(slot0._layoutList, SortUtil.keyLower("index"))
 
 	slot1 = -197
 

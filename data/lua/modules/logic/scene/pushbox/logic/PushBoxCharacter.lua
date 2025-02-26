@@ -192,9 +192,9 @@ function slot0.init(slot0)
 	gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/CharacterDown"), slot0._gameObject, PushBoxGameMgr.Direction.Down)
 	gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/CharacterLeft"), slot0._gameObject, PushBoxGameMgr.Direction.Left)
 
-	slot4 = slot0._gameObject
+	slot4 = PushBoxGameMgr.Direction.Right
 
-	gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/CharacterRight"), slot4, PushBoxGameMgr.Direction.Right)
+	gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/CharacterRight"), slot0._gameObject, slot4)
 
 	slot0._transform = slot0._gameObject.transform
 

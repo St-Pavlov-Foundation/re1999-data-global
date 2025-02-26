@@ -92,9 +92,9 @@ function slot0.updateTabs(slot0)
 	end
 
 	slot0.curTabIndex = slot0.curIndex + slot1
-	slot6 = slot0.limitCount + slot1
+	slot6 = #slot0.tabItems
 
-	for slot6 = 1, math.max(slot6, #slot0.tabItems) do
+	for slot6 = 1, math.max(slot0.limitCount + slot1, slot6) do
 		if not slot0.tabItems[slot6] then
 			slot0.tabItems[slot6] = slot0:createTab(slot6)
 		end

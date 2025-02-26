@@ -107,9 +107,8 @@ function slot0.detectUpgrade()
 
 	slot0 = {}
 	slot1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
-	slot5 = uv0.sortEntity
 
-	table.sort(slot1, slot5)
+	table.sort(slot1, uv0.sortEntity)
 
 	for slot5, slot6 in ipairs(slot1) do
 		if slot6:getMO() and slot7.canUpgradeIds and tabletool.len(slot7.canUpgradeIds) > 0 then

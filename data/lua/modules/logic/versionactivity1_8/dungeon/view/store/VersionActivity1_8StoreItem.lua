@@ -71,8 +71,7 @@ function slot0.refreshTagClip(slot0, slot1)
 		return
 	end
 
-	slot7 = 1
-	slot0.tagCanvasGroup.alpha = Mathf.Clamp((uv0 - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (uv0 - uv1), 0, slot7)
+	slot0.tagCanvasGroup.alpha = Mathf.Clamp((uv0 - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (uv0 - uv1), 0, 1)
 
 	for slot7, slot8 in ipairs(slot0.tagMaskList) do
 		slot8.maskable = slot2.y <= uv2

@@ -51,12 +51,11 @@ function slot0.endRecord(slot0)
 
 	TaskDispatcher.cancelTask(slot0._calLuaMemory, slot0)
 
-	slot8 = slot0.minOpenNameList
 	slot1 = "" .. string.format("占用最大内存 ：%s, 场景 ： %s, openView : %s\n", slot0.maxMemory / 1024, slot0.maxMemoryScene, slot0.maxOpenNameList) .. string.format([[
 占用最小内存 ：%s, 场景 ： %s, openView : %s
 
 
-]], slot0.minMemory / 1024, slot0.minMemoryScene, slot8)
+]], slot0.minMemory / 1024, slot0.minMemoryScene, slot0.minOpenNameList)
 	slot2 = {}
 	slot3 = 0
 
@@ -78,13 +77,14 @@ function slot0.endRecord(slot0)
 		slot3 = slot11
 	end
 
-	table.insert(slot2, slot0:getLineLog(slot3, slot3, slot0.memoryTimeList[#slot0.memoryTimeList].time, slot0.memoryTimeList[#slot0.memoryTimeList].scene))
+	slot9 = slot3
 
-	slot8 = slot2
-	slot9 = "\n"
+	table.insert(slot2, slot0:getLineLog(slot9, slot3, slot0.memoryTimeList[#slot0.memoryTimeList].time, slot0.memoryTimeList[#slot0.memoryTimeList].scene))
+
+	slot8 = "\n"
 
 	for slot8, slot9 in ipairs(slot0.memoryTimeList) do
-		slot1 = slot1 .. table.concat(slot8, slot9) .. [[
+		slot1 = slot1 .. table.concat(slot2, slot8) .. [[
 
 
 详细内存统计 : 

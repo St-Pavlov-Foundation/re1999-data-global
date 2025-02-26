@@ -32,10 +32,9 @@ function slot0.init(slot0, slot1, slot2)
 
 		slot0.talentCubeInfos:init(slot2.talentCubeInfos)
 
-		slot6 = slot0.heroId
-		slot7 = slot0.talent
+		slot6 = slot0.talent
 
-		slot0.talentCubeInfos:setOwnData(slot6, slot7)
+		slot0.talentCubeInfos:setOwnData(slot0.heroId, slot6)
 
 		slot0.originalTalentCubeInfos = {}
 

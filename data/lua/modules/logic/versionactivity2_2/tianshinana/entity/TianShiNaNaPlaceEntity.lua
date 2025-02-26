@@ -29,12 +29,12 @@ function slot0.init(slot0, slot1)
 	slot0.go = slot1
 	slot0.trans = slot1.transform
 	slot2 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(slot0.x, slot0.y))
-	slot7 = slot2.y
+	slot6 = slot2.y
+	slot7 = slot2.z
 
-	transformhelper.setLocalPos(slot0.trans, slot2.x, slot7, slot2.z)
+	transformhelper.setLocalPos(slot0.trans, slot2.x, slot6, slot7)
 
-	slot6 = slot0.y
-	slot0._renderOrder = TianShiNaNaHelper.getSortIndex(slot0.x, slot6)
+	slot0._renderOrder = TianShiNaNaHelper.getSortIndex(slot0.x, slot0.y)
 
 	for slot6, slot7 in pairs(TianShiNaNaEnum.OperDir) do
 		if slot0.canOperDirs[slot7] then

@@ -46,9 +46,9 @@ function slot0._editableInitView(slot0)
 	slot0._simagehuimianpu1:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu1"))
 	slot0._simagehuimianpu3:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu3"))
 
-	slot4 = ResUrl.getAct114MeetIcon
+	slot4 = "bg_huimianpu4"
 
-	slot0._simagehuimianpu4:LoadImage(slot4("bg_huimianpu4"))
+	slot0._simagehuimianpu4:LoadImage(ResUrl.getAct114MeetIcon(slot4))
 
 	slot0.meetList = {}
 

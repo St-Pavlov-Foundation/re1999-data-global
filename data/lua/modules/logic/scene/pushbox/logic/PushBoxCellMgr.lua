@@ -94,9 +94,7 @@ end
 
 function slot0.detectCellData(slot0)
 	if slot0._element_cell_dic and slot0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics] then
-		slot5 = PushBoxGameMgr.ElementType.Mechanics
-
-		for slot5, slot6 in ipairs(slot0._element_cell_dic[slot5]) do
+		for slot5, slot6 in ipairs(slot0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]) do
 			slot7 = false
 
 			if slot6:getBox() then

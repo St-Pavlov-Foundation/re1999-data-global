@@ -73,9 +73,10 @@ function slot0.refreshStory(slot0)
 	RedDotController.instance:addRedDot(slot0._goreddot, slot2.redDotId)
 
 	slot0._txtdesc.text = slot2.actDesc
-	slot7 = #(GameUtil.splitString2(slot2.activityBonus, true) or {})
+	slot3 = GameUtil.splitString2(slot2.activityBonus, true) or {}
+	slot7 = #slot0.rewardItems
 
-	for slot7 = 1, math.max(slot7, #slot0.rewardItems) do
+	for slot7 = 1, math.max(#slot3, slot7) do
 		slot9 = slot3[slot7]
 
 		if not slot0.rewardItems[slot7] then

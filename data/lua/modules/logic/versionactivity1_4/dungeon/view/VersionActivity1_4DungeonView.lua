@@ -86,9 +86,9 @@ end
 
 function slot0.refreshStages(slot0)
 	slot2, slot3 = nil
-	slot8 = #slot0._stageItemList
+	slot8 = #DungeonConfig.instance:getChapterEpisodeCOList(14101)
 
-	for slot8 = 1, math.max(slot8, #DungeonConfig.instance:getChapterEpisodeCOList(14101)) do
+	for slot8 = 1, math.max(#slot0._stageItemList, slot8) do
 		if not slot0._stageItemList[slot8] then
 			slot0._stageItemList[slot8] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], gohelper.findChild(slot0._gostages, "stage" .. slot8)), VersionActivity1_4DungeonItem, slot0, slot8)
 		end

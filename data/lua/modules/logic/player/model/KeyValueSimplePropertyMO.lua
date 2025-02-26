@@ -10,10 +10,9 @@ function slot0.init(slot0, slot1)
 	slot0.id = slot1.id
 	slot0.property = slot1.property
 	slot0._map = {}
-	slot6 = "|"
-	slot7 = "#"
+	slot6 = "#"
 
-	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1.property, slot0._isNumber, slot6, slot7)) do
+	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1.property, slot0._isNumber, "|", slot6)) do
 		slot0._map[slot7[1]] = slot7[2]
 	end
 end

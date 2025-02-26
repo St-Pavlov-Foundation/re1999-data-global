@@ -46,15 +46,15 @@ function slot0.onInitView(slot0)
 	slot0._detailClick = {}
 
 	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1")))
-	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2")))
+
+	slot7 = "#go_detail/skillDescContent/#go_skillDescItem2"
+
+	table.insert(slot0._detailClick, gohelper.getClick(gohelper.findChild(slot0._heroSkillGO, slot7)))
 
 	slot0._cardOpAddPower = 0
-	slot6 = slot0.viewContainer
-	slot8 = slot6
-	slot7 = gohelper.findChild(slot0.viewGO, "root/heroSkill/#go_simple/skilliconnew")
 
 	for slot7, slot8 in ipairs(lua_cloth.configList) do
-		if not gohelper.isNil(gohelper.findChild(slot0:getResInst(slot6.getSetting(slot8).otherRes[2], slot7), tostring(slot8.id))) then
+		if not gohelper.isNil(gohelper.findChild(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], gohelper.findChild(slot0.viewGO, "root/heroSkill/#go_simple/skilliconnew")), tostring(slot8.id))) then
 			gohelper.setActive(slot9, slot8.id == FightModel.instance.clothId)
 
 			if slot8.id == FightModel.instance.clothId then
@@ -70,10 +70,9 @@ end
 
 function slot0.addEvents(slot0)
 	if not FightReplayModel.instance:isReplay() then
-		slot4 = slot0._onClick
-		slot5 = slot0
+		slot4 = slot0
 
-		slot0._click:AddClickListener(slot4, slot5)
+		slot0._click:AddClickListener(slot0._onClick, slot4)
 
 		for slot4, slot5 in ipairs(slot0._detailClick) do
 			slot5:AddClickListener(slot0._onClickSkillIcon, slot0, slot4)
@@ -104,10 +103,7 @@ function slot0.removeEvents(slot0)
 	TaskDispatcher.cancelTask(slot0._sendChangeSubRequest, slot0)
 	TaskDispatcher.cancelTask(slot0._sendUseClothSkillRequest, slot0)
 	TaskDispatcher.cancelTask(slot0._setState, slot0)
-
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot4)
+	TaskDispatcher.cancelTask(slot0._checkAnyKey, slot0)
 	slot0._click:RemoveClickListener()
 
 	for slot4, slot5 in ipairs(slot0._detailClick) do

@@ -120,9 +120,9 @@ function slot0.updateAnswerItems(slot0)
 	gohelper.setActive(slot0._gocontentroot, true)
 	gohelper.setActive(slot0._gooption, false)
 
-	slot8 = slot4.topic
+	slot8 = slot0.showOptions
 
-	slot0._dialogItem:showTxt(slot8, slot0.showOptions, slot0)
+	slot0._dialogItem:showTxt(slot4.topic, slot8, slot0)
 
 	for slot8 = 1, 3 do
 		slot0.items[slot8]:updateData(Activity114Enum.EventContentType.Normal, slot4["choice" .. slot8], slot0.onAnswer, slot0)
@@ -236,9 +236,7 @@ function slot0.getCheckData(slot0, slot1)
 end
 
 function slot0.onSelectIndex(slot0, slot1)
-	slot5 = AudioEnum.UI.play_ui_checkpoint_continuemesh
-
-	AudioMgr.instance:trigger(slot5)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
 	for slot5 = 1, #slot0.items do
 		if slot5 ~= slot1 then

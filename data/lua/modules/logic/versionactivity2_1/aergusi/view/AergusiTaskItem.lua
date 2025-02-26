@@ -143,7 +143,6 @@ function slot0._refreshUI(slot0)
 		slot0._txtnum.text = slot1:getFinishProgress()
 		slot0._txttotal.text = slot1:getMaxProgress()
 		slot0._txttaskdes.text = slot1.config and slot1.config.name or ""
-		slot8 = slot1.config.bonus
 		slot4 = {
 			[slot8] = {
 				isIcon = true,
@@ -153,7 +152,7 @@ function slot0._refreshUI(slot0)
 			}
 		}
 
-		for slot8, slot9 in ipairs(DungeonConfig.instance:getRewardItems(tonumber(slot8))) do
+		for slot8, slot9 in ipairs(DungeonConfig.instance:getRewardItems(tonumber(slot1.config.bonus))) do
 			-- Nothing
 		end
 

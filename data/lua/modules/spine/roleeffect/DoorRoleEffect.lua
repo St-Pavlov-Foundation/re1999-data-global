@@ -136,9 +136,7 @@ function slot0._stopVideo(slot0)
 end
 
 function slot0._clearVideos(slot0)
-	slot4 = false
-
-	slot0:_setIdle2CameraEnabled(slot4)
+	slot0:_setIdle2CameraEnabled(false)
 
 	for slot4, slot5 in pairs(slot0._videoList) do
 		if not gohelper.isNil(slot4) then

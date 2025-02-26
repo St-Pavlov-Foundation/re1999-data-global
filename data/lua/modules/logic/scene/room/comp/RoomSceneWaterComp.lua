@@ -58,10 +58,10 @@ function slot0._refreshWaterGO(slot0)
 end
 
 function slot0.onSceneClose(slot0)
-	slot4 = RoomEvent.UpdateWater
-	slot5 = slot0._updateWater
+	slot4 = slot0._updateWater
+	slot5 = slot0
 
-	RoomMapController.instance:unregisterCallback(slot4, slot5, slot0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateWater, slot4, slot5)
 
 	for slot4, slot5 in pairs(slot0._waterGODict) do
 		for slot9, slot10 in pairs(slot5) do

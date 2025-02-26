@@ -57,9 +57,7 @@ function slot0._getTimelineUrlList(slot0)
 	slot0.context.timelineSkinDict = {}
 
 	if lua_battle.configDict[slot0.context.battleId] then
-		slot6 = "#"
-
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1.monsterGroupIds, slot6)) do
+		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1.monsterGroupIds, "#")) do
 			if not string.nilorempty(lua_monster_group.configDict[slot7].appearTimeline) then
 				slot9 = ResUrl.getSkillTimeline(slot8.appearTimeline)
 				slot0.context.timelineUrlDict[slot9] = FightEnum.EntitySide.EnemySide

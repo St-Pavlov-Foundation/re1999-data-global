@@ -437,10 +437,7 @@ function slot0._test_red_reset(slot0)
 		slot8 = slot7.stage
 
 		BossRushRedModel.instance:_deleteByDSL(slot1.BossRushOpen, slot8)
-
-		slot13 = slot8
-
-		BossRushRedModel.instance:_deleteByDSL(slot1.BossRushNewBoss, slot13)
+		BossRushRedModel.instance:_deleteByDSL(slot1.BossRushNewBoss, slot8)
 
 		for slot13, slot14 in pairs(BossRushConfig.instance:getEpisodeStages(slot8)) do
 			BossRushRedModel.instance:_deleteByDSL(slot1.BossRushNewLayer, slot8, slot14.layer)

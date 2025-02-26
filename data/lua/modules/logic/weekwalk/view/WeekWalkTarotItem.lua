@@ -170,10 +170,9 @@ function slot0._initParams(slot0)
 
 	slot0._blessingLimit = slot0._prayConfig.blessingLimit == "1"
 	slot0._effectMap = {}
-	slot7 = "|"
-	slot8 = "#"
+	slot7 = "#"
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot0._prayConfig.effect, true, slot7, slot8)) do
+	for slot7, slot8 in ipairs(GameUtil.splitString2(slot0._prayConfig.effect, true, "|", slot7)) do
 		slot11 = slot8[3]
 
 		if slot8[1] == WeekWalkEnum.SacrificeEffectType.BaseAttr then

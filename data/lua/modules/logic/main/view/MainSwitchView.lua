@@ -68,9 +68,7 @@ function slot0._onSceneSwitchUIVisible(slot0, slot1)
 end
 
 function slot0._itemClick(slot0, slot1)
-	slot5 = slot1
-
-	slot0.viewContainer:switchTab(slot5)
+	slot0.viewContainer:switchTab(slot1)
 
 	for slot5, slot6 in pairs(slot0._itemList) do
 		slot6:refreshStatus()

@@ -99,10 +99,8 @@ function slot0.initActivityVersion()
 				end
 
 				if slot10.ActivityId then
-					slot15 = slot8
-
 					for slot15, slot16 in pairs(slot10.ActivityId) do
-						uv0[slot16] = string.format("%d_%d", slot4, slot15)
+						uv0[slot16] = string.format("%d_%d", slot4, slot8)
 					end
 				end
 

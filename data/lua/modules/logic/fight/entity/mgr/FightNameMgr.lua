@@ -94,7 +94,7 @@ function slot0._delayAdujstUISibling(slot0)
 		return
 	end
 
-	function slot4(slot0, slot1)
+	table.sort(slot0._fightNameUIList, function (slot0, slot1)
 		if slot0.entity.go.transform.position.z ~= slot1.entity.go.transform.position.z then
 			return slot3.z < slot2.z
 		elseif slot2.x ~= slot3.x then
@@ -102,9 +102,7 @@ function slot0._delayAdujstUISibling(slot0)
 		else
 			return slot1.entity.id < slot0.entity.id
 		end
-	end
-
-	table.sort(slot0._fightNameUIList, slot4)
+	end)
 	gohelper.setAsFirstSibling(slot0._fightNameUIList[1]:getGO())
 
 	for slot4 = 2, #slot0._fightNameUIList do

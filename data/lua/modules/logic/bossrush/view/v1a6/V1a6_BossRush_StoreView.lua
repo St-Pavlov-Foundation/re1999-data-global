@@ -58,9 +58,7 @@ function slot0._btntagOnClick(slot0, slot1)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = false
-
-	gohelper.setActive(slot0._gostoreItem, slot4)
+	gohelper.setActive(slot0._gostoreItem, false)
 
 	slot0.storeItemList = slot0:getUserDataTb_()
 	slot0._tagList = slot0:getUserDataTb_()

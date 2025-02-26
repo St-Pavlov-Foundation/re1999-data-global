@@ -169,9 +169,10 @@ end
 
 function slot0.initStoryShowData(slot0)
 	slot0._taskConfigDataTab = slot0:getUserDataTb_()
-	slot5 = ActivityConfig.instance.getActivityShowTaskCount
+	slot4 = ActivityConfig.instance
+	slot5 = slot4
 
-	for slot5 = 1, GameUtil.getTabLen(slot5(slot5, ActivityEnum.Activity.StoryShow)) do
+	for slot5 = 1, GameUtil.getTabLen(slot4.getActivityShowTaskCount(slot5, ActivityEnum.Activity.StoryShow)) do
 		table.insert(slot0._taskConfigDataTab, ActivityConfig.instance:getActivityShowTaskList(slot1, slot5))
 	end
 end
@@ -198,8 +199,7 @@ function slot0._onReadMail(slot0, slot1, slot2)
 end
 
 function slot0._initTipsView(slot0)
-	slot4 = "Root/Card1/#go_Normal/#go_Schedule"
-	slot0._goSchedule = gohelper.findChild(slot0.viewGO, slot4)
+	slot0._goSchedule = gohelper.findChild(slot0.viewGO, "Root/Card1/#go_Normal/#go_Schedule")
 	slot0._progressGoList = slot0:getUserDataTb_()
 
 	for slot4 = 1, 3 do

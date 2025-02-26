@@ -50,13 +50,12 @@ function slot0.refreshUI(slot0)
 	slot0.txtName.text = slot0.config.name
 	slot0.txtTitle.text = string.format("St.%d", slot0.baseId)
 	slot1 = Season166BaseSpotModel.instance:getStarCount(slot0.actId, slot0.baseId)
-	slot6 = slot0.baseId
 
 	for slot6 = 1, #slot0.starTab do
 		gohelper.setActive(slot0.starTab[slot6].light, slot6 <= slot1)
 		gohelper.setActive(slot0.starTab[slot6].dark, slot1 < slot6)
 
-		slot7 = slot0.finalLevelScore <= Season166BaseSpotModel.instance:getBaseSpotMaxScore(slot0.actId, slot6) and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
+		slot7 = slot0.finalLevelScore <= Season166BaseSpotModel.instance:getBaseSpotMaxScore(slot0.actId, slot0.baseId) and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
 
 		UISpriteSetMgr.instance:setSeason166Sprite(slot0.starTab[slot6].imageLight, slot7)
 		UISpriteSetMgr.instance:setSeason166Sprite(slot0.starTab[slot6].imageLight1, slot7)

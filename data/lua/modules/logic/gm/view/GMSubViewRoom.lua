@@ -97,9 +97,8 @@ function slot0._finInitCharacterInteractParams(slot0)
 		[RoomCharacterEnum.InteractionType.Dialog] = "对话",
 		[RoomCharacterEnum.InteractionType.Building] = "建筑"
 	}
-	slot7 = "英雄-交互#id选择"
 
-	table.insert({}, slot7)
+	table.insert({}, "英雄-交互#id选择")
 
 	for slot7, slot8 in ipairs(slot1) do
 		if slot3[slot8.behaviour] then

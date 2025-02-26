@@ -539,9 +539,9 @@ function slot0.fiterFightCardDataList(slot0, slot1, slot2)
 		end
 	end
 
-	slot8 = uv0.TotalEquipPos
+	slot8 = slot3
 
-	slot0:_fiterFightCardData(slot8, slot3, slot1)
+	slot0:_fiterFightCardData(uv0.TotalEquipPos, slot8, slot1)
 
 	for slot8 = 1, uv0.TotalEquipPos - 1 do
 		slot0:_fiterFightCardData(slot8, slot3, slot1, slot4)

@@ -85,9 +85,9 @@ function slot0._initListItem(slot0)
 	end
 
 	slot0._historyListItems = {}
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo
+	slot6 = gohelper.findChild(slot0.viewGO, "allbg/middle/history/item")
 
-	table.insert(slot0._historyListItems, slot6(gohelper.findChild(slot0.viewGO, "allbg/middle/history/item"), SummonPoolHistoryListItem, slot0))
+	table.insert(slot0._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(slot6, SummonPoolHistoryListItem, slot0))
 
 	for slot6 = 2, uv0.PAGE_ITEM_NUM do
 		table.insert(slot0._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot1, gohelper.findChild(slot0.viewGO, "allbg/middle/history"), "item" .. slot6), SummonPoolHistoryListItem, slot0))

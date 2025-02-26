@@ -9,10 +9,9 @@ end
 function slot0.onStart(slot0, slot1)
 	uv0.super.onStart(slot0, slot1)
 
-	slot8 = ","
 	slot4 = {}
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0.actionParam, false, "$", slot8)) do
+	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0.actionParam, false, "$", ",")) do
 		slot10 = MaterialDataMO.New()
 
 		slot10:initValue(slot9[1], slot9[2], slot9[3])

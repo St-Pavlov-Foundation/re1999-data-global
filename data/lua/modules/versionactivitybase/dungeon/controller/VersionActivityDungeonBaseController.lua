@@ -33,9 +33,9 @@ function slot0.initChapterIdLastSelectEpisodeIdDict(slot0)
 	end
 
 	slot2 = nil
-	slot7 = slot1
+	slot6 = ";"
 
-	for slot6, slot7 in ipairs(string.split(slot7, ";")) do
+	for slot6, slot7 in ipairs(string.split(slot1, slot6)) do
 		if string.splitToNumber(slot7, ":") and #slot2 == 2 then
 			slot0.chapterIdLastSelectEpisodeIdDict[slot2[1]] = slot2[2]
 		end

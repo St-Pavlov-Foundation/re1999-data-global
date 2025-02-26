@@ -44,10 +44,9 @@ end
 
 function slot0.refreshView(slot0)
 	slot0.storyId = RoleStoryModel.instance:getCurActStoryId()
-	slot1 = RoleStoryConfig.instance:getScoreConfig(slot0.storyId) or {}
-	slot5 = #slot0.itemList
+	slot5 = #(RoleStoryConfig.instance:getScoreConfig(slot0.storyId) or {})
 
-	for slot5 = 1, math.max(slot5, #slot1) do
+	for slot5 = 1, math.max(#slot0.itemList, slot5) do
 		if not slot0.itemList[slot5] then
 			slot0.itemList[slot5] = slot0:createItem(slot5)
 		end

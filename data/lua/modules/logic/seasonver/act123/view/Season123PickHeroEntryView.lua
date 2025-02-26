@@ -120,10 +120,7 @@ end
 function slot0.refreshRecommendCareer(slot0)
 	if Season123Config.instance:getRecommendCareers(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage) and #slot1 > 0 then
 		gohelper.setActive(slot0._gorecommentnone, false)
-
-		slot5 = true
-
-		gohelper.setActive(slot0._gorecommentexist, slot5)
+		gohelper.setActive(slot0._gorecommentexist, true)
 
 		for slot5 = 1, #slot1 do
 			slot6 = slot0:getOrCreateCareer(slot5)

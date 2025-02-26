@@ -115,8 +115,8 @@ function slot0.isShowRedDot(slot0)
 end
 
 function slot0._initReddotitem(slot0, slot1)
-	slot8 = nil
-	slot0._redDot = RedDotController.instance:addRedDot(gohelper.findChild(slot1, "go_activityreddot"), RedDotEnum.DotNode.TurnbackEntre, slot8, slot0._checkCustomShowRedDotData, slot0)
+	slot8 = slot0._checkCustomShowRedDotData
+	slot0._redDot = RedDotController.instance:addRedDot(gohelper.findChild(slot1, "go_activityreddot"), RedDotEnum.DotNode.TurnbackEntre, nil, slot8, slot0)
 
 	return
 

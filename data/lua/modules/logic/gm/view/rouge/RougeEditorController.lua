@@ -240,9 +240,7 @@ function slot0.hideNodeClickArea(slot0)
 		gohelper.setActive(slot1:GetChild(slot6).gameObject, false)
 	end
 
-	slot6 = false
-
-	gohelper.setActive(slot0.goCenterPointContainer, slot6)
+	gohelper.setActive(slot0.goCenterPointContainer, false)
 
 	for slot6 = 0, slot0.goCenterPointContainer.transform.childCount - 1 do
 		gohelper.setActive(slot1:GetChild(slot6).gameObject, false)

@@ -193,9 +193,9 @@ function slot0._refreshInfo(slot0)
 
 	gohelper.setActive(slot0._gorewarditem, false)
 
-	slot8 = #slot0._rewardItems
+	slot8 = #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)
 
-	for slot8 = 1, math.max(slot8, #DungeonModel.instance:getEpisodeFirstBonus(slot1.episodeId)) do
+	for slot8 = 1, math.max(#slot0._rewardItems, slot8) do
 		slot0:refreshRewardItem(slot0._rewardItems[slot8] or slot0:createRewardItem(slot8), slot4[slot8])
 	end
 

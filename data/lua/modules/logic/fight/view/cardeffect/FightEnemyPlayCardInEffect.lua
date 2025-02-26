@@ -4,9 +4,7 @@ slot0 = class("FightEnemyPlayCardInEffect", BaseWork)
 slot1 = Color.white
 
 function slot0.onStart(slot0, slot1)
-	slot5 = slot1
-
-	uv0.super.onStart(slot0, slot5)
+	uv0.super.onStart(slot0, slot1)
 
 	for slot5 = 1, slot1.enemyNowActPoint do
 		gohelper.setActive(gohelper.findChild(slot1.viewGO, string.format("root/enemycards/item%d/op", slot5)), true)

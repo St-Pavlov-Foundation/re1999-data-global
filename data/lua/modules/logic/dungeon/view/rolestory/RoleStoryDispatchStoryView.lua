@@ -111,9 +111,10 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.refreshView(slot0)
-	slot5 = #(RoleStoryConfig.instance:getDispatchList(slot0.storyId, slot0.dispatchType) or {})
+	slot1 = RoleStoryConfig.instance:getDispatchList(slot0.storyId, slot0.dispatchType) or {}
+	slot5 = #slot0.itemList
 
-	for slot5 = 1, math.max(slot5, #slot0.itemList) do
+	for slot5 = 1, math.max(#slot1, slot5) do
 		slot0:refreshDispatchItem(slot0.itemList[slot5], slot1[slot5], slot5)
 	end
 end

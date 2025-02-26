@@ -17,10 +17,7 @@ function slot0.onCancelSelect(slot0)
 end
 
 function slot0.onSelectPos(slot0, slot1, slot2)
-	slot5 = YaXianGameModel.instance
-	slot7 = slot5
-
-	for slot6, slot7 in pairs(slot5.getCanWalkTargetPosDict(slot7)) do
+	for slot6, slot7 in pairs(YaXianGameModel.instance:getCanWalkTargetPosDict()) do
 		if slot7.x == slot1 and slot7.y == slot2 then
 			Activity115Rpc.instance:sendAct115BeginRoundRequest(YaXianGameEnum.ActivityId, {
 				{

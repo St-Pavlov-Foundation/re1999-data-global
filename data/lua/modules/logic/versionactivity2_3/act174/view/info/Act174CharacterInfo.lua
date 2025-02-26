@@ -24,9 +24,9 @@ function slot0.init(slot0, slot1)
 	slot0.goSkill = gohelper.findChild(slot1, "go_characterinfo/go_skill")
 	slot0.txtPassiveName = gohelper.findChildText(slot1, "go_characterinfo/passiveskill/bg/txt_passivename")
 	slot0.btnPassiveSkill = gohelper.findChildButtonWithAudio(slot1, "go_characterinfo/passiveskill/btn_passiveskill")
-	slot5 = slot0.btnPassiveSkill
+	slot5 = slot0.onClickPassiveSkill
 
-	slot0:addClickCb(slot5, slot0.onClickPassiveSkill, slot0)
+	slot0:addClickCb(slot0.btnPassiveSkill, slot5, slot0)
 
 	for slot5 = 1, 5 do
 		slot6 = gohelper.findChild(slot1, "go_characterinfo/attribute/go_attribute/attribute" .. slot5)

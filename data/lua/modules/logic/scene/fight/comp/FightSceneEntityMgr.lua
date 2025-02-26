@@ -133,21 +133,21 @@ function slot0._getCameraPos(slot0)
 end
 
 function slot0._onUpdateSpeed(slot0)
-	slot6 = slot0
+	slot5 = SceneTag.UnitPlayer
 
-	for slot5, slot6 in pairs(slot0.getTagUnitDict(slot6, SceneTag.UnitPlayer)) do
+	for slot5, slot6 in pairs(slot0:getTagUnitDict(slot5)) do
 		slot6:setSpeed(FightModel.instance:getSpeed())
 	end
 
-	slot6 = slot0
+	slot5 = SceneTag.UnitMonster
 
-	for slot5, slot6 in pairs(slot0.getTagUnitDict(slot6, SceneTag.UnitMonster)) do
+	for slot5, slot6 in pairs(slot0:getTagUnitDict(slot5)) do
 		slot6:setSpeed(slot1)
 	end
 
-	slot6 = slot0
+	slot5 = SceneTag.UnitNpc
 
-	for slot5, slot6 in pairs(slot0.getTagUnitDict(slot6, SceneTag.UnitNpc)) do
+	for slot5, slot6 in pairs(slot0:getTagUnitDict(slot5)) do
 		slot6:setSpeed(slot1)
 	end
 
@@ -160,34 +160,32 @@ function slot0.compareUpdate(slot0, slot1, slot2)
 
 	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot0._existBuffUidDict[slot8.id] = {}
-		slot13 = slot8
 
-		for slot12, slot13 in pairs(slot8.getBuffDic(slot13)) do
+		for slot12, slot13 in pairs(slot8:getBuffDic()) do
 			slot0._existBuffUidDict[slot8.id][slot13.id] = slot13
 		end
 	end
 
 	slot0._myStancePos2EntityId = {}
 	slot0._enemyStancePos2EntityId = {}
-	slot8 = slot0
+	slot7 = SceneTag.UnitPlayer
 
-	for slot7, slot8 in pairs(slot0.getTagUnitDict(slot8, SceneTag.UnitPlayer)) do
+	for slot7, slot8 in pairs(slot0:getTagUnitDict(slot7)) do
 		slot0._myStancePos2EntityId[slot8:getMO().position] = slot8.id
 	end
 
-	slot8 = slot0
+	slot7 = SceneTag.UnitMonster
 
-	for slot7, slot8 in pairs(slot0.getTagUnitDict(slot8, SceneTag.UnitMonster)) do
+	for slot7, slot8 in pairs(slot0:getTagUnitDict(slot7)) do
 		slot0._enemyStancePos2EntityId[slot8:getMO().position] = slot8.id
 	end
 
 	FightModel.instance:updateFight(slot1, slot2)
 	slot0:_rebuildEntity(SceneTag.UnitPlayer, slot0._myStancePos2EntityId)
 
-	slot7 = SceneTag.UnitMonster
-	slot8 = slot0._enemyStancePos2EntityId
+	slot7 = slot0._enemyStancePos2EntityId
 
-	slot0:_rebuildEntity(slot7, slot8)
+	slot0:_rebuildEntity(SceneTag.UnitMonster, slot7)
 
 	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
 		slot9 = slot0._existBuffUidDict[slot8.id]
@@ -199,9 +197,7 @@ function slot0.compareUpdate(slot0, slot1, slot2)
 				end
 			end
 
-			slot15 = slot8
-
-			for slot14, slot15 in ipairs(slot8.getBuffList(slot15)) do
+			for slot14, slot15 in ipairs(slot8:getBuffList()) do
 				if not slot9[slot15.id] then
 					slot10.buff:addBuff(slot15, true)
 				end

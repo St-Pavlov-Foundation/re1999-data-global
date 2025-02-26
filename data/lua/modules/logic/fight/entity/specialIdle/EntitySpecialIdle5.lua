@@ -14,10 +14,7 @@ function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot6 = slot0._entity
-	slot8 = slot6
-
-	for slot7, slot8 in ipairs(slot6.getMO(slot8).skillGroup2) do
+	for slot7, slot8 in ipairs(slot0._entity:getMO().skillGroup2) do
 		if slot2 == slot8 then
 			FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, slot1.id)
 

@@ -172,9 +172,8 @@ function slot0._setQuality(slot0, slot1, slot2, slot3, slot4)
 		for slot11 = 1, slot1.transform.childCount do
 			slot12 = slot6:GetChild(slot11 - 1)
 			slot5[slot12.name] = slot12
-			slot17 = true
 
-			for slot17 = 0, slot12:GetComponentsInChildren(gohelper.Type_Image, slot17).Length - 1 do
+			for slot17 = 0, slot12:GetComponentsInChildren(gohelper.Type_Image, true).Length - 1 do
 				slot13[slot17].maskable = true
 			end
 		end
@@ -224,8 +223,7 @@ function slot0._showSeatInfo(slot0, slot1)
 		slot8 = CharacterEnum.Star[slot7.config.rare]
 	end
 
-	slot12 = slot8
-	slot0._roleStarNum.text = tostring(slot12)
+	slot0._roleStarNum.text = tostring(slot8)
 
 	for slot12, slot13 in ipairs(slot0._roleStarList) do
 		gohelper.setActive(slot13, slot12 <= slot8)
@@ -235,10 +233,10 @@ function slot0._showSeatInfo(slot0, slot1)
 
 	slot0:_showDetailLevel(slot6[slot9], slot0._txtlevel1, slot0._rankList1)
 
-	slot13 = slot5[slot9]
-	slot14 = slot0._txtlevel2
+	slot13 = slot0._txtlevel2
+	slot14 = slot0._rankList2
 
-	slot0:_showDetailLevel(slot13, slot14, slot0._rankList2)
+	slot0:_showDetailLevel(slot5[slot9], slot13, slot14)
 
 	for slot13, slot14 in ipairs(slot0._detailItemList) do
 		slot0:_updateDetailItem(slot14, slot6, slot5, slot0:_getLevelKey(slot14.starNum))
@@ -316,8 +314,7 @@ function slot0._initDetailItem(slot0, slot1, slot2, slot3)
 	slot4.lv1 = gohelper.findChildText(slot1, "txt_level1")
 	slot4.lv2 = gohelper.findChildText(slot1, "txt_level2")
 	slot4.lvnum = gohelper.findChildText(slot1, "#txt_num")
-	slot8 = slot2
-	slot4.lvnum.text = tostring(slot8)
+	slot4.lvnum.text = tostring(slot2)
 	slot4._rankList1 = slot0:getUserDataTb_()
 	slot4._rankList2 = slot0:getUserDataTb_()
 

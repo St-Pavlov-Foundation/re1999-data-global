@@ -80,12 +80,10 @@ function slot0.buildResistanceList(slot0, slot1)
 
 	for slot5, slot6 in pairs(FightEnum.ToughnessToResistance) do
 		if slot0:getResistanceValue(slot1, slot5) and slot7 > 0 then
-			slot11 = {
+			table.insert(slot0.resistanceList, {
 				resistanceId = slot5,
 				value = slot7
-			}
-
-			table.insert(slot0.resistanceList, slot11)
+			})
 
 			slot0.resistanceDict[slot5] = true
 

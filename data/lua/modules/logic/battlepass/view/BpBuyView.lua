@@ -145,9 +145,9 @@ function slot0._updateView(slot0)
 end
 
 function slot0._calcBonus(slot0, slot1, slot2, slot3)
-	slot8 = slot3
+	slot7 = "|"
 
-	for slot7, slot8 in pairs(string.split(slot8, "|")) do
+	for slot7, slot8 in pairs(string.split(slot3, slot7)) do
 		slot9 = string.splitToNumber(slot8, "#")
 		slot11 = slot9[3]
 

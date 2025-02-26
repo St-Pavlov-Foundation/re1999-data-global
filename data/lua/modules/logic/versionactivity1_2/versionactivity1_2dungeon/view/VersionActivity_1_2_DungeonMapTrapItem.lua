@@ -38,10 +38,9 @@ function slot0.onOpen(slot0)
 	slot0._trapIds = VersionActivity1_2DungeonModel.instance.trapIds
 	slot0._putTrap = VersionActivity1_2DungeonModel.instance.putTrap
 	slot1 = {}
-	slot5 = VersionActivity1_2DungeonConfig.instance
-	slot7 = slot5
+	slot6 = slot0._config.id
 
-	for slot6, slot7 in pairs(slot5.getBuildingConfigsByElementID(slot7, slot0._config.id)) do
+	for slot6, slot7 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot6)) do
 		table.insert(slot1, slot7)
 
 		if not slot0._modelItem then
@@ -53,11 +52,9 @@ function slot0.onOpen(slot0)
 		end
 	end
 
-	function slot6(slot0, slot1)
+	table.sort(slot1, function (slot0, slot1)
 		return slot0.id < slot1.id
-	end
-
-	table.sort(slot1, slot6)
+	end)
 
 	for slot6, slot7 in ipairs(slot1) do
 		slot0:openSubView(VersionActivity_1_2_DungeonMapTrapChildItem, slot2[slot6], nil, slot7)

@@ -139,10 +139,9 @@ function slot0._setSeatLevel(slot0, slot1)
 		end
 	end
 
-	slot7 = slot1
-	slot6 = "v1a6_cachot_quality_0" .. slot7
+	slot6 = slot1
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._quality, slot6)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._quality, "v1a6_cachot_quality_0" .. slot6)
 
 	for slot6, slot7 in pairs(slot0._qualityEffectList) do
 		gohelper.setActive(slot7, slot6 == "effect_0" .. slot1)
@@ -159,8 +158,7 @@ function slot0.showSelectEffect(slot0)
 end
 
 function slot0._editableInitView(slot0)
-	slot4 = "#go_heart/#go_heartselect/#simage_heart"
-	slot0._heartImg = gohelper.findChildImage(slot0.viewGO, slot4)
+	slot0._heartImg = gohelper.findChildImage(slot0.viewGO, "#go_heart/#go_heartselect/#simage_heart")
 	slot0._goStarList = slot0:getUserDataTb_()
 
 	for slot4 = 1, 6 do
@@ -233,9 +231,9 @@ function slot0._showDeadStatus(slot0, slot1)
 	gohelper.setActive(slot0._goroledead, slot1)
 	gohelper.setActive(slot0._godeadmask, slot1)
 
-	slot8, slot9, slot4 = transformhelper.getLocalPos(slot0._simagerolehead.transform)
+	slot7, slot8, slot4 = transformhelper.getLocalPos(slot0._simagerolehead.transform)
 
-	transformhelper.setLocalPos(slot0._simagerolehead.transform, slot8, slot9, slot1 and 1 or 0)
+	transformhelper.setLocalPos(slot0._simagerolehead.transform, slot7, slot8, slot1 and 1 or 0)
 end
 
 function slot0.tweenHp(slot0, slot1, slot2, slot3)

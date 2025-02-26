@@ -77,9 +77,7 @@ function slot0.canAddChessMen(slot0, slot1)
 end
 
 function slot0.addSelectedChessMen(slot0, slot1)
-	slot5 = slot1
-
-	tabletool.removeValue(slot0._initList, slot5)
+	tabletool.removeValue(slot0._initList, slot1)
 
 	for slot5 = 1, slot0._addMaxCount do
 		if slot0._addList[slot5] == nil then

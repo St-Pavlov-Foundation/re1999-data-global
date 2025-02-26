@@ -58,9 +58,7 @@ function slot0.checkUpdateStoreActivity(slot0)
 	slot2 = nil
 
 	if slot0:getStoreGroupMO() and slot1[StoreEnum.BossRushStore.UpdateStore] then
-		slot8 = slot3
-
-		for slot7, slot8 in pairs(slot3.getGoodsList(slot8)) do
+		for slot7, slot8 in pairs(slot3:getGoodsList()) do
 			if not slot2 then
 				if slot8.config.activityId ~= 0 then
 					slot2 = slot8.config.activityId
@@ -166,10 +164,9 @@ function slot0.readStoreGroupNewMo(slot0, slot1)
 		}
 
 		if not string.nilorempty(slot3) then
-			slot20 = "#"
 			slot16 = nil
 
-			for slot20, slot21 in pairs(GameUtil.splitString2(slot3, true, "|", slot20)) do
+			for slot20, slot21 in pairs(GameUtil.splitString2(slot3, true, "|", "#")) do
 				if slot21 and slot21[1] == slot12 then
 					if slot21[2] ~= slot13 then
 						slot14.isNew = true

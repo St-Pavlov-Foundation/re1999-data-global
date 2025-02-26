@@ -251,9 +251,7 @@ function slot0.setHeroTalentStyleStatInfo(slot0, slot1)
 	end
 
 	if slot0.unlockStateInfo[slot1.heroId] then
-		slot6 = slot1.heroId
-
-		for slot6, slot7 in pairs(slot0.unlockStateInfo[slot6]) do
+		for slot6, slot7 in pairs(slot0.unlockStateInfo[slot1.heroId]) do
 			slot7:setHotUnlockStyle(slot2 == slot7:getUnlockPercent())
 		end
 	end

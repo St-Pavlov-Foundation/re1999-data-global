@@ -37,14 +37,14 @@ function slot0._onClickAddBuff(slot0)
 		GameFacade.showToast(ToastEnum.IconId, "add buff " .. slot1)
 
 		slot3 = GMFightEntityModel.instance.entityMO
-		slot7 = string.format
+		slot7 = "fightAddBuff %s %s"
+		slot8 = tostring(slot3.id)
 
-		GMRpc.instance:sendGMRequest(slot7("fightAddBuff %s %s", tostring(slot3.id), tostring(slot1)))
+		GMRpc.instance:sendGMRequest(string.format(slot7, slot8, tostring(slot1)))
 
 		slot0._oldBuffUidDict = {}
-		slot8 = slot3
 
-		for slot7, slot8 in ipairs(slot3.getBuffList(slot8)) do
+		for slot7, slot8 in ipairs(slot3:getBuffList()) do
 			slot0._oldBuffUidDict[slot8.id] = true
 		end
 
@@ -62,9 +62,7 @@ function slot0._onGetEntityInfo(slot0, slot1)
 		return
 	end
 
-	slot7 = slot2
-
-	for slot6, slot7 in ipairs(slot2.getBuffList(slot7)) do
+	for slot6, slot7 in ipairs(slot2:getBuffList()) do
 		if not slot0._oldBuffUidDict[slot7.id] then
 			logError("add buff " .. slot7.buffId)
 
@@ -119,9 +117,8 @@ function slot0._checkBuildItems(slot0)
 		slot1.cellSpaceV = 0
 		slot0._searchScrollModel = ListScrollModel.New()
 		slot0._searchScrollView = LuaListScrollView.New(slot0._searchScrollModel, slot1)
-		slot5 = slot0._searchScrollView
 
-		slot0:addChildView(slot5)
+		slot0:addChildView(slot0._searchScrollView)
 
 		slot0._buffList = {}
 

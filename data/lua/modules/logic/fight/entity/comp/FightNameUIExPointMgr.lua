@@ -563,9 +563,7 @@ function slot0.playAddPointEffect(slot0, slot1, slot2)
 			end
 		end
 
-		slot10 = slot1 + 1
-
-		for slot10 = math.max(slot4 + 1, slot10), slot2 do
+		for slot10 = math.max(slot4 + 1, slot1 + 1), slot2 do
 			slot11 = slot0.pointItemList[slot10]
 
 			slot0:assetPointItem(slot11)
@@ -694,9 +692,7 @@ function slot0.log(slot0, slot1)
 end
 
 function slot0.beforeDestroy(slot0)
-	slot4 = slot0
-
-	TaskDispatcher.cancelTask(slot0.hideTsnnEffect, slot4)
+	TaskDispatcher.cancelTask(slot0.hideTsnnEffect, slot0)
 
 	for slot4, slot5 in ipairs(slot0.pointItemList) do
 		slot5:destroy()

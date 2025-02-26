@@ -98,9 +98,7 @@ function slot0._initStoryList(slot0)
 		table.insert(slot1, slot6)
 	end
 
-	slot5 = uv0._sortStory
-
-	table.sort(slot1, slot5)
+	table.sort(slot1, uv0._sortStory)
 
 	slot0._storyList = {}
 	slot0._storyMap = {}

@@ -264,6 +264,9 @@ function slot0.openDesc(slot0, slot1, slot2)
 	end
 
 	slot0:_resetTweenDescPos()
+
+	slot7 = slot0.viewContainer:getEpisodeConfigCur().time or 0
+
 	gohelper.setActive(slot0._goWrongChannel, false)
 	gohelper.setActive(slot0._scroll_TaskDescGo, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_loop)
@@ -278,7 +281,7 @@ function slot0.openDesc(slot0, slot1, slot2)
 
 	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId")
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, math.max(slot0.viewContainer:getEpisodeConfigCur().time or 0, 1), slot0._tweenDescUpdateCb, function ()
+	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, math.max(slot7, 1), slot0._tweenDescUpdateCb, function ()
 		uv0:_tweenDescEndCb(uv1, uv2)
 	end, slot0)
 end

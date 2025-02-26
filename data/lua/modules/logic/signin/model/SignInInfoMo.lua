@@ -39,9 +39,7 @@ function slot0._getListInfo(slot0, slot1, slot2)
 end
 
 function slot0.addSignInfo(slot0, slot1)
-	slot5 = slot1.day
-
-	table.insert(slot0.hasSignInDays, slot5)
+	table.insert(slot0.hasSignInDays, slot1.day)
 
 	for slot5, slot6 in ipairs(slot1.birthdayHeroIds) do
 		table.insert(slot0.birthdayHeroIds, slot6)

@@ -205,8 +205,7 @@ function slot0._taskItemOnClick(slot0, slot1)
 end
 
 function slot0._initRewards(slot0)
-	slot7 = slot0
-	slot0._rewardCount = #string.split(Activity125Config.instance:getEpisodeConfig(slot0._actId, slot0.getCurSelectedEpisode(slot7)).bonus, "|")
+	slot0._rewardCount = #string.split(Activity125Config.instance:getEpisodeConfig(slot0._actId, slot0:getCurSelectedEpisode()).bonus, "|")
 
 	for slot7 = 1, slot0._rewardCount do
 		if not slot0._rewardItemTab[slot7] then

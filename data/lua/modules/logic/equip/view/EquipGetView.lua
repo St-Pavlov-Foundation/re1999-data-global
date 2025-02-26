@@ -48,16 +48,15 @@ function slot0._editableInitView(slot0)
 	slot0._simagecircle:LoadImage(ResUrl.getCharacterGetIcon("bg_yuanchuan"))
 	slot0._simageblackbg:LoadImage(ResUrl.getCharacterGetIcon("heisedi"))
 
-	slot4 = ResUrl.getSignature
+	slot4 = "qm123"
 
-	slot0._simageicon:LoadImage(slot4("qm123"))
+	slot0._simageicon:LoadImage(ResUrl.getSignature(slot4))
 
 	for slot4 = 1, uv0 do
 		slot0["_starGo" .. tostring(slot4)] = gohelper.findChild(slot0._gostarList, "star" .. tostring(slot4))
 	end
 
-	slot4 = "#go_bg/xingxing"
-	slot0._goeffectstarList = gohelper.findChild(slot0.viewGO, slot4)
+	slot0._goeffectstarList = gohelper.findChild(slot0.viewGO, "#go_bg/xingxing")
 
 	for slot4 = 1, uv0 do
 		slot0["_starEffectGo" .. tostring(slot4)] = gohelper.findChild(slot0._goeffectstarList, "star" .. slot4)
