@@ -6421,7 +6421,7 @@
   },
   {
     "key": "language_10001606",
-    "content": "ストーリーでボスを倒す"
+    "content": "メインストーリーでボスを倒す"
   },
   {
     "key": "language_10001607",
@@ -6461,7 +6461,7 @@
   },
   {
     "key": "language_10001616",
-    "content": "メインボスを倒す"
+    "content": "メインストーリーでボスを倒す"
   },
   {
     "key": "language_10001617",
@@ -105090,6 +105090,10 @@
   {
     "key": "language_90001094",
     "content": "ULT獲得不可"
+  },
+  {
+    "key": "language_90001107",
+    "content": "デバフ解除"
   },
   {
     "key": "language_90001061",

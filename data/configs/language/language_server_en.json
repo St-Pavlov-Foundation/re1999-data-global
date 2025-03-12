@@ -31949,7 +31949,7 @@
   },
   {
     "key": "language_10007990",
-    "content": "Upon leaving the field, grants +5 Moxie for all enemies and increases Ultimate power by 50% for 2 rounds."
+    "content": "Upon leaving the field, grants +5 Moxie for all enemies and increases Ultimate Might by 50% for 2 rounds."
   },
   {
     "key": "language_10007991",
@@ -32001,7 +32001,7 @@
   },
   {
     "key": "language_10008003",
-    "content": "Upon leaving the field, grants +3 Moxie for all enemies and increases Ultimate power by 50% for 2 rounds."
+    "content": "Upon leaving the field, grants +3 Moxie for all enemies and increases Ultimate Might by 50% for 2 rounds."
   },
   {
     "key": "language_10008004",
@@ -44501,7 +44501,7 @@
   },
   {
     "key": "language_10011128",
-    "content": "Ultimate power +12% (stackable up to 6 times and cannot be dispelled)."
+    "content": "Ultimate Might +12% (stackable up to 6 times and cannot be dispelled)."
   },
   {
     "key": "language_10011129",
@@ -45037,7 +45037,7 @@
   },
   {
     "key": "language_10011262",
-    "content": "Ultimate power +20% and immune to Moxie reduction effects (stackable, and disappears after Ultimate is used)."
+    "content": "Ultimate Might +20% and immune to Moxie reduction effects (stackable, and disappears after Ultimate is used)."
   },
   {
     "key": "language_10011263",
@@ -101681,7 +101681,7 @@
   },
   {
     "key": "language_10025423",
-    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:0>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:0>] she has, while removing other Force Fields:\nAt 5 or more stacks, gain [Paper Parade<id:0>].\nAt 15 or more stacks, gain [Wave of Sheets<id:0>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:0>]."
+    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:0>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:0>] she has, while removing other Gust Force Fields she applied to herself in this way:\nAt 5 or more stacks, gain [Paper Parade<id:0>].\nAt 15 or more stacks, gain [Wave of Sheets<id:0>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:0>]."
   },
   {
     "key": "language_10025424",
@@ -101709,11 +101709,11 @@
   },
   {
     "key": "language_10025430",
-    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:2>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:2>] she has, while removing other Gust Force Fields:\nAt 5 or more stacks, gain [Paper Parade<id:2>].\nAt 15 or more stacks, gain [Wave of Sheets<id:2>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:2>]."
+    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:2>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:2>] she has, while removing other Gust Force Fields she applied to herself in this way:\nAt 5 or more stacks, gain [Paper Parade<id:2>].\nAt 15 or more stacks, gain [Wave of Sheets<id:2>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:2>]."
   },
   {
     "key": "language_10025431",
-    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:3>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:3>] she has, while removing other Gust Force Fields:\nAt 5 or more stacks, gain [Paper Parade<id:2>].\nAt 15 or more stacks, gain [Wave of Sheets<id:3>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:3>]."
+    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:3>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:3>] she has, while removing other Gust Force Fields she applied to herself in this way:\nAt 5 or more stacks, gain [Paper Parade<id:2>].\nAt 15 or more stacks, gain [Wave of Sheets<id:3>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:3>]."
   },
   {
     "key": "language_10025432",
@@ -101721,7 +101721,7 @@
   },
   {
     "key": "language_10025433",
-    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:4>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:4>] she has, while removing other Gust Force Fields:\nAt 5 or more stacks, gain [Paper Parade<id:4>].\nAt 15 or more stacks, gain [Wave of Sheets<id:4>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:4>]."
+    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:4>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:4>] she has, while removing other Gust Force Fields she applied to herself in this way:\nAt 5 or more stacks, gain [Paper Parade<id:4>].\nAt 15 or more stacks, gain [Wave of Sheets<id:4>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:4>]."
   },
   {
     "key": "language_10025434",
@@ -103845,7 +103845,7 @@
   },
   {
     "key": "language_10025964",
-    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; Druvis III gains an additional DMG Bonus +1% for every 200 ATK she has; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status; Druvis III also gains additional ATK based on 7.5% of her own Mental DEF (undispellable)."
+    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; Druvis III gains an additional DMG Bonus +1% for every 200 ATK she has; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status. Gain ATK based on 7.5% of Druvis III's Mental DEF (undispellable)."
   },
   {
     "key": "language_10025965",
@@ -104113,7 +104113,7 @@
   },
   {
     "key": "language_10026031",
-    "content": "At the start of the round, Flutterpage gains a Force Field based on her Gust stacks and removes other Force Fields; stacks up to 50 times."
+    "content": "At the start of the round, Flutterpage gains a Force Field based on her Gust stacks and removes other Gust Force Fields she applied to herself in this way; stacks up to 50 times."
   },
   {
     "key": "language_10026032",
@@ -105090,6 +105090,10 @@
   {
     "key": "language_90001094",
     "content": "Cannot gain Ultimate."
+  },
+  {
+    "key": "language_90001107",
+    "content": "Dispeller"
   },
   {
     "key": "language_90001061",

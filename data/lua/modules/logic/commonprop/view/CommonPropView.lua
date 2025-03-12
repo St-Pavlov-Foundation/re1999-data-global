@@ -2,6 +2,10 @@ module("modules.logic.commonprop.view.CommonPropView", package.seeall)
 
 slot0 = class("CommonPropView", BaseView)
 
+if BootNativeUtil.isWindows() then
+	module_views.CommonPropView.destroy = 1
+end
+
 function slot0.onInitView(slot0)
 	slot0._bgClick = gohelper.getClick(slot0.viewGO)
 	slot0._scrollitem = gohelper.findChild(slot0.viewGO, "#scroll_item")
