@@ -3,11 +3,13 @@ module("modules.logic.rouge.define.RougeEnum", package.seeall)
 slot0 = _M
 slot0.ResPath = {
 	rougepageprogress = "ui/viewres/rouge/rougepageprogress.prefab",
-	rougefactionitem = "ui/viewres/rouge/rougefactionitem.prefab",
-	CommonCollectionItem = "ui/viewres/rouge/rougeitemcollection.prefab",
+	CollectionLevelUpLeftItem = "ui/viewres/rouge/dlc/102/rougecollectionlevelupleftitem.prefab",
+	CollectionLevelUpRightItem = "ui/viewres/rouge/dlc/102/rougecollectionleveluprightitem.prefab",
 	CommonLvItem = "ui/viewres/rouge/rougeitemlv.prefab",
 	rougedifficultyitem = "ui/viewres/rouge/rougedifficultyitem.prefab",
 	CollectionIconItem = "ui/viewres/rouge/rougecollectioniconitem.prefab",
+	rougefactionitem = "ui/viewres/rouge/rougefactionitem.prefab",
+	CommonCollectionItem = "ui/viewres/rouge/rougeitemcollection.prefab",
 	CommonHeroGroupItem = "ui/viewres/rouge/rougeitemherogroup.prefab",
 	CoinView = "ui/viewres/rouge/map/rougemapcoinview.prefab",
 	CollectionDetailBtnItem = "ui/viewres/rouge/map/rougemapdetailview.prefab",
@@ -53,10 +55,12 @@ slot0.HeroGroupEditType = {
 slot0.Const = {
 	RewardTranslation = 1018,
 	RoleHalfCapacity = 9,
+	EndingThreeContent = 6002,
 	TalentTranslation = 1019,
 	AchievementJumpId = 51,
 	RoleCapacity = 2,
 	FavoriteEndingShow = 42,
+	EndingThreeTitle = 6001,
 	TalentCost = 27,
 	SelectHeroCapacity = 8,
 	CompositeEntryVisible = 47,
@@ -69,9 +73,10 @@ slot0.OutsideConst = {
 	StartNode = 101
 }
 slot0.BigRewardType = {
-	RoomItem = 2,
-	RoleOrSkin = 1,
 	Multi = 4,
+	RoomItem = 2,
+	Role = 1,
+	Skin = 5,
 	Artifice = 3
 }
 slot0.CollectionHeight = {
@@ -83,6 +88,7 @@ slot0.MaxCollectionSlotSize = Vector2(8, 8)
 slot0.MaxCollectionBagSize = Vector2(8, 7)
 slot0.MinCollectionExtraTagID = 100
 slot0.CompositeCollectionCostCount = 1
+slot0.MaxLevelSpAttrId = 4001
 slot0.CollectionEditorParamType = {
 	CenterPos = 4,
 	Effect = "effectArea",
@@ -109,9 +115,10 @@ slot0.CollectionType = {
 	Weapon = 103,
 	Magic = 104,
 	Protect = 102,
-	Enchant = 105,
+	Special = 107,
 	Baggage = 106,
-	Decorate = 101
+	Decorate = 101,
+	Enchant = 105
 }
 slot0.CollectionTypeSort = {
 	[slot0.CollectionType.Weapon] = 1,
@@ -119,7 +126,8 @@ slot0.CollectionTypeSort = {
 	[slot0.CollectionType.Decorate] = 3,
 	[slot0.CollectionType.Magic] = 4,
 	[slot0.CollectionType.Enchant] = 5,
-	[slot0.CollectionType.Baggage] = 6
+	[slot0.CollectionType.Baggage] = 6,
+	[slot0.CollectionType.Special] = 7
 }
 slot0.CollectionTipPos = {
 	Slot = Vector2(310, 0),
@@ -158,10 +166,6 @@ slot0.State = {
 	Empty = 0
 }
 slot0.CollectionBgMaxSize = 4
-slot0.CollectionDescType = {
-	Default = 0,
-	Enchant = 1
-}
 slot0.EffectActiveType = {
 	Electric = 1,
 	Engulf = 2,
@@ -216,13 +220,27 @@ slot0.SkillTypeSortEnum = {
 	[slot0.SkillType.Map] = 2
 }
 slot0.CollectionDescType = {
-	ExtraEffect = 2,
-	BaseEffect = 1,
-	Desc = 3
+	Text = 3,
+	SpecialHeader = 4,
+	BaseEffect = 2,
+	ExtraEffect = 1,
+	SpecialText = 5
+}
+slot0.CollectionDescTypeSort = {
+	[slot0.CollectionDescType.SpecialHeader] = 1,
+	[slot0.CollectionDescType.ExtraEffect] = 2,
+	[slot0.CollectionDescType.BaseEffect] = 3,
+	[slot0.CollectionDescType.SpecialText] = 4,
+	[slot0.CollectionDescType.Text] = 5
 }
 slot0.IllustrationType = {
 	DLC = 2,
 	Normal = 1
 }
+slot0.CollectionDescSource = {
+	Config = 1,
+	Inst = 2
+}
+slot0.EndingThreeId = 103
 
 return slot0

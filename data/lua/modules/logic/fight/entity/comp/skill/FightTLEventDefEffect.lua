@@ -93,6 +93,10 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 					slot22 = false
 				end
 
+				if slot20.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(slot20) then
+					slot22 = false
+				end
+
 				if slot22 and (not slot0._defenderEffectWrapDict or not slot0._defenderEffectWrapDict[slot21]) then
 					if slot14 and slot14[slot21:getMO().skin] then
 						slot0._monster_scale_dic = {

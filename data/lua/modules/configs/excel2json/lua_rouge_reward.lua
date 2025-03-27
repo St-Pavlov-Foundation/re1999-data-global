@@ -6,6 +6,7 @@ slot1 = {
 	preId = 3,
 	type = 7,
 	season = 1,
+	offset = 11,
 	pos = 5,
 	rewardName = 9,
 	rewardType = 10,

@@ -2169,7 +2169,7 @@
   },
   {
     "id": "bp_rule",
-    "lang": "language_10055559"
+    "lang": "language_10065809"
   },
   {
     "id": "bp_score_limit",
@@ -5268,6 +5268,214 @@
     "lang": "language_10061113"
   },
   {
+    "id": "character_copy_talentLayout_title_cn",
+    "lang": "language_10064039"
+  },
+  {
+    "id": "character_copy_talentLayout_title_en",
+    "lang": "language_10064040"
+  },
+  {
+    "id": "character_copy_talentLayout_tip",
+    "lang": "language_10064041"
+  },
+  {
+    "id": "character_copy_talentLayout_use_tip",
+    "lang": "language_10064042"
+  },
+  {
+    "id": "MusicFreeNoInstrument",
+    "lang": "language_10064043"
+  },
+  {
+    "id": "MusicRecordReady",
+    "lang": "language_10064044"
+  },
+  {
+    "id": "MusicRecording",
+    "lang": "language_10064045"
+  },
+  {
+    "id": "MusicRecordPause",
+    "lang": "language_10064046"
+  },
+  {
+    "id": "MusicPlaying",
+    "lang": "language_10064047"
+  },
+  {
+    "id": "MusicPlayPause",
+    "lang": "language_10064048"
+  },
+  {
+    "id": "MusicAccompany1",
+    "lang": "language_10064049"
+  },
+  {
+    "id": "MusicAccompany2",
+    "lang": "language_10064050"
+  },
+  {
+    "id": "MusicAccompany3",
+    "lang": "language_10064051"
+  },
+  {
+    "id": "MusicInstrumentsSelectedTips",
+    "lang": "language_10064052"
+  },
+  {
+    "id": "pinball_day",
+    "lang": "language_10064053"
+  },
+  {
+    "id": "pinball_food_not_enough",
+    "lang": "language_10064054"
+  },
+  {
+    "id": "pinball_food_enough",
+    "lang": "language_10064055"
+  },
+  {
+    "id": "pinball_play_not_enough",
+    "lang": "language_10064056"
+  },
+  {
+    "id": "pinball_play_enough",
+    "lang": "language_10064057"
+  },
+  {
+    "id": "pinball_rest",
+    "lang": "language_10064058"
+  },
+  {
+    "id": "pinball_game_target",
+    "lang": "language_10064059"
+  },
+  {
+    "id": "pinball_game_target2",
+    "lang": "language_10064060"
+  },
+  {
+    "id": "pinball_any_res",
+    "lang": "language_10064061"
+  },
+  {
+    "id": "pinball_food_need",
+    "lang": "language_10064062"
+  },
+  {
+    "id": "pinball_play_need",
+    "lang": "language_10064063"
+  },
+  {
+    "id": "pinball_score_desc_1",
+    "lang": "language_10064064"
+  },
+  {
+    "id": "pinball_score_desc_2",
+    "lang": "language_10064065"
+  },
+  {
+    "id": "pinball_score_desc_3",
+    "lang": "language_10064066"
+  },
+  {
+    "id": "pinball_holenum_desc_1",
+    "lang": "language_10064067"
+  },
+  {
+    "id": "pinball_holenum_desc_2",
+    "lang": "language_10064068"
+  },
+  {
+    "id": "pinball_unlock",
+    "lang": "language_10064069"
+  },
+  {
+    "id": "rouge_spcollection_header",
+    "lang": "language_10064070"
+  },
+  {
+    "id": "rouge_spcollection_unlock",
+    "lang": "language_10064071"
+  },
+  {
+    "id": "rouge_trammels_title",
+    "lang": "language_10064072"
+  },
+  {
+    "id": "blind_box_bouns_count",
+    "lang": "language_10053356"
+  },
+  {
+    "id": "character_copy_talentLayout_copy_code",
+    "lang": "language_10064073"
+  },
+  {
+    "id": "character_copy_talentLayout_use_code",
+    "lang": "language_10064074"
+  },
+  {
+    "id": "character_copy_talentLayout_default",
+    "lang": "language_10030940"
+  },
+  {
+    "id": "rougecollectionlevelupview_desc",
+    "lang": "language_10064075"
+  },
+  {
+    "id": "playercard_act128SSSCount",
+    "lang": "language_10064076"
+  },
+  {
+    "id": "playercard_towerbosspasscount",
+    "lang": "language_10064077"
+  },
+  {
+    "id": "towerbossepisodepasscount",
+    "lang": "language_10064078"
+  },
+  {
+    "id": "NewPlayerCardView_activity_only",
+    "lang": "language_10030294"
+  },
+  {
+    "id": "NewPlayerCardView_activity",
+    "lang": "language_10065813"
+  },
+  {
+    "id": "NewPlayerCardView_times_only",
+    "lang": "language_10033769"
+  },
+  {
+    "id": "NewPlayerCardView_times",
+    "lang": "language_10047757"
+  },
+  {
+    "id": "PinballController_removeBuilding",
+    "lang": "language_10020123"
+  },
+  {
+    "id": "PinballBuildView_createEffectItem",
+    "lang": "language_10020123"
+  },
+  {
+    "id": "SkillDescComp_replaceSkillTag_overseas",
+    "lang": "language_10065815"
+  },
+  {
+    "id": "PinballController_sep",
+    "lang": "language_10029560"
+  },
+  {
+    "id": "warmup_radiotaskitem_day",
+    "lang": "language_10065816"
+  },
+  {
+    "id": "Season166_2_4InformationAnalyView_consume",
+    "lang": "language_10065817"
+  },
+  {
     "id": "SkillDescComp_buildSkillNameLinkTag_overseas",
     "lang": "language_10053330"
   },
@@ -5614,10 +5822,6 @@
   {
     "id": "V2a1_BossRush_OfferRoleEffectItem_skillname_link_overseas",
     "lang": "language_10053330"
-  },
-  {
-    "id": "blind_box_bouns_count",
-    "lang": "language_10053356"
   },
   {
     "id": "packagestoregoods_pregoods_tips",

@@ -30,7 +30,7 @@ function slot0.resetHero(slot0, slot1, slot2, slot3, slot4)
 
 	slot0._conAudioId = slot4
 
-	if slot0._heroGo.activeSelf and (slot1.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] ~= "" or slot1.expressions[slot6] ~= "" or slot1.mouses[slot6] ~= "") and slot1.anims[slot6] == slot0._heroCo.anims[slot6] and slot1.expressions[slot6] == slot0._heroCo.expressions[slot6] and slot1.mouses[slot6] == slot0._heroCo.mouses[slot6] then
+	if slot0._heroGo.activeSelf and (slot1.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] ~= "" or slot1.expressions[slot6] ~= "" or slot1.mouses[slot6] ~= "") and not string.find(slot1.mouses[slot6], "_auto") and slot1.anims[slot6] == slot0._heroCo.anims[slot6] and slot1.expressions[slot6] == slot0._heroCo.expressions[slot6] and slot1.mouses[slot6] == slot0._heroCo.mouses[slot6] then
 		if not slot0._isLightSpine then
 			slot0:_setHeroMat(slot2)
 		end
@@ -417,7 +417,8 @@ function slot0._waitHeroSpineLoaded(slot0)
 		motion = slot0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		face = slot0._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		mouth = slot0._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
-		storyAudioId = slot0._conAudioId
+		storyAudioId = slot0._conAudioId,
+		storyHeroIndex = slot0._heroCo.heroIndex
 	})
 
 	if slot0._heroCo.effs[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] ~= "" then

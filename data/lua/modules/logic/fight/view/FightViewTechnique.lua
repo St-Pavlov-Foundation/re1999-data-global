@@ -1,13 +1,15 @@
 module("modules.logic.fight.view.FightViewTechnique", package.seeall)
 
 slot0 = class("FightViewTechnique", BaseView)
-slot1, slot2, slot3, slot4 = nil
+slot1, slot2, slot3, slot4, slot5, slot6 = nil
 
 function slot0.onInitView(slot0)
 	if not uv0 then
 		uv0 = {}
 		uv1 = {}
 		uv2 = {}
+		uv3 = {}
+		uv4 = {}
 
 		for slot4, slot5 in ipairs(lua_fight_technique.configList) do
 			for slot10, slot11 in ipairs(string.split(slot5.condition, "|")) do
@@ -16,9 +18,13 @@ function slot0.onInitView(slot0)
 				elseif slot12[1] == "2" then
 					uv1[tonumber(slot12[2])] = slot5.id
 				elseif slot12[1] == "3" then
-					uv3 = slot5.id
+					uv5 = slot5.id
 				elseif slot12[1] == "4" then
 					table.insert(uv2, slot5.id)
+				elseif slot12[1] == "5" then
+					table.insert(uv3, slot5.id)
+				elseif slot12[1] == "6" then
+					table.insert(uv4, slot5.id)
 				end
 			end
 		end
@@ -40,6 +46,8 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, slot0._updateSimpleProperty, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, slot0._onSetStateForDialogBeforeStartFight, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, slot0.onTriggerCardShowResistanceTag, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, slot0.onStartAllocateCardEnergy, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.AddUseCard, slot0.AddUseCard, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -50,6 +58,8 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, slot0._updateSimpleProperty, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, slot0._onSetStateForDialogBeforeStartFight, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, slot0.onTriggerCardShowResistanceTag, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, slot0.onStartAllocateCardEnergy, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.AddUseCard, slot0.AddUseCard, slot0)
 end
 
 function slot0.onOpen(slot0)
@@ -60,6 +70,20 @@ end
 function slot0.onTriggerCardShowResistanceTag(slot0)
 	for slot4, slot5 in ipairs(uv0) do
 		slot0:_checkAdd(slot5)
+	end
+end
+
+function slot0.onStartAllocateCardEnergy(slot0)
+	for slot4, slot5 in ipairs(uv0) do
+		slot0:_checkAdd(slot5)
+	end
+end
+
+function slot0.AddUseCard(slot0, slot1)
+	if FightPlayCardModel.instance:getUsedCards()[slot1] and FightHelper.isASFDSkill(slot3.skillId) then
+		for slot7, slot8 in ipairs(uv0) do
+			slot0:_checkAdd(slot8)
+		end
 	end
 end
 

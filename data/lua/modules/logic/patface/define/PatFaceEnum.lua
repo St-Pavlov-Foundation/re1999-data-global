@@ -24,6 +24,7 @@ slot0.patFace = {
 	V2a0_Role_PanelSignView_Part1 = 20001,
 	V2a3_Role_PanelSignView_Part1 = 20301,
 	V1a7_Role_PanelSignView_Part2 = 11,
+	V2a4_Role_PanelSignView_Part1 = 20400,
 	V1a8_Work_PanelSignView = 15,
 	V2a3_Special_PanelsView = 20304,
 	V2a2_NeWCultivationGift_PanelView = 20300,
@@ -46,7 +47,8 @@ slot0.patFace = {
 	V2a0_Role_PanelSignView_Part2 = 20002,
 	V2a1_Role_PanelSignView_Part2 = 20101,
 	V2a2_Role_PanelSignView_Part2 = 20201,
-	V2a3_Role_PanelSignView_Part2 = 20302
+	V2a3_Role_PanelSignView_Part2 = 20302,
+	V2a4_Role_PanelSignView_Part2 = 20401
 }
 slot0.CustomCheckCanPatFun = {
 	[slot0.patFace.Activity136] = PatFaceCustomHandler.activity142CheckCanPat,
@@ -99,7 +101,9 @@ slot0.patFaceCustomWork = {
 	[slot0.patFace.V2a3_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
 	[slot0.patFace.V2a3_Role_PanelSignView_Part2] = Activity101SignPatFaceWork,
 	[slot0.patFace.LinkageActivity_Panelview] = Activity101SignPatFaceWork,
-	[slot0.patFace.V2a3_Special_PanelsView] = Activity101SignPatFaceWork
+	[slot0.patFace.V2a3_Special_PanelsView] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a4_Role_PanelSignView_Part1] = Activity101SignPatFaceWork,
+	[slot0.patFace.V2a4_Role_PanelSignView_Part2] = Activity101SignPatFaceWork
 }
 
 return slot0

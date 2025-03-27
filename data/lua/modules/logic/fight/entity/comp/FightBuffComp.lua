@@ -10,12 +10,17 @@ slot2 = {
 	[FightEnum.BuffType_ContractBuff] = FightBuffContractBuff,
 	[FightEnum.BuffType_BeContractedBuff] = FightBuffBeContractedBuff
 }
+slot3 = {
+	[31080132] = FightBuffAddBKLESpBuff,
+	[31080134] = FightBuffAddBKLESpBuff
+}
 
 function slot0.ctor(slot0, slot1)
 	slot0._entity = slot1
 	slot0._animPriorityQueue = PriorityQueue.New(uv0.buffCompareFuncAni)
 	slot0._matPriorityQueue = PriorityQueue.New(uv0.buffCompareFuncMat)
 	slot0._buffEffectDict = {}
+	slot0._loopBuffEffectWrapDict = {}
 	slot0._onceEffectDict = {}
 	slot0._buffHandlerDict = {}
 	slot0._buff_loop_effect_name = {}
@@ -24,6 +29,10 @@ function slot0.ctor(slot0, slot1)
 	slot0._addBuffEffectPathDic = {}
 	slot0._curBuffTypeIdDic = {}
 	slot0._buffDic = {}
+end
+
+function slot0.init(slot0, slot1)
+	slot0:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, slot0._onCoverPerformanceEntityData, slot0)
 end
 
 function slot0.dealStartBuff(slot0)
@@ -197,6 +206,12 @@ function slot0.addBuff(slot0, slot1, slot2, slot3)
 	FightController.instance:dispatchEvent(FightEvent.AddEntityBuff, slot0._entity.id, slot1)
 end
 
+function slot0.setBuffEffectDict(slot0, slot1, slot2)
+	if slot0._loopBuffEffectWrapDict then
+		slot0._loopBuffEffectWrapDict[slot1] = slot2
+	end
+end
+
 function slot0._addBuffHandler(slot0, slot1)
 	if not lua_skill_buff.configDict[slot1.buffId] then
 		return
@@ -217,6 +232,12 @@ function slot0._addBuffHandler(slot0, slot1)
 	end
 
 	if slot3 and FightBuffHandlerPool.getHandlerInst(slot3, uv0[slot3]) then
+		slot0._buffHandlerDict[slot1.uid] = slot6
+
+		slot6:onBuffStart(slot0._entity, slot1)
+	end
+
+	if uv1[slot1.buffId] and FightBuffHandlerPool.getHandlerInst(slot1.buffId, uv1[slot1.buffId]) then
 		slot0._buffHandlerDict[slot1.uid] = slot6
 
 		slot6:onBuffStart(slot0._entity, slot1)
@@ -326,6 +347,9 @@ end
 function slot0.showBuffEffects(slot0, slot1)
 	for slot5, slot6 in pairs(slot0._buffEffectDict) do
 		slot6:setActive(true, slot1)
+	end
+
+	for slot5, slot6 in pairs(slot0._loopBuffEffectWrapDict) do
 		slot6:setActive(true, slot1)
 	end
 
@@ -335,6 +359,10 @@ end
 
 function slot0.hideBuffEffects(slot0, slot1)
 	for slot5, slot6 in pairs(slot0._buffEffectDict) do
+		slot6:setActive(false, slot1)
+	end
+
+	for slot5, slot6 in pairs(slot0._loopBuffEffectWrapDict) do
 		slot6:setActive(false, slot1)
 	end
 
@@ -355,6 +383,10 @@ function slot0.hideLoopEffects(slot0, slot1)
 		elseif slot8 then
 			logError("buff表找不到id:" .. slot8.buffId)
 		end
+	end
+
+	for slot6, slot7 in pairs(slot0._loopBuffEffectWrapDict) do
+		slot7:setActive(false, slot1)
 	end
 end
 
@@ -386,7 +418,17 @@ function slot0._showBuffFloat(slot0, slot1)
 	end
 end
 
-slot3 = {
+function slot0._onCoverPerformanceEntityData(slot0, slot1)
+	if slot0._entity and slot0._entity.id == slot1 and slot0._buffDic and FightDataHelper.entityMgr:getById(slot1) then
+		for slot6, slot7 in pairs(slot0._buffDic) do
+			if not slot2.buffDic[slot6] then
+				slot0:delBuff(slot6)
+			end
+		end
+	end
+end
+
+slot4 = {
 	[4150003.0] = true
 }
 
@@ -546,6 +588,7 @@ function slot0.onDestroy(slot0)
 	end
 
 	slot0._buffEffectDict = nil
+	slot0._loopBuffEffectWrapDict = nil
 	slot0._onceEffectDict = nil
 	slot0._buffHandlerDict = nil
 	slot0._buff_loop_effect_name = nil

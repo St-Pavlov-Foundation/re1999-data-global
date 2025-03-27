@@ -6,6 +6,7 @@
     "nameEn": "language_10057846",
     "icon": "",
     "baseSkillIds": "840010000",
+    "baseSkillIds2": "",
     "sortIndex": 1
   },
   {
@@ -15,6 +16,7 @@
     "nameEn": "language_10057847",
     "icon": "",
     "baseSkillIds": "840020000",
+    "baseSkillIds2": "",
     "sortIndex": 2
   },
   {
@@ -24,6 +26,37 @@
     "nameEn": "language_10057848",
     "icon": "",
     "baseSkillIds": "840030000",
+    "baseSkillIds2": "",
+    "sortIndex": 3
+  },
+  {
+    "activityId": 12400,
+    "talentId": 2401,
+    "name": "language_10055961",
+    "nameEn": "language_10057846",
+    "icon": "",
+    "baseSkillIds": "",
+    "baseSkillIds2": "342410000",
+    "sortIndex": 1
+  },
+  {
+    "activityId": 12400,
+    "talentId": 2402,
+    "name": "language_10055962",
+    "nameEn": "language_10057847",
+    "icon": "",
+    "baseSkillIds": "342420000",
+    "baseSkillIds2": "",
+    "sortIndex": 2
+  },
+  {
+    "activityId": 12400,
+    "talentId": 2403,
+    "name": "language_10055963",
+    "nameEn": "language_10057848",
+    "icon": "",
+    "baseSkillIds": "342430000",
+    "baseSkillIds2": "",
     "sortIndex": 3
   }
 ]

@@ -293,16 +293,16 @@ function slot0.refreshFlag(slot0)
 end
 
 function slot0.refreshUnlockContent(slot0)
-	if slot0.pass then
+	if slot0.pass or DungeonModel.instance:isReactivityEpisode(slot0._config.id) then
 		gohelper.setActive(slot0._txtlocktips.gameObject, false)
 
 		return
 	end
 
-	if OpenConfig.instance:getOpenShowInEpisode(slot0._config.id) and #slot1 > 0 then
+	if OpenConfig.instance:getOpenShowInEpisode(slot0._config.id) and #slot2 > 0 then
 		gohelper.setActive(slot0._txtlocktips.gameObject, true)
 
-		slot0._txtlocktips.text = DungeonModel.instance:getUnlockContentList(slot0._config.id) and #slot2 > 0 and slot2[1] or ""
+		slot0._txtlocktips.text = DungeonModel.instance:getUnlockContentList(slot0._config.id) and #slot3 > 0 and slot3[1] or ""
 
 		UISpriteSetMgr.instance:setUiFBSprite(slot0._imagesuo, "unlock", true)
 	else

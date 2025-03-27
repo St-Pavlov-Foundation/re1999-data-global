@@ -7,15 +7,24 @@ function slot0.checkCanPat(slot0)
 end
 
 function slot0.startPat(slot0)
-	uv0.super.startPat(slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
 
 	slot0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
+	slot0:_openView()
 	TurnbackRpc.instance:sendTurnbackFirstShowRequest(slot0.turnbackId)
 end
 
+function slot0._openView(slot0)
+	if TurnbackModel.instance:isNewType() then
+		ViewMgr.instance:openView(ViewName.TurnbackNewLatterView)
+	else
+		ViewMgr.instance:openView(slot0._patViewName)
+	end
+end
+
 function slot0.onCloseViewFinish(slot0, slot1)
-	if string.nilorempty(slot0._patViewName) or slot0._patViewName == slot1 then
+	if string.nilorempty(slot0._patViewName) or slot0._patViewName == slot1 or slot1 == ViewName.TurnbackNewLatterView then
 		slot0:patComplete()
 		TurnbackRpc.instance:sendTurnbackFirstShowRequest(slot0.turnbackId)
 	end

@@ -7,6 +7,12 @@ function slot0.onAwake(slot0, slot1)
 end
 
 function slot0.onStart(slot0)
+	if slot0._waitSeconds == 0 then
+		slot0:onDone(true)
+
+		return
+	end
+
 	slot0:cancelFightWorkSafeTimer()
 	slot0:com_registTimer(slot0._onTimeEnd, slot0._waitSeconds)
 end

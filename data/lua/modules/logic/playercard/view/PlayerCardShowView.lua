@@ -22,13 +22,13 @@ function slot0.onClickBtnClose(slot0)
 end
 
 function slot0.onClickBtnConfirm(slot0)
-	PlayerCardShowModel.instance:confirmData()
+	PlayerCardProgressModel.instance:confirmData()
 	slot0:closeThis()
 end
 
 function slot0.onOpen(slot0)
 	slot0:_updateParam()
-	PlayerCardShowModel.instance:initSelectData(slot0:getCardInfo())
+	PlayerCardProgressModel.instance:initSelectData(slot0:getCardInfo())
 	slot0:refreshView()
 end
 
@@ -46,7 +46,7 @@ function slot0.getCardInfo(slot0)
 end
 
 function slot0.refreshView(slot0)
-	PlayerCardShowModel.instance:refreshList()
+	PlayerCardProgressModel.instance:refreshList()
 	slot0:refreshNum()
 end
 
@@ -56,7 +56,7 @@ end
 
 function slot0.refreshNum(slot0)
 	slot0.txtNum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
-		PlayerCardShowModel.instance:getSelectNum(),
+		PlayerCardProgressModel.instance:getSelectNum(),
 		PlayerCardEnum.MaxCardNum
 	})
 end

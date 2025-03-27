@@ -78,7 +78,6 @@ function slot0.init(slot0, slot1)
 	slot0:_initCapacity()
 	slot0:_initAssit()
 	slot0:_initAssitSkill()
-	slot0:initDLCs()
 end
 
 function slot0._initAssitSkill(slot0)

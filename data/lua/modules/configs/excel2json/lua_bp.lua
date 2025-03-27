@@ -4,19 +4,21 @@ slot1 = {
 	isSp = 16,
 	name = 7,
 	chargeId2 = 3,
-	bpSkinDesc = 10,
-	bpSkinNametxt = 11,
 	bpSkinEnNametxt = 12,
-	expLevelUp = 9,
-	payStatus1Bonus = 5,
 	bpviewicon = 13,
+	payStatus1Bonus = 5,
 	bpId = 1,
 	chargeId1 = 2,
-	bpviewpos = 14,
 	chargeId1to2 = 4,
+	bpviewpos = 14,
+	showBonus = 15,
+	weekLimitTimes = 17,
+	bpSkinDesc = 10,
+	bpSkinNametxt = 11,
+	expLevelUp = 9,
 	payStatus2Bonus = 6,
 	payStatus2AddLevel = 8,
-	showBonus = 15
+	expUpShow = 18
 }
 slot2 = {
 	"bpId"

@@ -62,6 +62,7 @@ function slot0.onTowerItemClick(slot0, slot1)
 	slot0:refreshSelectState()
 	slot0:refreshRemainTime()
 	slot0:refreshTaskPos()
+	slot0:refreshReddot()
 end
 
 function slot0._editableInitView(slot0)
@@ -140,36 +141,62 @@ end
 
 function slot0.createOrRefreshTowerItem(slot0, slot1)
 	slot0.towerItemList = slot0:getUserDataTb_()
+	slot2 = false
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.towerItemTab[slot6.type] then
-			slot0.towerItemTab[slot6.type] = {}
+	for slot6, slot7 in ipairs(slot1) do
+		if not slot0.towerItemTab[slot7.type] then
+			slot0.towerItemTab[slot7.type] = {}
 		end
 
-		if not slot0.towerItemTab[slot6.type][slot6.towerId] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.clone(slot0._gotowerItem, slot0._gotowerContent, string.format("tower%s_%s", slot6.type, slot6.towerId))
-			slot7.goTimeTower = gohelper.findChild(slot7.go, "go_timeTowerItem")
-			slot7.goBossTower = gohelper.findChild(slot7.go, "go_bossTowerItem")
-			slot7.btnClick = gohelper.findChildButtonWithAudio(slot7.go, "btn_click")
+		if tabletool.len(slot0.towerItemTab[slot7.type]) > 0 then
+			for slot11, slot12 in pairs(slot0.towerItemTab[slot7.type]) do
+				slot13 = slot12.data
+				slot14 = false
 
-			slot7.btnClick:AddClickListener(slot0.onTowerItemClick, slot0, slot7)
+				for slot18, slot19 in pairs(slot1) do
+					if slot19.towerId == slot13.towerId and slot19.type == slot13.type then
+						slot14 = true
+					end
+				end
 
-			slot7.timeTowerUI = slot0:findTowerItemUI(slot7.goTimeTower)
-			slot7.bossTowerUI = slot0:findTowerItemUI(slot7.goBossTower)
-			slot7.select = false
-			slot7.data = slot6
-			slot0.towerItemTab[slot6.type][slot6.towerId] = slot7
+				if not slot14 then
+					slot12.btnClick:RemoveClickListener()
+					gohelper.destroy(slot12.go)
+
+					slot0.towerItemTab[slot7.type][slot13.towerId] = nil
+					slot2 = true
+				end
+			end
+
+			if slot2 then
+				TowerController.instance:selectDefaultTowerTask()
+			end
 		end
 
-		slot7.towerItemUI = slot6.type == TowerEnum.TowerType.Boss and slot7.bossTowerUI or slot7.timeTowerUI
+		if not slot0.towerItemTab[slot7.type][slot7.towerId] then
+			slot8 = slot0:getUserDataTb_()
+			slot8.go = gohelper.clone(slot0._gotowerItem, slot0._gotowerContent, string.format("tower%s_%s", slot7.type, slot7.towerId))
+			slot8.goTimeTower = gohelper.findChild(slot8.go, "go_timeTowerItem")
+			slot8.goBossTower = gohelper.findChild(slot8.go, "go_bossTowerItem")
+			slot8.btnClick = gohelper.findChildButtonWithAudio(slot8.go, "btn_click")
 
-		slot0:refreshTowerItem(slot7)
-		table.insert(slot0.towerItemList, slot7)
+			slot8.btnClick:AddClickListener(slot0.onTowerItemClick, slot0, slot8)
+
+			slot8.timeTowerUI = slot0:findTowerItemUI(slot8.goTimeTower)
+			slot8.bossTowerUI = slot0:findTowerItemUI(slot8.goBossTower)
+			slot8.select = false
+			slot8.data = slot7
+			slot0.towerItemTab[slot7.type][slot7.towerId] = slot8
+		end
+
+		slot8.towerItemUI = slot7.type == TowerEnum.TowerType.Boss and slot8.bossTowerUI or slot8.timeTowerUI
+
+		slot0:refreshTowerItem(slot8)
+		table.insert(slot0.towerItemList, slot8)
 	end
 
-	for slot5 = #slot1 + 1, #slot0.towerItemList do
-		gohelper.setActive(slot0.towerItemList[slot5].go, false)
+	for slot6 = #slot1 + 1, #slot0.towerItemList do
+		gohelper.setActive(slot0.towerItemList[slot6].go, false)
 	end
 end
 
@@ -182,27 +209,34 @@ function slot0.refreshTowerItem(slot0, slot1)
 	gohelper.setActive(slot1.goBossTower, slot4)
 	gohelper.setActive(slot1.towerItemUI.normalGO, not slot1.select)
 	gohelper.setActive(slot1.towerItemUI.selectGO, slot1.select)
+	gohelper.setActive(slot1.towerItemUI.goNormalIconMask, slot4)
+	gohelper.setActive(slot1.towerItemUI.goSelectIconMask, slot4)
+	gohelper.setActive(slot1.towerItemUI.imageNormalIcon, not slot4)
+	gohelper.setActive(slot1.towerItemUI.imageSelectIcon, not slot4)
 
-	slot5 = slot4 and string.format("tower_taskbossicon_%s", slot1.data.towerId) or "tower_tasktimeicon_1"
+	if slot4 then
+		slot1.towerItemUI.simageNormalIcon:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(TowerConfig.instance:getBossTowerConfig(slot1.data.towerId).bossId).skinId) and slot7.headIcon))
+		slot1.towerItemUI.simageSelectIcon:LoadImage(ResUrl.monsterHeadIcon(slot7 and slot7.headIcon))
+	else
+		UISpriteSetMgr.instance:setTowerSprite(slot1.towerItemUI.imageNormalIcon, "tower_tasktimeicon_1")
+		UISpriteSetMgr.instance:setTowerSprite(slot1.towerItemUI.imageSelectIcon, "tower_tasktimeicon_1")
+	end
 
-	UISpriteSetMgr.instance:setTowerSprite(slot1.towerItemUI.imageNormalIcon, slot5, true)
-	UISpriteSetMgr.instance:setTowerSprite(slot1.towerItemUI.imageSelectIcon, slot5, true)
+	slot5 = TowerConfig.instance:getBossTowerConfig(slot1.data.towerId)
+	slot1.towerItemUI.txtNormalName.text = slot4 and slot5.name or luaLang("towertask_timelimited_name")
+	slot1.towerItemUI.txtSelectName.text = slot4 and slot5.name or luaLang("towertask_timelimited_name")
+	slot1.towerItemUI.txtNameEn.text = slot4 and slot5.nameEn or luaLang("towertask_timelimited_nameEn")
+	slot6 = {}
 
-	slot6 = TowerConfig.instance:getBossTowerConfig(slot1.data.towerId)
-	slot1.towerItemUI.txtNormalName.text = slot4 and slot6.name or luaLang("towertask_timelimited_name")
-	slot1.towerItemUI.txtSelectName.text = slot4 and slot6.name or luaLang("towertask_timelimited_name")
-	slot1.towerItemUI.txtNameEn.text = slot4 and slot6.nameEn or luaLang("towertask_timelimited_nameEn")
-	slot7 = {}
-
-	for slot11, slot12 in ipairs(slot1.data.taskList) do
-		table.insert(slot7, {
+	for slot10, slot11 in ipairs(slot1.data.taskList) do
+		table.insert(slot6, {
 			finishCount = slot1.data.finishCount,
-			taskMo = slot12
+			taskMo = slot11
 		})
 	end
 
-	gohelper.CreateObjList(slot0, slot0.taskProgressShow, slot7, slot1.towerItemUI.goNormalPointContent, slot1.towerItemUI.goNormalPointItem)
-	gohelper.CreateObjList(slot0, slot0.taskProgressShow, slot7, slot1.towerItemUI.goSelectPointContent, slot1.towerItemUI.goSelectPointItem)
+	gohelper.CreateObjList(slot0, slot0.taskProgressShow, slot6, slot1.towerItemUI.goNormalPointContent, slot1.towerItemUI.goNormalPointItem)
+	gohelper.CreateObjList(slot0, slot0.taskProgressShow, slot6, slot1.towerItemUI.goSelectPointContent, slot1.towerItemUI.goSelectPointItem)
 end
 
 function slot0.findTowerItemUI(slot0, slot1)
@@ -211,6 +245,10 @@ function slot0.findTowerItemUI(slot0, slot1)
 	slot2.selectGO = gohelper.findChild(slot1, "select")
 	slot2.imageNormalIcon = gohelper.findChildImage(slot2.normalGO, "image_icon")
 	slot2.imageSelectIcon = gohelper.findChildImage(slot2.selectGO, "image_icon")
+	slot2.goNormalIconMask = gohelper.findChild(slot2.normalGO, "Mask")
+	slot2.goSelectIconMask = gohelper.findChild(slot2.selectGO, "Mask")
+	slot2.simageNormalIcon = gohelper.findChildSingleImage(slot2.normalGO, "Mask/image_bossIcon")
+	slot2.simageSelectIcon = gohelper.findChildSingleImage(slot2.selectGO, "Mask/image_bossIcon")
 	slot2.txtNormalName = gohelper.findChildText(slot2.normalGO, "txt_name")
 	slot2.txtSelectName = gohelper.findChildText(slot2.selectGO, "txt_name")
 	slot2.goNormalPointContent = gohelper.findChild(slot2.normalGO, "go_pointContent")
@@ -247,13 +285,10 @@ function slot0.refreshSelectState(slot0)
 	slot3 = TowerModel.instance:getTowerInfoById(slot1, slot2)
 
 	if slot1 == TowerEnum.TowerType.Boss then
-		slot0._txtbossTowerTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertask_passlayer"), {
-			slot3 and slot3.passLayerId or 0,
-			#TowerConfig.instance:getBossTowerEpisodeCoList(slot2)
-		})
+		slot0._txtbossTowerTip.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerbossepisodepasscount"), TowerAssistBossModel.instance:getById(TowerConfig.instance:getBossTowerConfig(slot2).bossId) and slot5.level or 0, TowerConfig.instance:getAssistBossMaxLev(slot4.bossId))
 	elseif slot1 == TowerEnum.TowerType.Limited then
 		slot0._txttimeTowerScore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertask_currenthighscore"), {
-			TowerTimeLimitLevelModel.instance:getTotalScore(true)
+			TowerTimeLimitLevelModel.instance:getHistoryHighScore()
 		})
 	end
 end
@@ -325,6 +360,8 @@ end
 function slot0.onClose(slot0)
 	for slot4, slot5 in ipairs(slot0.towerItemList) do
 		slot5.btnClick:RemoveClickListener()
+		slot5.bossTowerUI.simageNormalIcon:UnLoadImage()
+		slot5.bossTowerUI.simageSelectIcon:UnLoadImage()
 	end
 
 	UIBlockMgr.instance:endBlock(uv0.EnterViewAnimBlock)

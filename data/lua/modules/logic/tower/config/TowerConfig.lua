@@ -175,6 +175,24 @@ function slot0.getAssistDevelopConfig(slot0, slot1, slot2)
 	return slot0.towerAssistDevelopConfig.configDict[slot1] and slot3[slot2]
 end
 
+function slot0.getAssistBossMaxLev(slot0, slot1)
+	if not slot0._bossLevDict then
+		slot0._bossLevDict = {}
+	end
+
+	if not slot0._bossLevDict[slot1] then
+		for slot7, slot8 in pairs(slot0.towerAssistDevelopConfig.configDict[slot1]) do
+			if 0 < slot7 then
+				slot2 = slot7
+			end
+		end
+
+		slot0._bossLevDict[slot1] = slot2
+	end
+
+	return slot0._bossLevDict[slot1]
+end
+
 function slot0.getMaxMopUpConfigByLayerId(slot0, slot1)
 	slot3 = nil
 

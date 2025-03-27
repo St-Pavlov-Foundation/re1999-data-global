@@ -44,7 +44,7 @@ end
 
 function slot0.OnStoryDialogSelect(slot0, slot1)
 	if slot0._keyTrigger and slot0._keyTrigger[slot1] then
-		slot0._keyTrigger[slot1]:onSelectOptionView()
+		slot0:onKeySelect(slot0._keyTrigger[slot1])
 	end
 end
 
@@ -84,8 +84,18 @@ function slot0.showKeyTips(slot0)
 					PCInputController.instance:showkeyTips(slot7, 0, 0, "Alpha" .. slot1)
 				end
 
-				slot0._keyTrigger[slot1] = slot6
+				slot0._keyTrigger[slot1] = slot5
 				slot1 = slot1 + 1
+			end
+		end
+	end
+end
+
+function slot0.onKeySelect(slot0, slot1)
+	if slot0._items then
+		for slot5, slot6 in ipairs(slot0._items) do
+			if slot5 == slot1 then
+				slot6:_btnselectOnClick()
 			end
 		end
 	end

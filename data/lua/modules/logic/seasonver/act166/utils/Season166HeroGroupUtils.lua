@@ -3,7 +3,9 @@ module("modules.logic.seasonver.act166.utils.Season166HeroGroupUtils", package.s
 slot0 = class("Season166HeroGroupUtils")
 
 function slot0.buildSnapshotHeroGroups(slot0)
-	slot1 = {}
+	slot1 = {
+		[slot8.groupId] = slot8
+	}
 
 	for slot6, slot7 in ipairs(#slot0 == 0 and {
 		slot0
@@ -16,9 +18,9 @@ function slot0.buildSnapshotHeroGroups(slot0)
 			end
 		else
 			slot8:init(slot7)
-		end
 
-		slot1[slot7.groupId] = slot8
+			slot1[slot7.groupId] = slot8
+		end
 	end
 
 	table.sort(slot1, function (slot0, slot1)
@@ -51,8 +53,8 @@ end
 
 function slot0.createEmptyGroup(slot0, slot1)
 	slot2 = Season166HeroGroupModel.instance:getById(1)
-	slot1.id = slot0.groupId
-	slot1.groupId = slot0.groupId
+	slot1.id = slot0.groupId or 1
+	slot1.groupId = slot0.groupId or 1
 	slot1.name = ""
 	slot1.heroList = {}
 

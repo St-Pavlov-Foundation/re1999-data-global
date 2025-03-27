@@ -87,11 +87,11 @@ function slot0.onIndicatorChange(slot0)
 		return
 	end
 
-	if FightModel.instance:getIndicatorNum(slot0.indicatorId) <= 0 or slot0.totalIndicatorNum < slot1 then
+	if FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId) <= 0 or slot0.totalIndicatorNum < slot1 then
 		return
 	end
 
-	slot0.indicatorNum = FightModel.instance:getIndicatorNum(slot0.indicatorId)
+	slot0.indicatorNum = slot1
 
 	slot0:playEffect()
 end

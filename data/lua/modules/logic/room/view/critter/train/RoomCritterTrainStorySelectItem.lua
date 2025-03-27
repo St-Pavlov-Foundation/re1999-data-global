@@ -63,7 +63,7 @@ function slot0._refreshItem(slot0)
 
 	UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot0._attributeCo.icon)
 
-	slot0._txtnum.text = "+" .. string.format("%.02f", slot0._attributeMO.value)
+	slot0._txtnum.text = string.format("+%.02f", slot0._attributeMO.value)
 	slot1 = false
 
 	if CritterConfig.instance:getCritterHeroPreferenceCfg(slot0._critterMo.trainInfo.heroId).effectAttribute == slot0._attributeMO.attributeId then
@@ -73,8 +73,13 @@ function slot0._refreshItem(slot0)
 	gohelper.setActive(slot0._goup, slot1)
 
 	slot3 = slot0._attributeInfo.value + slot0._addAttributeValue
+	slot5 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeMO.value + slot3).level
 
-	gohelper.setActive(slot0._golvup, CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot3).level < CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeMO.value + slot3).level)
+	if CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot3).level == CritterConfig.instance:getMaxCritterAttributeLevelCfg().level then
+		slot0._txtnum.text = string.format("+%.02f(MAX)", slot0._attributeMO.value)
+	end
+
+	gohelper.setActive(slot0._golvup, slot4 < slot5)
 end
 
 function slot0.destroy(slot0)

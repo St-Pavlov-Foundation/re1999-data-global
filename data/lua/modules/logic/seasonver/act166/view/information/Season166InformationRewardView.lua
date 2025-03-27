@@ -39,7 +39,7 @@ function slot0.onGetInformationBonus(slot0)
 end
 
 function slot0.onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
+	if slot1 == ViewName.CommonPropView or slot1 == ViewName.CharacterSkinGainView then
 		slot0:refreshReward()
 	end
 end
@@ -67,7 +67,7 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.refreshReward(slot0)
-	if ViewMgr.instance:isOpen(ViewName.CommonPropView) then
+	if ViewMgr.instance:isOpen(ViewName.CommonPropView) or ViewMgr.instance:isOpen(ViewName.CharacterSkinGainView) then
 		return
 	end
 

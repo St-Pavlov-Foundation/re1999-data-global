@@ -85,8 +85,22 @@ function slot0.setSelectUI(slot0)
 	gohelper.setActive(slot0._goselectedunequip, slot0._isSelect and not slot1)
 	gohelper.setActive(slot0._gounselectunequip, not slot0._isSelect and not slot1)
 	gohelper.setActive(slot0._goequipedeffect, slot0._isEquiped ~= slot1 and slot1)
+	slot0:setTabIcon(slot0._goselectedequip, true, true)
+	slot0:setTabIcon(slot0._gounselectequip, false, true)
+	slot0:setTabIcon(slot0._goselectedunequip, true, false)
+	slot0:setTabIcon(slot0._gounselectunequip, false, false)
 
 	slot0._isEquiped = slot1
+end
+
+function slot0.setTabIcon(slot0, slot1, slot2, slot3)
+	if not gohelper.findChildImage(slot1, "icon") then
+		return
+	end
+
+	slot6 = ""
+
+	UISpriteSetMgr.instance:setRouge4Sprite(slot4, string.format("rouge_dlc%s_leftlogo", slot0._mo.id) .. (slot2 and (slot3 and "1" or "2") or slot3 and "2" or "3"))
 end
 
 function slot0.setLaterFlagVisible(slot0)

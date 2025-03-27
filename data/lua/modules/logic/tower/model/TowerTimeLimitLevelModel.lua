@@ -81,17 +81,12 @@ function slot0.saveLastEntranceDifficulty(slot0, slot1)
 	end
 end
 
-function slot0.getTotalScore(slot0, slot1)
+function slot0.getHistoryHighScore(slot0)
 	if not slot0:getCurOpenTimeLimitTower() then
 		return 0
 	end
 
-	for slot9 = 1, 3 do
-		slot12 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot2 and slot2.towerId or 1):getLayerScore(TowerConfig.instance:getTowerLimitedTimeCoList(slot3, slot9)[1].layerId, slot1)
-		slot5 = slot3 == 1 and 0 + slot12 or Mathf.Max(slot12, slot12)
-	end
-
-	return slot5
+	return TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, slot1 and slot1.towerId or 1):getHistoryHighScore()
 end
 
 slot0.instance = slot0.New()

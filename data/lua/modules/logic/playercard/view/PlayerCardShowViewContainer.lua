@@ -17,7 +17,7 @@ function slot0.buildViews(slot0)
 	slot2.cellWidth = 482
 	slot2.cellHeight = 186
 	slot2.startSpace = 150
-	slot0._scrollView = LuaListScrollView.New(PlayerCardShowModel.instance, slot2)
+	slot0._scrollView = LuaListScrollView.New(PlayerCardProgressModel.instance, slot2)
 
 	table.insert(slot1, slot0._scrollView)
 

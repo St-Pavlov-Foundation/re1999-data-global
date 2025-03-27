@@ -160,7 +160,7 @@ end
 function slot0._checkCustomShowRedDotData(slot0, slot1)
 	slot1:defaultRefreshDot()
 
-	if not slot1.show then
+	if not slot1.show and not TurnbackModel.instance:isNewType() then
 		if TurnbackModel.instance:getCurTurnbackMo() and TurnbackModel.instance:getCurTurnbackMo():isAdditionInOpenTime() then
 			TurnbackController.instance:_checkCustomShowRedDotData(slot1, TurnbackEnum.ActivityId.DungeonShowView)
 		end

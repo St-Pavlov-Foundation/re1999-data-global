@@ -15,6 +15,7 @@ end
 function slot0.onReceiveGetTowerInfoReply(slot0, slot1, slot2)
 	if slot1 == 0 then
 		TowerModel.instance:onReceiveGetTowerInfoReply(slot2)
+		TowerController.instance:dispatchEvent(TowerEvent.TowerUpdate)
 	end
 end
 

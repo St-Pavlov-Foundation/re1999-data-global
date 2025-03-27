@@ -18,6 +18,7 @@ function slot0.onInitView(slot0)
 	slot0._txtstonename = gohelper.findChildText(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#txt_stonename")
 	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#image_icon")
 	slot0._simagestone = gohelper.findChildSingleImage(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stone")
+	slot0._gostonebtnicon = gohelper.findChild(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/icon")
 	slot0._simagestonedec = gohelper.findChildSingleImage(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stonedec")
 	slot0._btnstone = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#btn_stone")
 	slot0._goconsumeitem = gohelper.findChild(slot0.viewGO, "#go_main/middle/#go_slot/btn/#go_consumeitem")
@@ -382,6 +383,14 @@ function slot0.onOpen(slot0)
 	slot0:_refreshAttrPanel()
 	slot0:_refreshEmpty()
 	slot0.viewContainer:setCurDestinySlot(slot1)
+	slot0:_refreshTrial()
+end
+
+function slot0._refreshTrial(slot0)
+	slot1 = slot0._heroMO:isTrial()
+
+	gohelper.setActive(slot0._gostonebtnicon.gameObject, not slot1)
+	gohelper.setActive(slot0._btnstone.gameObject, not slot1)
 end
 
 function slot0._playerOpenAnim(slot0)
@@ -658,20 +667,20 @@ function slot0._refreshBtn(slot0, slot1)
 	slot5 = slot3 and not slot4 and slot2:isCanUpSlotRank()
 	slot6 = slot3 and not slot4 and not slot2:isCanUpSlotRank()
 
-	gohelper.setActive(slot0._gounlockbtn, not slot3)
-	gohelper.setActive(slot0._gouplv, slot6)
-	gohelper.setActive(slot0._gouprank, slot5)
+	gohelper.setActive(slot0._gounlockbtn, not slot0._heroMO:isTrial() and not slot3)
+	gohelper.setActive(slot0._gouplv, not slot8 and slot6)
+	gohelper.setActive(slot0._gouprank, not slot8 and slot5)
 	gohelper.setActive(slot0._gomax, slot3 and slot4)
-	gohelper.setActive(slot0._goconsumeitem, not slot3 or slot5)
-	gohelper.setActive(slot0._gocurrency, slot6)
+	gohelper.setActive(slot0._goconsumeitem, not slot8 and (not slot3 or slot5))
+	gohelper.setActive(slot0._gocurrency, not slot8 and slot6)
 
 	if CharacterDestinyConfig.instance:getNextDestinySlotCo(slot2.heroId, slot2.rank, slot1 or slot2.level) then
 		if slot7 then
-			IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onConsumeItemCB, ItemModel.instance:getItemDataListByConfigStr(slot8.consume), slot0._goconsumeitem)
+			IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onConsumeItemCB, ItemModel.instance:getItemDataListByConfigStr(slot9.consume), slot0._goconsumeitem)
 		end
 
 		if slot6 then
-			slot0:_onRefreshConsumeCurrencyItems(slot9)
+			slot0:_onRefreshConsumeCurrencyItems(slot10)
 		end
 	end
 

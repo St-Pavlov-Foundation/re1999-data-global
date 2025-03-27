@@ -25,6 +25,7 @@ function slot0.onScenePrepared(slot0, slot1, slot2)
 	slot0._sceneEntityEnemySide:setSpeed(slot3)
 	slot0:addUnit(slot0._sceneEntityMySide)
 	slot0:addUnit(slot0._sceneEntityEnemySide)
+	slot0:addASFDUnit()
 
 	slot8 = FightDataHelper.entityMgr:getMySubList()
 
@@ -75,6 +76,22 @@ function slot0.onScenePrepared(slot0, slot1, slot2)
 
 	slot12:AddPositionCallback(slot0._adjustSpinesLookRotation, slot0)
 	slot12:AddRotationCallback(slot0._adjustSpinesLookRotation, slot0)
+end
+
+function slot0.addASFDUnit(slot0)
+	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide) and not FightHelper.getEntity(slot2.id) then
+		slot3 = MonoHelper.addLuaComOnceToGo(gohelper.create3d(slot0._containerGO, "MyASFDEntityGo"), FightEntityASFD, slot2.id)
+
+		slot3:setSpeed(FightModel.instance:getSpeed())
+		slot0:addUnit(slot3)
+	end
+
+	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide) and not FightHelper.getEntity(slot3.id) then
+		slot4 = MonoHelper.addLuaComOnceToGo(gohelper.create3d(slot0._containerGO, "EnemyASFDEntityGo"), FightEntityASFD, slot3.id)
+
+		slot4:setSpeed(slot1)
+		slot0:addUnit(slot4)
+	end
 end
 
 function slot0.onSceneClose(slot0)
@@ -403,6 +420,8 @@ function slot0.buildTempSceneEntity(slot0, slot1)
 end
 
 function slot0.destroyUnit(slot0, slot1)
+	slot1.IS_REMOVED = true
+
 	if FightSkillMgr.instance:isEntityPlayingTimeline(slot1.id) then
 		FightSkillMgr.instance:afterTimeline(slot1)
 	end

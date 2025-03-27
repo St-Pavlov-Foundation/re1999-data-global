@@ -199,6 +199,11 @@ function slot0.getMaxItemCount()
 			slot2 = slot2 + 1
 			slot3 = slot3 + 1
 		end
+
+		if slot9:isPlayerFinisherSkill() then
+			slot2 = slot2 + 1
+			slot3 = slot3 + 1
+		end
 	end
 
 	return slot2, slot3
@@ -239,7 +244,7 @@ function slot0.recordPlayData(slot0, slot1)
 		return
 	end
 
-	if slot1:isPlayCard() or slot1:isAssistBossPlayCard() then
+	if slot1:isPlayCard() or slot1:isAssistBossPlayCard() or slot1:isPlayerFinisherSkill() then
 		table.insert(slot0._begin_round_ops, slot1)
 	elseif slot1:isMoveCard() then
 		if FightCardModel.instance:getCardMO().extraMoveAct > 0 and slot2 > #slot0._extra_move_round_ops then

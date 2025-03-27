@@ -32,11 +32,23 @@ function slot0.onStart(slot0)
 			return
 		end
 
-		slot6 = slot1.effect:addHangEffect("v1a9_kkny/kkny_innate1_s1", "special1", nil, 1.2 / FightModel.instance:getSpeed())
+		if not FightDataHelper.entityMgr:getById(slot1.id) then
+			slot0:onDone(true)
 
-		FightAudioMgr.instance:playAudio(430800101)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot6)
-		slot6:setLocalPos(0, 0, 0)
+			return
+		end
+
+		if not lua_fight_sp_effect_kkny_bear_damage.configDict[slot6.skin] then
+			slot0:onDone(true)
+
+			return
+		end
+
+		slot8 = slot1.effect:addHangEffect(slot7.path, slot7.hangPoint, nil, 1.2 / FightModel.instance:getSpeed())
+
+		FightAudioMgr.instance:playAudio(slot7.audio)
+		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot8)
+		slot8:setLocalPos(0, 0, 0)
 	end
 
 	slot0:onDone(true)

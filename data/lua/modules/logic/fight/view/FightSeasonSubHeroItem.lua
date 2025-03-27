@@ -30,6 +30,7 @@ function slot0.addEvents(slot0)
 	slot0:com_registFightEvent(FightEvent.ChangeSubEntityHp, slot0._onChangeSubEntityHp)
 	slot0:com_registFightEvent(FightEvent.EntitySync, slot0._onEntitySync)
 	slot0:com_registFightEvent(FightEvent.ChangeEntitySubCd, slot0._onChangeEntitySubCd)
+	slot0:com_registFightEvent(FightEvent.StageChanged, slot0._onStageChanged)
 end
 
 function slot0.removeEvents(slot0)
@@ -105,11 +106,7 @@ function slot0._canUse(slot0)
 end
 
 function slot0._onBtnClick(slot0)
-	if not FightDataHelper.stageMgr:isNormalStage() then
-		return
-	end
-
-	if FightDataHelper.stageMgr:inAutoFightState() then
+	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 
@@ -156,6 +153,10 @@ function slot0._onEntitySync(slot0, slot1)
 	end
 end
 
+function slot0._onStageChanged(slot0, slot1)
+	slot0:refreshAni()
+end
+
 function slot0.refreshAni(slot0)
 	if not slot0.viewGO.activeInHierarchy then
 		return
@@ -199,6 +200,16 @@ function slot0.refreshData(slot0, slot1)
 	slot4 = slot0:_canUse()
 end
 
+function slot0._buildDataListByNum(slot0, slot1)
+	slot2 = {}
+
+	for slot6 = 1, slot1 do
+		table.insert(slot2, slot6)
+	end
+
+	return slot2
+end
+
 function slot0._refreshExpoint(slot0, slot1, slot2, slot3)
 	slot4 = FightDataHelper.entityMgr:getById(slot0._entityId)
 	slot0._expointObj = {}
@@ -208,13 +219,13 @@ function slot0._refreshExpoint(slot0, slot1, slot2, slot3)
 	gohelper.setActive(slot0._point2Root, false)
 
 	if slot0._expointMax <= 6 then
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, math.min(slot0._expointMax, 6), slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(math.min(slot0._expointMax, 6)), slot0._pointRoot, slot0._pointItem)
 	elseif slot0._expointMax <= 12 then
 		gohelper.setActive(slot0._point2Root, true)
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, 6, slot0._pointRoot, slot0._pointItem)
-		gohelper.CreateObjList(slot0, slot0._onPoint2ItemShow, 6, slot0._point2Root, slot0._point2Item)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(6), slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPoint2ItemShow, slot0:_buildDataListByNum(slot0._expointMax - 6), slot0._point2Root, slot0._point2Item)
 	else
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0._expointMax, slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(slot0._expointMax), slot0._pointRoot, slot0._pointItem)
 	end
 
 	for slot8, slot9 in ipairs(slot0._expointObj) do

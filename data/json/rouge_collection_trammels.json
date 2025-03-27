@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "num": 1,
+    "ruleList": "1#4240006",
+    "desc": "language_10063430"
+  },
+  {
+    "id": 2,
+    "num": 2,
+    "ruleList": "1#4240007",
+    "desc": "language_10064387"
+  },
+  {
+    "id": 3,
+    "num": 4,
+    "ruleList": "1#4240008",
+    "desc": "language_10006440"
+  }
+]

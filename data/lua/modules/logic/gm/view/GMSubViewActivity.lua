@@ -45,9 +45,59 @@ function slot0.initViewContent(slot0)
 
 	slot0._setRectTransSize(slot0.douQuQuStartRound.gameObject, nil, 150, 80)
 	slot0:addButton("L5", "开始战斗", slot0._douQuQuTestForceIndexRound, slot0)
+	slot0:addLabel("L6", "2.4玩法")
+	slot0:addButton("L6", "直接打开芭卡洛儿", function ()
+		VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicChapterView()
+	end, slot0)
+
+	slot0._act178Ball = slot0:addDropDown("L7", "弹珠游戏", {
+		"无",
+		"普通弹珠",
+		"分裂弹珠",
+		"玻璃弹珠",
+		"爆炸弹珠",
+		"弹力弹珠"
+	}, slot0._onAct178DropChange, slot0)
+
+	slot0._act178Ball:SetValue(PinballModel.instance._gmball)
+
+	slot0._act178Toggle = slot0:addToggle("L7", "解锁所有弹珠科技", slot0._onAct178ToggleChange, slot0)
+	slot0._act178Toggle.isOn = PinballModel.instance._gmUnlockAll
+	slot0._act178Toggle2 = slot0:addToggle("L7", "GM", slot0._onAct178ToggleChange2, slot0)
+	slot0._act178Toggle2.isOn = PinballModel.instance._gmkey
+
+	slot0:addLabel("L8", "弹珠游戏")
+
+	slot0._act178EpisodeId = slot0:addInputText("L8", nil, "关卡ID")
+
+	slot0:addButton("L8", "直接进入弹珠游戏", slot0._enterAct178Game, slot0)
 	slot0:initActivityDrop()
 
 	slot0._inited = true
+end
+
+function slot0._onAct178DropChange(slot0, slot1)
+	PinballModel.instance._gmball = slot1
+end
+
+function slot0._onAct178ToggleChange(slot0)
+	PinballModel.instance._gmUnlockAll = slot0._act178Toggle.isOn
+end
+
+function slot0._onAct178ToggleChange2(slot0)
+	PinballModel.instance._gmkey = slot0._act178Toggle2.isOn
+end
+
+function slot0._enterAct178Game(slot0)
+	if not lua_activity178_episode.configDict[VersionActivity2_4Enum.ActivityId.Pinball][tonumber(slot0._act178EpisodeId:GetText())] then
+		GameFacade.showToastString("关卡配置不存在")
+
+		return
+	end
+
+	PinballModel.instance.leftEpisodeId = slot1
+
+	ViewMgr.instance:openView(ViewName.PinballGameView)
 end
 
 function slot0.initActivityDrop(slot0)
@@ -55,14 +105,14 @@ function slot0.initActivityDrop(slot0)
 	slot0.activityShowStrList = {}
 	slot2 = {}
 
-	tabletool.addValues(slot2, VersionActivity1_7Enum.ActivityId)
+	tabletool.addValues(slot2, VersionActivity2_4Enum.ActivityId)
 
 	slot0.activityAll = {
-		["1_7all"] = slot2
+		["2_4all"] = slot2
 	}
 
 	for slot6, slot7 in ipairs({
-		VersionActivity1_7Enum.ActivityId
+		VersionActivity2_4Enum.ActivityId
 	}) do
 		for slot11, slot12 in pairs(slot7) do
 			if type(slot12) == "table" then
@@ -203,6 +253,43 @@ function slot0._douQuQuTestForceIndexRound(slot0)
 	end
 
 	slot0:closeThis()
+end
+
+function slot0.copyConfig(slot0)
+	for slot6, slot7 in pairs({
+		logoName = 9,
+		name = 3,
+		banner = 13,
+		actDesc = 5,
+		desc = 14,
+		openId = 17,
+		tabButton = 25,
+		logoType = 8,
+		isRetroAcitivity = 21,
+		confirmCondition = 11,
+		achievementGroupPath = 22,
+		achievementGroup = 19,
+		tabBgmId = 26,
+		showCenter = 15,
+		param = 16,
+		redDotId = 18,
+		storyId = 20,
+		tabBgPath = 24,
+		typeId = 7,
+		actTip = 6,
+		activityBonus = 23,
+		tabName = 2,
+		id = 1,
+		joinCondition = 10,
+		displayPriority = 12,
+		nameEn = 4
+	}) do
+		-- Nothing
+	end
+
+	return {
+		[slot6] = slot0[slot6]
+	}
 end
 
 return slot0

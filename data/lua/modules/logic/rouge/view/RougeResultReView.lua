@@ -114,15 +114,13 @@ function slot0.refreshBaseInfo(slot0, slot1)
 end
 
 function slot0.refreshTitle(slot0, slot1)
-	slot2 = slot1 and slot1:getVersions()
-	slot3 = RougeDLCHelper.versionListToMap(slot2)
-	slot4 = slot2 and #slot2 > 0
+	for slot8 = 1, slot0._godlctitles.transform.childCount do
+		slot9 = slot0._godlctitles.transform:GetChild(slot8 - 1).gameObject
 
-	for slot9 = 1, slot0._godlctitles.transform.childCount do
-		gohelper.setActive(slot10, slot3 and slot3[tonumber(slot0._godlctitles.transform:GetChild(slot9 - 1).gameObject.name)] ~= nil)
+		gohelper.setActive(slot9, slot9.name == RougeDLCHelper.versionListToString(slot1 and slot1:getVersions()))
 	end
 
-	gohelper.setActive(slot0._gonormaltitle, not slot4)
+	gohelper.setActive(slot0._gonormaltitle, not (slot2 and #slot2 > 0))
 end
 
 function slot0.refreshStyleInfo(slot0, slot1)

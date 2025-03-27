@@ -302,21 +302,21 @@ function slot0.refreshAttributeItem(slot0)
 	end
 end
 
-function slot0.playLevelUp(slot0, slot1)
+function slot0.playLevelUp(slot0, slot1, slot2)
 	if slot0._critterMO then
-		for slot6, slot7 in ipairs(slot0._attributeItems) do
-			slot8 = false
+		for slot7, slot8 in ipairs(slot0._attributeItems) do
+			slot9 = false
 
-			for slot12 = 1, #slot1 do
-				if slot7:getAttributeId() == slot1[slot12].attributeId then
-					slot8 = true
+			for slot13 = 1, #slot1 do
+				if slot8:getAttributeId() == slot1[slot13].attributeId then
+					slot9 = true
 
-					slot7:playLevelUp(slot1[slot12])
+					slot8:playLevelUp(slot1[slot13], slot2)
 				end
 			end
 
-			if not slot8 then
-				slot7:playNoLevelUp()
+			if not slot9 then
+				slot8:playNoLevelUp()
 			end
 		end
 	end

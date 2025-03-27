@@ -16,11 +16,16 @@ end
 function slot0.addEvents(slot0)
 	slot0:com_registFightEvent(FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd)
 	slot0:com_registFightEvent(FightEvent.OnIndicatorChange, slot0._onIndicatorChange)
+	slot0:com_registFightEvent(FightEvent.StageChanged, slot0._onStageChanged)
 	slot0:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView)
 	slot0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView)
 end
 
 function slot0.removeEvents(slot0)
+end
+
+function slot0._onStageChanged(slot0, slot1, slot2)
+	gohelper.setActive(slot0._itemRoot, slot1 ~= FightStageMgr.StageType.Play)
 end
 
 function slot0._enterOperate(slot0)
@@ -62,7 +67,7 @@ function slot0.onOpen(slot0)
 
 	slot0:_refreshHeroList()
 
-	slot0._score = FightModel.instance:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScore)
+	slot0._score = FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScore)
 
 	slot0:_refreshScore()
 end
@@ -125,7 +130,7 @@ end
 
 function slot0._onIndicatorChange(slot0, slot1)
 	if slot1 == FightEnum.IndicatorId.NewSeasonScoreOffset then
-		slot0._score = slot0._score + FightModel.instance:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScoreOffset)
+		slot0._score = slot0._score + FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScoreOffset)
 
 		slot0:_refreshScore()
 		slot0._ani:Play("up", nil, )

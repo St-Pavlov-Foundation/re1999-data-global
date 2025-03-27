@@ -24,6 +24,7 @@ function slot0.init(slot0, slot1, slot2)
 	slot0.actCommonParams = slot1.actCommonParams or ""
 	slot0.layer = slot1.layer or 0
 	slot0.type = slot1.type or FightEnum.BuffType.Normal
+	slot0.clientNum = 0
 end
 
 function slot0.clone(slot0)
@@ -38,6 +39,10 @@ end
 
 function slot0.getCO(slot0)
 	return lua_skill_buff.configDict[slot0.buffId]
+end
+
+function slot0.setClientNum(slot0, slot1)
+	slot0.clientNum = slot1
 end
 
 return slot0

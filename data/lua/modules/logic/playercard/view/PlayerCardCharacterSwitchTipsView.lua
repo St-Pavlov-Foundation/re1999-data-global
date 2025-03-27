@@ -39,6 +39,7 @@ function slot0._btncloseOnClick(slot0)
 
 	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(slot0.characterParam, false)
 	slot0:closeThis()
+	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
 function slot0._btnbuyOnClick(slot0)
@@ -48,6 +49,7 @@ function slot0._btnbuyOnClick(slot0)
 
 	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(slot0.characterParam, true)
 	slot0:closeThis()
+	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
 function slot0._toggleTipOnClick(slot0)

@@ -32,6 +32,45 @@ function slot0.checkActRed2(slot0, slot1)
 	return Activity125Model.instance:hasRedDot(slot1)
 end
 
+function slot0.sendGetTaskInfoRequest(slot0, slot1, slot2)
+	TaskRpc.instance:sendGetTaskInfoRequest({
+		TaskEnum.TaskType.Activity125
+	}, slot1, slot2)
+end
+
+function slot0.sendFinishAllTaskRequest(slot0, slot1, slot2, slot3)
+	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity125, nil, , slot2, slot3, slot1)
+end
+
+slot1 = PlayerEnum.SimpleProperty.V2a4_WarmUp_sum_help_npc
+
+function slot0.set_V2a4_WarmUp_sum_help_npc(slot0, slot1)
+	slot2 = tostring(slot1 or 0)
+
+	PlayerModel.instance:forceSetSimpleProperty(uv0, slot2)
+	PlayerRpc.instance:sendSetSimplePropertyRequest(uv0, slot2)
+end
+
+function slot0.get_V2a4_WarmUp_sum_help_npc(slot0, slot1)
+	return tonumber(PlayerModel.instance:getSimpleProperty(uv0)) or (slot1 or 0)
+end
+
+function slot0.checkRed_Task(slot0)
+	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Activity125Task, 0)
+end
+
+function slot0.checkActRed3(slot0, slot1)
+	if ActivityBeginnerController.instance:checkRedDot(slot1) then
+		return true
+	end
+
+	if slot0:checkActRed2(slot1) then
+		return true
+	end
+
+	return slot0:checkRed_Task()
+end
+
 slot0.instance = slot0.New()
 
 return slot0

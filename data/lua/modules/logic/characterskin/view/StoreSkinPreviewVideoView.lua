@@ -37,7 +37,7 @@ function slot0.onOpen(slot0)
 	slot3 = string.splitToNumber(slot0._skinGoodMo.config.product, "#")[2]
 	slot0.skinConfig = lua_skin.configDict[slot3]
 
-	if not lua_character_limited.configDict[slot3] then
+	if not lua_character_limited.configDict[slot3] or VersionValidator.instance:isInReviewing() then
 		slot0:checkVideoGuide()
 
 		return

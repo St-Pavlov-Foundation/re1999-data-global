@@ -17,6 +17,7 @@ function slot0.onInitView(slot0)
 	slot0._tipsOn = gohelper.findChild(slot0.viewGO, "pcScroll/Viewport/Content/shortcutstips/switch/btn/on")
 	slot0._tipsoff = gohelper.findChild(slot0.viewGO, "pcScroll/Viewport/Content/shortcutstips/switch/btn/off")
 	slot0._tipsStatue = PlayerPrefsHelper.getNumber("keyTips", 0)
+	slot0._exitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_exit")
 
 	slot0:refreshTips()
 
@@ -29,6 +30,7 @@ function slot0.addEvents(slot0)
 	slot0._btnshortcuts:AddClickListener(slot0._btnshortcutsOnClick, slot0)
 	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
 	slot0._tipsBtn:AddClickListener(slot0._tipsSwtich, slot0)
+	slot0._exitgame:AddClickListener(slot0.exitgame, slot0)
 	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnKeyMapChange, slot0.onSelectChange, slot0)
 end
 
@@ -36,6 +38,7 @@ function slot0.removeEvents(slot0)
 	slot0._btnshortcuts:RemoveClickListener()
 	slot0._btnreset:RemoveClickListener()
 	slot0._tipsBtn:RemoveClickListener()
+	slot0._exitgame:RemoveClickListener()
 	slot0:removeEventCb(SettingsController.instance, SettingsEvent.OnKeyMapChange, slot0.onSelectChange, slot0)
 end
 
@@ -60,7 +63,7 @@ function slot0.refreshTips(slot0)
 end
 
 function slot0._btnresetOnClick(slot0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputReset, MsgBoxEnum.BoxType.Yes_No, slot0._ResetByIndex, nil, , slot0, nil, )
+	GameFacade.showMessageBox(MessageBoxIdDefine.PCInputReset, MsgBoxEnum.BoxType.Yes_No, slot0._ResetByIndex, nil, , slot0, nil, , slot0:getSelectTopMo().name)
 end
 
 function slot0._ResetByIndex(slot0)
@@ -100,8 +103,8 @@ function slot0.createTopScroll(slot0)
 	slot1.cellClass = SettingsKeyTopItem
 	slot1.scrollDir = ScrollEnum.ScrollDirH
 	slot1.lineCount = 1
-	slot1.cellWidth = 360
-	slot1.cellHeight = 80
+	slot1.cellWidth = 240
+	slot1.cellHeight = 68
 	slot1.cellSpaceH = 0
 	slot1.cellSpaceV = 0
 	slot0._topScroll = LuaListScrollView.New(SettingsKeyTopListModel.instance, slot1)
@@ -132,6 +135,16 @@ function slot0.createPCScroll(slot0)
 	slot0:addChildView(slot0._pcScroll)
 	SettingsKeyListModel.instance:Init()
 	SettingsKeyListModel.instance:SetActivity(slot0._index)
+end
+
+function slot0.getSelectTopMo(slot0)
+	return slot0._topScroll:getFirstSelect()
+end
+
+function slot0.exitgame(slot0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.exitGame, MsgBoxEnum.BoxType.Yes_No, function ()
+		ProjBooter.instance:quitGame()
+	end)
 end
 
 return slot0

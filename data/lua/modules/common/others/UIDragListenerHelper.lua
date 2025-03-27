@@ -40,11 +40,11 @@ function slot14(slot0, slot1)
 	return slot0.x * slot1.x + slot0.y * slot1.y + slot0.z * slot1.z
 end
 
-function _crossV3(slot0, slot1)
+function slot15(slot0, slot1)
 	return Vector3.New(slot0.y * slot1.z - slot0.z * slot1.y, slot0.z * slot1.x - slot0.x * slot1.z, slot0.x * slot1.y - slot0.y * slot1.x)
 end
 
-function slot15(slot0, slot1)
+function slot16(slot0, slot1)
 	slot3 = uv0(slot1, slot1)
 
 	if uv1(uv0(slot0, slot0)) or uv1(slot3) then
@@ -54,7 +54,7 @@ function slot15(slot0, slot1)
 	return uv3(uv0(slot0, slot1) / uv2(slot2 * slot3))
 end
 
-function slot16(slot0, slot1)
+function slot17(slot0, slot1)
 	slot2 = Mathf.Cos(slot1)
 	slot3 = Mathf.Sin(slot1)
 
@@ -296,16 +296,15 @@ function slot0.quaternionToMouse(slot0, slot1, slot2)
 	slot6 = slot4 - slot3.delta - slot2
 	slot7 = slot4 - slot2
 	slot11, slot12 = Quaternion.FromToRotation(Vector3.New(slot6.x, slot6.y, 0), Vector3.New(slot7.x, slot7.y, 0)):ToAngleAxis()
+	slot14 = nil
 
 	if slot12.z < 0 then
-		isClockWise = true
+		slot14 = true
 	elseif slot13 > 0 then
-		isClockWise = false
-	else
-		isClockWise = nil
+		slot14 = false
 	end
 
-	return slot10, slot11, isClockWise
+	return slot10, slot11, slot14
 end
 
 function slot0.rotateZToMousePos(slot0, slot1, slot2)

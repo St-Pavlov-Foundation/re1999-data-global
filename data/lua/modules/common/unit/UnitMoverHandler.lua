@@ -6,7 +6,8 @@ slot1 = {
 	UnitMoverParabola,
 	UnitMoverBezier,
 	UnitMoverCurve,
-	UnitMoverMmo
+	UnitMoverMmo,
+	UnitMoverBezier3
 }
 
 function slot0.init(slot0, slot1)

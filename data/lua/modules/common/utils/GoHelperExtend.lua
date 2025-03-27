@@ -14,6 +14,7 @@ slot0.Type_Animation = typeof(UnityEngine.Animation)
 slot0.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
 slot0.Type_RectMask2D = typeof(UnityEngine.UI.RectMask2D)
 slot0.Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup)
+slot0.Type_ContentSizeFitter = typeof(UnityEngine.UI.ContentSizeFitter)
 slot0.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
 slot1 = SLFramework.UGUI.ButtonWrap
 slot2 = SLFramework.UGUI.UIClickListener
@@ -50,6 +51,12 @@ function slot0.findChildClickWithAudio(slot0, slot1, slot2)
 	end
 
 	return slot3
+end
+
+function slot0.findChildAnim(slot0, slot1)
+	if uv0.findChild(slot0, slot1) then
+		return slot2:GetComponent(uv0.Type_Animator)
+	end
 end
 
 function slot0.getClickWithAudio(slot0, slot1)
@@ -96,6 +103,10 @@ function slot0.activateExtend()
 end
 
 function slot0.CreateObjList(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+	if uv0.isNil(slot3) and not uv0.isNil(slot4) then
+		slot3 = slot4.transform.parent.gameObject
+	end
+
 	slot8 = nil
 	slot10 = slot3.transform
 	slot7 = slot7 or #slot2

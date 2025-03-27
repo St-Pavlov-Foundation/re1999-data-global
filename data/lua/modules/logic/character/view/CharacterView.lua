@@ -91,6 +91,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, slot0._refreshTalentRed, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onRefreshStyleIcon, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onRefreshStyleIcon, slot0)
+	slot0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onRefreshStyleIcon, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -112,6 +113,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onRefreshStyleIcon, slot0)
 	slot0:removeEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onRefreshStyleIcon, slot0)
 	slot0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, slot0._markFavorSuccess, slot0)
+	slot0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onRefreshStyleIcon, slot0)
 end
 
 slot0.HpAttrId = 101

@@ -24,5 +24,6 @@ return {
 	VoiceHttpGetter = "VoiceHttpGetter",
 	FightAuto = "FightAuto",
 	LimitedRoleMainView = "LimitedRoleMainView",
+	WaitItemAnimeDone = "WaitItemAnimeDone",
 	PayFinish = "PayFinish"
 }

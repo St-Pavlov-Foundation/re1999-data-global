@@ -96,9 +96,13 @@ function slot0._btnplayercardOnClick(slot0)
 		return
 	end
 
-	PlayerCardController.instance:openPlayerCardView({
-		userId = slot0._info.userId
-	})
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
+		PlayerCardController.instance:openPlayerCardView({
+			userId = slot0._info.userId
+		})
+	else
+		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.PlayerCard))
+	end
 end
 
 function slot0._btnplayeridOnClick(slot0)

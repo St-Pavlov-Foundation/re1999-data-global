@@ -185,6 +185,7 @@ function slot0.showOptionMsgBox(slot0, slot1, slot2, slot3, slot4, slot5, slot6,
 
 	ViewMgr.instance:openView(ViewName.MessageOptionBoxView, {
 		msg = MessageBoxConfig.instance:getMessage(slot1),
+		messageBoxId = slot1,
 		msgBoxType = slot2,
 		optionType = slot3,
 		yesCallback = slot4,
@@ -199,20 +200,24 @@ function slot0.showOptionMsgBox(slot0, slot1, slot2, slot3, slot4, slot5, slot6,
 	})
 end
 
-function slot0.canShowMessageOptionBoxView(slot0, slot1)
-	slot3 = true
+function slot0.canShowMessageOptionBoxView(slot0, slot1, slot2)
+	slot4 = true
 
-	if slot1 == MsgBoxEnum.optionType.Daily then
-		slot3 = TimeUtil.getDayFirstLoginRed(slot0:getOptionLocalKey(slot1))
-	elseif slot1 == MsgBoxEnum.optionType.NotShow then
-		slot3 = string.nilorempty(PlayerPrefsHelper.getString(slot2, ""))
+	if slot2 == MsgBoxEnum.optionType.Daily then
+		slot4 = TimeUtil.getDayFirstLoginRed(slot0:getOptionLocalKey(slot1, slot2))
+	elseif slot2 == MsgBoxEnum.optionType.NotShow then
+		slot4 = string.nilorempty(PlayerPrefsHelper.getString(slot3, ""))
 	end
 
-	return slot3
+	return slot4
 end
 
-function slot0.getOptionLocalKey(slot0, slot1)
-	return "MessageOptionBoxView" .. "#" .. slot1 .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function slot0.getOptionLocalKey(slot0, slot1, slot2)
+	return string.format("MessageOptionBoxView#%s#%s#%s", slot1, slot2, tostring(PlayerModel.instance:getPlayinfo().userId))
+end
+
+function slot0.clearOption(slot0, slot1, slot2)
+	PlayerPrefsHelper.deleteKey(slot0:getOptionLocalKey(slot1, slot2))
 end
 
 slot0.instance = slot0.New()

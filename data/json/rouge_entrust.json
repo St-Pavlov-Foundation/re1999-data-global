@@ -276,7 +276,7 @@
     "id": 1210233,
     "type": 7,
     "param": "110107",
-    "interactive": "",
+    "interactive": "1#31110036",
     "incompleteEffect": ""
   },
   {
@@ -291,6 +291,27 @@
     "type": 7,
     "param": "110109",
     "interactive": "",
+    "incompleteEffect": ""
+  },
+  {
+    "id": 1110208,
+    "type": 9,
+    "param": "1",
+    "interactive": "1#31110099",
+    "incompleteEffect": ""
+  },
+  {
+    "id": 1210208,
+    "type": 9,
+    "param": "1",
+    "interactive": "1#31110099",
+    "incompleteEffect": ""
+  },
+  {
+    "id": 1310208,
+    "type": 9,
+    "param": "1",
+    "interactive": "1#31110099",
     "incompleteEffect": ""
   }
 ]

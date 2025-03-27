@@ -1593,5 +1593,45 @@
     "id": 2820101,
     "eventName": "play_ui_checkpoint_noise_athletes_lounge",
     "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3240001,
+    "eventName": "play_battle_diqiu_2_4_normalfight",
+    "bankName": "activtiy_diqiu_combataudio"
+  },
+  {
+    "id": 3240002,
+    "eventName": "play_battle_diqiu_2_4_bossfight",
+    "bankName": "activtiy_diqiu_combataudio"
+  },
+  {
+    "id": 2670101,
+    "eventName": "play_ui_checkpoint_noise_highland_volleypoint_loop",
+    "bankName": "activtiy_gudu_combataudio_noise"
+  },
+  {
+    "id": 2690101,
+    "eventName": "play_ui_checkpoint_noise_weald",
+    "bankName": "activtiy_wangshi_combataudio_noise"
+  },
+  {
+    "id": 2700101,
+    "eventName": "play_ui_checkpoint_noise_stadium_after",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 2710101,
+    "eventName": "play_ui_checkpoint_noise_jobsite",
+    "bankName": "activtiy_shiji_combataudio_noise"
+  },
+  {
+    "id": 2720101,
+    "eventName": "play_ui_checkpoint_noise_three_stages",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 2830101,
+    "eventName": "play_ui_checkpoint_noise_highland_air_loop",
+    "bankName": "activtiy_gudu_combataudio_noise"
   }
 ]

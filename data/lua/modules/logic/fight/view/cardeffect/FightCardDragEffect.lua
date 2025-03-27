@@ -185,7 +185,7 @@ function slot0.setCardsUniversalMatch(slot0, slot1, slot2, slot3, slot4, slot5)
 		if slot16 ~= slot2 then
 			slot0[slot16]:setUniversal(false)
 
-			if slot9 and slot16 == slot11 and FightCardDataHelper.canCombineWithUniversal(slot6, slot1[slot16]) then
+			if slot9 and slot16 == slot11 and FightCardDataHelper.canCombineWithUniversalForPerformance(slot6, slot1[slot16]) then
 				slot17:setUniversal(true)
 				FightCardModel.instance:setUniversalCombine(slot6, slot1[slot16])
 

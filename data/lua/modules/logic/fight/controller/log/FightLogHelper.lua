@@ -145,6 +145,7 @@ function slot0.getFightActEffectString(slot0, slot1, slot2)
 	table.insert(slot5, string.format("%s targetId : %s 作用对象:%s", slot6, slot0.targetId, uv0.getEntityName(slot0.targetId)))
 	table.insert(slot5, string.format("%s effectType : %s 效果类型:%s", slot6, slot0.effectType, uv0.getEffectTypeName(slot0.effectType)))
 	table.insert(slot5, string.format("%s effectNum : %s", slot6, slot0.effectNum))
+	table.insert(slot5, string.format("%s effectNum1 : %s", slot6, slot0.effectNum1))
 	table.insert(slot5, string.format("%s fromSide : %s", slot6, slot0.fromSide))
 	table.insert(slot5, string.format("%s configEffect : %s", slot6, slot0.configEffect))
 	table.insert(slot5, string.format("%s buffActId : %s", slot6, slot0.buffActId))
@@ -669,6 +670,36 @@ slot0.EffectTypeNameDict = {
 	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = "附加伤害暴击",
 	[FightEnum.EffectType.ACT174FIRST] = "活动174决定先后手",
 	[FightEnum.EffectType.ACT174USECARD] = "活动174回合出牌",
+	[FightEnum.EffectType.CHANGESHIELD] = "修改护盾值",
+	[FightEnum.EffectType.TOWERSCORECHANGE] = "限时塔分数改变",
+	[FightEnum.EffectType.ACT174MONSTERAICARD] = "敌方选牌列表",
+	[FightEnum.EffectType.AFTERREDEALCARD] = "洗牌后",
+	[FightEnum.EffectType.TEAMENERGYCHANGE] = "队伍灵能变化",
+	[FightEnum.EffectType.ALLOCATECARDENERGY] = "分配手牌灵能",
+	[FightEnum.EffectType.EMITTERENERGYCHANGE] = "发射器灵能变化",
+	[FightEnum.EffectType.EMITTERSKILLEND] = "发射器技能结束",
+	[FightEnum.EffectType.CARDDECKCLEAR] = "清空牌库",
+	[FightEnum.EffectType.EMITTERCREATE] = "发射器实体创建",
+	[FightEnum.EffectType.ADDONCECARD] = "加一张牌 新加效果详情请咨询 皓文大佬 and 森总 ",
+	[FightEnum.EffectType.SHAREHURT] = "分摊伤害",
+	[FightEnum.EffectType.PLAYERFINISHERSKILLCHANGE] = "玩家终结技能改变",
+	[FightEnum.EffectType.EMITTERCAREERCHANGE] = "奥术飞弹发射器灵感变换",
+	[FightEnum.EffectType.EMITTERNUMCHANGE] = "奥术飞弹发射器数量改变",
+	[FightEnum.EffectType.EMITTERTAG] = "奥术飞弹发射器存在标记tag",
+	[FightEnum.EffectType.EMITTERREMOVE] = "发射器实体移除",
+	[FightEnum.EffectType.USESKILLTEAMADDEMITTERENERGY] = " 行动全队特定buff提升奥术飞弹灵能值",
+	[FightEnum.EffectType.FIXATTRTEAMENERGY] = " 属性修正（根据队伍灵能值）",
+	[FightEnum.EffectType.SIMPLEPOLARIZATIONACTIVE] = "启用简振",
+	[FightEnum.EffectType.SIMPLEPOLARIZATIONLEVEL] = "简振等级",
+	[FightEnum.EffectType.SIMPLEPOLARIZATIONADDLEVEL] = "添加简振等级",
+	[FightEnum.EffectType.CALLMONSTERTOSUB] = "召唤小怪到后场",
+	[FightEnum.EffectType.FIXATTRTEAMENERGYANDBUFF] = " 属性修正（根据队伍灵能值和队友buff） value显示数值",
+	[FightEnum.EffectType.POWERINFOCHANGE] = "能量信息变化",
+	[FightEnum.EffectType.SIMPLEPOLARIZATIONADDLIMIT] = "简振上限增加",
+	[FightEnum.EffectType.EMITTERMAINTARGET] = " 奥术飞弹优先攻击目标",
+	[FightEnum.EffectType.CONDITIONSPLITEMITTERNUM] = " 奥术飞弹条件分裂",
+	[FightEnum.EffectType.ADDSPLITEMITTERNUM] = " 奥术飞弹额外分裂",
+	[FightEnum.EffectType.EMITTERSPLITNUM] = " 奥术飞弹分裂通知",
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 

@@ -22,6 +22,9 @@ function slot0.buildRoundFlows(slot0)
 	end
 
 	slot0:addWork(FunctionWork.New(function ()
+		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+	end))
+	slot0:addWork(FunctionWork.New(function ()
 		FightController.instance:dispatchEvent(FightEvent.AfterPlayClothSkill)
 	end))
 end

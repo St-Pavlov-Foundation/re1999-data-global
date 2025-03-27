@@ -1330,6 +1330,18 @@ function slot0.getV2a3WarmUpSingleBg(slot0)
 	return string.format("singlebg/v2a3_warmup_singlebg/%s.png", slot0)
 end
 
+function slot0.getV2a4SignSingleBg(slot0)
+	return string.format("singlebg/v2a4_sign_singlebg/%s.png", slot0)
+end
+
+function slot0.getV2a4SignSingleBgLang(slot0)
+	return string.format("singlebg_lang/txt_v2a4_sign_singlebg/%s.png", slot0)
+end
+
+function slot0.getChessDialogueSingleBg(slot0)
+	return string.format("singlebg/dialogue/chess/%s.png", slot0)
+end
+
 slot2 = string.len("Assets/ZResourcesLib/")
 
 function slot0.getPathWithoutAssetLib(slot0)
@@ -1384,6 +1396,10 @@ function slot0.getAct174BuffIcon(slot0)
 	return string.format("singlebg/act174/bufficon/%s.png", slot0)
 end
 
+function slot0.getV2a4WuErLiXiIcon(slot0)
+	return string.format("singlebg/v2a4_wuerlixi_singlebg/%s.png", slot0)
+end
+
 function slot0.getLiveHeadIconPrefab(slot0)
 	return string.format("ui/viewres/dynamichead/%s.prefab", tostring(slot0))
 end
@@ -1394,6 +1410,10 @@ end
 
 function slot0.getDestinyIcon(slot0)
 	return string.format("singlebg/characterdestiny/stone/%s.png", tostring(slot0))
+end
+
+function slot0.getV2a4WarmUpSingleBg(slot0)
+	return string.format("singlebg/v2a4_warmup_singlebg/%s.png", slot0)
 end
 
 return slot0

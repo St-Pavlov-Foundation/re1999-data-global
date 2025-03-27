@@ -5,7 +5,8 @@ slot1 = nil
 slot2 = {
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
 	[FightEnum.EffectType.STORAGEINJURY] = true,
-	[FightEnum.EffectType.SHIELDVALUECHANGE] = true
+	[FightEnum.EffectType.SHIELDVALUECHANGE] = true,
+	[FightEnum.EffectType.SHAREHURT] = true
 }
 
 function slot0.resetLatestStepUid()

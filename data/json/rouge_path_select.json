@@ -48,5 +48,15 @@
     "focusCameraSize": 7,
     "startPos": "160#-53",
     "endPos": "-412.8#128"
+  },
+  {
+    "id": 143,
+    "version": "",
+    "name": "language_10043164",
+    "mapRes": "scenes/v1a9_m_s16_dilao/scene_prefab/v1a9_m_s16_dilao_ditu_niuqu_p.prefab",
+    "focusMapPos": "-37#13",
+    "focusCameraSize": 12,
+    "startPos": "130#0",
+    "endPos": "-420#280"
   }
 ]

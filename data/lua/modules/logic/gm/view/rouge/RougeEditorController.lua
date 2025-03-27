@@ -44,12 +44,14 @@ function slot0.enterRougeMapEditor(slot0)
 	slot0:_addMapEditorView()
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
+		slot2 = lua_rouge_middle_layer.configList[1]
+
 		RougeMapModel.instance:init(RougeMapEnum.MapType.Edit)
-		RougeMapEditModel.instance:init(101)
+		RougeMapEditModel.instance:init(slot2.id)
 
 		slot0.flow = FlowSequence.New()
 
-		slot0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, 101))
+		slot0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, slot2.id))
 		slot0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougeMapEditorView))
 		slot0.flow:registerDoneListener(slot0.onFlowDone, slot0)
 		slot0.flow:start()
@@ -64,7 +66,7 @@ function slot0.enterRougeMapEditor(slot0)
 
 		RougeMapModel.instance.isMiddle = true
 
-		GameSceneMgr.instance:getCurScene().map:switchMap(RougeMapModel.instance:getLayerId(), 101)
+		GameSceneMgr.instance:getCurScene().map:switchMap(RougeMapModel.instance:getLayerId(), lua_rouge_middle_layer.configList[1].id)
 	end
 end
 

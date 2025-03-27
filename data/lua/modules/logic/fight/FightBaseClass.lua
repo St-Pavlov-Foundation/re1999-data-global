@@ -25,6 +25,10 @@ function slot0.com_loadListAsset(slot0, slot1, slot2, slot3, slot4)
 	slot0:registComponent(FightLoaderComponent):loadListAsset(slot1, slot2, slot3, slot0, slot4)
 end
 
+function slot0.com_releaseAllLoader(slot0)
+	slot0:releaseComponent(FightLoaderComponent)
+end
+
 function slot0.com_registFlowSequence(slot0)
 	return slot0:com_registCustomFlow(FightWorkFlowSequence)
 end
@@ -65,24 +69,29 @@ function slot0.com_playWork(slot0, slot1, ...)
 	slot0:registComponent(FightWorkComponent):playWork(slot1, ...)
 end
 
-function slot0.com_playSequeueWork(slot0, slot1, ...)
-	return slot0:registComponent(FightWorkComponent):playIdSequeueWork(1, slot1, ...)
+function slot0.com_registAutoSequence(slot0, slot1, ...)
+	return slot0:registComponent(FightSequenceAutoWorkComponent):registAutoSequence(slot1, ...)
 end
 
-function slot0.com_playIdSequeueWork(slot0, slot1, slot2, ...)
-	return slot0:registComponent(FightWorkComponent):playIdSequeueWork(slot1, slot2, ...)
+function slot0.com_playAutoWork(slot0, slot1, ...)
+	return slot0:registComponent(FightSequenceAutoWorkComponent):playAutoWork(slot1, ...)
+end
+
+function slot0.com_registAutoWork(slot0, slot1, ...)
+	return slot0:registComponent(FightSequenceAutoWorkComponent):registAutoWork(slot1, ...)
 end
 
 function slot0.com_releaseAllWork(slot0)
 	slot0:releaseComponent(FightWorkComponent)
+	slot0:releaseComponent(FightSequenceAutoWorkComponent)
 end
 
-function slot0.com_registObjItemList(slot0, slot1, slot2, slot3, slot4)
-	return slot0:registComponent(FightObjItemListComponent):registObjItemList(slot1, slot2, slot3, slot4)
+function slot0.com_registObjItemList(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightObjItemListComponent):registObjItemList(slot1, slot2, slot3)
 end
 
-function slot0.com_registViewItemList(slot0, slot1, slot2, slot3, slot4)
-	return slot0:registComponent(FightObjItemListComponent):registViewItemList(slot1, slot2, slot3, slot4)
+function slot0.com_registViewItemList(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightObjItemListComponent):registViewItemList(slot1, slot2, slot3)
 end
 
 function slot0.com_cancelTimer(slot0, slot1)
@@ -139,6 +148,14 @@ function slot0.com_cancelEvent(slot0, slot1, slot2, slot3)
 	slot0:registComponent(FightEventComponent):cancelEvent(slot1, slot2, slot3, slot0)
 end
 
+function slot0.com_lockEvent(slot0)
+	slot0:registComponent(FightEventComponent):lockEvent()
+end
+
+function slot0.com_unlockEvent(slot0)
+	slot0:registComponent(FightEventComponent):unlockEvent()
+end
+
 function slot0.com_sendFightEvent(slot0, slot1, ...)
 	FightController.instance:dispatchEvent(slot1, ...)
 end
@@ -157,6 +174,10 @@ end
 
 function slot0.com_sendMsg(slot0, slot1, ...)
 	return FightMsgMgr.sendMsg(slot1, ...)
+end
+
+function slot0.com_replyMsg(slot0, slot1, slot2)
+	return FightMsgMgr.replyMsg(slot1, slot2)
 end
 
 function slot0.com_lockMsg(slot0)
@@ -197,6 +218,50 @@ end
 
 function slot0.com_removeClick(slot0, slot1)
 	return slot0:registComponent(FightClickComponent):removeClick(slot1)
+end
+
+function slot0.com_registDragBegin(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightDragComponent):registDragBegin(slot1, slot2, slot0, slot3)
+end
+
+function slot0.com_registDrag(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightDragComponent):registDrag(slot1, slot2, slot0, slot3)
+end
+
+function slot0.com_registDragEnd(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightDragComponent):registDragEnd(slot1, slot2, slot0, slot3)
+end
+
+function slot0.com_registLongPress(slot0, slot1, slot2, slot3)
+	return slot0:registComponent(FightLongPressComponent):registLongPress(slot1, slot2, slot0, slot3)
+end
+
+function slot0.com_registHover(slot0, slot1, slot2)
+	return slot0:registComponent(FightLongPressComponent):registHover(slot1, slot2, slot0)
+end
+
+function slot0.com_registUpdate(slot0, slot1, slot2)
+	return slot0:registComponent(FightUpdateComponent):registUpdate(slot1, slot0, slot2)
+end
+
+function slot0.com_cancelUpdate(slot0, slot1)
+	return slot0:registComponent(FightUpdateComponent):cancelUpdate(slot1)
+end
+
+function slot0.com_playTween(slot0, slot1, ...)
+	return slot0:registComponent(FightTweenComponent):playTween(slot1, ...)
+end
+
+function slot0.com_killTween(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	return slot0:registComponent(FightTweenComponent):killTween(slot1)
+end
+
+function slot0.com_KillTweenByObj(slot0, slot1)
+	return slot0:registComponent(FightTweenComponent):KillTweenByObj(slot1)
 end
 
 return slot0

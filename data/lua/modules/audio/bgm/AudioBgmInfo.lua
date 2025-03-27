@@ -30,6 +30,7 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.WeekWalk, 0, 0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Summon, 0, 0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Fight, 0, 0)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4MusicFree, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivityVideoView, 0, 0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Story, 0, 0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_2Main, AudioEnum.Bgm.ActivityMainBgm1_2, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
@@ -60,7 +61,7 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Act_QuNiang, AudioEnum.Bgm.role_activity_quniang, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Act_GeTian, AudioEnum.Bgm.role_activity_getian, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Cachot, AudioEnum.Bgm.CachotMainScene, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
-	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_7Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_7Main, AudioEnum.Bgm.Act1_7DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_8Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_8Dungeon, AudioEnum.Bgm.Act1_8DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
@@ -84,6 +85,10 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Tower, AudioEnum.TowerBgm.play_replay_music_towermain_2_3, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.LinkageActivity_FullView, AudioEnum.Bgm.ui_shenghuo_discovery_amb_20234001, AudioEnum.Bgm.stop_ui_bus_2000048)
 	slot0:_addBgmData(AudioBgmEnum.Layer.V2a3_WarmUp, AudioEnum.Bgm.play_ui_shenghuo_preheat_amb_20234003, AudioEnum.Bgm.stop_ui_bus_2000048)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4Act178Game, AudioEnum.Act178.bgm_game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi, AudioEnum.WuErLiXi.bgm_wuerliximap, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXiGame, AudioEnum.WuErLiXi.bgm_wuerliximapgame, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function slot0._initBgmUsage(slot0)
@@ -337,7 +342,8 @@ function slot0._initBgmUsage(slot0)
 	slot0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_7Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity1_7EnterView
+		ViewName.VersionActivity1_7EnterView,
+		ViewName.Permanent1_7EnterView
 	}, nil, , true)
 	slot0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_8Main
@@ -456,6 +462,32 @@ function slot0._initBgmUsage(slot0)
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.V2a3_WarmUp
 	})
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_4MusicFree
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_4MusicFreeView,
+		ViewName.VersionActivity2_4MusicBeatView
+	})
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_4Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_4EnterView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_4Act178Game
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.PinballGameView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_4WuErLiXiGame
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.WuErLiXiGameView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.WuErLiXiLevelView
+	}, nil, , true)
 end
 
 function slot0._initBgmBind(slot0)

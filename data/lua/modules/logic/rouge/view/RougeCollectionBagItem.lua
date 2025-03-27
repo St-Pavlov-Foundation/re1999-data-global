@@ -120,7 +120,7 @@ function slot0.refreshCollectionDesc(slot0)
 		return
 	end
 
-	slot0._txtdesc.text = RougeCollectionHelper.getCollectionEffectStrById(slot0._mo.id)
+	RougeCollectionDescHelper.setCollectionDescInfos4(slot0._mo.id, slot0._txtdesc, RougeCollectionDescHelper.getShowDescTypesWithoutText(), RougeCollectionDescHelper.getExtraParams_KeepAllActive())
 end
 
 function slot0.setItemVisible(slot0, slot1)

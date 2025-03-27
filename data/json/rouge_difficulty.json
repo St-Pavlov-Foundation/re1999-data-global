@@ -10,6 +10,7 @@
     "scoreReward": 100,
     "startView": "",
     "initCollections": "9300011",
+    "initEffects": "50003",
     "desc": "language_10043536",
     "balanceLevel": "121#10#60"
   },
@@ -24,6 +25,7 @@
     "scoreReward": 120,
     "startView": "",
     "initCollections": "9300011#9300021",
+    "initEffects": "50003",
     "desc": "language_10040309",
     "balanceLevel": "121#10#60"
   },
@@ -38,6 +40,7 @@
     "scoreReward": 130,
     "startView": "",
     "initCollections": "9300011#9300021#9300031",
+    "initEffects": "50003",
     "desc": "language_10040310",
     "balanceLevel": "121#10#60"
   },
@@ -52,6 +55,7 @@
     "scoreReward": 140,
     "startView": "",
     "initCollections": "9300041#9300021#9300031",
+    "initEffects": "50003",
     "desc": "language_10043543",
     "balanceLevel": "121#10#60"
   },
@@ -66,6 +70,7 @@
     "scoreReward": 145,
     "startView": "",
     "initCollections": "9300041#9300021#9300031",
+    "initEffects": "50003",
     "desc": "language_10043545",
     "balanceLevel": "121#10#60"
   },
@@ -80,6 +85,7 @@
     "scoreReward": 150,
     "startView": "",
     "initCollections": "9300041#9300021#9300031#9300061",
+    "initEffects": "50003",
     "desc": "language_10043549",
     "balanceLevel": ""
   },
@@ -94,6 +100,7 @@
     "scoreReward": 155,
     "startView": "",
     "initCollections": "9300041#9300021#9300031#9300061#9300071",
+    "initEffects": "50003",
     "desc": "language_10040311",
     "balanceLevel": ""
   },
@@ -108,6 +115,7 @@
     "scoreReward": 160,
     "startView": "power#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081",
+    "initEffects": "50003",
     "desc": "language_10043556",
     "balanceLevel": ""
   },
@@ -122,6 +130,7 @@
     "scoreReward": 165,
     "startView": "power#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091",
+    "initEffects": "50003",
     "desc": "language_10040312",
     "balanceLevel": ""
   },
@@ -136,6 +145,7 @@
     "scoreReward": 170,
     "startView": "power#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091",
+    "initEffects": "50003",
     "desc": "language_10043561",
     "balanceLevel": ""
   },
@@ -150,6 +160,7 @@
     "scoreReward": 175,
     "startView": "power#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111",
+    "initEffects": "50003",
     "desc": "language_10040313",
     "balanceLevel": ""
   },
@@ -164,6 +175,7 @@
     "scoreReward": 175,
     "startView": "power#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121",
+    "initEffects": "50003",
     "desc": "language_10040314",
     "balanceLevel": ""
   },
@@ -178,6 +190,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131",
+    "initEffects": "50003",
     "desc": "language_10043571",
     "balanceLevel": ""
   },
@@ -192,6 +205,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141",
+    "initEffects": "50003",
     "desc": "language_10040315",
     "balanceLevel": ""
   },
@@ -206,6 +220,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141",
+    "initEffects": "50003",
     "desc": "language_10043577",
     "balanceLevel": ""
   },
@@ -220,6 +235,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141#9300161",
+    "initEffects": "50003",
     "desc": "language_10040316",
     "balanceLevel": ""
   },
@@ -234,6 +250,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141#9300161#9300171",
+    "initEffects": "50003",
     "desc": "language_10043584",
     "balanceLevel": ""
   },
@@ -248,6 +265,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141#9300161#9300171#9300181",
+    "initEffects": "50003",
     "desc": "language_10043588",
     "balanceLevel": ""
   },
@@ -262,6 +280,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141#9300161#9300171#9300181#9300191",
+    "initEffects": "50003",
     "desc": "language_10043592",
     "balanceLevel": ""
   },
@@ -276,6 +295,7 @@
     "scoreReward": 175,
     "startView": "power#-15|powerLimit#-15",
     "initCollections": "9300041#9300021#9300031#9300061#9300071#9300081#9300091#9300111#9300121#9300131#9300141#9300161#9300171#9300181#9300191#9300201",
+    "initEffects": "50003",
     "desc": "language_10040318",
     "balanceLevel": ""
   }

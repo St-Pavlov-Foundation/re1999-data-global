@@ -15,7 +15,9 @@
     "bpviewicon": "full/img_bp_bg#img_pifu_xiali#img_poster#img_bp_shangcheng_stamp#icon_fdj_hei",
     "bpviewpos": "3C2412#C66030#000000#-180.9#-200.5#-664.0176#287.4#1#1#-72.1#57#1#1#1108#1302",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 2,
@@ -33,7 +35,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 3,
@@ -51,7 +55,9 @@
     "bpviewicon": "full/1_3/img_bp_zhujiemian_bg#1_3/bp_clothing_2#1_3/img_bp_poster#1_3/img_bp_tx#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 4,
@@ -69,7 +75,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 5,
@@ -87,7 +95,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 6,
@@ -105,7 +115,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 7,
@@ -123,7 +135,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 8,
@@ -141,7 +155,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 9,
@@ -159,7 +175,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 10,
@@ -177,7 +195,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 11,
@@ -195,7 +215,9 @@
     "bpviewicon": "full/1_2/img_bp_zhujiemian_bg#1_2/img_bp_zhujiemian_pifu_main#1_2/img_bp_rukou_poster#1_2/img_bp_shangcheng_stamp_1_2#icon_fdj",
     "bpviewpos": "B3B8B2#A6E6A2#D4C9A0#-208.4#205#-1073.018#167.4#0.86#0.86#63#0#1#1#2592#1312.453",
     "showBonus": "",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 12,
@@ -213,7 +235,9 @@
     "bpviewicon": "",
     "bpviewpos": "",
     "showBonus": "5#308203#1#1|1#140001#5|1#481010#2|9#1000#1|2#21#90|1#120012#25|1#481007#9|1#481006#6|1#120011#20|9#1003#150|2#3#225000|2#5#375000",
-    "isSp": true
+    "isSp": true,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   },
   {
     "bpId": 13,
@@ -231,6 +255,28 @@
     "bpviewicon": "",
     "bpviewpos": "",
     "showBonus": "5#304304#1#1|1#140001#5|1#481010#2|9#1000#1|1#620103#3|1#620102#40|2#21#90|1#120012#25|1#481007#9|1#481006#6|1#120011#20|9#1003#150|2#3#225000|2#5#375000",
-    "isSp": false
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
+  },
+  {
+    "bpId": 14,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#171403#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10064249",
+    "bpSkinNametxt": "language_10064865",
+    "bpSkinEnNametxt": "Midnight<br>Mistmancer",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "5#309503#1#1|1#140001#5|1#481010#2|9#1000#1|1#620103#3|1#620102#40|2#21#90|1#120012#25|1#481007#9|1#481006#6|1#120011#20|9#1003#150|2#3#225000|2#5#375000",
+    "isSp": false,
+    "weekLimitTimes": 500,
+    "expUpShow": true
   }
 ]

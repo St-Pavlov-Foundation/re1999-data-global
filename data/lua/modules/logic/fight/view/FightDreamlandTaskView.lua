@@ -36,7 +36,7 @@ function slot0._refreshDes(slot0)
 	gohelper.setActive(slot0._goTask, slot0._taskConfig)
 
 	if slot0._taskConfig then
-		slot1 = FightModel.instance:getIndicatorNum(slot0._taskConfig.indicator)
+		slot1 = FightDataHelper.fieldMgr:getIndicatorNum(slot0._taskConfig.indicator)
 		slot2 = slot0._taskConfig.num
 		slot0._txtTask.text = slot0._taskConfig.desc .. string.format(" <color=#cc7f56>(%d/%d)</color>", slot1, slot2)
 

@@ -66,7 +66,7 @@ function slot0._onLoaded(slot0, slot1)
 	slot0._animComp.runtimeAnimatorController = slot0._animatorInst
 	slot0._animComp.speed = FightModel.instance:getSpeed()
 
-	slot0._animComp:SetBool("isRight", slot0._attacker and slot0._attacker:isMySide())
+	slot0._animComp:SetBool("isRight", slot0._attacker and slot0._attacker:isMySide() or false)
 
 	if slot0._attacker and slot0._attacker:getMO() and slot0._attacker:getMO().position then
 		slot0._animComp:SetInteger("pos", slot15)

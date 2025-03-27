@@ -245,11 +245,11 @@ function slot0.ruleDescWindowShow(slot0, slot1, slot2, slot3)
 	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot1, "tag"), "wz_" .. slot7)
 	SkillHelper.addHyperLinkClick(slot6)
 
-	slot6.text = string.format("<color=%s>[%s]</color>%s", ({
+	slot6.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot7), SkillHelper.buildDesc(slot9.desc, nil, "#6680bd"), ({
 		"#6680bd",
 		"#d05b4c",
 		"#c7b376"
-	})[slot7], luaLang("dungeon_add_rule_target_" .. slot7), SkillHelper.buildDesc(slot9.desc, nil, "#6680bd"))
+	})[slot7])
 end
 
 function slot0.refreshHeroList(slot0)

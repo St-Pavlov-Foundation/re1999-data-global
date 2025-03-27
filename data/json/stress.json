@@ -8148,5 +8148,415 @@
     "type": "meltdown",
     "pressParam": "1#1",
     "rule": "6230002"
+  },
+  {
+    "id": 9241004,
+    "identity": 9241004,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（小怪关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241004"
+  },
+  {
+    "id": 9241006,
+    "identity": 9241006,
+    "desc": "",
+    "title": "2.4主活动-躁动的旅客（小怪关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241006"
+  },
+  {
+    "id": 9241015,
+    "identity": 9241015,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（精英关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241015"
+  },
+  {
+    "id": 9241016,
+    "identity": 9241016,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（精英关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241016"
+  },
+  {
+    "id": 9241017,
+    "identity": 9241017,
+    "desc": "",
+    "title": "2.4主活动-躁动的旅客（精英关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241017"
+  },
+  {
+    "id": 9241018,
+    "identity": 9241018,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（boss关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241018"
+  },
+  {
+    "id": 9241115,
+    "identity": 9241115,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（困难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241115"
+  },
+  {
+    "id": 9241116,
+    "identity": 9241116,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（困难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241116"
+  },
+  {
+    "id": 9241117,
+    "identity": 9241117,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（困难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241117"
+  },
+  {
+    "id": 9241118,
+    "identity": 9241118,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（困难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241118"
+  },
+  {
+    "id": 9241215,
+    "identity": 9241215,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（艰难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241215"
+  },
+  {
+    "id": 9241216,
+    "identity": 9241216,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（艰难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241216"
+  },
+  {
+    "id": 9241217,
+    "identity": 9241217,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（艰难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241217"
+  },
+  {
+    "id": 9241218,
+    "identity": 9241218,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（艰难难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241218"
+  },
+  {
+    "id": 9241304,
+    "identity": 9241304,
+    "desc": "",
+    "title": "小怪-努库泰澳人（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241304"
+  },
+  {
+    "id": 9241306,
+    "identity": 9241306,
+    "desc": "",
+    "title": "小怪-躁动的旅客（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241306"
+  },
+  {
+    "id": 9241315,
+    "identity": 9241315,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241315"
+  },
+  {
+    "id": 9241316,
+    "identity": 9241316,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241316"
+  },
+  {
+    "id": 9241317,
+    "identity": 9241317,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241317"
+  },
+  {
+    "id": 9241318,
+    "identity": 9241318,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（探索难度）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9241318"
+  },
+  {
+    "id": 9241401,
+    "identity": 9241004,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（小怪关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241402,
+    "identity": 9241005,
+    "desc": "",
+    "title": "2.4主活动-重塑努库泰澳人（小怪关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "521200001"
+  },
+  {
+    "id": 9241403,
+    "identity": 9241006,
+    "desc": "",
+    "title": "2.4主活动-躁动的旅客（小怪关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241404,
+    "identity": 9241015,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（精英关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241405,
+    "identity": 9241016,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（精英关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241406,
+    "identity": 9241017,
+    "desc": "",
+    "title": "2.4主活动-躁动的旅客（精英关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241407,
+    "identity": 9241018,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（boss关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241408,
+    "identity": 9241115,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（困难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241409,
+    "identity": 9241116,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（困难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241410,
+    "identity": 9241117,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（困难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241411,
+    "identity": 9241118,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（困难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241412,
+    "identity": 9241215,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（艰难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241413,
+    "identity": 9241216,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（艰难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241414,
+    "identity": 9241217,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（艰难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241415,
+    "identity": 9241218,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（艰难难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241416,
+    "identity": 9241304,
+    "desc": "",
+    "title": "小怪-努库泰澳人（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241417,
+    "identity": 9241306,
+    "desc": "",
+    "title": "小怪-躁动的旅客（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241418,
+    "identity": 9241315,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关1-特殊应激）（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241419,
+    "identity": 9241316,
+    "desc": "",
+    "title": "小怪-努库泰澳人（精英关2-特殊应激）（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241420,
+    "identity": 9241317,
+    "desc": "",
+    "title": "小怪-躁动的旅客（精英关2-特殊应激）（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
+  },
+  {
+    "id": 9241421,
+    "identity": 9241318,
+    "desc": "",
+    "title": "小怪-努库泰澳人（boss关-特殊应激）（探索难度）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
   }
 ]

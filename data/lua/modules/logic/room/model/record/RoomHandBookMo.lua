@@ -73,6 +73,10 @@ function slot0.checkShowMutate(slot0)
 end
 
 function slot0.checkShowSpeicalSkin(slot0)
+	if not slot0._mo then
+		return false
+	end
+
 	return slot0._mo.UseSpecialSkin
 end
 

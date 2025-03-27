@@ -1,0 +1,482 @@
+[
+  {
+    "id": 8170001,
+    "effectId": 7,
+    "condition": "language_10064388",
+    "desc": "language_10063338",
+    "conditionSimply": "language_10064388",
+    "descSimply": "language_10064389"
+  },
+  {
+    "id": 8170001,
+    "effectId": 8,
+    "condition": "language_10064390",
+    "desc": "language_10063339",
+    "conditionSimply": "language_10064390",
+    "descSimply": "language_10064391"
+  },
+  {
+    "id": 8170002,
+    "effectId": 7,
+    "condition": "language_10064392",
+    "desc": "language_10063341",
+    "conditionSimply": "language_10064392",
+    "descSimply": "language_10064393"
+  },
+  {
+    "id": 8170002,
+    "effectId": 8,
+    "condition": "language_10064394",
+    "desc": "language_10063342",
+    "conditionSimply": "language_10064394",
+    "descSimply": "language_10063342"
+  },
+  {
+    "id": 8170003,
+    "effectId": 7,
+    "condition": "language_10064395",
+    "desc": "language_10063344",
+    "conditionSimply": "language_10064395",
+    "descSimply": "language_10064396"
+  },
+  {
+    "id": 8170003,
+    "effectId": 8,
+    "condition": "language_10064397",
+    "desc": "language_10062594",
+    "conditionSimply": "language_10064397",
+    "descSimply": "language_10064398"
+  },
+  {
+    "id": 8170004,
+    "effectId": 7,
+    "condition": "language_10064399",
+    "desc": "language_10063346",
+    "conditionSimply": "language_10064399",
+    "descSimply": "language_10064400"
+  },
+  {
+    "id": 8170004,
+    "effectId": 8,
+    "condition": "language_10064401",
+    "desc": "language_10064402",
+    "conditionSimply": "language_10064401",
+    "descSimply": "language_10064403"
+  },
+  {
+    "id": 8170005,
+    "effectId": 7,
+    "condition": "language_10064404",
+    "desc": "language_10063349",
+    "conditionSimply": "language_10064404",
+    "descSimply": "language_10064405"
+  },
+  {
+    "id": 8170005,
+    "effectId": 8,
+    "condition": "language_10064406",
+    "desc": "language_10063350",
+    "conditionSimply": "language_10064406",
+    "descSimply": "language_10064407"
+  },
+  {
+    "id": 8170006,
+    "effectId": 7,
+    "condition": "language_10064408",
+    "desc": "language_10063352",
+    "conditionSimply": "language_10064408",
+    "descSimply": "language_10064409"
+  },
+  {
+    "id": 8170006,
+    "effectId": 8,
+    "condition": "language_10064410",
+    "desc": "language_10063353",
+    "conditionSimply": "language_10064410",
+    "descSimply": "language_10064411"
+  },
+  {
+    "id": 8170007,
+    "effectId": 7,
+    "condition": "language_10064412",
+    "desc": "language_10063355",
+    "conditionSimply": "language_10064412",
+    "descSimply": "language_10064413"
+  },
+  {
+    "id": 8170007,
+    "effectId": 8,
+    "condition": "language_10064414",
+    "desc": "language_10063356",
+    "conditionSimply": "language_10064414",
+    "descSimply": "language_10064415"
+  },
+  {
+    "id": 8170008,
+    "effectId": 7,
+    "condition": "language_10064416",
+    "desc": "language_10063358",
+    "conditionSimply": "language_10064416",
+    "descSimply": "language_10063358"
+  },
+  {
+    "id": 8170008,
+    "effectId": 8,
+    "condition": "language_10064417",
+    "desc": "language_10063359",
+    "conditionSimply": "language_10064417",
+    "descSimply": "language_10064418"
+  },
+  {
+    "id": 8170009,
+    "effectId": 7,
+    "condition": "language_10064419",
+    "desc": "language_10063361",
+    "conditionSimply": "language_10064419",
+    "descSimply": "language_10064420"
+  },
+  {
+    "id": 8170009,
+    "effectId": 8,
+    "condition": "language_10064421",
+    "desc": "language_10063362",
+    "conditionSimply": "language_10064421",
+    "descSimply": "language_10064422"
+  },
+  {
+    "id": 8170010,
+    "effectId": 11,
+    "condition": "language_10064423",
+    "desc": "language_10064424",
+    "conditionSimply": "language_10064423",
+    "descSimply": "language_10064424"
+  },
+  {
+    "id": 8170010,
+    "effectId": 12,
+    "condition": "language_10064425",
+    "desc": "language_10064426",
+    "conditionSimply": "language_10064425",
+    "descSimply": "language_10064427"
+  },
+  {
+    "id": 8170011,
+    "effectId": 7,
+    "condition": "language_10064428",
+    "desc": "language_10063367",
+    "conditionSimply": "language_10064428",
+    "descSimply": "language_10064429"
+  },
+  {
+    "id": 8170011,
+    "effectId": 8,
+    "condition": "language_10064430",
+    "desc": "language_10063368",
+    "conditionSimply": "language_10064430",
+    "descSimply": "language_10064431"
+  },
+  {
+    "id": 8170012,
+    "effectId": 7,
+    "condition": "language_10064432",
+    "desc": "language_10063370",
+    "conditionSimply": "language_10064432",
+    "descSimply": "language_10064433"
+  },
+  {
+    "id": 8170012,
+    "effectId": 8,
+    "condition": "language_10064434",
+    "desc": "language_10063371",
+    "conditionSimply": "language_10064434",
+    "descSimply": "language_10064435"
+  },
+  {
+    "id": 8170013,
+    "effectId": 7,
+    "condition": "language_10064436",
+    "desc": "language_10064437",
+    "conditionSimply": "language_10064436",
+    "descSimply": "language_10064437"
+  },
+  {
+    "id": 8170013,
+    "effectId": 8,
+    "condition": "language_10064438",
+    "desc": "language_10063374",
+    "conditionSimply": "language_10064438",
+    "descSimply": "language_10063374"
+  },
+  {
+    "id": 8170014,
+    "effectId": 10,
+    "condition": "language_10064439",
+    "desc": "language_10063376",
+    "conditionSimply": "language_10064439",
+    "descSimply": "language_10064440"
+  },
+  {
+    "id": 8170014,
+    "effectId": 11,
+    "condition": "language_10064441",
+    "desc": "language_10064442",
+    "conditionSimply": "language_10064441",
+    "descSimply": "language_10064443"
+  },
+  {
+    "id": 8170015,
+    "effectId": 7,
+    "condition": "language_10064444",
+    "desc": "language_10063379",
+    "conditionSimply": "language_10064444",
+    "descSimply": "language_10063379"
+  },
+  {
+    "id": 8170015,
+    "effectId": 8,
+    "condition": "language_10064445",
+    "desc": "language_10063380",
+    "conditionSimply": "language_10064445",
+    "descSimply": "language_10063380"
+  },
+  {
+    "id": 8170016,
+    "effectId": 7,
+    "condition": "language_10064446",
+    "desc": "language_10064447",
+    "conditionSimply": "language_10064446",
+    "descSimply": "language_10064448"
+  },
+  {
+    "id": 8170016,
+    "effectId": 8,
+    "condition": "language_10064449",
+    "desc": "language_10064450",
+    "conditionSimply": "language_10064449",
+    "descSimply": "language_10064451"
+  },
+  {
+    "id": 8170017,
+    "effectId": 7,
+    "condition": "language_10064452",
+    "desc": "language_10063385",
+    "conditionSimply": "language_10064452",
+    "descSimply": "language_10064453"
+  },
+  {
+    "id": 8170017,
+    "effectId": 8,
+    "condition": "language_10064454",
+    "desc": "language_10063386",
+    "conditionSimply": "language_10064454",
+    "descSimply": "language_10064455"
+  },
+  {
+    "id": 8170018,
+    "effectId": 7,
+    "condition": "language_10064456",
+    "desc": "language_10063388",
+    "conditionSimply": "language_10064456",
+    "descSimply": "language_10064457"
+  },
+  {
+    "id": 8170018,
+    "effectId": 8,
+    "condition": "language_10064458",
+    "desc": "language_10063389",
+    "conditionSimply": "language_10064458",
+    "descSimply": "language_10064459"
+  },
+  {
+    "id": 8170019,
+    "effectId": 7,
+    "condition": "language_10064460",
+    "desc": "language_10063391",
+    "conditionSimply": "language_10064460",
+    "descSimply": "language_10064461"
+  },
+  {
+    "id": 8170019,
+    "effectId": 8,
+    "condition": "language_10064462",
+    "desc": "language_10063392",
+    "conditionSimply": "language_10064462",
+    "descSimply": "language_10064463"
+  },
+  {
+    "id": 8170020,
+    "effectId": 7,
+    "condition": "language_10064464",
+    "desc": "language_10063394",
+    "conditionSimply": "language_10064464",
+    "descSimply": "language_10064465"
+  },
+  {
+    "id": 8170020,
+    "effectId": 8,
+    "condition": "language_10064466",
+    "desc": "language_10063395",
+    "conditionSimply": "language_10064466",
+    "descSimply": "language_10064467"
+  },
+  {
+    "id": 8170021,
+    "effectId": 7,
+    "condition": "language_10064468",
+    "desc": "language_10064469",
+    "conditionSimply": "language_10064468",
+    "descSimply": "language_10064470"
+  },
+  {
+    "id": 8170021,
+    "effectId": 8,
+    "condition": "language_10064471",
+    "desc": "language_10063398",
+    "conditionSimply": "language_10064471",
+    "descSimply": "language_10064472"
+  },
+  {
+    "id": 8170022,
+    "effectId": 7,
+    "condition": "language_10064473",
+    "desc": "language_10063400",
+    "conditionSimply": "language_10064473",
+    "descSimply": "language_10063400"
+  },
+  {
+    "id": 8170022,
+    "effectId": 8,
+    "condition": "language_10064474",
+    "desc": "language_10063401",
+    "conditionSimply": "language_10064474",
+    "descSimply": "language_10064475"
+  },
+  {
+    "id": 8170023,
+    "effectId": 7,
+    "condition": "language_10064476",
+    "desc": "language_10063403",
+    "conditionSimply": "language_10064476",
+    "descSimply": "language_10063403"
+  },
+  {
+    "id": 8170023,
+    "effectId": 8,
+    "condition": "language_10064477",
+    "desc": "language_10063404",
+    "conditionSimply": "language_10064477",
+    "descSimply": "language_10064478"
+  },
+  {
+    "id": 8170024,
+    "effectId": 7,
+    "condition": "language_10064479",
+    "desc": "language_10064480",
+    "conditionSimply": "language_10064479",
+    "descSimply": "language_10064481"
+  },
+  {
+    "id": 8170024,
+    "effectId": 8,
+    "condition": "language_10064482",
+    "desc": "language_10064483",
+    "conditionSimply": "language_10064482",
+    "descSimply": "language_10064484"
+  },
+  {
+    "id": 8170025,
+    "effectId": 7,
+    "condition": "language_10064485",
+    "desc": "language_10064486",
+    "conditionSimply": "language_10064485",
+    "descSimply": "language_10064487"
+  },
+  {
+    "id": 8170025,
+    "effectId": 8,
+    "condition": "language_10064488",
+    "desc": "language_10064489",
+    "conditionSimply": "language_10064488",
+    "descSimply": "language_10064490"
+  },
+  {
+    "id": 8170026,
+    "effectId": 7,
+    "condition": "language_10064491",
+    "desc": "language_10063412",
+    "conditionSimply": "language_10064491",
+    "descSimply": "language_10064492"
+  },
+  {
+    "id": 8170026,
+    "effectId": 8,
+    "condition": "language_10064493",
+    "desc": "language_10063413",
+    "conditionSimply": "language_10064493",
+    "descSimply": "language_10064494"
+  },
+  {
+    "id": 8170027,
+    "effectId": 7,
+    "condition": "language_10064495",
+    "desc": "language_10064496",
+    "conditionSimply": "language_10064495",
+    "descSimply": "language_10064497"
+  },
+  {
+    "id": 8170027,
+    "effectId": 8,
+    "condition": "language_10064498",
+    "desc": "language_10064499",
+    "conditionSimply": "language_10064498",
+    "descSimply": "language_10063416"
+  },
+  {
+    "id": 8170028,
+    "effectId": 7,
+    "condition": "language_10064500",
+    "desc": "language_10063418",
+    "conditionSimply": "language_10064500",
+    "descSimply": "language_10063418"
+  },
+  {
+    "id": 8170028,
+    "effectId": 8,
+    "condition": "language_10064501",
+    "desc": "language_10063419",
+    "conditionSimply": "language_10064501",
+    "descSimply": "language_10063419"
+  },
+  {
+    "id": 8170029,
+    "effectId": 7,
+    "condition": "language_10064502",
+    "desc": "language_10063421",
+    "conditionSimply": "language_10064502",
+    "descSimply": "language_10064503"
+  },
+  {
+    "id": 8170029,
+    "effectId": 8,
+    "condition": "language_10064504",
+    "desc": "language_10064505",
+    "conditionSimply": "language_10064504",
+    "descSimply": "language_10064506"
+  },
+  {
+    "id": 8170030,
+    "effectId": 7,
+    "condition": "language_10064507",
+    "desc": "language_10064508",
+    "conditionSimply": "language_10064507",
+    "descSimply": "language_10064509"
+  },
+  {
+    "id": 8170030,
+    "effectId": 8,
+    "condition": "language_10064510",
+    "desc": "language_10064511",
+    "conditionSimply": "language_10064510",
+    "descSimply": "language_10064512"
+  }
+]

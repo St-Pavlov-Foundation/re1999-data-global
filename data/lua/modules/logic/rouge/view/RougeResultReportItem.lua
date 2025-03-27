@@ -151,10 +151,9 @@ function slot0.refreshStyleInfo(slot0, slot1)
 end
 
 function slot0.refreshTitle(slot0, slot1)
-	slot3 = slot1:getVersions() and slot2[1]
 	slot4 = ""
 
-	slot0._simagetitle:LoadImage((not slot3 or ResUrl.getRougeDLCLangImage("logo_dlc_" .. slot3)) and uv0.DefaultTitleImageUrl)
+	slot0._simagetitle:LoadImage((not string.nilorempty(RougeDLCHelper.versionListToString(slot1:getVersions())) or uv0.DefaultTitleImageUrl) and ResUrl.getRougeDLCLangImage("logo_dlc_" .. slot3))
 end
 
 function slot0.onSelect(slot0, slot1)

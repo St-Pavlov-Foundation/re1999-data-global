@@ -1,6 +1,6 @@
 module("modules.logic.rouge.common.comp.RougeCollectionComp", package.seeall)
 
-slot0 = class("RougeCollectionComp", UserDataDispose)
+slot0 = class("RougeCollectionComp", RougeLuaCompBase)
 
 function slot0.Get(slot0)
 	slot1 = uv0.New()
@@ -12,6 +12,7 @@ end
 
 function slot0.init(slot0, slot1)
 	slot0:__onInit()
+	uv0.super.init(slot0, slot1)
 
 	slot0.go = slot1
 	slot0._gostate1 = gohelper.findChild(slot0.go, "Root/#go_state1")
@@ -44,6 +45,7 @@ function slot0.onOpen(slot0, slot1)
 
 	slot0._slotComp:onUpdateMO(slot3.col, slot3.row, RougeCollectionModel.instance:getSlotAreaCollection())
 	slot0:switchEntryState(slot1)
+	slot0:tickUpdateDLCs()
 end
 
 function slot0.onClose(slot0)

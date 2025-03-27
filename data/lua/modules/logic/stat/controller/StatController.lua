@@ -21,6 +21,7 @@ function slot0.sendBaseProperties(slot0)
 end
 
 function slot0.onLogin(slot0)
+	slot0:sendBaseProperties()
 	SDKDataTrackMgr.instance:roleLogin(tostring(PlayerModel.instance:getMyUserId()))
 
 	if not string.nilorempty(PlayerModel.instance:getPlayinfo().name) then
@@ -33,10 +34,6 @@ function slot0.setUserProperties(slot0, slot1)
 end
 
 function slot0.track(slot0, slot1, slot2)
-	if isDebugBuild then
-		logNormal("track event : eventName : " .. slot1 .. ", properties : " .. cjson.encode(slot2))
-	end
-
 	slot2 = slot2 or {}
 
 	for slot7, slot8 in pairs(StatModel.instance:getEventCommonProperties()) do

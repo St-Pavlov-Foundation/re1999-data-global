@@ -40,7 +40,13 @@ function slot0.onUpdateMO(slot0, slot1)
 	slot0._itemIcon:setMOValue(slot2, slot3, slot4, nil, true)
 	slot0._itemIcon:hideExpEquipState()
 	slot0._itemIcon:isShowName(false)
-	slot0._itemIcon:isShowEquipAndItemCount(true)
+
+	if tonumber(slot2) == MaterialEnum.MaterialType.HeroSkin then
+		slot0._itemIcon:isShowEquipAndItemCount(false)
+	else
+		slot0._itemIcon:isShowEquipAndItemCount(true)
+	end
+
 	slot0._itemIcon:setCountFontSize(36)
 	slot0._itemIcon:hideEquipLvAndBreak(true)
 	slot0._itemIcon:showEquipRefineContainer(false)

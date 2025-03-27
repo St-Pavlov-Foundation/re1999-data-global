@@ -1,0 +1,20 @@
+[
+  {
+    "id": 308003,
+    "path": "v2a4_kkny/kkny_innate2_s1",
+    "hangPoint": "special1",
+    "audio": 430800302
+  },
+  {
+    "id": 308001,
+    "path": "v1a9_kkny/kkny_innate2_s1",
+    "hangPoint": "special1",
+    "audio": 430800102
+  },
+  {
+    "id": 308002,
+    "path": "v1a9_kkny/kkny_innate2_s1",
+    "hangPoint": "special1",
+    "audio": 430800102
+  }
+]

@@ -31,7 +31,7 @@ function slot0._createAllComps(slot0)
 	slot0:_addComp("tempEntityMgr", FightSceneTempEntityMgrComp)
 	slot0:_addComp("fightStatus", FightSceneFightStatusComp)
 
-	if SLFramework.FrameworkSettings.IsEditor then
+	if isDebugBuild then
 		slot0:_addComp("fightLog", FightSceneFightLogComp)
 	end
 

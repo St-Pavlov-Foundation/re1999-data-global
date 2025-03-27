@@ -10,7 +10,7 @@ end
 function slot0.changeBgm(slot0)
 	slot2 = AudioEnum.Bgm.RougeMain
 
-	if RougeMapModel.instance:getLayerCo().bgm ~= 0 then
+	if RougeMapModel.instance:getLayerCo() and slot1.bgm ~= 0 then
 		slot2 = slot1.bgm
 	end
 

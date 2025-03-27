@@ -4,7 +4,7 @@ slot0 = class("RougeSceneMap", BaseSceneComp)
 
 function slot0.onSceneStart(slot0, slot1, slot2)
 	RougeMapModel.instance:setMapState(RougeMapEnum.MapState.LoadingMap)
-	slot0:loadMap(slot0.layerId)
+	slot0:loadMap()
 	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, slot0.onChangeMapInfo, slot0)
 	RougeMapController.instance:registerCallback(RougeMapEvent.onBeforeChangeMapInfo, slot0.onBeforeChangeMapInfo, slot0)
 end

@@ -64,7 +64,7 @@ function slot0.setLocalQuality(slot0, slot1, slot2)
 	slot10 = 300
 
 	if BootNativeUtil.isWindows() then
-		UnityEngine.QualitySettings.vSyncCount = 1
+		slot0:setVSyncCount(PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVSyncCount, 1), true)
 	else
 		UnityEngine.QualitySettings.vSyncCount = 0
 
@@ -103,6 +103,20 @@ function slot0.resetMaxFileLoadingCount(slot0)
 	slot1 = 8
 
 	GameResMgr:SetMaxFileLoadingCount(slot0.grade == ModuleEnum.Performance.Low and 8 or slot0.grade == ModuleEnum.Performance.Middle and 10 or 12)
+end
+
+function slot0.getVSyncCount(slot0)
+	return slot0.vSyncCount
+end
+
+function slot0.setVSyncCount(slot0, slot1, slot2)
+	slot0.vSyncCount = slot1
+
+	if not slot2 then
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVSyncCount, slot0.vSyncCount)
+	end
+
+	UnityEngine.QualitySettings.vSyncCount = slot0.vSyncCount
 end
 
 function slot0.setTargetFrameRate(slot0, slot1, slot2)

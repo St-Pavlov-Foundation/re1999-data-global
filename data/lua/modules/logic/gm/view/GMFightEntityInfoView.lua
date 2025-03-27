@@ -20,6 +20,8 @@ function slot0.onInitView(slot0)
 	slot0.assistBoss_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss/input")
 	slot0.assistBoss_max = gohelper.findChildText(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss/max")
 	slot0.assistBoss_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss")
+	slot0.emitterEnergy_input = gohelper.findChildTextMeshInputField(slot0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy/input")
+	slot0.emitterEnergy_go = gohelper.findChild(slot0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy")
 	slot0._icon = gohelper.findChildSingleImage(slot0.viewGO, "info/image")
 	slot0._imgIcon = gohelper.findChildImage(slot0.viewGO, "info/image")
 	slot0._imgCareer = gohelper.findChildImage(slot0.viewGO, "info/image/career")
@@ -32,6 +34,7 @@ function slot0.addEvents(slot0)
 	slot0.power_input:AddOnEndEdit(slot0._onEndEditPower, slot0)
 	slot0.stress_input:AddOnEndEdit(slot0._onEndEditStress, slot0)
 	slot0.assistBoss_input:AddOnEndEdit(slot0._onEndEditAssistBoss, slot0)
+	slot0.emitterEnergy_input:AddOnEndEdit(slot0._onEndEditEmitterEnergy, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -41,6 +44,7 @@ function slot0.removeEvents(slot0)
 	slot0.power_input:RemoveOnEndEdit()
 	slot0.stress_input:RemoveOnEndEdit()
 	slot0.assistBoss_input:RemoveOnEndEdit()
+	slot0.emitterEnergy_input:RemoveOnEndEdit()
 end
 
 function slot0.onOpen(slot0)
@@ -93,19 +97,27 @@ function slot0._onSelectHero(slot0, slot1)
 	end
 
 	gohelper.setActive(slot0.assistBoss_go, slot2)
+
+	if slot1:isASFDEmitter() then
+		-- Nothing
+	end
+
+	gohelper.setActive(slot0.emitterEnergy_go, slot5)
 	slot0._icon:UnLoadImage()
 
-	slot5 = slot1:isMonster() and lua_monster.configDict[slot1.modelId] or lua_character.configDict[slot1.modelId]
+	slot6 = slot1:isMonster() and lua_monster.configDict[slot1.modelId] or lua_character.configDict[slot1.modelId]
 
 	if slot1:isCharacter() then
 		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot1.originSkin).retangleIcon))
 	elseif slot1:isMonster() then
-		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot6.headIcon))
+		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot7.headIcon))
 
 		slot0._imgIcon.enabled = true
 	end
 
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot1.career))
+	if slot1:getCareer() ~= 0 then
+		UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot8))
+	end
 end
 
 function slot0._onEndEditHp(slot0, slot1)
@@ -214,6 +226,19 @@ function slot0._onEndEditAssistBoss(slot0, slot1)
 		FightController.instance:dispatchEvent(FightEvent.PowerChange, slot2.id, FightEnum.PowerType.AssistBoss, slot5, slot7)
 		GMRpc.instance:sendGMRequest(string.format("fightChangePower %s %s %d", slot2.id, FightEnum.PowerType.AssistBoss, slot7))
 	end
+end
+
+function slot0._onEndEditEmitterEnergy(slot0, slot1)
+	if not GMFightEntityModel.instance.entityMO:isASFDEmitter() then
+		return
+	end
+
+	if not tonumber(slot1) then
+		return
+	end
+
+	GMRpc.instance:sendGMRequest(string.format("fightChangeEmitterEnergy %s %d", slot2.id, slot3))
+	FightDataHelper.ASFDDataMgr:changeEmitterEnergy(FightEnum.EntitySide.MySide, slot3)
 end
 
 return slot0

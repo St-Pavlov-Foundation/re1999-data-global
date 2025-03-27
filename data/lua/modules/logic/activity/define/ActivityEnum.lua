@@ -56,8 +56,12 @@ slot0.Activity = {
 	V2a1_Role_SignView_Part1 = 12108,
 	RoleSignViewPart1_1_6 = 11614,
 	Activity1_6WarmUp = 11622,
+	V2a4_Role_SignView_Part1 = 12432,
 	V2a4_Blind_Box_Draw = 12434,
 	v2a2_RedLeafFestival = 12232,
+	V2a4_Role_SignView_Part2 = 12433,
+	V2a4_NewInsight = 12437,
+	V2a4_WarmUp = 12436,
 	RoomSign = 12239,
 	ActivityGiftForTheVoyage = 100002,
 	LanternFestival = 11710,
@@ -132,7 +136,7 @@ slot0.VersionActivityIdDict = {
 	Activity1_41 = 11401,
 	Activity1_6 = 11601,
 	Activity2_3 = 12301,
-	Activity2_0 = 12002,
+	Activity2_4 = 12401,
 	Activity1_3 = 11301,
 	Activity2_1 = 12101,
 	Activity1_51 = 11501,
@@ -142,10 +146,11 @@ slot0.VersionActivityIdDict = {
 	Activity1_2 = 11201,
 	Activity1_7 = 11701,
 	Activity1_52 = 11517,
+	Activity2_0 = 12002,
 	Activity1_8 = 11803
 }
 slot0.VersionActivityIdList = {
-	slot0.VersionActivityIdDict.Activity2_3
+	slot0.VersionActivityIdDict.Activity2_4
 }
 slot0.MainIcon = {
 	[slot0.VersionActivityIdDict.Activity1_1] = "rk1111",
@@ -162,7 +167,8 @@ slot0.MainIcon = {
 	[slot0.VersionActivityIdDict.Activity2_0] = "rk_2_0",
 	[slot0.VersionActivityIdDict.Activity2_1] = "rk_2_1",
 	[slot0.VersionActivityIdDict.Activity2_2] = "rk_2_2",
-	[slot0.VersionActivityIdDict.Activity2_3] = "rk_2_3"
+	[slot0.VersionActivityIdDict.Activity2_3] = "rk_2_3",
+	[slot0.VersionActivityIdDict.Activity2_4] = "rk_2_4"
 }
 slot0.ShowVersionActivityEpisode = 10103
 slot0.MainViewActivityState = {
@@ -170,6 +176,8 @@ slot0.MainViewActivityState = {
 	SeasonActivity = 3,
 	Rouge = 4,
 	DouQuQu = 6,
+	Act178 = 7,
+	WuErLiXi = 5,
 	Reactivity = 2,
 	None = 0
 }

@@ -204,6 +204,10 @@ end
 
 function slot0.resetEntity(slot0)
 	if slot0:getMO() then
+		if FightEntityDataHelper.isPlayerUid(slot1.id) then
+			return
+		end
+
 		if slot0.skill and slot0.skill:sameSkillPlaying() then
 			return
 		end
@@ -464,6 +468,10 @@ end
 
 function slot0.registClasses(slot0)
 	if not slot0:getMO() then
+		return
+	end
+
+	if FightEntityDataHelper.isPlayerUid(slot1.id) then
 		return
 	end
 

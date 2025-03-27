@@ -27,7 +27,7 @@ function slot0.buildViews(slot0)
 	return {
 		slot3,
 		ReactivityTaskView.New(),
-		TabViewGroup.New(1, "#go_BackBtns")
+		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 

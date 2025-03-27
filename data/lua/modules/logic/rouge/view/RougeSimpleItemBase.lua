@@ -2,6 +2,7 @@ module("modules.logic.rouge.view.RougeSimpleItemBase", package.seeall)
 
 slot0 = class("RougeSimpleItemBase", ListScrollCellExtend)
 slot1 = table.insert
+slot2 = ZProj.UGUIHelper
 
 function slot0.ctor(slot0, slot1)
 	uv0.super.ctor(slot0, slot1)
@@ -164,6 +165,10 @@ end
 function slot0.onDestroyView(slot0)
 	slot0:removeEventListeners()
 	uv0.super.onDestroyView(slot0)
+end
+
+function slot0.setGrayscale(slot0, slot1, slot2)
+	uv0.SetGrayscale(slot1, slot2)
 end
 
 return slot0

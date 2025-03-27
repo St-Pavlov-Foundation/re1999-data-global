@@ -45,11 +45,15 @@ function slot0._buildPlayCardFadeOut(slot0)
 
 		if slot6.fightBeginRoundOp and slot12:isAssistBossPlayCard() then
 			gohelper.setActive(gohelper.findChild(slot7, "imgEmpty"), false)
+		elseif slot12 and slot12:isPlayerFinisherSkill() then
+			gohelper.setActive(slot8, false)
 		elseif slot12 then
 			gohelper.setActive(slot8, not slot12:isPlayCard() or slot12.costActPoint >= 1)
 		else
 			gohelper.setActive(slot8, true)
 		end
+
+		slot6:playASFDCloseAnim()
 	end
 
 	return slot1
@@ -70,7 +74,9 @@ function slot0._buildPlayCardMove(slot0)
 
 		if slot9.fightBeginRoundOp and slot11:isPlayCard() and slot11.costActPoint == 0 then
 			-- Nothing
-		elseif not slot11 or not slot11:isAssistBossPlayCard() then
+		elseif slot11 and slot11:isAssistBossPlayCard() then
+			-- Nothing
+		elseif not slot11 or not slot11:isPlayerFinisherSkill() then
 			slot12, slot13 = FightViewPlayCard.calcCardPosX(slot3, slot1 + slot2)
 
 			slot4:addWork(TweenWork.New({

@@ -41,6 +41,10 @@ function slot0._editableInitView(slot0)
 
 	slot0._tagObjList = {}
 	slot0._tipsTagObjList = {}
+	slot0._itemInstTab = slot0:getUserDataTb_()
+	slot0._descParams = {
+		isAllActive = true
+	}
 	slot0._txttagitemGo = slot0._txttagitem.gameObject
 	slot0._gridGo = gohelper.findChild(slot0.viewGO, "Grid")
 	slot0._scrollViewLimitScrollCmp = gohelper.findChild(slot0.viewGO, "scroll_desc"):GetComponent(gohelper.Type_LimitedScrollRect)
@@ -79,7 +83,7 @@ function slot0.setData(slot0, slot1)
 end
 
 function slot0._refreshDesc(slot0)
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0._collectionCfgId, nil, slot0._godescContent, slot0._godescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0._collectionCfgId, nil, slot0._godescContent, slot0._itemInstTab, nil, slot0._descParams)
 end
 
 function slot0._refreshTagList(slot0, slot1)

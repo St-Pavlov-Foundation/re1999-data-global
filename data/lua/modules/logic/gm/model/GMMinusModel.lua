@@ -71,10 +71,9 @@ function slot0.addBtnGM(slot0, slot1)
 end
 
 function slot3(slot0)
-	if not ViewName["GM_" .. slot0.class.__cname] then
-		assert(false, "please add customFunc when call btnGM_AddClickListener!")
-	end
+	slot3 = "GM_" .. slot0.class.__cname
 
+	assert(ViewName[slot3], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. slot3)
 	ViewMgr.instance:openView(slot3)
 end
 

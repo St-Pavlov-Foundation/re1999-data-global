@@ -36,6 +36,7 @@ function slot0.init(slot0, slot1)
 	slot0.heroId = slot1.heroId or 0
 	slot0.status = slot1.status or FightEnum.CardInfoStatus.STATUS_NONE
 	slot0.targetUid = slot1.targetUid or "0"
+	slot0.energy = slot1.energy or 0
 end
 
 function slot0.isUniqueSkill(slot0)

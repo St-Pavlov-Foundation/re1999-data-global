@@ -64,7 +64,7 @@ function slot0.initHeroItem(slot0)
 	end
 
 	slot0._heroItem:_setTxtPos("_rankObj", 2, -37)
-	slot0._heroItem:_setTxtPos("_lvObj", 1.7, 178.6)
+	slot0._heroItem:_setTxtPos("_lvObj", 1.7, 165)
 	slot0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 153.4)
 	slot0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 124.3)
 	slot0._heroItem:_setTxtPos("_goexskill", 1.7, -170)

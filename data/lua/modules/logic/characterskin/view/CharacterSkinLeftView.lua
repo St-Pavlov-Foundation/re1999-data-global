@@ -73,7 +73,7 @@ function slot0._btnvideoOnClick(slot0)
 	logNormal("播放视频,当前英雄id:" .. slot1 .. " 皮肤id: " .. slot2 .. " url: " .. WebViewController.instance:getVideoUrl(slot1, slot2))
 
 	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL(slot4)
+		GameUtil.openURL(slot4)
 	else
 		WebViewController.instance:openWebView(slot4, false, slot0.OnWebViewBack, slot0)
 	end

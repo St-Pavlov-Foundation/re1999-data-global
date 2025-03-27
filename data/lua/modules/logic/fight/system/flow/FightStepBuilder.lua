@@ -2,6 +2,7 @@ module("modules.logic.fight.system.flow.FightStepBuilder", package.seeall)
 
 slot0 = class("FightStepBuilder")
 slot0.ActEffectWorkCls = {
+	[FightEnum.EffectType.MISS] = FightWorkEffectMiss,
 	[FightEnum.EffectType.DAMAGE] = FightWorkEffectDamage,
 	[FightEnum.EffectType.CRIT] = FightWorkEffectDamage,
 	[FightEnum.EffectType.HEAL] = FightWorkEffectHeal,
@@ -108,6 +109,7 @@ slot0.ActEffectWorkCls = {
 	[FightEnum.EffectType.GUARDBREAK] = FightWorkEffectGuardBreak,
 	[FightEnum.EffectType.CARDDECKGENERATE] = FightWorkCardDeckGenerate,
 	[FightEnum.EffectType.CARDDECKDELETE] = FightWorkCardDeckDelete,
+	[FightEnum.EffectType.CARDDECKCLEAR] = FightWorkCardClear,
 	[FightEnum.EffectType.DELCARDANDDAMAGE] = FightWorkDelCardAndDamage,
 	[FightEnum.EffectType.PROGRESSCHANGE] = FightWorkProgressChange,
 	[FightEnum.EffectType.ASSISTBOSSSKILLCD] = FightWorkChangeAssistBossCD,
@@ -123,6 +125,13 @@ slot0.ActEffectWorkCls = {
 	[FightEnum.EffectType.CHANGESHIELD] = FightWorkChangeShield,
 	[FightEnum.EffectType.TOWERSCORECHANGE] = FightWorkTowerScoreChangeWork,
 	[FightEnum.EffectType.ACT174MONSTERAICARD] = FightWorkAct174MonsterAiCard,
+	[FightEnum.EffectType.AFTERREDEALCARD] = FightWorkAfterRedealCard,
+	[FightEnum.EffectType.SHAREHURT] = FightWorkShareHurt,
+	[FightEnum.EffectType.PLAYERFINISHERSKILLCHANGE] = FightWorkPlayerFinisherSkillChange,
+	[FightEnum.EffectType.SIMPLEPOLARIZATIONLEVEL] = FightWorkSimplePolarizationLevel,
+	[FightEnum.EffectType.CALLMONSTERTOSUB] = FightWorkCallMonsterToSub,
+	[FightEnum.EffectType.AVERAGELIFE] = FightWorkAverageLife,
+	[FightEnum.EffectType.POWERINFOCHANGE] = FightWorkPowerInfoChange,
 	[FightEnum.EffectType.CURE] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.DOT] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.REBOUND] = FightBuffTriggerEffect,
@@ -133,7 +142,12 @@ slot0.ActEffectWorkCls = {
 	[FightEnum.EffectType.DODGESPECSKILL2] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.EXPOINTADD] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.EXPOINTDEL] = FightBuffTriggerEffect,
-	[FightEnum.EffectType.IMMUNITY] = FightBuffTriggerEffect
+	[FightEnum.EffectType.IMMUNITY] = FightBuffTriggerEffect,
+	[FightEnum.EffectType.EMITTERCREATE] = FightWorkCreateEmitterEntity,
+	[FightEnum.EffectType.EMITTERENERGYCHANGE] = FightWorkEmitterEnergyChange,
+	[FightEnum.EffectType.EMITTERREMOVE] = FightWorkEmitterRemove,
+	[FightEnum.EffectType.TEAMENERGYCHANGE] = FightWorkTeamEnergyChange,
+	[FightEnum.EffectType.ALLOCATECARDENERGY] = FightWorkAllocateCardEnergy
 }
 slot0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.SPCARDADD] = FightWorkSpCardAddContainer,
@@ -175,12 +189,18 @@ function slot0.buildStepWorkList(slot0)
 
 	FightSkillBuffMgr.instance:clearCompleteBuff()
 
+	uv0.ASFDIndex = 0
+	slot1 = nil
 	slot2 = {}
 	slot3 = {}
 
 	for slot7, slot8 in ipairs(slot0) do
 		if slot8.actType == FightEnum.ActType.SKILL then
-			slot1 = uv0._buildSkillWork(slot0, slot8, nil, slot0[slot7 + 1], slot2, slot3)
+			if FightHelper.isASFDSkill(slot8.actId) then
+				uv0._buildASFDSkillWork(slot8, slot2, slot3, slot0[slot7 + 1])
+			else
+				slot1 = uv0._buildSkillWork(slot0, slot8, slot1, slot0[slot7 + 1], slot2, slot3)
+			end
 		elseif slot8.actType == FightEnum.ActType.EFFECT then
 			slot12 = slot8
 			slot13 = nil
@@ -261,6 +281,18 @@ function slot0._buildSkillWork(slot0, slot1, slot2, slot3, slot4, slot5)
 	table.insert(slot4, FightWorkSpecialDelay.New(slot1))
 
 	return slot2
+end
+
+slot0.ASFDIndex = 0
+
+function slot0._buildASFDSkillWork(slot0, slot1, slot2, slot3)
+	uv0.ASFDIndex = uv0.ASFDIndex + 1
+	slot4 = FightASFDFlow.New(slot0, slot3, uv0.ASFDIndex)
+
+	table.insert(slot1, slot4)
+	table.insert(slot2, slot4)
+
+	return slot4
 end
 
 slot0.lastEffect = nil

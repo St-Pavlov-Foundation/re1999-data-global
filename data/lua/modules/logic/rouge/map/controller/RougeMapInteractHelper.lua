@@ -35,7 +35,9 @@ function slot0._initInteractHandle()
 			[RougeMapEnum.InteractType.LossNotUniqueCollection] = uv0.handleLossNotUniqueCollection,
 			[RougeMapEnum.InteractType.StorageCollection] = uv0.handleStorageCollection,
 			[RougeMapEnum.InteractType.LossCoin] = uv0.handleLossCoin,
-			[RougeMapEnum.InteractType.AdvanceDrop] = uv0.handleAdvanceDrop
+			[RougeMapEnum.InteractType.AdvanceDrop] = uv0.handleAdvanceDrop,
+			[RougeMapEnum.InteractType.LevelUpSp] = uv0.handleLevelUpSpCollection,
+			[RougeMapEnum.InteractType.LossSpCollection] = uv0.handleLossSpCollection
 		}
 	end
 end
@@ -140,7 +142,9 @@ end
 
 function slot0.handleStorageCollection()
 	logNormal("存储造物")
-	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionStorageView, RougeMapModel.instance:getCurInteractiveJson().lostNum)
+	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionStorageView, {
+		lossCount = RougeMapModel.instance:getCurInteractiveJson().lostNum
+	})
 end
 
 function slot0.handleLossCoin()
@@ -158,6 +162,29 @@ function slot0.handleAdvanceDrop(slot0)
 		canSelectCount = slot1.dropSelectNum,
 		dropRandomNum = slot1.dropRandomNum
 	})
+end
+
+function slot0.handleLevelUpSpCollection()
+	logNormal("专武升级")
+	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionLevelUpView, {
+		closeBtnVisible = false,
+		maxLevelUpNum = RougeMapModel.instance:getCurInteractiveJson().collectionLevelUpNum,
+		filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType())
+	})
+end
+
+function slot0.handleLossSpCollection(slot0)
+	if slot0 == 1 then
+		logNormal("丢弃专武")
+		RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionAbandonView, {
+			lossType = RougeMapEnum.LossType.AbandonSp,
+			lostNum = RougeMapModel.instance:getCurInteractiveJson().lostNum,
+			filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType()),
+			collections = RougeDLCModel102.instance:getAllSpCollections()
+		})
+	elseif slot0 == 2 then
+		logNormal("获得丢弃专武")
+	end
 end
 
 return slot0

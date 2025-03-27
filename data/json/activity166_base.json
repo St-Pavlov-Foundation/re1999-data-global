@@ -28,5 +28,35 @@
     "desc": "language_10057782",
     "level": 150,
     "strategy": "language_10057783"
+  },
+  {
+    "activityId": 12400,
+    "baseId": 1,
+    "episodeId": 2401101,
+    "talentId": 2401,
+    "name": "language_10065126",
+    "desc": "language_10065127",
+    "level": 150,
+    "strategy": "language_10065128"
+  },
+  {
+    "activityId": 12400,
+    "baseId": 2,
+    "episodeId": 2401102,
+    "talentId": 2402,
+    "name": "language_10065129",
+    "desc": "language_10065130",
+    "level": 150,
+    "strategy": "language_10065131"
+  },
+  {
+    "activityId": 12400,
+    "baseId": 3,
+    "episodeId": 2401103,
+    "talentId": 2403,
+    "name": "language_10065132",
+    "desc": "language_10065133",
+    "level": 150,
+    "strategy": "language_10065134"
   }
 ]

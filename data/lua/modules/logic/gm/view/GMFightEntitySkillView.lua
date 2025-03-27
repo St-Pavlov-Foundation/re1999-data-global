@@ -25,6 +25,10 @@ function slot0._onClickAddSkill(slot0)
 		GMRpc.instance:sendGMRequest(string.format("fightAddPassiveSkill %s %s", tostring(slot3.id), tostring(slot1)))
 		slot3:addPassiveSkill(slot1)
 		GMFightEntityModel.instance:setEntityMO(slot3)
+
+		if FightLocalDataMgr.instance.entityMgr:getById(slot3.id) then
+			FightEntityDataHelper.copyEntityMO(slot3, slot4)
+		end
 	else
 		GameFacade.showToast(ToastEnum.IconId, "skill not exist")
 	end

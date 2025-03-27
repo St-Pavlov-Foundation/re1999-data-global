@@ -16,5 +16,11 @@
     "bossId": 3,
     "name": "language_10061264",
     "nameEn": "Operatic Reflection"
+  },
+  {
+    "towerId": 4,
+    "bossId": 4,
+    "name": "language_10064231",
+    "nameEn": "Ashen Beast"
   }
 ]

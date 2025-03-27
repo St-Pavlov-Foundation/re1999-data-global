@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "className": "V2a4_WarmUp_DialogueView_LeftDialogueItem",
+    "fontColor": "#EBEBEB"
+  },
+  {
+    "id": 2,
+    "className": "V2a4_WarmUp_DialogueView_RightDialogueItem",
+    "fontColor": "#4C3926"
+  },
+  {
+    "id": 3,
+    "className": "V2a4_WarmUp_DialogueView_MidDialogueItem",
+    "fontColor": "#C56464"
+  },
+  {
+    "id": 4,
+    "className": "V2a4_WarmUp_DialogueView_MidDialogueItem",
+    "fontColor": "#FFCB88"
+  }
+]

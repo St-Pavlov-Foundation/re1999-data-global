@@ -74,11 +74,19 @@ function slot0.getMotion(slot0, slot1)
 	end
 end
 
+function slot0._getHeroId(slot0, slot1)
+	if slot1.storyHeroIndex then
+		return lua_story_hero_to_character.configDict[slot1.storyHeroIndex] and slot2.heroId
+	end
+
+	return slot1.heroId
+end
+
 function slot0._initCutMotion(slot0, slot1)
 	slot0._motionCutList = {}
 	slot0._motionCutConfig = nil
 
-	if not lua_character_motion_cut.configDict[slot1.heroId] then
+	if not lua_character_motion_cut.configDict[slot0:_getHeroId(slot1)] then
 		return
 	end
 
@@ -93,7 +101,7 @@ function slot0._initPlayCutMotion(slot0, slot1)
 	slot0._motionPlayCutList = {}
 	slot0._motionPlayCutConfig = nil
 
-	if not lua_character_motion_play_cut.configDict[slot1.heroId] then
+	if not lua_character_motion_play_cut.configDict[slot0:_getHeroId(slot1)] then
 		return
 	end
 

@@ -9,7 +9,6 @@ function slot0.addDLC(slot0, slot1)
 		return
 	end
 
-	AudioMgr.instance:trigger(AudioEnum.UI.AddRougeDLC)
 	RougeOutsideRpc.instance:sendRougeDLCSettingSaveRequest(RougeOutsideModel.instance:season(), slot0:_getTargetDLCs(slot1, true))
 end
 
@@ -43,6 +42,8 @@ function slot0._getTargetDLCs(slot0, slot1, slot2)
 	else
 		tabletool.removeValue(slot3, slot1)
 	end
+
+	table.sort(slot3)
 
 	return slot3
 end

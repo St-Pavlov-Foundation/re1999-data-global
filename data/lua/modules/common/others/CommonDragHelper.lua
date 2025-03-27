@@ -59,6 +59,16 @@ function slot0.setCallBack(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot
 	slot8.params = slot7
 end
 
+function slot0.refreshParent(slot0, slot1)
+	if not slot0:getDragData(slot1) then
+		return
+	end
+
+	slot2.parent = slot2.transform.parent
+
+	ZProj.TweenHelper.KillByObj(slot2.transform)
+end
+
 function slot0._onBeginDrag(slot0, slot1, slot2)
 	if not slot1.enabled or not slot0.enabled then
 		return

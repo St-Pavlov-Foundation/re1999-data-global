@@ -13,6 +13,9 @@ function slot0.onStart(slot0, slot1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightPlayCard)
 
 	slot3 = slot1.handCardItemList[slot1.from]
+
+	slot3:setASFDActive(false)
+
 	slot0._cardInfoMO = slot3.cardInfoMO:clone()
 	slot0._cardInfoMO.playCanAddExpoint = slot1.cards[slot1.from].playCanAddExpoint
 	slot0._clonePlayCardGO = gohelper.cloneInPlace(slot3.go)

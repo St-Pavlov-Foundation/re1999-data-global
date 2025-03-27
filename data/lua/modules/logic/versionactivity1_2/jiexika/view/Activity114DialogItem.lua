@@ -1,6 +1,6 @@
 module("modules.logic.versionactivity1_2.jiexika.view.Activity114DialogItem", package.seeall)
 
-slot0 = class("Activity114DialogItem", StoryDialogItem)
+slot0 = class("Activity114DialogItem", Activity114DialogBaseItem)
 slot1 = {
 	1,
 	"",

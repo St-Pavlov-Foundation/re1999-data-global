@@ -1,6 +1,15 @@
 module("modules.logic.jump.controller.JumpControllerHandleFunc", package.seeall)
 
 slot0 = JumpController
+
+function slot0.V2a4_WuErLiXi(slot0, slot1, slot2)
+	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+		WuErLiXiController.instance:enterLevelView()
+	end, nil, slot1)
+
+	return JumpEnum.JumpResult.Success
+end
+
 slot0.DefaultToastId = 0
 
 function slot0.activateHandleFuncController()
@@ -556,7 +565,7 @@ function slot0.jumpToActivityView(slot0, slot1)
 		table.insert(slot0.waitOpenViewNames, ViewName.ActivityBeginnerView)
 		ActivityModel.instance:setTargetActivityCategoryId(slot3)
 		ActivityController.instance:openActivityBeginnerView()
-	elseif slot3 == ActivityEnum.Activity.VersionActivity1_3Radio or slot3 == ActivityEnum.Activity.Activity1_9WarmUp or slot3 == ActivityEnum.Activity.V2a0_WarmUp or slot3 == ActivityEnum.Activity.V2a1_WarmUp or slot3 == ActivityEnum.Activity.V2a2_WarmUp or slot3 == ActivityEnum.Activity.V2a3_WarmUp then
+	elseif slot3 == ActivityEnum.Activity.VersionActivity1_3Radio or slot3 == ActivityEnum.Activity.Activity1_9WarmUp or slot3 == ActivityEnum.Activity.V2a0_WarmUp or slot3 == ActivityEnum.Activity.V2a1_WarmUp or slot3 == ActivityEnum.Activity.V2a2_WarmUp or slot3 == ActivityEnum.Activity.V2a3_WarmUp or slot3 == ActivityEnum.Activity.V2a4_WarmUp then
 		if ActivityHelper.getActivityStatus(slot3, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
@@ -896,22 +905,31 @@ function slot0.jumpToAct1_3Act125(slot0, slot1, slot2)
 end
 
 function slot0.jumpToTurnback(slot0, slot1)
-	if not TurnbackModel.instance:canShowTurnbackPop() then
-		return JumpEnum.JumpResult.Fail
+	if not TurnbackModel.instance:isNewType() then
+		if not TurnbackModel.instance:canShowTurnbackPop() then
+			return JumpEnum.JumpResult.Fail
+		end
+
+		slot2 = string.splitToNumber(slot1, "#")
+		slot3 = {
+			turnbackId = tonumber(slot2[2]),
+			subModuleId = tonumber(slot2[3])
+		}
+
+		table.insert(slot0.waitOpenViewNames, ViewName.TurnbackBeginnerView)
+		TurnbackModel.instance:setCurTurnbackId(slot3.turnbackId)
+		TurnbackModel.instance:setTargetCategoryId(slot3.subModuleId)
+		TurnbackController.instance:openTurnbackBeginnerView(slot3)
+
+		return JumpEnum.JumpResult.Success
+	elseif ViewMgr.instance:isOpen(ViewName.TurnbackNewBeginnerView) then
+		TurnbackModel.instance:setTargetCategoryId(({
+			subModuleId = tonumber(string.splitToNumber(slot1, "#")[3])
+		}).subModuleId)
+		TurnbackController.instance:dispatchEvent(TurnbackEvent.RefreshBeginner)
+
+		return JumpEnum.JumpResult.Success
 	end
-
-	slot2 = string.splitToNumber(slot1, "#")
-	slot3 = {
-		turnbackId = tonumber(slot2[2]),
-		subModuleId = tonumber(slot2[3])
-	}
-
-	table.insert(slot0.waitOpenViewNames, ViewName.TurnbackBeginnerView)
-	TurnbackModel.instance:setCurTurnbackId(slot3.turnbackId)
-	TurnbackModel.instance:setTargetCategoryId(slot3.subModuleId)
-	TurnbackController.instance:openTurnbackBeginnerView(slot3)
-
-	return JumpEnum.JumpResult.Success
 end
 
 function slot0.jumpToEnterView1_4(slot0, slot1, slot2)
@@ -1433,6 +1451,7 @@ slot0.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.InvestigateOpinionTabView] = slot0.jumpToInvestigateOpinionTabView
 }
 slot0.JumpActViewToHandleFunc = {
+	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = slot0.V2a4_WuErLiXi,
 	[JumpEnum.ActIdEnum.Act117] = slot0.jumpToAct117,
 	[JumpEnum.ActIdEnum.Act114] = slot0.jumpToAct114,
 	[JumpEnum.ActIdEnum.Act119] = slot0.jumpToAct119,

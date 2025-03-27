@@ -2,9 +2,10 @@ module("modules.configs.excel2json.lua_rouge_effect", package.seeall)
 
 slot1 = {
 	tips = 2,
+	typeParam = 5,
+	type = 4,
 	id = 1,
-	typeParam = 4,
-	type = 3
+	version = 3
 }
 slot2 = {
 	"id"

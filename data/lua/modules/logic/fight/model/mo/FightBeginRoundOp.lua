@@ -71,6 +71,14 @@ function slot0.playAssistBossHandCard(slot0, slot1, slot2)
 	slot0.costActPoint = 0
 end
 
+function slot0.playPlayerFinisherSkill(slot0, slot1, slot2)
+	slot0.operType = FightEnum.CardOpType.PlayerFinisherSkill
+	slot0.param1 = slot1
+	slot0.toId = slot2
+	slot0.skillId = slot1
+	slot0.costActPoint = 0
+end
+
 function slot0.simulateDissolveCard(slot0, slot1)
 	slot0.operType = FightEnum.CardOpType.SimulateDissolveCard
 	slot0.dissolveIndex = slot1
@@ -95,6 +103,14 @@ end
 
 function slot0.isAssistBossPlayCard(slot0)
 	return slot0.operType == FightEnum.CardOpType.AssistBoss
+end
+
+function slot0.isPlayerFinisherSkill(slot0)
+	return slot0.operType == FightEnum.CardOpType.PlayerFinisherSkill
+end
+
+function slot0.isSeason2ChangeHero(slot0)
+	return slot0.operType == FightEnum.CardOpType.Season2ChangeHero
 end
 
 function slot0.isSimulateDissolveCard(slot0)

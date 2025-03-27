@@ -25,7 +25,6 @@ function slot0.onInitView(slot0)
 	slot0._btnvideo = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn")
 	slot0._govideoon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn/on")
 	slot0._govideooff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn/off")
-	slot0._btnframerateswitch = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch")
 	slot0._golowfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_lowfps")
 	slot0._gohighfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_highfps")
 	slot0._goscreen = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen")
@@ -34,6 +33,13 @@ function slot0.onInitView(slot0)
 	slot0._gofullscreenoff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_fullscreenoff")
 	slot0._drop = gohelper.findChildDropdown(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/#dropResolution")
 	slot0._dropClick = gohelper.getClick(slot0._drop.gameObject)
+	slot0._framerateDrop = gohelper.findChildDropdown(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch")
+	slot0._framerateDropClick = gohelper.getClick(slot0._framerateDrop.gameObject)
+	slot0._frameTemplate = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch/Template")
+	slot0.verticalmode = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/verticalmode")
+	slot0._btnVerticalmode = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/verticalmode/switch/btn")
+	slot0._goVerticalmodeOn = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/verticalmode/switch/btn/on")
+	slot0._goVerticalmodeOff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/verticalmode/switch/btn/off")
 	slot0._goscreenshot = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/#go_screenshot")
 	slot0._btnshot = gohelper.findChildButtonWithAudio(slot0._goscreenshot, "switch/btn")
 	slot0._gooffshot = gohelper.findChild(slot0._goscreenshot, "switch/btn/off")
@@ -57,10 +63,10 @@ function slot0.addEvents(slot0)
 	slot0._btnlow:AddClickListener(slot0._btnlowOnClick, slot0)
 	slot0._btnmiddle:AddClickListener(slot0._btnmiddleOnClick, slot0)
 	slot0._btnhigh:AddClickListener(slot0._btnhighOnClick, slot0)
-	slot0._btnframerateswitch:AddClickListener(slot0._btnframerateswitchOnClick, slot0)
 	slot0._btnenergy:AddClickListener(slot0._btnenergyOnClick, slot0)
 	slot0._btnvideo:AddClickListener(slot0._btnvideoOnClick, slot0)
 	slot0._btnEnableVideo:AddClickListener(slot0._btnEnableVideoOnClick, slot0)
+	slot0._btnVerticalmode:AddClickListener(slot0._btnVerticalmodeClick, slot0)
 
 	if BootNativeUtil.isWindows() then
 		slot0._btnfullscreenswitch:AddClickListener(slot0._btnfullscreenswitchOnClick, slot0)
@@ -70,6 +76,12 @@ function slot0.addEvents(slot0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
 		end, slot0)
 	end
+
+	slot0._framerateDrop:AddOnValueChanged(slot0._onFrameValueChanged, slot0)
+	slot0._framerateDropClick:AddClickListener(function ()
+		uv0:_refreshTargetFrameRateUI()
+		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
+	end, slot0)
 
 	if not GameChannelConfig.isSlsdk() and SDKNativeUtil.isShowShareButton() then
 		slot0._btnshot:AddClickListener(slot0._btnShotOnClick, slot0)
@@ -82,16 +94,19 @@ function slot0.removeEvents(slot0)
 	slot0._btnlow:RemoveClickListener()
 	slot0._btnmiddle:RemoveClickListener()
 	slot0._btnhigh:RemoveClickListener()
-	slot0._btnframerateswitch:RemoveClickListener()
 	slot0._btnenergy:RemoveClickListener()
 	slot0._btnvideo:RemoveClickListener()
 	slot0._btnEnableVideo:RemoveClickListener()
+	slot0._btnVerticalmode:RemoveClickListener()
 
 	if BootNativeUtil.isWindows() then
 		slot0._btnfullscreenswitch:RemoveClickListener()
 		slot0._drop:RemoveOnValueChanged()
 		slot0._dropClick:RemoveClickListener()
 	end
+
+	slot0._framerateDrop:RemoveOnValueChanged()
+	slot0._framerateDropClick:RemoveClickListener()
 
 	if not GameChannelConfig.isSlsdk() and SDKNativeUtil.isShowShareButton() then
 		slot0._btnshot:RemoveClickListener()
@@ -142,15 +157,9 @@ function slot0._switchVideoCompatible(slot0)
 	slot0:_refreshVideoUI()
 end
 
-function slot0._btnframerateswitchOnClick(slot0)
-	if SettingsModel.instance:getModelTargetFrameRate() == ModuleEnum.TargetFrameRate.Low then
-		slot1 = ModuleEnum.TargetFrameRate.High
-	elseif slot1 == ModuleEnum.TargetFrameRate.High then
-		slot1 = ModuleEnum.TargetFrameRate.Low
-	end
-
-	SettingsModel.instance:setTargetFrameRate(slot1)
-	slot0:_refreshTargetFrameRateUI()
+function slot0._btnVerticalmodeClick(slot0)
+	SettingsModel.instance:setVSyncCount(SettingsModel.instance:getVSyncCount() == 1 and 0 or 1)
+	slot0:_refreshVerticalUI()
 end
 
 function slot0._btnfullscreenswitchOnClick(slot0)
@@ -187,6 +196,11 @@ function slot0._onValueChanged(slot0, slot1)
 	slot0._preSelectedIndex = slot1
 end
 
+function slot0._onFrameValueChanged(slot0, slot1)
+	SettingsModel.instance:setModelTargetFrameRate(slot1)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_select)
+end
+
 function slot0._editableInitView(slot0)
 	if not SLFramework.FrameworkSettings.IsEditor and BootNativeUtil.isWindows() then
 		slot0:_refreshDropdownList()
@@ -205,7 +219,9 @@ function slot0._editableInitView(slot0)
 		gohelper.setActive(slot0._goscreenshot, false)
 	end
 
-	gohelper.addUIClickAudio(slot0._btnframerateswitch.gameObject, AudioEnum.UI.UI_Mission_switch)
+	slot0._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() + 1)
+	slot0:_refreshVerticalUI()
+	gohelper.setActive(slot0.verticalmode, BootNativeUtil.isWindows())
 end
 
 function slot0._onChangeLangTxt(slot0)
@@ -273,11 +289,6 @@ function slot0._refreshGraphicsQualityUI(slot0)
 	gohelper.setActive(slot0._goline2, slot1 == ModuleEnum.Performance.Low)
 end
 
-function slot0._refreshTargetFrameRateUI(slot0)
-	gohelper.setActive(slot0._golowfps, SettingsModel.instance:getModelTargetFrameRate() == ModuleEnum.TargetFrameRate.Low)
-	gohelper.setActive(slot0._gohighfps, slot1 == ModuleEnum.TargetFrameRate.High)
-end
-
 function slot0._refreshIsFullScreenUI(slot0)
 	gohelper.setActive(slot0._gofullscreenon, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.On)
 	gohelper.setActive(slot0._gofullscreenoff, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.Off)
@@ -309,6 +320,13 @@ function slot0._refreshVideoEnabledUI(slot0)
 	gohelper.setActive(slot0._goEnableVideooff, not slot1)
 end
 
+function slot0._refreshVerticalUI(slot0)
+	slot1 = SettingsModel.instance:getVSyncCount() == 1
+
+	gohelper.setActive(slot0._goVerticalmodeOn, slot1)
+	gohelper.setActive(slot0._goVerticalmodeOff, not slot1)
+end
+
 function slot0._refreshDropdownList(slot0)
 	slot0._drop:ClearOptions()
 	slot0._drop:AddOptions(SettingsModel.instance:getResolutionRatioStrList())
@@ -323,6 +341,33 @@ function slot0._refreshDropdownList(slot0)
 	slot0._drop:SetValue(SettingsModel.instance:getCurrentDropDownIndex())
 
 	slot0._preSelectedIndex = slot0._drop:GetValue()
+end
+
+function slot0._refreshTargetFrameRateUI(slot0)
+	slot2 = {}
+
+	for slot6, slot7 in ipairs(SettingsModel.instance.FrameRate) do
+		if not BootNativeUtil.isWindows() and slot7 > 60 then
+			break
+		end
+
+		table.insert(slot2, tostring(slot7))
+	end
+
+	slot0._framerateDrop:ClearOptions()
+	slot0._framerateDrop:AddOptions(slot2)
+	recthelper.setHeight(slot0._frameTemplate.transform, #slot2 * 73)
+	slot0._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() - 1)
+
+	slot0._framerateDropIndex = slot0._framerateDrop:GetValue()
+
+	if slot0._framerateDropIndex == 0 then
+		SettingsModel.instance:setModelTargetFrameRate(0)
+	end
+
+	if gohelper.findChild(slot0._framerateDrop.gameObject, "Dropdown List") and gohelper.findChild(slot4, "Viewport/Content") and slot5.transform:GetChild(slot0._framerateDropIndex + 1) and gohelper.findChild(slot6.gameObject, "BG") then
+		gohelper.setActive(slot7, true)
+	end
 end
 
 return slot0

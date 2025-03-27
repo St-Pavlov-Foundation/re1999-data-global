@@ -1,40 +1,103 @@
 module("modules.logic.fight.model.datahelper.FightCardDataHelper", package.seeall)
 
+slot1 = {
+	nil,
+	nil,
+	nil,
+	nil,
+	nil,
+	nil,
+	nil,
+	nil,
+	0.9,
+	0.8,
+	0.73,
+	0.67,
+	0.62,
+	0.57,
+	0.53,
+	0.5,
+	0.47,
+	0.44,
+	0.42,
+	0.4
+}
+
 return {
-	combineCardList = function (slot0)
-		slot1 = 1
+	combineCardListForLocal = function (slot0)
+		return uv0.combineCardList(slot0, FightLocalDataMgr.instance)
+	end,
+	combineCardListForPerformance = function (slot0)
+		return uv0.combineCardList(slot0, FightDataMgr.instance)
+	end,
+	combineCardList = function (slot0, slot1)
+		if not slot1 then
+			logError("调用list合牌方法,但是没有传入entityDataMgr,请检查代码")
+
+			slot1 = FightLocalDataMgr.entityMgr
+		end
+
+		slot2 = 1
 
 		while not false do
-			slot3 = false
+			slot4 = false
 
 			while true do
-				if uv0.canCombineCard(slot0[slot1], slot0[slot1 + 1]) then
-					slot5 = slot0[slot1]
-					slot5.skillId = FightCardModel.instance:getSkillNextLvId(slot5.uid, slot5.skillId)
-					slot5.tempCard = false
+				if uv0.canCombineCard(slot0[slot2], slot0[slot2 + 1], slot1) then
+					uv0.combineCard(slot0[slot2], table.remove(slot0, slot2 + 1), slot1)
 
-					uv0.enchantsAfterCombine(slot5, table.remove(slot0, slot1 + 1))
-
-					slot3 = true
+					slot4 = true
 				else
-					slot1 = slot1 + 1
+					slot2 = slot2 + 1
 				end
 
-				if slot1 >= #slot0 then
+				if slot2 >= #slot0 then
 					break
 				end
 			end
 
-			if not slot3 then
-				slot2 = true
+			if not slot4 then
+				slot3 = true
 			else
-				slot1 = 1
+				slot2 = 1
 			end
 		end
 
 		return slot0
 	end,
-	canCombineCard = function (slot0, slot1)
+	combineCardForLocal = function (slot0, slot1)
+		return uv0.combineCard(slot0, slot1, FightLocalDataMgr.instance)
+	end,
+	combineCardForPerformance = function (slot0, slot1)
+		return uv0.combineCard(slot0, slot1, FightDataMgr.instance)
+	end,
+	combineCard = function (slot0, slot1, slot2)
+		if not slot2 then
+			logError("调用合牌方法,但是没有传入entityDataMgr,请检查代码")
+
+			slot2 = FightLocalDataMgr.entityMgr
+		end
+
+		slot0.skillId = FightCardModel.instance:getSkillNextLvId(slot0.uid, slot0.skillId)
+		slot0.tempCard = false
+
+		uv0.enchantsAfterCombine(slot0, slot1)
+
+		return slot0
+	end,
+	canCombineCardForLocal = function (slot0, slot1)
+		return uv0.canCombineCard(slot0, slot1, FightLocalDataMgr.instance)
+	end,
+	canCombineCardForPerformance = function (slot0, slot1)
+		return uv0.canCombineCard(slot0, slot1, FightDataMgr.instance)
+	end,
+	canCombineCard = function (slot0, slot1, slot2)
+		if not slot2 then
+			logError("调用检测是否可以合牌方法,但是没有传入entityDataMgr,请检查代码")
+
+			slot2 = FightLocalDataMgr.entityMgr
+		end
+
 		if not slot0 or not slot1 then
 			return false
 		end
@@ -55,13 +118,13 @@ return {
 			return false
 		end
 
-		slot3 = lua_skill.configDict[slot1.skillId]
+		slot4 = lua_skill.configDict[slot1.skillId]
 
-		if not lua_skill.configDict[slot0.skillId] or not slot3 then
+		if not lua_skill.configDict[slot0.skillId] or not slot4 then
 			return false
 		end
 
-		if slot2.isBigSkill == 1 or slot3.isBigSkill == 1 then
+		if slot3.isBigSkill == 1 or slot4.isBigSkill == 1 then
 			return false
 		end
 
@@ -71,7 +134,19 @@ return {
 
 		return true
 	end,
-	canCombineWithUniversal = function (slot0, slot1)
+	canCombineWithUniversalForLocal = function (slot0, slot1)
+		return uv0.canCombineWithUniversal(slot0, slot1, FightLocalDataMgr.instance)
+	end,
+	canCombineWithUniversalForPerformance = function (slot0, slot1)
+		return uv0.canCombineWithUniversal(slot0, slot1, FightDataMgr.instance)
+	end,
+	canCombineWithUniversal = function (slot0, slot1, slot2)
+		if not slot2 then
+			logError("调用检测是否可以和万能牌合牌,但是没有传入entityDataMgr,请检查代码")
+
+			slot2 = FightLocalDataMgr.entityMgr
+		end
+
 		if not slot0 or not slot1 then
 			return false
 		end
@@ -80,15 +155,15 @@ return {
 			return false
 		end
 
-		if slot1.skillId == FightEnum.UniversalCard1 or slot2 == FightEnum.UniversalCard2 then
+		if slot1.skillId == FightEnum.UniversalCard1 or slot3 == FightEnum.UniversalCard2 then
 			return false
 		end
 
 		if slot0.skillId == FightEnum.UniversalCard1 then
-			if FightCardModel.instance:getSkillLv(slot1.uid, slot2) ~= 1 then
+			if FightCardModel.instance:getSkillLv(slot1.uid, slot3) ~= 1 then
 				return false
 			end
-		elseif slot0.skillId == FightEnum.UniversalCard2 and slot3 ~= 1 and slot3 ~= 2 then
+		elseif slot0.skillId == FightEnum.UniversalCard2 and slot4 ~= 1 and slot4 ~= 2 then
 			return false
 		end
 
@@ -246,6 +321,21 @@ return {
 
 		return true
 	end,
+	checkCanPlayCard = function (slot0, slot1)
+		if not slot0 then
+			return false
+		end
+
+		if uv0.isFrozenCard(slot0) then
+			return false
+		end
+
+		if uv0.isBlockade(slot0) and tabletool.indexOf(slot1, slot0) then
+			return slot2 == 1 or slot2 == #slot1
+		end
+
+		return true
+	end,
 	canMoveCard = function (slot0)
 		if not slot0 then
 			return false
@@ -379,5 +469,18 @@ return {
 		end
 
 		return slot1
+	end,
+	getHandCardContainerScale = function (slot0, slot1)
+		slot4 = uv0[#(slot1 or FightDataHelper.handCardMgr.handCard)] or 1
+
+		if slot3 > 20 then
+			slot4 = 0.4
+		end
+
+		if slot0 and slot3 >= 8 then
+			slot4 = slot4 * 0.9
+		end
+
+		return slot4
 	end
 }

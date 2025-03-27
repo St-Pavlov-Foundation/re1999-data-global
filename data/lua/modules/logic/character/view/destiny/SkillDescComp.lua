@@ -2,6 +2,7 @@ module("modules.logic.character.view.destiny.SkillDescComp", package.seeall)
 
 slot0 = class("SkillDescComp", LuaCompBase)
 slot1 = "SkillDescComp"
+slot2 = "#7e99d0"
 
 function slot0.init(slot0, slot1)
 	slot0.viewGO = slot1
@@ -10,12 +11,11 @@ end
 function slot0.updateInfo(slot0, slot1, slot2, slot3)
 	slot0._txtComp = slot1
 	slot0._heroId = slot3
-	slot4, slot5, slot0._skillIndex = slot0:_parseDesc(slot2)
 	slot0._hyperLinkClick = gohelper.onceAddComponent(slot0.viewGO, typeof(ZProj.TMPHyperLinkClick))
 
 	slot0._hyperLinkClick:SetClickListener(slot0._onHyperLinkClick, slot0)
 
-	slot0._txtComp.text = string.gsub(slot0:addNumColor(string.gsub(slot0:addLink(slot2), "▩(%d)%%s", uv0)), uv0, slot0:_buildSkillNameLinkTag(slot5))
+	slot0._txtComp.text = slot0:_revertSkillName(slot0:addNumColor(slot0:addLink(slot0:_replaceSkillTag(slot2, "▩(%d)%%s"))), 1)
 	slot0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewGO.gameObject, FixTmpBreakLine)
 
 	slot0._fixTmpBreakLine:refreshTmpContent(slot0.viewGO)
@@ -24,14 +24,14 @@ function slot0.updateInfo(slot0, slot1, slot2, slot3)
 
 	if not slot0.heroMo then
 		slot0.heroMo = HeroMo.New()
-		slot12 = HeroConfig.instance:getHeroCO(slot0._heroId)
+		slot8 = HeroConfig.instance:getHeroCO(slot0._heroId)
 
-		slot0.heroMo:init({}, slot12)
+		slot0.heroMo:init({}, slot8)
 
 		slot0.heroMo.passiveSkillLevel = {}
 
-		for slot12 = 1, 3 do
-			table.insert(slot0.heroMo.passiveSkillLevel, slot12)
+		for slot8 = 1, 3 do
+			table.insert(slot0.heroMo.passiveSkillLevel, slot8)
 		end
 	end
 end
@@ -41,26 +41,42 @@ function slot0.setTipParam(slot0, slot1, slot2)
 	slot0._buffTipAnchor = slot2
 end
 
-function slot0._parseDesc(slot0, slot1)
-	slot2, slot3, slot4 = string.find(slot1, "▩(%d)%%s")
+function slot0._replaceSkillTag(slot0, slot1, slot2)
+	slot3, slot4, slot5 = string.find(slot1, slot2)
 
-	if not slot4 then
+	if not slot3 then
 		return slot1
 	end
 
-	slot5 = nil
+	slot6 = nil
 
-	if not ((tonumber(slot4) ~= 0 or SkillConfig.instance:getpassiveskillsCO(slot0._heroId)[1].skillPassive) and SkillConfig.instance:getHeroBaseSkillIdDict(slot0._heroId)[slot4]) then
+	if not ((tonumber(slot5) ~= 0 or SkillConfig.instance:getpassiveskillsCO(slot0._heroId)[1].skillPassive) and SkillConfig.instance:getHeroBaseSkillIdDict(slot0._heroId)[slot5]) then
+		logError("没找到当前角色的技能：heroId:" .. slot0._heroId .. "  skillindex:" .. slot5)
+
 		return slot1
 	end
 
-	return slot1, lua_skill.configDict[slot5].name, slot4
+	slot8 = lua_skill.configDict[slot6].name and string.format(luaLang("SkillDescComp_replaceSkillTag_overseas"), uv0, slot5, slot7) or ""
+
+	if not slot0._skillNameList then
+		slot0._skillNameList = {}
+	end
+
+	table.insert(slot0._skillNameList, slot8)
+
+	return slot0:_replaceSkillTag(string.gsub(slot1, slot2, uv1, 1), slot2)
 end
 
-slot2 = "#7e99d0"
+function slot0._revertSkillName(slot0, slot1, slot2)
+	if not string.find(slot1, uv0) then
+		return slot1
+	end
 
-function slot0._buildSkillNameLinkTag(slot0, slot1)
-	return slot1 and string.format(luaLang("SkillDescComp_buildSkillNameLinkTag_overseas"), uv0, slot1) or ""
+	if not slot0._skillNameList[slot2] then
+		return slot1
+	end
+
+	return slot0:_revertSkillName(string.gsub(slot1, uv0, slot4, 1), slot2 + 1)
 end
 
 function slot0.addLink(slot0, slot1)
@@ -135,9 +151,9 @@ end
 function slot0._onHyperLinkClick(slot0, slot1, slot2)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if slot1 ~= "skillIndex" then
+	if not (string.match(slot1, "skillIndex=(%d)") and tonumber(slot3)) then
 		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(slot1), slot0._buffTipAnchor or CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
-	elseif slot0._skillIndex == 0 then
+	elseif slot3 == 0 then
 		CharacterController.instance:openCharacterTipView({
 			tag = "passiveskill",
 			heroid = slot0._heroId,
@@ -151,8 +167,8 @@ function slot0._onHyperLinkClick(slot0, slot1, slot2)
 		})
 	else
 		ViewMgr.instance:openView(ViewName.SkillTipView, {
-			super = slot0._skillIndex == 3,
-			skillIdList = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(slot0._heroId)[slot0._skillIndex],
+			super = slot3 == 3,
+			skillIdList = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(slot0._heroId)[slot3],
 			monsterName = HeroConfig.instance:getHeroCO(slot0._heroId).name,
 			anchorX = slot0._skillTipAnchorX,
 			heroMo = slot0.heroMo

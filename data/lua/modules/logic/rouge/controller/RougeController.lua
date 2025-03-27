@@ -275,6 +275,7 @@ function slot0.startEndFlow(slot0)
 		end
 
 		slot0.flow:addWork(WaitFinishViewDoneWork.New(slot2))
+		slot0.flow:addWork(WaitEndingThreeViewDoneWork.New(slot1))
 		slot0.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeResultView))
 		slot0.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeSettlementView))
 		slot0.flow:addWork(WaitOpenRougeReviewWork.New())

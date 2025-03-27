@@ -14,6 +14,7 @@ function slot0.onInitView(slot0)
 	slot0._goprogress = gohelper.findChild(slot0.viewGO, "#go_progress")
 	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "#go_progress/#txt_progress")
 	slot0._gonewrule = gohelper.findChild(slot0.viewGO, "#btn_detail/#go_newrule")
+	slot0._animView = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -79,6 +80,8 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	slot0._animView:Play(UIAnimationName.Open, 0, 0)
+
 	slot0._actId = slot0.viewContainer.activityId
 
 	slot0:refreshUI()

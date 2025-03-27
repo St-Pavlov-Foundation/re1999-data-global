@@ -40,6 +40,10 @@ function slot0.initViewContent(slot0)
 
 	slot0._transporQuickLinkToggle = slot0:addToggle(slot1, "调试运输路线【快速绘制】", slot0._ontransporQuickLinkChange, slot0)
 	slot0._transporQuickLinkToggle.isOn = RoomTransportPathQuickLinkViewUI._IsShow_ == true
+
+	if RoomController.instance:isEditMode() and GameResMgr.IsFromEditorDir then
+		RoomDebugController.instance:getDebugPackageInfo(slot0._onInitDebugMapPackageInfo, slot0)
+	end
 end
 
 function slot0._findInitFollowTargetParams(slot0)
@@ -194,16 +198,74 @@ function slot0._onRoomClockSelectChanged(slot0, slot1)
 	end
 end
 
+function slot0._onInitDebugMapPackageInfo(slot0, slot1)
+	slot2 = {
+		"选择需要复制的地图"
+	}
+	slot0._blockInfosList = {}
+	slot3 = RoomConfig.instance
+
+	for slot7, slot8 in ipairs(slot1) do
+		slot9 = {}
+
+		for slot13, slot14 in ipairs(slot8.infos) do
+			if slot3:getBlock(slot14.blockId) and not slot3:getInitBlock(slot14.blockId) then
+				table.insert(slot9, slot14)
+			end
+		end
+
+		if #slot9 > 1 then
+			table.insert(slot2, slot8.packageName)
+			table.insert(slot0._blockInfosList, slot9)
+		end
+	end
+
+	slot0:addDropDown("L2", "一键复制\n地图地块", slot2, slot0._onDropDownMapPackageChanged, slot0)
+end
+
+slot0.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
+
+function slot0._onDropDownMapPackageChanged(slot0, slot1)
+	if slot1 >= 1 or slot1 <= #slot0._blockInfosList then
+		if RoomMapBlockModel.instance:getConfirmBlockCount() > 0 then
+			GameFacade.showToast(ToastEnum.IconId, "需要先重置下荒原")
+
+			return
+		end
+
+		slot0._waitUseBlockList = {}
+
+		tabletool.addValues(slot0._waitUseBlockList, slot0._blockInfosList[slot1])
+		TaskDispatcher.cancelTask(slot0._onWaitUseBlockList, slot0)
+
+		if #slot0._waitUseBlockList > 0 then
+			UIBlockMgr.instance:startBlock(uv0.Drop_Down_Map_Package_Changed)
+			TaskDispatcher.runRepeat(slot0._onWaitUseBlockList, slot0, 0.001, #slot0._waitUseBlockList + 1)
+		end
+	end
+end
+
+function slot0._onWaitUseBlockList(slot0)
+	if slot0._waitUseBlockList and #slot0._waitUseBlockList > 0 then
+		slot1 = slot0._waitUseBlockList[#slot0._waitUseBlockList]
+
+		table.remove(slot0._waitUseBlockList, #slot0._waitUseBlockList)
+		RoomMapController.instance:useBlockRequest(slot1.blockId, slot1.rotate, slot1.x, slot1.y)
+	else
+		UIBlockMgr.instance:endBlock(uv0.Drop_Down_Map_Package_Changed)
+		RoomController.instance:exitRoom(true)
+	end
+end
+
 function slot0._onOpenMiniMapView(slot0)
-	if CritterModel.instance:getMaturityCritters() and #slot1 > 0 then
-		RoomCritterController.instance:openTrainReporView(slot1[1].uid, 3025)
-	end
-
-	for slot6, slot7 in ipairs(CritterModel.instance:getCultivatingCritters()) do
-		slot8 = slot7.trainInfo
-
-		logError(string.format("uid:%s,sTime:%s,eTime:%s,fTime:%s,curTime:%s", slot7.uid, slot8.startTime, slot8.endTime, slot8.fastForwardTime, ServerTime.now()))
-	end
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.RoomBlockPackageGetView, ViewName.RoomBlockPackageGetView, {
+		itemList = {
+			{
+				itemId = 11921,
+				itemType = MaterialEnum.MaterialType.Building
+			}
+		}
+	})
 end
 
 function slot0._onOpenEditPathView(slot0)
@@ -230,6 +292,7 @@ function slot0._findCharacterShadow(slot0)
 end
 
 function slot0.onDestroyView(slot0)
+	TaskDispatcher.cancelTask(slot0._onWaitUseBlockList, slot0)
 end
 
 return slot0

@@ -3,11 +3,10 @@ module("modules.logic.fight.view.cardeffect.FightCardDissolveEffect", package.se
 slot0 = class("FightCardDissolveEffect", BaseWork)
 slot2 = 1 * 0.033
 slot3 = "CardItemMeshs"
-slot4 = 11
-slot5 = "_MainTex"
-slot6 = "UNITY_UI_DISSOLVE"
-slot7 = "_UseUIDissolve"
-slot8 = {
+slot4 = "_MainTex"
+slot5 = "UNITY_UI_DISSOLVE"
+slot6 = "_UseUIDissolve"
+slot7 = {
 	"_DissolveOffset",
 	"Vector4",
 	Vector4.New(0, 25, 3.35, 0),
@@ -82,59 +81,68 @@ function slot0._tweenFrameFunc(slot0, slot1)
 end
 
 function slot0._setupMesh(slot0, slot1, slot2)
+	slot3 = CameraMgr.instance:getUnitCamera()
 	slot4 = CameraMgr.instance:getUICamera()
 	slot5 = CameraMgr.instance:getCameraTraceGO().transform.rotation * Quaternion.Euler(0, 180, 0)
-	slot8 = UnityEngine.Screen.width / UnityEngine.Screen.height
-	slot9 = CameraMgr.instance:getUnitCamera().fieldOfView * Mathf.Deg2Rad
-	slot10 = Mathf.Tan(slot9 * 0.5) * uv0 / UnityEngine.Screen.height
-	slot11 = Mathf.Tan(slot9 * 0.5) * uv0 / 1080 * slot8 * 0.5625
+	slot8 = Mathf.Tan(slot3.fieldOfView * Mathf.Deg2Rad * 0.5) * slot0:getCameraDistance() / UnityEngine.Screen.height
+	slot9, slot10 = slot0:getScaleFactor()
+	slot11 = UnityEngine.GameObject.New()
+	slot11.name = uv0
+	slot11.transform.parent = slot3.transform
 
-	if 1.7777777777777777 < slot8 then
-		slot11 = Mathf.Tan(slot9 * 0.5) * uv0 / 1080
-	end
+	for slot15 = 0, slot1.Length - 1 do
+		slot16 = slot1[slot15]
+		slot17 = slot16.transform
+		slot18 = UnityEngine.GameObject.Instantiate(slot16.material)
 
-	slot12 = UnityEngine.GameObject.New()
-	slot12.name = uv1
-	slot12.transform.parent = slot3.transform
+		table.insert(slot0._cloneMats, slot18)
 
-	for slot16 = 0, slot1.Length - 1 do
-		slot17 = slot1[slot16]
-		slot18 = slot17.transform
-		slot19 = UnityEngine.GameObject.Instantiate(slot17.material)
+		slot18.name = slot16.material.name .. "_clone"
 
-		table.insert(slot0._cloneMats, slot19)
+		if not gohelper.isNil(slot16.sprite) and not gohelper.isNil(slot16.sprite.texture) then
+			slot18:SetTexture(uv1, slot16.sprite.texture)
 
-		slot19.name = slot17.material.name .. "_clone"
+			slot19 = Vector2.New(slot16.sprite.texture.width, slot16.sprite.texture.height)
+			slot20 = slot16.sprite.textureRect.min
+			slot21 = slot16.sprite.textureRect.size
 
-		if not gohelper.isNil(slot17.sprite) and not gohelper.isNil(slot17.sprite.texture) then
-			slot19:SetTexture(uv2, slot17.sprite.texture)
-
-			slot20 = Vector2.New(slot17.sprite.texture.width, slot17.sprite.texture.height)
-			slot21 = slot17.sprite.textureRect.min
-			slot22 = slot17.sprite.textureRect.size
-
-			slot19:SetTextureOffset(uv2, Vector2.New(slot21.x / slot20.x, slot21.y / slot20.y))
-			slot19:SetTextureScale(uv2, Vector2.New(slot22.x / slot20.x, slot22.y / slot20.y))
+			slot18:SetTextureOffset(uv1, Vector2.New(slot20.x / slot19.x, slot20.y / slot19.y))
+			slot18:SetTextureScale(uv1, Vector2.New(slot21.x / slot19.x, slot21.y / slot19.y))
 		end
 
-		slot20 = gohelper.clone(slot2, slot12, slot17.name)
-		slot21 = slot20.transform
+		slot19 = gohelper.clone(slot2, slot11, slot16.name)
+		slot20 = slot19.transform
 
-		gohelper.setLayer(slot20, UnityLayer.Unit, true)
+		gohelper.setLayer(slot19, UnityLayer.Unit, true)
 
-		slot22 = slot20:GetComponent(typeof(UnityEngine.Renderer))
-		slot22.sortingOrder = slot22.sortingOrder + slot16
-		slot22.sharedMaterial = slot19
+		slot21 = slot19:GetComponent(typeof(UnityEngine.Renderer))
+		slot21.sortingOrder = slot21.sortingOrder + slot15
+		slot21.sharedMaterial = slot18
 
-		table.insert(slot0._renderers, slot22)
+		table.insert(slot0._renderers, slot21)
 
-		slot23 = slot4:WorldToScreenPoint(slot18.position)
-		slot21.localScale = Vector3.New(slot11 * slot18.sizeDelta.x * (slot0.context.dissolveScale or 1), slot11 * slot18.sizeDelta.y * (slot0.context.dissolveScale or 1), 1)
-		slot21.rotation = slot5
-		slot21.position = slot3.transform:TransformPoint(Vector3.New(-((UnityEngine.Screen.width - slot23.x * 2) * slot10), -((UnityEngine.Screen.height - slot23.y * 2) * slot10), uv0) * 0.5)
+		slot22 = slot4:WorldToScreenPoint(slot17.position)
+		slot20.localScale = Vector3.New(slot9 * slot17.sizeDelta.x * (slot0.context.dissolveScale or 1), slot10 * slot17.sizeDelta.y * (slot0.context.dissolveScale or 1), 1)
+		slot20.rotation = slot5
+		slot20.position = slot3.transform:TransformPoint(Vector3.New(-((UnityEngine.Screen.width - slot22.x * 2) * slot8), -((UnityEngine.Screen.height - slot22.y * 2) * slot8), slot6) * 0.5)
 	end
 
-	return slot12
+	return slot11
+end
+
+function slot0.getScaleFactor(slot0)
+	if slot0.wRate then
+		return slot0.wRate, slot0.hRate
+	end
+
+	slot4 = ViewMgr.instance:getUIRoot():GetComponent(gohelper.Type_RectTransform)
+	slot5 = recthelper.getWidth(slot4)
+	slot6 = recthelper.getHeight(slot4)
+	slot10 = Mathf.Tan(CameraMgr.instance:getUnitCamera().fieldOfView * Mathf.Deg2Rad * 0.5) * slot0:getCameraDistance()
+	slot0.hRate = slot10 / slot6
+	slot0.wRate = slot5 / slot6 * slot10 / slot5
+
+	return slot0.wRate, slot0.hRate
 end
 
 function slot0.onStop(slot0)
@@ -220,6 +228,16 @@ function slot0.clear()
 			gohelper.destroy(slot7.gameObject)
 		end
 	end
+end
+
+function slot0.getCameraDistance(slot0)
+	if slot0.cameraDistance then
+		return slot0.cameraDistance
+	end
+
+	slot0.cameraDistance = math.abs(CameraMgr.instance:getUnitCamera().transform.position.z - ViewMgr.instance:getUIRoot().transform.position.z)
+
+	return slot0.cameraDistance
 end
 
 function slot0._hideEffect(slot0, slot1)

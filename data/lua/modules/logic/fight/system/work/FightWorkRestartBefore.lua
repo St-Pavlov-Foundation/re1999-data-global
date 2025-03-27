@@ -14,6 +14,9 @@ end
 function slot0._onDestroyViewFinish(slot0, slot1)
 	if slot1 == ViewName.FightView then
 		ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, slot0._onDestroyViewFinish, slot0)
+
+		FightDataHelper.tempMgr.simplePolarizationLevel = nil
+
 		StoryController.instance:closeStoryView()
 		FightFloatMgr.instance:clearFloatItem()
 		FightPreloadController.instance:releaseRoleCardAsset()

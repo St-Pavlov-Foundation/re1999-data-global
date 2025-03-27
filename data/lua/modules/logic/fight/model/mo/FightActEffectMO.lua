@@ -24,6 +24,7 @@ function slot0.init(slot0, slot1, slot2)
 	slot0.targetId = slot1.targetId
 	slot0.effectType = slot1.effectType
 	slot0.effectNum = slot1.effectNum
+	slot0.effectNum1 = slot1.effectNum1
 	slot0.fromSide = slot2
 	slot0.configEffect = slot1.configEffect
 	slot0.buffActId = slot1.buffActId
@@ -51,6 +52,17 @@ function slot0.init(slot0, slot1, slot2)
 
 		slot0.cus_stepMO:init(slot0.fightStep)
 	end
+
+	if slot1:HasField("emitterInfo") then
+		slot0.emitterInfo = FightASFDEmitterInfoMO.New()
+
+		slot0.emitterInfo:init(slot1.emitterInfo)
+	else
+		slot0.emitterInfo = nil
+	end
+
+	slot0.playerFinisherInfo = slot1.playerFinisherInfo
+	slot0.powerInfo = slot1.powerInfo
 end
 
 function slot0._buildBuff(slot0, slot1)

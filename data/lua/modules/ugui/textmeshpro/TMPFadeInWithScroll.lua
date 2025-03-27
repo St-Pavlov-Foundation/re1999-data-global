@@ -12,6 +12,12 @@ function slot0.init(slot0, slot1)
 	slot2 = UnityEngine.Shader
 	slot0._LineMinYId = slot2.PropertyToID("_LineMinY")
 	slot0._LineMaxYId = slot2.PropertyToID("_LineMaxY")
+	slot0._lastBottomLeft = 0
+	slot0._lineSpace = 0
+	slot0._hasUnderline = false
+	slot0._markTopList = {}
+	slot0._originalLineSpacing = slot0._txtcontentcn.lineSpacing
+	slot0._lineSpacing = slot0._originalLineSpacing
 end
 
 function slot0.hideDialog(slot0)
@@ -42,6 +48,9 @@ function slot0.playNormalText(slot0, slot1, slot2, slot3)
 	slot0._txt = slot1
 	slot0._finishCallback = slot2
 	slot0._finishCallbackObj = slot3
+
+	slot0:_setLineSpacing(slot0:getLineSpacing())
+
 	slot5, slot6, slot7 = transformhelper.getLocalPos(slot0._txtcontentcn.transform)
 
 	transformhelper.setLocalPos(slot0._txtcontentcn.transform, slot5, slot6, 1)
@@ -52,9 +61,11 @@ function slot0.playNormalText(slot0, slot1, slot2, slot3)
 end
 
 function slot0._delayShow(slot0)
+	slot0._lastBottomLeft = 0
+	slot0._lineSpace = 0
+	slot0._hasUnderline = string.find(slot0._txt, "<u>") and string.find(slot0._txt, "</u>")
 	slot1 = CameraMgr.instance:getUICamera()
-	slot2 = slot0._txtcontentcn:GetTextInfo(slot0._txt)
-	slot0._textInfo = slot2
+	slot0._textInfo = slot0._txtcontentcn:GetTextInfo(slot0._txt)
 	slot0._lineInfoList = {}
 	slot3 = 0
 	slot4 = slot0._txtcontentcn.transform
@@ -170,14 +181,45 @@ function slot0.conFinished(slot0)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._delayShow, slot0)
-
-	if slot0._conTweenId then
-		ZProj.TweenHelper.KillById(slot0._conTweenId)
-
-		slot0._conTweenId = nil
+function slot0._disable_GRADUAL_ON(slot0)
+	if slot0._txtcontentcn.gameObject:GetComponentsInChildren(gohelper.Type_TMP_SubMeshUI, true) then
+		for slot6 = 0, slot1.Length - 1 do
+			if not gohelper.isNil(slot1[slot6].sharedMaterial) then
+				slot8:DisableKeyword("_GRADUAL_ON")
+				slot8:SetFloat(slot0._LineMinYId, 0)
+				slot8:SetFloat(slot0._LineMaxYId, 0)
+			end
+		end
 	end
+
+	slot0._conMat:DisableKeyword("_GRADUAL_ON")
+	slot0._conMat:SetFloat(slot0._LineMinYId, 0)
+	slot0._conMat:SetFloat(slot0._LineMaxYId, 0)
+end
+
+function slot0.onDestroy(slot0)
+	slot0:onDestroyView()
+end
+
+function slot0.onDestroyView(slot0)
+	TaskDispatcher.cancelTask(slot0._delayShow, slot0)
+	GameUtil.onDestroyViewMember_TweenId(slot0, "_conTweenId")
+end
+
+function slot0.setTopOffset(slot0, slot1, slot2)
+	slot0._conMark:SetTopOffset(slot1 or 0, slot2 or 0)
+end
+
+function slot0.setLineSpacing(slot0, slot1)
+	slot0._lineSpacing = slot1 or 0
+end
+
+function slot0.getLineSpacing(slot0)
+	return #slot0._markTopList > 0 and slot0._lineSpacing or slot0._originalLineSpacing
+end
+
+function slot0._setLineSpacing(slot0, slot1)
+	slot0._txtcontentcn.lineSpacing = slot1 or 0
 end
 
 function slot0._disable_GRADUAL_ON(slot0)

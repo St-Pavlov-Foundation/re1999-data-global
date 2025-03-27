@@ -2,7 +2,8 @@ module("modules.configs.excel2json.lua_activity166_talent_style", package.seeall
 
 slot1 = {
 	needStar = 3,
-	slot = 5,
+	slot = 6,
+	skillId2 = 5,
 	skillId = 4,
 	talentId = 1,
 	level = 2

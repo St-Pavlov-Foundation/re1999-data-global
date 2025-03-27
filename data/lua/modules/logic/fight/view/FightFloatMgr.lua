@@ -68,6 +68,7 @@ function slot0._onLoadCallback(slot0)
 	slot0:_initPrefab(FightEnum.FloatType.stress, gohelper.findChild(slot2, "stress"), 0)
 	slot0:_initPrefab(FightEnum.FloatType.additional_damage, gohelper.findChild(slot2, "additional_damage"), 0)
 	slot0:_initPrefab(FightEnum.FloatType.crit_additional_damage, gohelper.findChild(slot2, "crit_additional_damage"), 0)
+	slot0:_initPrefab(FightEnum.FloatType.addShield, gohelper.findChild(slot2, "shield"), 0)
 end
 
 function slot0.dispose(slot0)

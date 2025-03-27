@@ -45,7 +45,8 @@ function slot0.refreshUI(slot0)
 		slot0:refreshCollectionIcon()
 
 		slot0._txtname.text = RougeCollectionConfig.instance:getCollectionName(slot0._mo.cfgId, slot0._mo:getAllEnchantCfgId())
-		slot0._txtdec.text = RougeCollectionHelper.getCollectionEffectStrById(slot0._mo.id)
+
+		RougeCollectionDescHelper.setCollectionDescInfos4(slot0._mo.id, slot0._txtdec, RougeCollectionDescHelper.getShowDescTypesWithoutText(), RougeCollectionDescHelper.getExtraParams_KeepAllActive())
 	end
 end
 

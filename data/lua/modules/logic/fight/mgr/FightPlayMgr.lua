@@ -1,6 +1,6 @@
 module("modules.logic.fight.mgr.FightPlayMgr", package.seeall)
 
-slot0 = class("FightPlayMgr", FightBaseClass)
+slot0 = class("FightPlayMgr", FightPerformanceMgrBase)
 
 function slot0.onInitialization(slot0)
 	slot0:com_registFightEvent(FightEvent.EnterStage, slot0._onEnterStage)
@@ -31,9 +31,6 @@ function slot0._onGMDouQuQuSkip2IndexRound(slot0, slot1, slot2)
 end
 
 function slot0.onDestructor(slot0)
-end
-
-function slot0.onDestructorFinish(slot0)
 end
 
 return slot0

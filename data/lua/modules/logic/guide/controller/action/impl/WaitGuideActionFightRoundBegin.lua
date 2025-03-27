@@ -9,7 +9,9 @@ function slot0.onStart(slot0, slot1)
 end
 
 function slot0._onRoundStart(slot0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Distribute or slot1 == FightEnum.Stage.Card then
+	slot1 = FightModel.instance:getCurStage()
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card) or slot1 == FightEnum.Stage.Distribute or slot1 == FightEnum.Stage.Card then
 		slot0:clearWork()
 		slot0:onDone(true)
 	end

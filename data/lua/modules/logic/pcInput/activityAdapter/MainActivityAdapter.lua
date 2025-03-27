@@ -47,6 +47,33 @@ slot0.keytoFunction = {
 	end,
 	function ()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSummon)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterBook)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterAchievement)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterFriend)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterTravelCollection)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterNotice)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSign)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSetting)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterFeedback)
+	end,
+	function ()
+		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterStore)
 	end
 }
 
@@ -60,7 +87,7 @@ function slot0.ctor(slot0)
 end
 
 function slot0.OnkeyUp(slot0, slot1)
-	if ViewMgr.instance:IsPopUpViewOpen() then
+	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
 		return
 	end
 

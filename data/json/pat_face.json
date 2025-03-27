@@ -266,8 +266,22 @@
     "patFaceOrder": 8
   },
   {
+    "id": 20400,
+    "patFaceActivityId": 12432,
+    "patFaceViewName": "V2a4_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20400
+  },
+  {
+    "id": 20401,
+    "patFaceActivityId": 12433,
+    "patFaceViewName": "V2a4_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20401
+  },
+  {
     "id": 20602,
-    "patFaceActivityId": 12607,
+    "patFaceActivityId": 12481,
     "patFaceViewName": "ShortenAct_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 20602

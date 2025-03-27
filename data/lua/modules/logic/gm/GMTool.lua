@@ -85,6 +85,7 @@ function slot18()
 	slot1("Ctrl + 鼠标左键 + 点击UI", "可查看UI最顶层点击到的节点路径")
 	slot1("F2", "                                         通关所有关卡")
 	slot1("F12", "                                       退出登录")
+	slot1("Ctrl + Alt + 3", "                      开/关资源加载耗时Log")
 	slot1("Ctrl + Alt + 2", "                      查看正在打开的ViewNames")
 	slot1("Ctrl + Alt + 1", "                      显示/隐藏LangKey")
 

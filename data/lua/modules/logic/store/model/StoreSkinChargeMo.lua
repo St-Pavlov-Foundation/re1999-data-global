@@ -20,4 +20,8 @@ function slot0.getSkinChargePrice(slot0)
 	return slot1, slot2
 end
 
+function slot0.isSoldOut(slot0)
+	return slot0.buyCount > 0
+end
+
 return slot0

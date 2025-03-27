@@ -17,6 +17,7 @@ function slot0.onInitView(slot0)
 	slot0._btnbank = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_bank")
 	slot0._gobankreddot = gohelper.findChild(slot0.viewGO, "left/#btn_bank/#go_bankreddot")
 	slot0._godeadlinebank = gohelper.findChild(slot0.viewGO, "left/#btn_bank/#go_deadlinebank")
+	slot0._gobankeffect = gohelper.findChild(slot0.viewGO, "left/#btn_bank/#go_bankeffect")
 	slot0._goright = gohelper.findChild(slot0.viewGO, "right")
 	slot0._btnroom = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_room")
 	slot0._goroomlock = gohelper.findChild(slot0.viewGO, "right/#btn_room/#go_roomlock")
@@ -67,6 +68,8 @@ function slot0.onInitView(slot0)
 
 	gohelper.setActive(slot0._btnlimitedshow.gameObject, true)
 	gohelper.setActive(slot0._golimitedshow, false)
+
+	slot0._showMainView = true
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -133,20 +136,18 @@ function slot0._btnhideOnClick(slot0)
 end
 
 function slot0.OnNotifySetMainViewVisible(slot0)
-	if slot0.viewContainer._canvasGroup.interactable then
+	if slot0._showMainView then
 		slot0:_btnhideOnClick()
 	else
-		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
+		GameStateMgr.instance:dispatchEvent(GameStateEvent.OnTouchScreenUp)
 	end
 end
 
 function slot0.showKeyTips(slot0)
-	if PlayerPrefsHelper.getNumber("keyTips", 0) == 1 then
-		PCInputController.instance:showkeyTips(slot0._pcBtnHide, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.hide)
-		PCInputController.instance:showkeyTips(slot0._pcBtnRoom, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Room)
-		PCInputController.instance:showkeyTips(slot0._pcBtnCharactor, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Role)
-		PCInputController.instance:showkeyTips(slot0._pcBtnSummon, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Summon)
-	end
+	PCInputController.instance:showkeyTips(slot0._pcBtnHide, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.hide)
+	PCInputController.instance:showkeyTips(slot0._pcBtnRoom, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Room)
+	PCInputController.instance:showkeyTips(slot0._pcBtnCharactor, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Role)
+	PCInputController.instance:showkeyTips(slot0._pcBtnSummon, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Summon)
 end
 
 function slot0._btnbgmOnClick(slot0)
@@ -166,6 +167,8 @@ function slot0._setViewVisible(slot0, slot1)
 	if LuaUtil.isString(slot1) then
 		slot1 = slot1 == "true"
 	end
+
+	slot0._showMainView = slot1
 
 	gohelper.setActive(slot0._pcBtnHide, slot1)
 	slot0._animator:Play(slot1 and "mainview_in" or "mainview_out", 0, 0)
@@ -453,8 +456,13 @@ function slot0.thumbnailRedDotRefreshFunc(slot0, slot1)
 	end
 end
 
+function slot0.showBankNewEffect(slot0, slot1)
+	gohelper.setActive(slot0._gobankeffect, slot1)
+end
+
 function slot0.storeRedDotRefreshFunc(slot0, slot1)
 	slot1:defaultRefreshDot()
+	slot0:showBankNewEffect(false)
 
 	if not slot1.show then
 		for slot6, slot7 in ipairs(StoreHelper.getRecommendStoreSecondTabConfig()) do
@@ -465,6 +473,7 @@ function slot0.storeRedDotRefreshFunc(slot0, slot1)
 				slot1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
 				slot0:showStoreDeadline(false)
 				slot0:registStoreDeadlineCall(false)
+				slot0:showBankNewEffect(true)
 
 				return
 			end
@@ -494,6 +503,7 @@ function slot0.storeRedDotRefreshFunc(slot0, slot1)
 
 				slot1:showRedDot(RedDotEnum.Style.NewTag)
 				slot1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
+				slot0:showBankNewEffect(true)
 			end
 		end
 
@@ -595,7 +605,9 @@ function slot0._onCloseViewFinish(slot0, slot1)
 		LateUpdateBeat:Add(slot0._forceUpdateCameraPos, slot0)
 	end
 
-	slot0:_tryDoMainViewGuide()
+	if slot1 ~= ViewName.LoadingView then
+		slot0:_tryDoMainViewGuide()
+	end
 end
 
 function slot0._forceUpdateCameraPos(slot0)
@@ -804,7 +816,7 @@ function slot0._tryDoMainViewGuide(slot0)
 		return
 	end
 
-	if not slot0:_hasOpenedOtherView() and MainController.instance:isInPopupFlow() and tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId)) and slot3 > 0 and (MainViewGuideCondition.getCondition(slot3) == nil and true or slot4()) then
+	if not slot0:_hasOpenedOtherView() and not MainController.instance:isInPopupFlow() and tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId)) and slot3 > 0 and (MainViewGuideCondition.getCondition(slot3) == nil and true or slot4()) then
 		GuideController.instance:dispatchEvent(GuideEvent.DoMainViewGuide, slot3)
 	end
 end

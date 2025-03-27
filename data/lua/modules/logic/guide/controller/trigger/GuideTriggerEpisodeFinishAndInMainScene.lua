@@ -7,6 +7,7 @@ function slot0.ctor(slot0, slot1)
 	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, slot0._checkStartGuide, slot0)
 	StoryController.instance:registerCallback(StoryEvent.Finish, slot0._checkStartGuide, slot0)
 	GuideController.instance:registerCallback(GuideEvent.FinishGuide, slot0._checkStartGuide, slot0)
+	PatFaceController.instance:registerCallback(PatFaceEvent.FinishAllPatFace, slot0._checkStartGuide, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 end
@@ -23,18 +24,18 @@ function slot0.assertGuideSatisfy(slot0, slot1, slot2)
 		return false
 	end
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GameSceneMgr.instance:isLoading() and not GameSceneMgr.instance:isClosing() then
-		slot11 = false
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GameSceneMgr.instance:isLoading() and not GameSceneMgr.instance:isClosing() and not PatFaceModel.instance:getIsPatting() then
+		slot12 = false
 
-		for slot16, slot17 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-			if ViewMgr.instance:isModal(slot17) or ViewMgr.instance:isFull(slot17) then
-				slot11 = true
+		for slot17, slot18 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
+			if ViewMgr.instance:isModal(slot18) or ViewMgr.instance:isFull(slot18) then
+				slot12 = true
 
 				break
 			end
 		end
 
-		if not slot11 then
+		if not slot12 then
 			return true
 		end
 	end

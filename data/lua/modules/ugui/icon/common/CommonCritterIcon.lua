@@ -15,6 +15,7 @@ function slot0.onInitView(slot0)
 	slot0._txtindex = gohelper.findChildText(slot0.viewGO, "#go_index/#txt_index")
 	slot0._btnclick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#btn_click")
 	slot0._gouptips = gohelper.findChild(slot0.viewGO, "#go_uptips")
+	slot0._gospecial = gohelper.findChild(slot0.viewGO, "#go_special")
 
 	slot0:setSelectUIVisible()
 	slot0:showIndex()
@@ -159,6 +160,10 @@ end
 
 function slot0.showUpTip(slot0, slot1)
 	gohelper.setActive(slot0._gouptips, slot1)
+end
+
+function slot0.showSpeical(slot0)
+	gohelper.setActive(slot0._gospecial, slot0:getCritterMo():isMutate())
 end
 
 function slot0.refreshBuildingIcon(slot0)

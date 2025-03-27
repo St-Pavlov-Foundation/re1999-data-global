@@ -78,36 +78,66 @@ function slot0.buildResistanceList(slot0, slot1)
 		return
 	end
 
-	for slot5, slot6 in pairs(FightEnum.ToughnessToResistance) do
-		if slot0:getResistanceValue(slot1, slot5) and slot7 > 0 then
-			table.insert(slot0.resistanceList, {
-				resistanceId = slot5,
-				value = slot7
+	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.controlResilience)
+	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.delExPointResilience)
+	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.stressUpResilience)
+	slot0:buildResistanceListByResistanceDict(slot1)
+end
+
+function slot0.buildResistanceListByReToughness(slot0, slot1, slot2)
+	slot3 = FightEnum.ToughnessToResistance[slot2]
+	slot0.tempResistanceList = slot0.tempResistanceList or {}
+
+	tabletool.clear(slot0.tempResistanceList)
+
+	if slot0:getResistanceValue(slot1, slot2) and slot4 > 0 then
+		table.insert(slot0.resistanceList, {
+			resistanceId = slot2,
+			value = slot4
+		})
+
+		slot0.resistanceDict[slot2] = true
+
+		for slot8, slot9 in ipairs(slot3) do
+			table.insert(slot0.tempResistanceList, {
+				resistanceId = slot9,
+				value = slot0:getResistanceValue(slot1, slot9)
 			})
 
-			slot0.resistanceDict[slot5] = true
+			slot0.resistanceDict[slot9] = true
+		end
 
-			for slot11, slot12 in ipairs(slot6) do
-				table.insert(slot0.resistanceList, {
-					resistanceId = slot12,
-					value = slot0:getResistanceValue(slot1, slot12)
-				})
+		table.sort(slot0.tempResistanceList, uv0.sortResistance)
 
-				slot0.resistanceDict[slot12] = true
-			end
+		for slot8, slot9 in ipairs(slot0.tempResistanceList) do
+			table.insert(slot0.resistanceList, slot9)
+		end
+	end
+end
+
+function slot0.buildResistanceListByResistanceDict(slot0, slot1)
+	slot0.tempResistanceList = slot0.tempResistanceList or {}
+
+	tabletool.clear(slot0.tempResistanceList)
+
+	for slot5, slot6 in pairs(slot1) do
+		if slot6 > 0 and FightEnum.Resistance[slot5] and not slot0.resistanceDict[slot7] then
+			table.insert(slot0.tempResistanceList, {
+				resistanceId = slot7,
+				value = slot0:getResistanceValue(slot1, slot7)
+			})
+
+			slot0.resistanceDict[slot7] = true
 		end
 	end
 
-	for slot5, slot6 in pairs(FightEnum.Resistance) do
-		if not slot0.resistanceDict[slot6] and (slot1[slot5] or 0) > 0 then
-			table.insert(slot0.resistanceList, {
-				resistanceId = slot6,
-				value = slot7
-			})
+	if #slot0.tempResistanceList > 0 then
+		table.sort(slot0.tempResistanceList, uv0.sortResistance)
+
+		for slot5, slot6 in ipairs(slot0.tempResistanceList) do
+			table.insert(slot0.resistanceList, slot6)
 		end
 	end
-
-	table.sort(slot0.resistanceList, uv0.sortResistance)
 end
 
 function slot0.getResistanceValue(slot0, slot1, slot2)
@@ -189,6 +219,10 @@ function slot0.hideDescTip(slot0)
 end
 
 function slot0.sortResistance(slot0, slot1)
+	if slot0.value ~= slot1.value then
+		return slot1.value < slot0.value
+	end
+
 	return lua_character_attribute.configDict[slot0.resistanceId].sortId < lua_character_attribute.configDict[slot1.resistanceId].sortId
 end
 

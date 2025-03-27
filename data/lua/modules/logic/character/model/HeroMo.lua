@@ -230,6 +230,11 @@ function slot0.initFromTrial(slot0, slot1, slot2, slot3)
 	end
 
 	slot0:init(slot6, slot5)
+
+	slot0.destinyStoneMo = slot0.destinyStoneMo or HeroDestinyStoneMO.New(slot0.heroId)
+
+	slot0.destinyStoneMo:refreshMo(slot4.facetslevel, 1, slot4.facetsId)
+	slot0.destinyStoneMo:setTrial()
 end
 
 function slot0.initFromConfig(slot0, slot1)
@@ -814,7 +819,7 @@ function slot0.getHeroUseStyleCubeId(slot0)
 end
 
 function slot0.isCanOpenDestinySystem(slot0, slot1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DestinyStone) then
+	if not slot0:isTrial() and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DestinyStone) then
 		slot2 = lua_open.configDict[OpenEnum.UnlockFunc.DestinyStone].episodeId
 
 		if slot1 and not DungeonModel.instance:hasPassLevel(slot2) then

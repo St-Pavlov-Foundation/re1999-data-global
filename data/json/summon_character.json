@@ -444,6 +444,30 @@
     "location": 2
   },
   {
+    "id": 241111,
+    "heroId": 3108,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 241211,
+    "heroId": 3109,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 241911,
+    "heroId": 3098,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 241912,
+    "heroId": 3094,
+    "skinId": 0,
+    "location": 2
+  },
+  {
     "id": 231011,
     "heroId": 3095,
     "skinId": 0,

@@ -45,7 +45,8 @@ function slot0._initEventHandleDict()
 		[RougeMapEnum.EventType.TreasurePlace] = uv0.choiceHandle,
 		[RougeMapEnum.EventType.ChoiceLair] = uv0.choiceHandle,
 		[RougeMapEnum.EventType.FightLair] = uv0.fightHandle,
-		[RougeMapEnum.EventType.Unknow] = uv0.emptyHandle
+		[RougeMapEnum.EventType.Unknow] = uv0.emptyHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = uv0.choiceHandle
 	}
 end
 
@@ -92,7 +93,8 @@ function slot0._initContinueEventHandleDict()
 		[RougeMapEnum.EventType.TreasurePlace] = uv0.choiceHandle,
 		[RougeMapEnum.EventType.ChoiceLair] = uv0.choiceHandle,
 		[RougeMapEnum.EventType.FightLair] = uv0.continueFightEventHandle,
-		[RougeMapEnum.EventType.Unknow] = uv0.emptyHandle
+		[RougeMapEnum.EventType.Unknow] = uv0.emptyHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = uv0.choiceHandle
 	}
 end
 
@@ -182,7 +184,8 @@ function slot0._initEventHandleOnChoiceViewDict()
 		[RougeMapEnum.EventType.WatchTower] = uv0.onChoiceViewChoiceHandle,
 		[RougeMapEnum.EventType.TreasurePlace] = uv0.onChoiceViewChoiceHandle,
 		[RougeMapEnum.EventType.ChoiceLair] = uv0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.FightLair] = uv0.onChoiceViewFightHandle
+		[RougeMapEnum.EventType.FightLair] = uv0.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = uv0.onChoiceViewChoiceHandle
 	}
 end
 
@@ -198,6 +201,15 @@ end
 function slot0.onChoiceViewStoreHandle(slot0)
 	uv0.defaultHandleOnChoiceView()
 	ViewMgr.instance:openView(ViewName.RougeStoreView, slot0.eventMo)
+end
+
+function slot0._getLevelUpMaxNum(slot0)
+	if slot0 then
+		slot1 = slot0 and slot0.eventMo
+		slot2 = slot1 and slot1.jsonData
+
+		return slot2 and slot2.collectionLevelUpNum
+	end
 end
 
 return slot0

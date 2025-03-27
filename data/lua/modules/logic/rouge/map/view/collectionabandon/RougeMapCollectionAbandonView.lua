@@ -94,9 +94,10 @@ function slot0.onOpen(slot0)
 	slot0.lossType = slot0.viewParam.lossType
 	slot0.lossCount = slot0.viewParam.lostNum
 	slot0.filterUnique = slot0.viewParam.filterUnique
+	slot0.collections = slot0.viewParam.collections or RougeCollectionModel.instance:getAllCollections()
 
 	RougeLossCollectionListModel.instance:setLossType(slot0.lossType)
-	RougeLossCollectionListModel.instance:initList(slot0.lossCount, slot0.baseFilterTagDict, slot0.extraFilterTagDict, slot0.filterUnique)
+	RougeLossCollectionListModel.instance:initList(slot0.lossCount, slot0.collections, slot0.baseFilterTagDict, slot0.extraFilterTagDict, slot0.filterUnique)
 	slot0:refreshTitle()
 	slot0:refreshLeft()
 	slot0:refreshRight()
@@ -107,6 +108,9 @@ function slot0.refreshTitle(slot0)
 	if slot0.lossType == RougeMapEnum.LossType.Copy then
 		slot0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_copy")
 		slot0._txtdec.text = luaLang("p_rougecollectionabandonview_txt_copy1")
+	elseif slot0.lossType == RougeMapEnum.LossType.AbandonSp then
+		slot0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_losssp")
+		slot0._txtdec.text = luaLang("p_rougecollectionabandonview_txt_losssp1")
 	else
 		slot0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_dec1")
 		slot0._txtdec.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_loss_title"), slot0.lossCount)

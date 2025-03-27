@@ -772,6 +772,10 @@ function slot0._fadeIn(slot0)
 end
 
 function slot0._fadeInFinished(slot0)
+	if not slot0._stepCo then
+		return
+	end
+
 	StoryModel.instance:setTextShowing(false)
 	TaskDispatcher.cancelTask(slot0._onCheckNext, slot0)
 

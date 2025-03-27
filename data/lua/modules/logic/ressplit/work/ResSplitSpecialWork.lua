@@ -66,7 +66,19 @@ function slot0.onStart(slot0, slot1)
 	}
 	slot3 = {
 		"1_2lvhuemeng",
-		"1_2lvhuemeng_1"
+		"1_2lvhuemeng_1",
+		"xuzhangkaichangpv_4k",
+		"1_7_enter",
+		"1_8_enter",
+		"1_9_enter",
+		"2_4_opening_1",
+		"1_1_opening_0",
+		"1_1_opening_1",
+		"1_2_opening_0",
+		"1_2_opening_1",
+		"1_3_opening_1",
+		"1_5_opening_1",
+		"1_7_enter"
 	}
 	slot5 = {
 		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_chuchang),

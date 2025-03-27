@@ -55,5 +55,24 @@
     "resMaxVal": 100,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_3.png",
     "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow3.png"
+  },
+  {
+    "bossId": 4,
+    "towerId": 4,
+    "name": "language_10064231",
+    "career": 1,
+    "skinId": 620405,
+    "gender": 3,
+    "dmgType": 1,
+    "tag": "language_10064234",
+    "heartVariantId": 7,
+    "coldTime": 0,
+    "activeSkills": "12410010#50#0#100",
+    "passiveSkills": "12410021",
+    "passiveSkillName": "language_10064231",
+    "resInitVal": 0,
+    "resMaxVal": 100,
+    "bossPic": "singlebg/tower_singlebg/boss/tower_boss_4.png",
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow4.png"
   }
 ]

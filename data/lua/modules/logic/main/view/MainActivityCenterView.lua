@@ -28,6 +28,9 @@ function slot0._editableInitView(slot0)
 	slot0._turnbackItem = nil
 	slot0._activityImg = gohelper.findChildImage(slot0.viewGO, "left/#go_activity")
 	slot0._activityLogo = gohelper.findChild(slot0.viewGO, "left/#go_activity/actlogo")
+	slot0._goactbg = gohelper.findChild(slot0.viewGO, "left/#go_activity/scroll_view/#go_actbg")
+	slot0._goactbgTrans = slot0._goactbg.transform
+	slot0._goactbgOffsetX = recthelper.getAnchorX(slot0._goactbgTrans)
 
 	if gohelper.findChildClickWithAudio(slot0.viewGO, "left/#go_activity/actlogo/click") then
 		slot0._activityAnimator = slot0._activityImg:GetComponent("Animator")
@@ -84,6 +87,9 @@ function slot0._onScreenResize(slot0)
 
 	slot0._scrollview.horizontalNormalizedPosition = 0
 	slot0._scrollarrow.transform.position = slot0._scrollarrowpos.transform.position
+
+	slot0:_refreshActBgWidth()
+
 	slot0._needCheckPosX = math.max(0, recthelper.rectToRelativeAnchorPos(slot0._scrollarrowpos.transform.position, slot0._scrollview.transform).x - 32)
 end
 
@@ -187,18 +193,13 @@ function slot0.showActivityEffect()
 end
 
 function slot0._checkActivityImgVisible(slot0)
-	slot2 = uv0.showActivityEffect()
-
-	if slot0._activityImg then
-		slot0._activityImg.enabled = slot2
-	end
-
-	gohelper.setActive(slot0._activityLogo, slot2)
+	gohelper.setActive(slot0._activityLogo, uv0.showActivityEffect() and slot0:_checkIsShowLogoVisible())
+	gohelper.setActive(slot0._goactbg, slot1 and slot0:_checkIsShowActBgVisible())
 
 	if ActivityConfig.instance:getMainActAtmosphereConfig() then
-		for slot7, slot8 in ipairs(slot3.mainView) do
-			if gohelper.findChild(slot0.viewGO, slot8) then
-				gohelper.setActive(slot9, slot1)
+		for slot8, slot9 in ipairs(slot4.mainView) do
+			if gohelper.findChild(slot0.viewGO, slot9) then
+				gohelper.setActive(slot10, slot1)
 			end
 		end
 	end
@@ -269,6 +270,8 @@ function slot0._sortBtns(slot0)
 	end
 
 	slot0._scrollview.horizontalNormalizedPosition = 0
+
+	slot0:_refreshActBgWidth()
 end
 
 function slot0._checkBpBtn(slot0)
@@ -502,6 +505,8 @@ function slot0._checkSpringSignViewBtn(slot0)
 end
 
 function slot0._createActCenterItem(slot0, slot1)
+	slot0:_refreshActBgWidth()
+
 	return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._itemGo), slot1)
 end
 
@@ -571,6 +576,40 @@ function slot0._onDailyRefresh(slot0)
 	slot0:_freshBtns()
 	slot0:_updateRoleSignViewBtn()
 	slot0:_updateSpringSignViewBtn()
+end
+
+function slot0._checkIsShowLogoVisible(slot0)
+	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+		return false
+	end
+
+	return slot1.isShowLogo or false
+end
+
+function slot0._checkIsShowActBgVisible(slot0)
+	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+		return false
+	end
+
+	return slot1.isShowActBg or false
+end
+
+slot2 = 840.4
+
+function slot0._refreshActBgWidth(slot0)
+	slot1 = 0
+
+	if slot0._sortBtnList then
+		for slot5, slot6 in pairs(slot0._sortBtnList) do
+			slot1 = slot1 + 1
+		end
+	end
+
+	if slot0._centerItems then
+		slot1 = slot1 + #slot0._centerItems
+	end
+
+	recthelper.setWidth(slot0._goactbgTrans, GameUtil.clamp(slot1 * slot0._itemSize + slot0._horizontalLeft + (slot1 - 1) * slot0._horizontal.spacing + -math.min(0, slot0._goactbgOffsetX) * 2, 0, uv0))
 end
 
 return slot0

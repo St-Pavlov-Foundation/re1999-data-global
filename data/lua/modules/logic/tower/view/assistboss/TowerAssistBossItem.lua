@@ -13,6 +13,7 @@ function slot0.onInitView(slot0)
 	slot0.btnCancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btnCancel")
 	slot0.goLevel = gohelper.findChild(slot0.viewGO, "root/level")
 	slot0.txtLevel = gohelper.findChildTextMesh(slot0.viewGO, "root/level/#txt_level")
+	slot0.goArrow = gohelper.findChild(slot0.viewGO, "root/level/#go_Arrow")
 	slot0.itemList = {}
 
 	slot0:createItem(slot0.goOpen)
@@ -29,6 +30,8 @@ function slot0.addEvents(slot0)
 	slot0:addClickCb(slot0.btnClick, slot0.onBtnClick, slot0)
 	slot0:addClickCb(slot0.btnSure, slot0.onBtnSure, slot0)
 	slot0:addClickCb(slot0.btnCancel, slot0.onBtnCancel, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -38,6 +41,14 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
+end
+
+function slot0._onResetTalent(slot0, slot1)
+	slot0:refreshTalent()
+end
+
+function slot0._onActiveTalent(slot0, slot1)
+	slot0:refreshTalent()
 end
 
 function slot0.onBtnSure(slot0)
@@ -152,6 +163,12 @@ function slot0.onUpdateMO(slot0, slot1)
 	if slot4 then
 		slot0.txtLevel.text = tostring(slot0._mo.bossInfo.level)
 	end
+
+	slot0:refreshTalent()
+end
+
+function slot0.refreshTalent(slot0)
+	gohelper.setActive(slot0.goArrow, slot0._mo.bossInfo and slot0._mo.bossInfo:hasTalentCanActive() or false)
 end
 
 function slot0.updateItem(slot0, slot1, slot2)

@@ -435,5 +435,28 @@
     "cgScale": "1",
     "mainviewName": "language_10060911",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 20,
+    "chapterId": 1920,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110503#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10005352",
+    "photo": "302502",
+    "cgBg": "302501",
+    "order": 20,
+    "name": "language_10062386",
+    "nameEn": "T</size>he  <color=#D2CDBC><size=30>Best Band</size></color> in Town<size=140>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_20",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12407,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 192007,
+    "cgPos": "-121#-186",
+    "cgScale": "1",
+    "mainviewName": "language_10063894",
+    "permanentUnlock": "2#24#1"
   }
 ]

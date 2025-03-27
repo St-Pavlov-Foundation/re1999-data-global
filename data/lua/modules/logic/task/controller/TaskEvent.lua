@@ -12,5 +12,6 @@ slot0.OnDeleteTask = 1008
 slot0.onReceiveFinishReadTaskReply = 1009
 slot0.OnShowTaskFinished = 1100
 slot0.OnRefreshActItem = 1101
+slot0.OnClickFinishAllTask = 1201
 
 return slot0

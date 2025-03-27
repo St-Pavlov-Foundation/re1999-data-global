@@ -15,17 +15,12 @@ end
 function slot0.initHeroList(slot0)
 	slot0._mainHeroList = {}
 	slot0.curHeroId = nil
-	slot1 = CharacterMainHeroMO.New()
-	slot6 = true
 
-	slot1:init(nil, 0, slot6)
-	table.insert(slot0._mainHeroList, slot1)
+	for slot5, slot6 in ipairs(HeroModel.instance:getList()) do
+		slot7 = CharacterMainHeroMO.New()
 
-	for slot6, slot7 in ipairs(HeroModel.instance:getList()) do
-		slot8 = CharacterMainHeroMO.New()
-
-		slot8:init(slot7, slot7.config.skinId, false)
-		table.insert(slot0._mainHeroList, slot8)
+		slot7:init(slot6, slot6.config.skinId, false)
+		table.insert(slot0._mainHeroList, slot7)
 	end
 end
 
@@ -34,14 +29,6 @@ function slot0._isDefaultSkinId(slot0, slot1)
 end
 
 function slot0._commonSort(slot0, slot1, slot2)
-	if slot1.isRandom then
-		return true
-	end
-
-	if slot2.isRandom then
-		return false
-	end
-
 	if slot1.heroMO.heroId == slot0.curHeroId then
 		return true
 	end
@@ -129,13 +116,9 @@ end
 
 function slot0.changeMainHero(slot0, slot1, slot2, slot3, slot4)
 	slot1 = slot1 and tonumber(slot1)
-	slot2 = slot2 and tonumber(slot2)
 	slot5 = slot4 and 1 or 0
 
-	if slot3 then
-		slot1 = -1
-		slot2 = -1
-	elseif not slot2 or slot2 == 0 then
+	if not slot2 or not tonumber(slot2) or slot2 == 0 then
 		slot2 = HeroConfig.instance:getHeroCO(slot1).skinId
 	end
 
@@ -161,9 +144,11 @@ function slot0.changeMainHeroByParam(slot0, slot1, slot2)
 
 	if slot2 then
 		slot3 = string.splitToNumber(slot1, "#")
+		slot4 = slot3[1]
 
-		CharacterSwitchListModel.instance:changeMainHero(slot4, slot3[2], slot3[1] == -1)
+		CharacterSwitchListModel.instance:changeMainHero(slot4, slot3[2])
 		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshMainHeroSkin)
+		CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, slot4)
 	end
 
 	PlayerCardRpc.instance:sendSetPlayerCardHeroCoverRequest(slot1)

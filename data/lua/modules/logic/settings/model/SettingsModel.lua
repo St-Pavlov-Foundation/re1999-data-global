@@ -1,6 +1,21 @@
 module("modules.logic.settings.model.SettingsModel", package.seeall)
 
 slot0 = class("SettingsModel", BaseModel)
+
+function slot0.extractByRegion(slot0, slot1)
+	if string.nilorempty(slot1) then
+		return slot1
+	end
+
+	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, false)) do
+		if slot8[1] == slot0:getRegionShortcut() then
+			return slot8[2]
+		end
+	end
+
+	return slot1
+end
+
 slot0.ResolutionRatioWidthList = {
 	15360,
 	7680,
@@ -13,6 +28,12 @@ slot0.ResolutionRatioWidthList = {
 	1152,
 	1024,
 	800
+}
+slot0.FrameRate = {
+	30,
+	60,
+	120,
+	144
 }
 
 function slot0.onInit(slot0)
@@ -344,6 +365,14 @@ function slot0.setTargetFrameRate(slot0, slot1)
 	GameGlobalMgr.instance:getScreenState():setTargetFrameRate(slot1)
 end
 
+function slot0.getVSyncCount(slot0)
+	return GameGlobalMgr.instance:getScreenState():getVSyncCount()
+end
+
+function slot0.setVSyncCount(slot0, slot1)
+	GameGlobalMgr.instance:getScreenState():setVSyncCount(slot1)
+end
+
 function slot0._setIsFullScreen(slot0, slot1)
 	slot0._isFullScreen = slot1 and ModuleEnum.FullScreenState.On or ModuleEnum.FullScreenState.Off
 end
@@ -498,91 +527,6 @@ function slot0.getRecordVideo(slot0)
 	return slot0._isRecordVideo == 1
 end
 
-function slot0._resolutionStr(slot0, slot1, slot2)
-	return string.format("%s * %s", slot1, slot2)
-end
-
-function slot0.getResolutionRatioStrList(slot0)
-	slot0:initResolutionRationDataList()
-
-	slot1 = {}
-
-	for slot5, slot6 in ipairs(slot0._resolutionRatioDataList) do
-		slot7 = slot0:_resolutionStr(slot6.width, slot6.height)
-
-		if slot6.isFullscreen then
-			slot7 = luaLang("settings_fullscreen")
-		end
-
-		table.insert(slot1, slot7)
-	end
-
-	return slot1
-end
-
-function slot0._appendResolutionData(slot0, slot1, slot2, slot3)
-	table.insert(slot0._resolutionRatioDataList, {
-		width = slot1,
-		height = slot2,
-		isFullscreen = slot3
-	})
-end
-
-function slot0.setScreenResolutionByIndex(slot0, slot1)
-	if not BootNativeUtil.isWindows() then
-		return false
-	end
-
-	if not slot0._resolutionRatioDataList then
-		return false
-	end
-
-	if not slot0._resolutionRatioDataList[slot1] then
-		GameFacade.showToastString("error index:" .. slot1)
-
-		return false
-	end
-
-	slot0._screenWidth = slot2.width
-	slot0._screenHeight = slot2.height
-
-	slot0:_setIsFullScreen(slot2.isFullscreen)
-
-	slot0._resolutionRatio = slot0:_resolutionStr(slot0._screenWidth, slot0._screenHeight)
-
-	slot0:setResolutionRatio()
-
-	return true
-end
-
-function slot0.getCurrentResolutionWHAndIsFull(slot0)
-	if not slot0._resolutionRatio then
-		slot0:initWindowsResolution()
-	end
-
-	if not string.splitToNumber(slot0._resolutionRatio, "*") then
-		return 0, 0, false
-	end
-
-	return slot1[1], slot1[2], slot0:isFullScreen()
-end
-
-function slot0.getCurrentDropDownIndex(slot0)
-	slot1, slot2, slot3 = slot0:getCurrentResolutionWHAndIsFull()
-
-	if slot3 then
-		return 0
-	end
-
-	for slot7, slot8 in ipairs(slot0._resolutionRatioDataList or {}) do
-		if not slot8.isFullscreen and slot1 == slot8.width and slot2 == slot8.height then
-			return slot7 - 1
-		end
-	end
-
-	return 0, true
-end
-
 function slot0.setPushState(slot0, slot1)
 	slot0._pushStates = {}
 
@@ -695,6 +639,23 @@ function slot0.getCurrentDropDownIndex(slot0)
 	end
 
 	return 0, true
+end
+
+function slot0.getCurrentFrameRateIndex(slot0)
+	for slot5, slot6 in ipairs(uv0.FrameRate) do
+		if slot0:getModelTargetFrameRate() == slot6 then
+			return slot5
+		end
+	end
+
+	return 1
+end
+
+function slot0.setModelTargetFrameRate(slot0, slot1)
+	if uv0.FrameRate[slot1 + 1] then
+		logNormal("设置帧率: ", slot2)
+		slot0:setTargetFrameRate(slot2)
+	end
 end
 
 slot0.instance = slot0.New()

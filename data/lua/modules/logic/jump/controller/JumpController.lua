@@ -227,7 +227,9 @@ slot1 = {
 	"V2a2_RedLeafFestival_PanelView",
 	"V2a3_Role_PanelSignView_Part1",
 	"V2a3_Role_PanelSignView_Part2",
-	"V2a3_Special_PanelsView"
+	"V2a3_Special_PanelsView",
+	"V2a4_Role_PanelSignView_Part1",
+	"V2a4_Role_PanelSignView_Part2"
 }
 
 function slot0.jumpTo(slot0, slot1, slot2, slot3, slot4)

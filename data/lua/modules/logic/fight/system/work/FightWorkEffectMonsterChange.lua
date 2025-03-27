@@ -28,6 +28,7 @@ function slot0.onStart(slot0)
 	slot0:com_registWorkDoneFlowSequence():addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.MonsterChangeBefore, slot0._oldEntityMO.modelId))
 
 	if lua_fight_boss_evolution_client.configDict[slot0._oldEntityMO.skin] then
+		slot1.beforeMonsterChangeSkin = slot0._oldEntityMO.skin
 		slot4 = FightWorkFlowSequence.New()
 
 		FightHelper.buildMonsterA2B(slot1, slot0._oldEntityMO, slot4, FightWorkFunction.New(slot0._buildNewEntity, slot0))
@@ -48,8 +49,14 @@ function slot0._removeOldEntity(slot0, slot1)
 end
 
 function slot0._buildNewEntity(slot0)
-	if GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._newEntityMO) and slot2.buff then
-		xpcall(slot3.dealStartBuff, __G__TRACKBACK__, slot3)
+	slot1 = GameSceneMgr.instance:getCurScene().entityMgr
+
+	if FightHelper.getEntity(slot0._newEntityMO.id) then
+		slot1:removeUnit(slot2:getTag(), slot2.id)
+	end
+
+	if slot1:buildSpine(slot0._newEntityMO) and slot3.buff then
+		xpcall(slot4.dealStartBuff, __G__TRACKBACK__, slot4)
 	end
 end
 

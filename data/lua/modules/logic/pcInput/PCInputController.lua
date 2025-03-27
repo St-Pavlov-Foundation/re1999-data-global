@@ -213,10 +213,6 @@ function slot0.showkeyTips(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	if PlayerPrefsHelper.getNumber("keyTips", 0) == 0 then
-		return
-	end
-
 	if not slot4 then
 		MonoHelper.addLuaComOnceToGo(slot1, keyTipsView, {
 			keyname = slot4,
@@ -224,10 +220,10 @@ function slot0.showkeyTips(slot0, slot1, slot2, slot3, slot4)
 			keyid = slot3
 		}):Refresh(slot2, slot3)
 	else
-		slot6:RefreshByKeyName(slot4)
+		slot5:RefreshByKeyName(slot4)
 	end
 
-	return slot6
+	return slot5
 end
 
 function slot0.KeyNameToDescName(slot0, slot1)

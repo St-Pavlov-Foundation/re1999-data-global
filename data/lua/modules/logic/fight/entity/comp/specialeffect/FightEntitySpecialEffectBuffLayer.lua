@@ -7,6 +7,7 @@ function slot0.initClass(slot0)
 	slot0._effectWraps = {}
 	slot0._buffId2Config = {}
 	slot0._oldLayer = {}
+	slot0._buffType = {}
 
 	slot0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, slot0._onSetBuffEffectVisible, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
@@ -62,9 +63,25 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 	end
 
 	if lua_fight_buff_layer_effect.configDict[slot3] then
+		if slot2 == FightEnum.EffectType.BUFFDEL or slot2 == FightEnum.EffectType.BUFFDELNOEFFECT then
+			if not slot0._buffType[slot4] then
+				return
+			end
+
+			if slot5 == FightEnum.BuffType.LayerSalveHalo then
+				return
+			end
+
+			slot0:_refreshEffect(slot3, nil, 0, slot2)
+
+			return
+		end
+
 		if not slot0._entity:getMO():getBuffMO(slot4) then
 			return
 		end
+
+		slot0._buffType[slot4] = slot6.type
 
 		if slot6.type == FightEnum.BuffType.LayerSalveHalo then
 			return
@@ -83,8 +100,6 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 
 			if FightSkillBuffMgr.instance:buffIsStackerBuff(lua_skill_buff.configDict[slot3]) then
 				slot9 = FightSkillBuffMgr.instance:getStackedCount(slot1, slot6)
-			elseif slot2 == FightEnum.EffectType.BUFFDEL or slot2 == FightEnum.EffectType.BUFFDELNOEFFECT then
-				slot9 = 0
 			end
 
 			slot0:_refreshEffect(slot3, slot8, slot9, slot2)

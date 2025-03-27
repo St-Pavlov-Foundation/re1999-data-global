@@ -20,7 +20,6 @@ function slot0.init(slot0, slot1)
 
 	slot0:_initCapacity()
 	slot0:_initObj(slot1)
-	slot0:initDLCs()
 	slot0:addEventCb(RougeController.instance, RougeEvent.OnTeamViewSelectedHeroPlayEffect, slot0._onTeamViewSelectedHeroPlayEffect, slot0)
 end
 

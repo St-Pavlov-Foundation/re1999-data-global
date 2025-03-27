@@ -42,7 +42,8 @@ function slot0.onClickBaseSpotItem(slot0)
 	Season166Controller.instance:openSeasonBaseSpotView({
 		actId = slot0.actId,
 		baseId = slot0.baseId,
-		config = slot0.config
+		config = slot0.config,
+		viewType = Season166Enum.WordBaseSpotType
 	})
 end
 

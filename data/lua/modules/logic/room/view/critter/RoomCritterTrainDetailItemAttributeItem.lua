@@ -137,25 +137,33 @@ function slot0.playBarAdd(slot0, slot1, slot2)
 	end
 end
 
-function slot0.playLevelUp(slot0, slot1)
+function slot0.playLevelUp(slot0, slot1, slot2)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("attributelevelup")
 	TaskDispatcher.cancelTask(slot0._detailFinished, slot0)
 
 	slot0._addAttributeMO = slot1
 	slot0._addAttr = true
-	slot0._startValue = slot0._imagedetailprogress.fillAmount
-	slot0._endValue = CritterConfig.instance:getCritterAttributeLevelCfg(CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeBaseValue).level + 1) and (slot0._attributeBaseValue + slot0._addAttributeMO.value - slot3.minValue) / (slot4.minValue - slot3.minValue) or 1
+	slot0._tweenEndAttrValue = slot0._attributeBaseValue + slot0._addAttributeMO.value
+	slot0._tweenStartAttrValue = slot0._attributeBaseValue
+
+	if slot2 == true then
+		slot0._tweenEndAttrValue = slot0._attributeBaseValue
+		slot0._tweenStartAttrValue = slot0._attributeBaseValue - slot0._addAttributeMO.value
+		slot0._addAttributeMO = nil
+	end
+
+	slot0._endValue = CritterConfig.instance:getCritterAttributeLevelCfg(CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._tweenStartAttrValue).level + 1) and (slot0._tweenEndAttrValue - slot3.minValue) / (slot4.minValue - slot3.minValue) or 1
+	slot0._startValue = slot4 and (slot0._tweenStartAttrValue - slot3.minValue) / (slot4.minValue - slot3.minValue) or 1
 
 	slot0:_clearTween()
 
-	slot0._fillDetailTweenId = ZProj.TweenHelper.DOTweenFloat(slot0._startValue, slot0._endValue, 1.5, slot0._detailFillUpdate, slot0._detailFinished, slot0, nil, EaseType.Linear)
+	slot0._fillDetailTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, slot0._detailFillUpdate, slot0._detailFinished, slot0, nil, EaseType.Linear)
 end
 
 function slot0._detailFillUpdate(slot0, slot1)
-	slot0._imagedetailprogress.fillAmount = slot1
-	slot2 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeBaseValue)
-	slot0._txtnum.text = string.format("%.02f", math.min(slot2.minValue + slot1 * (slot0._attributeBaseValue + slot0._addAttributeMO.value - slot2.minValue), CritterConfig.instance:getCritterAttributeMax()))
+	slot0._imagedetailprogress.fillAmount = slot0._startValue + slot1 * (slot0._endValue - slot0._startValue)
+	slot0._txtnum.text = string.format("%.02f", math.min(slot0._tweenStartAttrValue + slot1 * (slot0._tweenEndAttrValue - slot0._tweenStartAttrValue), CritterConfig.instance:getCritterAttributeMax()))
 end
 
 function slot0._detailFinished(slot0)

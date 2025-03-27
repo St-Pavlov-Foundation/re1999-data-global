@@ -85,15 +85,15 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._btnPrivacyOnClick(slot0)
-	UnityEngine.Application.OpenURL("https://m.sl916.com/protocol.html")
+	GameUtil.openURL("https://m.sl916.com/protocol.html")
 end
 
 function slot0._btnPersonalOnClick(slot0)
-	UnityEngine.Application.OpenURL("https://m.sl916.com/collected.html")
+	GameUtil.openURL("https://m.sl916.com/collected.html")
 end
 
 function slot0._btnThirdPartyOnClick(slot0)
-	UnityEngine.Application.OpenURL("https://m.sl916.com/personal.html")
+	GameUtil.openURL("https://m.sl916.com/personal.html")
 end
 
 function slot0._OnChangeLangTxt(slot0)

@@ -54,6 +54,9 @@ function slot0.onInitView(slot0)
 	slot0._littlemonthcardiconright = gohelper.findChild(slot0._littlemonthcardreward, "right/#go_righticon")
 	slot0._littlemonthcardiconpower = gohelper.findChild(slot0._littlemonthcardreward, "right/#go_powericon")
 	slot0._golittlemonthcardicon2new = gohelper.findChild(slot0._littlemonthcardreward, "left/#go_lefticon2/new")
+	slot0._goSkinTips = gohelper.findChild(slot0.viewGO, "view/#go_SkinTips")
+	slot0._imgProp = gohelper.findChildImage(slot0.viewGO, "view/#go_SkinTips/#txt_Tips/#image_Prop")
+	slot0._txtPropNum = gohelper.findChildTextMesh(slot0.viewGO, "view/#go_SkinTips/#txt_Tips/#txt_Num")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -174,6 +177,7 @@ function slot0.onOpen(slot0)
 	end
 
 	gohelper.setActive(slot0._gonewbiePick, slot4)
+	slot0:refreshSkinTips(slot0._mo)
 end
 
 function slot0._refreshPriceArea(slot0)
@@ -485,6 +489,28 @@ end
 
 function slot0._payFinished(slot0)
 	slot0:closeThis()
+end
+
+function slot0.refreshSkinTips(slot0, slot1)
+	slot2, slot3 = SkinConfig.instance:isSkinStoreGoods(slot1.goodsId)
+
+	if not slot2 then
+		gohelper.setActive(slot0._goSkinTips, false)
+
+		return
+	end
+
+	if StoreModel.instance:isSkinGoodsCanRepeatBuy(slot1, slot3) then
+		gohelper.setActive(slot0._goSkinTips, true)
+
+		slot5 = string.splitToNumber(SkinConfig.instance:getSkinCo(slot3).compensate, "#")
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imgProp, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot5[2]).icon))
+
+		slot0._txtPropNum.text = tostring(slot5[3])
+	else
+		gohelper.setActive(slot0._goSkinTips, false)
+	end
 end
 
 function slot0.onClose(slot0)

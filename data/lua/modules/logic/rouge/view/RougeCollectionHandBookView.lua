@@ -62,6 +62,7 @@ function slot0._editableInitView(slot0)
 
 	slot0._compositeItemTab = slot0:getUserDataTb_()
 	slot0._collectionCellTab = slot0:getUserDataTb_()
+	slot0._itemInstTab = slot0:getUserDataTb_()
 	slot0._baseTagSelectMap = {}
 	slot0._extraTagSelectMap = {}
 	slot0._goshapecontainer = gohelper.findChild(slot0.viewGO, "Right/top/layout/shape")
@@ -104,7 +105,7 @@ function slot0.refreshSelectCollectionInfo(slot0)
 end
 
 function slot0.refrehsCollectionDesc(slot0)
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0._productId, nil, slot0._godescContent, slot0._godescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0._productId, nil, slot0._godescContent, slot0._itemInstTab)
 end
 
 function slot0.refreshCollectionTagIcon(slot0, slot1, slot2, slot3)

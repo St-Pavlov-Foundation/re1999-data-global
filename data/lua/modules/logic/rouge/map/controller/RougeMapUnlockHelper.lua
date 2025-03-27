@@ -10,7 +10,9 @@ slot0.UnlockType = {
 	DeadHeroNum = 17,
 	PassLayer = 7,
 	HadNotUniqueCollectionNum = 18,
+	LevelUpSpCollectionCount = 20,
 	PossessHero = 3,
+	PossessSpCollectionCount = 21,
 	FinishDifficulty = 16,
 	PossessCollectionCount = 5,
 	FinishPiece = 15,
@@ -71,7 +73,9 @@ function slot0._initHandle()
 		[uv0.UnlockType.FinishPiece] = uv0._checkFinishPiece,
 		[uv0.UnlockType.FinishDifficulty] = uv0._checkFinishDifficulty,
 		[uv0.UnlockType.DeadHeroNum] = uv0._checkDeadHeroNum,
-		[uv0.UnlockType.HadNotUniqueCollectionNum] = uv0._checkHadNotUniqueCollectionNum
+		[uv0.UnlockType.HadNotUniqueCollectionNum] = uv0._checkHadNotUniqueCollectionNum,
+		[uv0.UnlockType.PossessSpCollectionCount] = uv0._checkHadSpCollectionNum,
+		[uv0.UnlockType.LevelUpSpCollectionCount] = uv0._checkHadLevelUpSpCollectionNum
 	}
 end
 
@@ -98,7 +102,9 @@ function slot0._initGetTipHandle()
 		[uv0.UnlockType.FinishPiece] = uv0._noParamTips,
 		[uv0.UnlockType.FinishDifficulty] = uv0._getFinishDifficultyTips,
 		[uv0.UnlockType.DeadHeroNum] = uv0._getDefaultTips,
-		[uv0.UnlockType.HadNotUniqueCollectionNum] = uv0._getDefaultTips
+		[uv0.UnlockType.HadNotUniqueCollectionNum] = uv0._getDefaultTips,
+		[uv0.UnlockType.PossessSpCollectionCount] = uv0._getDefaultTips,
+		[uv0.UnlockType.LevelUpSpCollectionCount] = uv0._getDefaultTips
 	}
 end
 
@@ -214,13 +220,15 @@ function slot0._checkFinishPiece(slot0)
 		return false
 	end
 
-	for slot6, slot7 in ipairs(RougeMapModel.instance:getPieceList()) do
-		if tonumber(slot0) == slot7.id then
-			return slot7:isFinish()
+	slot3 = false
+
+	for slot7, slot8 in ipairs(RougeMapModel.instance:getPieceList()) do
+		if tabletool.indexOf(string.splitToNumber(slot0, "#"), slot8.id) and slot8:isFinish() then
+			break
 		end
 	end
 
-	return false
+	return slot3
 end
 
 function slot0._checkFinishDifficulty(slot0)
@@ -233,6 +241,14 @@ end
 
 function slot0._checkHadNotUniqueCollectionNum(slot0)
 	return tonumber(slot0) <= RougeCollectionHelper.getNotUniqueCollectionNum()
+end
+
+function slot0._checkHadSpCollectionNum(slot0)
+	return tonumber(slot0) <= RougeDLCModel102.instance:getAllSpCollectionCount()
+end
+
+function slot0._checkHadLevelUpSpCollectionNum(slot0)
+	return tonumber(slot0) <= RougeDLCModel102.instance:getAllCanLevelUpSpCollectionCount()
 end
 
 function slot0._noParamTips(slot0, slot1)

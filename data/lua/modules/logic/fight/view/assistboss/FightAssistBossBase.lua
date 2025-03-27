@@ -184,6 +184,24 @@ function slot0.playAssistBossCard(slot0)
 		return
 	end
 
+	if not slot0:canUseSkill() then
+		return
+	end
+
+	slot2 = FightCardModel.instance:playAssistBossHandCardOp(slot1.skillId)
+
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot2)
+	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot2)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, slot2)
+	FightDataHelper.paTaMgr:playAssistBossSkill(slot1)
+	FightController.instance:dispatchEvent(FightEvent.OnAssistBossPowerChange)
+	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
+
+	return true
+end
+
+function slot0.canUseSkill(slot0)
 	if not FightDataHelper.paTaMgr:canUseSkill() then
 		return
 	end
@@ -196,15 +214,11 @@ function slot0.playAssistBossCard(slot0)
 		return
 	end
 
-	slot3 = FightCardModel.instance:playAssistBossHandCardOp(slot2.skillId)
+	if FightDataHelper.paTaMgr:getAssistBossPower() < FightDataHelper.paTaMgr:getNeedPower(slot2) then
+		return
+	end
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot3)
-	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot3)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, slot3)
-	FightDataHelper.paTaMgr:playAssistBossSkill(slot2)
-	FightController.instance:dispatchEvent(FightEvent.OnAssistBossPowerChange)
-	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
+	return slot2
 end
 
 slot0.Duration = 0.5

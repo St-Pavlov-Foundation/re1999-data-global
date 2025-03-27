@@ -27,6 +27,24 @@
     "sceneIcon": "m_s06_ui_jfj_03"
   },
   {
+    "poolId": 24101,
+    "bagId": 90004,
+    "heroChoices": "3004#3048#3025#3053#3066#3074#3052#3051#3063#3070#3007",
+    "name": "language_10023269",
+    "nameEn": "Golden Thread I",
+    "icon": "heroversion_2_4/v2a4_fudai/v2a4_fudai_summon_icon_jinfangjie1",
+    "sceneIcon": "m_s06_ui_jfj_01"
+  },
+  {
+    "poolId": 24101,
+    "bagId": 90005,
+    "heroChoices": "3032#3047#3062#3072#3073#3003#3039#3009#3056#3079",
+    "name": "language_10023270",
+    "nameEn": "Golden Thread II",
+    "icon": "heroversion_2_4/v2a4_fudai/v2a4_fudai_summon_icon_jinfangjie2",
+    "sceneIcon": "m_s06_ui_jfj_02"
+  },
+  {
     "poolId": 21101,
     "bagId": 90004,
     "heroChoices": "3004#3048#3025#3053#3066#3074#3052#3051#3063#3070#3007",

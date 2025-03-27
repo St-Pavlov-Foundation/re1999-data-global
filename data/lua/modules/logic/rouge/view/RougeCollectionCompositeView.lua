@@ -98,6 +98,10 @@ function slot0._editableInitView(slot0)
 	slot0._compositeItemTab = slot0:getUserDataTb_()
 	slot0._baseTagSelectMap = {}
 	slot0._extraTagSelectMap = {}
+	slot0._itemInstTab = slot0:getUserDataTb_()
+	slot0._descParams = {
+		isAllActive = true
+	}
 	slot0.goCollection = slot0.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, slot0._gorougefunctionitem2)
 	slot0.collectionComp = RougeCollectionComp.Get(slot0.goCollection)
 end
@@ -134,7 +138,7 @@ function slot0.updateSelectCollectionInfo(slot0)
 end
 
 function slot0.refreshCollectionDesc(slot0)
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0._productId, nil, slot0._godescContent, slot0._godescitem, false)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0._productId, nil, slot0._godescContent, slot0._itemInstTab, RougeCollectionDescHelper.getShowDescTypesWithoutText(), slot0._descParams)
 end
 
 function slot0.buildCollectionCountMap(slot0, slot1)

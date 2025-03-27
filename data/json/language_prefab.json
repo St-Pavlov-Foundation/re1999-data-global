@@ -4065,7 +4065,7 @@
   },
   {
     "id": "p_charactertalentchessview_recommendwear",
-    "lang": "language_10030940"
+    "lang": "language_10064079"
   },
   {
     "id": "p_charactertalentlevelupview_load",
@@ -9501,7 +9501,7 @@
   },
   {
     "id": "p_summonluckybagdetaildescview_tips",
-    "lang": "language_10053365"
+    "lang": "language_10065796"
   },
   {
     "id": "p_character_detect",
@@ -13401,7 +13401,7 @@
   },
   {
     "id": "p_socialplayinfo_personalcard",
-    "lang": "language_10047777"
+    "lang": "language_10062528"
   },
   {
     "id": "p_playercardachieveview_txt_achievement",
@@ -13461,7 +13461,7 @@
   },
   {
     "id": "p_playercardroleswitchview_tips",
-    "lang": "language_10047790"
+    "lang": "language_10064080"
   },
   {
     "id": "p_playercardroleswitchview_confirm",
@@ -13469,7 +13469,7 @@
   },
   {
     "id": "p_playercardroleswitchview_cancel",
-    "lang": "language_10047792"
+    "lang": "language_10064081"
   },
   {
     "id": "p_v2a0_bossrush_help_1_txt_1",
@@ -14241,7 +14241,7 @@
   },
   {
     "id": "p_season166infoanalyze_rewardview_txt_desc2",
-    "lang": "language_10055774"
+    "lang": "language_10064082"
   },
   {
     "id": "p_roomcritterincubateview_txt_overview",
@@ -14561,7 +14561,7 @@
   },
   {
     "id": "p_storenewbiechooseview_txt_char_tag2",
-    "lang": "language_10018038"
+    "lang": "language_90001088"
   },
   {
     "id": "p_storenewbiechooseview_txt_char_tag3",
@@ -16244,6 +16244,854 @@
     "lang": "language_10061262"
   },
   {
+    "id": "p_v2a4_sudokuview_txt_Return",
+    "lang": "language_10031094"
+  },
+  {
+    "id": "p_v2a4_sudokuview_txt_Rule",
+    "lang": "language_10010207"
+  },
+  {
+    "id": "p_v2a4_sudokuview_txt_RuleDescr",
+    "lang": "language_10064083"
+  },
+  {
+    "id": "p_v2a4_sudokuview_txt_Keyboard",
+    "lang": "language_10064084"
+  },
+  {
+    "id": "p_v2a4_dungeonmapview_txt_shop",
+    "lang": "language_10064085"
+  },
+  {
+    "id": "p_v2a4_storeview_txt_title1",
+    "lang": "language_10064086"
+  },
+  {
+    "id": "p_v2a4_storeview_txt_title2",
+    "lang": "language_10064087"
+  },
+  {
+    "id": "p_v2a4_storeview_txt_title3",
+    "lang": "language_10064088"
+  },
+  {
+    "id": "p_v2a4_rougeenterview_txt_tips1",
+    "lang": "language_10064089"
+  },
+  {
+    "id": "p_v2a4_rougeenterview_txt_tips2",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultevaluateitem_state1",
+    "lang": "language_10064090"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultevaluateitem_state2",
+    "lang": "language_10064091"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultevaluateitem_state3",
+    "lang": "language_10064092"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultevaluateitem_state4",
+    "lang": "language_90001095"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_stoptitle",
+    "lang": "language_10064093"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_failtitle",
+    "lang": "language_10064094"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_successtitle",
+    "lang": "language_10064095"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_scoregroup",
+    "lang": "language_10064096"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_accompany",
+    "lang": "language_10064097"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_chapterview_modeentry",
+    "lang": "language_10064098"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeaccompanyview_txt_title",
+    "lang": "language_10064099"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeaccompanyview_txt_info",
+    "lang": "language_10064100"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeaccompanyview_txt_desc",
+    "lang": "language_10064101"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freecalibration_txt_title",
+    "lang": "language_10064102"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeinstrument_set_txt_title",
+    "lang": "language_10064103"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_transcribe",
+    "lang": "language_90001103"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_again",
+    "lang": "language_10064104"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_play",
+    "lang": "language_10064105"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_pause",
+    "lang": "language_10064106"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_continue",
+    "lang": "language_10064107"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_done",
+    "lang": "language_10030626"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_stop",
+    "lang": "language_10064108"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_cancel",
+    "lang": "language_10029702"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_delect",
+    "lang": "language_10031389"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_calibration",
+    "lang": "language_90001105"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_freeview_txt_immerse",
+    "lang": "language_10064109"
+  },
+  {
+    "id": "p_v2a4_balaluoer_beatview_txt_start",
+    "lang": "language_10064110"
+  },
+  {
+    "id": "p_v2a4_balaluoer_beatview_txt_skip",
+    "lang": "language_10064111"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_txt_continuegame",
+    "lang": "language_10064112"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_beatresultview_txt_quitgame",
+    "lang": "language_10064113"
+  },
+  {
+    "id": "p_v2a4_pinball_cityview_txt_desc",
+    "lang": "language_10064114"
+  },
+  {
+    "id": "p_rougecollectionchessview_txt_equipoverview",
+    "lang": "language_10064115"
+  },
+  {
+    "id": "p_rougeequiptipsview_txt_title",
+    "lang": "language_10064116"
+  },
+  {
+    "id": "p_a7_reappear_mainactivity_enterview_txt_EntranceRole1",
+    "lang": "language_10033898"
+  },
+  {
+    "id": "p_a7_reappear_mainactivity_enterview_txt_EntranceRole2",
+    "lang": "language_10033899"
+  },
+  {
+    "id": "p_a7_reappear_mainactivity_enterview_txt_ChapterTips",
+    "lang": "language_10064117"
+  },
+  {
+    "id": "p_rougecollectionabandonview_txt_losssp",
+    "lang": "language_10064118"
+  },
+  {
+    "id": "p_rougecollectionabandonview_txt_losssp1",
+    "lang": "language_10064119"
+  },
+  {
+    "id": "p_v2a4_enterview_txt_itemunselected",
+    "lang": "language_10062124"
+  },
+  {
+    "id": "p_charactertalentuselayoutview_txt_check",
+    "lang": "language_10064120"
+  },
+  {
+    "id": "p_charactertalentuselayoutview_txt_title",
+    "lang": "language_10064121"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_item1",
+    "lang": "language_10064122"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_item2",
+    "lang": "language_10064123"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_item3",
+    "lang": "language_10064124"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_item4",
+    "lang": "language_10064125"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_en1",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_en2",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_en3",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_en4",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_tips",
+    "lang": "language_10064126"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_start",
+    "lang": "language_10027556"
+  },
+  {
+    "id": "p_v2a4_pinball_mapselectview_txt_start_en",
+    "lang": ""
+  },
+  {
+    "id": "p_v2a4_pinball_resultview_txt_title1",
+    "lang": "language_10064127"
+  },
+  {
+    "id": "p_v2a4_pinball_resultview_txt_finish",
+    "lang": "language_10064128"
+  },
+  {
+    "id": "p_v2a4_pinball_resultview_txt_noFinish",
+    "lang": "language_10064129"
+  },
+  {
+    "id": "p_v2a4_pinball_resultview_txt_tips",
+    "lang": "language_10032028"
+  },
+  {
+    "id": "p_v2a4_pinball_loadingview_txt_tips",
+    "lang": "language_10064130"
+  },
+  {
+    "id": "p_v2a4_pinball_gameview_txt_bag",
+    "lang": "language_10064131"
+  },
+  {
+    "id": "p_v2a4_pinball_gameview_txt_extra",
+    "lang": "language_10064132"
+  },
+  {
+    "id": "p_v2a4_pinball_gameview_txt_collect",
+    "lang": "language_10064133"
+  },
+  {
+    "id": "p_v2a4_pinball_building_menu_txt_boost",
+    "lang": "language_10064134"
+  },
+  {
+    "id": "p_v2a4_pinball_buildview_txt_title",
+    "lang": "language_10064135"
+  },
+  {
+    "id": "p_v2a4_pinball_buildview_txt_done",
+    "lang": "language_10064136"
+  },
+  {
+    "id": "p_v2a4_pinball_buildview_txt_upgrade",
+    "lang": "language_10030293"
+  },
+  {
+    "id": "p_v2a4_pinball_buildview_txt_lock",
+    "lang": "language_10019891"
+  },
+  {
+    "id": "p_v2a4_pinball_cityview_txt_rest",
+    "lang": "language_10028476"
+  },
+  {
+    "id": "p_v2a4_pinball_cityview_txt_curmood",
+    "lang": "language_10064137"
+  },
+  {
+    "id": "p_v2a4_pinball_dayendview_txt_dec1",
+    "lang": "language_10064138"
+  },
+  {
+    "id": "p_v2a4_pinball_dayendview_txt_dec2",
+    "lang": "language_10064139"
+  },
+  {
+    "id": "p_v2a4_pinball_dayendview_txt_dec3",
+    "lang": "language_10064140"
+  },
+  {
+    "id": "p_v2a4_pinball_upgradeview_txt_upgrade",
+    "lang": "language_90001106"
+  },
+  {
+    "id": "p_v2a4_pinball_upgradeview_txt_upgrade2",
+    "lang": "language_10030354"
+  },
+  {
+    "id": "p_v2a4_pinball_upgradeview_txt_max",
+    "lang": "language_10055887"
+  },
+  {
+    "id": "p_v2a4_pinball_upgradeview_txt_preview",
+    "lang": "language_10030891"
+  },
+  {
+    "id": "p_v2a4_pinball_restview_txt_dec",
+    "lang": "language_10064141"
+  },
+  {
+    "id": "p_v2a4_pinball_restview_txt_dec2",
+    "lang": "language_10064142"
+  },
+  {
+    "id": "p_rougecollectionlevelupview_title",
+    "lang": "language_10064143"
+  },
+  {
+    "id": "p_rougecollectionlevelupview_lefttitle",
+    "lang": "language_10041981"
+  },
+  {
+    "id": "p_rougecollectionlevelupview_righttitle",
+    "lang": "language_90001109"
+  },
+  {
+    "id": "p_v2a4_dungeonmapview_txt_wuerlixi",
+    "lang": "language_10062527"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_Claimed",
+    "lang": "language_10053325"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_Tips1",
+    "lang": "language_10053326"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_Tips2",
+    "lang": "language_10053327"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_Reward",
+    "lang": "language_10031269"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_Descr",
+    "lang": "language_10053328"
+  },
+  {
+    "id": "p_v2a4_actxmasview_txt_RewardDescr",
+    "lang": "language_10053329"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_unittipview_txt_Title",
+    "lang": "language_10064144"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_TargetTitle",
+    "lang": "language_10030510"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_Target",
+    "lang": "language_10064145"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_UnitTitle",
+    "lang": "language_10064146"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_Skip",
+    "lang": "language_10064111"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_UnitTips",
+    "lang": "language_10032022"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_SuccessTitle",
+    "lang": "language_10064147"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_SuccessTips",
+    "lang": "language_10064148"
+  },
+  {
+    "id": "p_turnbacknewprogressview_txt_title1",
+    "lang": "language_10031525"
+  },
+  {
+    "id": "p_turnbacknewprogressview_txt_title2",
+    "lang": "language_10000137"
+  },
+  {
+    "id": "p_turnbacknewprogressview_txt_refresh",
+    "lang": "language_10064149"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_monthcard",
+    "lang": "language_10061465"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_dec1",
+    "lang": "language_10064150"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_doublereward",
+    "lang": "language_10007619"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_greet",
+    "lang": "language_90001114"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_search",
+    "lang": "language_10062643"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_search2",
+    "lang": "language_10065812"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_search3",
+    "lang": "language_10064153"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_finishing",
+    "lang": "language_10064154"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_finished",
+    "lang": "language_10064155"
+  },
+  {
+    "id": "p_turnbackdoublerewardchargeview_txt_titlecn",
+    "lang": "language_10064151"
+  },
+  {
+    "id": "p_turnbackdoublerewardchargeview_txt_lockreward",
+    "lang": "language_10064156"
+  },
+  {
+    "id": "p_turnbackdoublerewardchargeview_txt_unlockreward",
+    "lang": "language_10064157"
+  },
+  {
+    "id": "p_season166talentinfoview_txt_desc",
+    "lang": "language_10064158"
+  },
+  {
+    "id": "p_v2a4_versionsummonfudaihalfview_txt_tips",
+    "lang": "language_10053352"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview_txt_shopnamecn1",
+    "lang": "language_10036749"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview_txt_shopnamecn2",
+    "lang": "language_10064159"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview_txt_shopnamecn3",
+    "lang": "language_10032116"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview2_txt_shopnamecn1",
+    "lang": "language_10064160"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview2_txt_shopnamecn2",
+    "lang": "language_10064161"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview2_txt_shopnamecn3",
+    "lang": "language_10032116"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn1",
+    "lang": "language_10053332"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn2",
+    "lang": "language_10053334"
+  },
+  {
+    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn3",
+    "lang": "language_10053333"
+  },
+  {
+    "id": "p_v2a4_storeskinview_skintips",
+    "lang": "language_10064162"
+  },
+  {
+    "id": "p_mainthumbnailview_namecn_card",
+    "lang": "language_10062528"
+  },
+  {
+    "id": "p_mainthumbnailview_namecn_card_en",
+    "lang": "language_10064163"
+  },
+  {
+    "id": "p_playercardbaseinfoview_txt_title",
+    "lang": "language_10064164"
+  },
+  {
+    "id": "p_playercardbaseinfoview_txt_role",
+    "lang": "language_10062515"
+  },
+  {
+    "id": "p_playercardprogressview_txt_title",
+    "lang": "language_10064165"
+  },
+  {
+    "id": "p_playercardview_txt_achievement",
+    "lang": "language_10064166"
+  },
+  {
+    "id": "p_storeskingoodsitem2_txt_tips",
+    "lang": "language_10064167"
+  },
+  {
+    "id": "p_turnbacklatterview_txt_reward2",
+    "lang": "language_10064168"
+  },
+  {
+    "id": "p_turnbacklatterview_txt_goto",
+    "lang": "language_90001111"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec1",
+    "lang": "language_10064169"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec2",
+    "lang": "language_10064170"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec3",
+    "lang": "language_10064171"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec4",
+    "lang": "language_10064172"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec5",
+    "lang": "language_10064173"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec6",
+    "lang": "language_10064174"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_dec7",
+    "lang": "language_10038374"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_gameview_txt_end",
+    "lang": "language_10064175"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_1_txt_1",
+    "lang": "language_10064176"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_1_txt_2",
+    "lang": "language_10064177"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_2_txt_1",
+    "lang": "language_10064178"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_2_txt_2",
+    "lang": "language_10064179"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_2_txt_3",
+    "lang": "language_10064180"
+  },
+  {
+    "id": "p_v2a4_bakaluoer_help_2_txt_4",
+    "lang": "language_10064181"
+  },
+  {
+    "id": "p_fightsimplepolarizationlevelview_txt_name",
+    "lang": "language_10064182"
+  },
+  {
+    "id": "p_v1a5_aizila_gameview_txt_State",
+    "lang": "language_10032186"
+  },
+  {
+    "id": "p_v1a5_aizila_gamestateview_txt_Title",
+    "lang": "language_10032193"
+  },
+  {
+    "id": "p_v1a5_aizila_gamestateview_txtEqupTitle",
+    "lang": "language_10032184"
+  },
+  {
+    "id": "p_v1a5_aizila_gamestateview_txtGameTitle",
+    "lang": "language_10032185"
+  },
+  {
+    "id": "p_v1a5_aizila_gamepackview_txt_Title",
+    "lang": "language_10032192"
+  },
+  {
+    "id": "playercard_skin_default",
+    "lang": "language_10064183"
+  },
+  {
+    "id": "p_v2a4_storeroleskinview_roletxt1",
+    "lang": "language_10064184"
+  },
+  {
+    "id": "p_v2a4_storeroleskinview_rolename1",
+    "lang": "language_10034438"
+  },
+  {
+    "id": "p_v2a4_storeroleskinview_roletxt2",
+    "lang": "language_10064185"
+  },
+  {
+    "id": "p_v2a4_storeroleskinview_rolename2",
+    "lang": "language_10017913"
+  },
+  {
+    "id": "p_playercardroleswitchtipview_txt_cancel2",
+    "lang": "language_10064081"
+  },
+  {
+    "id": "p_v2a4_wuerlixi_enterview_txt_LockedTips",
+    "lang": "language_10064186"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_doublereward2",
+    "lang": "language_10064187"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_lock1",
+    "lang": "language_10064188"
+  },
+  {
+    "id": "p_turnbacknewbenfitview_txt_lock2",
+    "lang": "language_10064188"
+  },
+  {
+    "id": "p_v2a4_tower_help_1_txt_1",
+    "lang": "language_10061222"
+  },
+  {
+    "id": "p_v2a4_tower_help_1_txt_2",
+    "lang": "language_10064189"
+  },
+  {
+    "id": "p_v2a4_lingneng_help_1_txt_1",
+    "lang": "language_10064190"
+  },
+  {
+    "id": "p_v2a4_lingneng_help_1_txt_2",
+    "lang": "language_10064191"
+  },
+  {
+    "id": "p_v2a4_lingneng_help_2_txt_1",
+    "lang": "language_10064192"
+  },
+  {
+    "id": "p_v2a4_melody_help_1_txt_1",
+    "lang": "language_10064193"
+  },
+  {
+    "id": "p_v2a4_melody_help_1_txt_2",
+    "lang": "language_10064194"
+  },
+  {
+    "id": "p_v2a4_melody_help_2_txt_1",
+    "lang": "language_10064195"
+  },
+  {
+    "id": "p_v2a4_bossrush_help_1_txt_1",
+    "lang": "language_10064196"
+  },
+  {
+    "id": "p_v2a4_bossrush_help_1_txt_2",
+    "lang": "language_10064197"
+  },
+  {
+    "id": "p_turnbacklatterview_txt_reward3",
+    "lang": "language_90001111"
+  },
+  {
+    "id": "p_v2a4_storeblockpackageview_name",
+    "lang": "language_10064198"
+  },
+  {
+    "id": "p_v2a4_storeblockpackageview_dec",
+    "lang": "language_10064199"
+  },
+  {
+    "id": "p_turnbacknewtaskview_txt_daily",
+    "lang": "language_10065810"
+  },
+  {
+    "id": "p_turnbacknewprogressview_txt_dec",
+    "lang": "language_10064201"
+  },
+  {
+    "id": "p_v2a4_pinball_dayendview_txt_tips",
+    "lang": "language_10064202"
+  },
+  {
+    "id": "p_playercardview_txt_tips",
+    "lang": "language_10064203"
+  },
+  {
+    "id": "p_towerbossspepisodeview_txt_ReStart",
+    "lang": "language_10064204"
+  },
+  {
+    "id": "p_settingsgraphicsview_vertical",
+    "lang": "language_10064205"
+  },
+  {
+    "id": "p_settingsgraphicsview_verticaltip",
+    "lang": "language_10064206"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_tips",
+    "lang": "language_10064207"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_fail",
+    "lang": "language_10064208"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_success",
+    "lang": "language_10064209"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_yes",
+    "lang": "language_90001108"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_no",
+    "lang": "language_10064210"
+  },
+  {
+    "id": "p_v2a4_warmup_dialogueview_txt_next",
+    "lang": "language_10064211"
+  },
+  {
+    "id": "p_v2a4_warmup_taskview_txt_title",
+    "lang": "language_10025497"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_1",
+    "lang": "language_10064212"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_2",
+    "lang": "language_10064213"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_3",
+    "lang": "language_10064214"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_4",
+    "lang": "language_10064215"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_5",
+    "lang": "language_10064216"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_6",
+    "lang": "language_10064217"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_7",
+    "lang": "language_10064218"
+  },
+  {
+    "id": "p_v2a4_tutushizi_help_1_txt_8",
+    "lang": "language_10064219"
+  },
+  {
+    "id": "p_v2a4_warmup_resultview_txt_title1",
+    "lang": "language_10064220"
+  },
+  {
+    "id": "p_v2a4_warmup_resultview_txt_title2",
+    "lang": "language_10064221"
+  },
+  {
+    "id": "p_v2a4_warmup_resultview_txt_close",
+    "lang": "language_10064222"
+  },
+  {
+    "id": "p_v2a4_warmup_resultview_txt_play",
+    "lang": "language_10064223"
+  },
+  {
+    "id": "p_packagestoregoodsitem_txt_discover",
+    "lang": "language_10065764"
+  },
+  {
+    "id": "p_v2a4_pinbal_txt_light",
+    "lang": "language_90001110"
+  },
+  {
+    "id": "p_v2a4_storeskinview_skintips2",
+    "lang": "language_90001116"
+  },
+  {
     "id": "p_shortenact_txt_rewardname1",
     "lang": "language_10062109"
   },
@@ -16306,46 +17154,6 @@
   {
     "id": "p_settingsgraphicsview_enable_videotip",
     "lang": "language_10051262"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_Claimed",
-    "lang": "language_10053325"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_Tips1",
-    "lang": "language_10053326"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_Tips2",
-    "lang": "language_10053327"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_Reward",
-    "lang": "language_10031269"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_Descr",
-    "lang": "language_10053328"
-  },
-  {
-    "id": "p_v2a4_actxmasview_txt_RewardDescr",
-    "lang": "language_10053329"
-  },
-  {
-    "id": "p_v2a4_versionsummonfudaihalfview_txt_tips",
-    "lang": "language_10053352"
-  },
-  {
-    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn1",
-    "lang": "language_10053332"
-  },
-  {
-    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn2",
-    "lang": "language_10053334"
-  },
-  {
-    "id": "p_v2a4_giftrecommendview3_txt_shopnamecn3",
-    "lang": "language_10053333"
   },
   {
     "id": "v1a9_selfselectsix_summon_up",

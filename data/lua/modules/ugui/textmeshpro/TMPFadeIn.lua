@@ -208,10 +208,6 @@ function slot0.conFinished(slot0)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
-end
-
 function slot0._disable_GRADUAL_ON(slot0)
 	if slot0._txtcontentcn.gameObject:GetComponentsInChildren(gohelper.Type_TMP_SubMeshUI, true) then
 		for slot6 = 0, slot1.Length - 1 do
@@ -226,6 +222,15 @@ function slot0._disable_GRADUAL_ON(slot0)
 	slot0._conMat:DisableKeyword("_GRADUAL_ON")
 	slot0._conMat:SetFloat(slot0._LineMinYId, 0)
 	slot0._conMat:SetFloat(slot0._LineMaxYId, 0)
+end
+
+function slot0.onDestroy(slot0)
+	slot0:onDestroyView()
+end
+
+function slot0.onDestroyView(slot0)
+	TaskDispatcher.cancelTask(slot0._delayShow, slot0)
+	GameUtil.onDestroyViewMember_TweenId(slot0, "_conTweenId")
 end
 
 return slot0

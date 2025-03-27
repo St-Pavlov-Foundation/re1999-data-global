@@ -26,6 +26,7 @@ function slot0.onInitView(slot0)
 	slot0._btnend = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_end")
 	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
 	slot0._gotitle = gohelper.findChild(slot0.viewGO, "title")
+	slot0._gonormaltitle = gohelper.findChild(slot0.viewGO, "title/normal")
 	slot0._godlctitles = gohelper.findChild(slot0.viewGO, "title/#go_dlctitles")
 
 	if slot0._editableInitView then
@@ -89,9 +90,7 @@ end
 function slot0._editableInitView(slot0)
 	slot0._btnstartCanvasGroup = slot0._btnstart.gameObject:GetComponent(gohelper.Type_CanvasGroup)
 	slot0._btnEndGo = slot0._btnend.gameObject
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "title")
 	slot0._gotitleeffect = gohelper.findChild(slot0.viewGO, "title/eff_switch")
-	slot0._titleAnimator = gohelper.onceAddComponent(slot0._gotitle, gohelper.Type_Animator)
 
 	gohelper.setActive(slot0._goimage_start, false)
 	gohelper.setActive(slot0._goimage_start2, false)
@@ -103,6 +102,7 @@ function slot0._editableInitView(slot0)
 	slot0._btnstartCanvasGroup.alpha = 1
 	slot0._txtRewardNum.text = "0"
 	slot0._txttime.text = ""
+	slot0._originVersionStr = RougeDLCHelper.getCurVersionString()
 end
 
 function slot0.onUpdateParam(slot0)
@@ -134,6 +134,7 @@ function slot0.onClose(slot0)
 	RougeOutsideController.instance:unregisterCallback(RougeEvent.OnUpdateRougeOutsideInfo, slot0._onUpdateRougeOutsideInfo, slot0)
 	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._onUpdateRougeInfo, slot0)
 	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, slot0._onUpdateRougeInfo, slot0)
+	TaskDispatcher.cancelTask(slot0._onSwitchTitleDone, slot0)
 end
 
 function slot0.onDestroyView(slot0)
@@ -306,46 +307,54 @@ function slot0._refreshExchangeBtn(slot0)
 	gohelper.setActive(slot0._btnexchange.gameObject, not (slot2 and #slot2 > 0))
 end
 
-function slot0._refreshTitle(slot0, slot1)
-	slot3 = RougeOutsideModel.instance:getRougeGameRecord() and slot2:getVersionIds()
-	slot0._hasAddDLC = slot3 and #slot3 > 0
-
-	if slot1 then
-		slot0:_playTitleAnim(slot4, slot0._hasAddDLC)
-
-		return
-	else
-		slot0._titleAnimator:Play(slot4 and "godlctitles" or "normal", 0, 1)
-		gohelper.setActive(slot0._gotitleeffect, false)
-	end
-
-	slot0:_refreshDLCTitle()
-end
-
-function slot0._refreshDLCTitle(slot0)
-	slot3 = RougeDLCHelper.versionListToMap(RougeOutsideModel.instance:getRougeGameRecord() and slot1:getVersionIds())
-
-	for slot8 = 1, slot0._godlctitles.transform.childCount do
-		gohelper.setActive(slot9, slot3 and slot3[tonumber(slot0._godlctitles.transform:GetChild(slot8 - 1).gameObject.name)] ~= nil)
-	end
+function slot0._refreshTitle(slot0)
+	slot0:_switchDLCTitle()
 end
 
 slot1 = 1.6
 
-function slot0._playTitleAnim(slot0, slot1, slot2)
-	slot3 = slot1 and not slot2
-
-	slot0._titleAnimator:SetFloat("speed", slot3 and 1 or -1)
-	slot0._titleAnimator:Play("godlctitles", 0, slot3 and 0 or 1)
-	gohelper.setActive(slot0._gotitleeffect, false)
-	gohelper.setActive(slot0._gotitleeffect, true)
-	TaskDispatcher.cancelTask(slot0._refreshDLCTitle, slot0)
-
-	if slot3 then
+function slot0._switchDLCTitle(slot0)
+	if RougeDLCHelper.getCurVersionString() == slot0._originVersionStr then
 		slot0:_refreshDLCTitle()
-	else
-		TaskDispatcher.runDelay(slot0._refreshDLCTitle, slot0, uv0)
+
+		return
 	end
+
+	slot2, slot3 = nil
+	slot3 = (not string.nilorempty(slot1) or slot0._gonormaltitle) and gohelper.findChild(slot0._godlctitles, slot1)
+
+	if not gohelper.isNil((not string.nilorempty(slot0._originVersionStr) or slot0._gonormaltitle) and gohelper.findChild(slot0._godlctitles, slot0._originVersionStr)) then
+		gohelper.setActive(slot2, true)
+		gohelper.onceAddComponent(slot2, gohelper.Type_Animator):Play("fadeout", 0, 0)
+	end
+
+	if not gohelper.isNil(slot3) then
+		gohelper.setActive(slot3, true)
+		gohelper.onceAddComponent(slot3, gohelper.Type_Animator):Play("fadein", 0, 0)
+	end
+
+	gohelper.setActive(slot0._gotitleeffect, true)
+	AudioMgr.instance:trigger(AudioEnum.UI.SwitchRougeDLC)
+	TaskDispatcher.runDelay(slot0._onSwitchTitleDone, slot0, uv0)
+end
+
+function slot0._onSwitchTitleDone(slot0)
+	slot0:_refreshDLCTitle()
+end
+
+function slot0._refreshDLCTitle(slot0)
+	slot1 = RougeDLCHelper.getCurVersionString()
+
+	for slot6 = 1, slot0._godlctitles.transform.childCount do
+		slot7 = slot0._godlctitles.transform:GetChild(slot6 - 1).gameObject
+
+		gohelper.setActive(slot7, slot7.name == slot1)
+	end
+
+	gohelper.setActive(slot0._gonormaltitle, string.nilorempty(slot1))
+	gohelper.setActive(slot0._gotitleeffect, false)
+
+	slot0._originVersionStr = slot1
 end
 
 function slot0._onUpdateVersion(slot0)
@@ -358,7 +367,7 @@ function slot0._onUpdateVersion(slot0)
 	slot0._waitUpdate = nil
 
 	slot0:_refreshExchangeBtn()
-	slot0:_refreshTitle(true)
+	slot0:_refreshTitle()
 end
 
 function slot0._onCloseViewCallBack(slot0, slot1)

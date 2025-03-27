@@ -82,6 +82,7 @@ function slot0._editableInitView(slot0)
 	slot0._cellModelTab = slot0:getUserDataTb_()
 	slot0._animator = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
 	slot0._tipAnimator = gohelper.onceAddComponent(slot0._gotips, gohelper.Type_Animator)
+	slot0._itemInstTab = slot0:getUserDataTb_()
 end
 
 function slot0.onOpen(slot0)
@@ -121,7 +122,7 @@ function slot0.refreshCollectionBaseInfo(slot0, slot1)
 
 	slot0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(slot1.cfgId, slot1:getAllEnchantCfgId())
 
-	RougeCollectionHelper.refreshCollectionEffectInfosById(slot1.id, slot0._gocollectiondesccontent, slot0._gocollectiondescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos(slot1.id, slot0._gocollectiondesccontent, slot0._itemInstTab)
 	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot1.cfgId))
 end
 
@@ -225,8 +226,7 @@ function slot0.checkIsSelectEnchant(slot0)
 		slot0._txtname.text = RougeCollectionConfig.instance:getCollectionName(slot5)
 
 		slot0._simageenchanticon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot5))
-
-		slot0._txtenchantdesc.text = RougeCollectionHelper.getCollectionEffectStr(slot5)
+		RougeCollectionDescHelper.setCollectionDescInfos3(slot5, nil, slot0._txtenchantdesc, RougeCollectionDescHelper.getShowDescTypesWithoutText())
 	end
 end
 

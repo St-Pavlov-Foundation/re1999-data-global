@@ -640,6 +640,8 @@ function slot0._refreshCostPower(slot0)
 	slot0._txtusepower.text = string.format("-%s", slot3 * ((slot0._multiplication or 1) - slot0:_getfreeCount()))
 
 	if slot5 <= CurrencyModel.instance:getPower() then
+		gohelper.setActive(slot0._gonormallackpower, false)
+		gohelper.setActive(slot0._goreplaylackpower, false)
 		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepower, slot0._replayMode and "#070706" or (slot0._chapterConfig.type == DungeonEnum.ChapterType.Hard and "#FFFFFF" or "#070706"))
 	else
 		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepower, slot0._replayMode and "#800015" or (slot6 and "#C44945" or "#800015"))

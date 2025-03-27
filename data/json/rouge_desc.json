@@ -2136,7 +2136,7 @@
     "desc": "language_10044080",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10061457",
+    "descSimply": "language_10051912",
     "descExtraSimply": ""
   },
   {
@@ -2156,7 +2156,7 @@
     "desc": "language_10044081",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10061458",
+    "descSimply": "language_10051913",
     "descExtraSimply": ""
   },
   {
@@ -2176,7 +2176,7 @@
     "desc": "language_10044082",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10061459",
+    "descSimply": "language_10051914",
     "descExtraSimply": ""
   },
   {
@@ -2196,7 +2196,7 @@
     "desc": "language_10044083",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10061460",
+    "descSimply": "language_10051915",
     "descExtraSimply": ""
   },
   {
@@ -2216,7 +2216,7 @@
     "desc": "language_10044084",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10061461",
+    "descSimply": "language_10051916",
     "descExtraSimply": ""
   },
   {
@@ -4523,20 +4523,20 @@
     "id": 8220903,
     "name": "language_10052028",
     "effectId": 0,
-    "desc": "language_10052029",
+    "desc": "language_10056479",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10052030",
+    "descSimply": "language_10056480",
     "descExtraSimply": ""
   },
   {
     "id": 8350717,
     "name": "language_10052031",
     "effectId": 0,
-    "desc": "language_10052032",
+    "desc": "language_10064661",
     "descType": 0,
     "descExtra": "",
-    "descSimply": "language_10052033",
+    "descSimply": "language_10064662",
     "descExtraSimply": ""
   },
   {
@@ -4887,6 +4887,336 @@
     "descType": 0,
     "descExtra": "",
     "descSimply": "language_10052013",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 81201049,
+    "name": "language_10064663",
+    "effectId": 0,
+    "desc": "language_10064664",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064664",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 81201050,
+    "name": "language_10064663",
+    "effectId": 0,
+    "desc": "language_10064665",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064665",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170001,
+    "name": "language_10064666",
+    "effectId": 1,
+    "desc": "language_10063337",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064667",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170002,
+    "name": "language_10064668",
+    "effectId": 1,
+    "desc": "language_10063340",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10063340",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170003,
+    "name": "language_10064669",
+    "effectId": 1,
+    "desc": "language_10063343",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064670",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170004,
+    "name": "language_10064671",
+    "effectId": 1,
+    "desc": "language_10063345",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064672",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170005,
+    "name": "language_10064673",
+    "effectId": 1,
+    "desc": "language_10063348",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064674",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170006,
+    "name": "language_10064675",
+    "effectId": 1,
+    "desc": "language_10063351",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064676",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170007,
+    "name": "language_10028404",
+    "effectId": 1,
+    "desc": "language_10063354",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064677",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170008,
+    "name": "language_10064678",
+    "effectId": 1,
+    "desc": "language_10063357",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064679",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170009,
+    "name": "language_10064680",
+    "effectId": 1,
+    "desc": "language_10063360",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064681",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170010,
+    "name": "language_10064682",
+    "effectId": 5,
+    "desc": "language_10064683",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064684",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170011,
+    "name": "language_10064685",
+    "effectId": 1,
+    "desc": "language_10063366",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064686",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170012,
+    "name": "language_10064687",
+    "effectId": 1,
+    "desc": "language_10064688",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064689",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170013,
+    "name": "language_10064690",
+    "effectId": 1,
+    "desc": "language_10063372",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064691",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170014,
+    "name": "language_10064692",
+    "effectId": 4,
+    "desc": "language_10063375",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064693",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170015,
+    "name": "language_10064694",
+    "effectId": 1,
+    "desc": "language_10063378",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10063378",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170016,
+    "name": "language_10064695",
+    "effectId": 1,
+    "desc": "language_10064696",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064697",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170017,
+    "name": "language_10064698",
+    "effectId": 1,
+    "desc": "language_10064699",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064700",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170018,
+    "name": "language_10009417",
+    "effectId": 1,
+    "desc": "language_10063387",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064701",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170019,
+    "name": "language_10064702",
+    "effectId": 1,
+    "desc": "language_10063390",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10063390",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170020,
+    "name": "language_10064703",
+    "effectId": 1,
+    "desc": "language_10063393",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064704",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170021,
+    "name": "language_10064705",
+    "effectId": 1,
+    "desc": "language_10063396",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064706",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170022,
+    "name": "language_10064707",
+    "effectId": 1,
+    "desc": "language_10064708",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064708",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170023,
+    "name": "language_10064709",
+    "effectId": 1,
+    "desc": "language_10063402",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064710",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170024,
+    "name": "language_10064711",
+    "effectId": 1,
+    "desc": "language_10064712",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064713",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170025,
+    "name": "language_10064714",
+    "effectId": 1,
+    "desc": "language_10064715",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064716",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170026,
+    "name": "language_10064717",
+    "effectId": 1,
+    "desc": "language_10063411",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10063411",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170027,
+    "name": "language_10064718",
+    "effectId": 1,
+    "desc": "language_10064719",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064719",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170028,
+    "name": "language_10064720",
+    "effectId": 1,
+    "desc": "language_10063417",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10063417",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170029,
+    "name": "language_10064721",
+    "effectId": 1,
+    "desc": "language_10063420",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064722",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8170030,
+    "name": "language_10064723",
+    "effectId": 1,
+    "desc": "language_10063423",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064724",
+    "descExtraSimply": ""
+  },
+  {
+    "id": 8320907,
+    "name": "language_10062452",
+    "effectId": 0,
+    "desc": "language_10064725",
+    "descType": 0,
+    "descExtra": "",
+    "descSimply": "language_10064725",
     "descExtraSimply": ""
   }
 ]

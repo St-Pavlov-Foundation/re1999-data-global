@@ -44,6 +44,8 @@ function slot0.init(slot0, slot1)
 	slot0._loader = slot0._loader or LoaderComponent.New()
 	slot0._lockGO = gohelper.findChild(slot0.go, "foranim/lock")
 	slot0._cardConvertEffect = gohelper.findChild(slot0.go, "foranim/cardConvertEffect")
+
+	slot0:setASFDActive(true)
 end
 
 function slot0.addEventListeners(slot0)
@@ -70,6 +72,9 @@ function slot0.addEventListeners(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ResetCard, slot0._resetCard, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
 end
 
 function slot0.removeEventListeners(slot0)
@@ -100,7 +105,24 @@ function slot0.removeEventListeners(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.ResetCard, slot0._resetCard, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
 	TaskDispatcher.cancelTask(slot0._delayDisableAnim, slot0)
+end
+
+function slot0._allocateEnergyDone(slot0)
+	if slot0._cardItem then
+		slot0._cardItem:_allocateEnergyDone()
+	end
+end
+
+function slot0._showASFD(slot0)
+	slot0:setASFDActive(true)
+end
+
+function slot0._resetCard(slot0)
+	slot0:setASFDActive(true)
 end
 
 function slot0._onSeasonSelectChangeHeroTarget(slot0, slot1)
@@ -120,6 +142,18 @@ function slot0._onExitOperateState(slot0)
 		slot0._cardItemAni:Play("idle")
 
 		slot0._seasonChangeHeroSelecting = false
+	end
+end
+
+function slot0.setASFDActive(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:setASFDActive(slot1)
+	end
+end
+
+function slot0.playASFDAnim(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:playASFDAnim(slot1)
 	end
 end
 
@@ -756,6 +790,10 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
+		return
+	end
+
 	if slot0._isLongPress and not PCInputController.instance:getIsUse() then
 		slot0._isLongPress = false
 
@@ -858,6 +896,10 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 		return
 	end
 
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
+		return
+	end
+
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -888,6 +930,10 @@ function slot0._onDragThis(slot0, slot1, slot2)
 		return
 	end
 
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
+		return
+	end
+
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -896,8 +942,6 @@ function slot0._onDragThis(slot0, slot1, slot2)
 		return
 	end
 
-	logNormal("FightViewHandCardItem:_onDragThis " .. tostring(slot0._isDraging))
-
 	if slot0._isDraging then
 		FightController.instance:dispatchEvent(FightEvent.DragHandCard, slot0.index, slot2.position)
 	end
@@ -905,6 +949,10 @@ end
 
 function slot0._onDragEnd(slot0, slot1, slot2)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
+		return
+	end
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
 		return
 	end
 
@@ -919,7 +967,6 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 	if slot0._isDraging then
 		slot0._isDraging = false
 
-		logNormal("FightViewHandCardItem:_onDragEnd " .. tostring(slot2.position))
 		FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, slot0.index, slot2.position)
 		GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 	end
@@ -948,8 +995,6 @@ function slot0._onLongPress(slot0)
 	end
 
 	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
-		logNormal("stage = " .. FightModel.instance:getCurStageDesc() .. ", can't long press card")
-
 		return
 	end
 
@@ -1004,14 +1049,9 @@ function slot0._simulateDragHandCard(slot0, slot1, slot2)
 	end
 
 	if slot0._subViewInst:getHandCardItem(slot2) then
-		slot4 = recthelper.uiPosToScreenPos(slot3.tr)
-
 		slot0:_onDragThis(nil, {
-			position = slot4
+			position = recthelper.uiPosToScreenPos(slot3.tr)
 		})
-		logNormal("simulateDragHandCard success, toIndex = " .. slot2 .. ", pos = " .. tostring(slot4))
-	else
-		logError("simulateDragHandCard fail, toIndex = " .. slot2)
 	end
 end
 
@@ -1176,6 +1216,8 @@ function slot0.dissolveCard(slot0)
 
 	slot1.dissolveSkillItemGOs = slot2
 
+	slot0:setASFDActive(false)
+
 	if not slot0._dissolveFlow then
 		slot0._dissolveFlow = FlowSequence.New()
 
@@ -1299,6 +1341,10 @@ end
 
 function slot0.changeToTempCard(slot0)
 	slot0._cardItem:changeToTempCard()
+end
+
+function slot0.getASFDScreenPos(slot0)
+	return slot0._cardItem:getASFDScreenPos()
 end
 
 function slot0._releaseMoveFlow(slot0)

@@ -60,6 +60,7 @@ slot0.UnlockFunc = {
 	SettingsRecordVideo = 65,
 	Act_60101 = 60101,
 	HeroInvitation = 90103,
+	PlayerCard = 81,
 	DungeonHideElementTip = 63,
 	Buildings = 45,
 	Role = 12,

@@ -32,6 +32,7 @@ function slot0.init(slot0, slot1)
 		end
 	end
 
+	slot0.goTag = gohelper.findChild(slot1, "tag")
 	slot0._tagRootTr = gohelper.findChild(slot1, "tag/tag").transform
 	slot0._tag = gohelper.findChildSingleImage(slot1, "tag/tag/tagIcon")
 	slot0._txt = gohelper.findChildText(slot1, "Text")
@@ -84,18 +85,58 @@ function slot0.init(slot0, slot1)
 	slot0._precisionEffect = gohelper.findChild(slot0.go, "AccurateEnchant/effect")
 
 	gohelper.setActive(slot0._precisionEffect, false)
+
+	slot0.showASFD = false
+	slot0.goASFD = gohelper.findChild(slot1, "asfd_icon")
+	slot0.txtASFDEnergy = gohelper.findChildText(slot1, "asfd_icon/#txt_Num")
+	slot0.goASFDSkill = gohelper.findChild(slot1, "asfd")
+	slot0.asfdSkillSimage = gohelper.findChildSingleImage(slot1, "asfd/imgIcon")
+	slot0.asfdNumTxt = gohelper.findChildText(slot1, "asfd/#txt_Num")
+end
+
+function slot0.addEventListeners(slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ASFD_EmitterEnergyChange, slot0.onEmitterEnergyChange, slot0)
+end
+
+function slot0.onEmitterEnergyChange(slot0)
+	if not FightHelper.isASFDSkill(slot0.skillId) then
+		return
+	end
+
+	slot0.asfdNumTxt.text = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
+
+	if slot0._disappearFlow and slot0._disappearFlow.status == WorkStatus.Running then
+		return
+	end
+
+	if slot0._dissolveFlow and slot0._dissolveFlow.status == WorkStatus.Running then
+		return
+	end
+
+	AudioMgr.instance:trigger(20248003)
+
+	slot0.asfdSkillAnimator = slot0.asfdSkillAnimator or slot0.goASFDSkill:GetComponent(gohelper.Type_Animator)
+
+	slot0.asfdSkillAnimator:Play("aggrandizement", 0, 0)
 end
 
 function slot0.updateItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot0._countRoot, false)
-	slot0:_hideAniEffect()
-
 	slot0.entityId = slot1
 	slot0.skillId = slot2
 	slot0._cardInfoMO = slot3
+
+	if FightHelper.isASFDSkill(slot2) then
+		return slot0:refreshASFDSkill(slot1, slot2, slot3)
+	end
+
+	gohelper.setActive(slot0._countRoot, false)
+	gohelper.setActive(slot0.goASFDSkill, false)
+	slot0:_hideAniEffect()
+
 	slot4 = lua_skill.configDict[slot2]
 
 	for slot9, slot10 in ipairs(slot0._lvGOs) do
+		gohelper.setActive(slot10, true)
 		gohelper.setActiveCanvasGroup(slot10, FightCardModel.instance:getSkillLv(slot1, slot2) == slot9)
 	end
 
@@ -148,6 +189,25 @@ function slot0.updateItem(slot0, slot1, slot2, slot3)
 	slot0:_showUpgradeEffect()
 	slot0:_showEnchantsEffect()
 	slot0:_refreshGray()
+	slot0:_refreshASFD()
+end
+
+function slot0.refreshASFDSkill(slot0, slot1, slot2, slot3)
+	for slot8 = 1, slot0.tr.childCount do
+		gohelper.setActive(slot0.tr:GetChild(slot8 - 1).gameObject, false)
+	end
+
+	gohelper.setActive(slot0.goASFDSkill, true)
+	gohelper.setActive(slot0.goTag, true)
+	slot0.asfdSkillSimage:LoadImage(ResUrl.getSkillIcon(FightASFDConfig.instance.normalSkillIcon))
+
+	slot0.asfdNumTxt.text = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
+
+	slot0._tag:LoadImage(ResUrl.getAttributeIcon("attribute_asfd"))
+
+	slot6 = uv0.TagPosForLvs[1]
+
+	recthelper.setAnchor(slot0._tagRootTr, slot6[1], slot6[2])
 end
 
 function slot0.updateResistanceByCardInfo(slot0, slot1)
@@ -369,6 +429,13 @@ function slot0.dissolveCard(slot0, slot1)
 		return
 	end
 
+	if FightHelper.isASFDSkill(slot0.skillId) then
+		return slot0:disappearCard()
+	end
+
+	slot0:setASFDActive(false)
+	slot0:revertASFDSkillAnimator()
+
 	slot2 = slot0:getUserDataTb_()
 	slot2.dissolveScale = slot1 or 1
 	slot3 = slot0:getUserDataTb_()
@@ -381,6 +448,8 @@ function slot0.dissolveCard(slot0, slot1)
 		slot0._dissolveFlow = FlowSequence.New()
 
 		slot0._dissolveFlow:addWork(FightCardDissolveEffect.New())
+	else
+		slot0._dissolveFlow:stop()
 	end
 
 	slot0:_hideAllEffect()
@@ -391,6 +460,9 @@ function slot0.disappearCard(slot0)
 	if not slot0.go.activeInHierarchy then
 		return
 	end
+
+	slot0:setASFDActive(false)
+	slot0:revertASFDSkillAnimator()
 
 	slot1 = slot0:getUserDataTb_()
 	slot1.hideSkillItemGOs = slot0:getUserDataTb_()
@@ -406,6 +478,16 @@ function slot0.disappearCard(slot0)
 	end
 
 	slot0._disappearFlow:start(slot1)
+end
+
+function slot0.revertASFDSkillAnimator(slot0)
+	if not FightHelper.isASFDSkill(slot0.skillId) then
+		return
+	end
+
+	if slot0.asfdSkillAnimator then
+		slot0.asfdSkillAnimator:Play("open", 0, 0)
+	end
 end
 
 function slot0.playUsedCardDisplay(slot0, slot1)
@@ -518,6 +600,43 @@ function slot0.playChangeRankFail(slot0, slot1)
 	end
 end
 
+function slot0.setASFDActive(slot0, slot1)
+	slot0.showASFD = slot1
+
+	slot0:_refreshASFD()
+end
+
+function slot0._refreshASFD(slot0)
+	slot1 = slot0.showASFD and slot0._cardInfoMO and slot0._cardInfoMO.energy > 0
+
+	gohelper.setActive(slot0.goASFD, slot1)
+
+	if slot1 then
+		slot0.txtASFDEnergy.text = slot0._cardInfoMO.energy
+	end
+end
+
+function slot0._allocateEnergyDone(slot0)
+	slot1 = slot0.showASFD and slot0._cardInfoMO and slot0._cardInfoMO.energy > 0
+
+	gohelper.setActive(slot0.goASFD, slot1)
+
+	if slot1 then
+		slot0.txtASFDEnergy.text = slot0._cardInfoMO.energy
+		slot0.asfdAnimator = slot0.asfdAnimator or slot0.goASFD:GetComponent(gohelper.Type_Animator)
+
+		slot0.asfdAnimator:Play("open", 0, 0)
+	end
+end
+
+function slot0.playASFDAnim(slot0, slot1)
+	if slot0.goASFD.activeSelf then
+		slot0.asfdAnimator = slot0.asfdAnimator or slot0.goASFD:GetComponent(gohelper.Type_Animator)
+
+		slot0.asfdAnimator:Play(slot1, 0, 0)
+	end
+end
+
 function slot0._onCardLevelChangeFlowDone(slot0)
 	slot0:updateItem(slot0._cardInfoMO.uid, slot0._cardInfoMO.skillId, slot0._cardInfoMO)
 	FightController.instance:dispatchEvent(FightEvent.CardLevelChangeDone, slot0._cardInfoMO)
@@ -588,6 +707,12 @@ end
 
 function slot0.hideCardAppearEffect(slot0)
 	gohelper.setActive(slot0._cardAppearEffectRoot, false)
+end
+
+function slot0.getASFDScreenPos(slot0)
+	slot0.rectTrASFD = slot0.rectTrASFD or slot0.goASFD:GetComponent(gohelper.Type_RectTransform)
+
+	return recthelper.uiPosToScreenPos2(slot0.rectTrASFD)
 end
 
 function slot0.releaseEffectFlow(slot0)

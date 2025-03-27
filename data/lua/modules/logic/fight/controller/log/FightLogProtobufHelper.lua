@@ -123,6 +123,7 @@ function slot0.getFightActEffectString(slot0, slot1, slot2, slot3)
 	table.insert(slot6, string.format("%s targetId : %s 作用对象:%s", slot7, slot0.targetId, uv0.getEntityName(slot0.targetId)))
 	table.insert(slot6, string.format("%s effectType : %s 效果类型:%s", slot7, slot0.effectType, FightLogHelper.getEffectTypeName(slot0.effectType)))
 	table.insert(slot6, string.format("%s effectNum : %s", slot7, slot0.effectNum))
+	table.insert(slot6, string.format("%s effectNum1 : %s", slot7, slot0.effectNum1))
 
 	if slot0:HasField("buff") then
 		table.insert(slot6, uv0.getFightBuffString(slot0.buff, slot1))
@@ -138,8 +139,14 @@ function slot0.getFightActEffectString(slot0, slot1, slot2, slot3)
 	table.insert(slot6, string.format("%s reserveStr : %s", slot7, slot0.reserveStr))
 	table.insert(slot6, string.format("%s teamType : %s", slot7, slot0.teamType))
 
+	if slot0:HasField("cardInfo") then
+		table.insert(slot6, uv0.getCardInfoString(slot0.cardInfo, slot1))
+	end
+
+	table.insert(slot6, uv0.getCardInfoListString(slot0.cardInfoList, slot1, "cardInfoList", uv0.getStack(slot3, slot5)))
+
 	if slot0:HasField("fightStep") then
-		table.insert(slot6, uv0.getFightStepString(slot0.fightStep, slot1, nil, uv0.getStack(slot3, slot5)))
+		table.insert(slot6, uv0.getFightStepString(slot0.fightStep, slot1, nil, slot3))
 	end
 
 	if slot0:HasField("assistBossInfo") then
@@ -317,6 +324,7 @@ function slot0.getCardInfoString(slot0, slot1, slot2)
 	table.insert(slot5, string.format("%s heroId : %s", slot6, slot0.heroId))
 	table.insert(slot5, string.format("%s status : %s", slot6, slot0.status))
 	table.insert(slot5, string.format("%s targetUid : %s %s", slot6, slot0.targetUid, uv0.getEntityName(slot0.targetUid)))
+	table.insert(slot5, string.format("%s energy : %s", slot6, slot0.energy))
 	table.insert(slot5, uv0.getEnchantListString(slot0.enchants, slot1, "enchants"))
 	table.insert(slot5, slot3 .. "}")
 

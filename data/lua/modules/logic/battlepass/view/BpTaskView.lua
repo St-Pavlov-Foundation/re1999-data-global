@@ -55,6 +55,7 @@ function slot0._editableInitView(slot0)
 	slot0._redDotGO = gohelper.findChild(slot0.viewGO, "redDot")
 	slot0._toggleWraps = slot0:getUserDataTb_()
 	slot0._toggleRedDots = slot0:getUserDataTb_()
+	slot0._expupGos = slot0:getUserDataTb_()
 
 	for slot9 = 1, slot0._toggleGroupGO.transform.childCount do
 		slot0._toggleRedDots[slot9] = gohelper.findChild(slot0._redDotGO, "#go_reddot" .. slot9)
@@ -66,6 +67,8 @@ function slot0._editableInitView(slot0)
 
 			slot0._toggleWraps[slot9] = slot13
 		end
+
+		table.insert(slot0._expupGos, gohelper.findChild(slot11, "Label/#go_expup"))
 	end
 
 	slot0._taskHeight = slot1 + slot2
@@ -218,6 +221,7 @@ function slot0.onOpen(slot0)
 
 	BpTaskModel.instance:sortList()
 	slot0:_onTaskUpdate()
+	slot0:_refreshExpUp()
 end
 
 function slot0._onTaskUpdate(slot0)
@@ -254,6 +258,28 @@ function slot0.updateLineEnable(slot0)
 	end
 
 	gohelper.setActive(slot0._goline, slot1)
+end
+
+function slot0._refreshExpUp(slot0)
+	if not BpModel.instance:isShowExpUp() then
+		for slot5, slot6 in ipairs(slot0._expupGos) do
+			gohelper.setActive(slot6, false)
+		end
+
+		return
+	end
+
+	slot2 = {}
+
+	for slot6, slot7 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
+		slot8 = slot7.config
+		slot9 = slot8.loopType
+		slot2[slot9] = slot2[slot9] or 1000 + (slot8.bonusScoreTimes or 0) > 1000
+	end
+
+	for slot6, slot7 in ipairs(slot0._expupGos) do
+		gohelper.setActive(slot7, slot2[slot6] or false)
+	end
 end
 
 return slot0

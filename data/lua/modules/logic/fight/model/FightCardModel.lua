@@ -313,6 +313,10 @@ function slot0.getHandCards(slot0)
 	return slot0:getHandCardsByOps(slot0._cardOps)
 end
 
+function slot0.getHandCardData(slot0)
+	return slot0._cardMO and slot0._cardMO.cardGroup
+end
+
 function slot0.getHandCardsByOps(slot0, slot1)
 	return slot0:tryGettingHandCardsByOps(slot1) or {}
 end
@@ -476,6 +480,8 @@ function slot0.combineTwoCard(slot0, slot1, slot2)
 		slot3.heroId = slot1.heroId
 	end
 
+	slot3.energy = slot0.energy + slot1.energy
+
 	return slot3
 end
 
@@ -528,7 +534,7 @@ function slot0.getCombineIndexOnce(slot0, slot1, slot2)
 			elseif slot2 == slot0[slot6] and slot1 == slot0[slot6 + 1] then
 				return slot6
 			end
-		elseif FightCardDataHelper.canCombineCard(slot0[slot6], slot0[slot6 + 1]) then
+		elseif FightCardDataHelper.canCombineCardForPerformance(slot0[slot6], slot0[slot6 + 1]) then
 			return slot6
 		end
 	end
@@ -583,6 +589,15 @@ function slot0.playAssistBossHandCardOp(slot0, slot1, slot2)
 	end
 
 	slot3:playAssistBossHandCard(slot1, slot4)
+	table.insert(slot0._cardOps, slot3)
+
+	return slot3
+end
+
+function slot0.playPlayerFinisherSkill(slot0, slot1, slot2)
+	slot3 = FightBeginRoundOp.New()
+
+	slot3:playPlayerFinisherSkill(slot1, slot2)
 	table.insert(slot0._cardOps, slot3)
 
 	return slot3

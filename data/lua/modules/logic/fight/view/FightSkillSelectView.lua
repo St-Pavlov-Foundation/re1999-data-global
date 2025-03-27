@@ -292,10 +292,6 @@ function slot0._onClickDown(slot0, slot1, slot2)
 end
 
 function slot0.checkCanSelect(slot0, slot1)
-	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
-		return false
-	end
-
 	if FightDataHelper.entityMgr:isSub(slot1) then
 		return false
 	end
@@ -377,10 +373,6 @@ function slot0._onLongPress(slot0, slot1)
 	slot0.currentFocusEntityMO = FightDataHelper.entityMgr:getById(slot0._curClickEntityId)
 
 	if not slot0.currentFocusEntityMO then
-		return
-	end
-
-	if slot0.currentFocusEntityMO:isAssistBoss() then
 		return
 	end
 

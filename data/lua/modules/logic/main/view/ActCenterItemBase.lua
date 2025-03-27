@@ -5,14 +5,18 @@ slot0 = class("ActCenterItemBase", LuaCompBase)
 function slot0.init(slot0, slot1)
 	slot0:__onInit()
 
+	slot0.go = slot1
+	slot0._transform = slot1.transform
+	slot0._imgGo = gohelper.findChild(slot1, "bg")
 	slot0._imgitem = gohelper.findChildImage(slot1, "bg")
 	slot0._btnitem = gohelper.findChildClick(slot1, "bg")
 	slot0._goactivityreddot = gohelper.findChild(slot1, "go_activityreddot")
 	slot0._txttheme = gohelper.findChildText(slot1, "txt_theme")
 	slot0._godeadline = gohelper.findChild(slot1, "#go_deadline")
 	slot0._txttime = gohelper.findChildText(slot1, "#go_deadline/#txt_time")
-	slot0.go = slot1
-	slot0._transform = slot1.transform
+	slot0._act_iconbgGo = gohelper.findChild(slot1, "act_iconbg")
+	slot0._act_iconbg_effGo = gohelper.findChild(slot1, "act_iconbg_eff")
+	slot0._goexpup = gohelper.findChild(slot0.go, "#go_expup")
 
 	slot0:onInit(slot1)
 	slot0:_addEvent()

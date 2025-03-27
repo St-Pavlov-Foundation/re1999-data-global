@@ -2,6 +2,16 @@ module("modules.logic.rouge.controller.RougeDLCHelper", package.seeall)
 
 slot0 = class("RougeDLCHelper")
 
+function slot0.isUsingDLCs()
+	return RougeModel.instance:getVersion() and #slot0 > 0
+end
+
+function slot0.isUsingTargetDLC(slot0)
+	if RougeModel.instance:getVersion() then
+		return tabletool.indexOf(slot1, slot0) and slot2 > 0
+	end
+end
+
 function slot0.isCurrentUsingContent(slot0)
 	return uv0.isCurrentBaseContent(slot0) or uv0.isCurrentUsingVersions(slot0)
 end
@@ -107,6 +117,20 @@ function slot0.getCurrentUseStyleFightSkills(slot0)
 	table.sort(slot3, uv0._styleSkillSortFunc)
 
 	return slot3
+end
+
+function slot0.getCurVersionString()
+	return uv0.versionListToString(RougeOutsideModel.instance:getRougeGameRecord() and slot0:getVersionIds())
+end
+
+function slot0.versionListToString(slot0)
+	slot1 = ""
+
+	if slot0 then
+		slot1 = table.concat(slot0, "_")
+	end
+
+	return slot1
 end
 
 return slot0

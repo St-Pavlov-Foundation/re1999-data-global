@@ -41,6 +41,16 @@ function slot0.onDestructor(slot0)
 		end
 	end
 
+	if slot0.components_list_internal then
+		for slot5 = #slot0.components_list_internal, 1, -1 do
+			if not slot0.components_list_internal[slot5].INVOKEDDISPOSE then
+				slot6:disposeSelf()
+			end
+		end
+
+		slot0.components_list_internal = nil
+	end
+
 	for slot5, slot6 in pairs(slot0) do
 		if type(slot6) == "userdata" then
 			rawset(slot0, slot5, nil)
@@ -234,6 +244,23 @@ function slot0.releaseComponent(slot0, slot1)
 
 		slot0.components_internal[slot2] = nil
 	end
+end
+
+function slot0.addComponent(slot0, slot1)
+	if slot0.INVOKEDDISPOSE then
+		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. slot0.__cname)
+	end
+
+	if not slot0.components_list_internal then
+		slot0.components_list_internal = {}
+	end
+
+	slot2 = slot1.New()
+	slot2.PARENTROOTCLASS = slot0
+
+	table.insert(slot0.components_list_internal, slot2)
+
+	return slot2
 end
 
 return slot0

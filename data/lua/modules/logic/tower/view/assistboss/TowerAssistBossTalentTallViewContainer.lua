@@ -15,7 +15,7 @@ function slot0.buildTabViews(slot0, slot1)
 	if slot1 == 1 then
 		slot0.navigateView = NavigateButtonsView.New({
 			true,
-			true,
+			false,
 			false
 		})
 

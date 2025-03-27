@@ -2,9 +2,9 @@ module("modules.logic.reactivity.define.ReactivityEnum", package.seeall)
 
 slot0 = _M
 slot0.ActivityDefine = {
-	[11502] = {
-		storeCurrency = 1501,
-		storeActId = 12001
+	[VersionActivity2_4Enum.ActivityId.Reactivity] = {
+		storeCurrency = CurrencyEnum.CurrencyType.V1a8Dungeon,
+		storeActId = VersionActivity2_4Enum.ActivityId.ReactivityStore
 	}
 }
 

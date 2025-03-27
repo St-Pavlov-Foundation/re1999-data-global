@@ -82,15 +82,9 @@ function slot0.reverse(slot0)
 end
 
 function slot0.refreshUI(slot0)
-	if slot0._mo and slot0._mo:checkShowMutate() then
-		if slot0._mo:checkShowSpeicalSkin() then
-			if lua_critter_skin.configDict[slot0._config.mutateSkin] then
-				slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot2.largeIcon), function ()
-					uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-				end, slot0)
-			end
-		else
-			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot0._id), function ()
+	if slot0._mo:checkShowSpeicalSkin() then
+		if lua_critter_skin.configDict[slot0._config.mutateSkin] then
+			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot1.largeIcon), function ()
 				uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
 			end, slot0)
 		end
@@ -100,12 +94,12 @@ function slot0.refreshUI(slot0)
 		end, slot0)
 	end
 
-	slot2 = slot0._mo:getBackGroundId() and true or false
+	slot1 = slot0._mo:getBackGroundId() and true or false
 
-	gohelper.setActive(slot0._simageutm.gameObject, slot2)
-	gohelper.setActive(slot0._gobackbgicon, not slot2)
+	gohelper.setActive(slot0._simageutm.gameObject, slot1)
+	gohelper.setActive(slot0._gobackbgicon, not slot1)
 
-	if slot2 then
+	if slot1 then
 		slot0._simageutm:LoadImage(ResUrl.getPropItemIcon(slot0._mo:getBackGroundId()), function ()
 			uv0._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
 		end, slot0)

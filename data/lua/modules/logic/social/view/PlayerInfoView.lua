@@ -4,9 +4,9 @@ slot0 = class("PlayerInfoView", BaseView)
 
 function slot0.onInitView(slot0)
 	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "#go_playericon")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gocustombg = gohelper.findChild(slot0.viewGO, "#go_custombg")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_custombg/#simage_bg2")
+	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "scrollview/#simage_bg")
+	slot0._gocustombg = gohelper.findChild(slot0.viewGO, "scrollview/#go_custombg")
+	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "scrollview/#go_custombg/#simage_bg2")
 	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
 	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "level/#txt_level")
 	slot0._btnplayerview = gohelper.findChildButtonWithAudio(slot0.viewGO, "scrollview/viewport/buttonscontainer/#btn_playerview")
@@ -18,8 +18,6 @@ function slot0.onInitView(slot0)
 	slot0._btninformplayer = gohelper.findChildButtonWithAudio(slot0.viewGO, "scrollview/viewport/buttonscontainer/#btn_informplayer")
 	slot0._btnremark = gohelper.findChildButtonWithAudio(slot0.viewGO, "scrollview/viewport/buttonscontainer/#btn_remark")
 	slot0._btnplayercard = gohelper.findChildButtonWithAudio(slot0.viewGO, "scrollview/viewport/buttonscontainer/#btn_personalcard")
-
-	gohelper.setActive(slot0._btnplayercard, false)
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()

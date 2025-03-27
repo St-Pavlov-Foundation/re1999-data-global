@@ -81,8 +81,6 @@ function slot0.onDestroyView(slot0)
 	for slot4, slot5 in pairs(slot0.indicatorId2View) do
 		slot5:onDestroy()
 	end
-
-	FightModel.instance:clearIndicator()
 end
 
 return slot0

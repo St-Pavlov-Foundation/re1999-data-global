@@ -22,6 +22,9 @@ function slot0.init(slot0, slot1)
 	slot0._simageFinish2:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
 
 	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
+	slot0._gobonusItem = gohelper.findChild(slot0._gobonus, "#go_item")
+	slot0._gobonusExpup = gohelper.findChild(slot0._gobonus, "#go_expup")
+	slot0._gobonusExpupTxt = gohelper.findChildText(slot0._gobonusExpup, "#txt_num")
 end
 
 function slot0.addEventListeners(slot0)
@@ -73,22 +76,24 @@ function slot0.onUpdateMO(slot0, slot1)
 	end
 
 	if not slot0.bonusItem then
-		slot6 = IconMgr.instance:getCommonPropItemIcon(slot0._gobonus)
+		slot7 = IconMgr.instance:getCommonPropItemIcon(slot0._gobonusItem)
 
-		gohelper.setAsFirstSibling(slot6.go)
-		slot6:setMOValue(1, BpEnum.ScoreItemId, slot0.mo.config.bonusScore, nil, true)
-		slot6:setCountFontSize(36)
-		slot6:setScale(0.54)
-		slot6:SetCountLocalY(42)
-		slot6:SetCountBgHeight(22)
-		slot6:showStackableNum2()
-		slot6:setHideLvAndBreakFlag(true)
-		slot6:hideEquipLvAndBreak(true)
+		gohelper.setAsFirstSibling(slot7.go)
+		slot7:setMOValue(1, BpEnum.ScoreItemId, GameUtil.calcByDeltaRate1000AsInt(slot0.mo.config.bonusScore, slot0.mo.config.bonusScoreTimes), nil, true)
+		slot7:setCountFontSize(36)
+		slot7:setScale(0.54)
+		slot7:SetCountLocalY(42)
+		slot7:SetCountBgHeight(22)
+		slot7:showStackableNum2()
+		slot7:setHideLvAndBreakFlag(true)
+		slot7:hideEquipLvAndBreak(true)
 
-		slot0.bonusItem = slot6
+		slot0.bonusItem = slot7
 	else
-		slot0.bonusItem:setMOValue(1, BpEnum.ScoreItemId, slot0.mo.config.bonusScore, nil, true)
+		slot0.bonusItem:setMOValue(1, BpEnum.ScoreItemId, slot6, nil, true)
 	end
+
+	slot0:_refreshExpup()
 end
 
 function slot0.onTabClose(slot0, slot1)
@@ -142,6 +147,14 @@ function slot0.onDestroyView(slot0)
 
 	slot0._simageFinish:UnLoadImage()
 	slot0._simageFinish2:UnLoadImage()
+end
+
+function slot0._refreshExpup(slot0)
+	if 1000 + (slot0.mo.config.bonusScoreTimes or 0) > 1000 then
+		slot0._gobonusExpupTxt.text = GameUtil.convertToPercentStr(slot3)
+	end
+
+	gohelper.setActive(slot0._gobonusExpup, slot4)
 end
 
 return slot0

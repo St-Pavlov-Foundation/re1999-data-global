@@ -1,21 +1,25 @@
-slot2 = UnityEngine.Input
-slot3 = UnityEngine.KeyCode
-slot4 = SLFramework.GameObjectHelper
-slot5 = UnityEngine.EventSystems.EventSystem
-slot6 = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult
-slot7 = UnityEngine.EventSystems.PointerEventData
-slot9 = "#00FF00"
-slot10 = "#FFFF00"
-slot11 = "_luaLang"
-slot12 = "_lang"
+slot0 = string.format
+slot1 = table.insert
+slot2 = table.concat
+slot5 = UnityEngine.Input
+slot6 = UnityEngine.KeyCode
+slot7 = SLFramework.GameObjectHelper
+slot8 = UnityEngine.EventSystems.EventSystem
+slot9 = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult
+slot10 = UnityEngine.EventSystems.PointerEventData
+slot12 = "#00FF00"
+slot13 = "#FFFF00"
+slot14 = "_luaLang"
+slot15 = "_lang"
+slot16 = SLFramework.ResLogMgr.Instance
 
-function slot13(slot0)
+function slot17(slot0)
 	if uv0("GMRpc") then
 		slot1.instance:sendGMRequest(slot0)
 	end
 end
 
-function slot14()
+function slot18()
 	if uv0("LoginController") then
 		slot0.instance:logout()
 	end
@@ -76,7 +80,7 @@ _G.getGlobal("Partial_GMTool")._input = ({
 				table.insert(slot2, uv0.util.setColorDesc(slot6, uv1) .. " " .. uv0.util.setColorDesc(slot7, uv2))
 			end
 
-			logError(table.concat(slot2, "\n"))
+			logError(uv3(slot2, "\n"))
 		end
 	end,
 	_hookLangSettings__luaLang_rawkey = function (slot0, slot1)
@@ -101,9 +105,87 @@ _G.getGlobal("Partial_GMTool")._input = ({
 
 		slot0._mlStringEnable = slot1
 	end,
+	_switchResLog = function (slot0)
+		if slot0._resLogEnable == nil then
+			slot0._resLogEnable = true
+			uv0.Enable = true
+
+			return
+		end
+
+		if slot0._resLogEnable == true then
+			slot3 = {}
+
+			if SLFramework.ResLogMgr.Instance:GetList().Count > 0 then
+				for slot9 = 0, slot5 - 1 do
+					slot10 = slot4[slot9]
+
+					uv1(slot3, {
+						cost = slot10.loadedTime - slot10.loadTime,
+						loadedTime = slot10.loadedTime,
+						loadTime = slot10.loadTime,
+						path = slot10.path,
+						size = slot10.size,
+						_id = slot9
+					})
+				end
+			end
+
+			if #slot3 > 0 then
+				table.sort(slot3, function (slot0, slot1)
+					if slot0.loadTime ~= slot1.loadTime then
+						return slot2 < slot3
+					end
+
+					if slot0.cost ~= slot1.cost then
+						return slot5 < slot4
+					end
+
+					if slot0.size ~= slot1.size then
+						return slot7 < slot6
+					end
+
+					return slot0._id < slot1._id
+				end)
+			end
+
+			slot6 = {}
+			slot9 = 0
+			slot10 = 0
+
+			for slot14, slot15 in ipairs(slot3) do
+				slot16 = uv2("%.3fs", slot15.cost)
+
+				if uv2("%.2f", slot15.loadTime) ~= nil then
+					slot8 = 0 + 1
+					slot7 = slot17
+
+					if slot15.cost < 0 then
+						return
+					end
+
+					if slot15.cost < 10 then
+						slot9 = slot9 + slot15.cost
+					end
+				end
+
+				slot18 = tonumber(tostring(slot15.size))
+				slot10 = slot10 + slot18
+
+				uv1(slot6, uv2("%s (%s): cost=%s, size=%s, path=%s", slot14, slot8, slot16, uv2("%.4f MB", slot18 / 1024 / 1024), slot15.path))
+			end
+
+			uv1(slot6, 1, uv2("tot_cnt: %s, tot_size: %s, tot_cost: %s seconds", slot5, uv2("%.4f MB", slot10 / 1024 / 1024), slot9))
+			logError(uv3(slot6, "\n"))
+		end
+
+		slot0._resLogEnable = not slot0._resLogEnable
+		uv0.Enable = slot0._resLogEnable
+	end,
 	onClear = function (slot0)
 		slot0._pointerEventData = nil
 		slot0._csList = nil
+		slot0._resLogEnable = nil
 
 		if slot0._mlStringEnable == false then
 			slot0:_switchLuaLang()
@@ -113,6 +195,7 @@ _G.getGlobal("Partial_GMTool")._input = ({
 		end
 
 		slot0._mlStringEnable = true
+		uv2.Enable = false
 
 		return slot0
 	end,
@@ -136,6 +219,9 @@ _G.getGlobal("Partial_GMTool")._input = ({
 		elseif slot9 and slot3 and uv0.GetKeyDown(uv1.Alpha2) then
 			logNormal("Ctrl + Alt + 2")
 			slot0:_showOpeningViewName()
+		elseif slot9 and slot3 and uv0.GetKeyDown(uv1.Alpha3) then
+			logNormal("Ctrl + Alt + 3")
+			slot0:_switchResLog()
 		end
 	end
 }):onClear()

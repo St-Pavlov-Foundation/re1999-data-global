@@ -65,7 +65,7 @@ function slot0._startShowResult(slot0, slot1)
 
 	slot0._attributeMOs = slot1
 
-	slot0._attributeItem:playLevelUp(slot1)
+	slot0._attributeItem:playLevelUp(slot1, true)
 
 	slot0._repeatCount = 0
 

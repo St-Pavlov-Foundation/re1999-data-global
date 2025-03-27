@@ -7495,9 +7495,259 @@
     "bankName": "ui_activity_2_3_shenghuo"
   },
   {
-    "id": 20260901,
-    "eventName": "play_ui_mln_page_turn",
-    "bankName": "ui_activity"
+    "id": 20240001,
+    "eventName": "play_activitymusic_theme_2_4",
+    "bankName": "activity2_4_music"
+  },
+  {
+    "id": 20240002,
+    "eventName": "play_activitymusic_seasonmain_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 20240003,
+    "eventName": "play_activity_bakaluoer_2_4_1st",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240004,
+    "eventName": "play_activity_bakaluoer_2_4_2nd",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240005,
+    "eventName": "play_activity_bakaluoer_2_4_3rd",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240006,
+    "eventName": "play_activity_bakaluoer_2_4_loops",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240007,
+    "eventName": "play_playable_bass_g1",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240008,
+    "eventName": "play_playable_bass_a1",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240009,
+    "eventName": "play_playable_bass_b1",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240010,
+    "eventName": "play_playable_bass_c2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240011,
+    "eventName": "play_playable_bass_d2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240012,
+    "eventName": "play_playable_bass_e2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240013,
+    "eventName": "play_playable_bass__f2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240014,
+    "eventName": "play_playable_clarinet_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240015,
+    "eventName": "play_playable_clarinet_a3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240016,
+    "eventName": "play_playable_clarinet_b3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240017,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240018,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240019,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240020,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240021,
+    "eventName": "play_playable_dolceola_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240022,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240023,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240024,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240025,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240026,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240027,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240028,
+    "eventName": "play_playable_marimba_g2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240029,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240030,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240031,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240032,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240033,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240034,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240035,
+    "eventName": "play_playable_percussion_clap",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240036,
+    "eventName": "play_playable_percussion_kick",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240037,
+    "eventName": "play_playable_percussion_shaker",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240038,
+    "eventName": "play_playable_percussion_snare",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240039,
+    "eventName": "pause_bgm_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 20240040,
+    "eventName": "resume_bgm_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 20240041,
+    "eventName": "play_activity_bakaluoer_2_4_loops",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240042,
+    "eventName": "stop_activity_bakaluoer_2_4_loops",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20240043,
+    "eventName": "play_plot_music_gentlehope",
+    "bankName": "plot_music_gentlehope"
+  },
+  {
+    "id": 20240044,
+    "eventName": "play_plot_music_serious",
+    "bankName": "plot_music_serious"
+  },
+  {
+    "id": 20240045,
+    "eventName": "play_activitymusic_lapras01_1_9",
+    "bankName": "activity1_9_music"
+  },
+  {
+    "id": 20240046,
+    "eventName": "play_activitymusic_tokenstore1_4",
+    "bankName": "activity1_4_music"
+  },
+  {
+    "id": 20240047,
+    "eventName": "play_activitymusic_tokenstore1_4",
+    "bankName": "activity1_4_music"
+  },
+  {
+    "id": 20240048,
+    "eventName": "play_activitymusic_mission1_4",
+    "bankName": "activity1_4_music"
+  },
+  {
+    "id": 20240049,
+    "eventName": "play_ui_diqiu_count_down",
+    "bankName": "ui_activity_2_4_diqiu_barcarole"
+  },
+  {
+    "id": 20240050,
+    "eventName": "play_ui_diqiu_settle_accounts",
+    "bankName": "ui_activity_2_4_diqiu_barcarole"
+  },
+  {
+    "id": 20240051,
+    "eventName": "play_ui_diqiu_unlock",
+    "bankName": "ui_activity_2_4_diqiu_barcarole"
   },
   {
     "id": 20240052,
@@ -7518,5 +7768,1760 @@
     "id": 20240055,
     "eventName": "play_ui_common_click",
     "bankName": "uiclick"
+  },
+  {
+    "id": 20240056,
+    "eventName": "play_ui_diqiu_perfect",
+    "bankName": "ui_activity_2_4_diqiu_barcarole"
+  },
+  {
+    "id": 20240057,
+    "eventName": "play_ui_diqiu_open",
+    "bankName": "ui_activity_2_4_diqiu"
+  },
+  {
+    "id": 20240058,
+    "eventName": "play_ui_lvhu_clue_write_2",
+    "bankName": "ui_activity_lvhu"
+  },
+  {
+    "id": 20240059,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20240060,
+    "eventName": "play_ui_diqiu_complete",
+    "bankName": "ui_activity_2_4_diqiu"
+  },
+  {
+    "id": 20240061,
+    "eventName": "play_ui_diqiu_card_open_1",
+    "bankName": "ui_activity_2_4_diqiu_card"
+  },
+  {
+    "id": 20240062,
+    "eventName": "play_ui_diqiu_card_open_2",
+    "bankName": "ui_activity_2_4_diqiu_card"
+  },
+  {
+    "id": 20240063,
+    "eventName": "play_ui_diqiu_open_2",
+    "bankName": "ui_activity_2_4_diqiu"
+  },
+  {
+    "id": 20241001,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241002,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241003,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241004,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241005,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241006,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241007,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241008,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241009,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241010,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241011,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241012,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241013,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241014,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241015,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241016,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241017,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241018,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241019,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241020,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241021,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241022,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241023,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241024,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241025,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241026,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241027,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241028,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241029,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241030,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241031,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241032,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241033,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241034,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241035,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241036,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241037,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241038,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241039,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241040,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241041,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241042,
+    "eventName": "play_playable_dolceola_a4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20241043,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242001,
+    "eventName": "play_playable_bass_g2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242002,
+    "eventName": "play_playable_bass_g2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242003,
+    "eventName": "play_playable_bass_g2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242004,
+    "eventName": "play_playable_bass_g2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242005,
+    "eventName": "play_playable_bass_e2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242006,
+    "eventName": "play_playable_bass_e2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242007,
+    "eventName": "play_playable_bass_e2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242008,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242009,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242010,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242011,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242012,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242013,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242014,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242015,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242016,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242017,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242018,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242019,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242020,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242021,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242022,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242023,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242024,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242025,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242026,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242027,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242028,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242029,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242030,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242031,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242032,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242033,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242034,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242035,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242036,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242037,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242038,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242039,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242040,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242041,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242042,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242043,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242044,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242045,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242046,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242047,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242048,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242049,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242050,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242051,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242052,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242053,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242054,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242055,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242056,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242057,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242058,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242059,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242060,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242061,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242062,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242063,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242064,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242065,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242066,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242067,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242068,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242069,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242070,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242071,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242072,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242073,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242074,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242075,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242076,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242077,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242078,
+    "eventName": "play_playable_dolceola_g5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242079,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242080,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242081,
+    "eventName": "play_playable_dolceola__f5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242082,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242083,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242084,
+    "eventName": "play_playable_dolceola_e5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242085,
+    "eventName": "play_playable_dolceola_d5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242086,
+    "eventName": "play_playable_dolceola_c5",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20242087,
+    "eventName": "play_playable_dolceola_b4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243001,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243002,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243003,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243004,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243005,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243006,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243007,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243008,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243009,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243010,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243011,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243012,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243013,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243014,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243015,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243016,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243017,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243018,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243019,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243020,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243021,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243022,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243023,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243024,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243025,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243026,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243027,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243028,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243029,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243030,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243031,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243032,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243033,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243034,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243035,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243036,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243037,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243038,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243039,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243040,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243041,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243042,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243043,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243044,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243045,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243046,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243047,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243048,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243049,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243050,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243051,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243052,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243053,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243054,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243055,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243056,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243057,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243058,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243059,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243060,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243061,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243062,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243063,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243064,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243065,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243066,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243067,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243068,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243069,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243070,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243071,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243072,
+    "eventName": "play_playable_clarinet_b3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243073,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243074,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243075,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243076,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243077,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243078,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243079,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243080,
+    "eventName": "play_playable_clarinet_a3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243081,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243082,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243083,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243084,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243085,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243086,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243087,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243088,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243089,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243090,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243091,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243092,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243093,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243094,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243095,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243096,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243097,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243098,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243099,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243100,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243101,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243102,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243103,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243104,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243105,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243106,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243107,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243108,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243109,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243110,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243111,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243112,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243113,
+    "eventName": "play_playable_clarinet_e4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243114,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243115,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243116,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243117,
+    "eventName": "play_playable_marimba_b2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243118,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243119,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243120,
+    "eventName": "play_playable_clarinet_c4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243121,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243122,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243123,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243124,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243125,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243126,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243127,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243128,
+    "eventName": "play_playable_marimba_c3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243129,
+    "eventName": "play_playable_marimba_e3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243130,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243131,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243132,
+    "eventName": "play_playable_clarinet_d4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243133,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243134,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243135,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243136,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243137,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243138,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243139,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243140,
+    "eventName": "play_playable_marimba__f3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243141,
+    "eventName": "play_playable_clarinet__f4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243142,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243143,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243144,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243145,
+    "eventName": "play_playable_marimba_a2",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243146,
+    "eventName": "play_playable_marimba_d3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243147,
+    "eventName": "play_playable_marimba_g3",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20243148,
+    "eventName": "play_playable_clarinet_g4",
+    "bankName": "bakaluoer_2_4_music"
+  },
+  {
+    "id": 20245001,
+    "eventName": "play_replay_music_theme_2_4",
+    "bankName": "ui_replay_mainmusic2_4"
+  },
+  {
+    "id": 20245002,
+    "eventName": "play_replay_music_cambell_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245003,
+    "eventName": "play_replay_music_thusspoken37_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245004,
+    "eventName": "play_replay_music_fortunewalk_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245005,
+    "eventName": "play_replay_music_thedoors_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245006,
+    "eventName": "play_replay_music_polarnight_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245007,
+    "eventName": "play_replay_music_hymnusadbacchum_2_4nfc",
+    "bankName": "ui_replay_mainmusic2_4nfc"
+  },
+  {
+    "id": 20245101,
+    "eventName": "play_home_build_bakalor",
+    "bankName": "home_build_bakalor_2_4"
+  },
+  {
+    "id": 20245102,
+    "eventName": "play_home_build_pubu",
+    "bankName": "home_build_pubu_2_4"
+  },
+  {
+    "id": 20245103,
+    "eventName": "play_home_build_lunchaun",
+    "bankName": "home_build_lunchuan_2_4"
+  },
+  {
+    "id": 20246001,
+    "eventName": "play_ui_diqiu_jinru",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246002,
+    "eventName": "play_ui_diqiu_signal",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246003,
+    "eventName": "play_ui_diqiu_choose",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246004,
+    "eventName": "play_ui_diqiu_put",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246005,
+    "eventName": "play_ui_diqiu_revolve",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246006,
+    "eventName": "play_ui_diqiu_enable",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20246007,
+    "eventName": "play_ui_diqiu_success",
+    "bankName": "ui_activity_2_4_diqiu_wuerlixi"
+  },
+  {
+    "id": 20247001,
+    "eventName": "play_ui_leimi_theft_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20247002,
+    "eventName": "play_ui_mln_day_night",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20247003,
+    "eventName": "play_ui_fight_click",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20247004,
+    "eventName": "play_ui_fight_shatter",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20247005,
+    "eventName": "play_ui_hero_sign",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20247006,
+    "eventName": "play_ui_checkpoint_aekn_piaozi",
+    "bankName": "ui_checkpoint_2_4"
+  },
+  {
+    "id": 20248001,
+    "eventName": "play_ui_fight_inspiration_get",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20248002,
+    "eventName": "play_ui_fight_inspiration_assigned",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20248003,
+    "eventName": "play_ui_fight_cuff_strengthen",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20249001,
+    "eventName": "play_ui_diqiu_build_open",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249002,
+    "eventName": "play_ui_diqiu_build_click",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249003,
+    "eventName": "play_ui_magazines",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20249004,
+    "eventName": "play_ui_diqiu_building",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249005,
+    "eventName": "play_ui_diqiu_collect",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249006,
+    "eventName": "play_ui_gudu_bubble_click",
+    "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 20249007,
+    "eventName": "play_ui_mln_unlock",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20249008,
+    "eventName": "play_ui_wulu_build",
+    "bankName": "ui_activity_1_5_wulu"
+  },
+  {
+    "id": 20249009,
+    "eventName": "play_ui_diqiu_build_end",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249010,
+    "eventName": "play_ui_diqiu_rest",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249011,
+    "eventName": "stop_ui_diqiu_rest",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249034,
+    "eventName": "play_ui_inking_preference_open",
+    "bankName": "ui_inking"
+  },
+  {
+    "id": 20249012,
+    "eventName": "play_ui_diqiu_danzhu_open",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249013,
+    "eventName": "play_ui_diqiu_danzhu_common",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249014,
+    "eventName": "play_ui_diqiu_danzhu_spring",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249015,
+    "eventName": "play_ui_diqiu_danzhu_boom",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249016,
+    "eventName": "play_ui_diqiu_danzhu_liren",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249017,
+    "eventName": "play_ui_diqiu_danzhu_fenlie",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249018,
+    "eventName": "play_ui_diqiu_danzhu_spring",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249019,
+    "eventName": "play_ui_diqiu_danzhu_shuaxin",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249020,
+    "eventName": "play_ui_diqiu_danzhu_end",
+    "bankName": "ui_activity_2_4_diqiu_tutushizi"
+  },
+  {
+    "id": 20249021,
+    "eventName": "play_ui_call_back_letter_expansion",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249022,
+    "eventName": "play_ui_call_back_interface_entry_01",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249023,
+    "eventName": "play_ui_call_back_interface_entry_02",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249024,
+    "eventName": "play_ui_call_back_interface_entry_03",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249025,
+    "eventName": "play_ui_call_back_interface_entry_04",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249026,
+    "eventName": "play_ui_call_back_nameplate_switch",
+    "bankName": "ui_call_back_2_4"
+  },
+  {
+    "id": 20249027,
+    "eventName": "play_ui_achieve_weiqicard_switch",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20249028,
+    "eventName": "play_ui_checkpoint_resources_cardpass",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20249029,
+    "eventName": "play_ui_replay_buttonegg",
+    "bankName": "ui_replay_sfx_1_9"
+  },
+  {
+    "id": 20249030,
+    "eventName": "play_ui_fight_harp_close",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20249031,
+    "eventName": "play_ui_fight_harp_release",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20249032,
+    "eventName": "play_ui_fight_harp_open",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20249033,
+    "eventName": "play_ui_fight_harp_dian",
+    "bankName": "fight_ui_sfx2_4"
+  },
+  {
+    "id": 20249041,
+    "eventName": "play_ui_diqiu_yure_ring",
+    "bankName": "ui_activity_2_4_diqiu_yure"
+  },
+  {
+    "id": 20249042,
+    "eventName": "play_ui_mln_remove_effect",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20249043,
+    "eventName": "play_ui_diqiu_yure_success",
+    "bankName": "ui_activity_2_4_diqiu_yure"
+  },
+  {
+    "id": 20249044,
+    "eventName": "play_ui_diqiu_yure_click",
+    "bankName": "ui_activity_2_4_diqiu_yure"
+  },
+  {
+    "id": 20260901,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
   }
 ]

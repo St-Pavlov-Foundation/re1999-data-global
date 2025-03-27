@@ -112,6 +112,8 @@ function slot0.refreshUI(slot0)
 	for slot7 = #slot3 + 1, #slot0._rewardItems do
 		gohelper.setActive(slot0._rewardItems[slot7].go, false)
 	end
+
+	slot0:refreshTask()
 end
 
 function slot0.refreshTask(slot0)

@@ -19,6 +19,7 @@ slot0.CurrencyType = {
 	V2a3DouQuQu = 2302,
 	V2a2Dungeon = 2201,
 	FreeDiamondCoupon = 2,
+	V2a4Dungeon = 2401,
 	BlueSoul = 10,
 	ReactivityCurrency = 25,
 	Competition = 6,

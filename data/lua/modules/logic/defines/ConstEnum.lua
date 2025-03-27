@@ -115,5 +115,8 @@ slot0.StorePackageNewMatChargeGoodIds = 2302
 slot0.UnlockDestinyHeroLevel5 = 401
 slot0.UnlockDestinyHeroLevel6 = 402
 slot0.StorePackageShowCoBradedTagGoodIds = 2303
+slot0.CharacterTalentLayoutCopyCodeLimit = 2401
+slot0.WuErLiXiOnNodeSec = 2402
+slot0.V2a4_WarmUp_btnplay_openTs = 2499
 
 return slot0

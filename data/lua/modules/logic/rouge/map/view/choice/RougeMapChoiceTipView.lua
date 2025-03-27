@@ -68,27 +68,56 @@ function slot0.refreshUI(slot0)
 	slot0:refreshCollectionList()
 end
 
-slot1 = "#352E24"
-
 function slot0.refreshCollectionList(slot0)
-	for slot4, slot5 in ipairs(slot0.collectionIdList) do
-		slot6 = slot0:getCollectionItem(slot4)
+	for slot5, slot6 in ipairs(slot0.collectionIdList) do
+		slot7 = slot0:getCollectionItem(slot5)
 
-		gohelper.setActive(slot6.go, true)
+		gohelper.setActive(slot7.go, true)
+		RougeCollectionDescHelper.setCollectionDescInfos3(slot6, nil, slot7.txtDesc, nil, slot0:_getOrCreateExtraParams())
 
-		slot6.txtDesc.text = RougeCollectionHelper.getCollectionEffectStr(slot5, nil, , uv0)
-		slot6.txtName.text = RougeCollectionConfig.instance:getCollectionName(slot5)
+		slot7.txtName.text = RougeCollectionConfig.instance:getCollectionName(slot6)
 
-		slot6.sImageCollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot5))
-		slot0:refreshHole(slot6, RougeCollectionConfig.instance:getCollectionCfg(slot5).holeNum)
+		slot7.sImageCollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot6))
+		slot0:refreshHole(slot7, RougeCollectionConfig.instance:getCollectionCfg(slot6).holeNum)
 	end
 
-	for slot4 = #slot0.collectionIdList + 1, #slot0.collectionItemList do
-		gohelper.setActive(slot0.collectionItemList[slot4].go, false)
+	for slot5 = #slot0.collectionIdList + 1, #slot0.collectionItemList do
+		gohelper.setActive(slot0.collectionItemList[slot5].go, false)
 	end
 
 	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
 	recthelper.setHeight(slot0.rectViewPort, math.min(recthelper.getHeight(slot0.rectTrContent), RougeMapEnum.MaxTipHeight))
+end
+
+function slot0._getOrCreateExtraParams(slot0)
+	if not slot0._extraParams then
+		slot0._extraParams = {
+			isAllActive = true,
+			showDescToListFunc = slot0._ShowDescToListFunc
+		}
+	end
+
+	return slot0._extraParams
+end
+
+slot1 = "#352E24"
+
+function slot0._ShowDescToListFunc(slot0, slot1, slot2, slot3)
+	slot4 = {}
+	slot5 = slot3 and slot3.isAllActive
+
+	for slot9, slot10 in ipairs(slot0) do
+		if slot1[slot10] then
+			for slot15, slot16 in ipairs(slot11) do
+				slot17 = slot5 or slot16.isActive
+
+				table.insert(slot4, RougeCollectionDescHelper._decorateCollectionEffectStr(slot16.content, slot17, uv0))
+				table.insert(slot4, RougeCollectionDescHelper._decorateCollectionEffectStr(slot16.condition, slot17, uv0))
+			end
+		end
+	end
+
+	slot2.text = table.concat(slot4, "\n")
 end
 
 function slot0.getCollectionItem(slot0, slot1)

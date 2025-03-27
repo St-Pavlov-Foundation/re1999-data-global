@@ -9,11 +9,13 @@ end
 function slot0.refreshList(slot0, slot1)
 	slot0.isFromHeroGroup = slot1 and slot1.isFromHeroGroup
 	slot0.bossId = slot1 and slot1.bossId
+	slot0.towerType = slot1 and slot1.towerType
+	slot0.towerId = slot1 and slot1.towerId
 
 	if slot0.isFromHeroGroup then
 		slot0.bossId = HeroGroupModel.instance:getCurGroupMO():getAssistBossId()
 
-		if TowerModel.instance:isBossBan(slot0.bossId) then
+		if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot0.towerType, slot0.towerId, slot0.bossId) then
 			slot0.bossId = 0
 		end
 	end
@@ -23,7 +25,9 @@ function slot0.refreshList(slot0, slot1)
 
 		if TowerConfig.instance:getAssistBossList() then
 			for slot7, slot8 in ipairs(slot2) do
-				table.insert(slot3, slot0:buildBossData(slot8))
+				if slot0:checkBossCanShow(slot8.bossId) then
+					table.insert(slot3, slot0:buildBossData(slot8))
+				end
 			end
 		end
 
@@ -49,10 +53,38 @@ function slot0.refreshList(slot0, slot1)
 			slot0:buildBossData(slot7.config, slot7)
 		end
 
-		slot0:onModelUpdate()
+		slot3 = {}
+
+		for slot7, slot8 in ipairs(slot2) do
+			if slot0:checkBossCanShow(slot8.bossId) then
+				table.insert(slot3, slot8)
+			end
+		end
+
+		slot0:setList(slot3)
 	end
 
 	slot0.isFirstRefresh = false
+end
+
+function slot0.checkBossCanShow(slot0, slot1)
+	if not TowerModel.instance:isBossOpen(slot1) then
+		return false
+	end
+
+	if slot0.towerType and slot0.towerType == TowerEnum.TowerType.Limited then
+		if TowerConfig.instance:getTowerLimitedTimeCo(slot0.towerId) then
+			for slot7, slot8 in ipairs(string.splitToNumber(slot2.bossPool, "#")) do
+				if slot8 == slot1 then
+					return true
+				end
+			end
+		end
+
+		return false
+	end
+
+	return true
 end
 
 function slot0.buildBossData(slot0, slot1, slot2)

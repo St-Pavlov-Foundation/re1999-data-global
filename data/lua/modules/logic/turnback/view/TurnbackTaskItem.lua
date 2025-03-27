@@ -79,6 +79,10 @@ function slot0._btngotoOnClick(slot0)
 end
 
 function slot0._btncangetOnClick(slot0)
+	if not TurnbackModel.instance:isInOpenTime() then
+		return
+	end
+
 	UIBlockMgr.instance:startBlock("TurnbackTaskItemFinish")
 	TaskDispatcher.runDelay(slot0.finishTask, slot0, TurnbackEnum.TaskMaskTime)
 	TurnbackController.instance:dispatchEvent(TurnbackEvent.OnTaskRewardGetFinish, slot0._index)

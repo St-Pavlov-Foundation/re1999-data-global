@@ -17,6 +17,7 @@ function slot0.onInitView(slot0)
 	slot0.btnReset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_replayready/Reset")
 	slot0._goreplayready = gohelper.findChild(slot0.viewGO, "#go_container/#go_replayready")
 	slot0._dropherogroup = gohelper.findChildDropdown(slot0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	slot0.goArrow = gohelper.findChild(slot0.goBossRoot, "#go_Arrow")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -32,12 +33,21 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0.refreshUI, slot0)
 	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0._checkRestrictBoss, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, slot0.onResetSubEpisode, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnClick:RemoveClickListener()
 	slot0._btnAttr:RemoveClickListener()
 	slot0.btnReset:RemoveClickListener()
+end
+
+function slot0._onTowerUpdate(slot0)
+	slot1 = TowerModel.instance:getRecordFightParam()
+
+	TowerController.instance:checkTowerIsEnd(slot1.towerType, slot1.towerId)
 end
 
 function slot0._btnResetOnClick(slot0)
@@ -85,8 +95,16 @@ function slot0._btnClickOnClick(slot0)
 			GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 		end
 	else
-		TowerController.instance:openAssistBossView(slot0.bossId, true)
+		TowerController.instance:openAssistBossView(slot0.bossId, true, slot2.towerType, slot2.towerId)
 	end
+end
+
+function slot0._onResetTalent(slot0, slot1)
+	slot0:refreshTalent()
+end
+
+function slot0._onActiveTalent(slot0, slot1)
+	slot0:refreshTalent()
 end
 
 function slot0._editableInitView(slot0)
@@ -151,6 +169,15 @@ function slot0.refreshBoss(slot0)
 	end
 
 	gohelper.setActive(slot0.goAdd, TowerController.instance:isBossTowerOpen() and slot1 == nil and not (TowerModel.instance:getRecordFightParam().towerType == TowerEnum.TowerType.Boss) and not slot3.isHeroGroupLock)
+	slot0:refreshTalent()
+end
+
+function slot0.refreshTalent(slot0)
+	if TowerConfig.instance:getAssistBossConfig(slot0.bossId) then
+		gohelper.setActive(slot0.goArrow, TowerAssistBossModel.instance:getById(slot0.bossId) and slot2:hasTalentCanActive() or false)
+	else
+		gohelper.setActive(slot0.goArrow, false)
+	end
 end
 
 function slot0._checkRestrictBoss(slot0)
@@ -162,7 +189,7 @@ function slot0._checkRestrictBoss(slot0)
 		return
 	end
 
-	if TowerModel.instance:isBossBan(slot0.bossId) then
+	if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot1.towerType, slot1.towerId, slot0.bossId) then
 		UIBlockMgr.instance:startBlock("removeTowerBoss")
 		TaskDispatcher.runDelay(slot0._removeTowerBoss, slot0, 1.5)
 	end
@@ -171,7 +198,9 @@ end
 function slot0._removeTowerBoss(slot0)
 	UIBlockMgr.instance:endBlock("removeTowerBoss")
 
-	if TowerModel.instance:isBossBan(slot0.bossId) then
+	slot1 = TowerModel.instance:getRecordFightParam()
+
+	if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot1.towerType, slot1.towerId, slot0.bossId) then
 		slot0.bossId = 0
 
 		HeroGroupModel.instance:getCurGroupMO():setAssistBossId(slot0.bossId)

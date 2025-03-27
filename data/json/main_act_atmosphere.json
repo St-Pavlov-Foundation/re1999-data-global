@@ -6,9 +6,19 @@
       "#simage_actbg",
       "left/#go_activity/vx_actbg"
     ],
+    "isShowLogo": false,
+    "isShowActBg": false,
     "mainThumbnailView": [
       "#simage_actbg",
       "#simage_logo"
     ]
+  },
+  {
+    "id": 12431,
+    "effectDuration": 0,
+    "mainView": [],
+    "isShowLogo": false,
+    "isShowActBg": true,
+    "mainThumbnailView": []
   }
 ]

@@ -406,5 +406,29 @@
     "effectCompName": "CommonRoleEffect",
     "motion": "b_fengzhizi",
     "node": "Drawables/bone/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone2/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone3/effect-Bone/roleeffect_zxqe_fzz#Drawables/bone4/effect-Bone/roleeffect_zxqe_fzz"
+  },
+  {
+    "heroResName": "309503_hzsx",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_dengqiu|b_ganzhi",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_hzsx_dengqiu|Drawables/bone2/effect-Bone/roleeffect_hzsx_ganzhi"
+  },
+  {
+    "heroResName": "310901_ttsz",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_beike2",
+    "node": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike"
+  },
+  {
+    "heroResName": "310902_ttsz",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_beike2|b_sinian",
+    "node": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike|Drawables/bone/effect-Bone/roleeffect_ttsz_sinian1#Drawables/bone6/effect-Bone/roleeffect_ttsz_sinian6"
+  },
+  {
+    "heroResName": "310802_bkle",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_tanzou",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_bkle_tanzou2#Drawables/bone3/effect-Bone/roleeffect_bkle_tanzou3"
   }
 ]

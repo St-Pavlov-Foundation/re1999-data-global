@@ -3,7 +3,7 @@ module("modules.logic.reactivity.view.ReactivityStoreView", package.seeall)
 slot0 = class("ReactivityStoreView", BaseView)
 
 function slot0.onInitView(slot0)
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/#txt_time")
+	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/timebg/#txt_time")
 	slot0._scrollstore = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_store")
 	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content")
 	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
@@ -30,6 +30,7 @@ end
 function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gostoreItem, false)
 
+	slot0.rectTrContent = slot0._goContent:GetComponent(gohelper.Type_RectTransform)
 	slot0.storeItemList = slot0:getUserDataTb_()
 end
 
@@ -51,6 +52,7 @@ function slot0.onOpen(slot0)
 	slot0:refreshTime()
 	slot0:refreshStoreContent()
 	slot0:_onScrollValueChanged()
+	slot0:scrollToFirstNoSellOutStore()
 end
 
 function slot0.refreshStoreContent(slot0)
@@ -66,6 +68,42 @@ function slot0.refreshStoreContent(slot0)
 
 		slot2:updateInfo(slot6, slot1[slot6])
 	end
+end
+
+function slot0.scrollToFirstNoSellOutStore(slot0)
+	if slot0:getFirstNoSellOutGroup() <= 1 then
+		return
+	end
+
+	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
+
+	slot2 = 0
+
+	for slot6, slot7 in ipairs(slot0.storeItemList) do
+		if slot1 <= slot6 then
+			break
+		end
+
+		slot2 = slot2 + slot7:getHeight()
+	end
+
+	recthelper.setAnchorY(slot0.rectTrContent, math.min(slot2, recthelper.getHeight(slot0.rectTrContent) - recthelper.getHeight(gohelper.findChildComponent(slot0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform))))
+end
+
+function slot0.getFirstNoSellOutGroup(slot0)
+	for slot5, slot6 in ipairs(ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId)) do
+		for slot10, slot11 in ipairs(slot6) do
+			if slot11.maxBuyCount == 0 then
+				return slot5
+			end
+
+			if slot11.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.actId, slot11.id) > 0 then
+				return slot5
+			end
+		end
+	end
+
+	return 1
 end
 
 function slot0.refreshTime(slot0)

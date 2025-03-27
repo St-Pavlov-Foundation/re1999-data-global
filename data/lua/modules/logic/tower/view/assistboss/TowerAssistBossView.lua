@@ -13,9 +13,11 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
 end
 
 function slot0.removeEvents(slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
 end
 
 function slot0._editableInitView(slot0)
@@ -24,12 +26,18 @@ end
 function slot0._onBtnStartClick(slot0)
 end
 
+function slot0.onTowerUpdate(slot0)
+	TowerAssistBossListModel.instance:initList()
+	slot0:refreshView()
+end
+
 function slot0.onUpdateParam(slot0)
 	slot0:refreshParam()
 	slot0:refreshView()
 end
 
 function slot0.onOpen(slot0)
+	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
 	slot0:refreshParam()
 	slot0:refreshView()
 end

@@ -8,7 +8,10 @@ function slot0.init(slot0, slot1, slot2, slot3)
 
 	gohelper.setActive(slot0._opItemGO, false)
 
-	slot0._itemList = slot0:com_registViewItemList(slot0._opItemGO, FightNameUIOperationItem, slot2, "refreshItemData")
+	slot0._itemList = slot0:com_registViewItemList(slot0._opItemGO, FightNameUIOperationItem, slot2)
+
+	slot0._itemList:setFuncNames("refreshItemData")
+
 	slot0.entity = slot1
 	slot0._entityMO = slot0.entity:getMO()
 	slot0.playCardInfoList = {}

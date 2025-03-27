@@ -50,10 +50,10 @@ function slot0.addEvents(slot0)
 	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
 	slot0._btnboss:AddClickListener(slot0._btnbossOnClick, slot0)
 	slot0._btnpermanent:AddClickListener(slot0._btnpermanentOnClick, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, slot0.onDailyReresh, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.LocalKeyChange, slot0.onLocalKeyChange, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.refreshRewardTaskInfo, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, slot0.refreshPermanentInfo, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.dailyRequestData, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -62,10 +62,10 @@ function slot0.removeEvents(slot0)
 	slot0._btnreward:RemoveClickListener()
 	slot0._btnboss:RemoveClickListener()
 	slot0._btnpermanent:RemoveClickListener()
+	slot0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, slot0.onDailyReresh, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.LocalKeyChange, slot0.onLocalKeyChange, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.refreshRewardTaskInfo, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, slot0.refreshPermanentInfo, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0.dailyRequestData, slot0)
 	TaskDispatcher.cancelTask(slot0.refreshTowerState, slot0)
 end
 
@@ -113,19 +113,8 @@ function slot0._editableInitView(slot0)
 	slot0.bossItemTab = slot0:getUserDataTb_()
 end
 
-function slot0.dailyRequestData(slot0)
-	TowerRpc.instance:sendGetTowerInfoRequest(slot0.towerTaskDataRequest, slot0)
-end
-
-function slot0.towerTaskDataRequest(slot0)
-	TaskRpc.instance:sendGetTaskInfoRequest({
-		TaskEnum.TaskType.Tower
-	}, slot0.dailyRefresh, slot0)
-end
-
-function slot0.dailyRefresh(slot0)
+function slot0.onDailyReresh(slot0)
 	slot0:refreshUI()
-	TowerController.instance:dispatchEvent(TowerEvent.DailyReresh)
 end
 
 function slot0.onLocalKeyChange(slot0)
@@ -137,6 +126,7 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_leimi_theft_open)
 	slot0:checkJump()
 	slot0:refreshUI()
 	slot0:initReddot()
@@ -220,8 +210,7 @@ function slot0.refreshPermanentInfo(slot0)
 		slot0._txtaltitudeNum.text = DungeonConfig.instance:getEpisodeCO(slot6).name
 	end
 
-	slot8 = slot4 and slot4.stageId or 1
-	slot9 = slot5 and slot5.stageId or 1
+	slot9 = slot5 and slot5.stageId or (slot4 and slot4.stageId or 1) + 1
 	slot10 = {}
 
 	for slot14 = 1, TowerPermanentModel.instance:getStageCount() do
@@ -266,7 +255,7 @@ function slot0.bossItemShow(slot0, slot1, slot2, slot3)
 	slot4.simageEnemy = gohelper.findChildSingleImage(slot4.go, "Mask/image_bossIcon")
 	slot4.goSelected = gohelper.findChild(slot4.go, "#go_Selected")
 
-	slot4.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(TowerConfig.instance:getBossTowerConfig(slot2.id).bossId).skinId).headIcon))
+	slot4.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(TowerConfig.instance:getBossTowerConfig(slot2.id).bossId).skinId) and slot8.headIcon))
 	gohelper.setActive(slot4.goSelected, not slot0.bossEpisodeMo:isPassAllUnlockLayers(slot2.id))
 end
 

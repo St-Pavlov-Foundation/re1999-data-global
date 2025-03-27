@@ -35,5 +35,15 @@ slot0.ToastType = {
 	Info = 2,
 	Talent = 1
 }
+slot0.WordInterval = 7
+slot0.WordTxtPosYOffset = 5
+slot0.WordTxtPosXOffset = 2
+slot0.WordTxtInterval = 0.2
+slot0.WordTxtOpen = 0.7
+slot0.WordTxtIdle = 1.1
+slot0.WordTxtClose = 0.5
+slot0.WordLine2Delay = 1
+slot0.WordBaseSpotType = 1
+slot0.WordTrainType = 2
 
 return slot0

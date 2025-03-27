@@ -18,5 +18,6 @@ slot0.ResetTalent = 10101
 slot0.ActiveTalent = 10102
 slot0.LocalKeyChange = 10103
 slot0.RefreshTowerReddot = 10104
+slot0.TowerUpdate = 10105
 
 return slot0

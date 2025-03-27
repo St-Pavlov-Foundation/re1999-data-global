@@ -2,6 +2,25 @@ module("modules.logic.character.view.CharacterDataCultureView", package.seeall)
 
 slot0 = class("CharacterDataCultureView", BaseView)
 
+function slot0._getFormatStr_overseas(slot0, slot1)
+	if string.nilorempty(slot1) then
+		return "", ""
+	end
+
+	slot2 = LangSettings.instance:isZh() or LangSettings.instance:isTw()
+
+	GameUtil.setActive01(slot0._gofirstTran, slot2)
+
+	if slot2 then
+		return slot0:_getFormatStr(slot1)
+	else
+		slot3, slot4 = slot0:SwitchLangTab()
+		slot5 = "\n" .. string.rep(" ", slot3)
+
+		return "", slot5 .. string.gsub(slot1, "\n", slot5)
+	end
+end
+
 function slot0.onInitView(slot0)
 	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
 	slot0._simagecentericon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_centericon")
@@ -255,7 +274,7 @@ function slot0._refreshDesc(slot0, slot1)
 
 		TaskDispatcher.runDelay(slot0._setCustomRedIconPos, slot0, 0.01)
 	else
-		slot0._txtfirst.text, slot7 = slot0:_getFormatStr(slot5)
+		slot0._txtfirst.text, slot7 = slot0:_getFormatStr_overseas(slot5)
 		slot10 = slot0:_getFirstOffsetByLang()
 
 		recthelper.setAnchor(slot0._gofirstTran, slot0._gofirstPosX + slot10.x, slot0._gofirstPosY + slot10.y)

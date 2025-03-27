@@ -93,7 +93,36 @@ function slot0._onFrame(slot0)
 		slot0:getCurrency()
 	end
 
-	if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) or UnityEngine.Input.touchCount >= 5) and isDebugBuild and (SLFramework.FrameworkSettings.IsEditor or GameConfig.OpenGm) then
+	slot1 = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
+
+	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.Q) then
+		if ViewMgr.instance:isOpen(ViewName.V2a4_WarmUp_DialogueView) then
+			V2a4_WarmUpController.instance:log()
+		else
+			slot3 = 12436
+
+			ActivityModel.instance:setActivityInfo({
+				activityInfos = {
+					{
+						currentStage = 0,
+						isUnlock = true,
+						endTime = 1735678800000.0,
+						online = true,
+						isReceiveAllBonus = false,
+						isNewStage = false,
+						startTime = 1733000400000.0,
+						id = slot3
+					}
+				}
+			})
+			Activity125Testing.instance:_test()
+			Activity125Model.instance:setSelectEpisodeId(slot3, 1)
+			ActivityModel.instance:setTargetActivityCategoryId(slot3)
+			ViewMgr.instance:openView(ViewName.ActivityBeginnerView)
+		end
+	end
+
+	if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) and slot1 and slot2 or UnityEngine.Input.touchCount >= 5) and isDebugBuild and (SLFramework.FrameworkSettings.IsEditor or GameConfig.OpenGm) then
 		if ViewMgr.instance:isOpen(ViewName.LoadingView) then
 			slot0._lastTime = Time.time
 

@@ -229,7 +229,7 @@ function slot0.refreshCost(slot0, slot1)
 	if slot1.consume <= ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Season166Config.instance:getSeasonConstNum(slot0.actId, Season166Enum.InfoCostId)) then
 		slot0.txtCost.text = string.format("-%s", slot1.consume)
 	else
-		slot0.txtCost.text = string.format("<color=#BF2E11>-%s</color>", slot1.consume)
+		slot0.txtCost.text = formatLuaLang("Season166_2_4InformationAnalyView_consume", slot1.consume)
 	end
 
 	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.imgCost, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot2) and slot5.icon), true)

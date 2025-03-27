@@ -478,5 +478,53 @@
     "skinIds": "680403#680404#680401#680402",
     "skinScales": "1#1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
+  },
+  {
+    "activityId": 12410,
+    "stage": 1,
+    "name": "language_10065120",
+    "name_en": "Wind of the Ravages",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v2a4_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v2a4_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v2a4_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v2a4_bossrush_bossname_1",
+    "skinIds": "610405#610404",
+    "skinScales": "1#1",
+    "skinOffsetXYs": "-290#-485|-345#-513"
+  },
+  {
+    "activityId": 12410,
+    "stage": 2,
+    "name": "language_10048374",
+    "name_en": "Bellows of the Earth",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v2a0_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v2a0_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v2a0_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v2a0_bossrush_bossname_1",
+    "skinIds": "670212",
+    "skinScales": "0.85",
+    "skinOffsetXYs": "-545#-440"
+  },
+  {
+    "activityId": 12410,
+    "stage": 3,
+    "name": "language_10039296",
+    "name_en": "Echoes of Opera",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a8_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a8_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a8_bossrush_bossname_1",
+    "skinIds": "630409",
+    "skinScales": "1",
+    "skinOffsetXYs": "-241#-473"
   }
 ]

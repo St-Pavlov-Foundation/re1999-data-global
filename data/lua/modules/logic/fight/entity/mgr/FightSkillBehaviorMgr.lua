@@ -66,55 +66,65 @@ end
 
 function slot0._doSkillBehaviorEffect(slot0, slot1, slot2, slot3, slot4)
 	slot5 = FightHelper.getEntity(slot2.targetId) or slot2.entityMO and FightHelper.getEntity(slot2.entityMO.id)
+	slot6 = slot3.effect
+	slot7 = slot3.effectHangPoint
+	slot8 = slot3.audioId
+	slot9 = FightDataHelper.entityMgr:getById(slot1.fromId)
 
-	if not string.nilorempty(slot3.effect) and slot5 and slot5.effect then
-		slot6 = nil
+	if slot3.id == 60052 and slot9 and lua_fight_sp_effect_kkny_bear_damage_hit.configDict[slot9.skin] then
+		slot6 = slot10.path
+		slot7 = slot10.hangPoint
+		slot8 = slot10.audio
+	end
 
-		if not string.nilorempty(slot3.effectHangPoint) then
-			slot5.effect:addHangEffect(slot3.effect, slot3.effectHangPoint):setLocalPos(0, 0, 0)
+	if not string.nilorempty(slot6) and slot5 and slot5.effect then
+		slot10 = nil
+
+		if not string.nilorempty(slot7) then
+			slot5.effect:addHangEffect(slot6, slot7):setLocalPos(0, 0, 0)
 		else
-			slot5.effect:addGlobalEffect(slot3.effect):setWorldPos(FightHelper.getProcessEntitySpinePos(slot5))
+			slot5.effect:addGlobalEffect(slot6):setWorldPos(FightHelper.getProcessEntitySpinePos(slot5))
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot5.id, slot6)
+		FightRenderOrderMgr.instance:onAddEffectWrap(slot5.id, slot10)
 
 		slot0._effectCache = slot0._effectCache or {}
 
 		table.insert(slot0._effectCache, {
 			slot5.id,
-			slot6,
+			slot10,
 			Time.time
 		})
 		TaskDispatcher.runRepeat(slot0._removeEffects, slot0, 0.5)
 	end
 
-	if slot3.audioId > 0 then
-		FightAudioMgr.instance:playAudio(slot3.audioId)
+	if slot8 > 0 then
+		FightAudioMgr.instance:playAudio(slot8)
 	end
 
 	if slot3.dec_Type > 0 then
-		slot6 = slot2.targetId
+		slot10 = slot2.targetId
 
 		if slot2.effectType == FightEnum.EffectType.CARDLEVELCHANGE then
-			slot6 = slot2.entityMO and slot2.entityMO.uid or slot1.fromId
+			slot10 = slot2.entityMO and slot2.entityMO.uid or slot1.fromId
 		end
 
-		FightFloatMgr.instance:float(slot6, FightEnum.FloatType.buff, slot3.dec, slot3.dec_Type)
+		FightFloatMgr.instance:float(slot10, FightEnum.FloatType.buff, slot3.dec, slot3.dec_Type)
 	end
 
 	if slot4 then
-		if (slot3.type == FightEnum.Behavior_AddExPoint or slot6 == FightEnum.Behavior_DelExPoint) and slot2.effectType == FightEnum.EffectType.EXPOINTCHANGE then
-			slot7 = FightWork2Work.New(FightWorkExPointChange, slot1, slot2)
+		if (slot3.type == FightEnum.Behavior_AddExPoint or slot10 == FightEnum.Behavior_DelExPoint) and slot2.effectType == FightEnum.EffectType.EXPOINTCHANGE then
+			slot11 = FightWork2Work.New(FightWorkExPointChange, slot1, slot2)
 
-			slot7:onStart()
-			table.insert(slot0._specialWorkList, slot7)
+			slot11:onStart()
+			table.insert(slot0._specialWorkList, slot11)
 		elseif FightEnum.BuffEffectType[slot2.effectType] then
 			FightSkillBuffMgr.instance:playSkillBuff(slot1, slot2)
-		elseif slot6 == FightEnum.Behavior_LostLife and slot2.effectType == FightEnum.EffectType.DAMAGE and not slot2:isDone() then
-			slot7 = FightWork2Work.New(FightWorkEffectDamage, slot1, slot2)
+		elseif slot10 == FightEnum.Behavior_LostLife and slot2.effectType == FightEnum.EffectType.DAMAGE and not slot2:isDone() then
+			slot11 = FightWork2Work.New(FightWorkEffectDamage, slot1, slot2)
 
-			slot7:onStart()
-			table.insert(slot0._specialWorkList, slot7)
+			slot11:onStart()
+			table.insert(slot0._specialWorkList, slot11)
 		end
 	end
 end

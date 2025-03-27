@@ -46,15 +46,12 @@ function slot0.refreshTag(slot0)
 	slot0.gotag = gohelper.findChild(slot0.go, "tag" .. slot0.groupId)
 	slot0.canvasGroup = slot0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
 	slot0.imageTagType = gohelper.findChildImage(slot0.gotag, "image_tagType")
-	slot0.txtTagName = gohelper.findChildText(slot0.gotag, "txt_tagName")
 
 	gohelper.setActive(slot0.gotag, true)
 
-	slot0.txtTagName.text = luaLang("versionactivity1_5_store_tag_" .. slot0.groupId)
 	slot0.tagMaskList = slot0:getUserDataTb_()
 
 	table.insert(slot0.tagMaskList, slot0.imageTagType)
-	table.insert(slot0.tagMaskList, slot0.txtTagName)
 end
 
 function slot0.refreshGoods(slot0)
@@ -98,6 +95,10 @@ function slot0.sortGoods(slot0, slot1)
 	end
 
 	return slot0.id < slot1.id
+end
+
+function slot0.getHeight(slot0)
+	return recthelper.getHeight(slot0.go.transform)
 end
 
 function slot0.onDestroy(slot0)

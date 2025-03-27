@@ -2,7 +2,15 @@ module("modules.logic.rouge.define.RougeLuaCompBase", package.seeall)
 
 slot0 = class("RougeLuaCompBase", ListScrollCellExtend)
 
-function slot0.initDLCs(slot0)
+function slot0.init(slot0, slot1)
+	slot0:__onInit()
+	uv0.super.init(slot0, slot1)
+	slot0:initDLCs(slot1)
+end
+
+function slot0.initDLCs(slot0, slot1)
+	slot0._parentGo = slot1
+
 	slot0:_collectAllClsAndLoadRes()
 end
 
@@ -38,7 +46,7 @@ function slot0._collectAllClsAndLoadRes(slot0)
 end
 
 function slot0._collectNeedLoadRes(slot0, slot1, slot2, slot3)
-	if slot1 and slot1.ResUrl then
+	if slot1 and slot1.AssetUrl then
 		slot3[slot4] = true
 
 		table.insert(slot2, slot4)
@@ -69,7 +77,7 @@ function slot0._resLoadDoneCallBack(slot0)
 	end
 
 	for slot5, slot6 in ipairs(slot0._clsList) do
-		if slot0:_createGo(slot6.ResInstUrl, slot6.ResUrl, slot6.ResInitPosition) then
+		if slot0:_createGo(slot6.ParentObjPath, slot6.AssetUrl, slot6.ResInitPosition) then
 			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, slot6, slot0)
 
 			slot8:onUpdateDLC(slot1)
@@ -85,27 +93,25 @@ function slot0._createGo(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	if slot0._abLoader:getAssetItem(slot2) then
-		slot5, slot6 = string.match(slot1, "^(.*)/(.+)$")
+	if not (slot0._abLoader:getAssetItem(slot2) and slot4:GetResource(slot2)) then
+		logError("无法找到指定资源 :" .. slot2)
 
-		if gohelper.isNil(gohelper.findChild(slot0.viewGO, slot5)) then
-			logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(slot5))
-
-			return
-		end
-
-		if gohelper.isNil(gohelper.clone(slot4:GetResource(slot2), slot7, slot6)) then
-			logError(string.format("创建DLC节点失败: %s/%s", slot5, slot6))
-
-			return
-		end
-
-		if slot3 then
-			recthelper.setAnchor(slot9.transform, slot3.x or 0, slot3.y or 0)
-		end
-
-		return slot9
+		return
 	end
+
+	if gohelper.isNil(gohelper.findChild(slot0._parentGo, slot1)) then
+		logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(slot1))
+
+		return
+	end
+
+	slot7 = gohelper.clone(slot5, slot6)
+
+	if slot3 then
+		recthelper.setAnchor(slot7.transform, slot3.x or 0, slot3.y or 0)
+	end
+
+	return slot7
 end
 
 function slot0.onDestroy(slot0)
@@ -116,6 +122,7 @@ function slot0.onDestroy(slot0)
 	end
 
 	uv0.super.onDestroy(slot0)
+	slot0:__onDispose()
 end
 
 return slot0

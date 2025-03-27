@@ -98,6 +98,7 @@ function slot0.onInitView(slot0)
 	slot0._switchMemberSelect = gohelper.findChild(slot0.viewGO, "fightinfocontainer/#go_switch/#btn_member/select")
 	slot0._btnBuffObj = gohelper.findChild(slot0.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/#btn_more")
 	slot0._btnBuffMore = gohelper.getClickWithDefaultAudio(slot0._btnBuffObj)
+	slot0._goAssistBoss = gohelper.findChild(slot0.viewGO, "fightinfocontainer/#go_assistBoss")
 	slot0._ani = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
 
 	if slot0._editableInitView then
@@ -331,6 +332,10 @@ function slot0._getEntityList(slot0)
 
 	slot0:sortFightEntityList(slot1)
 
+	if FightDataHelper.entityMgr:getAssistBoss() and slot0._curSelectSide == FightEnum.EntitySide.MySide then
+		table.insert(slot1, slot3)
+	end
+
 	return slot1
 end
 
@@ -420,26 +425,52 @@ function slot0._refreshUI(slot0)
 
 	slot0._entityMO = slot1
 
-	if slot1:isCharacter() then
-		slot0.isCharacter = true
+	if not slot1:isAssistBoss() then
+		gohelper.setActive(slot0._gotargetframe, true)
+		gohelper.setActive(slot0._goattributeroot, true)
+		gohelper.setActive(slot0._goinfoView, true)
 
-		slot0:_refreshCharacterInfo(slot1)
-	else
-		if slot1.side == FightEnum.EntitySide.MySide then
+		if slot1:isCharacter() then
 			slot0.isCharacter = true
+
+			slot0:_refreshCharacterInfo(slot1)
 		else
-			slot0.isCharacter = false
+			if slot1.side == FightEnum.EntitySide.MySide then
+				slot0.isCharacter = true
+			else
+				slot0.isCharacter = false
+			end
+
+			slot0:_refreshInfo(slot1:getCO())
 		end
 
-		slot0:_refreshInfo(slot1:getCO())
+		gohelper.setActive(slot0._goplayer, slot0.isCharacter)
+		gohelper.setActive(slot0._goenemy, not slot0.isCharacter)
+		slot0:_refreshMO(slot1)
+		slot0:_hideDetail()
+		slot0:_detectBossMultiHp(slot1)
+	else
+		gohelper.setActive(slot0._gotargetframe, false)
+		gohelper.setActive(slot0._goattributeroot, false)
+		gohelper.setActive(slot0._goinfoView, false)
 	end
 
-	gohelper.setActive(slot0._goplayer, slot0.isCharacter)
-	gohelper.setActive(slot0._goenemy, not slot0.isCharacter)
-	slot0:_refreshMO(slot1)
-	slot0:_hideDetail()
-	slot0:_detectBossMultiHp(slot1)
+	slot0:setAssistBossStatus(slot2)
 	slot0:refreshScrollEnemySelectStatus()
+end
+
+function slot0.setAssistBossStatus(slot0, slot1, slot2)
+	if slot1 then
+		if not slot0._assistBossView then
+			slot0._assistBossView = FightFocusTowerView.New(slot0._goAssistBoss)
+		end
+
+		slot0._assistBossView.bossId = slot0._entityMO.modelId
+
+		slot0._assistBossView:show(slot2)
+	elseif slot0._assistBossView then
+		slot0._assistBossView:hide(slot2)
+	end
 end
 
 function slot0._refreshInfo(slot0, slot1)
@@ -1391,6 +1422,7 @@ function slot0.onClose(slot0)
 
 	FightController.instance:dispatchEvent(FightEvent.OnHideSkillEditorUIEvent, 1)
 	FightController.instance:dispatchEvent(FightEvent.SetSkillEditorViewVisible, true)
+	slot0:setAssistBossStatus(false, true)
 end
 
 function slot0.onDestroyView(slot0)
@@ -1428,6 +1460,12 @@ function slot0.onDestroyView(slot0)
 	slot0.stressComp:destroy()
 
 	slot0.stressComp = nil
+
+	if slot0._assistBossView then
+		slot0._assistBossView:destory()
+
+		slot0._assistBossView = nil
+	end
 
 	slot0:__onDispose()
 end

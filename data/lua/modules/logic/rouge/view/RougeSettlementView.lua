@@ -80,6 +80,7 @@ function slot0._btncloseOnClick(slot0)
 			reviewInfo = slot1.reviewInfo
 		})
 	else
+		ViewMgr.instance:closeView(ViewName.RougeEndingThreeView)
 		ViewMgr.instance:closeView(ViewName.RougeResultView)
 		slot0:closeThis()
 	end
@@ -322,6 +323,7 @@ end
 
 function slot0._onOpenViewFinishCallBack(slot0, slot1)
 	if slot1 == ViewName.RougeResultReView then
+		ViewMgr.instance:closeView(ViewName.RougeEndingThreeView)
 		ViewMgr.instance:closeView(ViewName.RougeResultView)
 		slot0:closeThis()
 	end

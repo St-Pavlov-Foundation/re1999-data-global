@@ -1,0 +1,42 @@
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelViewContainer", package.seeall)
+
+slot0 = class("WuErLiXiLevelViewContainer", BaseViewContainer)
+
+function slot0.buildViews(slot0)
+	slot1 = {}
+
+	table.insert(slot1, WuErLiXiLevelView.New())
+	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+
+	return slot1
+end
+
+function slot0.buildTabViews(slot0, slot1)
+	if slot1 == 1 then
+		slot0._navigateButtonsView = NavigateButtonsView.New({
+			true,
+			true,
+			false
+		})
+
+		slot0._navigateButtonsView:setOverrideClose(slot0.overrideOnCloseClick, slot0)
+
+		return {
+			slot0._navigateButtonsView
+		}
+	end
+end
+
+function slot0.onContainerInit(slot0)
+	ActivityEnterMgr.instance:enterActivity(VersionActivity2_4Enum.ActivityId.WuErLiXi)
+	ActivityRpc.instance:sendActivityNewStageReadRequest({
+		VersionActivity2_4Enum.ActivityId.WuErLiXi
+	})
+end
+
+function slot0.overrideOnCloseClick(slot0)
+	WuErLiXiModel.instance:setCurEpisodeIndex(0)
+	slot0:closeThis()
+end
+
+return slot0

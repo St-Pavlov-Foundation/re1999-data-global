@@ -60,6 +60,16 @@
     "bossEffect": 0
   },
   {
+    "id": 1530101,
+    "version": "",
+    "entrustType": 1,
+    "pieceRes": "",
+    "title": "language_10043166",
+    "desc": "language_10043166",
+    "talkId": 1530101,
+    "bossEffect": 0
+  },
+  {
     "id": 1110201,
     "version": "",
     "entrustType": 2,
@@ -117,6 +127,16 @@
     "title": "language_10042096",
     "desc": "language_10042096",
     "talkId": 1110207,
+    "bossEffect": 0
+  },
+  {
+    "id": 1110208,
+    "version": "102",
+    "entrustType": 2,
+    "pieceRes": "v2a4_m_s16_common_chess_2",
+    "title": "language_10042096",
+    "desc": "language_10042096",
+    "talkId": 1110208,
     "bossEffect": 0
   },
   {
@@ -230,6 +250,16 @@
     "bossEffect": 0
   },
   {
+    "id": 1210208,
+    "version": "102",
+    "entrustType": 2,
+    "pieceRes": "v2a4_m_s16_common_chess_2",
+    "title": "language_10042096",
+    "desc": "language_10042096",
+    "talkId": 1210208,
+    "bossEffect": 0
+  },
+  {
     "id": 1210211,
     "version": "",
     "entrustType": 3,
@@ -340,6 +370,16 @@
     "bossEffect": 0
   },
   {
+    "id": 1310208,
+    "version": "102",
+    "entrustType": 2,
+    "pieceRes": "v2a4_m_s16_common_chess_2",
+    "title": "language_10042096",
+    "desc": "language_10042096",
+    "talkId": 1310208,
+    "bossEffect": 0
+  },
+  {
     "id": 1310211,
     "version": "",
     "entrustType": 3,
@@ -410,6 +450,16 @@
     "bossEffect": 1
   },
   {
+    "id": 1510503,
+    "version": "",
+    "entrustType": 5,
+    "pieceRes": "",
+    "title": "language_10064621",
+    "desc": "language_10064621",
+    "talkId": 1510503,
+    "bossEffect": 1
+  },
+  {
     "id": 1410201,
     "version": "",
     "entrustType": 5,
@@ -417,6 +467,16 @@
     "title": "language_10045377",
     "desc": "language_10045377",
     "talkId": 1410201,
+    "bossEffect": 1
+  },
+  {
+    "id": 1410301,
+    "version": "",
+    "entrustType": 5,
+    "pieceRes": "v2a4_m_s16_common_chess_1",
+    "title": "language_10045377",
+    "desc": "language_10045377",
+    "talkId": 1410301,
     "bossEffect": 1
   },
   {

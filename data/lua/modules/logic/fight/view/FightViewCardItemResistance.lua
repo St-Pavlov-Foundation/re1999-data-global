@@ -7,9 +7,12 @@ end
 
 function slot0.init(slot0, slot1)
 	slot0.resistanceGo = gohelper.findChild(slot1, "#go_resistance")
+	slot0.resistanceGoPart = gohelper.findChild(slot1, "#go_resistancecrash")
 	slot0.rectTr = slot0.resistanceGo:GetComponent(gohelper.Type_RectTransform)
+	slot0.partRectTr = slot0.resistanceGoPart:GetComponent(gohelper.Type_RectTransform)
 
 	gohelper.setActive(slot0.resistanceGo, false)
+	gohelper.setActive(slot0.resistanceGoPart, false)
 end
 
 function slot0.addEventListeners(slot0)
@@ -101,30 +104,53 @@ slot0.AnchorY = {
 
 function slot0.refreshResistance(slot0, slot1, slot2)
 	if not string.nilorempty(lua_skill.configDict[slot2] and slot3.resistancesTag) then
-		slot6 = false
-
-		for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitCache(slot4, "#")) do
-			if slot1:isFullResistance(slot11) then
-				FightController.instance:dispatchEvent(FightEvent.TriggerCardShowResistanceTag)
-
-				slot6 = true
-
-				break
-			end
-		end
-
-		gohelper.setActive(slot0.resistanceGo, slot6)
-
-		if slot6 then
-			recthelper.setAnchorY(slot0.rectTr, slot3.isBigSkill == 1 and uv0.AnchorY.BigSkill or uv0.AnchorY.Normal)
+		if slot0:checkIsFullResistance(slot1, FightStrUtil.instance:getSplitCache(slot4, "#")) then
+			slot0:showFullResistanceTag(slot3.isBigSkill == 1)
+		elseif slot0:checkIsPartResistance(slot1, slot5) then
+			slot0:showPartResistanceTag(slot3.isBigSkill == 1)
+		else
+			slot0:hideResistanceGo()
 		end
 	else
 		slot0:hideResistanceGo()
 	end
 end
 
+function slot0.showFullResistanceTag(slot0, slot1)
+	gohelper.setActive(slot0.resistanceGo, true)
+	recthelper.setAnchorY(slot0.rectTr, slot1 and uv0.AnchorY.BigSkill or uv0.AnchorY.Normal)
+	FightController.instance:dispatchEvent(FightEvent.TriggerCardShowResistanceTag)
+end
+
+function slot0.showPartResistanceTag(slot0, slot1)
+	gohelper.setActive(slot0.resistanceGoPart, true)
+	recthelper.setAnchorY(slot0.partRectTr, slot1 and uv0.AnchorY.BigSkill or uv0.AnchorY.Normal)
+	FightController.instance:dispatchEvent(FightEvent.TriggerCardShowResistanceTag)
+end
+
+function slot0.checkIsFullResistance(slot0, slot1, slot2)
+	for slot6, slot7 in ipairs(slot2) do
+		if slot1:isFullResistance(slot7) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function slot0.checkIsPartResistance(slot0, slot1, slot2)
+	for slot6, slot7 in ipairs(slot2) do
+		if slot1:isPartResistance(slot7) then
+			return true
+		end
+	end
+
+	return false
+end
+
 function slot0.hideResistanceGo(slot0)
 	gohelper.setActive(slot0.resistanceGo, false)
+	gohelper.setActive(slot0.resistanceGoPart, false)
 end
 
 return slot0

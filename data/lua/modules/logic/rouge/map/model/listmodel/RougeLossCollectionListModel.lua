@@ -10,19 +10,19 @@ function slot0.getLossType(slot0)
 	return slot0.lossType
 end
 
-function slot0.initList(slot0, slot1, slot2, slot3, slot4)
+function slot0.initList(slot0, slot1, slot2, slot3, slot4, slot5)
 	slot0.maxSelectCount = slot1
 	slot0.selectCount = 0
 	slot0.selectMoList = {}
 	slot0.allMoList = {}
-	slot0.baseTagFilterMap = slot2
-	slot0.extraTagFilterMap = slot3
+	slot0.baseTagFilterMap = slot3
+	slot0.extraTagFilterMap = slot4
 
-	for slot9, slot10 in ipairs(RougeCollectionModel.instance:getAllCollections()) do
-		slot0:addCollection(slot10.id, slot10.cfgId, slot4)
+	for slot9, slot10 in ipairs(slot2) do
+		slot0:addCollection(slot10.id, slot10.cfgId, slot5)
 
 		for slot16, slot17 in ipairs(slot10:getAllEnchantId()) do
-			slot0:addCollection(slot17, slot10:getAllEnchantCfgId()[slot16], slot4)
+			slot0:addCollection(slot17, slot10:getAllEnchantCfgId()[slot16], slot5)
 		end
 	end
 

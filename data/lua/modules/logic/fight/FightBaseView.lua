@@ -1,6 +1,7 @@
 module("modules.logic.fight.FightBaseView", package.seeall)
 
 slot0 = class("FightBaseView", FightBaseClass)
+slot0.IS_FIGHT_BASE_VIEW = true
 
 function slot0.onInitialization(slot0, ...)
 	slot0.inner_visible = true

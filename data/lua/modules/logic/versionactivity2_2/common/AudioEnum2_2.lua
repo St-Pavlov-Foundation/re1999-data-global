@@ -12,13 +12,15 @@ slot0.VersionActivity2_2Enter = {
 	play_ui_jinye_unfold = 20220006
 }
 slot0.Season166 = {
-	play_ui_feichi_yure_caption = 20220309,
 	play_ui_checkpoint_light = 20220306,
-	play_ui_activity_hero37_checkpoint_completed_writing = 20220303,
-	play_ui_checkpoint_unlock = 20220304,
+	play_ui_checkpoint_aekn_piaozi = 20247006,
 	play_ui_checkpoint_result = 20220308,
-	stop_ui_feichi_yure_caption = 20220310,
+	play_ui_checkpoint_unlock = 20220304,
 	play_ui_wulu_aizila_forward_paper = 20220302,
+	play_ui_feichi_yure_caption = 20220309,
+	play_ui_activity_hero37_checkpoint_completed_writing = 20220303,
+	play_ui_hero_sign = 20247005,
+	stop_ui_feichi_yure_caption = 20220310,
 	play_ui_wangshi_argus_level_open = 20220311
 }
 slot2 = {

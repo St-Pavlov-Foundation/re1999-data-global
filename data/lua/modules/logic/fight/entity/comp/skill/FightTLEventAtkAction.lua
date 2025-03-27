@@ -30,8 +30,12 @@ function slot0._playAct(slot0)
 			slot0._attacker.spine._skeletonAnim:Jump2Time(slot0._timeline_item._spine_start_time)
 		end
 
-		if slot0._monsterEvolution and slot0._attacker:getMO() and lua_fight_boss_evolution_client.configDict[slot1.skin] then
-			slot0._attacker.spine.lockAct = true
+		if slot0._monsterEvolution then
+			slot1 = slot0._attacker:getMO()
+
+			if slot1 and lua_fight_boss_evolution_client.configDict[slot0._attacker.beforeMonsterChangeSkin or slot1.skin] then
+				slot0._attacker.spine.lockAct = true
+			end
 		end
 	end
 end

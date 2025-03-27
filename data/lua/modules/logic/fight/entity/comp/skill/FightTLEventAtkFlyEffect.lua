@@ -71,6 +71,15 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	slot0._alwayForceLookForward = slot3[14] and tonumber(slot3[14])
 	slot0._act_on_index_entity = slot3[15] and tonumber(slot3[15])
 	slot0._onlyActOnToId = slot3[19] == "1"
+	slot0._actSide = nil
+
+	if not string.nilorempty(slot3[20]) then
+		if slot3[20] == "1" then
+			slot0._actSide = FightEnum.EntitySide.EnemySide
+		elseif slot11 == "2" then
+			slot0._actSide = FightEnum.EntitySide.MySide
+		end
+	end
 
 	if slot0._act_on_index_entity then
 		slot0._actEffectMOs_list = FightHelper.dealDirectActEffectData(slot0._fightStepMO.actEffectMOs, slot0._act_on_index_entity, uv0)
@@ -172,6 +181,10 @@ function slot0._flyEffectSingle(slot0, slot1, slot2, slot3, slot4, slot5, slot6,
 			slot13 = false
 		end
 
+		if slot0._actSide and slot14 and slot0._actSide ~= slot14:getSide() then
+			slot13 = false
+		end
+
 		if slot13 and slot14 then
 			if slot14:isMySide() then
 				slot4 = -slot4 or slot4
@@ -198,8 +211,14 @@ function slot0._flyEffectTarget(slot0, slot1, slot2, slot3, slot4, slot5, slot6,
 			slot15 = false
 		end
 
+		slot16 = FightHelper.getEntity(slot14.targetId)
+
+		if slot0._actSide and slot16 and slot0._actSide ~= slot16:getSide() then
+			slot15 = false
+		end
+
 		if slot15 then
-			if FightHelper.getEntity(slot14.targetId) then
+			if slot16 then
 				slot18, slot19, slot20 = slot7 or FightHelper.getEntityWorldBottomPos(slot16, slot8)
 
 				slot0:_addFlyEffect(slot1, slot2, slot3, slot18 + (slot16:isMySide() and -slot4 or slot4), slot19 + slot5, slot20 + slot6)

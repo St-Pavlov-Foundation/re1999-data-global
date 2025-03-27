@@ -181,18 +181,18 @@ function slot0.updateView(slot0, slot1)
 		gohelper.setActive(slot0._gohidemutate, slot0._mo:checkShowSpeicalSkin())
 		gohelper.setActive(slot0._goshowyoung, slot0._mo:checkShowSpeicalSkin())
 		gohelper.setActive(slot0._gohideyoung, not slot0._mo:checkShowSpeicalSkin())
+	end
 
-		if slot0._mo:checkShowSpeicalSkin() then
-			if lua_critter_skin.configDict[slot3.mutateSkin] then
-				slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot8.largeIcon), function ()
-					uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-				end, slot0)
-			end
-		else
-			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot3.id), function ()
+	if slot0._mo:checkShowSpeicalSkin() then
+		if lua_critter_skin.configDict[slot3.mutateSkin] then
+			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot8.largeIcon), function ()
 				uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
 			end, slot0)
 		end
+	else
+		slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot3.id), function ()
+			uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end, slot0)
 	end
 
 	slot0:refreshLikeFood(slot0._mo)
@@ -314,6 +314,9 @@ function slot0.refreshBack(slot0)
 end
 
 function slot0.refreshMutate(slot0, slot1)
+	slot2 = slot1.UseSpecialSkin
+	slot4 = slot0._mo:getConfig()
+
 	if slot0._mo:checkShowMutate() then
 		gohelper.setActive(slot0._btnmutate.gameObject, not slot0._mo:checkShowSpeicalSkin())
 		gohelper.setActive(slot0._btnyoung.gameObject, slot0._mo:checkShowSpeicalSkin())
@@ -321,18 +324,18 @@ function slot0.refreshMutate(slot0, slot1)
 		gohelper.setActive(slot0._gohidemutate, slot0._mo:checkShowSpeicalSkin())
 		gohelper.setActive(slot0._goshowyoung, slot0._mo:checkShowSpeicalSkin())
 		gohelper.setActive(slot0._gohideyoung, not slot0._mo:checkShowSpeicalSkin())
+	end
 
-		if slot1.UseSpecialSkin then
-			if lua_critter_skin.configDict[slot0._mo:getConfig().mutateSkin] then
-				slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot5.largeIcon), function ()
-					uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-				end, slot0)
-			end
-		else
-			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot4.id), function ()
+	if slot2 then
+		if lua_critter_skin.configDict[slot4.mutateSkin] then
+			slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot5.largeIcon), function ()
 				uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
 			end, slot0)
 		end
+	else
+		slot0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot4.id), function ()
+			uv0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end, slot0)
 	end
 end
 

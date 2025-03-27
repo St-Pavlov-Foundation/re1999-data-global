@@ -4,28 +4,50 @@ slot0 = class("TurnbackTaskModel", ListScrollModel)
 
 function slot0.onInit(slot0)
 	slot0.tempTaskModel = BaseModel.New()
+	slot0.tempOnlineTaskModel = BaseModel.New()
 	slot0.taskLoopTypeDotDict = {}
+	slot0.taskSearchList = {}
+	slot0.taskSearchDict = {}
 end
 
 function slot0.reInit(slot0)
 	slot0.tempTaskModel:clear()
 
 	slot0.taskLoopTypeDotDict = {}
+	slot0.taskSearchList = {}
+	slot0.taskSearchDict = {}
 end
 
 function slot0.setTaskInfoList(slot0, slot1)
 	slot2 = {}
+	slot3 = {}
+	slot0.taskSearchList = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if TurnbackConfig.instance:getTurnbackTaskCo(slot7.id) then
-			slot9 = TaskMo.New()
+	for slot8, slot9 in ipairs(slot1) do
+		if TurnbackConfig.instance:getTurnbackTaskCo(slot9.id) then
+			TaskMo.New():init(slot9, slot10)
 
-			slot9:init(slot7, slot8)
-			table.insert(slot2, slot9)
+			if TurnbackModel.instance:isNewType() then
+				if slot10.type ~= TurnbackEnum.TaskEnum.Online then
+					table.insert(slot2, slot11)
+				else
+					table.insert(slot3, slot11)
+				end
+
+				if slot10.listenerType == "TodayOnlineSeconds" then
+					table.insert(slot0.taskSearchList, slot11)
+
+					slot0.taskSearchDict[slot11.id] = slot11
+				end
+			else
+				table.insert(slot2, slot11)
+			end
 		end
 	end
 
+	table.sort(slot0.taskSearchList, SortUtil.keyLower("id"))
 	slot0.tempTaskModel:setList(slot2)
+	slot0.tempOnlineTaskModel:setList(slot3)
 	slot0:sortList()
 	slot0:checkTaskLoopTypeDotState()
 end
@@ -90,6 +112,18 @@ function slot0.getTaskLoopTypeDotState(slot0)
 	return slot0.taskLoopTypeDotDict
 end
 
+function slot0.refreshListNewTaskList(slot0)
+	slot1 = {}
+
+	for slot5, slot6 in ipairs(slot0.tempTaskModel:getList()) do
+		if slot6.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() and ServerTime.now() >= TurnbackModel.instance:getCurTurnbackMo().startTime + (slot6.config.unlockDay - 1) * TimeUtil.OneDaySecond then
+			table.insert(slot1, slot6)
+		end
+	end
+
+	slot0:setList(slot0:checkAndRemoveTask(slot1))
+end
+
 function slot0.refreshList(slot0, slot1)
 	slot2 = {}
 
@@ -123,6 +157,14 @@ function slot0.isTaskFinished(slot0, slot1)
 	return slot1.finishCount > 0 and slot1.config.maxProgress <= slot1.progress
 end
 
+function slot0.getSearchTaskMoList(slot0)
+	return slot0.taskSearchList
+end
+
+function slot0.getSearchTaskMoById(slot0, slot1)
+	return slot0.taskSearchDict[slot1]
+end
+
 function slot0.checkAndRemovePreposeTask(slot0, slot1)
 	for slot6, slot7 in ipairs(tabletool.copy(slot1)) do
 		for slot12, slot13 in ipairs(string.split(slot7.config.prepose, "#")) do
@@ -135,6 +177,34 @@ function slot0.checkAndRemovePreposeTask(slot0, slot1)
 	end
 
 	return slot2
+end
+
+function slot0.checkAndRemoveTask(slot0, slot1)
+	slot2 = tabletool.copy(slot1)
+
+	for slot7 = 1, #slot1 do
+		for slot13, slot14 in ipairs(string.split(slot1[slot7].config.prepose, "#")) do
+			if slot0.tempTaskModel:getById(tonumber(slot14)) and not slot0:isTaskFinished(slot15) then
+				tabletool.removeValue(slot2, slot8)
+			end
+		end
+
+		if slot8.config.isOnlineTimeTask then
+			tabletool.removeValue(slot2, slot8)
+		end
+	end
+
+	return slot2
+end
+
+function slot0.checkOnlineTaskAllFinish(slot0)
+	for slot4, slot5 in ipairs(slot0.taskSearchList) do
+		if slot5.finishCount <= 0 then
+			return false
+		end
+	end
+
+	return true
 end
 
 slot0.instance = slot0.New()

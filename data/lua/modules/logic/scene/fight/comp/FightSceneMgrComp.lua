@@ -15,4 +15,10 @@ function slot0.onSceneClose(slot0, slot1, slot2)
 	end
 end
 
+function slot0.getASFDMgr(slot0)
+	if slot0.mgr then
+		return slot0.mgr:getASFDMgr()
+	end
+end
+
 return slot0

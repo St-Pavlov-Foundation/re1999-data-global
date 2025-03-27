@@ -9,8 +9,6 @@ function slot0.init(slot0, slot1)
 	slot0.slider = gohelper.findChildSlider(slot1, "#slider_hp")
 	slot0.simageRole = gohelper.findChildSingleImage(slot1, "hero/#simage_rolehead")
 	slot0.goDead = gohelper.findChild(slot1, "#go_dead")
-
-	slot0:initDLCs()
 end
 
 function slot0.refreshHero(slot0, slot1)

@@ -544,8 +544,14 @@ function slot0.playCloseAnim(slot0)
 end
 
 function slot0._onHeroTalentStyleStatReply(slot0, slot1)
+	slot2 = #slot1.stylePercentList > 0
+
 	if slot0:_getNavigateView() then
-		slot3:showStatBtn(#slot1.stylePercentList > 0)
+		slot3:showStatBtn(slot2)
+	end
+
+	if slot2 then
+		TalentStyleListModel.instance:refreshData(slot1.heroId)
 	end
 end
 

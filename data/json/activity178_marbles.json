@@ -1,0 +1,72 @@
+[
+  {
+    "activityId": 12404,
+    "id": 1,
+    "name": "language_10065230",
+    "desc": "language_10065231",
+    "icon": "v2a4_tutushizi_ball_0",
+    "radius": "1000#1000#1000#1000",
+    "elasticity": "1000#1000#1000#1000",
+    "velocity": 1000,
+    "detectTime": "1#1#1#1",
+    "effectTime": "",
+    "effectTime2": "",
+    "limit": ""
+  },
+  {
+    "activityId": 12404,
+    "id": 2,
+    "name": "language_10065232",
+    "desc": "language_10065233",
+    "icon": "v2a4_tutushizi_ball_3",
+    "radius": "1000#1000#1000#1000",
+    "elasticity": "1000#1000#1000#1000",
+    "velocity": 1000,
+    "detectTime": "1#1#1#1",
+    "effectTime": "3#3#3#3",
+    "effectTime2": "3#6#0#0",
+    "limit": "1#1#1#2"
+  },
+  {
+    "activityId": 12404,
+    "id": 3,
+    "name": "language_10065234",
+    "desc": "language_10065235",
+    "icon": "v2a4_tutushizi_ball_2",
+    "radius": "1500#1750#2000#2000",
+    "elasticity": "1000#1000#1000#1000",
+    "velocity": 1000,
+    "detectTime": "1#1#1#1",
+    "effectTime": "",
+    "effectTime2": "",
+    "limit": "1#1#1#2"
+  },
+  {
+    "activityId": 12404,
+    "id": 4,
+    "name": "language_10065236",
+    "desc": "language_10065237",
+    "icon": "v2a4_tutushizi_ball_1",
+    "radius": "1000#1000#1000#1000",
+    "elasticity": "1000#1000#1000#1000",
+    "velocity": 1000,
+    "detectTime": "1#1#1#1",
+    "effectTime": "2#3#3#3",
+    "effectTime2": "4#4#6#6",
+    "limit": "1#1#1#2"
+  },
+  {
+    "activityId": 12404,
+    "id": 5,
+    "name": "language_10065238",
+    "desc": "language_10065239",
+    "icon": "v2a4_tutushizi_ball_4",
+    "radius": "1000#1000#1000#1000",
+    "elasticity": "1500#2000#2500#2500",
+    "velocity": 1500,
+    "detectTime": "1#1#1#1",
+    "effectTime": "",
+    "effectTime2": "",
+    "limit": "1#1#1#2"
+  }
+]

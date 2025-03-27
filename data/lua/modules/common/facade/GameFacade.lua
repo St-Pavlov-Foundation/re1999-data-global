@@ -42,7 +42,7 @@ return {
 		return GameConfig:GetCurServerType() == GameUrlConfig.ServerType.OutExperience or slot0 == 8
 	end,
 	showOptionMessageBox = function (slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, ...)
-		if not MessageBoxController.instance:canShowMessageOptionBoxView(slot2) then
+		if not MessageBoxController.instance:canShowMessageOptionBoxView(slot0, slot2) then
 			if slot3 then
 				slot3(slot6)
 			end

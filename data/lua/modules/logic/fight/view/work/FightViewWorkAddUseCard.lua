@@ -37,6 +37,9 @@ function slot0.onStart(slot0)
 		recthelper.setAnchorY(slot13, 150)
 	end
 
+	slot8 = 0.2 / FightModel.instance:getUISpeed()
+	slot9 = 0.25 / FightModel.instance:getUISpeed()
+
 	for slot13, slot14 in ipairs(slot5) do
 		if slot14.go.activeInHierarchy then
 			slot14:hideCardAppearEffect()
@@ -47,12 +50,15 @@ function slot0.onStart(slot0)
 			if slot14._cardInfoMO.CUSTOMADDUSECARD then
 				gohelper.onceAddComponent(slot14.go, gohelper.Type_CanvasGroup).alpha = 0
 
-				slot14:playAppearEffect()
+				if not FightHelper.isASFDSkill(slot15.skillId) then
+					slot14:playAppearEffect()
+				end
+
 				slot14:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
 
 				slot16 = FlowSequence.New()
 
-				slot16:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getUISpeed()))
+				slot16:addWork(WorkWaitSeconds.New(slot8))
 
 				slot17 = slot14.go.transform.parent
 
@@ -61,7 +67,7 @@ function slot0.onStart(slot0)
 					type = "DOAnchorPosY",
 					to = 150,
 					tr = slot17,
-					t = 0.25 / FightModel.instance:getUISpeed(),
+					t = slot9,
 					ease = EaseType.OutQuart
 				}))
 				slot0._flow:addWork(slot16)
@@ -69,8 +75,15 @@ function slot0.onStart(slot0)
 		end
 	end
 
+	slot0._flow:addWork(FunctionWork.New(slot0._clearSign, slot0))
 	AudioMgr.instance:trigger(20211406)
 	slot0._flow:start()
+end
+
+function slot0._clearSign(slot0)
+	for slot5, slot6 in ipairs(FightPlayCardModel.instance:getUsedCards()) do
+		slot6.CUSTOMADDUSECARD = nil
+	end
 end
 
 function slot0._delayDone(slot0)

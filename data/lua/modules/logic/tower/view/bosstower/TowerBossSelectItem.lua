@@ -167,6 +167,8 @@ end
 function slot0.checkClearTag(slot0)
 	if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, slot0.towerId, slot0.towerOpenMo, TowerEnum.LockKey) == TowerEnum.LockKey then
 		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, slot0.towerId, slot0.towerOpenMo, TowerEnum.UnlockKey)
+
+		return
 	end
 
 	if slot0.towerInfo:hasNewSpLayer(slot0.towerOpenMo) then

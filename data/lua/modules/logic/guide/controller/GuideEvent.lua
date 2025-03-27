@@ -15,6 +15,7 @@ slot0.GetGuideInfoSuccess = 11
 slot0.FinishGuideLastStep = 12
 slot0.OneKeyFinishGuides = 13
 slot0.FinishGuideFail = 14
+slot0.TriggerActive = 15
 slot0.SetMaskOffset = 101
 slot0.FadeView = 102
 slot0.SetMaskPosition = 103

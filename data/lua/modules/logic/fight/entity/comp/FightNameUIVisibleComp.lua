@@ -45,7 +45,8 @@ end
 slot1 = {
 	[FightEnum.EffectType.STORAGEINJURY] = true,
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
-	[FightEnum.EffectType.SHIELDVALUECHANGE] = true
+	[FightEnum.EffectType.SHIELDVALUECHANGE] = true,
+	[FightEnum.EffectType.SHAREHURT] = true
 }
 
 function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3)

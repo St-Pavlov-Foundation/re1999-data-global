@@ -28,6 +28,7 @@ function slot0.onStart(slot0, slot1)
 			gohelper.setActive(uv0, true)
 
 			if uv1 and not gohelper.isNil(uv0) then
+				uv1:getOpCtrl():checkLockFirst()
 				uv1:getOpCtrl():onFlyEnd(MonoHelper.getLuaComFromGo(uv0, FightOpItem))
 			end
 		end))

@@ -5,7 +5,7 @@ slot0 = class("TowerBossEpisodeLeftView", BaseView)
 function slot0.onInitView(slot0)
 	slot0.btnHandBook = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/Left/#btn_HandBook")
 	slot0.goUp = gohelper.findChild(slot0.viewGO, "root/Left/#btn_HandBook/#go_up")
-	slot0.imgHead = gohelper.findChildImage(slot0.viewGO, "root/Left/Pass/Head/#image_PassHead")
+	slot0.bossIcon = gohelper.findChildSingleImage(slot0.viewGO, "root/Left/Pass/Head/Mask/image_bossIcon")
 	slot0.btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/Left/Pass")
 	slot0.txtPassLev = gohelper.findChildTextMesh(slot0.viewGO, "root/Left/Pass/#txt_PassLevel")
 	slot0.taskList = {}
@@ -16,6 +16,8 @@ function slot0.onInitView(slot0)
 		slot5.goLight = gohelper.findChild(slot5.go, "#go_PointFG")
 		slot0.taskList[slot4] = slot5
 	end
+
+	slot0._goTaskReddot = gohelper.findChild(slot0.viewGO, "root/Left/Pass/#go_RedPoint")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -28,6 +30,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.onTowerTaskUpdated, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -36,12 +39,21 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.onTowerTaskUpdated, slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
 end
 
 function slot0._editableInitView(slot0)
 end
 
+function slot0._onTowerUpdate(slot0)
+	TowerController.instance:checkTowerIsEnd(slot0.towerType, slot0.towerId)
+end
+
 function slot0._onBtnTaskClick(slot0)
+	TowerController.instance:openTowerTaskView({
+		towerType = slot0.towerType,
+		towerId = slot0.towerId
+	})
 end
 
 function slot0._onBtnHandBookClick(slot0)
@@ -74,6 +86,8 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_leimi_theft_open)
+	RedDotController.instance:addRedDot(slot0._goTaskReddot, RedDotEnum.DotNode.TowerTask)
 	slot0:refreshParam()
 	slot0:refreshView()
 end
@@ -88,15 +102,14 @@ function slot0.refreshParam(slot0)
 end
 
 function slot0.refreshView(slot0)
-	UISpriteSetMgr.instance:setTowerSprite(slot0.imgHead, string.format("towerbossepisodet_passheadicon%s", slot0.towerConfig.bossId))
+	slot0.bossIcon:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(slot0.towerConfig.bossId).skinId) and slot2.headIcon))
 	slot0:refreshPassLayer()
 	slot0:refreshTask()
 	slot0:refreshTalent()
 end
 
 function slot0.refreshPassLayer(slot0)
-	slot2 = slot0.episodeMo:getLayerCount(slot0.towerId, slot0.viewContainer:isSp())
-	slot0.txtPassLev.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerboss_passlayer"), string.format("<color=#dcae70>%s</color>", slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot0.towerInfo.passLayerId) % slot2), slot2)
+	slot0.txtPassLev.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerbossepisodepasscount"), string.format("<color=#dcae70>%s</color>", TowerAssistBossModel.instance:getById(slot0.towerConfig.bossId) and slot1.level or 0), TowerConfig.instance:getAssistBossMaxLev(slot0.towerConfig.bossId))
 end
 
 function slot0.refreshTask(slot0)
@@ -140,6 +153,7 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
+	slot0.bossIcon:UnLoadImage()
 end
 
 return slot0

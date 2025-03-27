@@ -23,10 +23,16 @@ function slot0.initViewContent(slot0)
 	slot0:addButton("L2", "指引状态", slot0._onClickGuideStatus, slot0)
 	slot0:addButton("L2", "指引屏蔽", slot0._onClickGuideForbid, slot0)
 	slot0:addButton("L2", "引导图预览", slot0._onClickHelpViewBrowse, slot0)
+	slot0:addButton("L2", "清空战斗指引记录", slot0._clearFightGuide, slot0)
 	slot0:addTitleSplitLine("指引编辑")
 	slot0:addButton("L3", "打开指引编辑器", slot0._onClickGuideEditor, slot0)
 	slot0:addWikiButton("L3", "http://doc.sl.com/pages/viewpage.action?pageId=31851464")
 	slot0._inpGuide:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGuide, ""))
+end
+
+function slot0._clearFightGuide(slot0)
+	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, "")
+	ToastController.instance:showToastWithString("清空成功，重启生效", isTop)
 end
 
 function slot0._onClickGuideStatus(slot0)

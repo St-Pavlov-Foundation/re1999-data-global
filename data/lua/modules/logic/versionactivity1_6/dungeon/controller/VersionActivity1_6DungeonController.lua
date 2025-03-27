@@ -58,7 +58,7 @@ end
 
 function slot0._onIndicatorChange(slot0, slot1)
 	if slot1 == FightEnum.IndicatorId.Act1_6DungeonBoss then
-		slot0._tempScore = math.max(slot0._tempScore, FightModel.instance:getIndicatorNum(slot1))
+		slot0._tempScore = math.max(slot0._tempScore, FightDataHelper.fieldMgr:getIndicatorNum(slot1))
 
 		slot0._bossModel:noticeFightScore(slot0._tempScore)
 	end

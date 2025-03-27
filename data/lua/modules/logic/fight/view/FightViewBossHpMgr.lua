@@ -53,7 +53,7 @@ function slot0._onBeforeEnterStepBehaviour(slot0)
 	end
 
 	if slot1 >= 6 then
-		recthelper.setAnchorX(slot0._bossHpRoot, -150)
+		recthelper.setAnchorX(slot0._bossHpRoot, -70)
 	end
 
 	for slot11, slot12 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do

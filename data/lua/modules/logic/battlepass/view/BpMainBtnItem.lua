@@ -16,6 +16,10 @@ function slot0.init(slot0, slot1)
 
 	slot0:_initReddotitem(slot0.go)
 
+	slot0._goexpup = gohelper.findChild(slot0.go, "#go_expup")
+
+	gohelper.setActive(slot0._goexpup, BpModel.instance:isShowExpUp())
+
 	if BpConfig.instance:getBpCO(BpModel.instance.id) and slot2.isSp then
 		gohelper.setActive(gohelper.findChild(slot0.go, "link"), true)
 	end

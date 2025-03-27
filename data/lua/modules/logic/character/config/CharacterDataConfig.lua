@@ -37,7 +37,8 @@ function slot0.reqConfigNames(slot0)
 		"character_shop_voice",
 		"character_face_effect",
 		"character_motion_special",
-		"character_special_interaction_voice"
+		"character_special_interaction_voice",
+		"story_hero_to_character"
 	}
 end
 

@@ -18,7 +18,8 @@ function slot0.reqConfigNames(slot0)
 		"turnback_task",
 		"turnback_submodule",
 		"turnback_task_bonus",
-		"turnback_recommend"
+		"turnback_recommend",
+		"turnback_drop"
 	}
 end
 
@@ -35,6 +36,8 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 		slot0._turnbackTaskBonusConfig = slot2
 	elseif slot1 == "turnback_recommend" then
 		slot0._turnbackRecommendConfig = slot2
+	elseif slot1 == "turnback_drop" then
+		slot0._turnbackDropConfig = slot2
 	end
 end
 
@@ -91,6 +94,18 @@ function slot0.getTurnbackTaskBonusCo(slot0, slot1, slot2)
 	return slot0._turnbackTaskBonusConfig.configDict[slot1][slot2]
 end
 
+function slot0.getTurnbackLastBounsPoint(slot0, slot1)
+	if slot0._turnbackTaskBonusConfig.configDict[slot1] then
+		return slot2[#slot2].needPoint
+	end
+
+	return 0
+end
+
+function slot0.getAllTurnbackTaskBonusCoCount(slot0, slot1)
+	return #slot0._turnbackTaskBonusConfig.configList[slot1]
+end
+
 function slot0.getAllTurnbackSubModules(slot0, slot1)
 	return string.splitToNumber(slot0:getTurnbackCo(slot1).subModuleIds, "#")
 end
@@ -139,6 +154,16 @@ function slot0.getAdditionDurationDays(slot0, slot1)
 	return slot2
 end
 
+function slot0.getOnlineDurationDays(slot0, slot1)
+	slot2 = 0
+
+	if slot0:getTurnbackCo(slot1) then
+		slot2 = slot3.onlineDurationDays
+	end
+
+	return slot2
+end
+
 function slot0.getTaskItemBonusPoint(slot0, slot1, slot2)
 	slot3, slot4 = slot0:getBonusPointCo(slot1)
 
@@ -173,6 +198,30 @@ end
 
 function slot0.getRecommendCo(slot0, slot1, slot2)
 	return slot0._turnbackRecommendConfig.configDict[slot1][slot2]
+end
+
+function slot0.getSearchTaskCoList(slot0)
+	slot1 = {}
+
+	for slot5, slot6 in ipairs(slot0._turnbackTaskConfig.configList) do
+		if slot6.listenerType == "TodayOnlineSeconds" then
+			table.insert(slot1, slot6)
+		end
+	end
+
+	return slot1
+end
+
+function slot0.getDropCoList(slot0)
+	return slot0._turnbackDropConfig.configList
+end
+
+function slot0.getDropCoById(slot0, slot1)
+	return slot0._turnbackDropConfig.configDict[slot1]
+end
+
+function slot0.getDropCoCount(slot0)
+	return #slot0._turnbackDropConfig.configList
 end
 
 slot0.instance = slot0.New()

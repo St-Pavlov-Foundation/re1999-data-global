@@ -83,7 +83,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300201,
@@ -169,7 +171,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300202,
@@ -255,7 +259,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300301,
@@ -339,9 +345,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-69.8#-212.1#0.68",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300302,
@@ -425,9 +433,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-9.6#-70.1#0.5",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300304,
@@ -513,7 +523,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 3003041,
@@ -599,7 +611,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300401,
@@ -686,9 +700,11 @@
     "fullScreenCameraSize": 11,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-19.9#-144.3#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300402,
@@ -775,9 +791,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "74.6#-15.9#0.62",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300501,
@@ -861,9 +879,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.7#-174.6#0.64",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300502,
@@ -947,9 +967,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "32.4#-49.6#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300601,
@@ -1033,9 +1055,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "30.4#-111.1#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300602,
@@ -1119,9 +1143,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-14.9#-106#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300603,
@@ -1205,9 +1231,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "58.1#102.1#0.63",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300701,
@@ -1291,9 +1319,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "16.4#-153.3#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300702,
@@ -1377,9 +1407,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "34.3#10#0.39",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300801,
@@ -1465,7 +1497,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300802,
@@ -1551,7 +1585,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300901,
@@ -1635,9 +1671,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "10.2#-150.9#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300902,
@@ -1721,9 +1759,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-58#247.9#0.75",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300903,
@@ -1807,9 +1847,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "102.1#20.9#0.73",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301001,
@@ -1893,9 +1935,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "12.6#-237.3#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301002,
@@ -1979,9 +2023,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-42.3#-155.7#0.84",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301003,
@@ -2065,9 +2111,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "33.1#-59.5#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301101,
@@ -2151,9 +2199,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-18.6#-194.8#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301102,
@@ -2237,9 +2287,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-50.6#79.2#0.69",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301201,
@@ -2323,9 +2375,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "4.6#-177.9#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301301,
@@ -2409,9 +2463,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "98.2#-223.3#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301302,
@@ -2495,9 +2551,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "35#-236.6#0.71",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301401,
@@ -2581,9 +2639,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "103.9#-158.7#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301402,
@@ -2667,9 +2727,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.6#-33.9#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301501,
@@ -2753,9 +2815,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "4.9#-295.5#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301502,
@@ -2839,9 +2903,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "30.3#-281.1#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301601,
@@ -2928,9 +2994,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-73.2#-185.7#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301602,
@@ -3017,9 +3085,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-96.7#-83.2#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301701,
@@ -3106,9 +3176,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "70.7#-139.3#0.46",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301702,
@@ -3195,9 +3267,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "10.6#-20.2#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301703,
@@ -3284,9 +3358,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-37#22.5#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301801,
@@ -3370,9 +3446,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-24.5#-160.4#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301802,
@@ -3456,9 +3534,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "82.9#-78.7#0.62",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301901,
@@ -3544,7 +3624,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301902,
@@ -3630,7 +3712,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302001,
@@ -3717,9 +3801,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-35.3#-199.2#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302002,
@@ -3806,9 +3892,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-22.7#-76#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302003,
@@ -3892,9 +3980,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "30.4#-64.7#0.63",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302101,
@@ -3980,7 +4070,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302102,
@@ -4066,7 +4158,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302201,
@@ -4150,9 +4244,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0.4#-234.7#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302202,
@@ -4236,9 +4332,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-8.9#-152.4#0.63",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302301,
@@ -4322,9 +4420,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-71.5#-207.9#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302302,
@@ -4410,7 +4510,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302303,
@@ -4494,9 +4596,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "21.7#23.8#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302401,
@@ -4583,9 +4687,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "74.6#-26.3#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302402,
@@ -4672,9 +4778,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "7.7#-61.5#0.67",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302501,
@@ -4758,9 +4866,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.8#-186.1#0.5",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 3025011,
@@ -4846,7 +4956,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302502,
@@ -4930,9 +5042,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "23.1#-68.1#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302503,
@@ -5016,9 +5130,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.6#27.1#0.46",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302511,
@@ -5104,7 +5220,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302601,
@@ -5188,9 +5306,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "83.5#-62.3#0.37",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302602,
@@ -5274,9 +5394,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-3.7#-60.4#0.55",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302701,
@@ -5363,9 +5485,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-18#27.4#0.26",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302801,
@@ -5452,9 +5576,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.9#23.6#0.42",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302802,
@@ -5541,9 +5667,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-57.8#12.2#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302803,
@@ -5630,9 +5758,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "7.5#-10.9#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302811,
@@ -5721,7 +5851,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302901,
@@ -5805,9 +5937,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.3#-233.2#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 3029011,
@@ -5893,7 +6027,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 3029012,
@@ -5979,7 +6115,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302902,
@@ -6063,9 +6201,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-6.5#-132.6#0.49",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303001,
@@ -6149,9 +6289,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "21.9#-86.2#0.42",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303101,
@@ -6238,9 +6380,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "18#-60.8#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303102,
@@ -6327,9 +6471,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "33.8#-77.2#0.61",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303201,
@@ -6413,9 +6559,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-140.9#-167.1#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303202,
@@ -6499,9 +6647,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-21.4#-38.6#0.5",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303203,
@@ -6588,9 +6738,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-36.5#-70.8#0.7",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303301,
@@ -6674,9 +6826,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "3.1#-129.7#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303302,
@@ -6760,9 +6914,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "8.3#-142#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303401,
@@ -6849,9 +7005,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "0#563.1#1",
-    "playercardViewImgOffset": "-150#-251.4#0.6",
+    "playercardViewImgOffset": "-14.3#-65.3#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303402,
@@ -6940,7 +7098,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303501,
@@ -7024,9 +7184,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-22.8#-175.1#0.45",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303601,
@@ -7110,9 +7272,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "2.8#-235.3#0.71",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303701,
@@ -7196,9 +7360,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-26.9#-183.6#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303702,
@@ -7282,9 +7448,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "26.3#-66.3#0.64",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303801,
@@ -7368,9 +7536,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "7.3#-157.8#0.48",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303802,
@@ -7454,9 +7624,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-17.2#-73.7#0.65",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303901,
@@ -7543,9 +7715,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-24.2#-173.1#0.48",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303902,
@@ -7632,9 +7806,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0#-2#0.72",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304001,
@@ -7718,9 +7894,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-2.7#-63.3#0.43",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304101,
@@ -7804,9 +7982,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-3.7#-202.4#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304102,
@@ -7890,9 +8070,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "50#-135.9#0.64",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304201,
@@ -7979,9 +8161,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-2.7#-124.2#0.46",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304202,
@@ -8068,9 +8252,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "22.3#-120.4#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304301,
@@ -8154,9 +8340,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "54.9#-155.8#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304302,
@@ -8240,9 +8428,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-161.4#59.7#0.61",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304401,
@@ -8326,9 +8516,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "7#-163.1#0.55",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304402,
@@ -8412,9 +8604,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-4.2#-163.2#0.55",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304501,
@@ -8498,9 +8692,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "77.6#-240#0.72",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304601,
@@ -8587,9 +8783,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "8.4#-104#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304602,
@@ -8676,9 +8874,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "6.9#-163.7#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304701,
@@ -8762,9 +8962,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0.7#-249.6#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304702,
@@ -8848,9 +9050,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "74.5#3.4#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304801,
@@ -8934,9 +9138,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "58.2#-226.1#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304802,
@@ -9020,9 +9226,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "73.9#112.1#0.75",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304901,
@@ -9109,9 +9317,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "20.5#-250.7#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304902,
@@ -9198,9 +9408,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-40.4#8.7#0.42",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305001,
@@ -9284,9 +9496,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "12.8#-34.5#0.33",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305101,
@@ -9370,9 +9584,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-0.2#-146.9#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305102,
@@ -9456,9 +9672,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "9.9#-7.5#0.84",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305201,
@@ -9542,9 +9760,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-109.3#-248.8#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305202,
@@ -9628,9 +9848,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-173.8#-106.5#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305301,
@@ -9714,9 +9936,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-12.3#-280.5#0.56",
     "summonPickUpImgOffset": "-23.5#-229#0.65",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305302,
@@ -9800,9 +10024,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-26.5#22.9#0.78",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305401,
@@ -9886,9 +10112,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "23.7#-165.5#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305501,
@@ -9975,9 +10203,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-53.9#-49.1#0.29",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305601,
@@ -10064,9 +10294,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "20.5#-201.3#0.47",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305602,
@@ -10153,9 +10385,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "16.2#78.4#0.74",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305701,
@@ -10239,9 +10473,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-13.5#-192.9#0.52",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305702,
@@ -10325,9 +10561,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-9.2#-214.1#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305801,
@@ -10411,9 +10649,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "49.2#-106.2#0.43",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305802,
@@ -10497,9 +10737,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.8#-140.9#0.46",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305901,
@@ -10586,9 +10828,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-21.5#-4.7#0.3",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306001,
@@ -10675,9 +10919,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-11.3#-162.2#0.46",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306002,
@@ -10764,9 +11010,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "91.6#6.3#0.55",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306101,
@@ -10850,9 +11098,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-47#-265.7#0.59",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306102,
@@ -10936,9 +11186,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-57.5#-119.5#0.72",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306201,
@@ -11025,9 +11277,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "35.8#-207.4#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306202,
@@ -11114,9 +11368,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "92.8#-155.3#0.93",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306301,
@@ -11203,9 +11459,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "30.8#-127.6#0.43",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306302,
@@ -11292,9 +11550,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "19.3#92.9#0.71",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306401,
@@ -11378,9 +11638,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "10.1#-258.9#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306402,
@@ -11464,9 +11726,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "173.7#12#0.81",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 560501,
@@ -11552,7 +11816,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999401,
@@ -11638,7 +11904,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999501,
@@ -11724,7 +11992,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999601,
@@ -11810,7 +12080,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999701,
@@ -11896,7 +12168,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999801,
@@ -11982,7 +12256,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 999901,
@@ -12068,7 +12344,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303502,
@@ -12152,9 +12430,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-39.4#-13.4#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304103,
@@ -12238,9 +12518,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "23.7#9.6#0.66",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304303,
@@ -12324,9 +12606,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-141.4#0#0.74",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306303,
@@ -12410,9 +12694,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-52#-54.6#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307001,
@@ -12496,9 +12782,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0#-254.2#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307002,
@@ -12582,9 +12870,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-20#111.1#0.62",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307101,
@@ -12650,7 +12940,7 @@
     "skinDescription": "language_10019614",
     "skinSpineOffset": "",
     "showSwitchBtn": 1,
-    "skinViewImgOffset": "-150#-150#0.6",
+    "skinViewImgOffset": "",
     "skinReplaceIcon": "307101",
     "skinGetIcon": "",
     "skinGetBackIcon": "",
@@ -12668,9 +12958,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "4.4#-233.9#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307102,
@@ -12754,9 +13046,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-249.3#-174#0.69",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307201,
@@ -12840,9 +13134,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "83.7#-236.9#0.53",
     "summonPickUpImgOffset": "40.3#-196.3#0.65",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307202,
@@ -12926,9 +13222,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "50.9#-40.7#0.71",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306601,
@@ -13015,9 +13313,11 @@
     "fullScreenCameraSize": 11,
     "folderName": "v1a4_306601_37",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-94.8#-315.4#0.61",
     "summonPickUpImgOffset": "-92.3#-292.2#0.70",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306602,
@@ -13104,9 +13404,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a4_306602_37",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "53.4#100.5#0.75",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307901,
@@ -13190,9 +13492,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a4_307901_6",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.4#-372.6#0.65",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307902,
@@ -13276,9 +13580,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a4_307902_6",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-124.6#-27.3#0.85",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300403,
@@ -13362,9 +13668,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a4_300403_hongnujian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-206.2#190.8#0.77",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301103,
@@ -13448,9 +13756,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a4_301103_mll_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "18.7#-71.4#0.76",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306403,
@@ -13534,9 +13844,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a4_306403_wajueyishu",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-262.7#-81.2#0.88",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303002,
@@ -13592,7 +13904,7 @@
     "characterGetViewOffset": "6.3#256.2#1.17",
     "characterDataTitleViewOffset": "",
     "characterViewOffset": "-17.4#367.8#1.14",
-    "characterTitleViewStaticOffset": "-20.8#497.8#0.6",
+    "characterTitleViewStaticOffset": "189.2#367.8#0.64",
     "characterDataVoiceViewOffset": "",
     "guideLeftPortraitOffset": "",
     "guideRightPortraitOffset": "",
@@ -13620,9 +13932,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a4_303002_lalaquan_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.4#103.6#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307301,
@@ -13706,9 +14020,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a5_307301_kerandian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "38.2#-222.6#0.51",
     "summonPickUpImgOffset": "13.5#-196.3#0.60",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307302,
@@ -13792,9 +14108,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a5_307302_kerandian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-127.7#-51.7#0.73",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307401,
@@ -13883,9 +14201,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a5_307401_aizila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "16#-207.2#0.48",
     "summonPickUpImgOffset": "0#-188.7#0.60",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307402,
@@ -13974,9 +14294,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a5_307402_aizila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-5.4#-60.3#0.66",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307501,
@@ -14060,9 +14382,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a5_307501_shasirong",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "18.8#-219.9#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307502,
@@ -14146,9 +14470,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a5_307502_shasirong",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-46.5#-32.5#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307601,
@@ -14232,9 +14558,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a5_307601_hepingwulu_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-15#25#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307602,
@@ -14318,9 +14646,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a5_307602_hepingwulu_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.9#-4.7#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305002,
@@ -14404,9 +14734,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a5_305002_dadadali_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "1.8#-16.7#0.38",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301503,
@@ -14490,9 +14822,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a5_301503_langqun_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-34.7#-112.8#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302203,
@@ -14576,9 +14910,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a5_302203_pamiai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "78.9#-150.6#0.61",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305303,
@@ -14662,9 +14998,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a5_305303_yaxian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-40.5#36.7#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308201,
@@ -14748,9 +15086,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_308201_xiaoyenisai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-11.4#-306.8#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308202,
@@ -14834,9 +15174,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_308202_xiaoyenisai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "20#0#0.74",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308301,
@@ -14920,9 +15262,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_308301_quniang",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-39.4#-214.4#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308302,
@@ -15006,9 +15350,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_308302_quniang",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-160.5#143.5#0.87",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308401,
@@ -15092,9 +15438,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a6_308401_gt",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "112.8#-359.2#0.66",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308402,
@@ -15178,9 +15526,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a6_308402_gt",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-178.4#188.7#0.92",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300305,
@@ -15264,9 +15614,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a6_300305_hujisheng",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-12.1#-186.5#0.98",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300703,
@@ -15353,9 +15705,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_300703_wxk_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "29.3#25.7#0.86",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301303,
@@ -15439,9 +15793,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_301303_d_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-1.2#-208.5#0.87",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302403,
@@ -15525,9 +15881,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a6_302403_qqpd_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-33.2#-116.9#0.93",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303903,
@@ -15614,9 +15972,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a6_303903_nmds",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-34.3#-319.1#0.78",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306501,
@@ -15703,9 +16063,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a7_306501_makusi",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-23.4#-218.6#0.53",
     "summonPickUpImgOffset": "-43.6#-165.2#0.63",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306502,
@@ -15792,9 +16154,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a7_306502_makusi",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-70#185.7#0.9",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308101,
@@ -15878,9 +16242,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a7_308101_yisuoerde",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "15.1#-287.8#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308102,
@@ -15964,9 +16330,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a7_308102_yisuoerde",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-111.2#-22.2#0.75",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303803,
@@ -16050,9 +16418,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a7_303803_wuseyue",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-64#75.7#0.78",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304403,
@@ -16136,9 +16506,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a7_304403_msns_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "72.6#58#0.66",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306203,
@@ -16222,9 +16594,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a7_306203_meilanni",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-40#23.7#0.84",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306603,
@@ -16308,9 +16682,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a7_306603_37",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-212.9#-58.6#1.01",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307701,
@@ -16394,9 +16770,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a8_307701_beifangshaoge",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-136.2#-231.9#0.5",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307702,
@@ -16480,9 +16858,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a8_307702_beifangshaoge",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-60.3#56.6#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307801,
@@ -16566,9 +16946,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a8_307801_afuxiwei",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-41.5#-116.3#0.38",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307802,
@@ -16652,9 +17034,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a8_307802_afuxiwei",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-20#90#0.74",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308701,
@@ -16738,9 +17122,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a8_308701_weila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-60.5#-251#0.53",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308702,
@@ -16824,9 +17210,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a8_308702_weila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "27.1#198#0.74",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301603,
@@ -16910,9 +17298,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a8_301603_yingerlan_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "5.7#55.4#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 301803,
@@ -16996,9 +17386,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a8_301803_wuxingzhe_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-60.9#-64#0.41",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305103,
@@ -17082,9 +17474,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v1a8_305103_wnfld",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-187.4#-80.4#0.69",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304703,
@@ -17168,9 +17562,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a8_304703_tumaoshoudai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-0.3#140.4#0.76",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304104,
@@ -17256,7 +17652,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308001,
@@ -17340,9 +17738,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a9_308001_kakaniya",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "29.7#-236.3#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308002,
@@ -17426,9 +17826,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a9_308002_kakaniya",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-13.7#72.3#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308801,
@@ -17512,9 +17914,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v1a9_308801_smews",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-10#-304.6#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308802,
@@ -17598,9 +18002,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v1a9_308802_smews",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-27.7#69.8#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309101,
@@ -17684,9 +18090,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a9_309101_luoleilai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-15.3#-244.6#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309102,
@@ -17770,9 +18178,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a9_309102_luoleilai",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-120#-50.2#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308601,
@@ -17856,9 +18266,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a9_308601_luxi",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "96.9#-344.4#0.64",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308602,
@@ -17942,9 +18354,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v1a9_308602_luxi",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-20.3#-93.1#0.35",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307503,
@@ -18028,9 +18442,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v1a9_307503_shasirong",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-81.2#-69.5#0.8",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302304,
@@ -18114,9 +18530,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v1a9_302304_sshs",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-46.6#130.6#0.65",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304803,
@@ -18200,9 +18618,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v1a9_304803_yuanlv",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "10#78.6#0.78",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305703,
@@ -18280,15 +18700,17 @@
     "canHide": 0,
     "mainBody": 0,
     "skinGainViewImgOffset": "-20#-60#0.65",
-    "jump": 10011915,
+    "jump": 0,
     "storeTag": "101|102",
     "fullScreenLive2dOffset": "",
     "fullScreenCameraSize": 0,
     "folderName": "v1a9_305703_xmsme_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-30#-60#0.48",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305603,
@@ -18374,7 +18796,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 302504,
@@ -18458,9 +18882,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v1a9_302504_xingti",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-10#-399.1#0.86",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300604,
@@ -18546,7 +18972,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309401,
@@ -18630,9 +19058,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a0_309401_j",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-17#-359.2#0.64",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309402,
@@ -18716,9 +19146,11 @@
     "fullScreenCameraSize": 17,
     "folderName": "v2a0_309402_j",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-40#-20#0.65",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309501,
@@ -18802,9 +19234,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a0_309501_huanzhuangshuixing",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-2#-288.1#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309502,
@@ -18888,9 +19322,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a0_309502_huanzhuangshuixing",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-30#-71.5#0.84",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309601,
@@ -18974,9 +19410,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a0_309601_xqz_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-22#-320.2#0.59",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305502,
@@ -19060,15 +19498,17 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a0_305502_sptnk_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-41.2#-27.4#0.36",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307003,
     "name": "language_10036741",
     "gainApproach": 2,
-    "nameEng": "Black Dwarf",
+    "nameEng": "Kaalaa Baunaa",
     "des": "language_10036741",
     "characterId": 3070,
     "itemIcon": "307003",
@@ -19110,16 +19550,16 @@
     "effectHangPoint": "",
     "haloOffset": "",
     "mainViewFrameOffset": "2.8#0.95#0.33",
-    "mainViewOffset": "-0.2#0.3#0.84",
+    "mainViewOffset": "-0.2#0.3#0.83",
     "mainThumbnailViewOffset": "",
-    "characterRankUpViewOffset": "-20#-390#0.7",
-    "fightSuccViewOffset": "-80#-690#0.7",
+    "characterRankUpViewOffset": "-30#-370#0.68",
+    "fightSuccViewOffset": "-80#-670#0.68",
     "characterGetViewStaticOffset": "",
-    "characterGetViewOffset": "30#-460#0.7",
-    "characterDataTitleViewOffset": "70#-350#0.7",
-    "characterViewOffset": "20#-410#0.7",
+    "characterGetViewOffset": "30#-440#0.68",
+    "characterDataTitleViewOffset": "70#-340#0.68",
+    "characterViewOffset": "20#-390#0.68",
     "characterTitleViewStaticOffset": "-350#380#0.75",
-    "characterDataVoiceViewOffset": "110#-350#0.7",
+    "characterDataVoiceViewOffset": "110#-340#0.68",
     "guideLeftPortraitOffset": "",
     "guideRightPortraitOffset": "",
     "characterViewImgOffset": "-30#-110#0.75",
@@ -19146,9 +19586,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a0_307003_jialabona",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-13.1#-107.5#0.58",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307103,
@@ -19232,9 +19674,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a0_307103_kjl",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-53.1#-110#0.72",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307303,
@@ -19318,9 +19762,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v2a0_307303_kerandian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-51.4#30#0.8",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307903,
@@ -19404,9 +19850,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v2a0_307903_6",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "51.4#34.8#0.71",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309701,
@@ -19490,9 +19938,11 @@
     "fullScreenCameraSize": 11,
     "folderName": "v2a1_309701_aegs",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "13.4#-231.4#0.49",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309702,
@@ -19576,9 +20026,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a1_309702_aegs",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-2#8.6#0.65",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309801,
@@ -19662,9 +20114,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a1_309801_lsp",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-26.5#-273.3#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309802,
@@ -19748,9 +20202,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a1_309802_lsp",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-20#118.6#0.6",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309901,
@@ -19834,9 +20290,11 @@
     "fullScreenCameraSize": 10,
     "folderName": "v2a1_309901_syg",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0#-135.6#0.4",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 309902,
@@ -19920,9 +20378,11 @@
     "fullScreenCameraSize": 10,
     "folderName": "v2a1_309902_syg",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-38.8#41.5#0.37",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303303,
@@ -20006,9 +20466,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a1_303303_ttt_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "5.7#24#0.45",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306003,
@@ -20092,9 +20554,11 @@
     "fullScreenCameraSize": 13,
     "folderName": "v2a1_306003_jinmier",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-70#136.8#0.5",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307403,
@@ -20178,9 +20642,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a1_307403_aizila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0#0#0.62",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308103,
@@ -20264,9 +20730,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a1_308103_yisuoerde",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-9.4#33.1#0.51",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310001,
@@ -20355,9 +20823,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v2a2_310001_anjonala",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-3.1#-243.5#0.51",
     "summonPickUpImgOffset": " ",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310002,
@@ -20446,9 +20916,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v2a2_310002_anjonala",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-51.2#89.7#0.35",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310101,
@@ -20532,9 +21004,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a2_310101_blm_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "8#-92.6#0.25",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310102,
@@ -20618,9 +21092,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a2_310102_blm_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "57.7#-18.5#0.32",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310201,
@@ -20704,9 +21180,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a2_310201_luopeila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-27.1#-203.8#0.48",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310202,
@@ -20790,9 +21268,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a2_310202_luopeila",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-180#180#0.77",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310301,
@@ -20878,7 +21358,9 @@
     "playercardViewLive2dOffset": "",
     "playercardViewImgOffset": "-1.4#-295.8#0.57",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310302,
@@ -20962,9 +21444,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a2_310302_dengken",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "0#56.3#0.61",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304603,
@@ -21048,9 +21532,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a2_304603_cng_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-188.3#-171.7#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306503,
@@ -21134,9 +21620,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a2_306503_mks",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-51.2#-2.8#0.82",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 306604,
@@ -21220,9 +21708,11 @@
     "fullScreenCameraSize": 11,
     "folderName": "v2a2_306604_37",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-200#292.9#0.49",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 307203,
@@ -21306,9 +21796,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a2_307203_zmsl",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-10.5#-3.3#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308203,
@@ -21392,9 +21884,11 @@
     "fullScreenCameraSize": 12,
     "folderName": "v2a2_308203_xyns",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "58.8#86.6#0.62",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308703,
@@ -21478,9 +21972,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a2_308703_wl",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-48.6#40.5#0.76",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310401,
@@ -21569,9 +22065,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a3_310401_ddg",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-70.3#-273.7#0.63",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310402,
@@ -21660,9 +22158,11 @@
     "fullScreenCameraSize": 14,
     "folderName": "v2a3_310402_ddg",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-82.3#105.2#0.56",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310501,
@@ -21746,9 +22246,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a3_310501_zxqe",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "67.7#-229.8#0.54",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310502,
@@ -21832,9 +22334,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v2a3_310502_zxqe",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-15.2#40.3#0.77",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310601,
@@ -21923,9 +22427,11 @@
     "fullScreenCameraSize": 18,
     "folderName": "v2a3_310601_kym",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-81.4#-108.3#0.29",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 310602,
@@ -22014,9 +22520,11 @@
     "fullScreenCameraSize": 18,
     "folderName": "v2a3_310602_kym",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "72.8#-4.9#0.4",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 300404,
@@ -22100,9 +22608,11 @@
     "fullScreenCameraSize": 15,
     "folderName": "v2a3_300404_hongnujian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-85.9#167.9#0.82",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 303602,
@@ -22186,9 +22696,11 @@
     "fullScreenCameraSize": 0,
     "folderName": "v2a3_303602_yhtt_p",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-50#11.5#0.44",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 304304,
@@ -22272,9 +22784,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a3_304304_tnt",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-80#-16.6#0.66",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 305304,
@@ -22358,9 +22872,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a3_305304_yaxian",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-20#66.7#0.79",
     "summonPickUpImgOffset": "-23.5#-229#0.65",
-    "isSkinVideo": false
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308404,
@@ -22444,9 +22960,11 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a3_308404_gt",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "-160#-103.5#0.86",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": false
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   },
   {
     "id": 308803,
@@ -22530,8 +23048,802 @@
     "fullScreenCameraSize": 16,
     "folderName": "v2a3_308803_smews",
     "playercardViewLive2dOffset": "",
-    "playercardViewImgOffset": "",
+    "playercardViewImgOffset": "5.2#102.6#0.68",
     "summonPickUpImgOffset": "",
-    "isSkinVideo": true
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 310801,
+    "name": "language_10062222",
+    "gainApproach": 0,
+    "nameEng": "Barcarola",
+    "des": "language_10005329",
+    "characterId": 3108,
+    "itemIcon": "310801",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 0,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "310801",
+    "live2d": "310801_bkle",
+    "live2dbg": "",
+    "verticalDrawing": "",
+    "spine": "v2a4_310801_bkle/310801_bkle",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a4_310801_bkle_s/310801_bkle_s",
+    "alternateSpineJump": "bakaluoer_310801_s",
+    "skills": "",
+    "headIcon": "310801",
+    "retangleIcon": "310801",
+    "largeIcon": "310801",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-60.0#275.0|160.0#55.0",
+    "triggerArea2": "60.0#-70.0|200.0#-210.0_-430.0#40.0|-100.0#-210.0",
+    "triggerArea3": "-140.0#55.0|200.0#-545.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 310801,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "3#0.9#0.35",
+    "mainViewOffset": "-0.1#1.4#1",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "-10#-320#0.85",
+    "fightSuccViewOffset": "-40#-620#0.85",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "40#-390#0.85",
+    "characterDataTitleViewOffset": "70#-280#0.85",
+    "characterViewOffset": "50#-340#0.85",
+    "characterTitleViewStaticOffset": "-190#280#0.85",
+    "characterDataVoiceViewOffset": "120#-280#0.85",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-100#-260#0.82",
+    "characterSkin": "",
+    "characterSkinNameEng": "",
+    "skinDescription": "language_10064242",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-210#-180#0.75",
+    "skinReplaceIcon": "310801",
+    "skinGetIcon": "",
+    "skinGetBackIcon": "",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "120#-270#0.85",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-50#-270#0.85",
+    "jump": 0,
+    "storeTag": "",
+    "fullScreenLive2dOffset": "-13.3#-148.5#0.95",
+    "fullScreenCameraSize": 18,
+    "folderName": "v2a4_310801_bkle",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-99.4#-149#0.57",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 310802,
+    "name": "language_10062222",
+    "gainApproach": 1,
+    "nameEng": "Barcarola",
+    "des": "language_10005330",
+    "characterId": 3108,
+    "itemIcon": "310802",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "310802",
+    "live2d": "310802_bkle",
+    "live2dbg": "",
+    "verticalDrawing": "",
+    "spine": "v2a4_310802_bkle/310802_bkle",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a4_310801_bkle_s/310801_bkle_s",
+    "alternateSpineJump": "bakaluoer_310801_s",
+    "skills": "",
+    "headIcon": "310802",
+    "retangleIcon": "310802",
+    "largeIcon": "310802",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-60.0#275.0|160.0#55.0",
+    "triggerArea2": "60.0#-70.0|200.0#-210.0_-430.0#40.0|-100.0#-210.0",
+    "triggerArea3": "-140.0#55.0|200.0#-545.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 310802,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "3#0.9#0.35",
+    "mainViewOffset": "-0.1#1.4#1",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "-10#-320#0.85",
+    "fightSuccViewOffset": "-40#-620#0.85",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "40#-390#0.85",
+    "characterDataTitleViewOffset": "70#-280#0.85",
+    "characterViewOffset": "50#-340#0.85",
+    "characterTitleViewStaticOffset": "-740#280#1",
+    "characterDataVoiceViewOffset": "120#-280#0.85",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-120#-200#1",
+    "characterSkin": "language_10064243",
+    "characterSkinNameEng": "As the Sea Breeze Leads",
+    "skinDescription": "language_10064244",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-320#-210#1",
+    "skinReplaceIcon": "310802",
+    "skinGetIcon": "310802",
+    "skinGetBackIcon": "310802",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "50#-210#1",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-50#-210#1",
+    "jump": 0,
+    "storeTag": "",
+    "fullScreenLive2dOffset": "-22#-148.8#0.95",
+    "fullScreenCameraSize": 18,
+    "folderName": "v2a4_310802_bkle",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-13.1#-130.4#0.78",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 310901,
+    "name": "language_10063973",
+    "gainApproach": 0,
+    "nameEng": "Fatutu",
+    "des": "language_10005329",
+    "characterId": 3109,
+    "itemIcon": "310901",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 0,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "310901",
+    "live2d": "310901_ttsz",
+    "live2dbg": "",
+    "verticalDrawing": "",
+    "spine": "v2a4_310901_ttsz/310901_ttsz",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a4_310901_ttsz_s/310901_ttsz_s",
+    "alternateSpineJump": "tutushizi_310901_s",
+    "skills": "",
+    "headIcon": "310901",
+    "retangleIcon": "310901",
+    "largeIcon": "310901",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-170.0#260.0|50.0#40.0",
+    "triggerArea2": "-280.0#-160.0|-140.0#-340.0_30.0#-240.0|170.0#-440.0",
+    "triggerArea3": "-240.0#40.0|100.0#-600.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 310901,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.8#1.1#0.35",
+    "mainViewOffset": "0.1#1.6#1.04",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "20#-290#0.88",
+    "fightSuccViewOffset": "-70#-600#0.88",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "60#-370#0.88",
+    "characterDataTitleViewOffset": "90#-250#0.88",
+    "characterViewOffset": "70#-310#0.88",
+    "characterTitleViewStaticOffset": "40#210#0.75",
+    "characterDataVoiceViewOffset": "140#-250#0.88",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "10#-340#0.75",
+    "characterSkin": "",
+    "characterSkinNameEng": "",
+    "skinDescription": "language_10064245",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-140#-250#0.65",
+    "skinReplaceIcon": "310901",
+    "skinGetIcon": "",
+    "skinGetBackIcon": "",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "200#-350#0.75",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "30#-350#0.75",
+    "jump": 0,
+    "storeTag": "",
+    "fullScreenLive2dOffset": "10#-37.9#0.9",
+    "fullScreenCameraSize": 16,
+    "folderName": "v2a4_310901_ttsz",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "5.8#-204.5#0.51",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 310902,
+    "name": "language_10063973",
+    "gainApproach": 1,
+    "nameEng": "Fatutu",
+    "des": "language_10005330",
+    "characterId": 3109,
+    "itemIcon": "310902",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "310902",
+    "live2d": "310902_ttsz",
+    "live2dbg": "",
+    "verticalDrawing": "",
+    "spine": "v2a4_310902_ttsz/310902_ttsz",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a4_310901_ttsz_s/310901_ttsz_s",
+    "alternateSpineJump": "tutushizi_310901_s",
+    "skills": "",
+    "headIcon": "310902",
+    "retangleIcon": "310902",
+    "largeIcon": "310902",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-170.0#260.0|50.0#40.0",
+    "triggerArea2": "-280.0#-160.0|-140.0#-340.0_30.0#-240.0|170.0#-440.0",
+    "triggerArea3": "-240.0#40.0|100.0#-600.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 310902,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.8#1.1#0.35",
+    "mainViewOffset": "0.1#1.6#1.04",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "20#-290#0.88",
+    "fightSuccViewOffset": "-70#-600#0.88",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "60#-370#0.88",
+    "characterDataTitleViewOffset": "90#-250#0.88",
+    "characterViewOffset": "70#-310#0.88",
+    "characterTitleViewStaticOffset": "-460#340#1",
+    "characterDataVoiceViewOffset": "140#-250#0.88",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "70#-130#1",
+    "characterSkin": "language_10064246",
+    "characterSkinNameEng": "Fading Ripples",
+    "skinDescription": "language_10064247",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-100#-150#1",
+    "skinReplaceIcon": "310902",
+    "skinGetIcon": "310902",
+    "skinGetBackIcon": "310902",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "170#-150#1",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "50#-150#1",
+    "jump": 0,
+    "storeTag": "",
+    "fullScreenLive2dOffset": "10#-36.5#0.9",
+    "fullScreenCameraSize": 16,
+    "folderName": "v2a4_310902_ttsz",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "88.3#-93.4#0.87",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 303703,
+    "name": "language_10064185",
+    "gainApproach": 2,
+    "nameEng": "A Voyage with No Return",
+    "des": "language_10064185",
+    "characterId": 3037,
+    "itemIcon": "303703",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "2#1#880",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "303703",
+    "live2d": "303703_fgr",
+    "live2dbg": "303703",
+    "verticalDrawing": "",
+    "spine": "v2a4_303703_fgr/303703_fgr",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "303701_fugaoren_s",
+    "alternateSpineJump": "fugaoren_303701_s",
+    "skills": "",
+    "headIcon": "303703",
+    "retangleIcon": "303703",
+    "largeIcon": "303703",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-140.0#380.0|100.0#100.0",
+    "triggerArea2": "-370.0#-200.0|-220.0#-350.0_-200.0#-250.0|-60.0#-410.0",
+    "triggerArea3": "-180.0#100.0|120.0#-600.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 303703,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.61#0.41#0.39",
+    "mainViewOffset": "0.4#2#1.53",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "",
+    "fightSuccViewOffset": "-42.7#-521#1.25",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "22.8#-322.6#1.24",
+    "characterDataTitleViewOffset": "",
+    "characterViewOffset": "41.9#-200.5#1.2",
+    "characterTitleViewStaticOffset": "-480#680#0.8",
+    "characterDataVoiceViewOffset": "",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-120#200#0.8",
+    "characterSkin": "language_10064185",
+    "characterSkinNameEng": "A Voyage with No Return",
+    "skinDescription": "language_10064248",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-260#190#0.8",
+    "skinReplaceIcon": "303703",
+    "skinGetIcon": "303703",
+    "skinGetBackIcon": "303703",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "40#190#0.8",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-100#190#0.8",
+    "jump": 10173,
+    "storeTag": "109|103|104|105|101|102",
+    "fullScreenLive2dOffset": "2.9#79.5#1.1",
+    "fullScreenCameraSize": 15,
+    "folderName": "v2a4_303703_fgr",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-111.4#172.6#0.78",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": true,
+    "repeatBuyTime": "2025-4-24 04:59:59",
+    "skinStoreId": 811528
+  },
+  {
+    "id": 309503,
+    "name": "language_10064249",
+    "gainApproach": 4,
+    "nameEng": "Midnight Mistmancer",
+    "des": "language_10064249",
+    "characterId": 3095,
+    "itemIcon": "309503",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "309503",
+    "live2d": "309503_hzsx",
+    "live2dbg": "309503",
+    "verticalDrawing": "",
+    "spine": "v2a4_309503_hzsx/309503_hzsx",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a0_309501_hzsx_s/309501_hzsx_s",
+    "alternateSpineJump": "huanzhuangshuixing_309501_s",
+    "skills": "",
+    "headIcon": "309503",
+    "retangleIcon": "309503",
+    "largeIcon": "309503",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-170.0#320.0|30.0#120.0",
+    "triggerArea2": "-340.0#-270.0|-180.0#-470.0_40.0#80.0|180.0#-100.0",
+    "triggerArea3": "-210.0#120.0|70.0#-540.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 309503,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.8#1.1#0.33",
+    "mainViewOffset": "-0.3#0.9#1.28",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "-20#-330#1.05",
+    "fightSuccViewOffset": "-90#-630#1.05",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "20#-390#1.05",
+    "characterDataTitleViewOffset": "60#-300#1.05",
+    "characterViewOffset": "20#-350#1.05",
+    "characterTitleViewStaticOffset": "-370#580#0.8",
+    "characterDataVoiceViewOffset": "100#-300#1.05",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-70#90#0.78",
+    "characterSkin": "language_10064249",
+    "characterSkinNameEng": "Midnight Mistmancer",
+    "skinDescription": "language_10064250",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-200#90#0.8",
+    "skinReplaceIcon": "309503",
+    "skinGetIcon": "309503",
+    "skinGetBackIcon": "309503",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "80#100#0.8",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-40#90#0.8",
+    "jump": 48,
+    "storeTag": "109|103|104|105|101|102",
+    "fullScreenLive2dOffset": "0#-105#1.1",
+    "fullScreenCameraSize": 16,
+    "folderName": "v2a4_309503_hzsx",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-51.7#73.1#0.72",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 305203,
+    "name": "language_10064251",
+    "gainApproach": 12409,
+    "nameEng": "Raise the Bid",
+    "des": "language_10064251",
+    "characterId": 3052,
+    "itemIcon": "305203",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "305203",
+    "live2d": "305203_xbbt",
+    "live2dbg": "305203",
+    "verticalDrawing": "",
+    "spine": "v2a4_305203_xbbt/305203_xbbt",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "305201_xinbabieta_s",
+    "alternateSpineJump": "xinbabieta_305201_s",
+    "skills": "",
+    "headIcon": "305203",
+    "retangleIcon": "305203",
+    "largeIcon": "305203",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-30.0#400.0|200.0#170.0",
+    "triggerArea2": "-240.0#-140.0|-80.0#-300.0_240.0#70.0|370.0#-150.0",
+    "triggerArea3": "-80.0#170.0|240.0#-660.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 305203,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.2#0.45#0.38",
+    "mainViewOffset": "-0.8#0.1#1.31",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "-60#-360#1.05",
+    "fightSuccViewOffset": "-100#-660#1.04",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "-60#-430#1.06",
+    "characterDataTitleViewOffset": "",
+    "characterViewOffset": "-60#-380#1.05",
+    "characterTitleViewStaticOffset": "-320#410#0.8",
+    "characterDataVoiceViewOffset": "",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "70#-70#0.8",
+    "characterSkin": "language_10064251",
+    "characterSkinNameEng": "Raise the Bid",
+    "skinDescription": "language_10064252",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-80#-80#0.8",
+    "skinReplaceIcon": "305203",
+    "skinGetIcon": "305203",
+    "skinGetBackIcon": "305203",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "230#-80#0.8",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "60#-80#0.8",
+    "jump": 10012413,
+    "storeTag": "109|103|104|105|101|102",
+    "fullScreenLive2dOffset": "-63.1#-49.6#1",
+    "fullScreenCameraSize": 16,
+    "folderName": "v2a4_305203_xbbt",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "188.9#-89.7#0.76",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 302603,
+    "name": "language_10064253",
+    "gainApproach": 12400,
+    "nameEng": "Silver Schirm",
+    "des": "language_10064253",
+    "characterId": 3026,
+    "itemIcon": "302603",
+    "rare": 4,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "302603",
+    "live2d": "",
+    "live2dbg": "302603",
+    "verticalDrawing": "302603_hdp_p",
+    "spine": "v2a4_302603_hdp/302603_hdp",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "302601_hongdoupeng_s",
+    "alternateSpineJump": "hongdoupeng_302601_s",
+    "skills": "",
+    "headIcon": "302603",
+    "retangleIcon": "302603",
+    "largeIcon": "302603",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-220.0#260.0|120.0#0.0",
+    "triggerArea2": "-160.0#-70.0|-40.0#-190.0_-230.0#-300.0|-90.0#-440.0",
+    "triggerArea3": "-160.0#0.0|180.0#-610.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 302603,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.6#0.8#0.39",
+    "mainViewOffset": "-0.1#4.5#0.97",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "",
+    "fightSuccViewOffset": "-88.7#6.1#0.8",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "0#227.6#0.81",
+    "characterDataTitleViewOffset": "",
+    "characterViewOffset": "0.7#375.2#0.78",
+    "characterTitleViewStaticOffset": "-300#410#0.8",
+    "characterDataVoiceViewOffset": "",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-180#-90#0.8",
+    "characterSkin": "language_10064253",
+    "characterSkinNameEng": "Silver Schirm",
+    "skinDescription": "language_10064254",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-310#-80#0.8",
+    "skinReplaceIcon": "302603",
+    "skinGetIcon": "302603",
+    "skinGetBackIcon": "302603",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "80#-80#0.8",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-100#-80#0.8",
+    "jump": 10012412,
+    "storeTag": "101|102",
+    "fullScreenLive2dOffset": "",
+    "fullScreenCameraSize": 0,
+    "folderName": "v2a4_302603_hdp_p",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-169.5#-73.1#0.66",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": false,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
+  },
+  {
+    "id": 308003,
+    "name": "language_10064184",
+    "gainApproach": 2,
+    "nameEng": "Seminars on Serenity",
+    "des": "language_10064184",
+    "characterId": 3080,
+    "itemIcon": "308003",
+    "rare": 5,
+    "colorbg": 1,
+    "compensate": "",
+    "showDrawingSwitch": 1,
+    "defaultStencilValue": "",
+    "frameStencilValue": "",
+    "cameraSize": 0,
+    "drawing": "308003",
+    "live2d": "308003_kakaniya",
+    "live2dbg": "308003",
+    "verticalDrawing": "",
+    "spine": "v2a4_308003_kkny/308003_kkny",
+    "fight_special": 0,
+    "flipX": 0,
+    "isFly": 0,
+    "alternateSpine": "v2a4_308003_kkny_s/308003_kkny_s",
+    "alternateSpineJump": "kakaniya_308003_s",
+    "skills": "",
+    "headIcon": "308003",
+    "retangleIcon": "308003",
+    "largeIcon": "308003",
+    "color": "153e37#4a6b5e|36324f#575080|af8868#e9be99",
+    "unlockCondition": "测试解锁条件",
+    "matId": 2,
+    "triggerArea1": "-170.0#330.0|50.0#110.0",
+    "triggerArea2": "-370.0#150.0|-230.0#-50.0_10.0#-140.0|150.0#-320.0",
+    "triggerArea3": "-250.0#110.0|110.0#-570.0",
+    "triggerArea4": "",
+    "triggerArea5": "",
+    "weatherParam": 100001,
+    "topuiOffset": [],
+    "focusOffset": [],
+    "showTemplate": 308003,
+    "noDeadEffect": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "haloOffset": "",
+    "mainViewFrameOffset": "2.8#1.1#0.33",
+    "mainViewOffset": "0#1.6#1.08",
+    "mainThumbnailViewOffset": "",
+    "characterRankUpViewOffset": "-10#-300#0.9",
+    "fightSuccViewOffset": "-70#-600#0.9",
+    "characterGetViewStaticOffset": "",
+    "characterGetViewOffset": "50#-370#0.9",
+    "characterDataTitleViewOffset": "90#-270#0.9",
+    "characterViewOffset": "50#-320#0.9",
+    "characterTitleViewStaticOffset": "-680#610#1",
+    "characterDataVoiceViewOffset": "130#-270#0.9",
+    "guideLeftPortraitOffset": "",
+    "guideRightPortraitOffset": "",
+    "characterViewImgOffset": "-90#110#0.98",
+    "characterSkin": "language_10064184",
+    "characterSkinNameEng": "Seminars on Serenity",
+    "skinDescription": "language_10064255",
+    "skinSpineOffset": "",
+    "showSwitchBtn": 1,
+    "skinViewImgOffset": "-210#120#1",
+    "skinReplaceIcon": "308003",
+    "skinGetIcon": "308003",
+    "skinGetBackIcon": "308003",
+    "skinGetColorbg": "",
+    "skinGetDetailViewSpineOffset": "",
+    "skinGetDetailViewIconOffset": "",
+    "summonHeroViewOffset": "30#120#1",
+    "canWade": 0,
+    "canHide": 0,
+    "mainBody": 0,
+    "skinGainViewImgOffset": "-80#120#1",
+    "jump": 10173,
+    "storeTag": "109|106|108|110|103|104|105|101|102",
+    "fullScreenLive2dOffset": "50#-80#0.95",
+    "fullScreenCameraSize": 16,
+    "folderName": "v2a4_308003_kakaniya",
+    "playercardViewLive2dOffset": "",
+    "playercardViewImgOffset": "-118.8#148#0.98",
+    "summonPickUpImgOffset": "",
+    "isSkinVideo": true,
+    "repeatBuyTime": "",
+    "skinStoreId": 0
   }
 ]

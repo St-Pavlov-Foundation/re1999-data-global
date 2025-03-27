@@ -196,12 +196,16 @@ function slot0._updateBuffs(slot0, slot1)
 	uv0._updateBuffDesc_overseas(slot1, slot0._buffItemList, slot0._gobuffitem, slot0, slot0.getCommonBuffTipScrollAnchor)
 end
 
-function slot0.getCommonBuffTipScrollAnchor(slot0, slot1, slot2)
-	slot3 = CameraMgr.instance:getUICamera()
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
-	slot4, slot5 = recthelper.worldPosToAnchorPos2(slot0.rectTrScrollBuff.position, slot1, slot3, slot3)
+slot0.Interval = 10
 
-	recthelper.setAnchor(slot2, slot4 - recthelper.getWidth(slot0.rectTrScrollBuff) / 2, slot5 + recthelper.getHeight(slot0.rectTrScrollBuff) / 2)
+function slot0.getCommonBuffTipScrollAnchor(slot0, slot1, slot2)
+	slot5 = slot0.rectTrScrollBuff
+	slot7, slot8 = recthelper.uiPosToScreenPos2(slot5)
+	slot9, slot10 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(slot7, slot8, slot1, CameraMgr.instance:getUICamera(), nil, )
+	slot2.pivot = CommonBuffTipEnum.Pivot.Right
+	slot15 = slot9
+
+	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= GameUtil.getViewSize() / 2 + slot9 - recthelper.getWidth(slot5) / 2 - uv0.Interval and slot15 - slot11 - uv0.Interval or slot15 + slot11 + uv0.Interval + slot13, slot10 + math.min(recthelper.getHeight(slot5), recthelper.getHeight(slot0.rectTrBuffContent)) / 2)
 end
 
 slot0.filterTypeKey = {

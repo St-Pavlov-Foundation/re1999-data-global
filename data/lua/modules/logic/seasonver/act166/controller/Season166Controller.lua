@@ -89,6 +89,10 @@ function slot0.openResultPanel(slot0)
 	ViewMgr.instance:openView(ViewName.Season166ResultPanel)
 end
 
+function slot0.openTalentInfoView(slot0, slot1)
+	ViewMgr.instance:openView(ViewName.Season166TalentInfoView, slot1)
+end
+
 function slot0.checkProcessFightReconnect(slot0)
 	if DungeonConfig.instance:getEpisodeCO(FightModel.instance:getFightReason().episodeId) and uv0.isSeason166EpisodeType(slot3.type) then
 		slot4 = Season166Config.instance:getSeasonConfigByEpisodeId(slot2)

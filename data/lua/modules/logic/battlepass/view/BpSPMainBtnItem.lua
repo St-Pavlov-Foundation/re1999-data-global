@@ -4,7 +4,9 @@ slot0 = class("BpSPMainBtnItem", LuaCompBase)
 
 function slot0.init(slot0, slot1)
 	slot0.go = gohelper.cloneInPlace(slot1)
+	slot0._goexpup = gohelper.findChild(slot0.go, "#go_expup")
 
+	gohelper.setActive(slot0._goexpup, BpModel.instance:isShowExpUp())
 	gohelper.setActive(slot0.go, true)
 
 	slot0._imgitem = gohelper.findChildImage(slot0.go, "bg")

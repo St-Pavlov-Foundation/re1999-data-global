@@ -80,7 +80,7 @@ function slot0.clearFlow(slot0)
 end
 
 function slot0.isWeeklyScoreFull(slot0)
-	return CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore) <= (slot0.weeklyScore or 0)
+	return uv0.instance:getWeeklyMaxScore() <= (slot0.weeklyScore or 0)
 end
 
 function slot0.getBpChargeLeftSec(slot0)
@@ -111,6 +111,26 @@ end
 
 function slot0.getBpLv(slot0, slot1)
 	return math.floor((slot1 or slot0.score or 0) / BpConfig.instance:getLevelScore(slot0.id))
+end
+
+function slot0.isShowExpUp(slot0)
+	if not BpConfig.instance:getBpCO(slot0.id or 0) then
+		return false
+	end
+
+	return slot1 and slot1.expUpShow or false
+end
+
+function slot0.getWeeklyMaxScore(slot0)
+	if not BpConfig.instance:getBpCO(slot0.id or 0) then
+		return CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore)
+	end
+
+	if 1000 + (slot2.weekLimitTimes or 0) > 1000 then
+		slot1 = math.floor(slot3 * slot1 / 1000)
+	end
+
+	return slot1
 end
 
 function slot0.checkGet50FreeBonus(slot0, slot1)

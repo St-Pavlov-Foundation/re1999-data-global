@@ -15,7 +15,7 @@ function slot0.setAtkStatInfo(slot0, slot1)
 	slot2 = {}
 
 	for slot6, slot7 in ipairs(slot1) do
-		if slot7.entityMO or FightDataHelper.entityMgr:getById(slot7.heroUid) then
+		if not slot0:checkShield(slot7) and (slot7.entityMO or FightDataHelper.entityMgr:getById(slot7.heroUid)) then
 			slot9 = FightStatMO.New()
 
 			slot9:init(slot7)
@@ -39,6 +39,18 @@ function slot0.setAtkStatInfo(slot0, slot1)
 		end
 	end)
 	slot0:setList(slot2)
+end
+
+function slot0.checkShield(slot0, slot1)
+	if not slot1 then
+		return true
+	end
+
+	if slot1.heroUid == FightEntityScene.MySideId or slot1.heroUid == FightEntityScene.EnemySideId then
+		return true
+	end
+
+	return false
 end
 
 function slot0.getTotalHarm(slot0)

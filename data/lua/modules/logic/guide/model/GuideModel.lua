@@ -12,6 +12,7 @@ slot0.GuideFlag = {
 	SkipShowDungeonMapLevelView = 26,
 	KeepEpisodeItemLock = 29,
 	FightDoingSubEntity = 5,
+	PinballBanOper = 34,
 	DontOpenMain = 24,
 	FightBackSkipDungeonView = 9,
 	UseBlock = 17,

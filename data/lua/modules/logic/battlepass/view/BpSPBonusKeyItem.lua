@@ -92,10 +92,10 @@ function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 		slot13:SetCountLocalY(43.6)
 		slot13:SetCountBgHeight(40)
 		slot13:SetCountBgScale(1, 1.3, 1)
-		slot13:showStackableNum2()
+		slot13:showStackableNum()
 		slot13:setHideLvAndBreakFlag(true)
 		slot13:hideEquipLvAndBreak(true)
-		slot13:isShowCount(slot12[1] ~= MaterialEnum.MaterialType.Hero and not slot7)
+		slot13:isShowCount(true)
 
 		if slot7 then
 			slot13:customOnClickCallback(slot4, slot0)

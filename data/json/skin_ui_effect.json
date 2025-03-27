@@ -207,6 +207,15 @@
     "realtime": "1|1"
   },
   {
+    "id": 309503,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_hzsx_dengqiu/root|Drawables/bone2/effect-Bone/roleeffect_hzsx_ganzhi/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1|1"
+  },
+  {
     "id": 307003,
     "effect": "Drawables/bone1/effect-Bone/roleeffect_jlbn_shanfen/root|Drawables/bone/effect-Bone/roleeffect_jlbn_shanfen/root",
     "scale": 1.0,
@@ -349,5 +358,23 @@
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
+  },
+  {
+    "id": 310901,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1"
+  },
+  {
+    "id": 310902,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1"
   }
 ]

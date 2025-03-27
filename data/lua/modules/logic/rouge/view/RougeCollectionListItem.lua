@@ -98,7 +98,7 @@ function slot0._refreshDLCTag(slot0, slot1, slot2)
 	gohelper.setActive(slot0._godlctag, slot4)
 
 	if slot4 then
-		UISpriteSetMgr.instance:setRougeSprite(slot0._godlctag:GetComponent(gohelper.Type_Image), "rouge_episode_tagdlc_" .. slot3)
+		UISpriteSetMgr.instance:setRougeSprite(slot0._godlctag:GetComponent(gohelper.Type_Image), "rouge_episode_tagdlc_101")
 	end
 end
 

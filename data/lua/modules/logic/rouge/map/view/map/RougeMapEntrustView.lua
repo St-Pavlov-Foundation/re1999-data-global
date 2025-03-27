@@ -149,7 +149,8 @@ function slot0.initEntrustDescHandle(slot0)
 		[RougeMapEnum.EntrustEventType.CostPower] = slot0.costPowerHandle,
 		[RougeMapEnum.EntrustEventType.MakePower] = slot0.makePowerHandle,
 		[RougeMapEnum.EntrustEventType.FinishEvent] = slot0.finishEventHandle,
-		[RougeMapEnum.EntrustEventType.GetCollection] = slot0.getCollectionHandle
+		[RougeMapEnum.EntrustEventType.GetCollection] = slot0.getCollectionHandle,
+		[RougeMapEnum.EntrustEventType.LevelUpSpCollection] = slot0.levelupSpCollectionHandle
 	}
 end
 
@@ -188,6 +189,10 @@ function slot0.finishEventHandle(slot0, slot1, slot2)
 end
 
 function slot0.getCollectionHandle(slot0, slot1, slot2)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(slot0:getDesc(slot2, tonumber(slot1.param) <= RougeMapModel.instance:getEntrustProgress()), slot3, slot4)
+end
+
+function slot0.levelupSpCollectionHandle(slot0, slot1, slot2)
 	return GameUtil.getSubPlaceholderLuaLangTwoParam(slot0:getDesc(slot2, tonumber(slot1.param) <= RougeMapModel.instance:getEntrustProgress()), slot3, slot4)
 end
 

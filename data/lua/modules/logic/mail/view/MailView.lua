@@ -103,7 +103,7 @@ function slot0._btnjumpOnClick(slot0)
 				id = slot3
 			}))
 		else
-			UnityEngine.Application.OpenURL(slot1)
+			GameUtil.openURL(slot1)
 		end
 
 		MailRpc.instance:sendMarkMailJumpRequest(slot0._selectMO.id)
@@ -147,7 +147,7 @@ function slot0._onHyperLinkClick(slot0, slot1)
 				id = slot3
 			}))
 		else
-			UnityEngine.Application.OpenURL(slot1)
+			GameUtil.openURL(slot1)
 		end
 	end
 end

@@ -46,6 +46,12 @@ function slot0.init(slot0, slot1)
 
 	gohelper.setActive(slot0._seasonRoot, slot4)
 	gohelper.setActive(slot0._emptyNormal, not slot4)
+
+	slot0.goASFD = gohelper.findChild(slot1, "asfd_icon")
+	slot0.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.goASFD)
+	slot0.txtASFDEnergy = gohelper.findChildText(slot1, "asfd_icon/#txt_Num")
+
+	gohelper.setSiblingAfter(slot0.goASFD, slot0._innerGO)
 end
 
 function slot0.refreshSeasonArrowShow(slot0, slot1)
@@ -91,7 +97,7 @@ function slot0.updateItem(slot0, slot1)
 	slot0.fightBeginRoundOp = slot1
 	slot2 = slot1
 	slot4 = slot2 and (slot2:isMoveCard() or slot2:isMoveUniversal())
-	slot5 = slot2 and (slot2:isPlayCard() or slot2:isAssistBossPlayCard())
+	slot5 = slot2 and (slot2:isPlayCard() or slot2:isAssistBossPlayCard() or slot2:isPlayerFinisherSkill())
 
 	gohelper.setActive(slot0._emtpyGO, not slot2)
 	gohelper.setActive(slot0._moveGO, slot4)
@@ -118,6 +124,10 @@ function slot0.updateItem(slot0, slot1)
 		slot0:_setCardPreRemove(slot2, slot7)
 		slot0._cardItem:detectShowBlueStar()
 		slot0._cardItem:updateResistanceByBeginRoundOp(slot1)
+
+		if slot2:isPlayerFinisherSkill() then
+			gohelper.setActive(slot0._lockGO, false)
+		end
 	else
 		gohelper.setActive(slot0._lockGO, false)
 	end
@@ -129,6 +139,36 @@ function slot0.updateItem(slot0, slot1)
 	else
 		gohelper.setActive(slot0.rankChangeRoot, false)
 	end
+
+	slot0:refreshASFDEnergy()
+end
+
+function slot0.refreshASFDEnergy(slot0)
+	slot1 = slot0.fightBeginRoundOp and slot0.fightBeginRoundOp.cardInfoMO
+	slot2 = slot1 and slot1.energy
+	slot3 = slot2 and slot2 > 0
+
+	gohelper.setActive(slot0.goASFD, slot3)
+
+	if slot3 then
+		slot0.txtASFDEnergy.text = slot2
+
+		if slot0.goASFD.activeSelf then
+			slot0.asfdAnimatorPlayer:Play("open", slot0.resetToASFDIdle, slot0)
+		end
+	end
+end
+
+function slot0.resetToASFDIdle(slot0)
+	slot0.asfdAnimatorPlayer:Play("idle")
+end
+
+function slot0.playASFDCloseAnim(slot0)
+	slot0.asfdAnimatorPlayer:Play("close", slot0.hideASFD, slot0)
+end
+
+function slot0.hideASFD(slot0)
+	gohelper.setActive(slot0.goASFD, false)
 end
 
 function slot0.setCopyCard(slot0)
@@ -184,6 +224,8 @@ function slot0._delayDisableMoveAnim(slot0)
 	slot0._moveAnimComp.enabled = false
 end
 
+slot3 = {}
+
 function slot0._onClickThis(slot0)
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
@@ -201,7 +243,7 @@ function slot0._onClickThis(slot0)
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
 	end
 
-	if not FightDataHelper.stageMgr:isFree() then
+	if not FightDataHelper.stageMgr:isFree(uv0) then
 		return
 	end
 

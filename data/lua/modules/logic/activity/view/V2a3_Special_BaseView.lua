@@ -10,7 +10,7 @@ function slot0.onDestroyView(slot0)
 	Activity101SignViewBase._internal_onDestroy(slot0)
 end
 
-function Activity101SignViewBase.internal_onOpen(slot0)
+function slot0.internal_onOpen(slot0)
 	if slot0:openMode() == Activity101SignViewBase.eOpenMode.ActivityBeginnerView then
 		slot0:internal_set_actId(slot0.viewParam.actId)
 		gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)

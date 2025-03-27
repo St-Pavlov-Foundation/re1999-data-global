@@ -44,4 +44,24 @@ function slot0.checkFinishGuide(slot0, slot1)
 	return GuideModel.instance:isGuideFinish(tonumber(slot1[3]))
 end
 
+function slot0.checkViewsIsClose(slot0, slot1)
+	if not GuideModel.instance:getById(slot0) then
+		return false
+	end
+
+	slot4 = true
+
+	for slot8, slot9 in pairs({
+		unpack(slot1, 3)
+	}) do
+		if ViewMgr.instance:isOpen(slot9) then
+			slot4 = false
+
+			break
+		end
+	end
+
+	return slot4
+end
+
 return slot0

@@ -4,14 +4,13 @@ slot0 = class("FightWorkShowEquipSkillEffect", BaseWork)
 
 function slot0.ctor(slot0, slot1)
 	slot0._fightStepMO = slot1
-	slot2 = FightModel.instance:getCurRoundMO().fightStepMOs
-	slot3 = nil
+	slot3 = FightModel.instance:getCurRoundMO() and slot2.fightStepMOs
+	slot0._nextStepMO = slot3 and slot3[index]
+	slot4 = nil
 
 	if slot0._fightStepMO.custom_stepIndex then
-		slot3 = slot0._fightStepMO.custom_stepIndex + 1
+		slot4 = slot0._fightStepMO.custom_stepIndex + 1
 	end
-
-	slot0._nextStepMO = slot2[slot3]
 end
 
 function slot0.onStart(slot0)

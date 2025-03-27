@@ -63,7 +63,7 @@ function slot0.startRound(slot0)
 
 	slot1:onBeginRound()
 	slot0._roundSequence:buildFlow(slot1)
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.Normal)
+	FightMgr.instance:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.Normal)
 	slot0._roundSequence:start(slot0._onRoundFinish, slot0)
 end
 
@@ -72,7 +72,7 @@ function slot0.startClothSkillRound(slot0)
 
 	FightController.instance:setCurStage(FightEnum.Stage.ClothSkill)
 	slot0._clothSkillSequence:buildFlow(FightModel.instance:getCurRoundMO())
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.ClothSkill)
+	FightMgr.instance:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.ClothSkill)
 	slot0._clothSkillSequence:start(slot0._onClothSkillRoundFinish, slot0)
 end
 
@@ -107,7 +107,8 @@ function slot0._onEndFight(slot0)
 end
 
 function slot0._onStartFinish(slot0)
-	FightDataHelper.stageMgr:exitStage(FightStageMgr.StageType.Enter)
+	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
+	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.Enter)
 
 	if FightModel.instance:isAuto() then
 		FightController.instance:setCurStage(FightEnum.Stage.AutoCard)
@@ -144,7 +145,7 @@ function slot0.getRestartSequence(slot0)
 end
 
 function slot0._onRoundFinish(slot0)
-	FightDataHelper.stageMgr:exitStage(FightStageMgr.StageType.Play)
+	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
 	FightModel.instance:onEndRound()
 
 	if not FightModel.instance:isFinish() then
@@ -159,7 +160,7 @@ function slot0._onRoundFinish(slot0)
 end
 
 function slot0._onClothSkillRoundFinish(slot0)
-	FightDataHelper.stageMgr:exitStage(FightStageMgr.StageType.Play)
+	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
 	FightController.instance:setCurStage(slot0._beforeClothSkillStage)
 
 	if FightModel.instance:getCurStage() == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then

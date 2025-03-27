@@ -9,8 +9,12 @@ function slot0.onStart(slot0, slot1)
 	slot2 = slot1.cards
 	slot3 = slot1.combineIndex
 	slot0._sequence = FlowSequence.New()
-	slot5 = slot1.handCardItemList[slot3 + 1]
-	slot0._universalCombineId = FightEnum.UniversalCard[slot1.handCardItemList[slot3].cardInfoMO.skillId] or FightEnum.UniversalCard[slot5.cardInfoMO.skillId]
+	slot4 = slot1.handCardItemList[slot3]
+
+	slot4:setASFDActive(false)
+	slot1.handCardItemList[slot3 + 1]:setASFDActive(false)
+
+	slot0._universalCombineId = FightEnum.UniversalCard[slot4.cardInfoMO.skillId] or FightEnum.UniversalCard[slot5.cardInfoMO.skillId]
 	slot6 = nil
 	slot7 = gohelper.create2d(slot4.tr.parent.gameObject, "Combine")
 	slot0._combineContainerGO = slot7
@@ -283,6 +287,17 @@ end
 
 function slot0._onCombineCardDone(slot0)
 	slot0._sequence:unregisterDoneListener(slot0._onCombineCardDone, slot0)
+
+	slot1 = slot0.context.combineIndex
+	slot3 = slot0.context.handCardItemList[slot1 + 1]
+
+	if slot0.context.handCardItemList[slot1] then
+		slot2:setASFDActive(true)
+	end
+
+	if slot3 then
+		slot3:setASFDActive(true)
+	end
 
 	if slot0._universalCombineId then
 		slot0:_createUniversalCombineEffect()

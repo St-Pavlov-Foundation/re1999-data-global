@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "name": "language_10040059",
+    "nameEn": "The Window to Other Worlds",
+    "displayPriority": 1
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "name": "language_10062523",
+    "nameEn": "Limbo Progress",
+    "displayPriority": 2
+  },
+  {
+    "id": 3,
+    "type": 5,
+    "name": "language_10062524",
+    "nameEn": "Wilderness Progress",
+    "displayPriority": 3
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "name": "language_10000065",
+    "nameEn": "SSS Ratings in Mane's Bulletin",
+    "displayPriority": 4
+  },
+  {
+    "id": 5,
+    "type": 4,
+    "name": "language_10000064",
+    "nameEn": "The Three Doors Progress",
+    "displayPriority": 5
+  },
+  {
+    "id": 6,
+    "type": 1,
+    "name": "language_10062525",
+    "nameEn": "Depths of Myth Explored",
+    "displayPriority": 6
+  },
+  {
+    "id": 7,
+    "type": 1,
+    "name": "language_10062526",
+    "nameEn": "Isle of Echoes Visits",
+    "displayPriority": 7
+  }
+]

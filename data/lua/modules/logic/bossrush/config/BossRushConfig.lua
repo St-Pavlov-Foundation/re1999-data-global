@@ -245,6 +245,6 @@ function slot0.getEpisodeCoByEpisodeId(slot0, slot1)
 	end
 end
 
-slot0.instance = slot0.New(VersionActivity2_3Enum.ActivityId.BossRush)
+slot0.instance = slot0.New(VersionActivity2_4Enum.ActivityId.BossRush)
 
 return slot0

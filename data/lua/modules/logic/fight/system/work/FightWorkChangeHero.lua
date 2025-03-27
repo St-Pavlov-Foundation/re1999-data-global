@@ -21,7 +21,7 @@ function slot0.onStart(slot0)
 	slot0._targetId = slot0._actEffectMO.targetId
 	slot0._targetEntity = FightHelper.getEntity(slot0._targetId)
 
-	if slot0._targetId == "0" then
+	if FightEntityDataHelper.isPlayerUid(slot0._targetId) then
 		slot0._targetEntity = nil
 	end
 

@@ -1,6 +1,7 @@
 module("modules.logic.fight.entity.mgr.FightRenderOrderMgr", package.seeall)
 
 slot0 = class("FightRenderOrderMgr")
+slot0.MaxOrder = 20 * FightEnum.OrderRegion
 
 function slot0.init(slot0)
 	slot0._registIdList = {}
@@ -62,6 +63,19 @@ function slot0.onAddEffectWrap(slot0, slot1, slot2)
 
 	table.insert(slot0._entityId2WrapList[slot1], slot2)
 	slot2:setRenderOrder(slot0:getOrder(slot1))
+end
+
+function slot0.addEffectWrapByOrder(slot0, slot1, slot2, slot3)
+	if not slot0._entityId2WrapList then
+		return
+	end
+
+	if not slot0._entityId2WrapList[slot1] then
+		slot0._entityId2WrapList[slot1] = {}
+	end
+
+	table.insert(slot0._entityId2WrapList[slot1], slot2)
+	slot2:setRenderOrder(slot3 or FightEnum.OrderRegion)
 end
 
 function slot0.onRemoveEffectWrap(slot0, slot1, slot2)

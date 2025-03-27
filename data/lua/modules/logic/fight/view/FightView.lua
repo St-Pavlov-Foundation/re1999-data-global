@@ -57,6 +57,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, slot0._onSetStateForDialogBeforeStartFight, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnStageChange, slot0.onStageChange, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.RefreshUIRound, slot0._onRefreshUIRound, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.AddSubEntity, slot0._onAddSubEntity, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeRound, slot0._onChangeRound, slot0)
@@ -295,6 +296,18 @@ end
 function slot0._delayStartAutoCards(slot0)
 	UIBlockMgr.instance:endBlock(UIBlockKey.FightAuto)
 
+	if FightModel.instance:isFinish() then
+		if FightDataHelper.fieldMgr:isDouQuQu() then
+			return
+		end
+
+		if FightDataHelper.stageMgr:isNormalStage() then
+			FightRpc.instance:sendEndFightRequest(false)
+		end
+
+		return
+	end
+
 	if not FightModel.instance:isFinish() and not FightReplayModel.instance:isReplay() then
 		if FightCardModel.instance:isCardOpEnd() then
 			if FightModel.instance:getCurStage() == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
@@ -374,6 +387,11 @@ function slot0._showEnemySubCount(slot0)
 	gohelper.setActive(slot0._goEnemyNum, #FightDataHelper.entityMgr:getEnemySubList() > 0 and GMFightShowState.leftMonster)
 end
 
+function slot0._onAddSubEntity(slot0)
+	slot0:_showEnemySubCount()
+	slot0:_showEnemySubHeroCount()
+end
+
 function slot0._onBeginWave(slot0)
 	slot0:_showEnemySubCount()
 end
@@ -409,7 +427,7 @@ function slot0._onClickBack(slot0)
 		return
 	end
 
-	if (FightModel.instance:getCurStage() == FightEnum.Stage.StartRound or slot1 == FightEnum.Stage.Distribute) and GuideModel.instance:getDoingGuideIdList() and #slot2 > 0 then
+	if (FightModel.instance:getCurStage() == FightEnum.Stage.StartRound or slot1 == FightEnum.Stage.Distribute or FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card)) and GuideModel.instance:getDoingGuideIdList() and #slot3 > 0 then
 		return
 	end
 
@@ -418,6 +436,10 @@ function slot0._onClickBack(slot0)
 end
 
 function slot0._onClickAuto(slot0)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero) then
+		return
+	end
+
 	if not FightDataHelper.stageMgr:isEmptyOperateState() then
 		return
 	end
@@ -512,6 +534,10 @@ function slot0._getPlayerPrefKeySpeed(slot0)
 end
 
 function slot0._autoPlayCard(slot0)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Season2AutoChangeHero) then
+		return
+	end
+
 	if not FightReplayModel.instance:isReplay() then
 		if #FightPlayerOperateMgr.detectUpgrade() > 0 and #FightCardModel.instance:getCardOps() > 0 and not FightCardModel.instance:isCardOpEnd() then
 			FightRpc.instance:sendResetRoundRequest()

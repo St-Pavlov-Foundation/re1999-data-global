@@ -6,7 +6,7 @@
     "nameEn": "language_10007614",
     "actDesc": "language_10007615",
     "showInPopup": 1,
-    "jumpId": 0,
+    "jumpId": "",
     "reddotId": 1092
   },
   {
@@ -16,7 +16,7 @@
     "nameEn": "language_10007617",
     "actDesc": "language_10007618",
     "showInPopup": 1,
-    "jumpId": 0,
+    "jumpId": "",
     "reddotId": 1093
   },
   {
@@ -26,7 +26,7 @@
     "nameEn": "language_10007620",
     "actDesc": "language_10007621",
     "showInPopup": 1,
-    "jumpId": 52,
+    "jumpId": "52",
     "reddotId": 1094
   },
   {
@@ -36,7 +36,7 @@
     "nameEn": "language_10007623",
     "actDesc": "language_10007624",
     "showInPopup": 0,
-    "jumpId": 0,
+    "jumpId": "",
     "reddotId": 1091
   },
   {
@@ -46,7 +46,47 @@
     "nameEn": "language_10037495",
     "actDesc": "language_10037496",
     "showInPopup": 1,
-    "jumpId": 0,
+    "jumpId": "",
     "reddotId": 1094
+  },
+  {
+    "id": 106,
+    "turnbackId": 2,
+    "name": "language_10007613",
+    "nameEn": "language_10007614",
+    "actDesc": "language_10037496",
+    "showInPopup": 0,
+    "jumpId": "",
+    "reddotId": 1092
+  },
+  {
+    "id": 107,
+    "turnbackId": 2,
+    "name": "language_10062622",
+    "nameEn": "language_10062650",
+    "actDesc": "language_10062651",
+    "showInPopup": 0,
+    "jumpId": "",
+    "reddotId": 1093
+  },
+  {
+    "id": 108,
+    "turnbackId": 2,
+    "name": "language_10062652",
+    "nameEn": "language_10062653",
+    "actDesc": "",
+    "showInPopup": 0,
+    "jumpId": "10170#52",
+    "reddotId": 2411
+  },
+  {
+    "id": 109,
+    "turnbackId": 2,
+    "name": "language_10062654",
+    "nameEn": "language_10062655",
+    "actDesc": "language_10062656",
+    "showInPopup": 0,
+    "jumpId": "",
+    "reddotId": 0
   }
 ]

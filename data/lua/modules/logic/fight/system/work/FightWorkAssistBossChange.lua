@@ -26,6 +26,8 @@ function slot0.onStart(slot0)
 	slot2 = slot0:com_registWorkDoneFlowSequence()
 
 	if lua_fight_boss_evolution_client.configDict[slot0._oldEntityMO.skin] then
+		slot1.beforeMonsterChangeSkin = slot0._oldEntityMO.skin
+
 		slot2:addWork(Work2FightWork.New(FightWorkPlayTimeline, slot1, slot3.timeline))
 		slot2:registWork(FightWorkFunction, slot0._removeOldEntity, slot0, slot1)
 		slot2:addWork(FightWorkFunction.New(slot0._buildNewEntity, slot0))

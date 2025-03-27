@@ -68,6 +68,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, slot0._onRenameTalentTemplateReply, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onUseTalentTemplateReply, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, slot0._refreshTalentStyleRed, slot0)
+	slot0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onUseShareCode, slot0)
 	slot0._dropresonategroup:AddOnValueChanged(slot0._opDropdownChange, slot0)
 	slot0._btnchangetemplatename:AddClickListener(slot0._onBtnChangeTemplateName, slot0)
 end
@@ -474,6 +475,8 @@ function slot0._releaseCellList(slot0)
 end
 
 function slot0._showTalentStyle(slot0)
+	TalentStyleModel.instance:refreshUnlockInfo(slot0.hero_id)
+
 	if TalentStyleModel.instance:isUnlockStyleSystem(slot0.hero_mo_data.talent) then
 		slot0:_refreshStyleTag()
 	end
@@ -580,6 +583,10 @@ end
 
 function slot0._refreshTalentStyleRed(slot0)
 	gohelper.setActive(slot0._goStyleRed, slot0.hero_mo_data.isShowTalentStyleRed)
+end
+
+function slot0._onUseShareCode(slot0, slot1)
+	slot0:_refreshUI()
 end
 
 function slot0.onClose(slot0)

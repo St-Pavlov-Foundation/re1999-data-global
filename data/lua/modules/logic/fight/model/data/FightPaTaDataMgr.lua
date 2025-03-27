@@ -19,7 +19,9 @@ function slot0.updateData(slot0, slot1)
 	slot0.currCd = slot2.currCd
 	slot0.cfgCd = slot2.cdCfg
 	slot0.formId = slot2.formId
-	slot0.score = slot2.score
+	slot0.roundUseLimit = slot2.roundUseLimit
+	slot0.exceedUseFree = slot2.exceedUseFree
+	slot0.params = slot2.params
 	slot0.preUsePower = 0
 	slot0.preCostCd = 0
 	slot0.useCardCount = 0
@@ -79,7 +81,13 @@ end
 function slot0.getAssistBossPower(slot0)
 	slot2 = slot0:getAssistBossMo() and slot1:getPowerInfo(FightEnum.PowerType.AssistBoss)
 
-	return (slot2 and slot2.num or 0) - slot0.preUsePower, slot2.max
+	return (slot2 and slot2.num or 0) - slot0.preUsePower, slot2 and slot2.max or 0
+end
+
+function slot0.getAssistBossServerPower(slot0)
+	slot2 = slot0:getAssistBossMo() and slot1:getPowerInfo(FightEnum.PowerType.AssistBoss)
+
+	return slot2 and slot2.num or 0, slot2 and slot2.max or 0
 end
 
 function slot0.getAssistBossMo(slot0)
@@ -87,9 +95,17 @@ function slot0.getAssistBossMo(slot0)
 end
 
 function slot0.playAssistBossSkill(slot0, slot1)
-	slot0.preUsePower = slot0.preUsePower + slot1.needPower
+	slot0.preUsePower = slot0.preUsePower + slot0:getNeedPower(slot1)
 	slot0.useCardCount = slot0.useCardCount + 1
 	slot0.preCostCd = slot0.preCostCd + slot0.cfgCd
+end
+
+function slot0.getNeedPower(slot0, slot1)
+	if slot0.exceedUseFree ~= 0 and slot0.exceedUseFree <= slot0.useCardCount then
+		return 0
+	end
+
+	return slot1.needPower
 end
 
 function slot0.playAssistBossSkillBySkillId(slot0, slot1)
@@ -109,6 +125,10 @@ function slot0.resetOp(slot0)
 end
 
 function slot0.canUseSkill(slot0)
+	if slot0.roundUseLimit ~= 0 then
+		return slot0.useCardCount < slot0.roundUseLimit
+	end
+
 	return slot0.useCardCount < (lua_tower_const.configDict[115] and tonumber(slot1.value) or 20)
 end
 
@@ -116,10 +136,14 @@ function slot0.getCurUseSkillInfo(slot0)
 	slot1 = slot0:getAssistBossPower()
 
 	for slot5 = #slot0.bossInfoList, 1, -1 do
-		if slot0.bossInfoList[slot5].powerLow <= slot1 and slot6.needPower <= slot1 then
+		if slot0.bossInfoList[slot5].powerLow <= slot1 and slot0:getNeedPower(slot6) <= slot1 then
 			return slot6
 		end
 	end
+end
+
+function slot0.getUseCardCount(slot0)
+	return slot0.useCardCount
 end
 
 function slot0.getBossSkillInfoList(slot0)

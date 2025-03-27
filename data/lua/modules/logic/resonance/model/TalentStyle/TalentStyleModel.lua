@@ -139,6 +139,16 @@ function slot0.getCubeMoByStyle(slot0, slot1, slot2)
 	return slot3 and slot3[0]
 end
 
+function slot0.refreshUnlockInfo(slot0, slot1)
+	slot0:refreshUnlockList(slot1)
+
+	slot3, slot4, slot5 = slot0:getCurInfo(slot1)
+
+	for slot9, slot10 in pairs(slot0:getStyleCoList(slot1)) do
+		slot10:onRefresh(slot3, slot4, LuaUtil.tableContains(slot5, slot10._styleId))
+	end
+end
+
 function slot0.getUnlockStyle(slot0, slot1)
 	slot3 = 0
 

@@ -66,11 +66,8 @@ function slot0._onFightAct174ReplyRound(slot0, slot1)
 	if slot0._endRound == 0 then
 		FightDataHelper.coverData(FightLocalDataMgr.instance, FightDataMgr.instance, {
 			dataMgr = true,
-			teamACards2 = true,
-			class = true,
-			beforeCards2 = true,
-			teamACards1 = true,
-			beforeCards1 = true
+			cacheFightMgr = true,
+			class = true
 		})
 		FightCardModel.instance:coverCard(FightDataHelper.handCardMgr.handCard)
 

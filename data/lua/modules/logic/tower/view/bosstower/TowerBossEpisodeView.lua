@@ -138,7 +138,11 @@ function slot0.refreshIndex(slot0)
 	slot0.txtCurIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot0.curLayer))
 
 	if slot0.episodeMo:getNextEpisodeLayer(slot0.towerId, slot0.curLayer) then
-		slot0.txtNextIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot2))
+		if slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot2).openRound > 0 then
+			slot0.txtNextIndex.text = ""
+		else
+			slot0.txtNextIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot2))
+		end
 	else
 		slot0.txtNextIndex.text = ""
 	end

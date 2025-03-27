@@ -22,7 +22,6 @@ function slot0._editableInitView(slot0)
 	slot0._txtname = gohelper.findChildText(slot0.go, "#txt_name")
 	slot0._scrollreward = gohelper.findChild(slot0.go, "scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
 	slot0._godescContent = gohelper.findChild(slot0.go, "scroll_desc/Viewport/#go_descContent")
-	slot0._godescitem = gohelper.findChild(slot0.go, "scroll_desc/Viewport/#go_descContent/#go_descitem")
 	slot0._gotags = gohelper.findChild(slot0.go, "tagcontent/tags")
 	slot0._gotagitem = gohelper.findChild(slot0.go, "tagcontent/tags/#go_tagitem")
 	slot0._gotips = gohelper.findChild(slot0.go, "#go_tips")
@@ -35,6 +34,7 @@ function slot0._editableInitView(slot0)
 	table.insert(slot0.holeGoList, slot0._gohole)
 
 	slot0.gridList = slot0:getUserDataTb_()
+	slot0._itemInstTab = slot0:getUserDataTb_()
 	slot0.click = gohelper.getClickWithDefaultAudio(slot0.go)
 
 	slot0.click:AddClickListener(slot0.onClickSelf, slot0)
@@ -114,9 +114,9 @@ function slot0.refreshEffectDesc(slot0)
 	end
 
 	slot0._clickLen = 0
-	slot5 = slot0._godescitem
+	slot5 = slot0._itemInstTab
 
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0.collectionId, nil, slot0._godescContent, slot5)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0.collectionId, nil, slot0._godescContent, slot5)
 
 	slot0._clickLen = slot0._scrollreward.gameObject:GetComponentsInChildren(typeof(SLFramework.UGUI.UIClickListener), true).Length
 

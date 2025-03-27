@@ -146,6 +146,10 @@ function slot0._checkChangeHeroNeedUseSkill(slot0)
 		return
 	end
 
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Season2AutoChangeHero) then
+		return
+	end
+
 	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
 		return
 	end

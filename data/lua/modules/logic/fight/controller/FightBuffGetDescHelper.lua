@@ -34,7 +34,9 @@ function slot0.getBuffFeatureHandle(slot0)
 			[FightEnum.BuffFeature.InjuryBank] = uv0.getInjuryBankDesc,
 			[FightEnum.BuffFeature.AttrFixFromInjuryBank] = uv0.getAttrFixFromInjuryBankDesc,
 			[FightEnum.BuffFeature.ModifyAttrByBuffLayer] = uv0.getModifyAttrByBuffLayerDesc,
-			[FightEnum.BuffFeature.ResistancesAttr] = uv0.getResistancesAttrDesc
+			[FightEnum.BuffFeature.ResistancesAttr] = uv0.getResistancesAttrDesc,
+			[FightEnum.BuffFeature.FixAttrTeamEnergyAndBuff] = uv0.getFixAttrTeamEnergyAndBuffDesc,
+			[FightEnum.BuffFeature.FixAttrTeamEnergy] = uv0.getFixAttrTeamEnergyDesc
 		}
 	end
 
@@ -61,6 +63,28 @@ end
 
 function slot0.getResistancesAttrDesc(slot0, slot1, slot2, slot3)
 	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, math.floor(tonumber(slot3[3]) / 10) .. "%%")
+end
+
+function slot0.getFixAttrTeamEnergyAndBuffDesc(slot0, slot1, slot2, slot3)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, tonumber(slot3[2]))
+end
+
+function slot0.getFixAttrTeamEnergyDesc(slot0, slot1, slot2, slot3)
+	if string.nilorempty(slot1.features) then
+		return slot1.desc
+	end
+
+	slot5 = 0
+
+	for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot4, true)) do
+		if slot11[1] == slot2.id then
+			slot5 = slot11[3] + slot11[4] * tonumber(slot3[2])
+
+			break
+		end
+	end
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot5 / 10 .. "%%")
 end
 
 return slot0

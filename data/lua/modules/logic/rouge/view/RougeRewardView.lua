@@ -306,7 +306,7 @@ function slot0._initRewardSign(slot0)
 end
 
 function slot0._initBigRewardNode(slot0)
-	for slot4 = 1, 4 do
+	for slot4 = 1, 5 do
 		slot5 = slot0:getUserDataTb_()
 		slot5.go = gohelper.findChild(slot0.viewGO, "Right/RewardNode/#go_Reward" .. slot4)
 		slot5.bg = gohelper.findChildSingleImage(slot5.go, "bg")
@@ -459,7 +459,7 @@ function slot0.refreshBigReward(slot0)
 
 		slot6 = nil
 
-		if slot2 == RougeEnum.BigRewardType.RoleOrSkin then
+		if slot2 == RougeEnum.BigRewardType.Role then
 			slot9 = SummonConfig.instance:getSummonDetailIdByHeroId(string.splitToNumber(slot1.value, "#")[2])
 
 			slot4.click:AddClickListener(function ()
@@ -469,6 +469,12 @@ function slot0.refreshBigReward(slot0)
 				})
 				AudioMgr.instance:trigger(AudioEnum.UI.RewardCommonClick)
 			end, slot0)
+		elseif slot2 == RougeEnum.BigRewardType.Skin then
+			if slot1.offset then
+				slot7 = string.splitToNumber(slot1.offset, "#")
+
+				recthelper.setAnchor(slot4.name.transform, slot7[1], slot7[2])
+			end
 		elseif slot0._currentSelectStage == 2 then
 			slot4.click:AddClickListener(slot0._onClickRewardIcon, slot0)
 		end

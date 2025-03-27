@@ -100,7 +100,9 @@ function slot0.loadStoryConfig(slot0, slot1, slot2, slot3)
 			end
 
 			StoryStepModel.instance:setStepList(cjson.decode(slot0.TextAsset)[3])
-			slot0:Retain()
+			TaskDispatcher.runDelay(function ()
+				SLFramework.ResMgr.Instance:ClearItem(uv0)
+			end, nil, 0.1)
 
 			uv0 = true
 
@@ -116,7 +118,9 @@ function slot0.loadStoryConfig(slot0, slot1, slot2, slot3)
 			end
 
 			StoryGroupModel.instance:setGroupList(cjson.decode(slot0.TextAsset))
-			slot0:Retain()
+			TaskDispatcher.runDelay(function ()
+				SLFramework.ResMgr.Instance:ClearItem(uv0)
+			end, nil, 0.1)
 
 			uv0 = true
 

@@ -238,6 +238,12 @@ function slot0._refreshBonusPoint(slot0, slot1)
 end
 
 function slot0._playGetRewardFinishAnim(slot0, slot1)
+	if not TurnbackModel.instance:isInOpenTime() or not slot1 then
+		TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+
+		return
+	end
+
 	if slot1 then
 		slot0.removeIndexTab = {
 			slot1
@@ -269,6 +275,7 @@ function slot0.onClose(slot0)
 	end
 
 	slot0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
 end
 
 function slot0.onDestroyView(slot0)

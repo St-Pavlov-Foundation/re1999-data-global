@@ -1,9 +1,11 @@
 module("modules.configs.excel2json.lua_playercard", package.seeall)
 
 slot1 = {
+	name = 3,
+	type = 2,
 	id = 1,
-	name = 2,
-	nameEn = 3
+	displayPriority = 5,
+	nameEn = 4
 }
 slot2 = {
 	"id"

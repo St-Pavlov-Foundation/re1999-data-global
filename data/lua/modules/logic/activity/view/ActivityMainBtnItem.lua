@@ -264,6 +264,12 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
+			if slot7 == ActivityEnum.Activity.V2a4_WarmUp and Activity125Controller.instance:checkActRed3(slot7) then
+				slot0:_showRedDotType(slot1, slot7)
+
+				return
+			end
+
 			if slot7 == VoyageConfig.instance:getActivityId() and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
 				slot0:_showRedDotType(slot1, slot7)
 

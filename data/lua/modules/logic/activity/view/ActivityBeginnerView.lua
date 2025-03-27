@@ -92,7 +92,10 @@ slot1 = {
 	[ActivityEnum.Activity.LinkageActivity_FullView] = ViewName.LinkageActivity_FullView,
 	[ActivityEnum.Activity.V2a3_WarmUp] = ViewName.V2a3_WarmUp,
 	[ActivityEnum.Activity.V2a3_Special] = ViewName.V2a3_Special_FullSignView,
-	[ActivityEnum.Activity.V2a4_Blind_Box_Draw] = ViewName.Activity181MainView
+	[ActivityEnum.Activity.V2a4_Blind_Box_Draw] = ViewName.Activity181MainView,
+	[ActivityEnum.Activity.V2a4_Role_SignView_Part1] = ViewName.V2a4_Role_FullSignView_Part1,
+	[ActivityEnum.Activity.V2a4_Role_SignView_Part2] = ViewName.V2a4_Role_FullSignView_Part2,
+	[ActivityEnum.Activity.V2a4_WarmUp] = ViewName.V2a4_WarmUp
 }
 slot2 = VoyageConfig.instance
 slot2 = ShortenActConfig.instance

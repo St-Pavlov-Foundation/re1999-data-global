@@ -102,7 +102,7 @@ function slot0._refreshSelect(slot0)
 			slot7.btnclick = gohelper.findChildButtonWithAudio(slot7.go, "btnselect")
 
 			slot7.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot7.index)
-			PCInputController.instance:showkeyTips(slot7.go, nil, , slot4)
+			PCInputController.instance:showkeyTips(gohelper.findChild(slot7.go, "bgdark/#go_pcbtn"), nil, , slot4)
 			table.insert(slot0._selectItemList, slot7)
 		end
 

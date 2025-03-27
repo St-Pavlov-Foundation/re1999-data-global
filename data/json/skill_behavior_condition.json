@@ -17846,5 +17846,1657 @@
   {
     "id": 93005,
     "type": "BuffGroupDel"
+  },
+  {
+    "id": 689002,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689004,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689100,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689101,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689103,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689104,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689105,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689106,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689201,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689202,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689203,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689204,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689205,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689206,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689207,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689208,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689209,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689210,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689211,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689212,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689213,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689301,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689302,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689303,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689304,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689305,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689306,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689307,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689401,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 689402,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 690002,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690004,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690100,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690101,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690103,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690104,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690105,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690106,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690201,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690202,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690203,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690204,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690205,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690206,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690207,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690208,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690209,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690210,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690211,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690212,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690213,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690301,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690302,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690303,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690304,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690305,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690306,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690307,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690401,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 690402,
+    "type": "PerHasBullet"
+  },
+  {
+    "id": 691208,
+    "type": "HasBuffGroupAndActiveUseHurtSkill"
+  },
+  {
+    "id": 691210,
+    "type": "HasBuffGroupAndActiveUseHurtSkill"
+  },
+  {
+    "id": 691212,
+    "type": "HasBuffGroupAndActiveUseHurtSkill"
+  },
+  {
+    "id": 692,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692002,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692004,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692005,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692100,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692101,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692102,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692103,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692104,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692105,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692106,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692107,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692201,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692202,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692203,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692204,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692205,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692206,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692207,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692208,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692209,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692210,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692211,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692212,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692213,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692301,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692302,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692303,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692304,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692305,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692306,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692307,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692401,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 692402,
+    "type": "RougeBattleHero"
+  },
+  {
+    "id": 693,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693002,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693004,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693100,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693101,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693103,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693104,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693105,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693106,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693201,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693202,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693203,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693204,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693205,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693206,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693207,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693208,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693209,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693210,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693211,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693212,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693213,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693301,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693302,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693303,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693304,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693305,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693306,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693307,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693401,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 693402,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 694,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694002,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694004,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694100,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694101,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694102,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694103,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694104,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694105,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694106,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694201,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694202,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694203,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694204,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694205,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694206,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694207,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694208,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694209,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694210,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694211,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694212,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694213,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694301,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694302,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694303,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694304,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694305,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694306,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694307,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694401,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 694402,
+    "type": "RougeItemByTagLimit"
+  },
+  {
+    "id": 695213,
+    "type": "ShareDamage"
+  },
+  {
+    "id": 616208,
+    "type": "TeammateAliveNumNoSp"
+  },
+  {
+    "id": 616002,
+    "type": "TeammateAliveNumNoSp"
+  },
+  {
+    "id": 617208,
+    "type": "TeammateAliveOrDying"
+  },
+  {
+    "id": 696,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696002,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696004,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696100,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696101,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696103,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696104,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696105,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696106,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696201,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696202,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696203,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696204,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696205,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696206,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696207,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696208,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696209,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696210,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696211,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696212,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696213,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696301,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696302,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696303,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696304,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696305,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696306,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696307,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696401,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 696402,
+    "type": "BuffTypeCompare"
+  },
+  {
+    "id": 697,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697002,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697004,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697100,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697101,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697103,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697104,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697105,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697106,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697201,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697202,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697203,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697204,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697205,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697206,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697207,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697208,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697209,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697210,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697211,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697212,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697213,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697301,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697302,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697303,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697304,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697305,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697306,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697307,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697401,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 697402,
+    "type": "TeamLostHpPercent"
+  },
+  {
+    "id": 698,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698002,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698004,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698100,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698101,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698103,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698104,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698105,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698106,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698201,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698202,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698203,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698204,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698205,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698206,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698207,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698208,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698209,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698210,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698211,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698212,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698213,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698301,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698302,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698303,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698304,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698305,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698306,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698307,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698401,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 698402,
+    "type": "PerSubEntity"
+  },
+  {
+    "id": 699,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699002,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699004,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699100,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699101,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699103,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699104,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699105,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699106,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699107,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699201,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699202,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699203,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699204,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699205,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699206,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699207,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699208,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699209,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699210,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699211,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699212,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699213,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699301,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699302,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699303,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699304,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699305,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699306,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699307,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699401,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 699402,
+    "type": "SimplePolarizationLevelMoreThan"
+  },
+  {
+    "id": 700,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700002,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700004,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700100,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700101,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700103,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700104,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700105,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700106,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700201,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700202,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700203,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700204,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700205,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700206,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700207,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700208,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700209,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700210,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700211,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700212,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700213,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700301,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700302,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700303,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700304,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700305,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700306,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700307,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700401,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 700402,
+    "type": "HandCardUpperLimitDelCard"
+  },
+  {
+    "id": 552307,
+    "type": "Random"
+  },
+  {
+    "id": 502402,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 24208,
+    "type": "TeammateAlive"
+  },
+  {
+    "id": 24304,
+    "type": "TeammateAlive"
+  },
+  {
+    "id": 73002,
+    "type": "TeammateAliveNum"
+  },
+  {
+    "id": 404301,
+    "type": "HasNotUseSkill"
+  },
+  {
+    "id": 404302,
+    "type": "HasNotUseSkill"
+  },
+  {
+    "id": 404303,
+    "type": "HasNotUseSkill"
+  },
+  {
+    "id": 404304,
+    "type": "HasNotUseSkill"
+  },
+  {
+    "id": 1205,
+    "type": "LifeLess"
+  },
+  {
+    "id": 51205,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 180302,
+    "type": "PowerCompare"
+  },
+  {
+    "id": 19214,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 61214,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 61004,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 569214,
+    "type": "BuffCountByBuffTypeId"
+  },
+  {
+    "id": 569004,
+    "type": "BuffCountByBuffTypeId"
+  },
+  {
+    "id": 61215,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 569215,
+    "type": "BuffCountByBuffTypeId"
+  },
+  {
+    "id": 19215,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 60214,
+    "type": "PerBuff"
+  },
+  {
+    "id": 60215,
+    "type": "PerBuff"
+  },
+  {
+    "id": 701,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701002,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701004,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701100,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701101,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701103,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701104,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701105,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701106,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701201,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701202,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701203,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701204,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701205,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701206,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701207,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701208,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701209,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701210,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701211,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701212,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701213,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701301,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701302,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701303,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701304,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701305,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701306,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701307,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701401,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 701402,
+    "type": "HasMasterHalo"
+  },
+  {
+    "id": 702,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702002,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702004,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702100,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702101,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702102,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702103,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702104,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702105,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702106,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702201,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702202,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702203,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702204,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702205,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702206,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702207,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702208,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702209,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702210,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702211,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702212,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702213,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702301,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702302,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702303,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702304,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702305,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702306,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702307,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702401,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 702402,
+    "type": "RougeSupportHero"
+  },
+  {
+    "id": 512081,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 73005,
+    "type": "TeammateAliveNum"
+  },
+  {
+    "id": 18212,
+    "type": "HasBuff"
+  },
+  {
+    "id": 85202,
+    "type": "PerBuffTypeCountGroupByTypeId"
+  },
+  {
+    "id": 33903,
+    "type": "HurtRestraint"
+  },
+  {
+    "id": 73105,
+    "type": "TeammateAliveNum"
+  },
+  {
+    "id": 510210,
+    "type": "MultiHpXIn"
+  },
+  {
+    "id": 215,
+    "type": "None"
   }
 ]

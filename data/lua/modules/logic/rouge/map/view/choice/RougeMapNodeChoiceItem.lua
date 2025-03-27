@@ -126,6 +126,16 @@ function slot0.buildCollectionIdList(slot0)
 				slot4
 			}
 		end
+	elseif slot3 == RougeMapEnum.InteractType.LossSpCollection then
+		if slot0.nodeMo.interactive14drop == 0 then
+			slot0.hadCollection = false
+			slot0.collectionIdList = nil
+		else
+			slot0.hadCollection = true
+			slot0.collectionIdList = {
+				slot4
+			}
+		end
 	else
 		slot0.hadCollection = false
 		slot0.collectionIdList = nil

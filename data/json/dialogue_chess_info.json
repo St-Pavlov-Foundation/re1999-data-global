@@ -364,5 +364,53 @@
     "id": 2,
     "res": "dialogue_dengken",
     "pos": "165#0"
+  },
+  {
+    "dialogueId": 29,
+    "id": 1,
+    "res": "dialogue_role15_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 29,
+    "id": 2,
+    "res": "dialogue_role12_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 29,
+    "id": 3,
+    "res": "dialogue_role1_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 29,
+    "id": 4,
+    "res": "dialogue_role2_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 30,
+    "id": 1,
+    "res": "dialogue_role14_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 30,
+    "id": 2,
+    "res": "dialogue_role11_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 31,
+    "id": 1,
+    "res": "dialogue_role16_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 31,
+    "id": 2,
+    "res": "dialogue_role13_right",
+    "pos": "420#0"
   }
 ]

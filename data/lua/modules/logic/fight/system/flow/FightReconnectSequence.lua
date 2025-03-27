@@ -29,6 +29,9 @@ function slot0.buildFlow(slot0, slot1)
 	end
 
 	slot0:addWork(FunctionWork.New(function ()
+		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+	end))
+	slot0:addWork(FunctionWork.New(function ()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)
 	end))
 	slot0:addWork(FunctionWork.New(function ()

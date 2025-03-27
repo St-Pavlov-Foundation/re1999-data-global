@@ -158,5 +158,165 @@
     "consume": 1,
     "bonus": "1#110104#1",
     "content": "language_10057845"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 1,
+    "stage": 1,
+    "consume": 1,
+    "bonus": "2#3#100000",
+    "content": "language_10065166"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 1,
+    "stage": 2,
+    "consume": 1,
+    "bonus": "1#120011#5",
+    "content": "language_10065167"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 1,
+    "stage": 3,
+    "consume": 1,
+    "bonus": "1#120012#3",
+    "content": "language_10065168"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 1,
+    "stage": 4,
+    "consume": 1,
+    "bonus": "1#120013#2",
+    "content": "language_10065169"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 2,
+    "stage": 1,
+    "consume": 1,
+    "bonus": "1#110602#10",
+    "content": "language_10065170"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 2,
+    "stage": 2,
+    "consume": 1,
+    "bonus": "1#180001#5",
+    "content": "language_10065171"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 2,
+    "stage": 3,
+    "consume": 1,
+    "bonus": "1#110303#5",
+    "content": "language_10065172"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 2,
+    "stage": 4,
+    "consume": 1,
+    "bonus": "1#110404#1",
+    "content": "language_10065173"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 3,
+    "stage": 1,
+    "consume": 1,
+    "bonus": "1#115011#6",
+    "content": "language_10065174"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 3,
+    "stage": 2,
+    "consume": 1,
+    "bonus": "2#23#240",
+    "content": "language_10065175"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 3,
+    "stage": 3,
+    "consume": 1,
+    "bonus": "1#115012#6",
+    "content": "language_10065176"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 3,
+    "stage": 4,
+    "consume": 1,
+    "bonus": "1#115013#6",
+    "content": "language_10065177"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 4,
+    "stage": 1,
+    "consume": 1,
+    "bonus": "2#5#100000",
+    "content": "language_10065178"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 4,
+    "stage": 2,
+    "consume": 1,
+    "bonus": "1#120011#5",
+    "content": "language_10065179"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 4,
+    "stage": 3,
+    "consume": 1,
+    "bonus": "1#120012#3",
+    "content": "language_10065180"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 4,
+    "stage": 4,
+    "consume": 1,
+    "bonus": "1#120013#2",
+    "content": "language_10065181"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 5,
+    "stage": 1,
+    "consume": 1,
+    "bonus": "1#110802#10",
+    "content": "language_10065182"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 5,
+    "stage": 2,
+    "consume": 1,
+    "bonus": "1#180001#5",
+    "content": "language_10065183"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 5,
+    "stage": 3,
+    "consume": 1,
+    "bonus": "1#110303#5",
+    "content": "language_10065184"
+  },
+  {
+    "activityId": 12400,
+    "infoId": 5,
+    "stage": 4,
+    "consume": 1,
+    "bonus": "1#110404#1",
+    "content": "language_10065185"
   }
 ]

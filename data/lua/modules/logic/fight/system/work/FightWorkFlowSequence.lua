@@ -10,24 +10,41 @@ function slot0.onInitialization(slot0)
 end
 
 function slot0.registWork(slot0, slot1, ...)
-	slot2 = slot0:registClass(slot1, ...)
+	return slot0:registWorkAtIndex(#slot0._workList + 1, slot1, ...)
+end
 
-	slot2:registFinishCallback(slot0.onWorkItemDone, slot0, slot2)
-	table.insert(slot0._workList, slot2)
+function slot0.registWorkAtIndex(slot0, slot1, slot2, ...)
+	slot3 = slot0:registClass(slot2, ...)
 
-	return slot2
+	slot3:registFinishCallback(slot0.onWorkItemDone, slot0, slot3)
+	table.insert(slot0._workList, slot1, slot3)
+
+	return slot3
 end
 
 function slot0.addWork(slot0, slot1)
-	if slot1.PARENTROOTCLASS and slot1.PARENTROOTCLASS.PARENTROOTCLASS then
-		logError("战斗任务流添加work,但是此work是被组件初始化的,已经拥有父节点,请检查代码,类名:" .. slot1.PARENTROOTCLASS.PARENTROOTCLASS.__cname)
+	slot0:addWorkAtIndex(#slot0._workList + 1, slot1)
+end
+
+function slot0.addWorkAtIndex(slot0, slot1, slot2)
+	if slot2.PARENTROOTCLASS and slot2.PARENTROOTCLASS.PARENTROOTCLASS then
+		logError("战斗任务流添加work,但是此work是被组件初始化的,已经拥有父节点,请检查代码,类名:" .. slot2.PARENTROOTCLASS.PARENTROOTCLASS.__cname)
+		slot0:listen2WorkAtIndex(slot1, slot2)
 	end
 
-	slot1.PARENTROOTCLASS = slot0
+	slot2.PARENTROOTCLASS = slot0
 
-	table.insert(slot0._instantiateClass, slot1)
-	slot1:registFinishCallback(slot0.onWorkItemDone, slot0, slot1)
-	table.insert(slot0._workList, slot1)
+	table.insert(slot0._instantiateClass, slot2)
+	slot2:registFinishCallback(slot0.onWorkItemDone, slot0, slot2)
+	table.insert(slot0._workList, slot1, slot2)
+end
+
+function slot0.listen2Work(slot0, slot1)
+	slot0:listen2WorkAtIndex(#slot0._workList + 1, slot1)
+end
+
+function slot0.listen2WorkAtIndex(slot0, slot1, slot2)
+	slot0:registWorkAtIndex(slot1, FightWorkListen2WorkDone, slot2)
 end
 
 function slot0.onStart(slot0)
@@ -73,6 +90,18 @@ function slot0.onWorkItemDone(slot0, slot1)
 	if slot1 == slot0._workList[slot0._curIndex] then
 		return slot0:_playNext()
 	end
+end
+
+function slot0.registWorkAtNext(slot0, slot1, ...)
+	return slot0:registWorkAtIndex(slot0._curIndex + 1, slot1, ...)
+end
+
+function slot0.addWorkAtNext(slot0, slot1)
+	slot0:addWorkAtIndex(slot0._curIndex + 1, slot1)
+end
+
+function slot0.listen2WorkAtNext(slot0, slot1)
+	slot0:listen2WorkAtIndex(slot0._curIndex + 1, slot1)
 end
 
 return slot0

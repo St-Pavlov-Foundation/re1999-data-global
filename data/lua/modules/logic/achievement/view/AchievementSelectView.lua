@@ -57,6 +57,10 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.onOpen(slot0)
+	if slot0.viewParam then
+		slot0.isPlayerCard = slot0.viewParam.isPlayerCard
+	end
+
 	AchievementSelectController.instance:onOpenView(AchievementSelectController.instance:isCurrentShowGroupInPlayerView() and slot0._focusTypes[4] or slot0._focusTypes[1])
 	slot0:addEventCb(AchievementSelectController.instance, AchievementEvent.SelectViewUpdated, slot0.refreshUI, slot0)
 	slot0:refreshUI()
@@ -160,7 +164,12 @@ function slot0._btnswitchgroupOnClick(slot0)
 end
 
 function slot0._btnsaveOnClick(slot0)
-	AchievementSelectController.instance:sendSave()
+	if slot0.isPlayerCard then
+		PlayerCardController.instance:saveAchievement()
+	else
+		AchievementSelectController.instance:sendSave()
+	end
+
 	slot0:closeThis()
 end
 

@@ -88,5 +88,15 @@
     "levelIdDict": "",
     "name": "language_10043459",
     "desc": ""
+  },
+  {
+    "season": 1,
+    "id": 10,
+    "storyIdList": "600912#600913#600914#600915",
+    "stageId": 8,
+    "image": "singlebg/rouge/review/rouge_review_chapter_10.png",
+    "levelIdDict": "",
+    "name": "language_10064639",
+    "desc": ""
   }
 ]

@@ -114,7 +114,7 @@ end
 function slot0.onUpdateMO(slot0, slot1)
 	slot0:refreshView(slot1.info, slot1.config)
 
-	if PlayerCardShowModel.instance:getSelectIndex(slot1.id) then
+	if PlayerCardProgressModel.instance:getSelectIndex(slot1.id) then
 		gohelper.setActive(slot0.goSelect, true)
 
 		slot0.txtIndex.text = tostring(slot2)
@@ -258,7 +258,7 @@ function slot0.btnChangeOnClick(slot0)
 	if slot0.compType == PlayerCardEnum.CompType.Normal then
 		ViewMgr.instance:openView(ViewName.PlayerCardShowView)
 	elseif slot0.cardConfig then
-		PlayerCardShowModel.instance:clickItem(slot0.cardConfig.id)
+		PlayerCardProgressModel.instance:clickItem(slot0.cardConfig.id)
 	end
 end
 

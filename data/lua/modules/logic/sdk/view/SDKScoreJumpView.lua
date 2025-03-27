@@ -32,15 +32,15 @@ function slot0._btnconfirmOnClick(slot0)
 	slot0:closeThis()
 
 	if GameChannelConfig.isGpGlobal() and UnityEngine.Application.version == "1.0.4" and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL("https://play.google.com/store/apps/details?id=com.bluepoch.m.en.reverse1999")
+		GameUtil.openURL("https://play.google.com/store/apps/details?id=com.bluepoch.m.en.reverse1999")
 
 		return
 	elseif GameChannelConfig.isGpJapan() and slot1 == "1.0.5" and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL("https://play.google.com/store/apps/details?id=com.bluepoch.m.jp.reverse1999.and")
+		GameUtil.openURL("https://play.google.com/store/apps/details?id=com.bluepoch.m.jp.reverse1999.and")
 
 		return
 	elseif GameChannelConfig.isEfun() and BootNativeUtil.isAndroid() and slot1 == "1.0.2" and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL("https://play.google.com/store/apps/details?id=com.mover.twcfwl1999")
+		GameUtil.openURL("https://play.google.com/store/apps/details?id=com.mover.twcfwl1999")
 
 		return
 	end

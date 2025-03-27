@@ -23,6 +23,9 @@ function slot0.onInitView(slot0)
 	slot0._gooptionalvx = gohelper.findChild(slot0.viewGO, "#packs_vx")
 	slot0._gosummonsimulationpickfx = gohelper.findChild(slot0.viewGO, "#go_summonSimulationPickFX")
 	slot0._txtpickdesc = gohelper.findChildText(slot0.viewGO, "#txt_pickdesc")
+	slot0._goSkinTips = gohelper.findChild(slot0.viewGO, "#go_SkinTips")
+	slot0._imgProp = gohelper.findChildImage(slot0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
+	slot0._txtPropNum = gohelper.findChildTextMesh(slot0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -277,6 +280,7 @@ function slot0.onUpdateMO(slot0, slot1)
 	gohelper.setActive(slot0._txtpickdesc.gameObject, slot1.goodsId == StoreEnum.NewbiePackId)
 	slot0:_onUpdateMO_newMatUpTag(slot1)
 	slot0:_onUpdateMO_coBrandedTag(slot1)
+	slot0:refreshSkinTips(slot1)
 end
 
 function slot0.showMonthCardTips(slot0)
@@ -288,6 +292,28 @@ end
 
 function slot0.getAnimator(slot0)
 	return slot0._animator
+end
+
+function slot0.refreshSkinTips(slot0, slot1)
+	slot2, slot3 = SkinConfig.instance:isSkinStoreGoods(slot1.goodsId)
+
+	if not slot2 then
+		gohelper.setActive(slot0._goSkinTips, false)
+
+		return
+	end
+
+	if StoreModel.instance:isSkinGoodsCanRepeatBuy(slot1, slot3) then
+		gohelper.setActive(slot0._goSkinTips, true)
+
+		slot5 = string.splitToNumber(SkinConfig.instance:getSkinCo(slot3).compensate, "#")
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imgProp, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot5[2]).icon))
+
+		slot0._txtPropNum.text = tostring(slot5[3])
+	else
+		gohelper.setActive(slot0._goSkinTips, false)
+	end
 end
 
 function slot0.onDestroy(slot0)
@@ -306,7 +332,7 @@ function slot0._onUpdateMO_newMatUpTag(slot0, slot1)
 end
 
 function slot0._onUpdateMO_coBrandedTag(slot0, slot1)
-	gohelper.setActive(slot0._gocobranded, StoreHelper.checkIsShowCoBrandedTag(slot1.goodsId))
+	gohelper.setActive(slot0._gocobranded, slot1.config.showLinkageTag or false)
 end
 
 return slot0

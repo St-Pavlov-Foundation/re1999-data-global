@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "episodeId": 1001,
+    "combo": 10,
+    "score": 1000,
+    "resource": ""
+  },
+  {
+    "id": 2,
+    "episodeId": 1001,
+    "combo": 20,
+    "score": 2000,
+    "resource": ""
+  },
+  {
+    "id": 3,
+    "episodeId": 1001,
+    "combo": 30,
+    "score": 3000,
+    "resource": ""
+  },
+  {
+    "id": 4,
+    "episodeId": 1002,
+    "combo": 20,
+    "score": 2000,
+    "resource": ""
+  },
+  {
+    "id": 5,
+    "episodeId": 1002,
+    "combo": 40,
+    "score": 4000,
+    "resource": ""
+  },
+  {
+    "id": 6,
+    "episodeId": 1002,
+    "combo": 75,
+    "score": 7500,
+    "resource": ""
+  },
+  {
+    "id": 7,
+    "episodeId": 1003,
+    "combo": 50,
+    "score": 5000,
+    "resource": ""
+  },
+  {
+    "id": 8,
+    "episodeId": 1003,
+    "combo": 90,
+    "score": 9000,
+    "resource": ""
+  },
+  {
+    "id": 9,
+    "episodeId": 1003,
+    "combo": 120,
+    "score": 12000,
+    "resource": ""
+  }
+]

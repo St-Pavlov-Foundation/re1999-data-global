@@ -30,6 +30,12 @@ function slot0.getSignInInfoMoList(slot0)
 	return slot0.signInInfoMoList
 end
 
+function slot0.getSignInStateById(slot0, slot1)
+	if slot0.signInInfoMoList[slot1] then
+		return slot2.state
+	end
+end
+
 function slot0.setSignInList(slot0)
 	if GameUtil.getTabLen(slot0.signInInfoMoList) > 0 then
 		slot0:setList(slot0.signInInfoMoList)

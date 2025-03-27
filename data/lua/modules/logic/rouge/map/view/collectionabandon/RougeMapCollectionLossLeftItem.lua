@@ -57,7 +57,7 @@ function slot0.refreshIcon(slot0)
 end
 
 function slot0.refreshDesc(slot0)
-	slot0.txtDesc.text = RougeCollectionHelper.getCollectionEffectStr(slot0.collectionId)
+	RougeCollectionDescHelper.setCollectionDescInfos3(slot0.collectionId, nil, slot0.txtDesc, RougeCollectionDescHelper.getShowDescTypesWithoutText())
 end
 
 function slot0._onSwitchCollectionInfoType(slot0)

@@ -88,6 +88,8 @@ function slot0._onCheckAutoPop(slot0, slot1)
 end
 
 function slot0._onPopupFlowDone(slot0, slot1)
+	slot0._inPopupFlow = false
+
 	uv0.instance:dispatchEvent(MainEvent.OnMainPopupFlowFinish)
 end
 

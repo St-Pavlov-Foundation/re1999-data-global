@@ -3,6 +3,7 @@ module("modules.logic.fight.entity.comp.FightNameUIOp", package.seeall)
 slot0 = class("FightNameUIOp")
 
 function slot0.init(slot0, slot1, slot2, slot3)
+	slot0.forceLockFirst = false
 	slot0.entity = slot1
 	slot0.playCardInfoList = {}
 
@@ -129,7 +130,21 @@ function slot0._checkGMHideUI(slot0)
 	gohelper.setActive(slot0._opContainerCanvasGroup.gameObject, GMFightShowState.enemyOp)
 end
 
+function slot0.checkLockFirst(slot0)
+	slot0.forceLockFirst = false
+
+	if FightModel.instance:isSeason2() and slot0.entity:getMO() then
+		for slot6, slot7 in ipairs(slot1:getBuffList()) do
+			if slot7.buffId == 832400103 then
+				slot0.forceLockFirst = true
+			end
+		end
+	end
+end
+
 function slot0._onStageChange(slot0, slot1)
+	slot0:checkLockFirst()
+
 	if slot1 == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
 		if FightModel.instance:isSeason2() then
 			if slot0._curRound ~= FightModel.instance:getCurRoundId() then
@@ -145,6 +160,36 @@ function slot0._onStageChange(slot0, slot1)
 	slot0:_updateEntityOps()
 end
 
+function slot0._canUseCardSkill(slot0, slot1, slot2)
+	if not FightDataHelper.entityMgr:getById(slot1) then
+		return false
+	end
+
+	if not FightModel.instance:isSeason2() then
+		return FightViewHandCardItemLock.canUseCardSkill(slot0.entity.id, slot2)
+	end
+
+	slot5 = false
+
+	for slot9, slot10 in ipairs(slot3:getBuffList()) do
+		if slot10.buffId == 832400103 then
+			slot5 = true
+
+			break
+		end
+	end
+
+	if slot5 then
+		for slot9 = #FightDataHelper.coverData(slot4), 1, -1 do
+			if slot4[slot9].buffId == 832400103 then
+				table.remove(slot4, slot9)
+			end
+		end
+	end
+
+	return FightViewHandCardItemLock.canUseCardSkill(slot0.entity.id, slot2, slot4)
+end
+
 function slot0._playOpInAnim(slot0)
 	slot0:_updateEntityOps()
 
@@ -156,7 +201,7 @@ function slot0._playOpInAnim(slot0)
 		gohelper.setActive(slot5.go, true)
 
 		gohelper.onceAddComponent(slot5.go, typeof(UnityEngine.CanvasGroup)).alpha = 0
-		slot0._canUseCard[slot5.cardInfoMO.custom_enemyCardIndex] = FightViewHandCardItemLock.canUseCardSkill(slot0.entity.id, slot5.cardInfoMO.skillId)
+		slot0._canUseCard[slot5.cardInfoMO.custom_enemyCardIndex] = slot0:_canUseCardSkill(slot0.entity.id, slot5.cardInfoMO.skillId)
 	end
 end
 
@@ -165,15 +210,20 @@ function slot0._calCanUseCard(slot0)
 
 	if FightModel.instance:getCurRoundMO() then
 		for slot5, slot6 in ipairs(slot0.playCardInfoList) do
-			slot0._canUseCard[slot6.custom_enemyCardIndex] = FightViewHandCardItemLock.canUseCardSkill(slot0.entity.id, slot6.skillId)
+			slot0._canUseCard[slot6.custom_enemyCardIndex] = slot0:_canUseCardSkill(slot0.entity.id, slot6.skillId)
 		end
 	end
 end
 
 function slot0.onFlyEnd(slot0, slot1)
 	gohelper.onceAddComponent(slot1.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
+	slot3 = slot0:_canUseSkill(slot1.cardInfoMO.skillId)
 
-	if not slot0:_canUseSkill(slot1.cardInfoMO.skillId) then
+	if slot0.forceLockFirst and slot1 == slot0._opItemList[1] then
+		slot3 = false
+	end
+
+	if not slot3 then
 		slot0:_playOpForbidIn(slot1)
 	else
 		slot0:_playOpIn(slot1)
@@ -184,7 +234,7 @@ function slot0._canUseSkill(slot0, slot1)
 	slot2 = slot0.entity:getMO()
 
 	if FightCardModel.instance:isUniqueSkill(slot0.entity.id, slot1) then
-		slot3 = FightViewHandCardItemLock.canUseCardSkill(slot0.entity.id, slot1) and slot2:getUniqueSkillPoint() <= slot2.exPoint
+		slot3 = slot0:_canUseCardSkill(slot0.entity.id, slot1) and slot2:getUniqueSkillPoint() <= slot2.exPoint
 	end
 
 	return slot3
@@ -248,9 +298,18 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
 end
 
 function slot0._checkPlayForbid(slot0)
+	slot0:checkLockFirst()
+
 	for slot4, slot5 in ipairs(slot0._opItemList) do
 		if slot5.cardInfoMO and not slot6.custom_done then
-			if slot0:_canUseSkill(slot5.cardInfoMO.skillId) and not slot0._canUseCard[slot5.cardInfoMO.custom_enemyCardIndex] then
+			slot8 = slot0:_canUseSkill(slot5.cardInfoMO.skillId)
+			slot10 = slot0._canUseCard[slot5.cardInfoMO.custom_enemyCardIndex]
+
+			if slot0.forceLockFirst and slot4 == 1 then
+				slot8 = false
+			end
+
+			if slot8 and not slot10 then
 				slot5:updateCardInfoMO(slot5.cardInfoMO)
 				slot0:_playOpForbidUnlock(slot5)
 			elseif not slot8 and slot10 then

@@ -2,9 +2,10 @@ module("modules.configs.excel2json.lua_character_destiny_facets", package.seeall
 
 slot1 = {
 	level = 2,
-	exchangeSkills = 3,
-	desc = 4,
-	facetsId = 1
+	desc = 5,
+	powerAdd = 3,
+	facetsId = 1,
+	exchangeSkills = 4
 }
 slot2 = {
 	"facetsId",

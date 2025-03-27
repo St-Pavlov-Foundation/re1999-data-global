@@ -8,28 +8,21 @@ slot0.ConfigEffect = {
 
 function slot0.onStart(slot0)
 	FightModel.instance:setWaitIndicatorAnimation(false)
-
-	if slot0._actEffectMO.configEffect == uv0.ConfigEffect.AddIndicator then
-		FightModel.instance:setIndicatorNum(tonumber(slot0._actEffectMO.targetId), slot0._actEffectMO.effectNum)
-	elseif slot0._actEffectMO.configEffect == uv0.ConfigEffect.ClearIndicator then
-		FightModel.instance:clearIndicatorNum(slot1)
-	end
+	slot0:com_sendFightEvent(FightEvent.OnIndicatorChange, tonumber(slot0._actEffectMO.targetId))
 
 	if FightModel.instance:isWaitIndicatorAnimation() then
-		FightController.instance:registerCallback(FightEvent.OnIndicatorAnimationDone, slot0._delayDone, slot0)
 		slot0:com_registTimer(slot0._delayDone, 3)
+		slot0:com_registFightEvent(FightEvent.OnIndicatorAnimationDone, slot0._delayDone)
 	else
 		slot0:onDone(true)
 	end
 end
 
 function slot0._delayDone(slot0)
-	slot0:clearWork()
 	slot0:onDone(true)
 end
 
 function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnIndicatorAnimationDone, slot0._delayDone, slot0)
 end
 
 return slot0

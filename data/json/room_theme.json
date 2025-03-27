@@ -166,5 +166,17 @@
     "collectionBonus": "11#12305#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 2401,
+    "name": "language_10064761",
+    "nameEn": "The Shelled Isle",
+    "desc": "language_10064817",
+    "rewardIcon": "1701500",
+    "building": "12401|12402|12403|12404|12405|12406",
+    "packages": "2401|2402|2403|2404|2405|2406",
+    "collectionBonus": "11#12405#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

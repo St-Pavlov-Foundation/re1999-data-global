@@ -3548,5 +3548,215 @@
     "param": "521300001",
     "isNoShow": 1,
     "desc": ""
+  },
+  {
+    "id": 9241004,
+    "name": "language_10063951",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241005,
+    "name": "language_10063952",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103002",
+    "isNoShow": 1,
+    "desc": "language_10050736"
+  },
+  {
+    "id": 9241006,
+    "name": "language_10063953",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241015,
+    "name": "language_10063954",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241016,
+    "name": "language_10063954",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241017,
+    "name": "language_10063955",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241018,
+    "name": "language_10063956",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241115,
+    "name": "language_10063957",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241116,
+    "name": "language_10063958",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241117,
+    "name": "language_10063959",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241118,
+    "name": "language_10063960",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241215,
+    "name": "language_10063961",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241216,
+    "name": "language_10063962",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241217,
+    "name": "language_10063963",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241218,
+    "name": "language_10063964",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241304,
+    "name": "language_10063965",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241306,
+    "name": "language_10063966",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241315,
+    "name": "language_10063967",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241316,
+    "name": "language_10063968",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241317,
+    "name": "language_10063969",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
+  },
+  {
+    "id": 9241318,
+    "name": "language_10063970",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
   }
 ]

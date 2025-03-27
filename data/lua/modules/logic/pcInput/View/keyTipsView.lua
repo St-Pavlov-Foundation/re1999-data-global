@@ -54,7 +54,7 @@ end
 
 function slot0.Show(slot0, slot1)
 	if slot0._instGO then
-		slot0._instGO:SetActive(slot1 and not ViewMgr.instance:isOpen(ViewName.GuideView))
+		slot0._instGO:SetActive(slot1 and not ViewMgr.instance:isOpen(ViewName.GuideView) and PlayerPrefsHelper.getNumber("keyTips", 0) == 1)
 	end
 end
 

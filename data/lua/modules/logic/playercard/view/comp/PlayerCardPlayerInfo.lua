@@ -1,47 +1,53 @@
 module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall)
 
-slot0 = class("PlayerCardPlayerInfo", BasePlayerCardComp)
+slot0 = class("PlayerCardPlayerInfo", BaseView)
 
 function slot0.onInitView(slot0)
-	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.viewGO, "headframe/#simage_headicon")
-	slot0._btnheadicon = gohelper.findChildButtonWithAudio(slot0.viewGO, "headframe/#simage_headicon")
-	slot0._goframenode = gohelper.findChild(slot0.viewGO, "headframe/#simage_headicon/#go_framenode")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "lv/#txt_level")
-	slot0._txtplayerid = gohelper.findChildText(slot0.viewGO, "#txt_playerid")
-	slot0._btnplayerid = gohelper.findChildButtonWithAudio(slot0.viewGO, "#txt_playerid/#btn_playerid")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._gosignature = gohelper.findChild(slot0.viewGO, "signature")
-	slot0._txtsignature = gohelper.findChildText(slot0.viewGO, "signature/scroll/viewport/#txt_signature")
-	slot0._btnsignature = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_signature")
-	slot0._btnlist = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_list")
+	slot0.go = gohelper.findChild(slot0.viewGO, "main/playerinfo")
+	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.go, "ani/headframe/#simage_headicon")
+	slot0._btnheadicon = gohelper.findChildButtonWithAudio(slot0.go, "ani/headframe/#simage_headicon")
+	slot0._goframenode = gohelper.findChild(slot0.go, "ani/headframe/#simage_headicon/#go_framenode")
+	slot0._txtlevel = gohelper.findChildText(slot0.go, "ani/lv/#txt_level")
+	slot0._txtplayerid = gohelper.findChildText(slot0.go, "ani/#txt_playerid")
+	slot0._btnplayerid = gohelper.findChildButtonWithAudio(slot0.go, "ani/#txt_playerid/#btn_playerid")
+	slot0._txtname = gohelper.findChildText(slot0.go, "ani/#txt_name")
 end
 
-function slot0.addEventListeners(slot0)
+function slot0.addEvents(slot0)
 	slot0._btnplayerid:AddClickListener(slot0._btnplayeridOnClick, slot0)
-	slot0._btnsignature:AddClickListener(slot0._btnsignatureOnClick, slot0)
 	slot0._btnheadicon:AddClickListener(slot0._changeIcon, slot0)
-	slot0._btnlist:AddClickListener(slot0._onClickBtnList, slot0)
+	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, slot0.onRefreshView, slot0)
+	slot0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, slot0.onRefreshView, slot0)
 end
 
-function slot0.removeEventListeners(slot0)
+function slot0.removeEvents(slot0)
 	slot0._btnplayerid:RemoveClickListener()
-	slot0._btnsignature:RemoveClickListener()
 	slot0._btnheadicon:RemoveClickListener()
-	slot0._btnlist:RemoveClickListener()
-end
-
-function slot0._onClickBtnList(slot0)
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ShowListBtn, slot0._btnlist)
 end
 
 function slot0._changeIcon(slot0)
-	if slot0:isPlayerSelf() and slot0.compType == PlayerCardEnum.CompType.Normal then
+	if slot0:isPlayerSelf() then
 		ViewMgr.instance:openView(ViewName.IconTipView)
+		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Magazinespage)
 	end
 end
 
+function slot0.onOpen(slot0)
+	slot0.userId = slot0.viewParam.userId
+
+	slot0:updateBaseInfo()
+end
+
+function slot0.getCardInfo(slot0)
+	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+end
+
+function slot0.isPlayerSelf(slot0)
+	return slot0:getCardInfo() and slot1:isSelf()
+end
+
 function slot0.getPlayerInfo(slot0)
-	return slot0.cardInfo and slot0.cardInfo:getPlayerInfo()
+	return slot0:getCardInfo() and slot1:getPlayerInfo()
 end
 
 function slot0._btnplayeridOnClick(slot0)
@@ -58,15 +64,8 @@ function slot0._btnplayeridOnClick(slot0)
 	GameFacade.showToast(ToastEnum.ClickPlayerId)
 end
 
-function slot0._btnsignatureOnClick(slot0)
-	if slot0:isPlayerSelf() and slot0.compType == PlayerCardEnum.CompType.Normal then
-		ViewMgr.instance:openView(ViewName.Signature)
-	end
-end
-
 function slot0.onRefreshView(slot0)
 	slot0:updateBaseInfo()
-	slot0:refreshStatus()
 end
 
 function slot0.updateBaseInfo(slot0)
@@ -77,16 +76,7 @@ function slot0.updateBaseInfo(slot0)
 	slot0._txtname.text = slot1.name
 	slot0._txtplayerid.text = string.format("ID:%s", slot1.userId)
 	slot0._txtlevel.text = slot1.level
-
-	if string.nilorempty(slot1.signature) and string.split(CommonConfig.instance:getConstStr(ConstEnum.RoleRandomSignature), "#") and #slot3 > 0 then
-		slot2 = slot3[math.random(1, #slot3)]
-	end
-
-	slot0._txtsignature.text = slot2
-
-	gohelper.setActive(slot0._txtsignature.gameObject, true)
-
-	slot3 = lua_item.configDict[slot1.portrait]
+	slot2 = lua_item.configDict[slot1.portrait]
 
 	if not slot0._liveHeadIcon then
 		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheadicon)
@@ -94,8 +84,8 @@ function slot0.updateBaseInfo(slot0)
 
 	slot0._liveHeadIcon:setLiveHead(slot1.portrait)
 
-	if #string.split(slot3.effect, "#") > 1 then
-		if slot3.id == tonumber(slot4[#slot4]) then
+	if #string.split(slot2.effect, "#") > 1 then
+		if slot2.id == tonumber(slot3[#slot3]) then
 			gohelper.setActive(slot0._goframenode, true)
 
 			if not slot0.frame and not slot0._loader then
@@ -118,14 +108,6 @@ function slot0._onLoadCallback(slot0)
 	slot5 = 1.41 * recthelper.getWidth(slot0._simageheadicon.transform) / recthelper.getWidth(slot0.frame.transform)
 
 	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
-end
-
-function slot0.refreshStatus(slot0)
-	slot1 = slot0:isPlayerSelf()
-
-	gohelper.setActive(slot0._gosignature, SDKNativeUtil.isGamePad() == false)
-	gohelper.setActive(slot0._btnsignature, slot1 and slot0.compType == PlayerCardEnum.CompType.Normal)
-	gohelper.setActive(slot0._btnlist, slot1 and slot0.compType == PlayerCardEnum.CompType.Normal)
 end
 
 function slot0.onDestroy(slot0)

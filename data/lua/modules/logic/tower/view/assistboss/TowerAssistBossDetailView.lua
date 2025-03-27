@@ -44,6 +44,7 @@ function slot0.addEvents(slot0)
 	slot0:addClickCb(slot0.btnPassiveskill, slot0.onBtnPassiveskillClick, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -54,6 +55,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeClickCb(slot0.btnPassiveskill)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
 end
 
 function slot0._editableInitView(slot0)
@@ -106,6 +108,10 @@ function slot0.onBtnBossTowerClick(slot0)
 	TowerController.instance:openBossTowerEpisodeView(TowerEnum.TowerType.Boss, slot0.config.towerId)
 end
 
+function slot0._onTowerUpdate(slot0)
+	slot0:refreshView()
+end
+
 function slot0._onResetTalent(slot0, slot1)
 	slot0:refreshTalent()
 end
@@ -138,7 +144,7 @@ function slot0.refreshView(slot0)
 
 	UISpriteSetMgr.instance:setCommonSprite(slot0.imgCareer, string.format("lssx_%s", slot0.config.career))
 	slot0.simageBoss:LoadImage(slot0.config.bossPic)
-	gohelper.setActive(slot0.btnBossTower, not slot0.isFromHeroGroup)
+	gohelper.setActive(slot0.btnBossTower, TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Boss, slot0.config.towerId) ~= nil and not slot0.isFromHeroGroup)
 	gohelper.setActive(slot0.btnBase, #TowerConfig.instance:getHeroGroupAddAttr(slot0.bossId, 0, slot1) > 0)
 	slot0:refreshPassiveSkill()
 	slot0:refreshActiveSkill()

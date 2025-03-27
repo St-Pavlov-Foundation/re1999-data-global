@@ -27,6 +27,12 @@ function slot0.onStart(slot0)
 			else
 				slot0._flowParallel:addWork(slot9)
 			end
+		else
+			if slot6.nameUI then
+				slot6.nameUI:setActive(true)
+			end
+
+			slot6:setAlpha(1, 0)
 		end
 	end
 

@@ -39,6 +39,10 @@ function slot0.getEntityStandPos(slot0, slot1)
 		return uv0.getAssistBossStandPos(slot0, slot1)
 	end
 
+	if FightEntityDataHelper.isPlayerUid(slot0.uid) then
+		return 0, 0, 0, 1
+	end
+
 	if not lua_stance.configDict[uv0.getEntityStanceId(slot0, slot1)] then
 		if slot0.side == FightEnum.EntitySide.MySide then
 			logError("我方用了不存在的站位，战斗id=" .. (FightModel.instance:getFightParam() and slot4.battleId or "nil") .. "， 站位id=" .. slot2)
@@ -111,6 +115,10 @@ function slot0.getDefenders(slot0, slot1, slot2)
 		slot9 = false
 
 		if slot2 and slot2[slot8.effectType] then
+			slot9 = true
+		end
+
+		if slot8.effectType == FightEnum.EffectType.SHIELD and not uv0.checkShieldHit(slot8) then
 			slot9 = true
 		end
 
@@ -252,6 +260,10 @@ function slot0.getRelativeEntityIdDict(slot0, slot1)
 			slot8 = true
 		end
 
+		if slot7.effectType == FightEnum.EffectType.SHIELD and not uv0.checkShieldHit(slot7) then
+			slot8 = true
+		end
+
 		if not slot8 and slot7.effectType ~= FightEnum.EffectType.EXPOINTCHANGE and slot7.targetId then
 			slot2[slot7.targetId] = true
 		end
@@ -269,6 +281,10 @@ function slot0.getSkillTargetEntitys(slot0, slot1)
 		slot8 = false
 
 		if slot1 and slot1[slot7.effectType] then
+			slot8 = true
+		end
+
+		if slot7.effectType == FightEnum.EffectType.SHIELD and not uv0.checkShieldHit(slot7) then
 			slot8 = true
 		end
 
@@ -321,7 +337,7 @@ function slot0.getTargetLimits(slot0, slot1, slot2)
 		for slot11 = 1, FightEnum.MaxBehavior do
 			if FightStrUtil.instance:getSplitCache(slot6["behavior" .. slot11], "#")[1] == "60032" then
 				for slot17 = #slot7, 1, -1 do
-					if FightDataHelper.entityMgr:getById(slot7[slot17]) and (slot18.skillGroup1 == 0 or #slot18.skillGroup2 == 0) then
+					if FightDataHelper.entityMgr:getById(slot7[slot17]) and (#slot18.skillGroup1 == 0 or #slot18.skillGroup2 == 0) then
 						table.remove(slot7, slot17)
 					end
 				end
@@ -547,7 +563,13 @@ function slot0.filterActEffect(slot0, slot1)
 	slot4 = {}
 
 	for slot8, slot9 in ipairs(slot0) do
-		if slot1[slot9.effectType] then
+		slot11 = false
+
+		if slot9.effectType == FightEnum.EffectType.SHIELD and not uv0.checkShieldHit(slot10) then
+			slot11 = true
+		end
+
+		if not slot11 and slot1[slot9.effectType] then
 			if not slot3[slot9.targetId] then
 				slot3[slot9.targetId] = {}
 
@@ -1378,169 +1400,198 @@ function slot0.detectReplaceTimeline(slot0, slot1)
 		table.sort(slot3, uv0.sortReplaceTimelineConfig)
 
 		for slot7, slot8 in ipairs(slot3) do
-			slot10 = {}
+			slot9 = {
+				[slot1.fromId] = FightDataHelper.entityMgr:getById(slot1.fromId)
+			}
 
 			if slot8.target == 1 then
-				table.insert({}, uv0.getEntity(slot1.fromId))
+				-- Nothing
 			elseif slot8.target == 2 then
-				table.insert(slot9, uv0.getEntity(slot1.toId))
-			elseif slot8.target == 3 then
-				if slot1.fromId == FightEntityScene.MySideId then
-					slot9 = uv0.getSideEntitys(FightEnum.EntitySide.MySide)
-				elseif slot11 == FightEntityScene.EnemySideId then
-					slot9 = uv0.getSideEntitys(FightEnum.EntitySide.EnemySide)
-				elseif FightDataHelper.entityMgr:getById(slot1.fromId) then
-					slot9 = uv0.getSideEntitys(slot12.side)
-				end
-			end
+				slot9[slot1.toId] = FightDataHelper.entityMgr:getById(slot1.toId)
+			elseif slot8.target == 3 or slot8.target == 4 then
+				slot10 = nil
+				slot12 = FightDataHelper.entityMgr
+				slot16 = slot8.target == 4
 
-			for slot14, slot15 in ipairs(slot9) do
-				slot10[slot15.id] = true
+				for slot16, slot17 in ipairs(slot12:getSideList((slot1.fromId ~= FightEntityScene.MySideId or FightEnum.EntitySide.MySide) and (slot11 ~= FightEntityScene.EnemySideId or FightEnum.EntitySide.EnemySide) and (not FightDataHelper.entityMgr:getById(slot1.fromId) or slot12.side) and FightEnum.EntitySide.MySide, nil, slot16)) do
+					slot9[slot17.id] = slot17
+				end
 			end
 
 			if FightStrUtil.instance:getSplitCache(slot8.condition, "#")[1] == "1" then
-				for slot19, slot20 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
-					if slot20.buffId == tonumber(slot11[2]) and tonumber(slot11[3]) <= slot20.count then
-						return slot8.timeline
-					end
-				end
-			elseif slot12 == "2" then
-				for slot16, slot17 in pairs(slot1.actEffectMOs) do
-					if slot17.effectType == FightEnum.EffectType.DEAD then
-						return slot8.timeline
-					end
-				end
-			elseif slot12 == "3" then
-				for slot17 = 2, #slot11 do
-					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot11[slot17]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) then
-						return slot8.timeline
-					end
-				end
-			elseif slot12 == "4" then
-				slot13 = {
-					[tonumber(slot11[slot17])] = true
-				}
-
-				for slot17 = 2, #slot11 do
-				end
-
 				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
-					if slot13[slot19.buffId] then
+					if slot19.buffId == tonumber(slot10[2]) and tonumber(slot10[3]) <= slot19.count then
 						return slot8.timeline
 					end
 				end
-			elseif slot12 == "5" then
-				slot13 = {
-					[tonumber(slot11[slot17])] = true
-				}
-
-				for slot17 = 2, #slot11 do
-				end
-
-				for slot17, slot18 in ipairs(slot9) do
-					if slot18:getMO() then
-						slot20 = slot19.skin
-
-						if slot8.target == 1 then
-							slot20 = uv0.processSkinByStepMO(slot1, slot19)
-						end
-
-						if slot19 and slot13[slot20] then
-							return slot8.timeline
-						end
-					end
-				end
-			elseif slot12 == "6" then
-				slot13 = {
-					[tonumber(slot11[slot17])] = true
-				}
-
-				for slot17 = 2, #slot11 do
-				end
-
-				for slot17, slot18 in ipairs(slot1.actEffectMOs) do
-					if slot10[slot18.targetId] and slot13[slot18.configEffect] then
+			elseif slot11 == "2" then
+				for slot15, slot16 in pairs(slot1.actEffectMOs) do
+					if slot16.effectType == FightEnum.EffectType.DEAD then
 						return slot8.timeline
 					end
 				end
-			elseif slot12 == "7" then
-				slot13 = {
-					[tonumber(slot11[slot17])] = true
+			elseif slot11 == "3" then
+				for slot16 = 2, #slot10 do
+					if uv0.detectEntityIncludeBuffType(nil, tonumber(slot10[slot16]), uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) then
+						return slot8.timeline
+					end
+				end
+			elseif slot11 == "4" then
+				slot12 = {
+					[tonumber(slot10[slot16])] = true
 				}
 
-				for slot17 = 2, #slot11 do
+				for slot16 = 2, #slot10 do
 				end
 
-				for slot18, slot19 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
-					if slot13[slot19.buffId] then
+				for slot17, slot18 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+					if slot12[slot18.buffId] then
+						return slot8.timeline
+					end
+				end
+			elseif slot11 == "5" then
+				slot12 = {
+					[tonumber(slot10[slot16])] = true
+				}
+
+				for slot16 = 2, #slot10 do
+				end
+
+				for slot16, slot17 in pairs(slot9) do
+					slot18 = slot17.skin
+
+					if slot8.target == 1 then
+						slot18 = uv0.processSkinByStepMO(slot1, slot17)
+					end
+
+					if slot17 and slot12[slot18] then
+						return slot8.timeline
+					end
+				end
+			elseif slot11 == "6" then
+				slot12 = {
+					[tonumber(slot10[slot16])] = true
+				}
+
+				for slot16 = 2, #slot10 do
+				end
+
+				for slot16, slot17 in ipairs(slot1.actEffectMOs) do
+					if slot9[slot17.targetId] and slot12[slot17.configEffect] then
+						return slot8.timeline
+					end
+				end
+			elseif slot11 == "7" then
+				slot12 = {
+					[tonumber(slot10[slot16])] = true
+				}
+
+				for slot16 = 2, #slot10 do
+				end
+
+				for slot17, slot18 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+					if slot12[slot18.buffId] then
 						return slot0
 					end
 				end
 
 				return slot8.timeline
-			elseif slot12 == "8" then
-				slot13 = tonumber(slot11[2])
-				slot14 = tonumber(slot11[3])
-				slot15 = uv0.getEntitysCloneBuff(slot9)
+			elseif slot11 == "8" then
+				slot12 = tonumber(slot10[2])
+				slot13 = tonumber(slot10[3])
+				slot14 = uv0.getEntitysCloneBuff(slot9)
 
 				if slot8.simulate == 1 then
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot1)) do
-						if slot21.buffId == slot13 and slot14 <= slot21.count then
+					for slot19, slot20 in ipairs(uv0.getBuffListForReplaceTimeline(nil, slot9, slot1)) do
+						if slot20.buffId == slot12 and slot13 <= slot20.count then
 							return slot8.timeline
 						end
 					end
 
-					if uv0.simulateFightStepMO(slot1, slot15, uv0.detectBuffCountEnough, {
-						buffId = slot13,
-						count = slot14
+					if uv0.simulateFightStepMO(slot1, slot14, uv0.detectBuffCountEnough, {
+						buffId = slot12,
+						count = slot13
 					}) == true then
 						return slot8.timeline
 					end
 				else
-					for slot20, slot21 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
-						if slot21.buffId == slot13 and slot14 <= slot21.count then
+					for slot19, slot20 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+						if slot20.buffId == slot12 and slot13 <= slot20.count then
 							return slot8.timeline
 						end
 					end
 				end
-			elseif slot12 == "9" then
+			elseif slot11 == "9" then
 				while true do
 					if math.random(1, #slot3) ~= uv1[slot0] then
-						uv1[slot0] = slot14
+						uv1[slot0] = slot13
 
-						return slot3[slot14].timeline
+						return slot3[slot13].timeline
 					end
 				end
-			elseif slot12 == "10" then
-				if tonumber(slot11[2]) == 1 then
+			elseif slot11 == "10" then
+				if tonumber(slot10[2]) == 1 then
 					if slot1.fromId == slot1.toId then
 						return slot8.timeline
 					end
-				elseif slot13 == 2 and slot1.fromId ~= slot1.toId then
+				elseif slot12 == 2 and slot1.fromId ~= slot1.toId then
 					return slot8.timeline
 				end
-			elseif slot12 == "11" then
-				slot13 = {
-					[tonumber(slot11[slot18])] = true
+			elseif slot11 == "11" then
+				slot12 = {
+					[tonumber(slot10[slot17])] = true
 				}
-				slot14 = tonumber(slot11[2])
+				slot13 = tonumber(slot10[2])
 
-				for slot18 = 3, #slot11 do
+				for slot17 = 3, #slot10 do
 				end
 
-				for slot18, slot19 in ipairs(slot9) do
-					if slot19:getMO() then
-						slot21 = slot20.skin
+				for slot17, slot18 in pairs(slot9) do
+					slot19 = slot18.skin
 
-						if slot8.target == 1 then
-							slot21 = uv0.processSkinByStepMO(slot1, slot20)
+					if slot8.target == 1 then
+						slot19 = uv0.processSkinByStepMO(slot1, slot18)
+					end
+
+					if slot13 == slot19 then
+						for slot24, slot25 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
+							if slot12[slot25.buffId] then
+								return slot8.timeline
+							end
 						end
+					end
+				end
+			elseif slot11 == "12" then
+				slot12 = {
+					[tonumber(slot10[slot16])] = true
+				}
 
-						if slot14 == slot21 then
-							for slot26, slot27 in ipairs(uv0.getBuffListForReplaceTimeline(slot8, slot9, slot1)) do
-								if slot13[slot27.buffId] then
-									return slot8.timeline
-								end
+				for slot16 = 2, #slot10 - 1 do
+				end
+
+				for slot16, slot17 in pairs(slot9) do
+					slot18 = slot17.skin
+
+					if slot8.target == 1 then
+						slot18 = uv0.processSkinByStepMO(slot1, slot17)
+					end
+
+					if slot17 and slot12[slot18] then
+						if slot10[#slot10] == "1" then
+							if slot1.fromId == slot1.toId then
+								return slot8.timeline
+							end
+						elseif slot19 == "2" then
+							slot21 = FightDataHelper.entityMgr:getById(slot1.toId)
+
+							if FightDataHelper.entityMgr:getById(slot1.fromId) and slot21 and slot20.id ~= slot21.id and slot20.side == slot21.side then
+								return slot8.timeline
+							end
+						elseif slot19 == "3" then
+							slot21 = FightDataHelper.entityMgr:getById(slot1.toId)
+
+							if FightDataHelper.entityMgr:getById(slot1.fromId) and slot21 and slot20.side ~= slot21.side then
+								return slot8.timeline
 							end
 						end
 					end
@@ -1608,16 +1659,14 @@ end
 function slot0.getEntitysCloneBuff(slot0)
 	slot1 = {}
 
-	for slot5, slot6 in ipairs(slot0) do
-		if slot6:getMO() then
-			slot8 = {}
+	for slot5, slot6 in pairs(slot0) do
+		slot7 = {}
 
-			for slot13, slot14 in ipairs(slot7:getBuffList()) do
-				table.insert(slot8, slot14:clone())
-			end
-
-			slot1[slot7.id] = slot8
+		for slot12, slot13 in ipairs(slot6:getBuffList()) do
+			table.insert(slot7, slot13:clone())
 		end
+
+		slot1[slot6.id] = slot7
 	end
 
 	return slot1
@@ -1702,10 +1751,7 @@ function slot0.buildMonsterA2B(slot0, slot1, slot2, slot3)
 
 	if lua_fight_boss_evolution_client.configDict[slot1.skin] then
 		slot2:addWork(Work2FightWork.New(FightWorkPlayTimeline, slot0, slot4.timeline))
-
-		if slot4.id ~= slot4.nextSkinId then
-			slot2:registWork(FightWorkFunction, uv0.setBossEvolution, uv0, slot0, slot4)
-		end
+		slot2:registWork(FightWorkFunction, uv0.setBossEvolution, uv0, slot0, slot4)
 	end
 
 	if slot3 then
@@ -1718,7 +1764,10 @@ end
 function slot0.setBossEvolution(slot0, slot1, slot2)
 	FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, slot1, slot2.nextSkinId)
 	FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, slot1, slot2.nextSkinId)
-	GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(slot1:getTag(), slot1.id)
+
+	if uv0.getEntity(slot1.id) == slot1 then
+		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(slot1:getTag(), slot1.id)
+	end
 end
 
 function slot0.buildDeadPerformanceWork(slot0, slot1)
@@ -1781,7 +1830,7 @@ function slot0.logStr(slot0, slot1)
 	slot2 = ""
 	uv0 = 0
 
-	return type(slot0) == "table" and slot2 .. "\n" .. uv1.logTable(slot0, slot1) or slot2 .. tostring(slot0)
+	return type(slot0) == "table" and slot2 .. uv1.logTable(slot0, slot1) or slot2 .. tostring(slot0)
 end
 
 function slot0.logTable(slot0, slot1)
@@ -2134,6 +2183,14 @@ function slot0.checkNextRoundCardSingleCondition(slot0, slot1)
 	elseif slot5[1] == "2" and slot5[2] and slot4 then
 		return slot4.exSkillLevel == tonumber(slot5[2])
 	end
+end
+
+function slot0.checkShieldHit(slot0)
+	if slot0.effectNum1 == FightEnum.EffectType.SHAREHURT then
+		return false
+	end
+
+	return true
 end
 
 slot0.SkillEditorHp = 2000
@@ -2625,7 +2682,7 @@ function slot0.isSameCardMo(slot0, slot1)
 end
 
 function slot0.getAssitHeroInfoByUid(slot0, slot1)
-	if FightDataHelper.entityMgr:getDeadById(slot0) then
+	if FightDataHelper.entityMgr:getById(slot0) and slot2:isCharacter() then
 		return {
 			skin = slot2.skin,
 			level = slot2.level,
@@ -2664,6 +2721,42 @@ function slot0.clearNoUseEffect()
 	end
 
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC)
+end
+
+function slot0.isASFDSkill(slot0)
+	return slot0 == FightASFDConfig.instance.skillId
+end
+
+function slot0.getASFDMgr()
+	slot1 = GameSceneMgr.instance:getCurScene() and slot0.mgr
+
+	return slot1 and slot1:getASFDMgr()
+end
+
+function slot0.getEntityCareer(slot0)
+	slot1 = slot0 and FightDataHelper.entityMgr:getById(slot0)
+
+	return slot1 and slot1:getCareer() or 0
+end
+
+function slot0.isRestrain(slot0, slot1)
+	return (FightConfig.instance:getRestrain(uv0.getEntityCareer(slot0), uv0.getEntityCareer(slot1)) or 1000) > 1000
+end
+
+slot0.tempEntityMoList = {}
+
+function slot0.hasSkinId(slot0)
+	slot1 = uv0.tempEntityMoList
+
+	tabletool.clear(slot1)
+
+	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getMyNormalList(slot1)) do
+		if slot7.originSkin == slot0 then
+			return true
+		end
+	end
+
+	return false
 end
 
 return slot0

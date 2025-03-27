@@ -54,6 +54,7 @@ end
 
 slot0.enemyBuffTipPosY = 80
 slot0.OnKeyTipsPosY = 380
+slot0.OnKeyTipsUniquePosY = 436
 
 function slot0._editableInitView(slot0)
 	slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0._goglobalClick)
@@ -197,18 +198,6 @@ function slot0._buildLinkTag(slot0, slot1)
 	return string.gsub(string.gsub(slot1, "%[(.-)%]", "<link=\"%1\">[%1]</link>"), "%【(.-)%】", "<link=\"%1\">【%1】</link>")
 end
 
-slot0.Interval = 10
-
-function slot0.getCommonBuffTipScrollAnchor(slot0, slot1, slot2)
-	slot5 = slot0.rectTrScrollBuff
-	slot7, slot8 = recthelper.uiPosToScreenPos2(slot5)
-	slot9, slot10 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(slot7, slot8, slot1, CameraMgr.instance:getUICamera(), nil, )
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
-	slot15 = slot9
-
-	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= GameUtil.getViewSize() / 2 + slot9 - recthelper.getWidth(slot5) / 2 - uv0.Interval and slot15 - slot11 - uv0.Interval or slot15 + slot11 + uv0.Interval + slot13, slot10 + math.min(recthelper.getHeight(slot5), recthelper.getHeight(slot0.rectTrBuffContent)) / 2)
-end
-
 function slot0._updateBuffs(slot0, slot1)
 	gohelper.setActive(slot0._gobuffinfocontainer, true)
 	FightBuffTipsView.updateBuffDesc(slot1, slot0._buffItemList, slot0._gobuffitem, slot0, slot0.getCommonBuffTipScrollAnchor)
@@ -234,7 +223,11 @@ function slot0._showCardSkillTips(slot0, slot1, slot2)
 	slot0:_setSkillTip(slot1, slot2)
 
 	if PCInputController.instance:getIsUse() and PlayerPrefsHelper.getNumber("keyTips", 0) ~= 0 then
-		recthelper.setAnchor(slot0._goskilltip.transform, slot0._originSkillPosX, uv0.OnKeyTipsPosY)
+		if FightConfig.instance:isUniqueSkill(slot1) then
+			recthelper.setAnchor(slot0._goskilltip.transform, slot0._originSkillPosX, uv0.OnKeyTipsUniquePosY)
+		else
+			recthelper.setAnchor(slot3, slot0._originSkillPosX, uv0.OnKeyTipsPosY)
+		end
 	else
 		recthelper.setAnchor(slot3, slot0._originSkillPosX, slot0._originSkillPosY)
 	end

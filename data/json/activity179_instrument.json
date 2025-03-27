@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "language_10065306",
+    "switch": 1,
+    "icon": "dolceola"
+  },
+  {
+    "id": 2,
+    "name": "language_10065307",
+    "switch": 1,
+    "icon": "clarinet"
+  },
+  {
+    "id": 3,
+    "name": "language_10065308",
+    "switch": 1,
+    "icon": "marimba"
+  },
+  {
+    "id": 4,
+    "name": "language_10065309",
+    "switch": 1,
+    "icon": "bass"
+  },
+  {
+    "id": 5,
+    "name": "language_90001104",
+    "switch": 0,
+    "icon": "clap"
+  },
+  {
+    "id": 6,
+    "name": "language_10065310",
+    "switch": 0,
+    "icon": "kick"
+  },
+  {
+    "id": 7,
+    "name": "language_10065311",
+    "switch": 0,
+    "icon": "shaker"
+  },
+  {
+    "id": 8,
+    "name": "language_10065312",
+    "switch": 0,
+    "icon": "snare"
+  }
+]

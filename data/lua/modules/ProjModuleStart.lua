@@ -71,7 +71,7 @@ function slot0.initFramework(slot0)
 end
 
 function slot0.initModuleLogic(slot0)
-	GameBranchMgr.instance:init(2, 3)
+	GameBranchMgr.instance:init()
 	ModuleMgr.instance:init(addGlobalModule("modules.setting.module_mvc", "module_mvc"), slot0._onModuleIniFinish, slot0)
 end
 
@@ -223,9 +223,22 @@ function slot0.startLogic(slot0)
 	SDKDataTrackMgr.instance:trackResourceLoadFinishEvent(SDKDataTrackMgr.Result.success)
 	StatViewController.instance:init()
 	BootLoadingView.instance:playClose()
-	TaskDispatcher.runDelay(function ()
-		LoginController.instance:login()
-	end, nil, 0.167)
+
+	if VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() and GameChannelConfig.isGpGlobal() then
+		if GameConfig:GetCurLangType() ~= BootLangEnum.en and slot2 ~= BootLangEnum.zh then
+			LangSettings.instance:SetCurLangType(GameConfig:GetDefaultLangShortcut(), function ()
+				LoginController.instance:login()
+			end)
+		else
+			TaskDispatcher.runDelay(function ()
+				LoginController.instance:login()
+			end, nil, 0.167)
+		end
+	else
+		TaskDispatcher.runDelay(function ()
+			LoginController.instance:login()
+		end, nil, 0.167)
+	end
 end
 
 slot0.instance = slot0.New()

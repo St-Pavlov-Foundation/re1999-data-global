@@ -379,7 +379,7 @@ function slot0._initViewList(slot0)
 	slot0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, slot0._onCharacterSkinGainViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
 	slot0:_addView("角色界面静态立绘", ViewName.CharacterView, slot0._onCharacterViewChangeStaticDrawingOpen, slot0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
 	slot0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, slot0._onCharacterGetViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset")
-	slot0:_addView("个人名片", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#simage_skin", "playercardViewImgOffset", "characterViewImgOffset")
+	slot0:_addView("个人名片", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardView/main/top/role/skinnode/#simage_role", "playercardViewImgOffset", "characterViewImgOffset")
 	slot0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, slot0._onSummonCustomThreePickOpen, slot0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
 	table.insert(slot0._viewNameList, "0#spine小人")
 	slot0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
@@ -747,8 +747,7 @@ function slot0._onPlayerCardViewStaticDrawingUpdate(slot0)
 		return
 	end
 
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#go_spinecontainer"), false)
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#simage_skin"), true)
+	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/NewPlayerCardView/main/top/role/skinnode/#simage_role"), true)
 	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
 		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
 	end, nil)
@@ -892,11 +891,10 @@ function slot0._onPlayerCardViewUpdate(slot0)
 		return
 	end
 
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#go_spinecontainer"), true)
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#simage_skin"), false)
+	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/NewPlayerCardView/main/top/#simage_role"), false)
 
-	slot3 = slot0._curViewInfo[6]
-	slot4 = slot0._curViewInfo[7]
+	slot2 = slot0._curViewInfo[6]
+	slot3 = slot0._curViewInfo[7]
 
 	TaskDispatcher.runDelay(function ()
 		uv0._uiSpine = GuiModelAgent.Create(gohelper.find(uv0._curViewInfo[5]), true)

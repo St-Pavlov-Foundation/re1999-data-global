@@ -140,10 +140,14 @@ function slot0.refreshCollectionBaseInfo(slot0, slot1, slot2)
 
 	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot4))
 
+	slot0._itemInstTab = slot0._itemInstTab or slot0:getUserDataTb_()
+
 	if slot1 then
-		RougeCollectionHelper.refreshCollectionEffectInfosById(slot1.id, slot0._godescContent, slot0._godescitem)
+		RougeCollectionDescHelper.setCollectionDescInfos(slot1.id, slot0._godescContent, slot0._itemInstTab)
 	else
-		RougeCollectionHelper.refreshCollectionEffectInfos(slot4, slot3, slot0._godescContent, slot0._godescitem)
+		RougeCollectionDescHelper.setCollectionDescInfos2(slot4, slot3, slot0._godescContent, slot0._itemInstTab, nil, {
+			isAllActive = true
+		})
 	end
 
 	recthelper.setHeight(slot0._scrollcollectiondesc.transform, (slot2 and slot2.holeNum or 0) > 0 and uv0 or uv1)

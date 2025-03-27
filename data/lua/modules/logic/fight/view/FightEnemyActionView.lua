@@ -198,14 +198,17 @@ function slot0.refreshCardItem(slot0, slot1)
 		return
 	end
 
-	slot5 = slot3:getCO() and slot4.skinId
+	slot5 = slot3.modelId
 
-	if slot5 and FightConfig.instance:getSkinCO(slot5) then
+	if slot3.skin and FightConfig.instance:getSkinCO(slot4) then
 		slot1.simageHeadIcon:LoadImage(ResUrl.monsterHeadIcon(slot6.headIcon))
-		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(slot4.heartVariantId), slot1.imageHeadIcon)
+
+		if not FightEntityDataHelper.isPlayerUid(slot3.id) then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(slot3:getCO().heartVariantId), slot1.imageHeadIcon)
+		end
 	end
 
-	UISpriteSetMgr.instance:setFightSprite(slot1.imageQualityBg, slot0:isBoss(slot4.id) and "fight_enemyaction_headbg3" or "fight_enemyaction_headbg1")
+	UISpriteSetMgr.instance:setFightSprite(slot1.imageQualityBg, slot0:isBoss(slot5) and "fight_enemyaction_headbg3" or "fight_enemyaction_headbg1")
 	slot1.actionCardItem:refreshCard()
 end
 

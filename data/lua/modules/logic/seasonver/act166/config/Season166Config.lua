@@ -17,7 +17,9 @@ function slot0.reqConfigNames(slot0)
 		"activity166_info_bonus",
 		"activity166_info",
 		"activity166_talent",
-		"activity166_talent_style"
+		"activity166_talent_style",
+		"activity166_word_effect",
+		"activity166_word_effect_pos"
 	}
 end
 
@@ -48,6 +50,12 @@ function slot0.onConfigLoaded(slot0, slot1, slot2)
 		slot0._infoBonusConfig = slot2
 	elseif slot1 == "activity166_info" then
 		slot0._infoConfig = slot2
+	elseif slot1 == "activity166_word_effect" then
+		slot0._wordEffectConfig = slot2
+
+		slot0:buildSeasonWordEffectConfig()
+	elseif slot1 == "activity166_word_effect_pos" then
+		slot0._wordEffectPosConfig = slot2
 	end
 
 	slot0._episodeId2Config = {}
@@ -199,6 +207,30 @@ end
 
 function slot0.getSeasonInfoBonuss(slot0, slot1)
 	return slot0._infoBonusConfig.configDict[slot1]
+end
+
+function slot0.buildSeasonWordEffectConfig(slot0)
+	slot0.wordEffectConfigMap = slot0.wordEffectConfigMap or {}
+
+	for slot5, slot6 in ipairs(slot0._wordEffectConfig.configList) do
+		if not slot0.wordEffectConfigMap[slot6.activityId] then
+			slot0.wordEffectConfigMap[slot6.activityId] = {}
+		end
+
+		if not slot7[slot6.type] then
+			slot7[slot6.type] = {}
+		end
+
+		table.insert(slot7[slot6.type], slot6)
+	end
+end
+
+function slot0.getSeasonWordEffectConfigList(slot0, slot1, slot2)
+	return slot0.wordEffectConfigMap[slot1] and slot0.wordEffectConfigMap[slot1][slot2]
+end
+
+function slot0.getSeasonWordEffectPosConfig(slot0, slot1, slot2)
+	return slot0._wordEffectPosConfig.configDict[slot1] and slot0._wordEffectPosConfig.configDict[slot1][slot2]
 end
 
 function slot0.getSeasonConfigByEpisodeId(slot0, slot1)

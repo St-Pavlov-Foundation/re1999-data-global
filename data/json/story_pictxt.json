@@ -538,5 +538,101 @@
     "de": "",
     "fr": "",
     "thai": ""
+  },
+  {
+    "id": 2401,
+    "fontType": 1,
+    "zh": "<size=50><color=#FFFFFF>这只是一场简单的考核，不是去战场上送死。</color></size>",
+    "tw": "",
+    "en": "<size=50><color=#FFFFFF>这只是一场简单的考核，不是去战场上送死。</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2402,
+    "fontType": 1,
+    "zh": "<size=40><color=#FFFFFF>……船长，APPLe某对此似乎有些印象。</color></size>",
+    "tw": "",
+    "en": "<size=40><color=#FFFFFF>……船长，APPLe某对此似乎有些印象。</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2403,
+    "fontType": 1,
+    "zh": "<size=72><color=#FFFFFF>嗯……因为你是无理数，才会被盯上的吧。</color></size>",
+    "tw": "",
+    "en": "<size=72><color=#FFFFFF>嗯……因为你是无理数，才会被盯上的吧。</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2404,
+    "fontType": 1,
+    "zh": "<size=40><color=#FFFFFF>所以这是不可能的谜题吗？</color></size>",
+    "tw": "",
+    "en": "<size=40><color=#FFFFFF>所以这是不可能的谜题吗？</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2405,
+    "fontType": 1,
+    "zh": "<size=72><color=#FFFFFF>你在害怕吗？</color></size>",
+    "tw": "",
+    "en": "<size=72><color=#FFFFFF>你在害怕吗？</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2406,
+    "fontType": 1,
+    "zh": "<size=50><color=#FFFFFF>船长——！</color></size>",
+    "tw": "",
+    "en": "<size=50><color=#FFFFFF>船长——！</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2407,
+    "fontType": 1,
+    "zh": "<size=72><color=#FFFFFF>快跟上来，星锑。</color></size>",
+    "tw": "",
+    "en": "<size=72><color=#FFFFFF>快跟上来，星锑。</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2408,
+    "fontType": 1,
+    "zh": "<size=60><color=#FFFFFF>祝你好运，星锑研究员。</color></size>",
+    "tw": "",
+    "en": "<size=60><color=#FFFFFF>祝你好运，星锑研究员。</color></size>",
+    "kr": "",
+    "jp": "",
+    "de": "",
+    "fr": "",
+    "thai": ""
   }
 ]

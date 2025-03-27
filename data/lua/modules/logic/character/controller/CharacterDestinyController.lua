@@ -15,10 +15,6 @@ function slot0.reInit(slot0)
 end
 
 function slot0.openCharacterDestinySlotView(slot0, slot1)
-	if not slot1:isCanOpenDestinySystem() then
-		return
-	end
-
 	ViewMgr.instance:openView(ViewName.CharacterDestinySlotView, {
 		heroMo = slot1
 	})

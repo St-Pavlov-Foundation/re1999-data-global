@@ -18,6 +18,7 @@ function slot0.onSceneStart(slot0, slot1, slot2)
 	FightAudioMgr.instance:init()
 	FightVideoMgr.instance:init()
 	FightSkillMgr.instance:init()
+	FightConfig.instance:_checkSkill()
 
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High) == ModuleEnum.Performance.High then
 		SpineFpsMgr.instance:set(SpineFpsMgr.FightScene)

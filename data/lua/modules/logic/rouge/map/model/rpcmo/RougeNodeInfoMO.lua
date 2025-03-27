@@ -17,6 +17,7 @@ function slot0.init(slot0, slot1)
 	slot0.arriveStatus = RougeMapEnum.Arrive.CantArrive
 	slot0.interactive9drop = slot1.interactive9drop
 	slot0.interactive10drop = slot1.interactive10drop
+	slot0.interactive14drop = slot1.interactive14drop
 	slot0.fog = slot1.fog
 end
 

@@ -34,6 +34,7 @@ function slot0._initSkinConfig(slot0)
 		slot0._characterSkinCoList = {}
 		slot0._live2dSkinDic = {}
 		slot0._skinFolderNameMap = {}
+		slot0._skinStoreGoodsDict = {}
 
 		for slot5, slot6 in ipairs(slot0._skinConfig.configList) do
 			if not string.nilorempty(slot6.live2d) and not string.nilorempty(slot6.verticalDrawing) then
@@ -53,7 +54,17 @@ function slot0._initSkinConfig(slot0)
 			end
 
 			table.insert(slot7, slot6)
+
+			if slot6.skinStoreId ~= 0 then
+				slot0._skinStoreGoodsDict[slot6.skinStoreId] = slot6.id
+			end
 		end
+	end
+end
+
+function slot0.isSkinStoreGoods(slot0, slot1)
+	if slot0._skinStoreGoodsDict then
+		return slot0._skinStoreGoodsDict[slot1] ~= nil, slot0._skinStoreGoodsDict[slot1]
 	end
 end
 

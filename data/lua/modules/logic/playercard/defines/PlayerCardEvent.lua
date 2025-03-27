@@ -12,5 +12,13 @@ slot0.SwitchTheme = 1008
 slot0.RefreshMainHeroSkin = 1009
 slot0.CloseLayout = 1010
 slot0.SelectNumChange = 1011
+slot0.SelectCritter = 1012
+slot0.OnCloseHeroView = 1013
+slot0.OnCloseProgressView = 1014
+slot0.OnCloseBaseInfoView = 1015
+slot0.OnCloseCritterView = 1016
+slot0.RefreshProgressView = 1017
+slot0.RefreshBaseInfoView = 1018
+slot0.OnCloseBottomView = 1019
 
 return slot0

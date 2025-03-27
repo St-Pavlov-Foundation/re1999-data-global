@@ -23,6 +23,8 @@ function slot0.onInitView(slot0)
 	slot0._btnInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_info", AudioEnum.UI.UI_role_introduce_open)
 	slot0._btnRule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rule")
 	slot0._btnDetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/desc/#txt_skinname/GameObject/#btn_faj", AudioEnum.UI.play_artificial_ui_carddisappear)
+	slot0._goexpup = gohelper.findChild(slot0.viewGO, "right/title/#go_expup")
+	slot0._btntitleClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/title/#btn_titleClick")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -41,6 +43,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, slot0._forcePlayBonusAnim, slot0)
 	slot0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, slot0._toSwitchTab, slot0)
 	slot0.viewContainer:registerCallback(BpEvent.TaskTabChange, slot0._taskTabChange, slot0)
+	slot0._btntitleClick:AddClickListener(slot0._btntitleClickOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -55,6 +58,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, slot0._forcePlayBonusAnim, slot0)
 	slot0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, slot0._toSwitchTab, slot0)
 	slot0.viewContainer:unregisterCallback(BpEvent.TaskTabChange, slot0._taskTabChange, slot0)
+	slot0._btntitleClick:RemoveClickListener()
 end
 
 function slot0._editableInitView(slot0)
@@ -79,6 +83,7 @@ function slot0._editableInitView(slot0)
 	RedDotController.instance:addRedDot(slot0._taskRedDot, RedDotEnum.DotNode.BattlePassTaskMain)
 	RedDotController.instance:addRedDot(slot0._bonusRedDot, RedDotEnum.DotNode.BattlePassBonus)
 	slot0:_initToggle()
+	gohelper.setActive(slot0._goexpup, BpModel.instance:isShowExpUp())
 end
 
 function slot0._forcePlayBonusAnim(slot0)
@@ -182,7 +187,7 @@ function slot0._updateLevelScore(slot0, slot1)
 	slot0._txtLevel.text = math.floor(BpModel.instance.score / slot2)
 	slot0._txtScore.text = BpModel.instance.score % slot2 .. "/" .. slot2
 
-	if CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore) <= BpModel.instance.weeklyScore then
+	if BpModel.instance:getWeeklyMaxScore() <= BpModel.instance.weeklyScore then
 		slot0._txtWeeklyLimit.text = slot5 .. "/" .. slot6
 	else
 		slot0._txtWeeklyLimit.text = "<color=#CAC8C5>" .. slot5 .. "/" .. slot6
@@ -220,6 +225,12 @@ function slot0.setSliderValue(slot0, slot1)
 	slot0._sliderScore:SetValue(slot1)
 
 	slot0._sliderImage.fillAmount = slot1
+end
+
+function slot0._btntitleClickOnClick(slot0)
+	if BpModel.instance:isShowExpUp() then
+		ToastController.instance:showToast(ToastEnum.BpExpUp)
+	end
 end
 
 return slot0

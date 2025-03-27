@@ -2486,5 +2486,341 @@
     "titleEn": "The Answer",
     "labelRes": "8",
     "storyBg": "singlebg/v2a3_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 24,
+    "part": 1,
+    "title": "language_10062388",
+    "titleEn": "A Message Delivered",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 2,
+    "title": "language_10062390",
+    "titleEn": "\"Free Breeze\"",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 3,
+    "title": "language_10062392",
+    "titleEn": "Cryptography for Beginners",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 4,
+    "title": "language_10062394",
+    "titleEn": "Music of the Era",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 5,
+    "title": "language_10062396",
+    "titleEn": "The Day We Set Sail",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 6,
+    "title": "language_10062398",
+    "titleEn": "As Home Fades",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 7,
+    "title": "language_10062400",
+    "titleEn": "Music or Light",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 8,
+    "title": "language_10062402",
+    "titleEn": "An Old Song at Sea",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 9,
+    "title": "language_10034002",
+    "titleEn": "Science Salon",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 10,
+    "title": "language_10062405",
+    "titleEn": "Piracy—Not the Fun Kind.",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 11,
+    "title": "language_10062407",
+    "titleEn": "The Hateful Hometown",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 12,
+    "title": "language_10062409",
+    "titleEn": "Clashing Genres",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 13,
+    "title": "language_10062411",
+    "titleEn": "End of the Sun",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 14,
+    "title": "language_10062413",
+    "titleEn": "A Call for Help",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 15,
+    "title": "language_10062415",
+    "titleEn": "A New Page Turned",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 16,
+    "title": "language_10062417",
+    "titleEn": "Barcarolle",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 17,
+    "title": "language_10045953",
+    "titleEn": "Dissonance",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 18,
+    "title": "language_10062420",
+    "titleEn": "The 27 Club",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 19,
+    "title": "language_10062422",
+    "titleEn": "The Pain of Missing Home",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 20,
+    "title": "language_10062424",
+    "titleEn": "To Elsewhere, To Home",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 21,
+    "title": "language_10062426",
+    "titleEn": "Final Farewell",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 22,
+    "title": "language_10062428",
+    "titleEn": "Without Regret",
+    "labelRes": "22",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 23,
+    "title": "language_10062430",
+    "titleEn": "Finding Home on the Waves",
+    "labelRes": "23",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 24,
+    "title": "language_10062527",
+    "titleEn": "From the Depths of Space",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 25,
+    "title": "language_10065313",
+    "titleEn": "\"Humanitarian\" Management",
+    "labelRes": "0",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 26,
+    "title": "language_10056553",
+    "titleEn": "A New Friend",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 27,
+    "title": "language_10065314",
+    "titleEn": "A Welcome Party",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 28,
+    "title": "language_10065315",
+    "titleEn": "Unwanted Noise",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 29,
+    "title": "language_10065316",
+    "titleEn": "No More Idleness",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 30,
+    "title": "language_10065317",
+    "titleEn": "\"Humanitarian\" Approach",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 31,
+    "title": "language_10065318",
+    "titleEn": "A Not-so-happy Birthday",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 32,
+    "title": "language_10065319",
+    "titleEn": "Ergodicity",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 33,
+    "title": "language_10065320",
+    "titleEn": "\"Nebular Hypothesis\"",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 34,
+    "title": "language_10062384",
+    "titleEn": "Beyond the Coastline",
+    "labelRes": "0",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 35,
+    "title": "language_10062432",
+    "titleEn": "VIP Barrel Seat",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 36,
+    "title": "language_10022223",
+    "titleEn": "Promised Destinations",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 37,
+    "title": "language_10062433",
+    "titleEn": "A Monotonous Rondo",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 38,
+    "title": "language_10062434",
+    "titleEn": "Passion and Hesitation",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 39,
+    "title": "language_10062435",
+    "titleEn": "The Indivisible",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 40,
+    "title": "language_10062436",
+    "titleEn": "Into the Vast World",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 41,
+    "title": "language_10062437",
+    "titleEn": "Farewell, Cremona",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 24,
+    "part": 42,
+    "title": "language_10062438",
+    "titleEn": "Such a Serene Evening",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

@@ -26,7 +26,7 @@ function slot0._onBtnSelect(slot0)
 
 		slot3 = slot3 + 1
 
-		gohelper.setSibling(slot2:insertIndex(slot3, slot0.config).keyword_gameObject, slot3 - 1)
+		gohelper.setSibling(slot2:addIndex(slot3, slot0.config).keyword_gameObject, slot3 - 1)
 	else
 		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and slot0.ITEM_LIST_MGR.lastSelectIndex and slot2 < #slot0.ITEM_LIST_MGR and slot2 > 0 then
 			for slot8 = math.min(slot2, slot1), math.max(slot2, slot1) do

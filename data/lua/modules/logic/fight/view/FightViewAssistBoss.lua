@@ -20,7 +20,8 @@ function slot0._editableInitView(slot0)
 	slot0.assistBossId2Behaviour = {
 		FightAssistBoss1,
 		FightAssistBoss2,
-		FightAssistBoss3
+		FightAssistBoss3,
+		FightAssistBoss4
 	}
 end
 

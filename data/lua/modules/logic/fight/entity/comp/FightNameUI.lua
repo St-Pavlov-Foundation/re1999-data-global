@@ -296,9 +296,11 @@ function slot0.updateUI(slot0)
 end
 
 function slot0._refreshCareer(slot0)
-	slot1 = slot0.entity:getMO()
+	slot2 = FightModel.instance:getVersion()
 
-	if FightModel.instance:getVersion() >= 2 and slot1.career ~= 0 then
+	if SkillEditorMgr.instance.inEditMode then
+		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot0.entity:getMO():getCO().career), true)
+	elseif slot2 >= 2 and slot1.career ~= 0 then
 		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot1.career), true)
 	else
 		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot1:getCO().career), true)

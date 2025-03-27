@@ -3,10 +3,11 @@ module("modules.configs.excel2json.lua_bp_task", package.seeall)
 slot1 = {
 	listenerType = 8,
 	name = 6,
-	jumpId = 17,
+	bonusScoreTimes = 22,
 	bonusMail = 14,
 	endTime = 19,
 	turnbackTask = 20,
+	jumpId = 17,
 	desc = 7,
 	listenerParam = 9,
 	bpId = 3,

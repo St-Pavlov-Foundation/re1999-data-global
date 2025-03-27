@@ -88,7 +88,8 @@ function slot0.reqConfigNames(slot0)
 		"ai_monster_target",
 		"ai_monster_card_tag",
 		"assist_boss_stance",
-		"fight_skin_replace_magic_effect"
+		"fight_skin_replace_magic_effect",
+		"simple_polarization"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then
@@ -462,11 +463,25 @@ function slot0.getSkillHeroId(slot0, slot1)
 	return slot0._skillHeroIdDict[slot1]
 end
 
+function slot0.setSkillDict(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot0._skillCurrCardLvDict = slot1
+	slot0._skillNextCardLvDict = slot2
+	slot0._skillPrevCardLvDict = slot3
+	slot0._skillHeroIdDict = slot4
+	slot0._skillMonsterIdDict = slot5
+	slot0.parseSkill = true
+end
+
+function slot0.isParsedSkill(slot0)
+	return slot0.parseSkill
+end
+
 function slot0._checkSkill(slot0)
-	if slot0._skillCurrCardLvDict then
+	if slot0.parseSkill then
 		return
 	end
 
+	slot0.parseSkill = true
 	slot0._skillCurrCardLvDict = {}
 	slot0._skillNextCardLvDict = {}
 	slot0._skillPrevCardLvDict = {}
@@ -474,63 +489,66 @@ function slot0._checkSkill(slot0)
 	slot0._skillMonsterIdDict = {}
 
 	for slot4, slot5 in ipairs(lua_character.configList) do
-		slot6 = {}
-
 		if not string.nilorempty(slot5.skill) then
-			for slot11, slot12 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot5.skill, true)) do
-				slot13 = slot12[2]
-				slot14 = slot12[3]
-				slot15 = slot12[4]
-				slot0._skillCurrCardLvDict[slot13] = 1
-				slot0._skillCurrCardLvDict[slot14] = 2
-				slot0._skillCurrCardLvDict[slot15] = 3
+			for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot5.skill, true)) do
+				slot12 = slot11[2]
+				slot13 = slot11[3]
+				slot14 = slot11[4]
+				slot0._skillCurrCardLvDict[slot12] = 1
+				slot0._skillCurrCardLvDict[slot13] = 2
+				slot0._skillCurrCardLvDict[slot14] = 3
+				slot0._skillNextCardLvDict[slot12] = slot13
 				slot0._skillNextCardLvDict[slot13] = slot14
-				slot0._skillNextCardLvDict[slot14] = slot15
+				slot0._skillPrevCardLvDict[slot13] = slot12
 				slot0._skillPrevCardLvDict[slot14] = slot13
-				slot0._skillPrevCardLvDict[slot15] = slot14
-				slot0._skillHeroIdDict[slot13] = slot5.id
-				slot0._skillHeroIdDict[slot14] = slot5.id
-				slot0._skillHeroIdDict[slot15] = slot5.id
+				slot15 = slot5.id
+				slot0._skillHeroIdDict[slot12] = slot15
+				slot0._skillHeroIdDict[slot13] = slot15
+				slot0._skillHeroIdDict[slot14] = slot15
 			end
 		end
 	end
 
 	for slot4, slot5 in ipairs(lua_skill_ex_level.configList) do
+		slot6 = slot5.heroId
+
 		if not string.nilorempty(slot5.skillGroup1) then
-			for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot5.skillGroup1, "|")) do
-				slot0._skillHeroIdDict[slot11] = slot5.heroId
-				slot0._skillCurrCardLvDict[slot11] = slot10
+			for slot12, slot13 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot7, "|")) do
+				slot0._skillHeroIdDict[slot13] = slot6
+				slot0._skillCurrCardLvDict[slot13] = slot12
 			end
 		end
 
 		if not string.nilorempty(slot5.skillGroup2) then
-			for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot5.skillGroup2, "|")) do
-				slot0._skillHeroIdDict[slot11] = slot5.heroId
-				slot0._skillCurrCardLvDict[slot11] = slot10
+			for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot8, "|")) do
+				slot0._skillHeroIdDict[slot14] = slot6
+				slot0._skillCurrCardLvDict[slot14] = slot13
 			end
 		end
 
-		slot0._skillHeroIdDict[slot5.skillEx] = slot5.heroId
+		slot0._skillHeroIdDict[slot5.skillEx] = slot6
 	end
 
 	for slot4, slot5 in ipairs(lua_monster.configList) do
-		if FightStrUtil.instance:getSplitString2Cache(slot5.activeSkill, true, "|", "#") then
-			for slot10, slot11 in ipairs(slot6) do
-				slot12 = 1
+		slot6 = slot5.id
 
-				for slot16, slot17 in ipairs(slot11) do
-					if lua_skill.configDict[slot17] then
-						slot0._skillMonsterIdDict[slot17] = slot5.id
-						slot0._skillCurrCardLvDict[slot17] = slot12
-						slot12 = slot12 + 1
+		if FightStrUtil.instance:getSplitString2Cache(slot5.activeSkill, true, "|", "#") then
+			for slot11, slot12 in ipairs(slot7) do
+				slot13 = 1
+
+				for slot17, slot18 in ipairs(slot12) do
+					if lua_skill.configDict[slot18] then
+						slot0._skillMonsterIdDict[slot18] = slot6
+						slot0._skillCurrCardLvDict[slot18] = slot13
+						slot13 = slot13 + 1
 					end
 				end
 			end
 		end
 
-		if slot5.uniqueSkill and #slot5.uniqueSkill > 0 then
-			for slot10, slot11 in ipairs(slot5.uniqueSkill) do
-				slot0._skillMonsterIdDict[slot11] = slot5.id
+		if slot5.uniqueSkill and #slot8 > 0 then
+			for slot12, slot13 in ipairs(slot8) do
+				slot0._skillMonsterIdDict[slot13] = slot6
 			end
 		end
 	end
@@ -755,7 +773,7 @@ end
 function slot0.getEntityName(slot0, slot1)
 	slot3 = FightDataHelper.entityMgr:getById(slot1) and slot2:getCO()
 
-	return slot3 and slot3.name
+	return slot3 and slot3.name or ""
 end
 
 function slot0._rebuildSkillEffectTab(slot0)

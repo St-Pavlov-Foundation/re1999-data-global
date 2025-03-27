@@ -10,5 +10,11 @@
     "motion": "baqiang1|baqiang2|baqiang3",
     "whenStopped": 0,
     "whenNotStopped": 0
+  },
+  {
+    "heroId": 3108,
+    "motion": "zhihui",
+    "whenStopped": 0,
+    "whenNotStopped": 0
   }
 ]

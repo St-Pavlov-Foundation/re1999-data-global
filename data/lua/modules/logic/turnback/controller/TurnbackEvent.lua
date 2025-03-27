@@ -9,5 +9,8 @@ return {
 	RefreshTaskRedDot = 6,
 	RefreshSignInScroll = 7,
 	RefreshRemainTime = 8,
-	RefreshView = 9
+	RefreshView = 9,
+	RefreshSignInItem = 10,
+	RefreshProgressItem = 11,
+	AfterBuyDoubleReward = 12
 }

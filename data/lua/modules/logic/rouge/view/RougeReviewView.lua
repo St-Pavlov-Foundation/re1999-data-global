@@ -44,39 +44,28 @@ function slot0._initStoryItems(slot0)
 	slot1 = RougeFavoriteConfig.instance:getStoryList()
 	slot0.storyList = slot1
 	slot2 = slot0.viewContainer:getSetting().otherRes[1]
-	slot3 = 1
-	slot4 = #slot1
-	slot5 = false
+	slot3 = false
+	slot5 = slot0:_splitStorysToStageList(slot1) and #slot4 or 0
+	slot0._unlockStageCount = 0
 
-	while slot3 <= slot4 do
-		slot6 = slot3
-		slot7 = slot1[slot3]
-		slot8, slot9 = slot0:_findNextSameStageStory(slot3, slot1)
-		slot10 = slot0:_getStoryItem(slot3, slot2)
-		slot9 = slot9 or {
-			slot1[slot3 + 1]
-		}
+	for slot9 = 1, slot5 - 1 do
+		slot11 = slot0:_getStoryItem(slot9, slot2)
 
-		if slot8 then
-			slot3 = slot8
-		end
+		slot11.item:setMaxUnlockStateId(slot0._unlockStageId)
+		slot11.item:onUpdateMO(slot4[slot9][1], slot9 >= slot5 - 1, slot0, slot4[slot9 + 1], slot2)
 
-		slot10.item:setMaxUnlockStateId(slot0._unlockStageId)
-		slot10.item:onUpdateMO(slot7, slot4 < slot3 + 1, slot0, slot9, slot2)
-
-		if not slot10.item:isUnlock() then
-			slot5 = false
+		if not slot11.item:isUnlock() then
+			slot3 = false
 
 			break
 		end
 
-		slot0._lastNodeIndex = slot6
+		slot0._unlockStageCount = slot0._unlockStageCount + 1
 	end
 
-	gohelper.setActive(slot0._goMask, not slot5)
+	gohelper.setActive(slot0._goMask, not slot3)
 
-	slot0._isEnd = slot5
-	slot0._lastNodeIndex = slot0._lastNodeIndex or 1
+	slot0._isEnd = slot3
 end
 
 function slot0._getStoryItem(slot0, slot1, slot2)
@@ -93,15 +82,42 @@ function slot0._getStoryItem(slot0, slot1, slot2)
 	return slot3
 end
 
-function slot0._findNextSameStageStory(slot0, slot1, slot2)
-	slot4 = slot2[slot1 + 2]
+function slot0._splitStorysToStageList(slot0, slot1)
+	slot2 = {}
+	slot3 = 1
 
-	if slot2[slot1 + 1] and slot4 and slot3.config.stageId == slot4.config.stageId then
-		return slot1 + 2, {
-			slot3,
-			slot4
-		}
+	while slot3 <= #slot1 do
+		slot5, slot6 = slot0:_findNextSameStageStory(slot3, slot1)
+		slot3 = slot5 + 1
+
+		table.insert(slot2, slot6)
 	end
+
+	return slot2
+end
+
+function slot0._findNextSameStageStory(slot0, slot1, slot2)
+	slot4, slot5 = nil
+
+	for slot9 = slot1, slot2 and #slot2 or 0 do
+		slot10 = slot2[slot9].config.stageId
+
+		if slot5 and slot5 ~= slot10 then
+			break
+		end
+
+		slot5 = slot10
+
+		table.insert(slot4 or {}, slot2[slot9])
+	end
+
+	slot6 = slot4 and #slot4 or 0
+
+	if not slot6 or slot6 <= 0 then
+		slot7 = slot1 + slot6 - 1 + 1
+	end
+
+	return slot7, slot4
 end
 
 function slot0._editableInitView(slot0)
@@ -117,7 +133,7 @@ function slot0._resetPos(slot0)
 	slot0._rootWidth = recthelper.getWidth(slot0.viewGO.transform)
 	slot0._viewportWidth = recthelper.getWidth(slot0._scrollview.transform)
 	slot0._curViewportWidth = slot0._viewportWidth
-	slot1 = (slot0._lastNodeIndex - 1) * slot0._itemContentWidth + slot0._itemIconWidth
+	slot1 = (slot0._unlockStageCount - 1) * slot0._itemContentWidth + slot0._itemIconWidth
 
 	if slot0._isEnd then
 		slot1 = slot1 + math.max(slot0._viewportWidth - slot1, 0) + slot0._itemContentWidth + slot0._itemIconWidth

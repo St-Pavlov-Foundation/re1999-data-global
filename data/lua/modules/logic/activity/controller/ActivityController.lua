@@ -95,7 +95,9 @@ slot1 = {
 	ActivityEnum.Activity.V2a3_Role_SignView_Part1,
 	ActivityEnum.Activity.V2a3_Role_SignView_Part2,
 	ActivityEnum.Activity.LinkageActivity_FullView,
-	ActivityEnum.Activity.V2a3_Special
+	ActivityEnum.Activity.V2a3_Special,
+	ActivityEnum.Activity.V2a4_Role_SignView_Part1,
+	ActivityEnum.Activity.V2a4_Role_SignView_Part2
 }
 slot2 = {
 	ActivityEnum.Activity.VersionActivity1_3Radio,
@@ -106,7 +108,8 @@ slot2 = {
 	ActivityEnum.Activity.V2a0_WarmUp,
 	ActivityEnum.Activity.V2a1_WarmUp,
 	ActivityEnum.Activity.RoomSign,
-	ActivityEnum.Activity.V2a3_WarmUp
+	ActivityEnum.Activity.V2a3_WarmUp,
+	ActivityEnum.Activity.V2a4_WarmUp
 }
 
 function slot0.checkGetActivityInfo(slot0)
@@ -144,6 +147,10 @@ function slot0.checkGetActivityInfo(slot0)
 
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a3_NewInsight) then
 		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a3_NewInsight)
+	end
+
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a4_NewInsight) then
+		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a4_NewInsight)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then

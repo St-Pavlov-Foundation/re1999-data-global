@@ -91,9 +91,11 @@ function slot0.onOpen(slot0)
 	slot0.collectionComp:onOpen()
 
 	slot0.lossCount = 1
+	slot0.collections = slot0.viewParam and slot0.viewParam.collections
+	slot0.collections = slot0.collections or RougeCollectionModel.instance:getAllCollections()
 
 	RougeLossCollectionListModel.instance:setLossType(RougeMapEnum.LossType.Exchange)
-	RougeLossCollectionListModel.instance:initList(slot0.lossCount, slot0.baseFilterTagDict, slot0.extraFilterTagDict)
+	RougeLossCollectionListModel.instance:initList(slot0.lossCount, slot0.collections, slot0.baseFilterTagDict, slot0.extraFilterTagDict)
 	slot0:refreshTitle()
 	slot0:refreshLeft()
 	slot0:refreshRight()

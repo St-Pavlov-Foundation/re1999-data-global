@@ -799,6 +799,61 @@ function slot0.checkShowNewRedDot(slot0, slot1)
 	return true
 end
 
+function slot0.isSkinGoodsCanRepeatBuy(slot0, slot1, slot2)
+	if not slot1 then
+		return false
+	end
+
+	slot4 = slot2 == nil
+
+	if slot2 == nil then
+		slot2 = string.splitToNumber(slot3.config.product, "#")[2]
+	end
+
+	if not SkinConfig.instance:getSkinCo(slot2) or string.nilorempty(slot5.repeatBuyTime) then
+		return false
+	end
+
+	if TimeUtil.stringToTimestamp(slot5.repeatBuyTime) < ServerTime.now() then
+		return false
+	end
+
+	if not slot3:isSoldOut() and slot4 and StoreConfig.instance:getSkinChargeGoodsId(slot2) then
+		slot8 = slot0._skinChargeDict[slot9] and slot10:isSoldOut()
+	end
+
+	return HeroModel.instance:checkHasSkin(slot2) and not slot8
+end
+
+function slot0.isSkinCanShowMessageBox(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	if not lua_skin.configDict[slot1] then
+		return
+	end
+
+	if not string.nilorempty(slot2.repeatBuyTime) and TimeUtil.stringToTimestamp(slot2.repeatBuyTime) < ServerTime.now() then
+		return
+	end
+
+	if slot2.skinStoreId == 0 then
+		return
+	end
+
+	if not slot0:getGoodsMO(slot4) then
+		return
+	end
+
+	if slot6.isOnline and (string.nilorempty(slot5.config.onlineTime) and slot3 or TimeUtil.stringToTimestamp(slot6.onlineTime) - ServerTime.clientToServerOffset()) <= slot3 and slot3 <= (string.nilorempty(slot6.offlineTime) and slot3 or TimeUtil.stringToTimestamp(slot6.offlineTime) - ServerTime.clientToServerOffset()) and not slot5:isSoldOut() and not (tabletool.indexOf(string.splitToNumber(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SkinCanShowMessageBox, ""), "#"), slot1) ~= nil) then
+		table.insert(slot12, slot1)
+		GameUtil.playerPrefsSetStringByUserId(slot10, table.concat(slot12, "#"))
+
+		return true
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

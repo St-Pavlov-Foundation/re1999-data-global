@@ -527,7 +527,7 @@ end
 function slot1._fillResByGuideId(slot0, slot1, slot2)
 	if slot0._guideId2HelpPageDict[slot1] then
 		for slot7, slot8 in ipairs(slot3) do
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.GuideHalpPage, ResUrl.getHelpItem(slot8.icon, slot8.isCn))
+			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.GuideHalpPage, ResUrl.getVersionActivityHelpItem(slot8.icon, slot8.isCn))
 		end
 	end
 end

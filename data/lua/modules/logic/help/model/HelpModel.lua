@@ -19,7 +19,13 @@ function slot0.getTargetPageIndex(slot0)
 end
 
 function slot0.updateShowedHelpId(slot0)
-	slot0.showedHelpIdList = string.splitToNumber(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.ShowHelpIds), "#")
+	if string.nilorempty(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.ShowHelpIds)) then
+		slot0.showedHelpIdList = {}
+	elseif string.sub(slot1, 1, 1) == "L" then
+		slot0.showedHelpIdList = NumberCompressUtil.decompress(string.sub(slot1, 2))
+	else
+		slot0.showedHelpIdList = string.splitToNumber(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.ShowHelpIds), "#")
+	end
 end
 
 function slot0.isShowedHelp(slot0, slot1)
@@ -46,7 +52,7 @@ function slot0.setShowedHelp(slot0, slot1)
 	end
 
 	table.insert(slot0.showedHelpIdList, slot1)
-	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.ShowHelpIds, table.concat(slot0.showedHelpIdList, "#"))
+	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.ShowHelpIds, "L" .. NumberCompressUtil.compress(slot0.showedHelpIdList))
 end
 
 slot0.instance = slot0.New()

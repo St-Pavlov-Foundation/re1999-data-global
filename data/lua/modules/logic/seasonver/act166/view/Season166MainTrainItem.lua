@@ -43,7 +43,8 @@ function slot0.onClickTrainItem(slot0)
 	slot1 = {
 		actId = slot0.actId,
 		trainId = slot0.trainId,
-		config = slot0.config
+		config = slot0.config,
+		viewType = Season166Enum.WordTrainType
 	}
 
 	if not slot0.canUnlock then

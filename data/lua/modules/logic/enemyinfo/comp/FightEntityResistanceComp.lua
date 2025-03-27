@@ -79,7 +79,7 @@ function slot0.refresh(slot0, slot1)
 			gohelper.setActive(slot0.resistanceItemList[slot6].go, false)
 		end
 
-		slot0.scroll.horizontalNormalizedPosition = 1
+		slot0.scroll.horizontalNormalizedPosition = 0
 
 		gohelper.setActive(slot0.goContainer, true)
 	else

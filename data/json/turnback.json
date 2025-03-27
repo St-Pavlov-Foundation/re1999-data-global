@@ -18,6 +18,37 @@
     "jumpId": 10401,
     "priority": 1,
     "bonusPointMaterial": "2#31",
-    "monthCardAddedId": 811512
+    "monthCardAddedId": 811512,
+    "endTime": "",
+    "canBuyDoubleBonus": false,
+    "buyDoubleBonusPrice": "",
+    "bonusList": "",
+    "onlineDurationDays": 0
+  },
+  {
+    "id": 2,
+    "bindActivityId": 10014,
+    "name": "language_10000052",
+    "offlineDays": 14,
+    "condition": "EpisodeFinish=10115",
+    "durationDays": 14,
+    "startStory": 501401,
+    "endStory": 501402,
+    "taskBonusMailId": 3097,
+    "subModuleIds": "106#107#108#109",
+    "onceBonus": "2#2#100|10#11#1|1#620103#1|2#3#10000|2#5#10000",
+    "additionDurationDays": 3,
+    "additionType": "2#4",
+    "additionRate": 1000,
+    "additionChapterIds": "401#501#701#702#703#704",
+    "jumpId": 10401,
+    "priority": 2,
+    "bonusPointMaterial": "2#31",
+    "monthCardAddedId": 811512,
+    "endTime": "",
+    "canBuyDoubleBonus": true,
+    "buyDoubleBonusPrice": "2#1#300",
+    "bonusList": "1#140001#1|2#2#1180|1#530001#4|1#620103#6|10#11#11|1#510010#3|9#1005#1|1#120013#1|1#180003#1|1#620102#60|1#481008#10|1#120012#4|2#10#220|1#620101#900|1#481003#14|2#3#43000|2#5#53000|2#23#260|9#1003#14|1#481006#6|1#481005#14",
+    "onlineDurationDays": 5
   }
 ]

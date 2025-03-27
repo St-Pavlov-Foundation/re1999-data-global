@@ -45,5 +45,9 @@ slot0.GuideId = {
 	WeekWalkDeep = 506,
 	RoomDailyOrder = 418
 }
+slot0.EventTrigger = {
+	MusicFreeView = 1,
+	Act178FoodNotEnough = 2
+}
 
 return slot0

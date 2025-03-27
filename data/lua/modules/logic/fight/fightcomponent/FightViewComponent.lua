@@ -7,6 +7,10 @@ function slot0.onInitialization(slot0)
 end
 
 function slot0.openSubView(slot0, slot1, slot2, slot3, ...)
+	if not slot1.IS_FIGHT_BASE_VIEW then
+		return slot0:openSubViewForBaseView(slot1, slot2, slot3, ...)
+	end
+
 	slot4 = slot0.PARENTROOTCLASS
 	slot5 = slot0:registClass(slot1, ...)
 	slot5.viewName = slot4.viewName

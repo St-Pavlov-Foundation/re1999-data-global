@@ -18,6 +18,7 @@ function slot0.addConstEvents(slot0)
 	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0.onUpdateTaskList, slot0)
 	TaskController.instance:registerCallback(TaskEvent.SetTaskList, slot0.onSetTaskList, slot0)
 	slot0:registerCallback(TowerEvent.DailyReresh, slot0.dailyReddotRefresh, slot0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 end
 
 function slot0.jumpView(slot0, slot1)
@@ -75,23 +76,37 @@ function slot0.openBossTowerEpisodeView(slot0, slot1, slot2, slot3)
 	end
 
 	slot4 = TowerModel.instance:getEpisodeMoByTowerType(slot1)
-	slot6 = TowerModel.instance:getTowerInfoById(slot1, slot2) and slot5.passLayerId or 0
+	slot5 = TowerModel.instance:getTowerInfoById(slot1, slot2)
 
-	if slot4:getEpisodeConfig(slot2, slot4:getNextEpisodeLayer(slot2, slot6) or slot6) then
-		(slot3 or {}).episodeConfig = slot8
+	if not TowerModel.instance:getTowerOpenInfo(slot1, slot2) then
+		return
+	end
 
-		if slot8.openRound > 0 then
-			ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, slot9)
+	slot7 = slot5 and slot5.passLayerId or 0
+
+	if slot4:getEpisodeConfig(slot2, slot4:getNextEpisodeLayer(slot2, slot7) or slot7) then
+		(slot3 or {}).episodeConfig = slot9
+
+		if slot9.openRound > 0 then
+			if slot5:isSpLayerOpen(slot9.layerId) then
+				ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, slot10)
+			else
+				slot10.episodeConfig = slot4:getEpisodeConfig(slot2, slot7)
+
+				ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, slot10)
+			end
 		else
-			ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, slot9)
+			ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, slot10)
 		end
 	end
 end
 
-function slot0.openAssistBossView(slot0, slot1, slot2)
+function slot0.openAssistBossView(slot0, slot1, slot2, slot3, slot4)
 	ViewMgr.instance:openView(ViewName.TowerAssistBossView, {
 		bossId = slot1,
-		isFromHeroGroup = slot2
+		isFromHeroGroup = slot2,
+		towerType = slot3,
+		towerId = slot4
 	})
 end
 
@@ -161,9 +176,9 @@ function slot0.openTowerPermanentView(slot0, slot1)
 end
 
 function slot0.openTowerTaskView(slot0, slot1)
-	slot2 = {
+	slot4 = {
 		towerType = slot1 and slot1.towerType or TowerEnum.TowerType.Limited,
-		towerId = slot1 and slot1.towerId or 1
+		towerId = slot1 and slot1.towerId or (TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() and slot2.towerId or 1)
 	}
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
@@ -172,6 +187,10 @@ function slot0.openTowerTaskView(slot0, slot1)
 		TowerTaskModel.instance:setCurSelectTowerTypeAndId(uv0.towerType, uv0.towerId)
 		ViewMgr.instance:openView(ViewName.TowerTaskView, uv1)
 	end)
+end
+
+function slot0.selectDefaultTowerTask(slot0)
+	TowerTaskModel.instance:setCurSelectTowerTypeAndId(TowerEnum.TowerType.Limited, TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() and slot1.towerId or 1)
 end
 
 function slot0.onUpdateTaskList(slot0, slot1)
@@ -297,6 +316,22 @@ function slot0.dailyReddotRefresh(slot0)
 	slot0:checkNewUpdateTowerRddotShow()
 end
 
+function slot0._onDailyRefresh(slot0)
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
+		TowerRpc.instance:sendGetTowerInfoRequest(slot0.towerTaskDataRequest, slot0)
+	end
+end
+
+function slot0.towerTaskDataRequest(slot0)
+	TaskRpc.instance:sendGetTaskInfoRequest({
+		TaskEnum.TaskType.Tower
+	}, slot0.dailyRefresh, slot0)
+end
+
+function slot0.dailyRefresh(slot0)
+	uv0.instance:dispatchEvent(TowerEvent.DailyReresh)
+end
+
 function slot0.saveNewUpdateTowerReddot(slot0)
 	if TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() then
 		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewTimeLimitOpen, slot1.id, slot1, TowerEnum.UnlockKey)
@@ -305,6 +340,17 @@ function slot0.saveNewUpdateTowerReddot(slot0)
 	for slot6, slot7 in ipairs(TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Boss)) do
 		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, slot7.towerId, slot7, TowerEnum.UnlockKey)
 	end
+end
+
+function slot0.checkTowerIsEnd(slot0, slot1, slot2)
+	if not TowerModel.instance:getTowerOpenInfo(slot1, slot2) or slot3.status ~= TowerEnum.TowerStatus.Open then
+		MessageBoxController.instance:showSystemMsgBox(slot1 == TowerEnum.TowerType.Boss and MessageBoxIdDefine.TowerEnd or MessageBoxIdDefine.TimeLimitTowerEnd, MsgBoxEnum.BoxType.Yes, uv0.yesCallback)
+	end
+end
+
+function slot0.yesCallback()
+	NavigateButtonsView.homeClick()
+	uv0.instance:openMainView()
 end
 
 slot0.instance = slot0.New()

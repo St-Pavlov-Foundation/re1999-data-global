@@ -53,7 +53,7 @@ function slot0.addEvents(slot0)
 	slot0._btnroleAttribute:AddClickListener(slot0._btnroleAttributeOnClick, slot0)
 	slot0._btnclosetipArea:AddClickListener(slot0._btnCloseTipOnClick, slot0)
 	slot0._btntakeoffallcube:AddClickListener(slot0._onBtnTakeOffAllCube, slot0)
-	slot0._btnrecommend:AddClickListener(slot0._onBtnPutTalentSchemeRequest, slot0)
+	slot0._btnrecommend:AddClickListener(slot0._showQuickLayoutPanel, slot0)
 	slot0._dropresonategroup:AddOnValueChanged(slot0._opDropdownChange, slot0)
 	slot0._dropClick:AddClickListener(slot0._onDropClick, slot0)
 	slot0._btnstylechange:AddClickListener(slot0._onStyleChangeClick, slot0)
@@ -98,6 +98,10 @@ function slot0._btnCloseTipOnClick(slot0)
 	slot0.cur_select_cell_data = nil
 
 	gohelper.setActive(slot0._gotip, false)
+
+	if slot0._quickLayoutPanel and slot0._quickLayoutPanel.gameObject.activeSelf then
+		slot0:_hideQuickLayoutPanel()
+	end
 end
 
 function slot0._editableInitView(slot0)
@@ -115,6 +119,7 @@ function slot0._editableInitView(slot0)
 	slot0._gomaxselect = gohelper.findChild(slot0.viewGO, "#go_check/#btn_check/selected")
 	slot0._gomaxunselect = gohelper.findChild(slot0.viewGO, "#go_check/#btn_check/unselect")
 	slot0._leftContentAnim = slot0._goContent:GetComponent(typeof(UnityEngine.Animator))
+	slot0._quickLayoutIcon = gohelper.findChild(slot0.viewGO, "#btn_recommend/cn/image_Arrow")
 
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.RefreshCubeList, slot0._onRefreshCubeList, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.ClickFirstResonanceCellItem, slot0._clickFirstResonanceCellItem, slot0)
@@ -123,6 +128,7 @@ function slot0._editableInitView(slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onUseTalentTemplateReply, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, slot0._onRenameTalentTemplateReply, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onUseTalentStyleReply, slot0)
+	slot0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onUseShareCode, slot0)
 end
 
 function slot0._showGuideDragEffect(slot0, slot1)
@@ -212,10 +218,17 @@ function slot0.onOpen(slot0)
 
 	slot0:_showMaxLvBtn()
 	slot0:_hideStyleUpdateAnim()
+	slot0:_initQuickLayoutItem()
 end
 
 function slot0._playScrollTween(slot0)
+	slot0._isPlayScrollTween = true
+
 	if slot0.own_cube_list then
+		if not slot0.cubeItemList then
+			slot0.cubeItemList = slot0:getUserDataTb_()
+		end
+
 		slot0._goContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = false
 		slot0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = false
 		slot0.parallel_sequence = slot0.parallel_sequence or FlowParallel.New()
@@ -252,10 +265,18 @@ function slot0._playScrollTween(slot0)
 				slot8:addWork(FunctionWork.New(function ()
 					uv0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = true
 					uv0._goContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = true
+					uv0._isPlayScrollTween = nil
 				end))
 			end
 
 			slot0.parallel_sequence:addWork(slot8)
+
+			slot11 = slot0:getUserDataTb_()
+			slot11.tr = slot6
+			slot11.cangroup = slot6:GetComponent(typeof(UnityEngine.CanvasGroup))
+			slot11.anchorY = slot7
+
+			table.insert(slot0.cubeItemList, slot11)
 		end
 
 		slot0.parallel_sequence:start({})
@@ -269,8 +290,6 @@ function slot0._onRefreshCubeList(slot0)
 		return
 	end
 
-	slot0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = true
-	slot0._goContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = true
 	slot0._goinspirationItem:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
 
 	slot0:_setChessboardData()
@@ -567,6 +586,7 @@ function slot0._refreshMainStyleCubeItem(slot0)
 	slot5 = string.split(slot1, "_")
 	slot6 = "gz_" .. slot5[#slot5]
 	slot7 = slot0.hero_mo_data:getHeroUseStyleCubeId()
+	slot0._showTalentStyle = slot7
 	slot8 = HeroResonanceConfig.instance:getCubeConfig(slot7)
 
 	if not (slot7 == slot0._mainCubeId) and slot8 and not string.nilorempty(slot8.icon) then
@@ -624,6 +644,26 @@ function slot0._setDebrisData(slot0)
 	gohelper.setActive(slot0._goEmpty, #slot1 == 0)
 	gohelper.setActive(slot0._goMaxLevel, #slot1 > 0)
 	gohelper.setActive(slot0._gostylechange, TalentStyleModel.instance:isUnlockStyleSystem(slot0.hero_mo_data.talent))
+
+	if slot0._isPlayScrollTween then
+		if slot0.parallel_sequence then
+			slot0.parallel_sequence:onDestroyInternal()
+
+			slot0.parallel_sequence = nil
+		end
+
+		if slot0.cubeItemList then
+			for slot6, slot7 in ipairs(slot0.cubeItemList) do
+				recthelper.setAnchorY(slot7.tr.transform, slot7.anchorY)
+
+				slot7.cangroup.alpha = 1
+			end
+		end
+
+		slot0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = true
+		slot0._goContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = true
+		slot0._isPlayScrollTween = nil
+	end
 end
 
 function slot0._onDebrisItemShow(slot0, slot1, slot2, slot3)
@@ -1383,52 +1423,35 @@ function slot0._onRenameTalentTemplateReply(slot0)
 end
 
 function slot0._onUseTalentStyleReply(slot0)
+	slot0:_cutTalentStyle()
+end
+
+function slot0._cutTalentStyle(slot0)
+	if slot0._showTalentStyle == slot0.hero_mo_data:getHeroUseCubeStyleId() then
+		return
+	end
+
+	slot0._showTalentStyle = slot1
 	slot0._isCanPlaySwitch = true
 
-	if slot0._cubeRoot[slot0._mainCubeId] then
+	if not slot0._mainCubeId then
+		slot0._mainCubeId = slot0.hero_mo_data.talentCubeInfos.own_main_cube_id
+	end
+
+	if slot0._cubeRoot and slot0._cubeRoot[slot0._mainCubeId] then
 		if slot0._cubeRoot[slot0._mainCubeId].root and slot0._cubeRoot[slot0._mainCubeId].item then
 			slot0:_refreshAttrItem(slot0._mainCubeId)
 		end
 	end
 
+	slot0:_onRefreshCubeList()
 	slot0:_setChessboardData()
 	slot0:_chooseOtherStyleOrTemplate()
 
 	slot0._canPlayCubeAnim = true
 
 	slot0:_initTemplateList()
-	slot0:_showMainCubeAttrTip()
 	slot0:_playMainCubeSwitchAnim()
-end
-
-function slot0._showMainCubeAttrTip(slot0)
-	if not slot0:_checkHasMainCubeInChess() then
-		return
-	end
-
-	slot1 = {}
-	slot6, slot7 = nil
-
-	slot0.hero_mo_data:getTalentStyleCubeAttr(slot0._mainCubeId, slot1, slot6, slot7)
-
-	slot2 = {}
-
-	for slot6, slot7 in pairs(slot1) do
-		table.insert(slot2, {
-			key = slot6,
-			value = slot7
-		})
-	end
-
-	slot0:_showAttrTip(slot2)
-end
-
-function slot0._checkHasMainCubeInChess(slot0)
-	for slot5, slot6 in pairs(slot0.hero_mo_data.talentCubeInfos.data_list) do
-		if slot6.cubeId == slot0._mainCubeId then
-			return true
-		end
-	end
 end
 
 function slot0._hideStyleUpdateAnim(slot0)
@@ -1515,6 +1538,88 @@ function slot0._onCopyTalentData(slot0)
 	ZProj.UGUIHelper.CopyText(slot2)
 end
 
+function slot0._initQuickLayoutItem(slot0)
+	slot0._quickLayoutPanel = gohelper.findChild(slot0.viewGO, "#btn_recommend/Template")
+
+	if not slot0._quickLayoutItems then
+		slot0._quickLayoutItems = slot0:getUserDataTb_()
+	end
+
+	for slot6, slot7 in ipairs(HeroResonanceEnum.QuickLayoutType) do
+		if not slot0._quickLayoutItems[slot6] then
+			slot8 = slot0:getUserDataTb_()
+			slot9 = gohelper.cloneInPlace(gohelper.findChild(slot0._quickLayoutPanel, "Viewport/Content/Item"), "toggle_" .. slot6)
+			slot10 = gohelper.onceAddComponent(slot9, typeof(SLFramework.UGUI.ToggleWrap))
+
+			slot10:AddOnValueChanged(slot0._onToggleValueChanged, slot0, slot6)
+
+			slot8.go = slot9
+			slot8.toggle = slot10
+			slot8.icon = gohelper.findChild(slot9, "BG")
+			slot8.txt = gohelper.findChildText(slot9, "Text")
+			slot11 = luaLang(slot7.name)
+			slot8.txt.text = slot7.isNeedParam and GameUtil.getSubPlaceholderLuaLangOneParam(slot11, HeroResonaceModel.instance:getSpecialCn(slot0.hero_mo_data)) or slot11
+			slot0._quickLayoutItems[slot6] = slot8
+
+			gohelper.setActive(slot8.icon, false)
+		end
+
+		gohelper.setActive(slot0._quickLayoutItems[slot6].go, true)
+	end
+end
+
+function slot0._onToggleValueChanged(slot0, slot1)
+	if slot1 == 1 then
+		if not string.nilorempty(HeroResonaceModel.instance:getCurLayoutShareCode(slot0.hero_mo_data)) then
+			ZProj.UGUIHelper.CopyText(slot2)
+			GameFacade.showToast(ToastEnum.CharacterTalentShareCodeCopy)
+			HeroResonaceModel.instance:saveShareCode(slot2)
+			HeroResonanceController.instance:statShareCode(slot0.hero_mo_data, false)
+		else
+			ToastController.instance:showToast(ToastEnum.CharacterTalentEmptyLayout, HeroResonaceModel.instance:getSpecialCn(slot0.hero_mo_data))
+		end
+	elseif slot1 == 2 then
+		ViewMgr.instance:openView(ViewName.CharacterTalentChessCopyView, {
+			heroMo = slot0.hero_mo_data
+		})
+	else
+		slot0:_onBtnPutTalentSchemeRequest()
+	end
+
+	slot0:_hideQuickLayoutPanel()
+end
+
+function slot0._activeToggleGraphic(slot0, slot1)
+	if not slot0._quickLayoutItems then
+		return
+	end
+
+	for slot5, slot6 in ipairs(slot0._quickLayoutItems) do
+		if slot6.icon then
+			gohelper.setActive(slot6.icon.gameObject, slot1 == slot5)
+		end
+	end
+end
+
+function slot0._showQuickLayoutPanel(slot0)
+	if slot0._quickLayoutPanel then
+		slot1 = not slot0._quickLayoutPanel.gameObject.activeSelf
+
+		gohelper.setActive(slot0._quickLayoutPanel, slot1)
+		transformhelper.setLocalScale(slot0._quickLayoutIcon.transform, 1, slot1 and -1 or 1, 1)
+	end
+end
+
+function slot0._hideQuickLayoutPanel(slot0)
+	gohelper.setActive(slot0._quickLayoutPanel, false)
+	transformhelper.setLocalScale(slot0._quickLayoutIcon.transform, 1, 1, 1)
+end
+
+function slot0._onUseShareCode(slot0, slot1)
+	slot0:_cutTalentStyle()
+	HeroResonanceController.instance:statShareCode(slot0.hero_mo_data, true)
+end
+
 function slot0.onDestroyView(slot0)
 	if slot0.parallel_sequence then
 		slot0.parallel_sequence:destroy()
@@ -1566,6 +1671,12 @@ function slot0.onDestroyView(slot0)
 		slot0._dragEffectLoader:dispose()
 
 		slot0._dragEffectLoader = nil
+	end
+
+	if slot0._quickLayoutItems then
+		for slot6, slot7 in ipairs(slot0._quickLayoutItems) do
+			slot7.toggle:RemoveOnValueChanged()
+		end
 	end
 end
 

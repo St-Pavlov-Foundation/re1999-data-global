@@ -1,1 +1,65 @@
-[]
+[
+  {
+    "id": 1,
+    "type": 1,
+    "name": "language_10062515",
+    "nameEn": "Crew",
+    "displayPriority": 1
+  },
+  {
+    "id": 2,
+    "type": 3,
+    "name": "language_90001097",
+    "nameEn": "Date of Departure",
+    "displayPriority": 2
+  },
+  {
+    "id": 3,
+    "type": 2,
+    "name": "language_10062516",
+    "nameEn": "Days into Journey",
+    "displayPriority": 3
+  },
+  {
+    "id": 4,
+    "type": 2,
+    "name": "language_10062517",
+    "nameEn": "Max Level Characters",
+    "displayPriority": 4
+  },
+  {
+    "id": 5,
+    "type": 2,
+    "name": "language_10062518",
+    "nameEn": "Character Lending",
+    "displayPriority": 5
+  },
+  {
+    "id": 6,
+    "type": 2,
+    "name": "language_10062519",
+    "nameEn": "Maximum Bonds",
+    "displayPriority": 6
+  },
+  {
+    "id": 7,
+    "type": 2,
+    "name": "language_10062520",
+    "nameEn": "Garments Owned",
+    "displayPriority": 7
+  },
+  {
+    "id": 8,
+    "type": 2,
+    "name": "language_10062521",
+    "nameEn": "Cellular Activity Consumed",
+    "displayPriority": 8
+  },
+  {
+    "id": 9,
+    "type": 2,
+    "name": "language_10062522",
+    "nameEn": "Main Interface Interactions",
+    "displayPriority": 9
+  }
+]

@@ -164,7 +164,9 @@ function slot0._playMouthActionList(slot0, slot1)
 		end
 
 		if slot0._autoBizui then
-			slot5 = slot0._faceEndTime
+			if slot0._faceEndTime < slot4 then
+				slot5 = slot4
+			end
 
 			slot0:_addMouthBizui(false, slot4, slot5)
 			slot0:_addMouthBizui(true, slot5, slot5 + 1)

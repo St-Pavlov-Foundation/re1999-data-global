@@ -4,35 +4,31 @@ slot0 = FightDataBase("FightHandCardDataMgr")
 
 function slot0.ctor(slot0)
 	slot0.handCard = {}
-	slot0.redealCardProto = {}
+	slot0.originCard = {}
+	slot0.redealCard = {}
+end
+
+function slot0.setOriginCard(slot0)
+	FightDataHelper.coverData(slot0.handCard, slot0.originCard)
 end
 
 function slot0.updateHandCardByProto(slot0, slot1)
-	slot2 = {}
-
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = FightCardInfoMO.New()
-
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
-	end
-
-	FightDataHelper.coverData(slot2, slot0.handCard)
+	FightDataHelper.coverData(FightCardDataHelper.newCardList(slot1), slot0.handCard)
 end
 
 function slot0.cacheDistributeCard(slot0, slot1)
-	slot0.beforeCards1 = slot1.beforeCards1
-	slot0.teamACards1 = slot1.teamACards1
-	slot0.beforeCards2 = slot1.beforeCards2
-	slot0.teamACards2 = slot1.teamACards2
+	slot0.beforeCards1 = FightCardDataHelper.newCardList(slot1.beforeCards1)
+	slot0.teamACards1 = FightCardDataHelper.newCardList(slot1.teamACards1)
+	slot0.beforeCards2 = FightCardDataHelper.newCardList(slot1.beforeCards2)
+	slot0.teamACards2 = FightCardDataHelper.newCardList(slot1.teamACards2)
 end
 
-function slot0.cacheRedealProto(slot0, slot1)
-	table.insert(slot0.redealCardProto, slot1)
+function slot0.cacheRedealCard(slot0, slot1)
+	table.insert(slot0.redealCard, FightCardDataHelper.newCardList(slot1))
 end
 
-function slot0.getRedealProto(slot0)
-	return table.remove(slot0.redealCardProto, 1)
+function slot0.getRedealCard(slot0)
+	return table.remove(slot0.redealCard, 1)
 end
 
 function slot0.getHandCard(slot0)
@@ -40,25 +36,9 @@ function slot0.getHandCard(slot0)
 end
 
 function slot0.distribute(slot0, slot1, slot2)
-	slot3 = {}
-
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = FightCardInfoMO.New()
-
-		slot9:init(slot8)
-		table.insert(slot3, slot9)
-	end
-
-	FightDataHelper.coverData(slot3, slot0.handCard)
-
-	for slot7, slot8 in ipairs(slot2) do
-		slot9 = FightCardInfoMO.New()
-
-		slot9:init(slot8)
-		table.insert(slot0.handCard, slot9)
-	end
-
-	FightCardDataHelper.combineCardList(slot0.handCard)
+	FightDataHelper.coverData(slot1, slot0.handCard)
+	tabletool.addValues(slot0.handCard, FightDataHelper.coverData(slot2))
+	FightCardDataHelper.combineCardListForLocal(slot0.handCard)
 end
 
 return slot0

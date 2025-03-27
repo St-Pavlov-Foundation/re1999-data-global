@@ -1,11 +1,12 @@
 module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeall)
 
-slot0 = class("PlayerCardAchievement", BasePlayerCardComp)
+slot0 = class("PlayerCardAchievement", BaseView)
 
 function slot0.onInitView(slot0)
-	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0.txtDec = gohelper.findChildTextMesh(slot0.viewGO, "#txt_dec")
-	slot0.goAchievement = gohelper.findChild(slot0.viewGO, "#go_achievement")
+	slot0.go = gohelper.findChild(slot0.viewGO, "main/achieve")
+	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.go, "#btn_click")
+	slot0.txtDec = gohelper.findChildTextMesh(slot0.go, "#txt_dec")
+	slot0.goAchievement = gohelper.findChild(slot0.go, "#go_achievement")
 	slot0.goSingle = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer")
 	slot0.goSingleItem = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer/horizontal/#go_singleitem")
 	slot0.goSingleSelectedEffect = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer/selected_eff")
@@ -26,20 +27,39 @@ function slot0.playSelelctEffect(slot0)
 	PlayerCardController.instance:playChangeEffectAudio()
 end
 
-function slot0.addEventListeners(slot0)
+function slot0.addEvents(slot0)
 	slot0.btnClick:AddClickListener(slot0.btnClickOnClick, slot0)
 	slot0:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, slot0.onRefreshView, slot0)
 end
 
-function slot0.removeEventListeners(slot0)
+function slot0.removeEvents(slot0)
 	slot0.btnClick:RemoveClickListener()
 	slot0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, slot0.onRefreshView, slot0)
 end
 
+function slot0.onOpen(slot0)
+	slot0.userId = slot0.viewParam.userId
+	slot0.itemRes = slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes.achieveitem)
+
+	slot0:onRefreshView()
+end
+
+function slot0.getCardInfo(slot0)
+	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+end
+
+function slot0.isPlayerSelf(slot0)
+	return slot0:getCardInfo() and slot1:isSelf()
+end
+
+function slot0.getPlayerInfo(slot0)
+	return slot0:getCardInfo() and slot1:getPlayerInfo()
+end
+
 function slot0.btnClickOnClick(slot0)
-	if slot0:isPlayerSelf() and slot0.compType == PlayerCardEnum.CompType.Normal then
+	if slot0:isPlayerSelf() then
 		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
-			ViewMgr.instance:openView(ViewName.AchievementSelectView)
+			ViewMgr.instance:openView(ViewName.PlayerCardAchievementSelectView)
 		else
 			GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Achievement))
 		end
@@ -47,7 +67,7 @@ function slot0.btnClickOnClick(slot0)
 end
 
 function slot0.onRefreshView(slot0)
-	if slot0.cardInfo.achievementCount == -1 then
+	if slot0:getCardInfo().achievementCount == -1 then
 		slot0.txtDec.text = PlayerCardEnum.EmptyString2
 	else
 		slot0.txtDec.text = tostring(slot1.achievementCount)
@@ -57,29 +77,29 @@ function slot0.onRefreshView(slot0)
 end
 
 function slot0._refreshAchievements(slot0)
-	slot3, slot4 = PlayerViewAchievementModel.instance:getShowAchievements(slot0:getPlayerInfo().showAchievement)
-	slot5 = not slot4 or tabletool.len(slot4) <= 0
+	slot4, slot5 = PlayerViewAchievementModel.instance:getShowAchievements(slot0:getCardInfo():getShowAchievement() or slot0:getPlayerInfo().showAchievement)
+	slot6 = not slot5 or tabletool.len(slot5) <= 0
 
-	gohelper.setActive(slot0.goEmpty, slot5)
-	gohelper.setActive(slot0.goGroup, slot3 and not slot5)
-	gohelper.setActive(slot0.goSingle, not slot3 and not slot5)
+	gohelper.setActive(slot0.goEmpty, slot6)
+	gohelper.setActive(slot0.goGroup, slot4 and not slot6)
+	gohelper.setActive(slot0.goSingle, not slot4 and not slot6)
 
-	if slot0.notIsFirst and slot0.showStr ~= slot2 then
+	if slot0.notIsFirst and slot0.showStr ~= slot3 then
 		slot0:playSelelctEffect()
 	end
 
-	slot0.showStr = slot2
+	slot0.showStr = slot3
 	slot0.notIsFirst = true
 
-	if slot5 then
+	if slot6 then
 		return
 	end
 
-	if not slot3 then
-		slot0:_refreshSingle(slot4)
+	if not slot4 then
+		slot0:_refreshSingle(slot5)
 	else
-		for slot9, slot10 in pairs(slot4) do
-			slot0:_refreshGroup(slot9, slot10)
+		for slot10, slot11 in pairs(slot5) do
+			slot0:_refreshGroup(slot10, slot11)
 
 			break
 		end

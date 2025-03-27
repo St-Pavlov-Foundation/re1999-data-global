@@ -82,7 +82,7 @@ function slot0._isOwnHero(slot0)
 		return
 	end
 
-	if slot0.heroMo:isOtherPlayerHero() or slot0.heroMo:isTrial() then
+	if slot0.heroMo:isOtherPlayerHero() then
 		return
 	end
 
@@ -253,7 +253,7 @@ function slot0._onRefreshDestinySystem(slot0)
 end
 
 function slot0._isShowDestinyReddot(slot0)
-	if not slot0:_isOwnHero() then
+	if not slot0:_isOwnHero() or slot0.heroMo:isTrial() then
 		return
 	end
 

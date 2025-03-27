@@ -23,7 +23,7 @@ function slot0.onInitView(slot0)
 	SkillHelper.addHyperLinkClick(slot0.txtDesc, slot0._onHyperLinkClick, slot0)
 
 	slot0.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.txtDesc.gameObject, FixTmpBreakLine)
-	slot0.imgBossHead = gohelper.findChildImage(slot0.viewGO, "BOSS/Head/#image_PassHead")
+	slot0.bossIcon = gohelper.findChildSingleImage(slot0.viewGO, "BOSS/Head/Mask/image_bossIcon")
 	slot0.txtActiveCount = gohelper.findChildTextMesh(slot0.viewGO, "BOSS/#txt_PassLevel")
 	slot0.btnResetAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "BOSS/btn_reset")
 	slot0.txtPoint = gohelper.findChildTextMesh(slot0.viewGO, "Tips/txt_point")
@@ -228,7 +228,7 @@ function slot0.refreshBoss(slot0)
 	slot1, slot2 = slot0.bossMo:getTalentActiveCount()
 	slot0.txtActiveCount.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towertalent_already_light"), slot1, slot1 + slot2)
 
-	UISpriteSetMgr.instance:setTowerSprite(slot0.imgBossHead, string.format("towerbossepisodet_passheadicon%s", slot0.bossId))
+	slot0.bossIcon:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(slot0.bossId).skinId) and slot5.headIcon))
 	gohelper.setActive(slot0.btnResetAll, TowerAssistBossModel.instance:getById(slot0.bossId) ~= nil)
 end
 
@@ -293,6 +293,7 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
+	slot0.bossIcon:UnLoadImage()
 end
 
 return slot0

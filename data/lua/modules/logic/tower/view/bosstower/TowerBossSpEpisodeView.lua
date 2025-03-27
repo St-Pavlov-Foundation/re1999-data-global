@@ -5,6 +5,7 @@ slot0 = class("TowerBossSpEpisodeView", BaseView)
 function slot0.onInitView(slot0)
 	slot0.simageBoss = gohelper.findChildSingleImage(slot0.viewGO, "root/episodeNode/BOSS/#simage_BossPic")
 	slot0.txtName = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/nameBg/txtName")
+	slot0.simageShadow = gohelper.findChildSingleImage(slot0.viewGO, "root/episodeNode/BOSS/#simage_BossShadow")
 	slot0.txtLev = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/#go_episodes/Bottom/txtCurEpisode")
 	slot0.goEpisodeInfo = gohelper.findChild(slot0.viewGO, "root/episodeInfo")
 	slot0.txtEpisodeIndex = gohelper.findChildTextMesh(slot0.goEpisodeInfo, "Title/txtIndex")
@@ -17,7 +18,9 @@ function slot0.onInitView(slot0)
 	slot0._txtrecommonddes = gohelper.findChildTextMesh(slot0.goEpisodeInfo, "#go_recommendAttr/#txt_recommonddes")
 	slot0._txtrecommendlevel = gohelper.findChildText(slot0.goEpisodeInfo, "recommend/#txt_recommendLevel")
 	slot0.btnStart = gohelper.findChildButtonWithAudio(slot0.goEpisodeInfo, "btnStart")
+	slot0.btnReStart = gohelper.findChildButtonWithAudio(slot0.goEpisodeInfo, "btnReStart")
 	slot0.goRewards = gohelper.findChild(slot0.goEpisodeInfo, "Reward/scroll_reward/Viewport/#go_rewards")
+	slot0.goItem = gohelper.findChild(slot0.goRewards, "goItem")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -26,10 +29,12 @@ end
 
 function slot0.addEvents(slot0)
 	slot0:addClickCb(slot0.btnStart, slot0._onBtnStartClick, slot0)
+	slot0:addClickCb(slot0.btnReStart, slot0._onBtnStartClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0:removeClickCb(slot0.btnStart)
+	slot0:removeClickCb(slot0.btnReStart)
 end
 
 function slot0._editableInitView(slot0)
@@ -78,6 +83,7 @@ function slot0.refreshView(slot0)
 	slot0.txtLev.text = slot0.bossInfo and slot0.bossInfo.level or 0
 
 	slot0.simageBoss:LoadImage(slot0.bossConfig.bossPic)
+	slot0.simageShadow:LoadImage(slot0.bossConfig.bossShadowPic)
 	slot0:refreshEpisodeList()
 	slot0:refreshEpisodeInfo()
 end
@@ -135,10 +141,11 @@ function slot0.onClickEpisode(slot0, slot1)
 end
 
 function slot0.refreshEpisodeInfo(slot0)
+	slot0.isPassLayer = slot0.selectLayerId <= slot0.towerMo.passLayerId
 	slot2 = DungeonConfig.instance:getEpisodeCO(slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot0.selectLayerId).episodeId)
 	slot0.txtEpisodeIndex.text = string.format("SP-%s", slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot0.selectLayerId))
 	slot0.txtEpisodeName.text = slot2.name
-	slot0.txtEpisodeNameEn.text = slot2.nameEn
+	slot0.txtEpisodeNameEn.text = slot2.name_En
 	slot0.txtEpisodeDesc.text = slot2.desc
 
 	if FightHelper.getBattleRecommendLevel(slot2.battleId) >= 0 then
@@ -158,6 +165,12 @@ function slot0.refreshEpisodeInfo(slot0)
 	end
 
 	slot0:refreshRewards(slot1.firstReward)
+	gohelper.setActive(slot0.btnReStart, slot0.isPassLayer)
+	gohelper.setActive(slot0.btnStart, not slot0.isPassLayer)
+end
+
+function slot0._onRecommendCareerItemShow(slot0, slot1, slot2, slot3)
+	UISpriteSetMgr.instance:setHeroGroupSprite(gohelper.findChildImage(slot1, "icon"), "career_" .. slot2)
 end
 
 function slot0.refreshRewards(slot0, slot1)
@@ -169,14 +182,21 @@ function slot0.refreshRewards(slot0, slot1)
 
 	for slot6 = 1, math.max(#slot0.rewardItems, slot6) do
 		if not slot0.rewardItems[slot6] then
-			slot0.rewardItems[slot6] = IconMgr.instance:getCommonPropItemIcon(slot0.goRewards)
+			slot7 = slot0:getUserDataTb_()
+			slot7.go = gohelper.cloneInPlace(slot0.goItem)
+			slot7.goReward = gohelper.findChild(slot7.go, "reward")
+			slot7.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot7.goReward)
+			slot7.goHasGet = gohelper.findChild(slot7.go, "#goHasGet")
+			slot0.rewardItems[slot6] = slot7
 		end
 
 		gohelper.setActive(slot7.go, slot2[slot6] ~= nil)
 
 		if slot2[slot6] then
-			slot7:setMOValue(slot2[slot6][1], slot2[slot6][2], slot2[slot6][3], nil, true)
-			slot7:setScale(0.7)
+			slot7.itemIcon:setMOValue(slot2[slot6][1], slot2[slot6][2], slot2[slot6][3], nil, true)
+			slot7.itemIcon:setScale(0.7)
+			slot7.itemIcon:setCountTxtSize(51)
+			gohelper.setActive(slot7.goHasGet, slot0.isPassLayer)
 		end
 	end
 end
@@ -186,6 +206,7 @@ end
 
 function slot0.onDestroyView(slot0)
 	slot0.simageBoss:UnLoadImage()
+	slot0.simageShadow:UnLoadImage()
 end
 
 return slot0

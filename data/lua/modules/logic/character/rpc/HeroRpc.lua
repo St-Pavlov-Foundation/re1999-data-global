@@ -79,13 +79,17 @@ function slot0.onReceiveHeroSkinGainPush(slot0, slot1, slot2)
 		return
 	end
 
+	if not ({
+		skinId = slot2.skinId,
+		firstGain = slot2.firstGain
+	}).firstGain then
+		return
+	end
+
 	HeroModel.instance:onGainSkinList(slot2.skinId)
 
 	if slot2.getApproach == MaterialEnum.GetApproach.Task or slot2.getApproach == MaterialEnum.GetApproach.TaskAct then
-		TaskController.instance:getRewardByLine(slot2.getApproach, ViewName.CharacterSkinGainView, {
-			skinId = slot2.skinId,
-			firstGain = slot2.firstGain
-		})
+		TaskController.instance:getRewardByLine(slot2.getApproach, ViewName.CharacterSkinGainView, slot3)
 	elseif slot2.getApproach ~= MaterialEnum.GetApproach.NoviceStageReward then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, ViewName.CharacterSkinGainView, slot3)
 	else
@@ -302,6 +306,29 @@ function slot0.PutTalentSchemeRequest(slot0, slot1, slot2, slot3, slot4)
 	slot5.templateId = HeroModel.instance:getCurTemplateId(slot1)
 
 	slot0:sendMsg(slot5)
+end
+
+function slot0.setPutTalentCubeBatchRequest(slot0, slot1, slot2, slot3, slot4)
+	slot5 = HeroModule_pb.PutTalentCubeBatchRequest()
+	slot5.heroId = slot1
+	slot5.templateId = slot3
+	slot5.style = slot4
+
+	for slot9, slot10 in pairs(slot2) do
+		slot11 = slot5.putCubeInfo:add()
+		slot11.cubeId = slot10.cubeId
+		slot11.direction = slot10.direction
+		slot11.posX = slot10.posX
+		slot11.posY = slot10.posY
+	end
+
+	slot0:sendMsg(slot5)
+end
+
+function slot0.onReceivePutTalentCubeBatchReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		HeroResonanceController.instance:dispatchEvent(HeroResonanceEvent.UseShareCode, slot2)
+	end
 end
 
 function slot0.onReceivePutTalentSchemeReply(slot0, slot1, slot2)

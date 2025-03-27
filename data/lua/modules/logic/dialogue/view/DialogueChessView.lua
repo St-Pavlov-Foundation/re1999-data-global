@@ -77,9 +77,9 @@ function slot0.createChessItem(slot0, slot1)
 	gohelper.setActive(slot2.go, true)
 
 	slot2.animator = slot2.go:GetComponent(gohelper.Type_Animator)
-	slot2.imageChess = gohelper.findChildImage(slot2.go, "#chess")
+	slot2.imageChess = gohelper.findChildSingleImage(slot2.go, "#chess")
 
-	UISpriteSetMgr.instance:setDialogueChessSprite(slot2.imageChess, slot1.res, true)
+	slot2.imageChess:LoadImage(ResUrl.getChessDialogueSingleBg(slot1.res))
 
 	slot2.goTalking = gohelper.findChild(slot2.go, "#go_talking")
 	slot2.goFootShadow = gohelper.findChild(slot2.go, "light2")
@@ -102,6 +102,9 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
+	for slot4, slot5 in ipairs(slot0.chessItemList) do
+		slot5.imageChess:UnLoadImage()
+	end
 end
 
 return slot0

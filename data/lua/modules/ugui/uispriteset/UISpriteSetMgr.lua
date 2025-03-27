@@ -122,9 +122,15 @@ function slot0.ctor(slot0)
 	slot0._v2a3_main_activity = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_mainactivity_spriteset.asset")
 	slot0._v2a3_dungeon_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_dungeon.asset")
 	slot0._v2a3_zhixinquaner = slot0:newSpriteSetUnit("ui/spriteassets/v2a3_zhixinquaner_spriteset.asset")
+	slot0._v2a4_main_activity = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_mainactivity_spriteset.asset")
+	slot0._v2a4_dungeon_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_dungeon.asset")
+	slot0._v2a4_bakaluoer_spriteset = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_bakaluoer_spriteset.asset")
 	slot0._tower = slot0:newSpriteSetUnit("ui/spriteassets/tower.asset")
 	slot0._tower_permanent = slot0:newSpriteSetUnit("ui/spriteassets/tower_permanent.asset")
 	slot0._act174 = slot0:newSpriteSetUnit("ui/spriteassets/act174.asset")
+	slot0._act178 = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_tutushizi_spriteset.asset")
+	slot0._v2a4_wuerlixi_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_wuerlixi_spriteset.asset")
+	slot0._playercard = slot0:newSpriteSetUnit("ui/spriteassets/playercard.asset")
 end
 
 function slot0.newSpriteSetUnit(slot0, slot1)
@@ -608,6 +614,10 @@ function slot0.setV2a3DungeonSprite(slot0, slot1, slot2, slot3)
 	slot0._v2a3_dungeon_sprite:setSprite(slot1, slot2, slot3)
 end
 
+function slot0.setMusicSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a4_bakaluoer_spriteset:setSprite(slot1, slot2, slot3)
+end
+
 function slot0.setTowerSprite(slot0, slot1, slot2, slot3)
 	slot0._tower:setSprite(slot1, slot2, slot3)
 end
@@ -620,8 +630,28 @@ function slot0.setAct174Sprite(slot0, slot1, slot2, slot3)
 	slot0._act174:setSprite(slot1, slot2, slot3)
 end
 
+function slot0.setAct178Sprite(slot0, slot1, slot2, slot3, slot4)
+	slot0._act178:setSprite(slot1, slot2, slot3, slot4)
+end
+
 function slot0.setV2a3ZhiXinQuanErSprite(slot0, slot1, slot2, slot3)
 	slot0._v2a3_zhixinquaner:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a4DungeonSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a4_dungeon_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a4MainActivitySprite(slot0, slot1, slot2, slot3)
+	slot0._v2a4_main_activity:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a4WuErLiXiSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a4_wuerlixi_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setPlayerCardSprite(slot0, slot1, slot2, slot3)
+	slot0._playercard:setSprite(slot1, slot2, slot3)
 end
 
 function slot0.tryDispose(slot0)

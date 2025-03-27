@@ -2,10 +2,12 @@ module("modules.logic.fight.model.data.FightEntityDataMgr", package.seeall)
 
 slot0 = FightDataBase("FightEntityDataMgr")
 slot1 = {
-	sub = "sub",
-	sp = "sp",
+	normal = "normal",
 	assistBoss = "assistBoss",
-	normal = "normal"
+	ASFD_emitter = "ASFD_emitter",
+	sp = "sp",
+	sub = "sub",
+	player = "player"
 }
 
 function slot0.ctor(slot0)
@@ -34,6 +36,14 @@ function slot0.getSideList(slot0, slot1, slot2, slot3)
 	end
 
 	return slot4
+end
+
+function slot0.getPlayerList(slot0, slot1, slot2, slot3)
+	return slot0:getList(slot1, uv0.player, slot2, slot3)
+end
+
+function slot0.getMyPlayerList(slot0, slot1, slot2)
+	return slot0:getList(FightEnum.EntitySide.MySide, uv0.player, slot1, slot2)
 end
 
 function slot0.getNormalList(slot0, slot1, slot2, slot3)
@@ -78,6 +88,12 @@ end
 
 function slot0.getAssistBoss(slot0)
 	return slot0._sideDic[FightEnum.EntitySide.MySide][uv0.assistBoss][1]
+end
+
+function slot0.getASFDEntityMo(slot0, slot1)
+	slot3 = slot0._sideDic[slot1] and slot2[uv0.ASFD_emitter]
+
+	return slot3 and slot3[1]
 end
 
 function slot0.getDeadList(slot0, slot1, slot2)
@@ -132,6 +148,10 @@ end
 
 function slot0.getOriginSpList(slot0, slot1)
 	return slot0._sideDic[slot1][uv0.sp]
+end
+
+function slot0.getOriginASFDEmitterList(slot0, slot1)
+	return slot0._sideDic[slot1][uv0.ASFD_emitter]
 end
 
 function slot0.getOriginListById(slot0, slot1)
@@ -196,6 +216,32 @@ function slot0.isDeadUid(slot0, slot1)
 	return slot0._deadUids[slot1]
 end
 
+function slot0.removeEntity(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	if not slot0._entityDataDic[slot1] then
+		return
+	end
+
+	slot0._entityDataDic[slot1] = nil
+
+	for slot6, slot7 in pairs(slot0._sideDic) do
+		for slot11, slot12 in pairs(slot7) do
+			for slot16, slot17 in ipairs(slot12) do
+				if slot17.id == slot2.id then
+					table.remove(slot12, slot16)
+
+					break
+				end
+			end
+		end
+	end
+
+	return slot2
+end
+
 function slot0.getById(slot0, slot1)
 	return slot0._entityDataDic[slot1]
 end
@@ -216,6 +262,10 @@ function slot0.getOldEntityMO(slot0, slot1)
 	FightDataHelper.coverData(slot0:getById(slot1), slot2)
 
 	return slot2
+end
+
+function slot0.getAllEntityData(slot0)
+	return slot0._entityDataDic
 end
 
 function slot0.getAllEntityMO(slot0)
@@ -256,7 +306,7 @@ function slot0.addEntityMOByProto(slot0, slot1, slot2)
 	return slot0:addEntityMO(slot3)
 end
 
-function slot0.addEntityListByProto(slot0, slot1, slot2, slot3)
+function slot0.initEntityListByProto(slot0, slot1, slot2, slot3)
 	tabletool.clear(slot3)
 
 	for slot7, slot8 in ipairs(slot1) do
@@ -264,7 +314,7 @@ function slot0.addEntityListByProto(slot0, slot1, slot2, slot3)
 	end
 end
 
-function slot0.addOneEntityListByProto(slot0, slot1, slot2, slot3)
+function slot0.initOneEntityListByProto(slot0, slot1, slot2, slot3)
 	tabletool.clear(slot3)
 	table.insert(slot3, slot0:addEntityMOByProto(slot1, slot2))
 end
@@ -273,17 +323,33 @@ function slot0.updateData(slot0, slot1)
 	slot2 = slot0._sideDic[FightEnum.EntitySide.MySide]
 	slot3 = slot0._sideDic[FightEnum.EntitySide.EnemySide]
 
-	slot0:addEntityListByProto(slot1.attacker.entitys, FightEnum.EntitySide.MySide, slot2[uv0.normal])
-	slot0:addEntityListByProto(slot1.attacker.subEntitys, FightEnum.EntitySide.MySide, slot2[uv0.sub])
-	slot0:addEntityListByProto(slot1.attacker.spEntitys, FightEnum.EntitySide.MySide, slot2[uv0.sp])
-
-	if slot1.attacker:HasField("assistBoss") then
-		slot0:addOneEntityListByProto(slot1.attacker.assistBoss, FightEnum.EntitySide.MySide, slot2[uv0.assistBoss])
+	if slot1.attacker:HasField("playerEntity") then
+		slot0:initOneEntityListByProto(slot1.attacker.playerEntity, FightEnum.EntitySide.MySide, slot2[uv0.player])
 	end
 
-	slot0:addEntityListByProto(slot1.defender.entitys, FightEnum.EntitySide.EnemySide, slot3[uv0.normal])
-	slot0:addEntityListByProto(slot1.defender.subEntitys, FightEnum.EntitySide.EnemySide, slot3[uv0.sub])
-	slot0:addEntityListByProto(slot1.defender.spEntitys, FightEnum.EntitySide.EnemySide, slot3[uv0.sp])
+	slot0:initEntityListByProto(slot1.attacker.entitys, FightEnum.EntitySide.MySide, slot2[uv0.normal])
+	slot0:initEntityListByProto(slot1.attacker.subEntitys, FightEnum.EntitySide.MySide, slot2[uv0.sub])
+	slot0:initEntityListByProto(slot1.attacker.spEntitys, FightEnum.EntitySide.MySide, slot2[uv0.sp])
+
+	if slot1.attacker:HasField("assistBoss") then
+		slot0:initOneEntityListByProto(slot1.attacker.assistBoss, FightEnum.EntitySide.MySide, slot2[uv0.assistBoss])
+	end
+
+	if slot1.attacker:HasField("emitter") then
+		slot0:initOneEntityListByProto(slot1.attacker.emitter, FightEnum.EntitySide.MySide, slot2[uv0.ASFD_emitter])
+	end
+
+	if slot1.defender:HasField("playerEntity") then
+		slot0:initOneEntityListByProto(slot1.defender.playerEntity, FightEnum.EntitySide.EnemySide, slot3[uv0.player])
+	end
+
+	slot0:initEntityListByProto(slot1.defender.entitys, FightEnum.EntitySide.EnemySide, slot3[uv0.normal])
+	slot0:initEntityListByProto(slot1.defender.subEntitys, FightEnum.EntitySide.EnemySide, slot3[uv0.sub])
+	slot0:initEntityListByProto(slot1.defender.spEntitys, FightEnum.EntitySide.EnemySide, slot3[uv0.sp])
+
+	if slot1.defender:HasField("emitter") then
+		slot0:initOneEntityListByProto(slot1.defender.emitter, FightEnum.EntitySide.EnemySide, slot3[uv0.ASFD_emitter])
+	end
 end
 
 function slot0.clientTestSetEntity(slot0, slot1, slot2, slot3)

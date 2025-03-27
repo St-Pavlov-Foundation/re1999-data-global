@@ -3,7 +3,15 @@ module("modules.logic.pcInput.activityAdapter.ThirdDoorActivtiyAdapter", package
 slot0 = class("ThirdDoorActivtiyAdapter", BaseActivityAdapter)
 slot0.keytoFunction = {
 	[5] = function ()
-		ViewMgr.instance:openView(ViewName.ExploreMapView)
+		if ViewMgr.instance:isOpen(ViewName.ExploreMapView) then
+			ViewMgr.instance:closeView(ViewName.ExploreMapView)
+		else
+			if ViewMgr.instance:IsPopUpViewOpen() or not uv0.instance:getHeroCanMove() then
+				return
+			end
+
+			ViewMgr.instance:openView(ViewName.ExploreMapView)
+		end
 	end,
 	[6] = function ()
 		if not ExploreSimpleModel.instance.isShowBag then
@@ -13,6 +21,10 @@ slot0.keytoFunction = {
 		if ViewMgr.instance:isOpen(ViewName.ExploreBackpackView) then
 			ViewMgr.instance:closeView(ViewName.ExploreBackpackView)
 		else
+			if ViewMgr.instance:IsPopUpViewOpen() or not uv0.instance:getHeroCanMove() then
+				return
+			end
+
 			ViewMgr.instance:openView(ViewName.ExploreBackpackView)
 		end
 	end,
@@ -44,12 +56,40 @@ slot0.keytoFunction = {
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyThirdDoorItemSelect, 9)
 	end,
 	[16] = function ()
+		if ViewMgr.instance:isOpen(ViewName.HelpView) then
+			ViewMgr.instance:closeView(ViewName.HelpView)
+
+			return
+		end
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not uv0.instance:getHeroCanMove() then
+			return
+		end
+
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyThirdDoorHelp)
 	end,
 	[17] = function ()
+		if ViewMgr.instance:isOpen(ViewName.ExploreArchivesView) then
+			ViewMgr.instance:closeView(ViewName.ExploreArchivesView)
+
+			return
+		end
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not uv0.instance:getHeroCanMove() then
+			return
+		end
+
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyThirdDoorOpenBook)
 	end
 }
+
+function slot0.getHeroCanMove(slot0)
+	if ExploreController.instance:getMap() and slot1:getNowStatus() == ExploreEnum.MapStatus.Normal then
+		return true
+	end
+
+	return false
+end
 
 function slot0.ctor(slot0)
 	BaseActivityAdapter.ctor(slot0)

@@ -11,11 +11,15 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.LocalKeyChange, slot0.onLocalKeyChange, slot0)
 	slot0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.onTowerTaskUpdated, slot0)
+	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
 end
 
 function slot0.removeEvents(slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.LocalKeyChange, slot0.onLocalKeyChange, slot0)
 	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, slot0.onTowerTaskUpdated, slot0)
+	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
 end
 
 function slot0._editableInitView(slot0)
@@ -26,11 +30,24 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
 	slot0:refreshView()
 end
 
 function slot0.onTowerTaskUpdated(slot0)
 	slot0:refreshTask()
+end
+
+function slot0.onTowerUpdate(slot0)
+	slot0:refreshView()
+end
+
+function slot0.onLocalKeyChange(slot0)
+	if slot0.itemList then
+		for slot4, slot5 in ipairs(slot0.itemList) do
+			slot5:refreshTag()
+		end
+	end
 end
 
 function slot0.refreshView(slot0)

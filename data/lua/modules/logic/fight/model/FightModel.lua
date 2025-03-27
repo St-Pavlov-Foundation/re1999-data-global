@@ -45,7 +45,6 @@ function slot0.clear(slot0)
 	uv0.forceParallelSkill = false
 	slot0._curStage = nil
 	slot0._curWaveId = 1
-	slot0.indicatorDict = nil
 
 	FightPlayCardModel.instance:clearUsedCards()
 	slot0:resetRTPCSpeedTo1()
@@ -416,14 +415,8 @@ function slot0.updateFight(slot0, slot1, slot2)
 	slot0._battleId = slot1.battleId
 	slot0.exTeamStr = slot1.attacker.exTeamStr
 
-	if slot1:HasField("attacker") then
-		if #slot1.attacker.skillInfos > 0 then
-			slot0:_updatePlayerSkillInfo(slot1.attacker.skillInfos)
-		end
-
-		if #slot1.attacker.indicators > 0 then
-			slot0:_updateIndicatorInfo(slot1.attacker.indicators)
-		end
+	if slot1:HasField("attacker") and #slot1.attacker.skillInfos > 0 then
+		slot0:_updatePlayerSkillInfo(slot1.attacker.skillInfos)
 	end
 
 	if slot1:HasField("magicCircle") then
@@ -433,9 +426,10 @@ end
 
 function slot0.updateFightRound(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
-	FightLocalDataMgr.instance:cacheRoundProto(slot1)
-	FightDataMgr.instance:cacheRoundProto(slot1)
+	FightLocalDataMgr.instance:beforePlayRoundProto(slot1)
+	FightDataMgr.instance:beforePlayRoundProto(slot1)
 	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
+	FightLocalDataMgr.instance:afterPlayRoundProto(slot1)
 
 	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
 
@@ -486,9 +480,10 @@ end
 
 function slot0.updateClothSkillRound(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
-	FightLocalDataMgr.instance:cacheRoundProto(slot1)
-	FightDataMgr.instance:cacheRoundProto(slot1)
+	FightLocalDataMgr.instance:beforePlayRoundProto(slot1)
+	FightDataMgr.instance:beforePlayRoundProto(slot1)
 	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
+	FightLocalDataMgr.instance:afterPlayRoundProto(slot1)
 
 	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
 
@@ -636,51 +631,6 @@ end
 
 function slot0.getPrefsKeyFightPassModel()
 	return PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.FightPassModel
-end
-
-function slot0._updateIndicatorInfo(slot0, slot1)
-	slot0.indicatorDict = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = tonumber(slot6.inticatorId)
-		slot0.indicatorDict[slot7] = {
-			id = slot7,
-			num = slot6.num
-		}
-	end
-end
-
-function slot0.setIndicatorNum(slot0, slot1, slot2)
-	slot0.indicatorDict = slot0.indicatorDict or {}
-
-	if not slot0.indicatorDict[tonumber(slot1)] then
-		slot0.indicatorDict[slot1] = {
-			num = 0,
-			id = slot1
-		}
-	end
-
-	slot3.num = slot2
-
-	FightController.instance:dispatchEvent(FightEvent.OnIndicatorChange, slot1)
-end
-
-function slot0.clearIndicatorNum(slot0, slot1)
-	slot1 = tonumber(slot1)
-	slot0.indicatorDict = slot0.indicatorDict or {}
-	slot0.indicatorDict[slot1] = nil
-
-	FightController.instance:dispatchEvent(FightEvent.OnIndicatorChange, slot1)
-end
-
-function slot0.getIndicatorNum(slot0, slot1)
-	slot1 = tonumber(slot1)
-
-	return slot0.indicatorDict and slot0.indicatorDict[slot1] and slot0.indicatorDict[slot1].num or 0
-end
-
-function slot0.clearIndicator(slot0)
-	slot0.indicatorDict = nil
 end
 
 function slot0.setWaitIndicatorAnimation(slot0, slot1)

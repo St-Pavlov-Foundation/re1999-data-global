@@ -113,19 +113,21 @@ function slot0.refreshBtnBuy(slot0)
 end
 
 function slot0.isCanBuyGoods(slot0)
-	slot1 = false
+	slot1 = true
+	slot2 = true
 
-	if StoreConfig.instance:getRoomProductGoodsId(slot0._layoutItemMO and slot2.materialType, slot2 and slot2.itemId) and StoreModel.instance:getGoodsMO(slot5) then
-		slot7 = false
-
-		if slot6:getOfflineTime() > 0 then
-			slot7 = slot8 - ServerTime.now() <= 0
+	if StoreConfig.instance:getRoomProductGoodsId(slot0._layoutItemMO and slot3.materialType, slot3 and slot3.itemId) and StoreModel.instance:getGoodsMO(slot6) then
+		if slot7:getIsActivityGoods() then
+			slot1 = ActivityHelper.getActivityStatus(slot7.config.activityId) ~= ActivityEnum.ActivityStatus.Normal
+		else
+			slot8 = ServerTime.now()
+			slot1 = slot7:getIsPackageGoods() and (StoreModel.instance:getGoodsMO(slot7.config.bindgoodid) and (slot8 < TimeUtil.stringToTimestamp(slot9.config.onlineTime) or TimeUtil.stringToTimestamp(slot9.config.offlineTime) <= slot8) or true) or slot7:getOfflineTime() > 0 and slot9 <= slot8
 		end
 
-		slot1 = not slot7 and not slot6:isSoldOut() and slot6:checkJumpGoodCanOpen()
+		slot2 = slot7:isSoldOut()
 	end
 
-	return slot1
+	return not slot1 and not slot2 and slot7:checkJumpGoodCanOpen()
 end
 
 function slot0.onDestroyView(slot0)

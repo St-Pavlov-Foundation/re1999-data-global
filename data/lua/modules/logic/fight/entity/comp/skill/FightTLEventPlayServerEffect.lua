@@ -29,6 +29,10 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	if slot3[6] == "1" then
 		slot0:_playEffect(FightEnum.EffectType.MOVEBACK)
 	end
+
+	if slot3[7] == "1" then
+		slot0:_playEffect(FightEnum.EffectType.AVERAGELIFE)
+	end
 end
 
 function slot0._playEffect(slot0, slot1)

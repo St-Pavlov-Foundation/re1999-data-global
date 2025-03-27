@@ -181,12 +181,8 @@ function slot0.setTrainItemTab(slot0, slot1)
 end
 
 function slot0.checkHasNewUnlock(slot0)
-	if GameUtil.getTabLen(Season166Model.instance:getLocalUnlockState(Season166Enum.MainTrainLockSaveKey)) == 0 then
-		return true
-	end
-
 	for slot5, slot6 in pairs(slot0.trainItemTab) do
-		if slot6.item:getUnlockState() == Season166Enum.UnlockState and slot8 ~= slot1[slot5] then
+		if slot6.item:getUnlockState() == Season166Enum.UnlockState and slot8 ~= Season166Model.instance:getLocalUnlockState(Season166Enum.MainTrainLockSaveKey)[slot5] then
 			return true
 		end
 	end

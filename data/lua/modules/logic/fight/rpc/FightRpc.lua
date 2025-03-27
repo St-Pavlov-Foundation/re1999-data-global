@@ -98,6 +98,7 @@ function slot0.onReceiveResetRoundReply(slot0, slot1, slot2)
 			FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, FightCardModel.instance:getCardMO().cardGroup)
 		end
 
+		FightMgr.instance:cancelOperation()
 		FightController.instance:dispatchEvent(FightEvent.RespResetCard)
 		FightController.instance:dispatchEvent(FightEvent.ResetCard, slot3)
 	end
@@ -133,6 +134,7 @@ function slot0.sendBeginRoundRequest(slot0, slot1)
 end
 
 function slot0.onReceiveBeginRoundReply(slot0, slot1, slot2)
+	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.FightStateType.sendOperation2Server)
 	FightCardModel.instance:clearCardOps()
 	FightDataHelper.paTaMgr:resetOp()
 
@@ -162,6 +164,8 @@ function slot0.onReceiveBeginRoundReply(slot0, slot1, slot2)
 end
 
 function slot0.sendChangeSubHeroRequest(slot0, slot1, slot2)
+	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero)
+
 	slot3 = FightModule_pb.ChangeSubHeroRequest()
 	slot3.subHeroId = slot1
 	slot3.changeHeroId = slot2
@@ -170,7 +174,8 @@ function slot0.sendChangeSubHeroRequest(slot0, slot1, slot2)
 end
 
 function slot0.onReceiveChangeSubHeroReply(slot0, slot1, slot2)
-	FightController.instance:dispatchEvent(FightEvent.ReceiveChangeSubHeroReply)
+	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero)
+	FightController.instance:dispatchEvent(FightEvent.ReceiveChangeSubHeroReply, slot1)
 
 	if slot1 == 0 and slot2:HasField("round") then
 		FightModel.instance:updateFightRound(slot2.round)
@@ -180,6 +185,8 @@ function slot0.onReceiveChangeSubHeroReply(slot0, slot1, slot2)
 end
 
 function slot0.sendChangeSubHeroExSkillRequest(slot0, slot1)
+	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero)
+
 	slot2 = FightModule_pb.ChangeSubHeroExSkillRequest()
 	slot2.exSkillTarget = slot1
 
@@ -187,13 +194,14 @@ function slot0.sendChangeSubHeroExSkillRequest(slot0, slot1)
 end
 
 function slot0.onReceiveChangeSubHeroExSkillReply(slot0, slot1, slot2)
+	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero)
+	FightController.instance:dispatchEvent(FightEvent.ChangeSubHeroExSkillReply, slot1)
+
 	if slot1 == 0 and slot2:HasField("round") then
 		FightModel.instance:updateFightRound(slot2.round)
 		FightSystem.instance:startRound()
 		FightController.instance:dispatchEvent(FightEvent.RespBeginRound)
 	end
-
-	FightController.instance:dispatchEvent(FightEvent.ChangeSubHeroExSkillReply)
 end
 
 function slot0.sendReconnectFightRequest(slot0, slot1, slot2)
@@ -218,6 +226,7 @@ end
 
 function slot0.onReceiveCardInfoPush(slot0, slot1, slot2)
 	FightLocalDataMgr.instance.handCardMgr:updateHandCardByProto(slot2.cardGroup)
+	FightLocalDataMgr.instance.fieldMgr:dealCardInfoPush(slot2)
 
 	slot0._lastCardInfoPushMsg = slot2
 
@@ -229,6 +238,7 @@ end
 function slot0.dealCardInfoPushData(slot0)
 	if slot0._lastCardInfoPushMsg then
 		FightDataMgr.instance.handCardMgr:updateHandCardByProto(slot0._lastCardInfoPushMsg.cardGroup)
+		FightDataMgr.instance.fieldMgr:dealCardInfoPush(slot0._lastCardInfoPushMsg)
 		FightCardModel.instance:updateCard(slot0._lastCardInfoPushMsg)
 		FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
@@ -277,7 +287,7 @@ function slot0.onReceiveEndFightPush(slot0, slot1, slot2)
 
 	FightDataHelper.lastFightResult = slot2.record.fightResult
 
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.End)
+	FightMgr.instance:enterStage(FightStageMgr.StageType.End)
 
 	FightModel.instance.needFightReconnect = false
 
@@ -367,8 +377,8 @@ end
 
 function slot0.onReceiveRedealCardInfoPush(slot0, slot1, slot2)
 	if slot1 == 0 then
-		FightLocalDataMgr.instance.handCardMgr:cacheRedealProto(slot2)
-		FightDataMgr.instance.handCardMgr:cacheRedealProto(slot2)
+		FightLocalDataMgr.instance.handCardMgr:cacheRedealCard(slot2)
+		FightDataMgr.instance.handCardMgr:cacheRedealCard(slot2)
 		FightCardModel.instance:clearDistributeQueue()
 
 		FightCardModel.instance.redealCardInfoList = FightHelper.buildInfoMOs(slot2.dealCardGroup, FightCardInfoMO)

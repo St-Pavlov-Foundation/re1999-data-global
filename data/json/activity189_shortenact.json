@@ -4,5 +4,11 @@
     "version": "2-3",
     "settingId": 12607,
     "style": 1
+  },
+  {
+    "id": 2,
+    "version": "2-4",
+    "settingId": 12481,
+    "style": 2
   }
 ]

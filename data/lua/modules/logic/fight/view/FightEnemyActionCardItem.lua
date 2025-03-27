@@ -79,6 +79,8 @@ function slot0.hideOther(slot0)
 	gohelper.setActive(gohelper.findChild(slot0.goCard, "cardAppearEffectRoot"), false)
 	gohelper.setActive(gohelper.findChild(slot0.goCard, "#go_pcbtn"), false)
 	gohelper.setActive(gohelper.findChild(slot0.goCard, "layout"), false)
+	gohelper.setActive(gohelper.findChild(slot0.goCard, "asfd_icon"), false)
+	gohelper.setActive(gohelper.findChild(slot0.goCard, "asfd"), false)
 end
 
 function slot0.refreshCard(slot0)

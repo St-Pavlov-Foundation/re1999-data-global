@@ -40,6 +40,10 @@ function slot0._getOriginFloatType(slot0)
 				return FightEnum.FloatType.additional_damage
 			elseif slot2.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
 				return FightEnum.FloatType.crit_additional_damage
+			elseif slot2.effectType == FightEnum.EffectType.DAMAGE then
+				return FightHelper.isRestrain(slot0._fightStepMO.fromId, slot0._actEffectMO.targetId) and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+			elseif slot2.effectType == FightEnum.EffectType.CRIT then
+				return FightHelper.isRestrain(slot0._fightStepMO.fromId, slot0._actEffectMO.targetId) and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
 			elseif slot2.effectType == FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE then
 				return FightEnum.FloatType.damage_origin
 			elseif slot2.effectType == FightEnum.EffectType.DEADLYPOISONORIGINCRIT then

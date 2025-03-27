@@ -40,8 +40,9 @@ function slot0.refreshScore(slot0)
 		return
 	end
 
-	slot0.txtScore.text = FightModel.instance:getIndicatorNum(slot0.indicatorId)
-	slot0.txtScore1.text = FightModel.instance:getIndicatorNum(slot0.indicatorId)
+	slot1 = FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId)
+	slot0.txtScore.text = slot1
+	slot0.txtScore1.text = slot1
 end
 
 slot0.Duration = 0.5

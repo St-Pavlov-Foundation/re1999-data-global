@@ -156,6 +156,10 @@ function slot0.isStageOpen(slot0, slot1)
 		return true
 	end
 
+	if not slot0._season then
+		slot0._season = RougeOutsideModel.instance:season()
+	end
+
 	if not string.nilorempty(RougeRewardConfig.instance:getStageRewardConfigById(slot0._season, slot1).openTime) then
 		return TimeUtil.stringToTimestamp(slot2.openTime) <= ServerTime.now()
 	end

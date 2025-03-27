@@ -118,5 +118,10 @@
     "heroId": 3043,
     "motion": "xuanshi|baoxiong",
     "onlyStopCut": 1
+  },
+  {
+    "heroId": 3052,
+    "motion": "baoxiong",
+    "onlyStopCut": 1
   }
 ]

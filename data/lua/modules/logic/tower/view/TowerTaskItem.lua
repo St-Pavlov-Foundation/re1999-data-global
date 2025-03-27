@@ -140,11 +140,12 @@ function slot0.refreshReward(slot0)
 		slot8.itemIcon:showStackableNum2()
 		slot8.itemIcon:setHideLvAndBreakFlag(true)
 		slot8.itemIcon:hideEquipLvAndBreak(true)
+		gohelper.setActive(slot8.itemIcon.go, true)
 	end
 
 	for slot6 = #slot2 + 1, #slot0.rewardItemTab do
 		if slot0.rewardItemTab[slot6] then
-			gohelper.setActive(slot7.itemIcon.gameObject, false)
+			gohelper.setActive(slot7.itemIcon.go, false)
 		end
 	end
 end

@@ -4,6 +4,7 @@ slot0 = class("PlayerCardCharacterSwitchView", BaseView)
 
 function slot0.onInitView(slot0)
 	slot0.switchViewGO = gohelper.findChild(slot0.viewGO, "#go_characterswitchview/characterswitchview")
+	slot0._btnClose = gohelper.findChildButton(slot0.viewGO, "#go_characterswitchview/characterswitchview/#btn_close")
 	slot0._btnchange = gohelper.findChildButtonWithAudio(slot0.switchViewGO, "right/start/#btn_change", AudioEnum.UI.Store_Good_Click)
 	slot0._goshowing = gohelper.findChild(slot0.switchViewGO, "right/start/#go_showing")
 	slot0._scrollcard = gohelper.findChildScrollRect(slot0.switchViewGO, "right/mask/#scroll_card")
@@ -17,7 +18,7 @@ function slot0.onInitView(slot0)
 	slot0._gobgbottom = gohelper.findChild(slot0.switchViewGO, "left/#go_heroskin/#go_bgbottom")
 	slot0._scrollskin = gohelper.findChildScrollRect(slot0.switchViewGO, "left/#go_heroskin/#scroll_skin")
 	slot0._goheroskinItem = gohelper.findChild(slot0.switchViewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
-	slot0.animator = slot0.switchViewGO:GetComponent(typeof(UnityEngine.Animator))
+	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -28,6 +29,7 @@ function slot0.addEvents(slot0)
 	slot0._btnchange:AddClickListener(slot0._btnchangeOnClick, slot0)
 	slot0._btntimerank:AddClickListener(slot0._btntimerankOnClick, slot0)
 	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
+	slot0._btnClose:AddClickListener(slot0._btncloseOnClick, slot0)
 	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHero, slot0._onSwitchHero, slot0)
 	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroSkin, slot0._switchHeroSkin, slot0)
 	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroL2d, slot0._switchL2d, slot0)
@@ -39,6 +41,7 @@ function slot0.removeEvents(slot0)
 	slot0._btnchange:RemoveClickListener()
 	slot0._btntimerank:RemoveClickListener()
 	slot0._btnrarerank:RemoveClickListener()
+	slot0._btnClose:RemoveClickListener()
 end
 
 function slot0._editableInitView(slot0)
@@ -62,6 +65,14 @@ function slot0._editableInitView(slot0)
 	slot0._sortIndex = 2
 	slot0._asceTime = false
 	slot0._asceRare = false
+end
+
+function slot0._btncloseOnClick(slot0)
+	if not PlayerCardModel.instance:checkHeroDiff() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, PlayerCardCharacterSwitchViewContainer.yesCallback)
+	else
+		slot0:closeThis()
+	end
 end
 
 function slot0._btnchangeOnClick(slot0)
@@ -203,6 +214,7 @@ function slot0._updateHero(slot0, slot1, slot2, slot3, slot4)
 		skinId = slot0._skinId,
 		isL2d = slot0._isL2d
 	})
+	PlayerCardModel.instance:setSelectHero(slot0._heroId, slot0._skinId)
 end
 
 function slot0._onRefreshSwitchView(slot0)
@@ -256,7 +268,10 @@ function slot0._showSkinList(slot0, slot1, slot2)
 	end
 
 	slot6 = HeroModel.instance:getByHeroId(slot3)
-	slot7 = slot6.skinInfoList
+	slot7 = tabletool.copy(slot6.skinInfoList)
+
+	table.sort(slot7, uv0._sort)
+
 	slot8 = SkinInfoMO.New()
 
 	slot8:init({
@@ -275,7 +290,11 @@ function slot0._showSkinList(slot0, slot1, slot2)
 		slot0:_showSkinItem(slot3, slot14, slot14 == slot4)
 	end
 
-	recthelper.setAnchorY(slot0._gobgbottom.transform, uv0[math.min(#slot7, #uv0)])
+	recthelper.setAnchorY(slot0._gobgbottom.transform, uv1[math.min(#slot7, #uv1)])
+end
+
+function slot0._sort(slot0, slot1)
+	return slot0.skin < slot1.skin
 end
 
 function slot0.removeDuplicates(slot0, slot1)
@@ -315,6 +334,7 @@ end
 
 function slot0.onClose(slot0)
 	slot0.animator:Play("close")
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseHeroView)
 end
 
 function slot0.onDestroyView(slot0)

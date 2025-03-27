@@ -117,5 +117,33 @@
     "limit": 1,
     "price": "2#25#150",
     "version": 12001
+  },
+  {
+    "typeId": 11,
+    "itemId": 11804,
+    "limit": 1,
+    "price": "2#25#500",
+    "version": 12408
+  },
+  {
+    "typeId": 13,
+    "itemId": 1804,
+    "limit": 1,
+    "price": "2#25#350",
+    "version": 12408
+  },
+  {
+    "typeId": 13,
+    "itemId": 1806,
+    "limit": 1,
+    "price": "2#25#150",
+    "version": 12408
+  },
+  {
+    "typeId": 13,
+    "itemId": 1807,
+    "limit": 1,
+    "price": "2#25#150",
+    "version": 12408
   }
 ]

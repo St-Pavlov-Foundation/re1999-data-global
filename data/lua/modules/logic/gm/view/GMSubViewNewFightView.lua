@@ -71,6 +71,29 @@ function slot0.initViewContent(slot0)
 
 	slot0:addButton(slot0:getLineGroup(), "我方牌库", slot0.onClickMyCardDeck, slot0)
 	slot0:addButton(slot0:getLineGroup(), "敌方牌库", slot0.onClickEnemyCardDeck, slot0)
+	slot0:addLineIndex()
+
+	slot0.countASFDInput = slot0:addInputText(slot0:getLineGroup(), "", "奥术飞弹数量...", nil, , {
+		fsize = 30,
+		w = 200
+	})
+	slot0.optionStrList = {
+		"我方",
+		"敌方"
+	}
+	slot0.optionValueList = {
+		FightEnum.EntitySide.MySide,
+		FightEnum.EntitySide.EnemySide
+	}
+	slot0.sideASFDDrop = slot0:addDropDown(slot0:getLineGroup(), "奥术飞弹发射方:", slot0.optionStrList, nil, , {
+		fsize = 25,
+		label_w = 100,
+		total_w = 300,
+		drop_w = 200
+	})
+	slot0.toEntityASFDInput = slot0:addInputText(slot0:getLineGroup(), "", "奥术飞弹目标uid...")
+	slot0.btnSendASFD = slot0:addButton(slot0:getLineGroup(), "发射", slot0.onClickSendASFDBtn, slot0)
+
 	slot0:addTitleSplitLine("战中打印")
 	slot0:addLineIndex()
 
@@ -137,43 +160,55 @@ function slot0.onClickBtnEnterFightByMonsterGroupId(slot0)
 end
 
 function slot0.onClickBtnEnterFightByBattleId(slot0)
-	if tonumber(slot0.battleInput:GetText()) and lua_battle.configDict[slot2] then
-		slot4 = FightController.instance:setFightParamByBattleId(slot2)
+	if not (tonumber(slot0.battleInput:GetText()) and lua_battle.configDict[slot2]) then
+		slot4 = string.format("没有找到战斗id ：%s 对应的配置", slot2)
 
-		HeroGroupModel.instance:setParam(slot2, nil, )
+		logError(slot4)
+		ToastController.instance:showToastWithString(slot4)
 
-		if not HeroGroupModel.instance:getCurGroupMO() then
-			logError("current HeroGroupMO is nil")
-			GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
-
-			return
-		end
-
-		slot6, slot7 = slot5:getMainList()
-		slot8, slot9 = slot5:getSubList()
-		slot10 = slot5:getAllHeroEquips()
-
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
-		slot0:closeThis()
-
-		for slot14, slot15 in ipairs(lua_episode.configList) do
-			if slot15.battleId == slot2 then
-				slot4.episodeId = slot15.id
-				FightResultModel.instance.episodeId = slot15.id
-
-				DungeonModel.instance:SetSendChapterEpisodeId(slot15.chapterId, slot15.id)
-
-				break
-			end
-		end
-
-		if not slot4.episodeId then
-			slot4.episodeId = 10101
-		end
-
-		slot4:setMySide(slot5.clothId, slot6, slot8, slot10)
-		FightController.instance:sendTestFightId(slot4)
+		return
 	end
+
+	slot4 = nil
+
+	for slot8, slot9 in ipairs(lua_episode.configList) do
+		if slot9.battleId == slot2 or slot9.firstBattleId == slot2 then
+			slot4 = slot9
+
+			break
+		end
+	end
+
+	if not slot4 then
+		logError("没有找到战斗id对应的关卡id")
+		ToastController.instance:showToastWithString("没有找到战斗id对应的关卡id")
+
+		return
+	end
+
+	slot5 = FightController.instance:setFightParamByBattleId(slot2)
+
+	HeroGroupModel.instance:setParam(slot2, nil, )
+
+	if not HeroGroupModel.instance:getCurGroupMO() then
+		logError("current HeroGroupMO is nil")
+		GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
+
+		return
+	end
+
+	slot7, slot8 = slot6:getMainList()
+	slot9, slot10 = slot6:getSubList()
+
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
+	slot0:closeThis()
+
+	slot5.episodeId = slot4.id
+	FightResultModel.instance.episodeId = slot4.id
+
+	DungeonModel.instance:SetSendChapterEpisodeId(slot4.chapterId, slot4.id)
+	slot5:setMySide(slot6.clothId, slot7, slot9, slot6:getAllHeroEquips())
+	FightController.instance:sendTestFightId(slot5)
 end
 
 function slot0.onClickSimulateBattle(slot0)
@@ -268,6 +303,98 @@ end
 
 function slot0.onClickLogLife(slot0)
 	GMRpc.instance:sendGMRequest("fight printLife")
+end
+
+function slot0.onClickSendASFDBtn(slot0)
+	slot1 = tonumber(slot0.countASFDInput:GetText()) or 1
+	slot3 = slot0.optionValueList[slot0.sideASFDDrop:GetValue() + 1]
+
+	if not FightHelper.getEntity(slot0.toEntityASFDInput:GetText()) then
+		slot6 = nil
+		slot6 = (slot3 ~= FightEnum.TeamType.MySide or FightDataHelper.entityMgr:getEnemyNormalList()) and FightDataHelper.entityMgr:getMyNormalList()
+		slot4 = slot6 and slot6[1] and slot6[1].id
+		slot5 = FightHelper.getEntity(slot4)
+
+		if not slot4 then
+			ToastController.instance:showToastWithString("没有找到奥术飞弹目标实体")
+
+			return
+		end
+	end
+
+	for slot11 = 1, slot1 do
+		slot12 = FightStepMO.New()
+
+		slot12:init({
+			cardIndex = 1,
+			actType = 1,
+			fromId = (FightDataHelper.entityMgr:getASFDEntityMo(slot3) or slot0:createASFDEmitter(slot3)).id,
+			toId = slot4,
+			actId = FightASFDConfig.instance.skillId,
+			actEffect = {}
+		})
+		table.insert({}, slot12)
+	end
+
+	if slot0.asfdSequence then
+		slot0.asfdSequence:stop()
+	end
+
+	slot0.asfdSequence = FlowSequence.New()
+
+	for slot11, slot12 in ipairs(slot7) do
+		slot0.asfdSequence:addWork(FightASFDFlow.New(slot12, slot7[slot11 + 1], slot11))
+	end
+
+	slot0.asfdSequence:start()
+	slot0:closeThis()
+end
+
+function slot0.createASFDEmitter(slot0, slot1)
+	slot2 = FightEntityMO.New()
+
+	slot2:init({
+		skin = 0,
+		exSkillLevel = 0,
+		userId = 0,
+		career = 0,
+		exSkill = 0,
+		status = 0,
+		position = 0,
+		level = 0,
+		teamType = 0,
+		guard = 0,
+		subCd = 0,
+		exPoint = 0,
+		shieldValue = 0,
+		modelId = 0,
+		uid = slot1 == FightEnum.TeamType.MySide and "99998" or "-99998",
+		entityType = FightEnum.EntityType.ASFDEmitter,
+		side = slot1,
+		attr = {
+			defense = 0,
+			multiHpNum = 0,
+			hp = 0,
+			multiHpIdx = 0,
+			mdefense = 0,
+			technic = 0,
+			attack = 0
+		},
+		buffs = {},
+		skillGroup1 = {},
+		skillGroup2 = {},
+		passiveSkill = {},
+		powerInfos = {},
+		SummonedList = {}
+	})
+
+	slot2.side = slot1
+	slot2 = FightDataHelper.entityMgr:addEntityMO(slot2)
+
+	table.insert(FightDataHelper.entityMgr:getOriginASFDEmitterList(slot2.side), slot2)
+	(GameSceneMgr.instance:getCurScene() and slot4.entityMgr):addASFDUnit()
+
+	return slot2
 end
 
 return slot0

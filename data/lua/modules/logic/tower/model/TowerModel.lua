@@ -30,6 +30,7 @@ function slot0.onReceiveTowerBattleFinishPush(slot0, slot1)
 	slot0.fightFinishParam.bossLevel = slot1.bossLevel
 	slot0.fightFinishParam.teamLevel = slot1.teamLevel
 	slot0.fightFinishParam.layer = slot1.layer
+	slot0.fightFinishParam.historyHighScore = slot1.historyHighScore
 end
 
 function slot0.getFightFinishParam(slot0)
@@ -94,6 +95,14 @@ end
 
 function slot0.getTowerOpenList(slot0, slot1)
 	return slot0.towerOpenList[slot1] or {}
+end
+
+function slot0.getTowerOpenInfoByRound(slot0, slot1, slot2, slot3)
+	if not (slot0.towerOpenMap[slot1] and slot4[slot2]) then
+		return
+	end
+
+	return slot5[slot3]
 end
 
 function slot0.getTowerOpenInfo(slot0, slot1, slot2, slot3)
@@ -258,6 +267,7 @@ function slot0.resetTowerSubEpisode(slot0, slot1)
 
 	slot5:resetLayerInfos(slot4)
 	slot5:resetLayerScore(slot4)
+	slot5:updateHistoryHighScore(slot1.historyHighScore)
 end
 
 function slot0.getTowerInfoList(slot0, slot1)
@@ -322,7 +332,15 @@ function slot0.prefabKeyPrefs(slot0, slot1, slot2)
 		return slot1
 	end
 
-	return string.format("Tower_%s_%s_%s_%s", slot1, slot2.type, slot2.towerId, slot2.round)
+	slot3 = slot2.type
+	slot4 = slot2.towerId
+	slot5 = slot2.round
+
+	if slot1 == TowerEnum.LocalPrefsKey.NewBossOpen then
+		slot5 = 1
+	end
+
+	return string.format("Tower_%s_%s_%s_%s", slot1, slot3, slot4, slot5)
 end
 
 function slot0.hasNewBossOpen(slot0)
@@ -353,6 +371,20 @@ end
 
 function slot0.isBossBan(slot0, slot1)
 	return slot0:getRecordFightParam().banAssistBossDict and slot3[slot1] ~= nil
+end
+
+function slot0.isLimitTowerBossBan(slot0, slot1, slot2, slot3)
+	if slot1 == TowerEnum.TowerType.Limited then
+		if TowerConfig.instance:getTowerLimitedTimeCo(slot2) then
+			for slot9, slot10 in ipairs(string.splitToNumber(slot4.bossPool, "#")) do
+				if slot10 == slot3 then
+					return false
+				end
+			end
+		end
+
+		return true
+	end
 end
 
 function slot0.isInTowerBattle(slot0)
@@ -401,6 +433,18 @@ function slot0.getFirstUnOpenTowerInfo(slot0, slot1)
 
 		return slot3
 	end
+end
+
+function slot0.isBossOpen(slot0, slot1)
+	if not TowerConfig.instance:getAssistBossConfig(slot1) then
+		return false
+	end
+
+	if not TowerConfig.instance:getBossTimeTowerConfig(slot2.towerId, 1) then
+		return false
+	end
+
+	return TimeUtil.stringToTimestamp(string.format("%s 5:0:0", slot4.startTime)) <= ServerTime.now()
 end
 
 slot0.instance = slot0.New()

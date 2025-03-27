@@ -234,7 +234,7 @@ function slot0.getTaskItemRewardCount(slot0, slot1)
 end
 
 function slot0.getTaskItemCanGetCount(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
+	for slot6, slot7 in pairs(slot1) do
 		if slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 then
 			slot2 = 0 + 1
 		end
@@ -258,7 +258,7 @@ function slot0.isTaskFinished(slot0, slot1)
 end
 
 function slot0.isTaskFinishedById(slot0, slot1)
-	return slot0.tempTaskModel:getById(slot1) and slot0:isTaskFinished(slot2)
+	return slot0.tempTaskModel:getById(slot1) and slot2.config.maxProgress <= slot2.progress
 end
 
 function slot0.getDelayPlayTime(slot0, slot1)

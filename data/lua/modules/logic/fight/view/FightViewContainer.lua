@@ -50,7 +50,9 @@ function slot0.buildViews(slot0)
 		FightShuZhenView.New(),
 		FightPlayerOperateMgr.New(),
 		FightViewRougeMgr.New(),
-		FightViewAssistBoss.New()
+		FightViewAssistBoss.New(),
+		FightViewDissolveCard.New(),
+		FightViewASFDEnergy.New()
 	}
 
 	table.insert(slot3, FightViewBossHpMgr.New())

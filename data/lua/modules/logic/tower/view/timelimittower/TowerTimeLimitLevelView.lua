@@ -103,7 +103,7 @@ function slot0._btnTaskClick(slot0)
 end
 
 function slot0._btnBossClick(slot0)
-	TowerController.instance:openAssistBossView()
+	TowerController.instance:openAssistBossView(nil, , TowerEnum.TowerType.Limited, slot0.seasonId)
 end
 
 function slot0._editableInitView(slot0)
@@ -154,6 +154,7 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
 	RedDotController.instance:addRedDot(slot0._goTaskReddot, RedDotEnum.DotNode.TowerTask)
 	gohelper.setActive(slot0._godetailInfo.gameObject, false)
 	slot0:refreshUI()
@@ -241,10 +242,9 @@ end
 
 function slot0.refreshRemainTime(slot0)
 	slot2 = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Limited, slot0.seasonId, TowerEnum.TowerStatus.Open).nextTime / 1000 - ServerTime.now()
-	slot3, slot4 = TimeUtil.secondToRoughTime2(slot2, true)
 	slot0._txttime.text = slot2 > 0 and GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_refreshtime"), {
-		slot3,
-		slot4
+		TimeUtil.getFormatTime(slot2),
+		""
 	}) or ""
 end
 
@@ -252,6 +252,10 @@ function slot0.refreshAssistBoss(slot0)
 	slot0.entranceBossUseMap = TowerTimeLimitLevelModel.instance:getEntranceBossUsedMap(slot0.seasonId)
 
 	gohelper.CreateObjList(slot0, slot0.bossItemShow, string.splitToNumber(TowerConfig.instance:getTowerLimitedTimeCo(slot0.seasonId).bossPool, "#"), slot0._gobossContent, slot0._gobossItem)
+
+	if ViewMgr.instance:isOpen(ViewName.TowerAssistBossView) then
+		TowerController.instance:openAssistBossView(nil, , TowerEnum.TowerType.Limited, slot0.seasonId)
+	end
 end
 
 function slot0.bossItemShow(slot0, slot1, slot2, slot3)

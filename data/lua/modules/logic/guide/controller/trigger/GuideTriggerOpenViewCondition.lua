@@ -27,6 +27,10 @@ function slot0.checkInEliminateEpisode(slot0)
 	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(slot0)
 end
 
+function slot0.checkInWindows(slot0)
+	return BootNativeUtil.isWindows()
+end
+
 function slot0.checkTowerMopUpOpen()
 	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)) <= TowerPermanentModel.instance:getCurPermanentPassLayer()
 end

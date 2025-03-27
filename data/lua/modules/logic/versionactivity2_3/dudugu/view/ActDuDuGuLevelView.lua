@@ -236,26 +236,6 @@ function slot0._unlockLvEnd(slot0)
 	slot0:_lockScreen(false)
 end
 
-function slot0._playStoryFinishAnim(slot0)
-	if ActDuDuGuModel.instance:getNewFinishStoryLvl() then
-		for slot5, slot6 in ipairs(slot0._lvItems) do
-			if slot6.id == slot1 then
-				slot0:_lockScreen(true)
-
-				slot0.finishStoryIndex = slot5
-
-				slot6:playFinish()
-				slot6:playStarAnim()
-				TaskDispatcher.runDelay(slot0._finishStoryEnd, slot0, 1.34)
-
-				break
-			end
-		end
-
-		ActDuDuGuModel.instance:clearNewFinishStoryLvl()
-	end
-end
-
 function slot0._finishStoryEnd(slot0)
 	if slot0.finishStoryIndex == #slot0._lvItems then
 		slot0._curLvIndex = slot0.finishStoryIndex

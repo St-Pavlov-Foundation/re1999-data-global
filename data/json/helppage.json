@@ -3780,6 +3780,76 @@
     "isCn": 1
   },
   {
+    "id": 2400001,
+    "title": "",
+    "type": 2,
+    "text": "芭卡洛儿音游玩法指引图",
+    "icon": "v2a4_bakaluoer_help_1",
+    "iconText": "v2a4_bakaluoer_help_1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2400002,
+    "title": "",
+    "type": 2,
+    "text": "芭卡洛儿合成器玩法指引图",
+    "icon": "v2a4_bakaluoer_help_2",
+    "iconText": "v2a4_bakaluoer_help_2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2400011,
+    "title": "",
+    "type": 2,
+    "text": "2.4桑托斯boss",
+    "icon": "v2a4_bossrush_help_1",
+    "iconText": "v2a4_bossrush_help_1",
+    "unlockGuideId": 24301,
+    "isCn": 0
+  },
+  {
+    "id": 2400111,
+    "title": "",
+    "type": 1,
+    "text": "2.4活动BOSS引导1",
+    "icon": "v2a4_melody_help_1",
+    "iconText": "v2a4_melody_help_1",
+    "unlockGuideId": 24111,
+    "isCn": 0
+  },
+  {
+    "id": 2400112,
+    "title": "",
+    "type": 1,
+    "text": "2.4活动BOSS引导2",
+    "icon": "v2a4_melody_help_2",
+    "iconText": "v2a4_melody_help_2",
+    "unlockGuideId": 24111,
+    "isCn": 0
+  },
+  {
+    "id": 2400201,
+    "title": "",
+    "type": 1,
+    "text": "爬塔SP关引导图",
+    "icon": "v2a4_tower_help_1",
+    "iconText": "v2a4_tower_help_1",
+    "unlockGuideId": 23205,
+    "isCn": 0
+  },
+  {
+    "id": 2400301,
+    "title": "",
+    "type": 2,
+    "text": "图图石子玩法指引图",
+    "icon": "v2a4_tutushizi_help_1",
+    "iconText": "v2a4_tutushizi_help_1",
+    "unlockGuideId": 24402,
+    "isCn": 0
+  },
+  {
     "id": 19001,
     "title": "language_10000135",
     "type": 1,

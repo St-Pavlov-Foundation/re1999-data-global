@@ -599,5 +599,45 @@
       "ui/viewres/versionactivity_1_5/v1a5_kerandian"
     ],
     "uiPath": []
+  },
+  {
+    "id": 16,
+    "audio": [
+      3200118,
+      3200114,
+      3200115,
+      3200116
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [
+      306501,
+      306502,
+      306503,
+      306504,
+      306505,
+      306506,
+      306507,
+      306508,
+      308301,
+      308302,
+      308303,
+      308304,
+      308305,
+      308306,
+      308307,
+      308308
+    ],
+    "folderPath": [],
+    "path": [
+      "1_7_chapter6_05.mp4",
+      "1_7_chapter6_05.mp4",
+      "1_7_pv.mp4"
+    ],
+    "uiFolder": [
+      "ui/viewres/versionactivity_1_7/v1a7_isolde",
+      "ui/viewres/versionactivity_1_7/v1a7_marcus"
+    ],
+    "uiPath": []
   }
 ]

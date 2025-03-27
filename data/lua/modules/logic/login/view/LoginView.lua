@@ -32,6 +32,7 @@ function slot0.onInitView(slot0)
 	slot0._goEffect = gohelper.findChild(slot0.viewGO, "imgBg/effect")
 	slot0._imgLogo = gohelper.findChildSingleImage(slot0.viewGO, "logo")
 	slot0._btnAgeFit = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftbtn/#btn_agefit")
+	slot0._btnexit = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_exit")
 end
 
 function slot0.addEvents(slot0)
@@ -43,6 +44,7 @@ function slot0.addEvents(slot0)
 	slot0._btnScan:AddClickListener(slot0._onClickScan, slot0)
 	slot0._btnPolicy:AddClickListener(slot0._onClickPolicy, slot0)
 	slot0._btnAgeFit:AddClickListener(slot0._onClickAgeFit, slot0)
+	slot0._btnexit:AddClickListener(slot0.exit, slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.SelectServerItem, slot0._onSelectServerItem, slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.OnSdkLoginReturn, slot0._onSdkLoginReturn, slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.SystemLoginFail, slot0._onSystemLoginFail, slot0)
@@ -61,6 +63,7 @@ function slot0.removeEvents(slot0)
 	slot0._btnScan:RemoveClickListener()
 	slot0._btnPolicy:RemoveClickListener()
 	slot0._btnAgeFit:RemoveClickListener()
+	slot0._btnexit:RemoveClickListener()
 	slot0._btnQuit:RemoveClickListener()
 	slot0._btnSet:RemoveClickListener()
 	TaskDispatcher.cancelTask(slot0._delayForLogout, slot0)
@@ -104,6 +107,8 @@ function slot0.onOpen(slot0)
 	else
 		slot0:_showEnterGameBtn(false, slot4)
 	end
+
+	gohelper.setActive(slot0._btnexit, BootNativeUtil.isWindows() and false)
 end
 
 function slot0._onOpenAnimDone(slot0)
@@ -178,6 +183,12 @@ function slot0._logout(slot0)
 
 		LoginController.instance:sdkLogout()
 	end
+end
+
+function slot0.exit(slot0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.exitGame, MsgBoxEnum.BoxType.Yes_No, function ()
+		ProjBooter.instance:quitGame()
+	end)
 end
 
 function slot0.onClose(slot0)

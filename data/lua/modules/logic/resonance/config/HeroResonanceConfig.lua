@@ -61,6 +61,10 @@ function slot0.getCubeConfig(slot0, slot1)
 	return slot0.resonance_cube_shape.configDict[slot1] or logError("共鸣形状表找不到id：", slot1)
 end
 
+function slot0.getCubeConfigNotError(slot0, slot1)
+	return slot0.resonance_cube_shape.configDict[slot1]
+end
+
 function slot0.getCubeRightful(slot0, slot1)
 	if not slot0.cube_rightful[slot1] then
 		slot3 = 0

@@ -975,6 +975,39 @@ function slot0.onReceiveRougeUnlockSkillReply(slot0, slot1, slot2)
 	slot4 = slot2.skillId
 end
 
+function slot0.sendRougeItemTrammelsRequest(slot0, slot1, slot2, slot3)
+	slot4 = RougeModule_pb.RougeItemTrammelsRequest()
+	slot4.season = slot1
+
+	return slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveRougeItemTrammelsReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+end
+
+function slot0.sendRougeSelectCollectionLevelUpRequest(slot0, slot1, slot2, slot3, slot4)
+	RougeModule_pb.RougeSelectCollectionLevelUpRequest().season = slot1
+
+	if slot2 then
+		for slot9, slot10 in ipairs(slot2) do
+			slot5.collectionUid:append(slot10)
+		end
+	end
+
+	return slot0:sendMsg(slot5, slot3, slot4)
+end
+
+function slot0.onReceiveRougeSelectCollectionLevelUpReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	RougeMapModel.instance:updateMapInfo(slot2.map)
+end
+
 slot0.instance = slot0.New()
 
 return slot0

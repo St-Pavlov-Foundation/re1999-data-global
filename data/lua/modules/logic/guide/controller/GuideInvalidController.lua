@@ -6,6 +6,7 @@ slot2 = "ActivityEnd"
 slot3 = "InvalidCondition"
 slot4 = "checkFinishGuide"
 slot5 = "FinishElement"
+slot6 = "InvalidNotInWindows"
 
 function slot0.addConstEvents(slot0)
 	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, slot0._checkFinishGuideInMainView, slot0)
@@ -73,7 +74,7 @@ function slot0.isInvalid(slot0, slot1)
 				slot4 = slot5 ~= nil and ActivityHelper.getActivityStatus(slot13) == ActivityEnum.ActivityStatus.Expired
 			end
 		else
-			slot4 = false
+			slot4 = (slot11 ~= uv4 or not BootNativeUtil.isWindows()) and false
 		end
 
 		if slot4 then

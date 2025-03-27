@@ -7,7 +7,6 @@ function slot0.onInitView(slot0)
 	slot0._txtcollectionname = gohelper.findChildText(slot0.viewGO, "Left/#txt_collectionname")
 	slot0._scrollcollectiondesc = gohelper.findChildScrollRect(slot0.viewGO, "Left/#scroll_collectiondesc")
 	slot0._godescContent = gohelper.findChild(slot0.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent")
-	slot0._godescitem = gohelper.findChild(slot0.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
 	slot0._goGrid = gohelper.findChild(slot0.viewGO, "Left/#go_grid")
 	slot0._goGridItem = gohelper.findChild(slot0.viewGO, "Left/#go_grid/#go_griditem")
 	slot0._gotagitem = gohelper.findChild(slot0.viewGO, "Left/tags/#go_tagitem")
@@ -65,6 +64,7 @@ function slot0._editableInitView(slot0)
 	slot0.gridList = slot0:getUserDataTb_()
 	slot0.tagGoList = slot0:getUserDataTb_()
 	slot0.goHoleList = slot0:getUserDataTb_()
+	slot0._itemInstTab = slot0:getUserDataTb_()
 	slot0.rectDesc = slot0._scrollcollectiondesc:GetComponent(gohelper.Type_RectTransform)
 	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
 
@@ -112,7 +112,7 @@ function slot0.refreshCollection(slot0)
 end
 
 function slot0.refreshDesc(slot0)
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0.collectionId, nil, slot0._godescContent, slot0._godescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0.collectionId, nil, slot0._godescContent, slot0._itemInstTab)
 end
 
 function slot0.refreshHole(slot0)

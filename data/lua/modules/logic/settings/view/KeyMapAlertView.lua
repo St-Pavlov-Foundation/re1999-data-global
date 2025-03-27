@@ -107,7 +107,7 @@ function slot0.setKeyOccupied(slot0, slot1, slot2)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 
 	if slot1[PCInputModel.Configfield.hud] == slot0._mo[PCInputModel.Configfield.hud] and slot1[PCInputModel.Configfield.id] == slot0._mo[PCInputModel.Configfield.id] then
-		ToastController.instance:showToast(ToastEnum.PCKeyCantModify, PCInputController.instance:KeyNameToDescName(slot1[PCInputModel.Configfield.key]))
+		ToastController.instance:showToast(ToastEnum.pcKeyTipsOccupied)
 		ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 
 		return

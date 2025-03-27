@@ -70,6 +70,8 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		end
 	end
 
+	slot0._forcePlayHitForOrigin = slot0._paramsArr[14] == "1"
+
 	slot0:_buildSkillEffect(slot4, slot5, slot6)
 
 	slot0._floatParams = {}
@@ -319,13 +321,29 @@ function slot0._playDefHit(slot0, slot1, slot2)
 				})
 			end
 
-			if slot13 ~= 0 then
+			slot15 = true
+
+			if not FightHelper.checkShieldHit(slot2) then
+				slot15 = false
+			end
+
+			if slot2.effectNum1 == FightEnum.EffectType.ORIGINDAMAGE and not slot0._forcePlayHitForOrigin then
+				slot15 = false
+			end
+
+			if slot2.effectNum1 == FightEnum.EffectType.ORIGINCRIT and not slot0._forcePlayHitForOrigin then
+				slot15 = false
+			end
+
+			if slot13 ~= 0 and slot15 then
 				slot0:_checkPlayAction(slot1, slot0._defeAction, slot2)
 			end
 
-			slot0:_playHitAudio(slot1, false)
-			slot0:_playHitVoice(slot1)
-			slot0:_playDefRestrain(slot1, slot10)
+			if slot15 then
+				slot0:_playHitAudio(slot1, false)
+				slot0:_playHitVoice(slot1)
+				slot0:_playDefRestrain(slot1, slot10)
+			end
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, slot1, slot13 * slot2.sign)
@@ -349,13 +367,20 @@ function slot0._playDefHit(slot0, slot1, slot2)
 			table.insert(slot0._floatParams, {
 				slot2.targetId,
 				slot14,
-				slot2.shieldOriginEffectNum
+				slot1:isMySide() and -slot2.shieldOriginEffectNum or slot2.shieldOriginEffectNum
 			})
 		end
 
 		if slot12 > 0 then
 			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot12)
 			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot11)
+		end
+
+		if slot0._forcePlayHitForOrigin then
+			slot0:_checkPlayAction(slot1, slot0._defeAction, slot2)
+			slot0:_playHitAudio(slot1, false)
+			slot0:_playHitVoice(slot1)
+			slot0:_playDefRestrain(slot1, slot10)
 		end
 	elseif uv1[slot2.effectType] then
 		slot13 = slot2.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
@@ -376,7 +401,7 @@ function slot0._playDefHit(slot0, slot1, slot2)
 			table.insert(slot0._floatParams, {
 				slot2.targetId,
 				slot14,
-				slot2.shieldAdditionalEffectNum
+				slot1:isMySide() and -slot2.shieldAdditionalEffectNum or slot2.shieldAdditionalEffectNum
 			})
 		end
 

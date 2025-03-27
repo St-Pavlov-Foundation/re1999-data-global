@@ -81,7 +81,7 @@ function slot0._btnvideoOnClick(slot0)
 	slot1 = WebViewController.instance:getVideoUrl(slot0.skinCo.characterId)
 
 	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL(slot1)
+		GameUtil.openURL(slot1)
 
 		return
 	end

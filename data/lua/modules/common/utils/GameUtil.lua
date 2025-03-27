@@ -719,10 +719,10 @@ function slot0.openDeepLink(slot0, slot1)
 		return
 	end
 
-	if SLFramework.FrameworkSettings.IsEditor then
+	if SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
 		UnityEngine.Application.OpenURL(slot0)
 
-		return
+		return true
 	end
 
 	slot3 = cjson.encode({
@@ -732,6 +732,28 @@ function slot0.openDeepLink(slot0, slot1)
 
 	logNormal("openDeepLink:" .. tostring(slot3))
 	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", slot3)
+
+	return true
+end
+
+function slot0.openURL(slot0)
+	if string.nilorempty(slot0) then
+		return
+	end
+
+	if not BootNativeUtil.isIOS() then
+		UnityEngine.Application.OpenURL(slot0)
+
+		return true
+	end
+
+	slot2 = cjson.encode({
+		deepLink = deepLinkUrl,
+		url = slot0
+	})
+
+	logNormal("openDeepLink:" .. tostring(slot2))
+	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", slot2)
 
 	return true
 end
@@ -1061,6 +1083,75 @@ function slot0.isBaseOf(slot0, slot1)
 	end
 
 	return false
+end
+
+function slot0.getRandomPosInCircle(slot0, slot1, slot2)
+	slot5 = math.sqrt(LuaTween.linear(math.random(1, 1000) / 1000, 0, slot2 * slot2, 1))
+	slot6 = LuaTween.linear(math.random(1, 1000) / 1000, 0, 2 * math.pi, 1)
+
+	return slot5 * math.cos(slot6) + slot0, slot5 * math.sin(slot6) + slot1
+end
+
+function slot0.doClearMember(slot0, slot1)
+	if slot0[slot1] then
+		slot0[slot1]:doClear()
+
+		slot0[slot1] = nil
+	end
+end
+
+slot9 = require("protobuf.descriptor").FieldDescriptor
+
+function slot0.copyPbData(slot0, slot1)
+	if not slot0 then
+		return
+	end
+
+	if next(slot0._fields) then
+		slot3 = {}
+
+		for slot7, slot8 in pairs(slot2) do
+			slot9 = slot7.name
+
+			if slot7.label == uv0.LABEL_REPEATED then
+				if #slot8 ~= 0 then
+					slot10 = {}
+
+					for slot14, slot15 in ipairs(slot8) do
+						if slot7.cpp_type == uv0.CPPTYPE_MESSAGE and slot1 then
+							slot10[#slot10 + 1] = uv1.copyPbData(slot15, slot1)
+						elseif slot7.cpp_type == uv0.CPPTYPE_INT64 or slot7.cpp_type == uv0.CPPTYPE_UINT64 then
+							slot10[#slot10 + 1] = tonumber(slot15)
+						else
+							slot10[#slot10 + 1] = slot15
+						end
+					end
+
+					slot3[slot9] = slot10
+				end
+			elseif slot7.cpp_type == uv0.CPPTYPE_MESSAGE and slot1 then
+				slot3[slot9] = uv1.copyPbData(slot8, true)
+			elseif slot7.cpp_type == uv0.CPPTYPE_INT64 or slot7.cpp_type == uv0.CPPTYPE_UINT64 then
+				slot3[slot9] = tonumber(slot8)
+			else
+				slot3[slot9] = slot8
+			end
+		end
+
+		return slot3
+	end
+end
+
+function slot0.convertToPercentStr(slot0)
+	return tostring(math.floor((slot0 or 0) / 10)) .. "%"
+end
+
+function slot0.calcByDeltaRate1000(slot0, slot1)
+	return (slot0 or 0) * (1000 + (slot1 or 0)) / 1000
+end
+
+function slot0.calcByDeltaRate1000AsInt(slot0, slot1)
+	return math.floor(uv0.calcByDeltaRate1000(slot0, slot1))
 end
 
 return slot0

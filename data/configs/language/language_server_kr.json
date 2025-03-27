@@ -2145,7 +2145,7 @@
   },
   {
     "key": "language_10000537",
-    "content": "Apple"
+    "content": "APPLe"
   },
   {
     "key": "language_10000538",
@@ -11369,7 +11369,7 @@
   },
   {
     "key": "language_10002844",
-    "content": "손뼉을 친다"
+    "content": "손뼉"
   },
   {
     "key": "language_10002845",
@@ -14141,7 +14141,7 @@
   },
   {
     "key": "language_10003537",
-    "content": "보물 찾기"
+    "content": "보물창고"
   },
   {
     "key": "language_10003538",
@@ -80369,7 +80369,7 @@
   },
   {
     "key": "language_10020095",
-    "content": "광역 공격, 모든 적군에게 40%의 현실 피해를 줌, 명중 시 [연소] 2스택 부여. 자신이 HP를 15% 잃을 때마다 10%의 현실 피해를 추가로 줌"
+    "content": "광역 공격, 모든 적군에게 40%의 현실 피해를 줌, 명중 시 [연소] 2스택 부여. 자신이 HP를 10% 잃을 때마다 15%의 현실 피해를 추가로 줌"
   },
   {
     "key": "language_10020096",
@@ -83549,7 +83549,7 @@
   },
   {
     "key": "language_10020890",
-    "content": "미스 한 잔 더"
+    "content": "미스 한잔 더"
   },
   {
     "key": "language_10020891",
@@ -84337,7 +84337,7 @@
   },
   {
     "key": "language_10021087",
-    "content": "복수"
+    "content": "원수"
   },
   {
     "key": "language_10021088",
@@ -96301,7 +96301,7 @@
   },
   {
     "key": "language_10024078",
-    "content": "아군 캐릭터가 공격 시 목표가 [독성 저주] 상태를 보유한 경우, 주는 중독 피해 30% 증가\n편성 팀이 동시에 『검은 약물』을 보유한 경우, 주는 중독 피해 30% 추가 증가"
+    "content": "아군 캐릭터가 공격 시 목표가 [독성 저주] 상태를 보유한 경우, 주는 중독 피해 30% 증가\n편성 팀이 동시에 『검은 포션』을 보유한 경우, 주는 중독 피해 30% 추가 증가"
   },
   {
     "key": "language_10024079",
@@ -96597,7 +96597,7 @@
   },
   {
     "key": "language_10024152",
-    "content": "광상 소다 피조물 1개 획득 시 효과 강화:\n편성 팀이 동시에 검은 약물을 보유한 경우, 받는 중독 피해 30% 증가"
+    "content": "광상 소다 피조물 1개 획득 시 효과 강화:\n편성 팀이 동시에 검은 포션을 보유한 경우, 받는 중독 피해 30% 증가"
   },
   {
     "key": "language_10024153",
@@ -99233,7 +99233,7 @@
   },
   {
     "key": "language_10024811",
-    "content": "햇빛에 바치는 장례의 애도"
+    "content": "햇빛을 향한 애도"
   },
   {
     "key": "language_10024812",
@@ -99529,7 +99529,7 @@
   },
   {
     "key": "language_10024885",
-    "content": "아군이 주문 싱크로 발동 시 모든 적군 긴장 -2"
+    "content": "아군이 주문 싱크로 발동 시 모든 적군 스트레스 -2"
   },
   {
     "key": "language_10024886",
@@ -99573,7 +99573,7 @@
   },
   {
     "key": "language_10024896",
-    "content": "아군이 주문 공명 발동 시 모든 적군 긴장 -2"
+    "content": "아군이 주문 공명 발동 시 모든 적군 스트레스 -2"
   },
   {
     "key": "language_10024897",
@@ -100205,7 +100205,7 @@
   },
   {
     "key": "language_10025054",
-    "content": "100 전기 에너지를 소모해 시전, 모든 적군에게 300%의 정신 피해를 줌, 다음 턴 보유 카드 최대치 +2, 카드 더미 상단 1번째 카드 주문 단계 +1"
+    "content": "100 전력을 소모해 시전, 모든 적군에게 300%의 정신 피해를 줌, 다음 턴 보유 카드 최대치 +2, 카드 더미 상단 1번째 카드 주문 단계 +1"
   },
   {
     "key": "language_10025055",
@@ -100213,11 +100213,11 @@
   },
   {
     "key": "language_10025056",
-    "content": "카드 제출이 끝나면 행동칸 주문 총 단계 수*3의 전기 에너지 회복"
+    "content": "카드 제출이 끝나면 행동칸 주문 총 단계 수x3의 전력 회복"
   },
   {
     "key": "language_10025057",
-    "content": "전투 진입 시 50 전기 에너지 회복. 행동칸 주문 적용 전에 3단계 주문 [뇌우 강림<id:370001010>] 1장을 주문 대기열에 추가하고, 사용한 주문 총 단계 수*3의 전기 에너지 회복"
+    "content": "전투 진입 시 50 전력 회복. 행동칸 주문 적용 전에 3단계 주문 [뇌우 강림<id:370001010>] 1장을 주문 대기열에 추가하고, 사용한 주문 총 단계 수x3의 전력 회복"
   },
   {
     "key": "language_10025058",
@@ -100985,15 +100985,15 @@
   },
   {
     "key": "language_10025249",
-    "content": "전투 진입 시 황금 참새 200개 획득"
+    "content": "전투 진입 시 참새 금화 200개 획득"
   },
   {
     "key": "language_10025250",
-    "content": "턴 시작 시 자신의 황금 참새 수가 180 이하일 경우, 모든 아군의 [악몽] 상태 해제"
+    "content": "턴 시작 시 자신의 참새 금화 수가 180 이하일 경우, 모든 아군의 [악몽] 상태 해제"
   },
   {
     "key": "language_10025251",
-    "content": "턴 시작 시 자신의 황금 참새 수가 160 이하일 경우, 교대 근무 경비병 1명 소환(최대 1회 발동)"
+    "content": "턴 시작 시 자신의 참새 금화 수가 160 이하일 경우, 교대 근무 경비병 1명 소환(최대 1회 발동)"
   },
   {
     "key": "language_10025252",
@@ -101005,7 +101005,7 @@
   },
   {
     "key": "language_10025254",
-    "content": "턴 시작 시 자신의 황금 참새 수가 140 이하면 1턴간 [투항] 상태 진입"
+    "content": "턴 시작 시 자신의 참새 금화 수가 140 이하면 1턴간 [투항] 상태 진입"
   },
   {
     "key": "language_10025255",
@@ -101249,23 +101249,23 @@
   },
   {
     "key": "language_10025315",
-    "content": "전투 중 아군 캐릭터 긴장도 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {10%} 증가, 받는 피해 {6%} 감소, 더 이상 긴장도가 전이되지 않음"
+    "content": "전투 중 아군 캐릭터 스트레스 수치 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {10%} 증가, 받는 피해 {6%} 감소, 더 이상 스트레스 수치가 전이되지 않음"
   },
   {
     "key": "language_10025316",
-    "content": "전투 중 아군 캐릭터 긴장도 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {12.5%} 증가, 받는 피해 {7.5%} 감소, 더 이상 긴장도가 전이되지 않음"
+    "content": "전투 중 아군 캐릭터 스트레스 수치 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {12.5%} 증가, 받는 피해 {7.5%} 감소, 더 이상 스트레스 수치가 전이되지 않음"
   },
   {
     "key": "language_10025317",
-    "content": "전투 중 아군 캐릭터 긴장도 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {15%} 증가, 받는 피해 {9%} 감소, 더 이상 긴장도가 전이되지 않음"
+    "content": "전투 중 아군 캐릭터 스트레스 수치 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {15%} 증가, 받는 피해 {9%} 감소, 더 이상 스트레스 수치가 전이되지 않음"
   },
   {
     "key": "language_10025318",
-    "content": "전투 중 아군 캐릭터 긴장도 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {17.5%} 증가, 받는 피해 {10.5%} 감소, 더 이상 긴장도가 전이되지 않음"
+    "content": "전투 중 아군 캐릭터 스트레스 수치 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {17.5%} 증가, 받는 피해 {10.5%} 감소, 더 이상 스트레스 수치가 전이되지 않음"
   },
   {
     "key": "language_10025319",
-    "content": "전투 중 아군 캐릭터 긴장도 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {20%} 증가, 받는 피해 {12%} 감소, 더 이상 긴장도가 전이되지 않음"
+    "content": "전투 중 아군 캐릭터 스트레스 수치 증가 시 기억자에게 전이. 기억자가 집중/폭주 첫 발동 시 반드시 집중 행위를 발동하고, 동시에 모든 아군 공격 {20%} 증가, 받는 피해 {12%} 감소, 더 이상 스트레스 수치가 전이되지 않음"
   },
   {
     "key": "language_10025320",
@@ -102285,7 +102285,7 @@
   },
   {
     "key": "language_10025574",
-    "content": "전투 진입 시 황금 참새 100개 획득. 턴 종료 시 황금 참새 5개 소모, 이후 모든 적군에게 150%의 정신 피해를 줌"
+    "content": "전투 진입 시 참새 금화 100개 획득. 턴 종료 시 참새 금화 5개 소모, 이후 모든 적군에게 150%의 정신 피해를 줌"
   },
   {
     "key": "language_10025575",
@@ -102813,7 +102813,7 @@
   },
   {
     "key": "language_10025706",
-    "content": "아군 캐릭터가 공격 시 목표가 [독성 저주] 상태를 보유한 경우, 주는 중독 피해 30% 증가\n편성 팀이 동시에 『검은 약물』 보유 시 주는 중독 피해 30% 추가 증가"
+    "content": "아군 캐릭터가 공격 시 목표가 [독성 저주] 상태를 보유한 경우, 주는 중독 피해 30% 증가\n편성 팀이 동시에 『검은 포션』 보유 시 주는 중독 피해 30% 추가 증가"
   },
   {
     "key": "language_10025707",
@@ -103721,7 +103721,7 @@
   },
   {
     "key": "language_10025933",
-    "content": "턴 시작 시마다 사용자 공격×120%의 HP 회복."
+    "content": "턴 시작 시마다 사용자 공격*20%의 HP 회복"
   },
   {
     "key": "language_10025934",
@@ -103921,7 +103921,7 @@
   },
   {
     "key": "language_10025983",
-    "content": "다른 아군의 긴장 수치 증가 시 자신의 긴장도 증가로 변경"
+    "content": "다른 아군의 스트레스 수치 증가 시 자신의 스트레스 수치 증가로 변경"
   },
   {
     "key": "language_10025984",
@@ -105037,7 +105037,5407 @@
   },
   {
     "key": "language_10026262",
-    "content": "0"
+    "content": ""
+  },
+  {
+    "key": "language_10026263",
+    "content": "지구에서의 마지막 밤"
+  },
+  {
+    "key": "language_10026264",
+    "content": "캠벨"
+  },
+  {
+    "key": "language_10026265",
+    "content": "37은 이렇게 말했다"
+  },
+  {
+    "key": "language_10026266",
+    "content": "포츈 워크"
+  },
+  {
+    "key": "language_10026267",
+    "content": "극야"
+  },
+  {
+    "key": "language_10026268",
+    "content": "차량 킬러"
+  },
+  {
+    "key": "language_10026269",
+    "content": "주간 야맹증"
+  },
+  {
+    "key": "language_10026270",
+    "content": "통신 기술"
+  },
+  {
+    "key": "language_10026271",
+    "content": "형식의 자유"
+  },
+  {
+    "key": "language_10026272",
+    "content": "이주 계획"
+  },
+  {
+    "key": "language_10026273",
+    "content": "다윈 나방"
+  },
+  {
+    "key": "language_10026274",
+    "content": "해상 음모론"
+  },
+  {
+    "key": "language_10026275",
+    "content": "개방형 노래"
+  },
+  {
+    "key": "language_10026276",
+    "content": "종말 구조대"
+  },
+  {
+    "key": "language_10026277",
+    "content": "유체 역학"
+  },
+  {
+    "key": "language_10026278",
+    "content": "허리케인 추적자"
+  },
+  {
+    "key": "language_10026279",
+    "content": "홍염 연주홀"
+  },
+  {
+    "key": "language_10026280",
+    "content": "황혼을 찾아서"
+  },
+  {
+    "key": "language_10026281",
+    "content": "작은 상자 배지, 비 내리기 전의 황혼이 응축되어 가방 속에 머무른다.\n티켓집 화면에서 외형을 교체하는 데 사용할 수 있다."
+  },
+  {
+    "key": "language_10026282",
+    "content": "바다의 이야기"
+  },
+  {
+    "key": "language_10026283",
+    "content": "바다의 이야기·빛을 향해서"
+  },
+  {
+    "key": "language_10026284",
+    "content": "파도 너머의 선율"
+  },
+  {
+    "key": "language_10026285",
+    "content": "초고속 재회"
+  },
+  {
+    "key": "language_10026286",
+    "content": "삐걱삐걱"
+  },
+  {
+    "key": "language_10026287",
+    "content": "천만 조각의 시간"
+  },
+  {
+    "key": "language_10026288",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《지구에서의 마지막 밤》이 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026289",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《캠벨》이 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026290",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《37은 이렇게 말했다》가 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026291",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《포츈 워크》가 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026292",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《문》이 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026293",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《극야》가 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026294",
+    "content": "추억을 담고 있는 자기 기록 매개체. 《술의 신을 위한 찬가》가 분위기 메이커에 추가되었습니다."
+  },
+  {
+    "key": "language_10026295",
+    "content": "바르카롤라의 이미지"
+  },
+  {
+    "key": "language_10026296",
+    "content": "파투투의 이미지"
+  },
+  {
+    "key": "language_10026297",
+    "content": "갈매기의 편지"
+  },
+  {
+    "key": "language_10026298",
+    "content": "크루즈 승객 전용으로 판매되는 기념품 카드. 열면 갈매기 울음소리가 함께 들린다. 특별 카운터에서 교환에 사용할 수 있다."
+  },
+  {
+    "key": "language_10026299",
+    "content": "[그림자 속 스파이]에서 정보를 분석하는 데 사용.\n[굴광성 연구-밤의 장막 밖] 이벤트 기간에만 사용할 수 있다."
+  },
+  {
+    "key": "language_10026300",
+    "content": "강과 바다 사이"
+  },
+  {
+    "key": "language_10026301",
+    "content": "누쿠타이오의 낙원 짓기"
+  },
+  {
+    "key": "language_10026302",
+    "content": "최고의 밴드"
+  },
+  {
+    "key": "language_10026303",
+    "content": "원형 분석1"
+  },
+  {
+    "key": "language_10026304",
+    "content": "배의 소식"
+  },
+  {
+    "key": "language_10026305",
+    "content": "‘프리 브리즈’"
+  },
+  {
+    "key": "language_10026306",
+    "content": "암호학 입문"
+  },
+  {
+    "key": "language_10026307",
+    "content": "시대의 소리"
+  },
+  {
+    "key": "language_10026308",
+    "content": "출항일"
+  },
+  {
+    "key": "language_10026309",
+    "content": "군도를 떠나"
+  },
+  {
+    "key": "language_10026310",
+    "content": "음악 혹은 빛"
+  },
+  {
+    "key": "language_10026311",
+    "content": "옛 노래"
+  },
+  {
+    "key": "language_10026312",
+    "content": "또 다른 면"
+  },
+  {
+    "key": "language_10026313",
+    "content": "나의 끔찍한 고향"
+  },
+  {
+    "key": "language_10026314",
+    "content": "3명의 음악가"
+  },
+  {
+    "key": "language_10026315",
+    "content": "태양의 죽음"
+  },
+  {
+    "key": "language_10026316",
+    "content": "긴급 통신"
+  },
+  {
+    "key": "language_10026317",
+    "content": "바람을 넘기고"
+  },
+  {
+    "key": "language_10026318",
+    "content": "이탈리아의 노래"
+  },
+  {
+    "key": "language_10026319",
+    "content": "27세 클럽"
+  },
+  {
+    "key": "language_10026320",
+    "content": "향수라는 것들"
+  },
+  {
+    "key": "language_10026321",
+    "content": "다른 곳으로"
+  },
+  {
+    "key": "language_10026322",
+    "content": "마지막 고별"
+  },
+  {
+    "key": "language_10026323",
+    "content": "나는 후회하지 않았다"
+  },
+  {
+    "key": "language_10026324",
+    "content": "바다에서 떠오른 그녀"
+  },
+  {
+    "key": "language_10026325",
+    "content": "나무통의 왕좌\n\n  "
+  },
+  {
+    "key": "language_10026326",
+    "content": "약속의 땅"
+  },
+  {
+    "key": "language_10026327",
+    "content": "선회곡"
+  },
+  {
+    "key": "language_10026328",
+    "content": "쉽게 사라지는 열정"
+  },
+  {
+    "key": "language_10026329",
+    "content": "분리할 수 없는 것"
+  },
+  {
+    "key": "language_10026330",
+    "content": "세계의 한가운데"
+  },
+  {
+    "key": "language_10026331",
+    "content": "흐릿한 고향"
+  },
+  {
+    "key": "language_10026332",
+    "content": "고요해서 좋은 밤"
+  },
+  {
+    "key": "language_10026333",
+    "content": "길 위에서"
+  },
+  {
+    "key": "language_10026334",
+    "content": "황금을 찾아서"
+  },
+  {
+    "key": "language_10026335",
+    "content": "광학 위장"
+  },
+  {
+    "key": "language_10026336",
+    "content": "승선하라!"
+  },
+  {
+    "key": "language_10026337",
+    "content": "여행 중"
+  },
+  {
+    "key": "language_10026338",
+    "content": "단순한 로큰롤"
+  },
+  {
+    "key": "language_10026339",
+    "content": "“그루스 안 아헨”"
+  },
+  {
+    "key": "language_10026340",
+    "content": "거리 결투"
+  },
+  {
+    "key": "language_10026341",
+    "content": "“그녀”들의 커튼콜"
+  },
+  {
+    "key": "language_10026342",
+    "content": "석탄재 카벙클의 왕"
+  },
+  {
+    "key": "language_10026343",
+    "content": "빠른 총잡이"
+  },
+  {
+    "key": "language_10026344",
+    "content": "검은콩 전하"
+  },
+  {
+    "key": "language_10026345",
+    "content": "백색의 호위병"
+  },
+  {
+    "key": "language_10026346",
+    "content": "서부 개척자"
+  },
+  {
+    "key": "language_10026347",
+    "content": "모험 정신이 강한 개척자.\n그녀가 도착하기 전까지 여기는 황량한 사막이 끝없이 펼쳐지고 인적이 드문 곳이었다."
+  },
+  {
+    "key": "language_10026348",
+    "content": "‘미래의 스카우트’"
+  },
+  {
+    "key": "language_10026349",
+    "content": "고통과 역경의 동반자"
+  },
+  {
+    "key": "language_10026350",
+    "content": "분노의 화신"
+  },
+  {
+    "key": "language_10026351",
+    "content": "견습 채색공"
+  },
+  {
+    "key": "language_10026352",
+    "content": "채색 조수"
+  },
+  {
+    "key": "language_10026353",
+    "content": "대리 결투인"
+  },
+  {
+    "key": "language_10026354",
+    "content": "“거울” 속 대답"
+  },
+  {
+    "key": "language_10026355",
+    "content": "트라이포데로"
+  },
+  {
+    "key": "language_10026356",
+    "content": "영역 의식이 강한 조류형 크리터\n공격성이 강하지만, 많은 엔지니어들에게 환영받는 존재. 업계에서는 트라이포데로의 방문이 건물의 우수한 품질을 증명하는 징표로 여겨진다."
+  },
+  {
+    "key": "language_10026357",
+    "content": "문피들러 크랩"
+  },
+  {
+    "key": "language_10026358",
+    "content": "광기에 빠진 크랩형 크리터\n달의 위상과 조수에 따라 스스로를 숨기며, 심지어 해변가 섬 주민들조차 존재를 알지 못한다."
+  },
+  {
+    "key": "language_10026359",
+    "content": "문피들러 크랩·변이종"
+  },
+  {
+    "key": "language_10026360",
+    "content": "이동에 바쁜 크랩형 크리터\n희귀종 중에서도 희귀한 개체로, 점술가들에게는 “살 수 없는 값진 존재”로 불린다."
+  },
+  {
+    "key": "language_10026361",
+    "content": "누쿠타이오 사람"
+  },
+  {
+    "key": "language_10026362",
+    "content": "고향을 떠난 누쿠타이오 섬 주민\n그들은 평화롭고, 친절하며, 은둔하며 살아간다. 서로를 가족처럼 여겼지만, 고향이 침몰한 뒤 이 모든 것은 과거의 이야기가 되었다."
+  },
+  {
+    "key": "language_10026363",
+    "content": "가면 쓴 누쿠타이오 사람"
+  },
+  {
+    "key": "language_10026364",
+    "content": "가면을 쓰기로 선택한 누쿠타이오 섬 주민\n그들은 기억할 가치가 있고, 자랑스러운 역사를 가지고 있다. 그래서 그들의 목적은 이해할 수 있다. 그들은 단지 고향이 침몰하기 전으로 돌아가고 싶을 뿐이다."
+  },
+  {
+    "key": "language_10026365",
+    "content": "크루즈 승객"
+  },
+  {
+    "key": "language_10026366",
+    "content": "공황 상태에 빠진 크루즈 승객\n군중이 모인 실내에서 소동을 일으키는 방법은 여러 가지가 있지만, 그중 가장 간단하고 신속한 방법은 “불을 끄는 것”이다."
+  },
+  {
+    "key": "language_10026367",
+    "content": "악장 지휘봉"
+  },
+  {
+    "key": "language_10026368",
+    "content": "몰래 엿듣는 자가 손에 든 “무기”, 지휘봉으로 추정된다.\n지휘는 심오한 학문이지만, 그림자 속에 숨어 있는 이 엿듣는 자는 “조용히 접근”하는 기술조차 아직 터득하지 못한 것 같다."
+  },
+  {
+    "key": "language_10026369",
+    "content": "톱니 가오리"
+  },
+  {
+    "key": "language_10026370",
+    "content": "무리를 이루어 행동하는 가오리형 크리터\n배를 쫓는 것은 이 거대한 무리가 바다를 정복하는 과정에서 별로 중요하지 않은 소소한 에피소드일 뿐이다."
+  },
+  {
+    "key": "language_10026371",
+    "content": "카무타"
+  },
+  {
+    "key": "language_10026372",
+    "content": "한 젊은 누쿠타이오인\n그는 너무 많은 것을 짊어졌다. 이별의 고통, 떠남의 혼란, 생존의 짐... 그러나 결국 그의 마음을 지배한 것은 복수에 대한 갈망이었다."
+  },
+  {
+    "key": "language_10026373",
+    "content": "이상한 엿듣는 자"
+  },
+  {
+    "key": "language_10026374",
+    "content": "그림자 속에 숨어 있는 기묘한 윤곽\n몰래 움직이는 모습이나 수상한 행동을 보면, 사람들은 엿듣는 자에게 호의가 전혀 없음을 알 수 있다. 형용사만 봐도 명백하다."
+  },
+  {
+    "key": "language_10026375",
+    "content": "고치 속 존재"
+  },
+  {
+    "key": "language_10026376",
+    "content": "어두운 바닷바람 속에 응축된 한 개의 고치\n약하고 여린 태막은 검은색과 푸른색으로 수놓인 비단 천을 두르고 있다. 고치 속에서 꿈틀거리는 것은 태양을 위험한 암초에 부딪히게 만든다. 모든 것은 마치 햇빛이 사라지는 것처럼 사라진다. 그녀는 태양의 채층 옆에서 우화한다."
+  },
+  {
+    "key": "language_10026377",
+    "content": "우화의 잔존"
+  },
+  {
+    "key": "language_10026378",
+    "content": "가방 속 재회"
+  },
+  {
+    "key": "language_10026379",
+    "content": "활약 임무"
+  },
+  {
+    "key": "language_10026380",
+    "content": "누적 임무"
+  },
+  {
+    "key": "language_10026381",
+    "content": "새로운 여정의 사진"
+  },
+  {
+    "key": "language_10026382",
+    "content": "근무 스냅샷"
+  },
+  {
+    "key": "language_10026383",
+    "content": "티타임 기념"
+  },
+  {
+    "key": "language_10026384",
+    "content": "파티의 순간 포착"
+  },
+  {
+    "key": "language_10026385",
+    "content": "Reunion in the Suitcase"
+  },
+  {
+    "key": "language_10026386",
+    "content": "귀로의 예우"
+  },
+  {
+    "key": "language_10026387",
+    "content": "Returning Gifts"
+  },
+  {
+    "key": "language_10026388",
+    "content": "비의 반환점"
+  },
+  {
+    "key": "language_10026389",
+    "content": "Where the Drops Go"
+  },
+  {
+    "key": "language_10026390",
+    "content": "밤바람의 갑판"
+  },
+  {
+    "key": "language_10026391",
+    "content": "누쿠타이오의 낙원 짓기!"
+  },
+  {
+    "key": "language_10026392",
+    "content": "심우주파"
+  },
+  {
+    "key": "language_10026393",
+    "content": "동토 깊은 곳"
+  },
+  {
+    "key": "language_10026394",
+    "content": "밤의 장막 밖"
+  },
+  {
+    "key": "language_10026395",
+    "content": "해상 협주곡·상"
+  },
+  {
+    "key": "language_10026396",
+    "content": "해상 협주곡·하"
+  },
+  {
+    "key": "language_10026397",
+    "content": "따르릉 따르릉 불길한 전화"
+  },
+  {
+    "key": "language_10026398",
+    "content": "물어뜯기"
+  },
+  {
+    "key": "language_10026399",
+    "content": "고온 비산재Ⅰ"
+  },
+  {
+    "key": "language_10026400",
+    "content": "마지막 맑은 날"
+  },
+  {
+    "key": "language_10026401",
+    "content": "고온 비산재Ⅱ"
+  },
+  {
+    "key": "language_10026402",
+    "content": "잔재"
+  },
+  {
+    "key": "language_10026403",
+    "content": "불타는 별조각"
+  },
+  {
+    "key": "language_10026404",
+    "content": "폐를 스미는 별조각"
+  },
+  {
+    "key": "language_10026405",
+    "content": "고온 비산재Ⅲ"
+  },
+  {
+    "key": "language_10026406",
+    "content": "희생의 불꽃Ⅰ"
+  },
+  {
+    "key": "language_10026407",
+    "content": "횃불의 몸"
+  },
+  {
+    "key": "language_10026408",
+    "content": "장작 추가"
+  },
+  {
+    "key": "language_10026409",
+    "content": "탄화"
+  },
+  {
+    "key": "language_10026410",
+    "content": "연기 경고"
+  },
+  {
+    "key": "language_10026411",
+    "content": "희생의 불꽃Ⅱ"
+  },
+  {
+    "key": "language_10026412",
+    "content": "희생의 불꽃Ⅲ"
+  },
+  {
+    "key": "language_10026413",
+    "content": "눈에 보이는 바람Ⅰ"
+  },
+  {
+    "key": "language_10026414",
+    "content": "바람 부채"
+  },
+  {
+    "key": "language_10026415",
+    "content": "들불"
+  },
+  {
+    "key": "language_10026416",
+    "content": "늑대의 이빨"
+  },
+  {
+    "key": "language_10026417",
+    "content": "(미표시)약점 폭로"
+  },
+  {
+    "key": "language_10026418",
+    "content": "엇갈린 마음"
+  },
+  {
+    "key": "language_10026419",
+    "content": "눈에 보이는 바람Ⅱ"
+  },
+  {
+    "key": "language_10026420",
+    "content": "눈에 보이는 바람Ⅲ"
+  },
+  {
+    "key": "language_10026421",
+    "content": "따뜻한 공간Ⅰ"
+  },
+  {
+    "key": "language_10026422",
+    "content": "뭉치기"
+  },
+  {
+    "key": "language_10026423",
+    "content": "따뜻한 공간Ⅱ"
+  },
+  {
+    "key": "language_10026424",
+    "content": "연기 장막"
+  },
+  {
+    "key": "language_10026425",
+    "content": "분포"
+  },
+  {
+    "key": "language_10026426",
+    "content": "따뜻한 공간Ⅲ"
+  },
+  {
+    "key": "language_10026427",
+    "content": "안개 속 운명 동원 스킬"
+  },
+  {
+    "key": "language_10026428",
+    "content": "대열 검사"
+  },
+  {
+    "key": "language_10026429",
+    "content": "5일 근무 1일 휴식"
+  },
+  {
+    "key": "language_10026430",
+    "content": "안개 후 거래"
+  },
+  {
+    "key": "language_10026431",
+    "content": "번식"
+  },
+  {
+    "key": "language_10026432",
+    "content": "열정의 시작"
+  },
+  {
+    "key": "language_10026433",
+    "content": "괴담 체험Ⅱ"
+  },
+  {
+    "key": "language_10026434",
+    "content": "장난스러운 마음Ⅲ"
+  },
+  {
+    "key": "language_10026435",
+    "content": "번지는 포화"
+  },
+  {
+    "key": "language_10026436",
+    "content": "정오 시간"
+  },
+  {
+    "key": "language_10026437",
+    "content": "우두머리 늑대"
+  },
+  {
+    "key": "language_10026438",
+    "content": "늑대 무리"
+  },
+  {
+    "key": "language_10026439",
+    "content": "표식 신호"
+  },
+  {
+    "key": "language_10026440",
+    "content": "탄알 장전"
+  },
+  {
+    "key": "language_10026441",
+    "content": "응답 제어(규칙 미표시)"
+  },
+  {
+    "key": "language_10026442",
+    "content": "콩과 곡식의 향연Ⅱ"
+  },
+  {
+    "key": "language_10026443",
+    "content": "검은콩 껍질Ⅱ"
+  },
+  {
+    "key": "language_10026444",
+    "content": "용맹한 울음소리Ⅱ"
+  },
+  {
+    "key": "language_10026445",
+    "content": "레드크라운 나이트Ⅱ"
+  },
+  {
+    "key": "language_10026446",
+    "content": "황야의 호기"
+  },
+  {
+    "key": "language_10026447",
+    "content": "증오의 족쇄"
+  },
+  {
+    "key": "language_10026448",
+    "content": "열정의 시작Ⅱ"
+  },
+  {
+    "key": "language_10026449",
+    "content": "RougeBattleHero"
+  },
+  {
+    "key": "language_10026450",
+    "content": "독성 역반응Ⅰ"
+  },
+  {
+    "key": "language_10026451",
+    "content": "독성 역반응Ⅱ"
+  },
+  {
+    "key": "language_10026452",
+    "content": "저항 자세"
+  },
+  {
+    "key": "language_10026453",
+    "content": "완고한 머리"
+  },
+  {
+    "key": "language_10026454",
+    "content": "반짝임의 중첩"
+  },
+  {
+    "key": "language_10026455",
+    "content": "화력 억제"
+  },
+  {
+    "key": "language_10026456",
+    "content": "상명하복"
+  },
+  {
+    "key": "language_10026457",
+    "content": "화력 지원"
+  },
+  {
+    "key": "language_10026458",
+    "content": "외로운 강습"
+  },
+  {
+    "key": "language_10026459",
+    "content": "침묵의 소란"
+  },
+  {
+    "key": "language_10026460",
+    "content": "혹한"
+  },
+  {
+    "key": "language_10026461",
+    "content": "서리의 침략Ⅰ"
+  },
+  {
+    "key": "language_10026462",
+    "content": "서리의 침략Ⅱ"
+  },
+  {
+    "key": "language_10026463",
+    "content": "얼음 파쇄 공세"
+  },
+  {
+    "key": "language_10026464",
+    "content": "고난 갈망"
+  },
+  {
+    "key": "language_10026465",
+    "content": "꿈의 구조Ⅰ"
+  },
+  {
+    "key": "language_10026466",
+    "content": "꿈의 구조Ⅱ"
+  },
+  {
+    "key": "language_10026467",
+    "content": "진화Ⅰ"
+  },
+  {
+    "key": "language_10026468",
+    "content": "진화Ⅱ"
+  },
+  {
+    "key": "language_10026469",
+    "content": "진화Ⅲ"
+  },
+  {
+    "key": "language_10026470",
+    "content": "인자 공유"
+  },
+  {
+    "key": "language_10026471",
+    "content": "완벽한 형태"
+  },
+  {
+    "key": "language_10026472",
+    "content": "힘의 소실"
+  },
+  {
+    "key": "language_10026473",
+    "content": "전투 의지 고조"
+  },
+  {
+    "key": "language_10026474",
+    "content": "전자기 전환"
+  },
+  {
+    "key": "language_10026475",
+    "content": "금지 권리 없음"
+  },
+  {
+    "key": "language_10026476",
+    "content": "이중 효과"
+  },
+  {
+    "key": "language_10026477",
+    "content": "전체 장악"
+  },
+  {
+    "key": "language_10026478",
+    "content": "만물 내려다보기"
+  },
+  {
+    "key": "language_10026479",
+    "content": "즉각 반격"
+  },
+  {
+    "key": "language_10026480",
+    "content": "섬광 타격"
+  },
+  {
+    "key": "language_10026481",
+    "content": "치명적 균열"
+  },
+  {
+    "key": "language_10026482",
+    "content": "껍질 속 바다"
+  },
+  {
+    "key": "language_10026483",
+    "content": "조개껍데기 목걸이"
+  },
+  {
+    "key": "language_10026484",
+    "content": "바닷바람의 경고"
+  },
+  {
+    "key": "language_10026485",
+    "content": "조개껍데기 목걸이Ⅱ"
+  },
+  {
+    "key": "language_10026486",
+    "content": "조개껍데기 목걸이Ⅲ"
+  },
+  {
+    "key": "language_10026487",
+    "content": "메아리치는 미움"
+  },
+  {
+    "key": "language_10026488",
+    "content": "무형의 갉아먹음"
+  },
+  {
+    "key": "language_10026489",
+    "content": "복수의 전조"
+  },
+  {
+    "key": "language_10026490",
+    "content": "산토스-폭발"
+  },
+  {
+    "key": "language_10026491",
+    "content": "천 개의 원한"
+  },
+  {
+    "key": "language_10026492",
+    "content": "바람의 멈춤"
+  },
+  {
+    "key": "language_10026493",
+    "content": "바람 속 댄스 파트너"
+  },
+  {
+    "key": "language_10026494",
+    "content": "죽음을 향한 바람"
+  },
+  {
+    "key": "language_10026495",
+    "content": "원한"
+  },
+  {
+    "key": "language_10026496",
+    "content": "즉흥 주문"
+  },
+  {
+    "key": "language_10026497",
+    "content": "테스트 설정1 (미표시)"
+  },
+  {
+    "key": "language_10026498",
+    "content": "테스트 설정2 (미표시)"
+  },
+  {
+    "key": "language_10026499",
+    "content": "테스트 설정3 (미표시)"
+  },
+  {
+    "key": "language_10026500",
+    "content": "테스트 설정4 (미표시)"
+  },
+  {
+    "key": "language_10026501",
+    "content": "테스트 설정5 (미표시)"
+  },
+  {
+    "key": "language_10026502",
+    "content": "테스트 설정6 (미표시)"
+  },
+  {
+    "key": "language_10026503",
+    "content": "테스트 설정7 (미표시)"
+  },
+  {
+    "key": "language_10026504",
+    "content": "테스트 설정8 (미표시)"
+  },
+  {
+    "key": "language_10026505",
+    "content": "테스트 설정9 (미표시)"
+  },
+  {
+    "key": "language_10026506",
+    "content": "테스트 설정10 (미표시)"
+  },
+  {
+    "key": "language_10026507",
+    "content": "테스트 설정11 (미표시)"
+  },
+  {
+    "key": "language_10026508",
+    "content": "테스트 설정12 (미표시)"
+  },
+  {
+    "key": "language_10026509",
+    "content": "테스트 설정13 (미표시)"
+  },
+  {
+    "key": "language_10026510",
+    "content": "테스트 설정14 (미표시)"
+  },
+  {
+    "key": "language_10026511",
+    "content": "테스트 설정15 (미표시)"
+  },
+  {
+    "key": "language_10026512",
+    "content": "아르페지오 연결"
+  },
+  {
+    "key": "language_10026513",
+    "content": "마음의 음악"
+  },
+  {
+    "key": "language_10026514",
+    "content": "해풍 교향곡"
+  },
+  {
+    "key": "language_10026515",
+    "content": "1인 밴드"
+  },
+  {
+    "key": "language_10026516",
+    "content": "1인 밴드Ⅱ"
+  },
+  {
+    "key": "language_10026517",
+    "content": "1인 밴드Ⅲ"
+  },
+  {
+    "key": "language_10026518",
+    "content": "2.4 전용 스킬1"
+  },
+  {
+    "key": "language_10026519",
+    "content": "2.4 전용 스킬2"
+  },
+  {
+    "key": "language_10026520",
+    "content": "2.4 전용 스킬3"
+  },
+  {
+    "key": "language_10026521",
+    "content": "2.4 전용 스킬4"
+  },
+  {
+    "key": "language_10026522",
+    "content": "2.4 전용 스킬5"
+  },
+  {
+    "key": "language_10026523",
+    "content": "2.4 전용 스킬6"
+  },
+  {
+    "key": "language_10026524",
+    "content": "2.4 전용 스킬7"
+  },
+  {
+    "key": "language_10026525",
+    "content": "2.4 전용 스킬8"
+  },
+  {
+    "key": "language_10026526",
+    "content": "2.4 전용 스킬9"
+  },
+  {
+    "key": "language_10026527",
+    "content": "2.4 전용 스킬10"
+  },
+  {
+    "key": "language_10026528",
+    "content": "2.4 전용 스킬11"
+  },
+  {
+    "key": "language_10026529",
+    "content": "2.4 전용 스킬12"
+  },
+  {
+    "key": "language_10026530",
+    "content": "2.4 전용 스킬13"
+  },
+  {
+    "key": "language_10026531",
+    "content": "2.4 전용 스킬14"
+  },
+  {
+    "key": "language_10026532",
+    "content": "2.4 전용 스킬15"
+  },
+  {
+    "key": "language_10026533",
+    "content": "2.4 전용 스킬16"
+  },
+  {
+    "key": "language_10026534",
+    "content": "2.4 전용 스킬17"
+  },
+  {
+    "key": "language_10026535",
+    "content": "2.4 전용 스킬18"
+  },
+  {
+    "key": "language_10026536",
+    "content": "2.4 전용 스킬19"
+  },
+  {
+    "key": "language_10026537",
+    "content": "2.4 전용 스킬20"
+  },
+  {
+    "key": "language_10026538",
+    "content": "2.4 전용 스킬21"
+  },
+  {
+    "key": "language_10026539",
+    "content": "2.4 전용 스킬21 분할"
+  },
+  {
+    "key": "language_10026540",
+    "content": "2.4 전용 스킬22"
+  },
+  {
+    "key": "language_10026541",
+    "content": "2.4 전용 스킬23"
+  },
+  {
+    "key": "language_10026542",
+    "content": "2.4 전용 스킬24"
+  },
+  {
+    "key": "language_10026543",
+    "content": "2.4 전용 스킬25"
+  },
+  {
+    "key": "language_10026544",
+    "content": "2.4 전용 스킬26"
+  },
+  {
+    "key": "language_10026545",
+    "content": "2.4 전용 스킬27"
+  },
+  {
+    "key": "language_10026546",
+    "content": "2.4 전용 스킬28"
+  },
+  {
+    "key": "language_10026547",
+    "content": "2.4 전용 스킬29"
+  },
+  {
+    "key": "language_10026548",
+    "content": "2.4 전용 스킬30"
+  },
+  {
+    "key": "language_10026549",
+    "content": "2.4 전용 스킬31"
+  },
+  {
+    "key": "language_10026550",
+    "content": "2.4 전용 스킬32"
+  },
+  {
+    "key": "language_10026551",
+    "content": "2.4 전용 스킬33"
+  },
+  {
+    "key": "language_10026552",
+    "content": "2.4 전용 스킬34"
+  },
+  {
+    "key": "language_10026553",
+    "content": "2.4 전용 스킬35"
+  },
+  {
+    "key": "language_10026554",
+    "content": "2.4 전용 스킬36"
+  },
+  {
+    "key": "language_10026555",
+    "content": "2.4 전용 스킬37"
+  },
+  {
+    "key": "language_10026556",
+    "content": "2.4 전용 스킬38"
+  },
+  {
+    "key": "language_10026557",
+    "content": "2.4 전용 스킬39"
+  },
+  {
+    "key": "language_10026558",
+    "content": "2.4 전용 스킬40"
+  },
+  {
+    "key": "language_10026559",
+    "content": "2.4 전용 스킬41"
+  },
+  {
+    "key": "language_10026560",
+    "content": "2.4 전용 스킬42"
+  },
+  {
+    "key": "language_10026561",
+    "content": "2.4 전용 스킬43"
+  },
+  {
+    "key": "language_10026562",
+    "content": "2.4 전용 스킬44"
+  },
+  {
+    "key": "language_10026563",
+    "content": "2.4 전용 스킬45"
+  },
+  {
+    "key": "language_10026564",
+    "content": "2.4 전용 스킬46"
+  },
+  {
+    "key": "language_10026565",
+    "content": "2.4 전용 스킬47"
+  },
+  {
+    "key": "language_10026566",
+    "content": "2.4 전용 스킬48"
+  },
+  {
+    "key": "language_10026567",
+    "content": "2.4 전용 스킬49"
+  },
+  {
+    "key": "language_10026568",
+    "content": "2.4 전용 스킬50"
+  },
+  {
+    "key": "language_10026569",
+    "content": "2.4 전용 스킬51"
+  },
+  {
+    "key": "language_10026570",
+    "content": "2.4 전용 스킬52"
+  },
+  {
+    "key": "language_10026571",
+    "content": "2.4 전용 스킬53"
+  },
+  {
+    "key": "language_10026572",
+    "content": "2.4 전용 스킬54"
+  },
+  {
+    "key": "language_10026573",
+    "content": "2.4 전용 스킬55"
+  },
+  {
+    "key": "language_10026574",
+    "content": "2.4 전용 스킬56"
+  },
+  {
+    "key": "language_10026575",
+    "content": "2.4 전용 스킬57"
+  },
+  {
+    "key": "language_10026576",
+    "content": "2.4 전용 스킬58"
+  },
+  {
+    "key": "language_10026577",
+    "content": "2.4 전용 스킬59"
+  },
+  {
+    "key": "language_10026578",
+    "content": "2.4 전용 스킬60"
+  },
+  {
+    "key": "language_10026579",
+    "content": "2.4 전용 스킬61"
+  },
+  {
+    "key": "language_10026580",
+    "content": "2.4 전용 스킬62"
+  },
+  {
+    "key": "language_10026581",
+    "content": "2.4 전용 스킬63"
+  },
+  {
+    "key": "language_10026582",
+    "content": "2.4 전용 스킬64"
+  },
+  {
+    "key": "language_10026583",
+    "content": "2.4 전용 스킬65"
+  },
+  {
+    "key": "language_10026584",
+    "content": "2.4 전용 스킬66"
+  },
+  {
+    "key": "language_10026585",
+    "content": "2.4 전용 스킬67"
+  },
+  {
+    "key": "language_10026586",
+    "content": "2.4 전용 스킬68"
+  },
+  {
+    "key": "language_10026587",
+    "content": "2.4 전용 스킬69"
+  },
+  {
+    "key": "language_10026588",
+    "content": "2.4 전용 스킬70"
+  },
+  {
+    "key": "language_10026589",
+    "content": "2.4 전용 스킬71"
+  },
+  {
+    "key": "language_10026590",
+    "content": "2.4 전용 스킬72"
+  },
+  {
+    "key": "language_10026591",
+    "content": "2.4 전용 스킬73"
+  },
+  {
+    "key": "language_10026592",
+    "content": "2.4 전용 스킬74"
+  },
+  {
+    "key": "language_10026593",
+    "content": "2.4 전용 스킬75"
+  },
+  {
+    "key": "language_10026594",
+    "content": "2.4 전용 스킬76"
+  },
+  {
+    "key": "language_10026595",
+    "content": "2.4 전용 스킬77"
+  },
+  {
+    "key": "language_10026596",
+    "content": "2.4 전용 스킬78"
+  },
+  {
+    "key": "language_10026597",
+    "content": "2.4 전용 스킬79"
+  },
+  {
+    "key": "language_10026598",
+    "content": "2.4 전용 스킬80"
+  },
+  {
+    "key": "language_10026599",
+    "content": "2.4 전용 스킬81"
+  },
+  {
+    "key": "language_10026600",
+    "content": "2.4 전용 스킬82"
+  },
+  {
+    "key": "language_10026601",
+    "content": "2.4 전용 스킬83"
+  },
+  {
+    "key": "language_10026602",
+    "content": "2.4 전용 스킬84"
+  },
+  {
+    "key": "language_10026603",
+    "content": "2.4 전용 스킬85"
+  },
+  {
+    "key": "language_10026604",
+    "content": "2.4 전용 스킬86"
+  },
+  {
+    "key": "language_10026605",
+    "content": "2.4 전용 스킬87"
+  },
+  {
+    "key": "language_10026606",
+    "content": "2.4 전용 스킬88"
+  },
+  {
+    "key": "language_10026607",
+    "content": "2.4 전용 스킬89"
+  },
+  {
+    "key": "language_10026608",
+    "content": "2.4 전용 스킬90"
+  },
+  {
+    "key": "language_10026609",
+    "content": "2.4 엔딩 피조물 스킬"
+  },
+  {
+    "key": "language_10026610",
+    "content": "정신 오염"
+  },
+  {
+    "key": "language_10026611",
+    "content": "‘그녀’의 응시"
+  },
+  {
+    "key": "language_10026612",
+    "content": "그녀의 그리움"
+  },
+  {
+    "key": "language_10026613",
+    "content": "‘거울’이 주는 답안"
+  },
+  {
+    "key": "language_10026614",
+    "content": "제어욕"
+  },
+  {
+    "key": "language_10026615",
+    "content": "불운-중독"
+  },
+  {
+    "key": "language_10026616",
+    "content": "불운-기절"
+  },
+  {
+    "key": "language_10026617",
+    "content": "불운-오염"
+  },
+  {
+    "key": "language_10026618",
+    "content": "색채의 중첩"
+  },
+  {
+    "key": "language_10026619",
+    "content": "권총 결투"
+  },
+  {
+    "key": "language_10026620",
+    "content": "눈 녹는 춤사위"
+  },
+  {
+    "key": "language_10026621",
+    "content": "샤먼의 리듬"
+  },
+  {
+    "key": "language_10026622",
+    "content": "손 끝의 타격"
+  },
+  {
+    "key": "language_10026623",
+    "content": "동작의 조화"
+  },
+  {
+    "key": "language_10026624",
+    "content": "불운 주문"
+  },
+  {
+    "key": "language_10026625",
+    "content": "북의 유혹"
+  },
+  {
+    "key": "language_10026626",
+    "content": "고치의 틈새에서"
+  },
+  {
+    "key": "language_10026627",
+    "content": "번데기 방"
+  },
+  {
+    "key": "language_10026628",
+    "content": "분출"
+  },
+  {
+    "key": "language_10026629",
+    "content": "벗어던짐"
+  },
+  {
+    "key": "language_10026630",
+    "content": "바닷바람의 장례Ⅰ"
+  },
+  {
+    "key": "language_10026631",
+    "content": "소박한 어둠에서의 시작"
+  },
+  {
+    "key": "language_10026632",
+    "content": "비늘과 날개의 서열Ⅰ"
+  },
+  {
+    "key": "language_10026633",
+    "content": "바닷바람의 장례Ⅱ"
+  },
+  {
+    "key": "language_10026634",
+    "content": "빛 없는 점액 속의 변태"
+  },
+  {
+    "key": "language_10026635",
+    "content": "주맹"
+  },
+  {
+    "key": "language_10026636",
+    "content": "얼룩진 표본"
+  },
+  {
+    "key": "language_10026637",
+    "content": "비늘과 날개의 서열Ⅱ"
+  },
+  {
+    "key": "language_10026638",
+    "content": "압축 타액"
+  },
+  {
+    "key": "language_10026639",
+    "content": "난사 사격장"
+  },
+  {
+    "key": "language_10026640",
+    "content": "고위험 “설전”"
+  },
+  {
+    "key": "language_10026641",
+    "content": "정밀 시각 측정"
+  },
+  {
+    "key": "language_10026642",
+    "content": "날카로운 집게발"
+  },
+  {
+    "key": "language_10026643",
+    "content": "월상의 계시"
+  },
+  {
+    "key": "language_10026644",
+    "content": "해변의 흉조"
+  },
+  {
+    "key": "language_10026645",
+    "content": "갑각 생물"
+  },
+  {
+    "key": "language_10026646",
+    "content": "가득 찬 슬픔"
+  },
+  {
+    "key": "language_10026647",
+    "content": "보상을 찾아"
+  },
+  {
+    "key": "language_10026648",
+    "content": "손쓸 수 없는 아쉬움"
+  },
+  {
+    "key": "language_10026649",
+    "content": "섬 주민"
+  },
+  {
+    "key": "language_10026650",
+    "content": "고향에 바치는 헌사"
+  },
+  {
+    "key": "language_10026651",
+    "content": "키틴질 집적"
+  },
+  {
+    "key": "language_10026652",
+    "content": "통로 봉쇄"
+  },
+  {
+    "key": "language_10026653",
+    "content": "비틀거리는 걸음"
+  },
+  {
+    "key": "language_10026654",
+    "content": "악성 짓밟힘"
+  },
+  {
+    "key": "language_10026655",
+    "content": "밀치기"
+  },
+  {
+    "key": "language_10026656",
+    "content": "박자 전달"
+  },
+  {
+    "key": "language_10026657",
+    "content": "노랫소리의 조화"
+  },
+  {
+    "key": "language_10026658",
+    "content": "날개형 호루라기"
+  },
+  {
+    "key": "language_10026659",
+    "content": "소란한 저주"
+  },
+  {
+    "key": "language_10026660",
+    "content": "파도 틈의 도발"
+  },
+  {
+    "key": "language_10026661",
+    "content": "생물 여과"
+  },
+  {
+    "key": "language_10026662",
+    "content": "광역 환청"
+  },
+  {
+    "key": "language_10026663",
+    "content": "낡은 신조"
+  },
+  {
+    "key": "language_10026664",
+    "content": "새로운 인도"
+  },
+  {
+    "key": "language_10026665",
+    "content": "고통, 밧줄, 그리고 그리움"
+  },
+  {
+    "key": "language_10026666",
+    "content": "떠도는 유랑자"
+  },
+  {
+    "key": "language_10026667",
+    "content": "멀리 떠나는 부족"
+  },
+  {
+    "key": "language_10026668",
+    "content": "엿보기 악센트"
+  },
+  {
+    "key": "language_10026669",
+    "content": "떨리는 음정"
+  },
+  {
+    "key": "language_10026670",
+    "content": "엿듣는 자의 막간 희극"
+  },
+  {
+    "key": "language_10026671",
+    "content": "복합 악기"
+  },
+  {
+    "key": "language_10026672",
+    "content": "‘앙코르’"
+  },
+  {
+    "key": "language_10026673",
+    "content": "즉흥 연주"
+  },
+  {
+    "key": "language_10026674",
+    "content": "가호의 협주"
+  },
+  {
+    "key": "language_10026675",
+    "content": "음률의 협공"
+  },
+  {
+    "key": "language_10026676",
+    "content": "광역 공격, 적군 2명에게 120%의 현실 피해를 줌. [간파<id:7160108>] 상태의 목표가 1명 이상일 경우 추가로 현실 피해 30%를 줌"
+  },
+  {
+    "key": "language_10026677",
+    "content": "광역 공격, 적군 2명에게 140%의 현실 피해를 줌. [간파<id:7160108>] 상태의 목표가 1명 이상일 경우 추가로 현실 피해 30%를 줌"
+  },
+  {
+    "key": "language_10026678",
+    "content": "광역 공격, 적군 2명에게 120%의 현실 피해를 줌. [간파<id:7160108>] 상태의 목표가 1명 이상일 경우 추가로 1단계 주문-뼈의 유지를 사용해 1회 추가 공격"
+  },
+  {
+    "key": "language_10026679",
+    "content": "광역 공격, 적군 2명에게 140%의 현실 피해를 줌. [간파<id:7160108>] 상태의 목표가 1명 이상일 경우 추가로 1단계 주문-뼈의 유지를 사용해 1회 추가 공격"
+  },
+  {
+    "key": "language_10026680",
+    "content": "광역 공격, 모든 적군에게 350%의 현실 피해를 줌. 명중 시 목표에게 [간파<id:7160108>] 부여"
+  },
+  {
+    "key": "language_10026681",
+    "content": "턴 시작 시 랜덤 적군 1명에게 [간파<id:7160108>] 상태 부여"
+  },
+  {
+    "key": "language_10026682",
+    "content": "폭주 시, 자신이 보유한 참새 금화 1개마다 모든 적군 스트레스 +1"
+  },
+  {
+    "key": "language_10026683",
+    "content": "폭주 시, 모든 적군에게 [주목] 5스택 부여"
+  },
+  {
+    "key": "language_10026684",
+    "content": "턴 시작 시 기억의 껍질이 파괴되지 않았을 경우 [거부의 껍질] 획득, 1턴간 지속\n기억의 껍질이 파괴될 때 1턴간 [파쇄의 껍질] 획득, [거부의 껍질] 제거"
+  },
+  {
+    "key": "language_10026685",
+    "content": "기억의 껍질 파괴 후 자신 공격력 200%의 고정 피해를 줌, 행동 후마다 우선 동일 위치의 교체 아군 열정 +1"
+  },
+  {
+    "key": "language_10026686",
+    "content": "광역 공격, 50%의 연무 농도를 소모해 모든 적군에게 150%의 현실 피해를 줌, 해당 턴 재시전 시 스킬을 [햇빛 포식자]로 강화"
+  },
+  {
+    "key": "language_10026687",
+    "content": "광역 공격, 50%의 연무 농도를 소모해 모든 적군에게 150%의 현실 피해를 줌, 모든 아군이 [견고] 1스택 획득. 해당 턴 재시전 시 스킬을 [햇빛을 향한 애도]로 강화"
+  },
+  {
+    "key": "language_10026688",
+    "content": "광역 공격, 모든 적군에게 300%의 현실 피해를 줌. 모든 아군이 [격앙] 1스택 획득, 3턴 동안 [과열] 상태 진입"
+  },
+  {
+    "key": "language_10026689",
+    "content": "턴마다 연무 농도 25% 증가"
+  },
+  {
+    "key": "language_10026690",
+    "content": "턴 종료 시, 모든 아군이 잃은 HP 10% 회복"
+  },
+  {
+    "key": "language_10026691",
+    "content": "주문 누적 4회 직접 사용 후 모든 아군의 [속성 감소] [제어] 해제"
+  },
+  {
+    "key": "language_10026692",
+    "content": "단일 공격, 100%의 피해를 줌"
+  },
+  {
+    "key": "language_10026693",
+    "content": "주문 직접 시전 시 50%의 현실 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026694",
+    "content": "전투 시작 시 50%의 연무 농도 추가 획득"
+  },
+  {
+    "key": "language_10026695",
+    "content": "[햇빛을 향한 애도] 시전 시 모든 아군 [상태 이상] [제어] 해제"
+  },
+  {
+    "key": "language_10026696",
+    "content": "턴 종료 시 모든 아군의 최대 HP 5% 추가 회복"
+  },
+  {
+    "key": "language_10026697",
+    "content": "[과열] 시 턴 시작 시마다 자신 피해 10% 증가"
+  },
+  {
+    "key": "language_10026698",
+    "content": "[과열] 시 턴 시작 시마다 모든 아군의 [속성 감소] 해제"
+  },
+  {
+    "key": "language_10026699",
+    "content": "[과열] 1턴 연장, [과열] 상태 종료 시 연무 농도 50% 즉시 획득"
+  },
+  {
+    "key": "language_10026700",
+    "content": "주문 직접 시전 시 모든 아군이 현재 HP의 10%를 잃음, 해당 공격에 모든 아군이 잃은 HP×15%의 고정 피해 추가 부여"
+  },
+  {
+    "key": "language_10026701",
+    "content": "전투 진입 시 아군 캐릭터가 현재 HP의 30%를 잃음. 턴 시작 시 아군 부대가 총 HP 5%를 잃을 때마다 연무 농도 5% 획득(최고 25% 획득)"
+  },
+  {
+    "key": "language_10026702",
+    "content": "공격받은 후 HP가 25% 미만인 암석 계열 캐릭터가 잃은 HP 25% 회복(모든 캐릭터 최대 3회 발동)"
+  },
+  {
+    "key": "language_10026703",
+    "content": "턴 종료 시, HP가 50% 미만인 암석 계열 캐릭터가 [견고] 1스택 획득"
+  },
+  {
+    "key": "language_10026704",
+    "content": "[과열] 상태 진입 시 모든 아군이 잃은 HP×30%의 보호막 획득, 3턴간 지속"
+  },
+  {
+    "key": "language_10026705",
+    "content": "[과열] 상태 종료 시 아군 캐릭터가 현재 HP의 30%를 잃음, 보스가 50%의 연무 농도 획득"
+  },
+  {
+    "key": "language_10026706",
+    "content": "암석 계열 캐릭터 공격 시, 자신이 HP 5%를 잃을 때마다 방어 무시율 +3%"
+  },
+  {
+    "key": "language_10026707",
+    "content": "스킬 직접 시전 후 모든 아군에게 2턴 동안 [짙은 안개] 1스택 부여"
+  },
+  {
+    "key": "language_10026708",
+    "content": "아군 추가 행동 시 연무 농도 10% 획득(턴마다 최대 3회 발동)"
+  },
+  {
+    "key": "language_10026709",
+    "content": "2턴 종료 시마다 자신이 [과열] 상태가 아닐 경우 랜덤 적군에게 [물어뜯기] 시전"
+  },
+  {
+    "key": "language_10026710",
+    "content": "[물어뜯기]로 목표에게 [약점 폭로] 1스택 추가 부여"
+  },
+  {
+    "key": "language_10026711",
+    "content": "추가 행동 공격을 받을 시 받는 피해 30% 증가"
+  },
+  {
+    "key": "language_10026712",
+    "content": "주문 누적 2회 직접 사용 후, 자신이 [과열] 상태가 아닐 경우 [물어뜯기] 1회 시전"
+  },
+  {
+    "key": "language_10026713",
+    "content": "암석 계열 캐릭터 추가 행동 후 최대 HP 10% 회복(모든 캐릭터 턴마다 최대 1회 발동)"
+  },
+  {
+    "key": "language_10026714",
+    "content": "부여한 [짙은 안개] 지속 턴 +10"
+  },
+  {
+    "key": "language_10026715",
+    "content": "스킬 직접 시전 후, 모든 아군에게 [연무 속성 집합] 중 1종 상태 부여, 2턴간 지속"
+  },
+  {
+    "key": "language_10026716",
+    "content": "턴 종료 시 모든 아군이 보유한 [속성 증가] [버프 상태] [카운터] [보호막] [음송] 2종마다, 연무 농도 +5%, 최대 +25%"
+  },
+  {
+    "key": "language_10026717",
+    "content": "뼈의 늑대가 부여한 속성 증가 효과 턴 +1"
+  },
+  {
+    "key": "language_10026718",
+    "content": "턴 시작 시, 모든 아군에게 [연무 속성 집합] 중 1종 상태 추가 부여, 2턴간 지속"
+  },
+  {
+    "key": "language_10026719",
+    "content": "암석 계열 캐릭터가 4종 이상 속성 증가 효과 보유 시 받는 피해 12% 감소"
+  },
+  {
+    "key": "language_10026720",
+    "content": "암석 계열 캐릭터 빈사 시 최대 HP 1% 회복(모든 캐릭터 턴마다 1회 발동)"
+  },
+  {
+    "key": "language_10026721",
+    "content": "[햇빛을 향한 애도] 시전 후 모든 아군 3턴 동안 [안개 속 운명] 획득"
+  },
+  {
+    "key": "language_10026722",
+    "content": "(미표시)턴 종료 시, HP가 50% 이상일 경우 현재 HP의 15%를 잃음, 이번에 잃은 HP 200%의 보호막 획득. HP가 50% 미만일 경우 자신 공격×80%의 보호막 획득(보호막 1턴간 지속)"
+  },
+  {
+    "key": "language_10026723",
+    "content": "단일 공격, 도발 무시, 적군 1번 캐릭터에게 1%의 정신 피해를 줌, 목표에게 최대 HP×100%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026724",
+    "content": "공격 후 목표가 뒤로 3칸 이동, 목표가 보유한 디버프 상태 1종마다 주는 고정 피해 5% 증가, 목표가 보유한 버프 1종마다 주는 고정 피해 5% 감소"
+  },
+  {
+    "key": "language_10026725",
+    "content": "5회 행동 후 1턴 휴식, 휴식 시 받는 피해 100% 감소"
+  },
+  {
+    "key": "language_10026726",
+    "content": "단일 공격, 도발 무시, 적군 1번 캐릭터에게 1%의 정신 피해를 줌, 목표에게 최대 HP×80%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026727",
+    "content": "턴 종료 시 자신이 [기절] 상태가 아닐 경우 모든 적군이 [디버프 집합] 중 2개 효과 랜덤 획득, 2턴간 지속"
+  },
+  {
+    "key": "language_10026728",
+    "content": "행동 포인트 없음. 빈사 시 최대 HP 100% 회복, 3턴 동안 [기절]"
+  },
+  {
+    "key": "language_10026729",
+    "content": "공격 시 목표의 HP가 60% 이상인 경우 자신 열정 +1, 목표의 HP가 80% 이상일 경우 방어 무시율 20% 증가"
+  },
+  {
+    "key": "language_10026730",
+    "content": "공격 시 목표에게 [두려움] 1스택 부여"
+  },
+  {
+    "key": "language_10026731",
+    "content": "공격받은 후 열정 +1, [예의] 3스택 획득. 상성 공격을 받을 경우 2턴 동안 [통증] 1스택 추가 획득. 턴 시작 시 [통증] 5스택 달성할 경우 열정 -2 및 [예의] 5스택 소모"
+  },
+  {
+    "key": "language_10026732",
+    "content": "턴 시작 시, 모든 아군이 [연무 속성 집합] 중 2종 상태 획득, 모든 적군이 [디버프 집합] 중 2종 상태 획득, 2턴 지속. 턴 시작 시 HP가 50% 미만일 때 [은하수 한 다발] 1단계 시전"
+  },
+  {
+    "key": "language_10026733",
+    "content": "공격 시 보유한 버프/디버프 상태 1종마다 피해 보너스 10% 증가/감소. 공격받을 시, 보유한 버프/디버프 상태 1종마다 피해 감면 10% 증가/감소"
+  },
+  {
+    "key": "language_10026734",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 모든 아군이 사용자 공격×200%의 HP 회복"
+  },
+  {
+    "key": "language_10026735",
+    "content": "턴 시작 시 모든 아군이 [공동체 공생] 3스택 획득, 다른 아군 퇴장 시 열정 +5, 필드에 다른 아군이 없을 경우 피해 보너스 50% 증가"
+  },
+  {
+    "key": "language_10026736",
+    "content": "전투 진입 시, [공동체 공생] 5스택 획득. [공동체 공생] 상태일 경우 공격 시 피해 30% 증가, 공격받을 시 받는 피해 30% 감소"
+  },
+  {
+    "key": "language_10026737",
+    "content": "단일 공격, 400%의 현실 피해를 줌, 목표를 전방으로 3칸 이동, [잠금] 3스택 부여 및 1턴 동안 [기절] 상태 부여"
+  },
+  {
+    "key": "language_10026738",
+    "content": "턴 종료 시, HP가 가장 높은 적군에게 최종 술식 시전"
+  },
+  {
+    "key": "language_10026739",
+    "content": "공격 시 방어 무시율 30% 증가, 전투 진입 및 턴 종료 시 랜덤 탄알 2종 획득"
+  },
+  {
+    "key": "language_10026740",
+    "content": "광역 치료, 모든 아군이 사용자 공격×120%의 HP 회복"
+  },
+  {
+    "key": "language_10026741",
+    "content": "광역 공격, 모든 적군에게 200%의 현실 피해를 줌. 이후 모든 아군의 [속성 증가] 1턴 연장"
+  },
+  {
+    "key": "language_10026742",
+    "content": "단일 공격, 180%의 현실 피해를 줌, 이번 공격 치명타율 30% 증가, 치명타 피해 40% 증가"
+  },
+  {
+    "key": "language_10026743",
+    "content": "광역 공격, 적군 2명에게 160%의 현실 피해를 줌. 목표의 현재 HP가 50% 이상일 경우 60%의 현실 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026744",
+    "content": "광역 공격, 모든 적군에게 250%의 현실 피해를 줌. 이번에 주는 피해×50%의 HP 회복"
+  },
+  {
+    "key": "language_10026745",
+    "content": "광역 공격, 모든 적군에게 250%의 현실 피해를 줌. 목표의 HP가 50% 이하일 경우 100%의 현실 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026746",
+    "content": "턴 시작 시 [제어] 상태에 처함, 잃은 HP의 10% 회복"
+  },
+  {
+    "key": "language_10026747",
+    "content": "턴 시작 시 [제어] 상태에 처함, 잃은 HP의 15% 회복"
+  },
+  {
+    "key": "language_10026748",
+    "content": "턴 시작 시 [제어] 상태에 처함, 잃은 HP의 20% 회복"
+  },
+  {
+    "key": "language_10026749",
+    "content": "광역 공격, 모든 적군에게 300%의 정신 피해를 줌. 이후 모든 아군의 디버프 상태 해제 및 모든 아군이 1턴간 [제어 저항] 획득"
+  },
+  {
+    "key": "language_10026750",
+    "content": "턴 종료 시 모든 적군에게 [검은콩 알레르기] 1스택 부여. 단일 공격을 받으면 모든 적군의 [검은콩 알레르기] 해제"
+  },
+  {
+    "key": "language_10026751",
+    "content": "받는 광역 피해 50% 감소, 모든 적군에게 [검은콩 알레르기] 1스택 부여"
+  },
+  {
+    "key": "language_10026752",
+    "content": "자기 강화, [우렁찬 선포] 상태 진입, 3턴간 지속"
+  },
+  {
+    "key": "language_10026753",
+    "content": "공격 시 HP를 10% 잃을 때마다 주는 피해 10% 증가. 공격받을 시 HP를 10% 잃을 때마다 받는 피해 10% 감소"
+  },
+  {
+    "key": "language_10026754",
+    "content": "턴 종료 시 1턴간 [도발] [충성스러운 병사] 획득"
+  },
+  {
+    "key": "language_10026755",
+    "content": "단일 공격, 200%의 현실 피해를 줌, 모든 아군이 [연무 속성 집합] 중 1종 상태 획득, 자신은 [백안] 1스택 획득"
+  },
+  {
+    "key": "language_10026756",
+    "content": "단일 약화, 목표에게 2턴간 [디버프 집합] 부여. [무장 해제] 중 2종 상태 획득, 2턴간 지속"
+  },
+  {
+    "key": "language_10026757",
+    "content": "단일 공격, 500%의 현실 피해를 줌, 모든 아군이 [연무 속성 집합] 중 2종 상태 획득, 모든 적군이 [디버프 집합] 중 2종 상태 획득, 2턴간 지속"
+  },
+  {
+    "key": "language_10026758",
+    "content": "턴 종료 시 [백안]이 3스택일 경우, 3스택을 소모하여 즉시 최종 술식 1회 시전(턴당 최대 1회 발동). 아군 퇴장 시 [백안] 3스택 획득"
+  },
+  {
+    "key": "language_10026759",
+    "content": "공격받은 후 자신의 1단계 주문을 시전해 반격(턴당 최대 2회 발동)"
+  },
+  {
+    "key": "language_10026760",
+    "content": "단일 공격, 200%의 정신 피해를 줌. 이번 공격 치명타 피해 50% 증가"
+  },
+  {
+    "key": "language_10026761",
+    "content": "광역 약화, 모든 적군이 받는 피해 20% 증가, 치명타 방어 20% 감소, 2턴간 지속"
+  },
+  {
+    "key": "language_10026762",
+    "content": "광역 공격, 모든 적군에게 300%의 정신 피해를 줌. 이번 공격의 치명타 피해 50% 증가"
+  },
+  {
+    "key": "language_10026763",
+    "content": "전투 진입 시 [증오] 5스택 획득, 턴 종료 시 [증오] 2스택 획득. 공격받을 시 치명타가 발동해 [증오] 1스택 획득. 공격 시 [증오]가 3스택이면 이번 공격의 치명타율 +100%. 3스택이 아니면 치명타율 -100%"
+  },
+  {
+    "key": "language_10026764",
+    "content": "단일 공격, 300%의 현실 피해를 줌, 이번 공격 치명타율, 치명타 피해 +100%"
+  },
+  {
+    "key": "language_10026765",
+    "content": "턴 종료 시 HP 비율이 가장 높은 목표에게 최종 술식 시전. 이후 다시 HP 비율이 가장 높은 목표에게 최종 술식 시전"
+  },
+  {
+    "key": "language_10026766",
+    "content": "턴 시작 시 모든 디버프 상태 해제"
+  },
+  {
+    "key": "language_10026767",
+    "content": "열정 감소하지 않음, 턴 시작 시 열정 +1"
+  },
+  {
+    "key": "language_10026768",
+    "content": "현실 방어, 정신 방어 50% 증가. 공격받을 시 디버프 상태 1종마다 공격자의 방어 무시율 10% 증가"
+  },
+  {
+    "key": "language_10026769",
+    "content": "협동 부대에 3082 캐릭터가 있을 경우 자신의 스킬1 시전"
+  },
+  {
+    "key": "language_10026770",
+    "content": "적군 입장 시, [연소] 10스택 획득, [연소] 스택 최대치 +20. [중독]이 사라질 때 50% 확률로 2턴 동안 [중독] 다시 획득"
+  },
+  {
+    "key": "language_10026771",
+    "content": "적군 턴 시작 시 [연소] 10스택마다 2턴간 [중독] 획득"
+  },
+  {
+    "key": "language_10026772",
+    "content": "적군이 [중독]을 잃을 시 [연소] 5스택 획득. 직접 결산 시 잃은 [중독] 1개마다 1회 적용으로 변경"
+  },
+  {
+    "key": "language_10026773",
+    "content": "라운드 시작 시, 적군의 [연소] 스택이 20 이상일 경우, 50% 확률로 자신의 [중독] 1턴 연장"
+  },
+  {
+    "key": "language_10026774",
+    "content": "라운드 종료 시, 모든 아군이 적군이 보유한 [중독] 유닛 수량×2의 [예열] 스택 획득"
+  },
+  {
+    "key": "language_10026775",
+    "content": "[연소] 상태의 유닛 공격 시 스택마다 자신의 피해 보너스 1% 증가"
+  },
+  {
+    "key": "language_10026776",
+    "content": "적군 유닛이 [중독] 획득 시, 모든 아군이 주는 중독 피해 1% 증가, 최대 30스택 증가"
+  },
+  {
+    "key": "language_10026777",
+    "content": "신기한 빛 최대치+1, 적군에게 1/2/3단계의 일반 주문 직접 사용 시, 40% 확률로 재시전"
+  },
+  {
+    "key": "language_10026778",
+    "content": "추가 행동 시 자신의 신기한 빛 +1 및 해당 턴의 [즉흥 주문]에 [계시] 2 추가 계산"
+  },
+  {
+    "key": "language_10026779",
+    "content": "턴 종료 시, 신기한 빛 5 보유한 경우, 신기한 빛 5를 소모해 2단계 주문1 1회 시전"
+  },
+  {
+    "key": "language_10026780",
+    "content": "추가 행동 치명타 시 50% 확률로 다른 아군 신기한 빛 +2"
+  },
+  {
+    "key": "language_10026781",
+    "content": "아군 유닛이 신기한 빛 소모 후 [계시] 1 획득, 아군이 신기한 빛 소모 후 모든 아군이 [계획] 1스택 획득, 최대 5회 발동"
+  },
+  {
+    "key": "language_10026782",
+    "content": "추가 행동 시 피해 보너스 30% 증가"
+  },
+  {
+    "key": "language_10026783",
+    "content": "아군이 신기한 빛 1포인트를 소모할 때마다 15% 확률로 [행운] 1스택 획득"
+  },
+  {
+    "key": "language_10026784",
+    "content": "직접 3단계 주문 사용 시 열정 +5"
+  },
+  {
+    "key": "language_10026785",
+    "content": "최종 술식 시전 후 자신의 주문 랜덤 1장의 주문 단계 +1"
+  },
+  {
+    "key": "language_10026786",
+    "content": "직접 3단계 주문 사용 시 우선 필드 아래 동일 위치 유닛의 열정 3 회복"
+  },
+  {
+    "key": "language_10026787",
+    "content": "최종 술식 시전 후 다음에 3단계 주문을 사용하여 공격 시 치명타율 +50%, 중첩 불가"
+  },
+  {
+    "key": "language_10026788",
+    "content": "주문 3단계 시전 후 다음에 최종 술식 사용하여 공격 시 방어 무시율+30%, 중첩 불가"
+  },
+  {
+    "key": "language_10026789",
+    "content": "최종 술식 시전 후 모든 적군이 받는 최종 술식 피해 10% 증가, 1턴 지속, 중첩 가능"
+  },
+  {
+    "key": "language_10026790",
+    "content": "3단계 주문으로 공격 시 방어 무시율 +30%"
+  },
+  {
+    "key": "language_10026791",
+    "content": "턴 시작 시 열정 +1, 피해 감면 60% 증가, [상태 이상]을 획득할 때마다 자신의 피해 감면 영구적으로 15% 감소"
+  },
+  {
+    "key": "language_10026792",
+    "content": "턴 시작 시 열정 +3, 피해 감면 80% 증가, [상태 이상]을 획득할 때마다 자신의 피해 감면 영구적으로 10% 감소"
+  },
+  {
+    "key": "language_10026793",
+    "content": "치명타율 +50%. 해당 턴에 자신은 획득한 [상태 이상]이 3개 미만일 경우 턴 종료 시 모든 아군 [상태 이상] 해제"
+  },
+  {
+    "key": "language_10026794",
+    "content": "턴 시작 시마다 [견고] 2스택 획득. [견고] 미보유 시 피격 당하기 전마다 자신의 피해 감면 10% 감소, 1턴 지속, 중첩 가능"
+  },
+  {
+    "key": "language_10026795",
+    "content": "공격 시 목표가 해당 턴에 자신을 공격하지 않은 경우 대상에게 1턴 동안 [빙결] 부여, 모든 열정 초기화"
+  },
+  {
+    "key": "language_10026796",
+    "content": "공격 시 목표에게 자신의 남은 HP×10%+목표 잃은 HP×10%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10026797",
+    "content": "임의의 아군 유닛이 [제어]를 잃은 후 모든 아군이 2턴 동안 [면역] 획득"
+  },
+  {
+    "key": "language_10026798",
+    "content": "턴 시작 시, 자주포 3개 소환. 해당 턴내에 2/3단계 주문 또는 술식 공격을 받은 후 소환 수량 -1"
+  },
+  {
+    "key": "language_10026799",
+    "content": "아군의 수가 2/1/0일 경우, 공격 시 자신의 피해 보너스 20%/40%/80% 증가\n아군 수가 0일 시 공격에 목표 최대 HP×20%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026800",
+    "content": "해당 턴에 자신을 공격하지 않은 유닛 피해 보너스 +50%"
+  },
+  {
+    "key": "language_10026801",
+    "content": "행동 후, 자신이 [동상] 2스택 획득"
+  },
+  {
+    "key": "language_10026802",
+    "content": "공격 시 적군에게 [동상] 1스택 부여"
+  },
+  {
+    "key": "language_10026803",
+    "content": "공격 시 적군에게 [동상] 2스택 부여 및 대상의 모든 [버프 상태] 해제"
+  },
+  {
+    "key": "language_10026804",
+    "content": "[빙결] 상태를 보유한 유닛 공격 시 최대 HP 10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10026805",
+    "content": "행동 +1, HP를 10% 잃을 때마다 공격받을 시 피해 감면 10% 증가, 공격 시 피해 보너스 10% 증가"
+  },
+  {
+    "key": "language_10026806",
+    "content": "턴 시작 시 자신의 HP가 30% 이하일 경우 잃은 HP 15%의 [보호막] 획득. 추가 행동 공격을 받을 시 공격자에게 [오염] 1스택 부여"
+  },
+  {
+    "key": "language_10026807",
+    "content": "턴 시작 시 자신의 HP가 30% 이하일 경우 잃은 HP 25%의 [보호막] 획득. 추가 행동 공격을 받을 시 공격자에게 [오염] 1스택 부여"
+  },
+  {
+    "key": "language_10026808",
+    "content": "턴 시작 시 [돌변<id:342440170>] 4스택 획득, 공격받은 후 1스택 사라짐. 턴 종료 시 [돌변<id:342440170>] 3스택 보유 시 카벙클 무리로 진화"
+  },
+  {
+    "key": "language_10026809",
+    "content": "턴 시작 시 [돌변<id:342440170>] 4스택 획득, 공격받은 후 1스택 사라짐. 턴 종료 시 [돌변<id:342440170>] 3스택 보유 시 카벙클의 왕으로 진화"
+  },
+  {
+    "key": "language_10026810",
+    "content": "턴 시작 시 [돌변<id:342440170>] 4스택 획득, 공격받은 후 1스택 사라짐. 턴 종료 시 [돌변<id:342440170>] 3스택 보유 시 왕관 카벙클의 왕으로 진화"
+  },
+  {
+    "key": "language_10026811",
+    "content": "사망 시 다른 아군이 [돌변<id:342440170>] 4스택 즉시 획득"
+  },
+  {
+    "key": "language_10026812",
+    "content": "행동력+1, 행동 후 목표에게 [두려움] 3스택 부여"
+  },
+  {
+    "key": "language_10026813",
+    "content": "턴 시작 시 적군 1번 캐릭터가 [무력화<id:342440210>] 획득"
+  },
+  {
+    "key": "language_10026814",
+    "content": "1/2/4턴 시작 시마다 자신의 피해 보너스 10% 증가/피해 감면 10% 증가/행동 포인트 +1, 전투 내 계속 지속"
+  },
+  {
+    "key": "language_10026815",
+    "content": "전투 시작 시 [느린 전기장<id:342440230>] 2스택 획득. 1단계 주문 공격을 받을 시 [느린 전기장<id:342440230>] 1스택 획득, 최종 술식에 공격받을 시 [느린 전기장<id:342440230>] 2스택 차감"
+  },
+  {
+    "key": "language_10026816",
+    "content": "행동 +1, [순간 기절<id:832400103>] 외의 [제어] 상태를 획득할 때마다 자신의 현재 HP 20%의 [보호막] 획득, 2턴간 지속. 또한 자신은 [열정 보호] 획득, 2턴간 지속"
+  },
+  {
+    "key": "language_10026817",
+    "content": "해당 턴에 정신과 현실 피해 공격을 동시에 받지 않은 경우 턴 종료 시 자신이 [느린 전기장<id:342440230>] 2스택 획득. 공격 시 자신의 [느린 전기장<id:342440230>]이 5스택 이상일 경우 목표의 잃은 HP 33%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10026818",
+    "content": "2/3단계가 아닌 주문 공격을 받은 후 자신 열정 +1, 공격자 [간파<id:7160108>] 획득"
+  },
+  {
+    "key": "language_10026819",
+    "content": "행동 +2, 2/3단계가 아닌 주문 공격을 받을 시 피해 감면 +30%"
+  },
+  {
+    "key": "language_10026820",
+    "content": "2/3단계가 아닌 주문 공격을 받을 시 자신의 열정이 5일 경우 최종 술식 바로 시전"
+  },
+  {
+    "key": "language_10026821",
+    "content": "추가 행동이 주는 피해 30% 증가"
+  },
+  {
+    "key": "language_10026822",
+    "content": "행동 후 아군 교체 열정 +1"
+  },
+  {
+    "key": "language_10026823",
+    "content": "궁극기 사용 시 아군이 보유한 탄알 1종마다 궁극기 피해 배율 30% 증가, 최대 120% 증가"
+  },
+  {
+    "key": "language_10026824",
+    "content": "자신이 [다이아 탄환]을 4회 발동할 때마다 [은하수 한 다발] 1단계 즉시 시전(턴마다 최대 1회 적용)"
+  },
+  {
+    "key": "language_10026825",
+    "content": "아군이 임의의 행동 후, 자신의 [다이아 탄환]이 3개 이상일 경우 [반짝이는 다이아] 1단계 시전(턴마다 최대 1회 적용)"
+  },
+  {
+    "key": "language_10026826",
+    "content": "전투 진입 후 [은하수 한 다발] 1단계 즉시 시전(최대 1회 적용), 홀수 턴 시작 시 자신이 [다이아 탄환] 1개 장착"
+  },
+  {
+    "key": "language_10026827",
+    "content": "단일 공격 550%의 현실 피해를 줌. 공격 시 모든 아군이 보유한 탄알 1종마다 40%의 현실 피해를 추가로 줌, 해당 효과로 최대 200%의 현실 피해를 줌, 공격 후 자신이 [다이아 탄환] 2개 장착"
+  },
+  {
+    "key": "language_10026828",
+    "content": "단일 공격 600%의 현실 피해를 줌. 공격 시 모든 아군이 보유한 탄알 1종마다 40%의 현실 피해를 추가로 줌, 해당 효과로 최대 200%의 현실 피해를 줌, 공격 후 자신이 [다이아 탄환] 2개 장착"
+  },
+  {
+    "key": "language_10026829",
+    "content": "단일 공격 650%의 현실 피해를 줌. 공격 시 모든 아군이 보유한 탄알 1종마다 40%의 현실 피해를 추가로 줌, 해당 효과로 최대 200%의 현실 피해를 줌, 공격 후 자신이 [다이아 탄환] 2개 장착"
+  },
+  {
+    "key": "language_10026830",
+    "content": "단일 공격 700%의 현실 피해를 줌. 공격 시 모든 아군이 보유한 탄알 1종마다 40%의 현실 피해를 추가로 줌, 해당 효과로 최대 200%의 현실 피해를 줌, 공격 후 자신이 [다이아 탄환] 2개 장착"
+  },
+  {
+    "key": "language_10026831",
+    "content": "아군이 임의의 행동 후, 자신의 [다이아 탄환]이 2개 이상일 경우 [반짝이는 다이아] 1단계 시전(턴마다 최대 1회 적용)"
+  },
+  {
+    "key": "language_10026832",
+    "content": "자신이 [다이아 탄환]을 2회 발동할 때마다 [은하수 한 다발] 1단계 즉시 시전(턴마다 최대 1회 적용)"
+  },
+  {
+    "key": "language_10026833",
+    "content": "공격 후 조개껍데기 3개 설치"
+  },
+  {
+    "key": "language_10026834",
+    "content": "공격 후 모든 조개껍데기 회수"
+  },
+  {
+    "key": "language_10026835",
+    "content": "누적 회수/설치 3회 후 주문 발동"
+  },
+  {
+    "key": "language_10026836",
+    "content": "1000% 피해를 줌"
+  },
+  {
+    "key": "language_10026837",
+    "content": "단일 공격, 120%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090112>] 3스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 1종 해제"
+  },
+  {
+    "key": "language_10026838",
+    "content": "단일 공격, 180%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090112>] 3스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 2종 해제"
+  },
+  {
+    "key": "language_10026839",
+    "content": "단일 공격, 300%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090112>] 3스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 3종 해제"
+  },
+  {
+    "key": "language_10026840",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 3스택 획득. 모든 [영혼의 조개껍데기<id:31090112>] 회수"
+  },
+  {
+    "key": "language_10026841",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 5스택 획득. 모든 [영혼의 조개껍데기<id:31090112>] 회수"
+  },
+  {
+    "key": "language_10026842",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 8스택 획득. 모든 [영혼의 조개껍데기<id:31090112>] 회수"
+  },
+  {
+    "key": "language_10026843",
+    "content": "단일 공격, 700%의 정신 피해를 줌. 모든 [영혼의 조개껍데기<id:31090112>] 설치. 목표에게 2턴 동안 [조개 표적<id:0>] 상태 부여"
+  },
+  {
+    "key": "language_10026844",
+    "content": "전투 진입 시 자신은 [영혼의 조개껍데기<id:31090111>] 8스택 획득\n[영혼의 조개껍데기<id:31090112>] 설치 시 20% 확률로 {name}의 열정 +1\n[영혼의 조개껍데기<id:31090112>] 회수 시 모든 아군이 회수 스택x{name} 공격x30%의 HP 회복\n[영혼의 조개껍데기<id:31090112>]를 보유한 적군 퇴장 시 해당 적군의 모든 [영혼의 조개껍데기<id:31090112>] 회수"
+  },
+  {
+    "key": "language_10026845",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090111>] 4스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090112>] 누적 7회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090112>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:0>] 1회 발동"
+  },
+  {
+    "key": "language_10026846",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090111>] 8스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090112>] 누적 7회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090112>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:0>] 1회 발동"
+  },
+  {
+    "key": "language_10026847",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090111>] 8스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090112>] 누적 5회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090112>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:0>] 1회 발동"
+  },
+  {
+    "key": "language_10026848",
+    "content": "단일 공격, 180%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090114>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 1종 해제"
+  },
+  {
+    "key": "language_10026849",
+    "content": "단일 공격, 270%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090114>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 2종 해제"
+  },
+  {
+    "key": "language_10026850",
+    "content": "단일 공격, 450%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090114>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 3종 해제"
+  },
+  {
+    "key": "language_10026851",
+    "content": "단일 공격, 700%의 정신 피해를 줌. 모든 [영혼의 조개껍데기<id:31090114>] 설치. 목표에게 2턴 동안 [조개 표적<id:3>] 상태 부여"
+  },
+  {
+    "key": "language_10026852",
+    "content": "전투 진입 시 자신은 [영혼의 조개껍데기<id:31090113>] 8스택 획득\n[영혼의 조개껍데기<id:31090114>] 설치 시 25% 확률로 {name}의 열정 +1\n[영혼의 조개껍데기<id:31090114>] 회수 시 모든 아군이 회수 스택x{name} 공격x30%의 HP 회복\n[영혼의 조개껍데기<id:31090114>]를 보유한 적군 퇴장 시 해당 적군의 모든 [영혼의 조개껍데기<id:31090114>] 회수"
+  },
+  {
+    "key": "language_10026853",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090113>] 8스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090114>] 누적 5회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090114>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:3>] 1회 발동"
+  },
+  {
+    "key": "language_10026854",
+    "content": "단일 공격, 180%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090116>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 1종 해제"
+  },
+  {
+    "key": "language_10026855",
+    "content": "단일 공격, 270%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090116>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 2종 해제"
+  },
+  {
+    "key": "language_10026856",
+    "content": "단일 공격, 450%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090116>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 3종 해제"
+  },
+  {
+    "key": "language_10026857",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 4스택 획득. 모든 [영혼의 조개껍데기<id:31090116>] 회수"
+  },
+  {
+    "key": "language_10026858",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 6스택 획득. 모든 [영혼의 조개껍데기<id:31090116>] 회수"
+  },
+  {
+    "key": "language_10026859",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 10스택 획득. 모든 [영혼의 조개껍데기<id:31090116>] 회수"
+  },
+  {
+    "key": "language_10026860",
+    "content": "단일 공격, 700%의 정신 피해를 줌. 모든 [영혼의 조개껍데기<id:31090116>] 설치. 목표에게 2턴 동안 [조개 표적<id:4>] 상태 부여"
+  },
+  {
+    "key": "language_10026861",
+    "content": "전투 진입 시 자신은 [영혼의 조개껍데기<id:31090115>] 8스택 획득\n[영혼의 조개껍데기<id:31090116>] 설치 시 25% 확률로 {name}의 열정 +1\n[영혼의 조개껍데기<id:31090116>] 회수 시 모든 아군이 회수 스택x{name} 공격x40%의 HP 회복\n[영혼의 조개껍데기<id:31090116>]를 보유한 적군 퇴장 시 해당 적군의 모든 [영혼의 조개껍데기<id:31090116>] 회수"
+  },
+  {
+    "key": "language_10026862",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090115>] 8스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090116>] 누적 5회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090116>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:4>] 1회 발동"
+  },
+  {
+    "key": "language_10026863",
+    "content": "단일 공격, 180%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090118>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 1종 해제"
+  },
+  {
+    "key": "language_10026864",
+    "content": "단일 공격, 270%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090118>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 2종 해제"
+  },
+  {
+    "key": "language_10026865",
+    "content": "단일 공격, 450%의 정신 피해를 줌. 공격 후 [영혼의 조개껍데기<id:31090118>] 4스택 설치. 모든 아군의 [속성 감소] [상태 이상] [제어] 효과 3종 해제"
+  },
+  {
+    "key": "language_10026866",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 4스택 획득. 모든 [영혼의 조개껍데기<id:31090118>] 회수"
+  },
+  {
+    "key": "language_10026867",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 6스택 획득. 모든 [영혼의 조개껍데기<id:31090118>] 회수"
+  },
+  {
+    "key": "language_10026868",
+    "content": "광역 강화, 모든 아군의 HP를 균등하게 나눔. 모든 아군이 [운명을 공유하는 조개<id:0>] 10스택 획득. 모든 [영혼의 조개껍데기<id:31090118>] 회수"
+  },
+  {
+    "key": "language_10026869",
+    "content": "단일 공격, 700%의 정신 피해를 줌. 모든 [영혼의 조개껍데기<id:31090118>] 설치. 목표에게 2턴 동안 [조개 표적<id:5>] 상태 부여"
+  },
+  {
+    "key": "language_10026870",
+    "content": "전투 진입 시 자신은 [영혼의 조개껍데기<id:31090117>] 8스택 획득\n[영혼의 조개껍데기<id:31090118>] 설치 시 25% 확률로 {name}의 열정 +1\n[영혼의 조개껍데기<id:31090118>] 회수 시 모든 아군이 회수 스택x{name} 공격x40%의 HP 회복\n[영혼의 조개껍데기<id:31090118>]를 보유한 적군 퇴장 시 해당 적군의 모든 [영혼의 조개껍데기<id:31090118>] 회수"
+  },
+  {
+    "key": "language_10026871",
+    "content": "전투 진입 시 추가로 [영혼의 조개껍데기<id:31090117>] 8스택 획득\n{name}(이)가 [영혼의 조개껍데기<id:31090118>] 누적 5회 설치 또는 회수 후 [영혼의 조개껍데기<id:31090118>] 보유 스택이 가장 높은 적군에게 [치명적 균열<id:5>] 1회 발동"
+  },
+  {
+    "key": "language_10026872",
+    "content": "아군 부대 신기한 빛 소모 시 [계시] 계산 누적, 모든 아군이 신기한 빛 1 소모 시마다, 모든 아군이 주는 피해 {0.3%} 증가, 최대 20스택 중첩. 기억자 영감이 [천체]일 경우, 행동 후 해당 턴 [즉흥 주문] 공격 횟수+1, 턴마다 최대 {1}회 적용"
+  },
+  {
+    "key": "language_10026873",
+    "content": "아군 부대 신기한 빛 소모 시 [계시] 계산 누적, 모든 아군이 신기한 빛 1 소모 시마다, 모든 아군이 주는 피해 {0.4%} 증가, 최대 20스택 중첩. 기억자 영감이 [천체]일 경우, 행동 후 해당 턴 [즉흥 주문] 공격 횟수+1, 턴마다 최대 {1}회 적용"
+  },
+  {
+    "key": "language_10026874",
+    "content": "아군 부대 신기한 빛 소모 시 [계시] 계산 누적, 모든 아군이 신기한 빛 1 소모 시마다, 모든 아군이 주는 피해 {0.5%} 증가, 최대 20스택 중첩. 기억자 영감이 [천체]일 경우, 행동 후 해당 턴 [즉흥 주문] 공격 횟수+1, 턴마다 최대 {1}회 적용"
+  },
+  {
+    "key": "language_10026875",
+    "content": "아군 부대 신기한 빛 소모 시 [계시] 계산 누적, 모든 아군이 신기한 빛 1 소모 시마다, 모든 아군이 주는 피해 {0.6%} 증가, 최대 20스택 중첩. 기억자 영감이 [천체]일 경우, 행동 후 해당 턴 [즉흥 주문] 공격 횟수+1, 턴마다 최대 {1}회 적용"
+  },
+  {
+    "key": "language_10026876",
+    "content": "아군 부대 신기한 빛 소모 시 [계시] 계산 누적, 모든 아군이 신기한 빛 1 소모 시마다, 모든 아군이 주는 피해 {0.6%} 증가, 최대 20스택 중첩. 기억자 영감이 [천체]일 경우, 행동 후 해당 턴 [즉흥 주문] 공격 횟수+1, 턴마다 최대 {2}회 적용"
+  },
+  {
+    "key": "language_10026877",
+    "content": "모든 아군 주는 피해 {0.3%} 증가"
+  },
+  {
+    "key": "language_10026878",
+    "content": "모든 아군 주는 피해 {0.4%} 증가"
+  },
+  {
+    "key": "language_10026879",
+    "content": "모든 아군 주는 피해 {0.5%} 증가"
+  },
+  {
+    "key": "language_10026880",
+    "content": "모든 아군 주는 피해 {0.6%} 증가"
+  },
+  {
+    "key": "language_10026881",
+    "content": "기억자 추가 행동 후, 치료율 {4%} 증가, 최대 3스택 중첩. 기억자가 공격을 받거나, 피해 분담 후, 모든 아군 치명타 피해 {1.2%} 증가, 3턴 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10026882",
+    "content": "기억자 추가 행동 후, 치료율 {5%} 증가, 최대 3스택 중첩. 기억자가 공격을 받거나, 피해 분담 후, 모든 아군 치명타 피해 {1.5%} 증가, 3턴 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10026883",
+    "content": "기억자 추가 행동 후, 치료율 {6%} 증가, 최대 3스택 중첩. 기억자가 공격을 받거나, 피해 분담 후, 모든 아군 치명타 피해 {1.8%} 증가, 3턴 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10026884",
+    "content": "기억자 추가 행동 후, 치료율 {7%} 증가, 최대 3스택 중첩. 기억자가 공격을 받거나, 피해 분담 후, 모든 아군 치명타 피해 {2.1%} 증가, 3턴 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10026885",
+    "content": "기억자 추가 행동 후, 치료율 {8%} 증가, 최대 3스택 중첩. 기억자가 공격을 받거나, 피해 분담 후, 모든 아군 치명타 피해 {2.4%} 증가, 3턴 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10026886",
+    "content": "전투 진입 시, 영감이 [천체] 캐릭터(기억자 포함) 1명마다, 영감이 [천체]인 모든 아군 캐릭터가 주는 피해 {2%} 증가, 최대 4스택 중첩"
+  },
+  {
+    "key": "language_10026887",
+    "content": "전투 진입 시, 영감이 [천체] 캐릭터(기억자 포함) 1명마다, 영감이 [천체]인 모든 아군 캐릭터가 주는 피해 {2.5%} 증가, 최대 4스택 중첩"
+  },
+  {
+    "key": "language_10026888",
+    "content": "전투 진입 시, 영감이 [천체] 캐릭터(기억자 포함) 1명마다, 영감이 [천체]인 모든 아군 캐릭터가 주는 피해 {3%} 증가, 최대 4스택 중첩"
+  },
+  {
+    "key": "language_10026889",
+    "content": "전투 진입 시, 영감이 [천체] 캐릭터(기억자 포함) 1명마다, 영감이 [천체]인 모든 아군 캐릭터가 주는 피해 {3.5%} 증가, 최대 4스택 중첩"
+  },
+  {
+    "key": "language_10026890",
+    "content": "전투 진입 시, 영감이 [천체] 캐릭터(기억자 포함) 1명마다, 영감이 [천체]인 모든 아군 캐릭터가 주는 피해 {4%} 증가, 최대 4스택 중첩"
+  },
+  {
+    "key": "language_10026891",
+    "content": "다음 단계 진입 시 자신의 모든 상태를 잃고 산토스Ⅱ로 변신"
+  },
+  {
+    "key": "language_10026892",
+    "content": "다음 단계 진입 시 자신의 모든 상태를 잃고 산토스Ⅲ로 변신"
+  },
+  {
+    "key": "language_10026893",
+    "content": "다음 단계 진입 시 자신의 모든 상태를 잃고 산토스Ⅳ로 변신"
+  },
+  {
+    "key": "language_10026894",
+    "content": "자신 강화, 자신 최대 HP×50%의 보호막 획득, 2턴간 지속. [술식 축적<id:102411130>] 상태에 진입, 2턴간 지속."
+  },
+  {
+    "key": "language_10026895",
+    "content": "자신 강화, 자신 최대 HP×50%의 보호막 획득, 2턴간 지속. [술식 축적<id:102411131>] 상태에 진입, 2턴간 지속."
+  },
+  {
+    "key": "language_10026896",
+    "content": "자신 강화, 자신 최대 HP×50%의 보호막 획득, 2턴간 지속. [술식 축적<id:102411132>] 상태에 진입, 2턴간 지속."
+  },
+  {
+    "key": "language_10026897",
+    "content": "자신 강화, 자신 최대 HP×50%의 보호막 획득, 2턴간 지속. [술식 축적<id:102411133>] 상태에 진입, 2턴간 지속."
+  },
+  {
+    "key": "language_10026898",
+    "content": "단일 공격, 150%의 현실 피해를 줌. 공격 후 목표에게 [나약] 2스택 부여"
+  },
+  {
+    "key": "language_10026899",
+    "content": "단일 공격, 180%의 현실 피해를 줌. 공격 후 목표에게 [나약] 2스택 부여"
+  },
+  {
+    "key": "language_10026900",
+    "content": "단일 공격, 210%의 현실 피해를 줌. 공격 후 목표에게 [나약] 2스택 부여"
+  },
+  {
+    "key": "language_10026901",
+    "content": "단일 공격, 240%의 현실 피해를 줌. 공격 후 목표에게 [나약] 2스택 부여"
+  },
+  {
+    "key": "language_10026902",
+    "content": "광역 공격, 90%의 현실 피해를 줌, 자신이 [죽음의 열풍<id:1>] 상태 진입, 자신이 보유한 [원수] 2스택마다 [원한] 1장으로 전환하여 적군 주문칸에 배치, 이후 [원수] 15스택 획득"
+  },
+  {
+    "key": "language_10026903",
+    "content": "광역 공격, 100%의 현실 피해를 줌, 자신이 [죽음의 열풍<id:2>] 상태 진입, 자신이 보유한 [원수] 2스택마다 [원한] 1장으로 전환하여 적군 주문칸에 배치, 이후 [원수] 15스택 획득"
+  },
+  {
+    "key": "language_10026904",
+    "content": "광역 공격, 110%의 현실 피해를 줌, 자신이 [죽음의 열풍<id:3>] 상태 진입, 자신이 보유한 [원수] 2스택마다 [원한] 1장으로 전환하여 적군 주문칸에 배치, 이후 [원수] 15스택 획득"
+  },
+  {
+    "key": "language_10026905",
+    "content": "광역 공격, 120%의 현실 피해를 줌, 자신이 [죽음의 열풍<id:4>] 상태 진입, 자신이 보유한 [원수] 2스택마다 [원한] 1장으로 전환하여 적군 주문칸에 배치, 이후 [원수] 15스택 획득"
+  },
+  {
+    "key": "language_10026906",
+    "content": "광역 공격, 모든 적군에게 30%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10026907",
+    "content": "광역 공격, 모든 적군에게 40%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10026908",
+    "content": "광역 공격, 모든 적군에게 50%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×15%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10026909",
+    "content": "광역 공격, 모든 적군에게 60%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×20%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10026910",
+    "content": "광역 공격, 260%의 현실 피해를 줌, [원망 기억] 20스택 획득 및 모든 [원망 기억] 상태 제거, [원한] 20장을 적군 주문칸에 배치"
+  },
+  {
+    "key": "language_10026911",
+    "content": "광역 공격, 290%의 현실 피해를 줌, [원망 기억] 20스택 획득 및 모든 [원망 기억] 상태 제거, [원한] 20장을 적군 주문칸에 배치"
+  },
+  {
+    "key": "language_10026912",
+    "content": "광역 공격, 320%의 현실 피해를 줌, [원망 기억] 20스택 획득 및 모든 [원망 기억] 상태 제거, [원한] 20장을 적군 주문칸에 배치"
+  },
+  {
+    "key": "language_10026913",
+    "content": "광역 공격, 350%의 현실 피해를 줌, [원망 기억] 20스택 획득 및 모든 [원망 기억] 상태 제거, [원한] 20장을 적군 주문칸에 배치"
+  },
+  {
+    "key": "language_10026914",
+    "content": "전투 시작 및 환원 후, [원수] 20스택 획득 및 모든 [원망 기억] 상태 제거, 아군 캐릭터가 공격받은 후 자신의 [원수] 1스택 제거, [원망 기억] 1스택 획득"
+  },
+  {
+    "key": "language_10026915",
+    "content": "공격받을 시 분노의 화신이 [흩날림] 1스택 획득, 1턴간 지속\n분노의 화신 퇴장 시 자신에게 최대 HP×30%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10026916",
+    "content": "분노의 화신이 고통과 역경의 동반자와 함께 음송 상태 진입"
+  },
+  {
+    "key": "language_10026917",
+    "content": "턴 시작 시 적군 중 공격이 가장 높은 캐릭터에게 1턴 동안 [핏빛<id:102411208>] 부여"
+  },
+  {
+    "key": "language_10026918",
+    "content": "자신 음송, [죽음의 열풍<id:1>] 상태 진입"
+  },
+  {
+    "key": "language_10026919",
+    "content": "자신 음송, [죽음의 열풍<id:2>] 상태 진입"
+  },
+  {
+    "key": "language_10026920",
+    "content": "자신 음송, [죽음의 열풍<id:3>] 상태 진입"
+  },
+  {
+    "key": "language_10026921",
+    "content": "자신 음송, [죽음의 열풍<id:4>] 상태 진입"
+  },
+  {
+    "key": "language_10026922",
+    "content": "광역 공격, 모든 적군에게 140%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10026923",
+    "content": "광역 공격, 모든 적군에게 160%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10026924",
+    "content": "광역 공격, 모든 적군에게 180%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10026925",
+    "content": "광역 공격, 모든 적군에게 200%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10026926",
+    "content": "입장 시 [분노의 바람] 1스택 획득, 턴 종료 시 [분노의 바람] 스택 2배\n턴 시작 시 [분노의 바람]이 4스택 도달 시 모든 아군이 마법 위력 20% 증가 획득, 1턴간 지속\n[분노의 바람]이 8스택 도달 시 모든 아군이 피해 감면 +30% 획득, 1턴간 지속"
+  },
+  {
+    "key": "language_10026927",
+    "content": "천체, 암석 영감 캐릭터의 공격, 현실 방어, 정신 방어, 최대 HP 20% 증가"
+  },
+  {
+    "key": "language_10026928",
+    "content": "행동 후 자신의 신기한 빛+1 (모든 캐릭터, 매 턴당 최대 1회 발동)"
+  },
+  {
+    "key": "language_10026929",
+    "content": "공격받을 시, [음송] 상태일 경우 받는 피해 30% 감소"
+  },
+  {
+    "key": "language_10026930",
+    "content": "공격 시 임의의 목표가 [상태 이상]일 경우 방어 무시율 30% 증가 및 공격 후 자신이 [견고] 1스택 획득"
+  },
+  {
+    "key": "language_10026931",
+    "content": "공격 후 목표가 [종적] 상태일 경우 대상에게 [상처] 1스택 부여. 공격 후 목표의 HP가 30% 이하일 경우 대상에게 [상처] 1스택 부여. 최종 술식 사용 후 열정이 가장 낮은 기타 아군 열정 +2"
+  },
+  {
+    "key": "language_10026932",
+    "content": "광역 공격, 모든 적군에게 150%의 현실 피해를 줌. 명중 시 랜덤으로 목표에게 [디버프 집합<id:42000044>] 중 3종 부여, 2턴간 지속"
+  },
+  {
+    "key": "language_10026933",
+    "content": "추가 행동 시 열정+1 (모든 캐릭터, 매 턴당 최대 1회 발동)"
+  },
+  {
+    "key": "language_10026934",
+    "content": "턴 시작 시 HP가 80% 이상일 경우 마법 위력+25%, 1턴 지속"
+  },
+  {
+    "key": "language_10026935",
+    "content": "공격 시 2단계 이상 주문이 주는 피해 30% 증가"
+  },
+  {
+    "key": "language_10026936",
+    "content": "(번역 불필요)턴 시작 시 적군 주문칸에 [폭탄 함정] 2장 놓음"
+  },
+  {
+    "key": "language_10026937",
+    "content": "(번역 불필요) 아군 캐릭터가 주문을 직접 사용하여 공격 후, 주 목표가 [중독] 상태일 경우 자신이 [행운] 1스택 획득"
+  },
+  {
+    "key": "language_10026938",
+    "content": "전투 진입 및 턴 종료 시 자신이 [바위 위 이끼<id:1>] 2스택 획득. 아군 캐릭터가 주문을 사용해 공격 후 주 목표가 [중독] 상태일 경우 자신이 [바위 위 이끼<id:1>] 1스택 획득\n턴 시작 시 10스택의 [바위 위 이끼<id:1>]를 보유한 경우 해당 턴 내의 자신이 처음 주문을 사용해 공격하기 전 주 목표가 1턴 동안 [석화] 상태에 빠지고 턴 종료 시 자신의 모든 [바위 위 이끼<id:1>] 상태 제거\n[석화] 상태를 보유한 적군 유닛 공격 시 [석화] 상태가 해제되지 않음"
+  },
+  {
+    "key": "language_10026939",
+    "content": "직접 공격 시, 주 목표가 [석화] 상태일 경우, 이번 공격 마법 위력 +30%"
+  },
+  {
+    "key": "language_10026940",
+    "content": "직접 공격 시, 주 목표가 [석화] 상태일 경우, 이번 공격 반드시 치명타"
+  },
+  {
+    "key": "language_10026941",
+    "content": "단일 공격, 180%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 40%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 20%의 현실 피해 다시 증가, 해당 효과는 최대 80%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026942",
+    "content": "단일 공격, 270%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 60%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 30%의 현실 피해 다시 증가, 해당 효과는 최대 120%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026943",
+    "content": "단일 공격, 450%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 100%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 50%의 현실 피해 다시 증가, 해당 효과는 최대 200%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026944",
+    "content": "단일 공격, 200%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 40%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 20%의 현실 피해 다시 증가, 해당 효과는 최대 80%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026945",
+    "content": "단일 공격, 300%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 60%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 30%의 현실 피해 다시 증가, 해당 효과는 최대 120%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026946",
+    "content": "단일 공격, 500%의 현실 피해를 줌. 목표에게 [중독] 상태 부여, 100%의 현실 피해를 추가로 줌. 이후 추가 [중독] 상태마다 50%의 현실 피해 다시 증가, 해당 효과는 최대 200%의 현실 피해까지 증가, [석화] 상태는 2개의 추가 [중독] 상태로 간주"
+  },
+  {
+    "key": "language_10026947",
+    "content": "단일 공격, 랜덤 적군 목표 1명에게 200%의 정신 피해를 줌, 해당 공격으로 15%×누적 계시 수의 정신 피해를 추가로 줌, 계산된 계시 수가 3/6/12/20 이상일 시, 공격 횟수 +1/2/3/5(즉흥 주문이 피해를 줄 때 모든 아군의 평균 속성으로 계산 진행)"
+  },
+  {
+    "key": "language_10026948",
+    "content": "입장 시 발사원 획득 가능 상태 생성, 퇴장 후 제거"
+  },
+  {
+    "key": "language_10026949",
+    "content": "턴 시작 시 신기한 빛 2포인트를 소모해 발사원에 버프 부여(효과: 즉흥 주문 공격 +100%, 공격 횟수 +5)"
+  },
+  {
+    "key": "language_10026950",
+    "content": "턴 시작 시 신기한 빛 2포인트를 소모해 발사원에 버프 1개 부여(효과: 공격 횟수 +5), 아군의 [석화] 캐릭터 1명마다 1회 추가 발동"
+  },
+  {
+    "key": "language_10026951",
+    "content": "턴 종료 시 모든 아군 캐릭터의 모든 신기한 빛 회복"
+  },
+  {
+    "key": "language_10026952",
+    "content": "턴 종료 시 모든 아군의 [중독] 상태가 5턴까지 연장"
+  },
+  {
+    "key": "language_10026953",
+    "content": "입장 시 발사원 생성"
+  },
+  {
+    "key": "language_10026954",
+    "content": "턴 시작 시, 발사원의 영감을 천체로 변경"
+  },
+  {
+    "key": "language_10026955",
+    "content": "턴 시작 시 발사원에 버프 부여(효과: 즉흥 주문 공격 횟수 +5)"
+  },
+  {
+    "key": "language_10026956",
+    "content": "턴 시작 시, 분배 가중 변경 버프를 발사원에 시전, 즉흥 주문 공격 유형 일반 주문 분배 가중+100"
+  },
+  {
+    "key": "language_10026957",
+    "content": "턴 시작 시 발사원에 버프 부여(효과: 즉흥 주문 피해 +100%)"
+  },
+  {
+    "key": "language_10026958",
+    "content": "턴 시작 시 모든 아군에게 버프 부여, 해당 버프를 보유한 캐릭터가 공격 유형 주문 직접 사용 시 해당 버프 유형을 보유한 모든 캐릭터는 신기한 빛 1포인트 소모 및 현재 턴의 오의 비탄 영혼 에너지 누적치 +1"
+  },
+  {
+    "key": "language_10026959",
+    "content": "턴 시작 시 자신의 피해 보너스 X 증가, X=10%+부대 영혼 에너지×2.5%"
+  },
+  {
+    "key": "language_10026960",
+    "content": "턴 시작 시 모든 아군에게 공격 X 증가의 버프 부여, X=(500+10×부대 누적 영혼 에너지)×(1+해당 버프 보유 캐릭터 수×50%)"
+  },
+  {
+    "key": "language_10026961",
+    "content": "턴 시작 시 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+5, 아군에 [사중주] 상태의 캐릭터가 2명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +5"
+  },
+  {
+    "key": "language_10026962",
+    "content": "턴 시작 시 부대 영혼 에너지+5"
+  },
+  {
+    "key": "language_10026963",
+    "content": "행동 후 해당 턴에 영혼 에너지 5 누적 지급"
+  },
+  {
+    "key": "language_10026964",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+1, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026965",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+1, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026966",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+1, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026967",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026968",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026969",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +1"
+  },
+  {
+    "key": "language_10026970",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026971",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026972",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026973",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026974",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026975",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 공격 횟수+2, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문] 공격 횟수 추가로 +2"
+  },
+  {
+    "key": "language_10026976",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 20% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026977",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 20% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026978",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 20% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026979",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026980",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026981",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22401>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026982",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026983",
+    "content": "단일 공격, 300%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026984",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문]이 주는 피해 35% 증가, 아군에 [사중주<id:22402>] 상태의 캐릭터가 3명 이상일 경우, [즉흥 주문]이 주는 피해 추가로 20% 증가"
+  },
+  {
+    "key": "language_10026985",
+    "content": "단일 강화, 모든 아군의 [사중주<id:22401>] 상태 1턴 연장, 목표 아군과 자신이 5턴 동안 [사중주<id:22401>] 상태 진입, 이미 해당 상태일 경우 5턴까지 연장. 이후 해당 상태의 모든 아군 캐릭터 신기한 빛 3포인트 회복, 자신 열정 +1, 또한 해당 턴의 [즉흥 주문]에 [계시] 8 추가 계산"
+  },
+  {
+    "key": "language_10026986",
+    "content": "단일 강화, 모든 아군의 [사중주<id:22402>] 상태 1턴 연장, 목표 아군과 자신이 5턴 동안 [사중주<id:22402>] 상태 진입, 이미 해당 상태일 경우 5턴까지 연장. 이후 해당 상태의 모든 아군 캐릭터 신기한 빛 3포인트 회복, 자신 열정 +1, 또한 해당 턴의 [즉흥 주문]에 [계시] 8 추가 계산"
+  },
+  {
+    "key": "language_10026987",
+    "content": "아군이 신기한 빛 소모 시 [계시] 누적, {name}이(가) [계시]를 공격 유형 주문에 분배할 확률이 높아짐. 전투 진입 시 [계시] 3포인트 누적. 신기한 빛 최대치 +1, 턴 시작 시마다 {name} 신기한 빛 +4, 아군이 공격 유형 주문 직접 사용 후 {name} 신기한 빛 +1"
+  },
+  {
+    "key": "language_10026988",
+    "content": "턴 시작 시 자신이 주는 피해 증가, 5%+2.5%×누적된 [계시]만큼 증가, 1턴 지속. [즉흥 주문]이 천체 영감으로 변경 및 [즉흥 주문] 1턴 동안 1회 공격 후마다 치명타율 7.5% 증가, 치명타 피해 7.5% 증가"
+  },
+  {
+    "key": "language_10026989",
+    "content": "턴 시작 시 자신이 주는 피해 증가, 5%+2.5%×누적된 [계시]만큼 증가, 1턴 지속. [즉흥 주문]이 천체 영감으로 변경 및 [즉흥 주문] 1턴 동안 1회 공격 후마다 치명타율 15% 증가, 치명타 피해 15% 증가"
+  },
+  {
+    "key": "language_10026990",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026991",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌. 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026992",
+    "content": "광역 공격, 적군 2명에게 200%의 정신 피해를 줌. 공격 후 목표에게 [의식 혼란] 2스택 부여, 1턴간 지속. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026993",
+    "content": "광역 공격, 적군 2명에게 165%의 정신 피해를 줌. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026994",
+    "content": "광역 공격, 적군 2명에게 170%의 정신 피해를 줌. 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026995",
+    "content": "광역 공격, 적군 2명에게 250%의 정신 피해를 줌. 공격 후 목표에게 [의식 혼란] 2스택 부여, 1턴간 지속. 공격 후 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026996",
+    "content": "광역 카운터, 모든 아군에게 [별의 파수꾼], [견고] 1스택 부여. 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026997",
+    "content": "광역 카운터, 모든 아군에게 [별의 파수꾼], [견고] 1스택 부여, 자신에게 [별의 파수꾼] 1스택 추가 부여. 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026998",
+    "content": "광역 카운터, 모든 아군에게 [별의 파수꾼], [견고] 1스택 부여, 자신에게 [별의 파수꾼] 2스택 추가 부여. 신기한 빛 2포인트 소모, 해당 턴 [즉흥 주문] 공격 횟수 +1, 또한 [즉흥 주문]의 분열 공격으로 적군 목표 1명 추가 선택"
+  },
+  {
+    "key": "language_10026999",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 공격 후 목표의 열정 -2. 목표가 [의식 혼란] 상태에 빠진 경우 100%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027000",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 공격 후 목표의 열정 -2. 목표가 [의식 혼란] 상태에 빠진 경우 175%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027001",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 공격 후 목표의 열정 -2. 목표가 [의식 혼란] 상태에 빠진 경우 250%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027002",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 공격 후 목표의 열정 -2. 목표가 [의식 혼란] 상태에 빠진 경우 325%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027003",
+    "content": "단일 공격, 500%의 정신 피해를 줌. 공격 후 목표의 열정 -2. 목표가 [의식 혼란] 상태에 빠진 경우 400%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027004",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표의 열정 -2 또한 해당 턴의 [즉흥 주문]에 [계시] 8포인트 추가 계산. 이번 공격에 100%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027005",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표의 열정 -2 또한 해당 턴의 [즉흥 주문]에 [계시] 8포인트 추가 계산. 이번 공격에 175%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027006",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표의 열정 -2 또한 해당 턴의 [즉흥 주문]에 [계시] 8포인트 추가 계산. 이번 공격에 250%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027007",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표의 열정 -2 또한 해당 턴의 [즉흥 주문]에 [계시] 8포인트 추가 계산. 이번 공격에 325%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027008",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표의 열정 -2 또한 해당 턴의 [즉흥 주문]에 [계시] 8포인트 추가 계산. 이번 공격에 400%의 정신 피해를 추가로 주고 목표에게 3턴 동안 [별자리의 방향] 상태 부여, 자신 열정 +1"
+  },
+  {
+    "key": "language_10027009",
+    "content": "전투 진입 시, [계시] 3포인트 누적. 턴 시작 시, 자신의 신기한 빛 +4. [즉흥 주문] 홀수 회차(1, 3, 5...회) 공격 시 분열, 공격 시 적군 목표 1명을 추가로 선택하여 공격 발동, 단 최종 피해 70% 감소"
+  },
+  {
+    "key": "language_10027010",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027011",
+    "content": "단일 공격, 250%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027012",
+    "content": "단일 공격, 450%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027013",
+    "content": "단일 공격, 220%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027014",
+    "content": "단일 공격, 280%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027015",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027016",
+    "content": "광역 공격, 적군 2명에게 120%의 정신 피해를 줌, 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027017",
+    "content": "광역 공격, 적군 2명에게 180%의 정신 피해를 줌, 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027018",
+    "content": "광역 공격, 적군 2명에게 300%의 정신 피해를 줌, 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027019",
+    "content": "광역 공격, 적군 2명에게 120%의 정신 피해를 줌, 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027020",
+    "content": "광역 공격, 적군 2명에게 180%의 정신 피해를 줌, 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027021",
+    "content": "광역 공격, 적군 2명에게 300%의 정신 피해를 줌, 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027022",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027023",
+    "content": "단일 공격, 250%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027024",
+    "content": "단일 공격, 450%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027025",
+    "content": "단일 공격, 220%의 정신 피해를 줌, 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027026",
+    "content": "단일 공격, 280%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027027",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 공격 후 목표에게 [의식 혼란] 1스택 부여, 1턴간 지속. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타율 15% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 25% 추가 증가"
+  },
+  {
+    "key": "language_10027028",
+    "content": "광역 공격, 적군 2명에게 120%의 정신 피해를 줌. 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027029",
+    "content": "광역 공격, 적군 2명에게 180%의 정신 피해를 줌. 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027030",
+    "content": "광역 공격, 적군 2명에게 300%의 정신 피해를 줌. 이번 공격의 방어 무시율 30% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027031",
+    "content": "광역 공격, 적군 2명에게 120%의 정신 피해를 줌. 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027032",
+    "content": "광역 공격, 적군 2명에게 180%의 정신 피해를 줌. 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027033",
+    "content": "광역 공격, 적군 2명에게 300%의 정신 피해를 줌. 이번 공격의 방어 무시율 40% 증가. 공격 후 신기한 빛 2 소모, 해당 턴 [즉흥 주문] 치명타율 15% 증가, [즉흥 주문]의 계시가 5 이상일 경우 치명타 피해 20% 추가 증가, [즉흥 주문]의 계시 10 이상일 경우 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027034",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 15% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가"
+  },
+  {
+    "key": "language_10027035",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 23% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가"
+  },
+  {
+    "key": "language_10027036",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 31% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가"
+  },
+  {
+    "key": "language_10027037",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 39% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가"
+  },
+  {
+    "key": "language_10027038",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 15% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가 및 반드시 치명타 발동"
+  },
+  {
+    "key": "language_10027039",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 23% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가 및 반드시 치명타 발동"
+  },
+  {
+    "key": "language_10027040",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 31% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가 및 반드시 치명타 발동"
+  },
+  {
+    "key": "language_10027041",
+    "content": "단일 공격, 500%의 정신 피해를 줌, 이번 공격의 치명타율 39% 증가, 또한 해당 턴의 [즉흥 주문]을 [계시]에 8포인트 추가 계산, 또한 치명타율 15% 추가 증가. 만약 [즉흥 주문]의 계시가 10 이상일 경우, 치명타 피해 50% 추가 증가 및 반드시 치명타 발동"
+  },
+  {
+    "key": "language_10027042",
+    "content": "아군 부대가 신기한 빛 소모 시 [계시] 누적, 턴 시작 시마다 신기한 빛 +4. 전투 진입 시 [계시] 3 누적"
+  },
+  {
+    "key": "language_10027043",
+    "content": "단일 공격, 100%의 정신 피해를 줌. 목표가 보유한 [불운] 1스택마다 10%의 정신 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027044",
+    "content": "광역 디버프, 모든 적군에게 1턴 동안 [흐림] 부여, 자신이 [견고] 1스택 획득"
+  },
+  {
+    "key": "language_10027045",
+    "content": "광역 디버프, 모든 적군에게 2턴 동안 [흐림] 부여, 자신이 [견고] 2스택 획득"
+  },
+  {
+    "key": "language_10027046",
+    "content": "단일 공격, 400%의 정신 피해를 줌. 목표에게 2턴 동안 [물들임] 상태 부여"
+  },
+  {
+    "key": "language_10027047",
+    "content": "전투 시작 및 2단계 진입 시 적군 주문함에 불운 주문 8장을 넣음. 적군 턴 시작 시 적군 주문함에 불운 주문 1장을 넣고 대상이 주문함에서 불운 주문 1장을 뽑음. 2단계 시 최종 술식 시전 후 모든 적군의 [불운] 2스택 소모, 적군 임의의 캐릭터가 보유한 불운 수가 2 미만일 경우 자신 열정 +5"
+  },
+  {
+    "key": "language_10027048",
+    "content": "턴 종료 시 적군 손에 있는 불운 주문 1장마다 모든 캐릭터에게 불운 주문 1회 시전, 최대 4회 발동"
+  },
+  {
+    "key": "language_10027049",
+    "content": "턴 종료 시, 자신이 [행운] 1스택과 [총력] 1스택 획득"
+  },
+  {
+    "key": "language_10027050",
+    "content": "사용 후 지정 아군이 [중독] 상태에 빠짐"
+  },
+  {
+    "key": "language_10027051",
+    "content": "사용 후 지정 아군이 [기절] 상태에 빠짐"
+  },
+  {
+    "key": "language_10027052",
+    "content": "사용 후 지정 아군이 [오염] 상태에 빠짐"
+  },
+  {
+    "key": "language_10027053",
+    "content": "직접 사용한 일반 주문 공격을 받을 후 적군 주문함에 불운 주문 3장을 넣음"
+  },
+  {
+    "key": "language_10027054",
+    "content": "전투 시작 시 공격력이 가장 높은 적군을 제외하고, 남은 적군 대상을 [혼미]에 빠트림"
+  },
+  {
+    "key": "language_10027055",
+    "content": "불운-기절 1장 넣기"
+  },
+  {
+    "key": "language_10027056",
+    "content": "불운-오염 1장 넣기"
+  },
+  {
+    "key": "language_10027057",
+    "content": "랜덤 불운 1개 시전, 광역화"
+  },
+  {
+    "key": "language_10027058",
+    "content": "사용 후 지정 아군이 [중독] 상태에 빠짐, 3턴 지속"
+  },
+  {
+    "key": "language_10027059",
+    "content": "사용 후 지정 아군이 [기절] 상태에 빠짐, 2턴 지속"
+  },
+  {
+    "key": "language_10027060",
+    "content": "사용 후 지정 아군이 [오염] 상태에 빠짐, 3턴 지속"
+  },
+  {
+    "key": "language_10027061",
+    "content": "자신이 주문 직접 사용 후 [물들임]을 보유한 경우 불운 주문 3장을 넣음"
+  },
+  {
+    "key": "language_10027062",
+    "content": "전투 시작 및 2단계 진입 시 적군 주문함에 불운 주문 8장을 넣음. 적군 턴 시작 시 적군 주문함에 불운 주문 1장을 넣고 대상이 주문함에서 불운 주문 1장을 뽑음. 2단계 시 최종 술식 시전 후 모든 적군의 [불운] 2스택 소모, 턴 종료 시 적군 임의의 캐릭터가 보유한 불운 수가 2 미만일 경우 자신 열정 +5"
+  },
+  {
+    "key": "language_10027063",
+    "content": "랜덤 약제 1개를 넣음"
+  },
+  {
+    "key": "language_10027064",
+    "content": "A 나이트 출전 시 적용: 자신의 술식 위력 +150%"
+  },
+  {
+    "key": "language_10027065",
+    "content": "A 나이트 출전 시 적용, 자신이 최종 술식을 시전하여 적군 처치 후, 자신의 열정 +5 및 [예의] 10스택 획득. 턴 시작 시 최종 술식 1회 시전"
+  },
+  {
+    "key": "language_10027066",
+    "content": "A 나이트 동행 시 적용, 『골동품 은검』 2개 획득(최대 1회 발동), 설치 중 모든 『골동품 은검』 레벨업, 모든 『디스크』의 술식 위력이 4%에서 6%로 증가"
+  },
+  {
+    "key": "language_10027067",
+    "content": "이글 협동 시 적용: 전투 시작 시 모든 적군이 [약점 감지] 상태에 빠짐"
+  },
+  {
+    "key": "language_10027068",
+    "content": "이글 협동 시 적용, 턴 시작 시 최종 술식 1회 시전(1턴에 1회 발동)"
+  },
+  {
+    "key": "language_10027069",
+    "content": "이글 협동 시 적용: 아군 최종 술식 시전 후 최종 술식 1회 시전"
+  },
+  {
+    "key": "language_10027070",
+    "content": "보이저 출전 시 적용:\n턴 종료 시 모든 적군에게 공격 500%의 고정 피해를 줌. 목표의 열정이 3 이하일 경우 500%의 고정 피해를 추가로 줌. 랜덤 1명 적군의 열정 -1"
+  },
+  {
+    "key": "language_10027071",
+    "content": "보이저 동행 시 적용2턴 종료 시마다 모든 적군 [심란] 부여, 1턴간 지속"
+  },
+  {
+    "key": "language_10027072",
+    "content": "보이저 동행 시 적용, [별의 파수꾼]을 보유한 아군 캐릭터가 공격받을 시 공격자의 열정 -1 및 자신의 잃은 HP 50% 회복"
+  },
+  {
+    "key": "language_10027073",
+    "content": "스파토데아 출전 시 적용: 공격 시 자신이 보유한 [총력] 1스택마다 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027074",
+    "content": "스파토데아 출전 시 적용, 스킬 [‘스파토데아’] 사용 후 자신이 [총력] 5스택과 [무흔] 1스택 획득"
+  },
+  {
+    "key": "language_10027075",
+    "content": "스파토데아 출전 시 적용, 아군 캐릭터가 공격 유형이 아닌 주문 사용 후, 자신이 [총력] 3스택과 [가호] 1스택 획득"
+  },
+  {
+    "key": "language_10027076",
+    "content": "소네트 협동 시 적용: 홀수 턴 시작 시 3단계 [장려·아홉째] 1회 시전, 모든 아군이 사용자 공격×250%의 [보호막] 획득, 1턴 지속"
+  },
+  {
+    "key": "language_10027077",
+    "content": "소네트 협동 시 적용, 턴 시작 시 모든 아군에게 [영구 버프 집합] 중 3종 랜덤 부여"
+  },
+  {
+    "key": "language_10027078",
+    "content": "소네트 협동 시 적용, 짝수 턴 시작 시 모든 적군에게 1턴 동안 [무장 해제] 부여"
+  },
+  {
+    "key": "language_10027079",
+    "content": "뉴바벨 동행 시 적용: 첫 의뢰 완료 시 참새 금화 500개 획득"
+  },
+  {
+    "key": "language_10027080",
+    "content": "뉴바벨 동행 시 적용, 계기 구매 진입 시마다 참새 금화 100개 획득"
+  },
+  {
+    "key": "language_10027081",
+    "content": "뉴바벨 동행 시 적용, 피조물 구매 시마다 참새 금화 25개 획득"
+  },
+  {
+    "key": "language_10027082",
+    "content": "릴리아 동행 시 적용: 임박한 위험을 3회 완료할 때마다 [뜨거운 독주] 3개 획득.\n릴리아 출전 시 적용: 주문 직접 사용 후 최종 술식 공격 1회 추가(턴마다 최대 2회 발동)"
+  },
+  {
+    "key": "language_10027083",
+    "content": "릴리아 출전 시 적용: 자신 추가 행동으로 열정 획득 가능, 추가 행동 피해 100% 증가"
+  },
+  {
+    "key": "language_10027084",
+    "content": "릴리아 출전 시 적용: 턴 시작 시 3단계 주문 [바람을 타고] 1장 생성, 설치 중의 『뜨거운 독주』 1개마다 자신의 공격 +15%"
+  },
+  {
+    "key": "language_10027085",
+    "content": "로렐라이 출전 시 적용:\n턴 시작 시 카드 10장 더 뽑음\n모든 아군 공격 시 아군 주문칸의 지정 유형의 주문 1장마다, 해당 공격 보너스 획득\n공격 유형 주문: 20%의 현실/정신 피해를 추가로 줌\n버프 유형 주문: 치명타율 10% 증가\n디버프 유형 주문: 방어 무시율 20% 증가\n특수 유형 주문: 공격력 10% 증가"
+  },
+  {
+    "key": "language_10027086",
+    "content": "로렐라이 출전 시 적용: 턴 시작 시 주문함에서 모든 불운 주문 삭제(최대 1회 발동), [월장석 가루] 1장과 [벨라도나 즙] 1장을 넣음"
+  },
+  {
+    "key": "language_10027087",
+    "content": "로렐라이 동행 시 적용: 눈 앞의 위기/재난의 염탐 완료 시마다 매개체 100 회복"
+  },
+  {
+    "key": "language_10027088",
+    "content": "안안 리 출전 시 적용: 턴 시작 시 주문함에서 주문 3장을 뽑고 모든 아군의 주문 단계 +1\n자신이 3단계 주문을 사용한 후 최종 술식 1회 시전"
+  },
+  {
+    "key": "language_10027089",
+    "content": "안안 리 출전 시 적용: 최종 술식 시전 시 행동칸의 1/2/3 단계 주문 1장마다 25%/100%/250%의 정신 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027090",
+    "content": "안안 리 출전 시 적용: 최종 술식 시전 후 모든 적군이 1턴 동안 [기절] 상태에 빠짐"
+  },
+  {
+    "key": "language_10027091",
+    "content": "루시 출전 시 적용:\n아군 캐릭터가 [전력]을 2스택 잃을 때마다 [전력] 1스택 획득\n아군 캐릭터의 [전력]이 10스택 이상일 경우 상성 피해 계수 50% 증가"
+  },
+  {
+    "key": "language_10027092",
+    "content": "루시 출전 시 적용: 전투 시작 시 모든 아군의 열정과 신기한 빛 최대치로 회복"
+  },
+  {
+    "key": "language_10027093",
+    "content": "루시 출전 시 적용: 아군 캐릭터가 비상성 적 공격을 받은 후 [전력] 2스택 소모, 잃은 HP 25% 회복"
+  },
+  {
+    "key": "language_10027094",
+    "content": "곡랑 출전 시 적용:\n[합성 골드버그 양조기] 획득(최대 1회 발동)\n턴 시작 시 설치된 [약제] 1개마다 [술] 3스택 획득"
+  },
+  {
+    "key": "language_10027095",
+    "content": "곡랑 동행 시 적용: 정비 지역을 떠날 때마다 설치와 창고의 『약제』 1개마다 참새 금화 20개 획득"
+  },
+  {
+    "key": "language_10027096",
+    "content": "곡랑 출전 시 적용:\n특수 주문 사용 후 HP 비율이 가장 낮은 적군 1명에게 3단계의 [한잔 더] 시전"
+  },
+  {
+    "key": "language_10027097",
+    "content": "안조 날라 출전 시 적용:\n아군 캐릭터 턴 시작 시 자신의 현재 HP가 50% 이하일 경우 매개체 5개를 소모해 자신 최대 HP의 100% 회복 및 [버티기] 1스택 획득\n아군 캐릭터가 적 1명을 처치할 때마다 매개체 5개 회복"
+  },
+  {
+    "key": "language_10027098",
+    "content": "안조 날라 동행 시 적용: 재난의 염탐 진입 시마다 매개체 최대치 +10 및 매개체 최대치까지 회복"
+  },
+  {
+    "key": "language_10027099",
+    "content": "안조 날라 출전 시 적용:\n아군 캐릭터가 주문 직접 사용 후 자신과 계약 대상이 [예의] 15스택 획득"
+  },
+  {
+    "key": "language_10027100",
+    "content": "로페라 동행 시 적용: 보물창고 진입 시마다 참새 금화 100개 획득"
+  },
+  {
+    "key": "language_10027101",
+    "content": "로페라 동행 시 적용: 새로운 지역 진입 시마다 재난의 염탐이 아닌 경로 랜덤 2개를 보물창고로 교체"
+  },
+  {
+    "key": "language_10027102",
+    "content": "로페라 동행 시 적용: 보물창고 처음 진입 시 랜덤 묘수 피조물 5개 획득"
+  },
+  {
+    "key": "language_10027103",
+    "content": "윌로우 출전 시 적용: 설치 중 [검은 포션] [칸타렐라 독액] [점성 칸타렐라 독액] 중 임의의 1종이 있을 경우 턴 종료 시 모든 적군이 2개 [중독]에 빠짐, 2턴간 지속"
+  },
+  {
+    "key": "language_10027104",
+    "content": "윌로우 출전 시 적용: 설치 중 [검은 포션] [칸타렐라 독액] [점성 칸타렐라 독액]의 수량이 3이상일 경우 자신이 주는 고정 피해 100% 증가"
+  },
+  {
+    "key": "language_10027105",
+    "content": "윌로우 출전 시 적용: 설치 중 [검은 포션] [칸타렐라 독액] [점성 칸타렐라 독액]의 수량이 5이상일 경우, 턴 종료 시 모든 적군에게 랜덤 [독성 저주] 1스택 부여"
+  },
+  {
+    "key": "language_10027106",
+    "content": "플러터 페이지 동행 시 적용: 랜덤 [추가 행동] 피조물 3개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027107",
+    "content": "플러터 페이지 동행 시 적용: 묘수 등급의 [추가 행동] 피조물 1개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027108",
+    "content": "플러터 페이지 동행 시 적용: 묘수 등급의 [추가 행동] 피조물 3개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027109",
+    "content": "바르카롤라 동행 시 적용: [나무 피리] 1개 획득(최대 1회 발동). 즉흥 주문 공격 횟수 +4"
+  },
+  {
+    "key": "language_10027110",
+    "content": "바르카롤라 동행 시 적용: [연주용 장총] 1개 획득(최대 1회 발동). 즉흥 주문 공격 횟수 +2"
+  },
+  {
+    "key": "language_10027111",
+    "content": "바르카롤라 동행 시 적용: [무성의 오르골] 1개 획득(최대 1회 발동)\n바르카롤라 출전 시 적용: 설치 중 [나무 피리] [연주용 장총] [무성의 오르골] 동시 보유 시 즉흥 주문 공격 횟수+8"
+  },
+  {
+    "key": "language_10027112",
+    "content": "찰리 출전 시 적용:\n턴 시작 시 HP가 40% 이상일 경우 자신에게 [폭군] 상태 부여, 1턴간 지속. HP가 60% 이하일 경우 [성군] 상태 진입, (HP가 40%~60%일 경우 동시 보유)\n[폭군]: 마법 위력+200%, 공격할 때마다 자신의 현재 HP 20% 소모\n[성군]: 술식 위력+600%, 최종 술식 시전 후 모든 HP 회복"
+  },
+  {
+    "key": "language_10027113",
+    "content": "찰리 출전 시 적용: [성군] 상태에서 받는 피해 200% 감소"
+  },
+  {
+    "key": "language_10027114",
+    "content": "찰리 출전 시 적용, [폭군] 상태에서 턴 시작 시마다 3단계의 [전기를 내리노라]와 [바람을 하사하노라] 1장 생성"
+  },
+  {
+    "key": "language_10027115",
+    "content": "레굴루스 협동 시 적용: 동빈 또는 공명 발동 시 자신의 열정 +2, 주문함에서 불운 주문 1장 삭제"
+  },
+  {
+    "key": "language_10027116",
+    "content": "레굴루스 협동 시 적용: 2레벨 이상 동빈 발동 시 모든 아군 열정 +2"
+  },
+  {
+    "key": "language_10027117",
+    "content": "레굴루스 협동 시 적용: 2레벨 이상 공명 발동일 경우, 턴 종료 시 자신이 최종 술식 1회 시전"
+  },
+  {
+    "key": "language_10027118",
+    "content": "드루비스 동행 시 적용: 여정의 가운데 3회 진입 시마다 [드루비스 가지] 3개 획득"
+  },
+  {
+    "key": "language_10027119",
+    "content": "드루비스 출전 시 적용: 설치 중의 [드루비스 가지] 1개마다 2턴 시작 시마다 특수 주문 [드루비스 과실] 1장을 주문함에 넣음"
+  },
+  {
+    "key": "language_10027120",
+    "content": "드루비스 출전 시 적용: 설치 중에 있는 [신기한 물건] 1개마다, 턴 시작 시 3단계 예비 주문 [숲의 바람] 1장 획득(턴마다 최대 3회 발동)"
+  },
+  {
+    "key": "language_10027121",
+    "content": "소네트가 마틸다 협동 시:\n공격 100% 증가, 치명타율 100% 증가, 치명타 피해 200% 증가"
+  },
+  {
+    "key": "language_10027122",
+    "content": "소네트가 마틸다 협동 시:\n최종 술식 시전 후, 치명타율과 치명타 피해 100% 증가, 1턴간 지속(효과 중첩 가능), 이후 소네트의 최종 술식 1회 시전"
+  },
+  {
+    "key": "language_10027123",
+    "content": "소네트가 마틸다 협동 시:\n초과된 치명타율을 치명타 피해로 전환. 턴 종료 시 [충전·준비] 2스택과 [충전·지원] 2스택 획득"
+  },
+  {
+    "key": "language_10027124",
+    "content": "37 출전 시 적용: 아군 캐릭터 추가 행동 후 자신이 [계획] 5스택 획득"
+  },
+  {
+    "key": "language_10027125",
+    "content": "37 출전 시 적용: 아군 행동 후 자신의 신기한 빛+1"
+  },
+  {
+    "key": "language_10027126",
+    "content": "37 출전 시 적용: [추가 산식] 시전 후, 자신의 치명타 피해 30% 증가(효과 중첩 가능)"
+  },
+  {
+    "key": "language_10027127",
+    "content": "J 동행 시 적용: 임박한 위험 진입 시마다 [고래기름 횃불] 1개 획득"
+  },
+  {
+    "key": "language_10027128",
+    "content": "J 동행 시 적용: [주름과 원] 1개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027129",
+    "content": "J 출전 시 적용: 설치 중에 [고래기름 횃불]과 [주름과 원] 동시 보유 시, 자신 추가 행동 후 잃은 HP 20% 회복"
+  },
+  {
+    "key": "language_10027130",
+    "content": "TTT 협동 시 적용: 턴 종료 시 아군 캐릭터가 [전력] 3스택 소모, 자신의 최대 HP 5% 회복"
+  },
+  {
+    "key": "language_10027131",
+    "content": "TTT 동행 시 적용: [화려한 만화경] 1개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027132",
+    "content": "TTT 협동 시 적용: 턴 종료 시 아군 캐릭터가 [전력] 10스택 소모, 모든 아군의 열정 +2"
+  },
+  {
+    "key": "language_10027133",
+    "content": "제멜바이스 동행 시 적용: 정비 지역 진입 시 [영혼 주전자] 1개 획득, 잠금 해제하지 않은 경우 랜덤 묘수 피조물 1개 획득으로 변경(최대 1회 발동)\n제멜바이스 출전 시 적용: 아군 행동 시 모든 아군의 현재 HP 1% 차감, [위력] 20스택 획득"
+  },
+  {
+    "key": "language_10027134",
+    "content": "제멜바이스 동행 시 적용: [디스크 드라이버] 랜덤 8개 획득(최대 1회 발동)\n제멜바이스 출전 시 적용: 최종 술식 시전 후 모든 아군 열정 +2, [버티기] 2스택 획득"
+  },
+  {
+    "key": "language_10027135",
+    "content": "제멜바이스 출전 시 적용: 설치 중의 디스크 2개마다 자신이 [버티기] 1스택과 [행운] 3스택 획득"
+  },
+  {
+    "key": "language_10027136",
+    "content": "전투 시작 시 이터니티만 필드에 있을 경우 적용: 최대 HP 100% 증가, 행동 포인트 +2, 턴 시작 시 주문 2장을 추가로 뽑음"
+  },
+  {
+    "key": "language_10027137",
+    "content": "이터니티만 필드에 있을 시 적용: 행동 시 [통찰] 2스택 획득, 자신이 최대 HP의 1%를 잃을 때마다 공격 2% 증가"
+  },
+  {
+    "key": "language_10027138",
+    "content": "전투 시작 시 이터니티만 필드에 있을 시 자신의 흡혈률 200% 증가. 턴 시작 시 자신의 HP가 50% 미만일 시, 자신의 디버프 4종 정화"
+  },
+  {
+    "key": "language_10027139",
+    "content": "메디슨 포켓 동행 시 적용: 묘수 등급의 [합성] 피조물 랜덤 1개 획득(최대 1회 발동)"
+  },
+  {
+    "key": "language_10027140",
+    "content": "메디슨 포켓 출전 시 적용: 전투 시작 시 설치 중 강화 후의 [합성] 피조물 1개마다 모든 아군 [영구 버프 집합] 중 4종 획득"
+  },
+  {
+    "key": "language_10027141",
+    "content": "메디슨 포켓 출전 시 적용: 전투 시작 시 설치 중의 [약제] 1개마다 특수 주문 [특효 진통제] 1장을 주문함에 추가(최대 5회 발동)"
+  },
+  {
+    "key": "language_10027142",
+    "content": "센츄리온 동행 시 적용: 눈 앞의 위기/재난의 염탐 완료 시마다 일반 풍요 피조물 1개 획득"
+  },
+  {
+    "key": "language_10027143",
+    "content": "센츄리온 동행 시 적용: 구매 계기 진입 시마다 정교 풍요 피조물 1개 획득"
+  },
+  {
+    "key": "language_10027144",
+    "content": "센츄리온 동행 시 적용: 휴식처 진입 시마다 묘수 풍요 피조물 1개 획득"
+  },
+  {
+    "key": "language_10027145",
+    "content": "소더비 동행 시 적용: 구매의 계기 진입 시 [칸타렐라 독액] 1개 획득"
+  },
+  {
+    "key": "language_10027146",
+    "content": "소더비 동행 시 적용: 휴식처 진입 시 중독 관련 [약제] 1개 획득"
+  },
+  {
+    "key": "language_10027147",
+    "content": "소더비 동행 시 적용: 새로운 지역 진입 시 중독 관련 [약제] 1개 획득"
+  },
+  {
+    "key": "language_10027148",
+    "content": "멜라니아 출전 시 적용: 자신이 몬스터 처치 후 참새 금화 40개 획득"
+  },
+  {
+    "key": "language_10027149",
+    "content": "멜라니아 출전 시 적용: 턴 시작 시 자신이 [신의 솜씨] 2스택 획득"
+  },
+  {
+    "key": "language_10027150",
+    "content": "멜라니아 출전 시 적용: 자신이 최종 술식 시전 후, 술식 위력 40% 증가(효과 중첩 가능)"
+  },
+  {
+    "key": "language_10027151",
+    "content": "피클즈 협동 시 적용: 턴 종료 시 협동한 캐릭터의 열정 +1, 아군 중 열정이 가장 낮은 캐릭터의 열정 +1"
+  },
+  {
+    "key": "language_10027152",
+    "content": "피클즈 동행 시 적용: [여정의 가운데] 경과 후, 일반 공명 피조물 랜덤 1개 획득"
+  },
+  {
+    "key": "language_10027153",
+    "content": "피클즈 동행 시 적용: [여정의 가운데] 경과 후, 랜덤 정교 이상의 동빈 피조물 1개 획득"
+  },
+  {
+    "key": "language_10027154",
+    "content": "턴 시작 시 [원액] 보유 시 [원액] 3스택 획득, 아닐 경우 [원액] 5스택 획득"
+  },
+  {
+    "key": "language_10027155",
+    "content": "공격받은 후 [원액] 1스택 차감, 턴 종료 시 [원액]을 보유한 경우 최종 술식 시전"
+  },
+  {
+    "key": "language_10027156",
+    "content": "행동력+1, 최종 술식 시전 후 열정 +2"
+  },
+  {
+    "key": "language_10027157",
+    "content": "턴 시작 시 주문함에서 불운 주문 1장 삭제"
+  },
+  {
+    "key": "language_10027158",
+    "content": "전투 시작 시 매개체 5 회복"
+  },
+  {
+    "key": "language_10027159",
+    "content": "턴 시작 시 주문 2장 뽑기. 해당 턴에 주문 분산이 발동했을 경우, 턴 종료 시 열정이 가장 낮은 1명의 열정 +2, 2회 발동"
+  },
+  {
+    "key": "language_10027160",
+    "content": "모든 아군이 주는 피해 +100%, 2턴 지속. 모든 적군에게 [심오한 영감] 1스택 부여, 적군이 [심오한 영감] 3스택 보유 시 대폭 강화 획득"
+  },
+  {
+    "key": "language_10027161",
+    "content": "캐릭터 1명에게 [술식의 영감] 부여, 2턴 동안 사용하는 최종 술식 열정 소모하지 않음. 모든 적군에게 [심오한 영감] 1스택 부여, 적군이 [심오한 영감] 3스택 보유 시 대폭 강화 획득"
+  },
+  {
+    "key": "language_10027162",
+    "content": "목표 행동 불가 및 현실 방어, 정신 방어 -100%, 3턴 지속. 모든 적군에게 [심오한 영감] 1스택 부여, 적군이 [심오한 영감] 3스택 부여 시 대폭 강화 획득"
+  },
+  {
+    "key": "language_10027163",
+    "content": "모든 아군의 [속성 감소] [상태 이상] [제어] 정화, 최대 HP 50% 회복 및 1턴 동안 [면역] 상태 진입. 모든 적군에게 [심오한 영감] 1스택 부여, 적군이 [심오한 영감] 3스택 보유 시 대폭 강화 획득"
+  },
+  {
+    "key": "language_10027164",
+    "content": "모든 아군이 받는 피해 100% 감소, 3턴 지속. 모든 적군에게 [심오한 영감] 1스택 부여, 적군이 [심오한 영감] 3스택 보유 시 대폭 강화 획득"
+  },
+  {
+    "key": "language_10027165",
+    "content": "사용 후 지정 아군이 [불운] 상태에 빠짐, 대상의 피해 감면 -5%, 턴 종료 시 현재 HP×3%의 고정 피해를 받음. 턴 종료 시 10스택 이상의 [불운] 보유 시 현재 HP의 90% 추가 차감"
+  },
+  {
+    "key": "language_10027166",
+    "content": "전투 시작 시 [심오·승리의 영감], [심오·향락의 영감], [심오·술식의 영감] 획득"
+  },
+  {
+    "key": "language_10027167",
+    "content": "A 나이트 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027168",
+    "content": "이글 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027169",
+    "content": "릴리아 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027170",
+    "content": "안안 리 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027171",
+    "content": "레굴루스 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027172",
+    "content": "소네트 최종 술식 전용 동원"
+  },
+  {
+    "key": "language_10027173",
+    "content": "간진 기능 활성화"
+  },
+  {
+    "key": "language_10027174",
+    "content": "턴 시작 시 간진 레벨 최대치 1레벨 증가"
+  },
+  {
+    "key": "language_10027175",
+    "content": "아군 캐릭터가 공격 유형 주문 직접 사용 후 다음 턴 간진 1레벨 증가"
+  },
+  {
+    "key": "language_10027176",
+    "content": "아군이 간진 발동 시 간진 2레벨 달성한 경우 다음 턴 간진 1레벨 증가"
+  },
+  {
+    "key": "language_10027177",
+    "content": "종결 스킬 초기화"
+  },
+  {
+    "key": "language_10027178",
+    "content": "턴 시작 시 재건의 손 멤버 1명을 아군 후열로 랜덤 소환"
+  },
+  {
+    "key": "language_10027179",
+    "content": "턴 종료 시 아군 후열의 아군 1명마다 모든 아군이 [총력] 1스택 획득"
+  },
+  {
+    "key": "language_10027180",
+    "content": "행동 후 랜덤으로 재건의 손 멤버 전환"
+  },
+  {
+    "key": "language_10027181",
+    "content": "광역 공격, 적군 2명에게 100%의 정신 피해를 주고 자신 공격×50%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027182",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 주고 자신 공격×50%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027183",
+    "content": "광역 강화, 모든 아군이 받는 피해 15% 감소, 2턴 지속. 필드에 임의의 아군이 존재하지 않을 경우 누쿠타이오 사람 1명 소환. 필드에 임의의 아군이 존재할 경우 아군 후열로 소환"
+  },
+  {
+    "key": "language_10027184",
+    "content": "광역 강화, 모든 아군이 받는 피해 20% 감소, 2턴 지속. 필드에 임의의 아군이 존재하지 않을 경우 누쿠타이오 사람 1명 소환. 필드에 임의의 아군이 존재할 경우 아군 후열로 소환"
+  },
+  {
+    "key": "language_10027185",
+    "content": "광역 공격, 적군 2명에게 300%의 정신 피해를 줌. 명중 시 목표에게 [혼란] 상태 부여, 1턴간 지속"
+  },
+  {
+    "key": "language_10027186",
+    "content": "적군 턴 시작 시 필드에 임의의 아군이 있을 경우, 적군이 자신을 주 목표로 공격할 수 없음"
+  },
+  {
+    "key": "language_10027187",
+    "content": "전투 진입 및 턴 시작 시 아군 필드 위 또는 후열에 존재하는 아군 1명마다, 자신의 피해 감면 5% 증가, 1턴 지속(최대 5스택 중첩)"
+  },
+  {
+    "key": "language_10027188",
+    "content": "단일 공격, 적군 4번 캐릭터에게 200%의 정신 피해를 줌, 목표가 [혼란] 보유 시 목표 최대 HP×10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027189",
+    "content": "단일 공격, 적군 4번 캐릭터에게 250%의 정신 피해를 줌, 목표가 [혼란] 보유 시 목표 최대 HP×10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027190",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌, 자신이 [탈피<id:3>] 상태가 아닐 경우 열정 +1"
+  },
+  {
+    "key": "language_10027191",
+    "content": "광역 공격, 적군 2명에게 200%의 정신 피해를 줌, 자신이 [탈피<id:3>] 상태가 아닐 경우 열정 +1"
+  },
+  {
+    "key": "language_10027192",
+    "content": "자신 음송, 자신이 [탈피<id:3>]의 음송 상태일 경우 [탈피<id:3>] 상태 종료, [소박한 어둠에서의 시작] 즉시 시전, 이후 자신 [탈피<id:1>] 상태 다시 진입, 3턴간 지속\n자신이 [탈피<id:3>]의 음송 상태가 아닐 경우 자신 [탈피<id:2>] 상태 진입, 1턴간 지속"
+  },
+  {
+    "key": "language_10027193",
+    "content": "광역 공격, 필드 위 모든 아군이 현재 HP의 50%를 잃음, 모든 적군에게 350%의 정신 피해를 주고 적군 3, 4번 캐릭터에게 2턴 동안 [혼란] 상태 부여\n필드에 다른 아군이 없을 경우 적군 1, 2번 캐릭터에게 2턴 동안 [혼란] 상태 추가 부여"
+  },
+  {
+    "key": "language_10027194",
+    "content": "2단계 진입 후 턴 종료 시마다 자신이 [탈피<id:3>] 상태가 아닐 경우 재건의 손 멤버 2명을 아군 후열로 랜덤 소환, 임의의 아군 사망 후 [탈피<id:3>] 음송 상태 1턴 연장"
+  },
+  {
+    "key": "language_10027195",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌, 자신이 [무성의 박리] 상태가 아닐 경우 열정 +1"
+  },
+  {
+    "key": "language_10027196",
+    "content": "광역 공격, 적군 2명에게 200%의 정신 피해를 줌, 자신이 [무성의 박리] 상태가 아닐 경우 열정 +1"
+  },
+  {
+    "key": "language_10027197",
+    "content": "자신 음송, 자신의 모든 [제어] 해제, [무성의 박리] 음송 상태 3턴 진입, 음송 종료 후 [빛 없는 점액 속의 변태] 시전"
+  },
+  {
+    "key": "language_10027198",
+    "content": "광역 공격, 모든 적군에게 목표 최대 HP×90%의 고정 피해를 줌, 자신의 남은 최대 HP 20%마다 목표 최대 HP×15%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027199",
+    "content": "3단계 진입 후 자신의 모든 상태 해제 및 자신은 [무성의 박리] 상태 진입. [무성의 박리] 상태일 경우 자신은 제어의 영향을 받지 않지만 열정 획득 불가. [무성의 박리] 암송 종료 후 모든 적군에게 [빛 없는 점액 속의 변태] 시전 후 퇴장"
+  },
+  {
+    "key": "language_10027200",
+    "content": "3단계 진입 후 자신이 [떨어진 비늘 가루] 7스택 획득. 자신이 모든 스택의 [떨어진 비늘 가루] 차감 후 피해 감면 30% 추가 감소, 1턴간 지속"
+  },
+  {
+    "key": "language_10027201",
+    "content": "3단계 진입 후 턴 시작 시마다 모든 아군의 현재 HP 50%를 바침, 자신이 [떨어진 비늘 가루] 3스택 획득. 이후 재건의 손 멤버 2명을 아군 후열로 랜덤 소환"
+  },
+  {
+    "key": "language_10027202",
+    "content": "공격받은 후 [떨어진 비늘 가루] 1스택 차감"
+  },
+  {
+    "key": "language_10027203",
+    "content": "3단계 진입 후 자신의 모든 상태 해제, 자신은 [무성의 박리] 상태 진입. [무성의 박리] 상태일 경우 자신은 제어의 영향을 받지 않지만 열정 획득 불가. [무성의 박리] 암송 종료 후 모든 적군에게 [빛 없는 점액 속의 변태] 시전 후 퇴장"
+  },
+  {
+    "key": "language_10027204",
+    "content": "(미표시)빈사 시 미스 스트레인저 2단계로 전환"
+  },
+  {
+    "key": "language_10027205",
+    "content": "(미표시)빈사 시 미스 스트레인저 3단계로 전환"
+  },
+  {
+    "key": "language_10027206",
+    "content": "광역 공격, 적군 2명에서 150%의 현실 피해를 줌, 목표가 [열상Ⅱ] 상태를 보유한 경우, 주 목표에게 1단계 [압축 타액]을 시전해 추가 공격 진행"
+  },
+  {
+    "key": "language_10027207",
+    "content": "광역 공격, 적군 2명에서 200%의 현실 피해를 줌, 목표가 [열상Ⅱ] 상태를 보유한 경우, 주 목표에게 1단계 [압축 타액]을 시전해 추가 공격 진행"
+  },
+  {
+    "key": "language_10027208",
+    "content": "자신 음송, 2턴 동안 [면밀한 조사] 상태 진입, 음송 종료 시 모든 적군에게 300%의 현실 피해를 주고 2턴 동안 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027209",
+    "content": "모든 적군에게 300%의 현실 피해를 주고 2턴 동안 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027210",
+    "content": "공격 목표가 [열상Ⅱ] 상태를 보유한 경우 목표가 다음 턴에 획득하는 [상태 이상] 1턴 연장"
+  },
+  {
+    "key": "language_10027211",
+    "content": "단일 공격, 100%의 현실 피해를 줌. 명중 시 목표에게 현재 HP×8%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027212",
+    "content": "단일 공격, 150%의 현실 피해를 줌. 명중 시 목표에게 현재 HP×8%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027213",
+    "content": "광역 공격, 적군 2명에서 150%의 현실 피해를 주고 대상에게 2턴 동안 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027214",
+    "content": "광역 공격, 적군 2명에서 200%의 현실 피해를 주고 대상에게 2턴 동안 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027215",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 300%의 현실 피해를 줌, 목표가 [열상Ⅱ] 상태를 보유한 경우, 명중 시 목표에게 현재 HP×10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027216",
+    "content": "턴 종료 시 해당 턴에 자신이 피해받지 않고 [갑각질] 미보유 시 [갑각질] 1스택 획득. 퇴장 후 적군 가장 앞의 캐릭터가 [갑각질] 1스택 획득"
+  },
+  {
+    "key": "language_10027217",
+    "content": "광역 공격, 적군 2명에게 100%의 현실 피해를 줌. 명중 시 목표에게 현재 HP×8%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027218",
+    "content": "광역 공격, 적군 2명에게 125%의 현실 피해를 줌. 명중 시 목표에게 현재 HP×8%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027219",
+    "content": "단일 공격, 180%의 현실 피해를 주고 목표에게 2턴간 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027220",
+    "content": "단일 공격, 240%의 현실 피해를 주고 목표에게 2턴간 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027221",
+    "content": "광역 공격, 모든 적군에게 200%의 현실 피해를 줌, 목표가 [열상Ⅱ] 상태를 보유한 경우, 명중 시 목표에게 현재 HP×10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027222",
+    "content": "단일 공격, 150%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 5%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027223",
+    "content": "단일 공격, 200%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 5%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027224",
+    "content": "광역 공격, 적군 2명에게 100%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 5%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027225",
+    "content": "광역 공격, 적군 2명에게 125%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 5%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027226",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 300%의 현실 피해를 줌, 명중 후 자신이 [갑각질] 1스택 획득"
+  },
+  {
+    "key": "language_10027227",
+    "content": "전투 진입 시 자신의 스트레스 20 증가, [갑각질] 1스택 획득\n공격받은 후 자신의 스트레스 -5"
+  },
+  {
+    "key": "language_10027228",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 150%의 현실 피해를 주고 목표에게 1턴 동안 [침묵] 상태 부여"
+  },
+  {
+    "key": "language_10027229",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 200%의 현실 피해를 주고 목표에게 1턴 동안 [침묵] 상태 부여"
+  },
+  {
+    "key": "language_10027230",
+    "content": "광역 공격, 적군 2명에게 100%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 10%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027231",
+    "content": "광역 공격, 적군 2명에게 125%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 10%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027232",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 300%의 현실 피해를 줌, 자신이 [갑각질]을 보유한 경우 [갑각질] 1스택 소모하여 해당 공격 명중 시 목표에게 현재 HP×15%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027233",
+    "content": "공격 시 자신의 스트레스가 40 이상일 시 [갑각질] 1스택 획득\n공격받은 후 자신의 스트레스 -5"
+  },
+  {
+    "key": "language_10027234",
+    "content": "단일 공격, 150%의 정신 피해를 줌. 자신의 HP가 50% 미만일 경우 자신 공격×50%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027235",
+    "content": "단일 공격, 200%의 정신 피해를 줌. 자신의 HP가 50% 미만일 경우 자신 공격×50%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027236",
+    "content": "자신 강화, 자신의 잃은 HP 10% 회복, 또한 모든 아군이 받는 피해 15% 감소"
+  },
+  {
+    "key": "language_10027237",
+    "content": "자신 강화, 자신의 잃은 HP 15% 회복, 또한 모든 아군이 받는 피해 15% 감소"
+  },
+  {
+    "key": "language_10027238",
+    "content": "광역 공격, 모든 적군에게 300%의 정신 피해를 줌. 자신이 최대 HP의 20%를 잃음, 자신이 잃은 HP×150%의 [보호막] 획득, 2턴간 지속"
+  },
+  {
+    "key": "language_10027239",
+    "content": "턴 시작 시 자신의 HP가 50% 이상일 경우 현재 HP의 10% 차감, [항진] 1스택 획득. 자신의 HP가 미만일 경우 잃은 HP 10% 회복\n공격받은 후 자신의 스트레스 -5"
+  },
+  {
+    "key": "language_10027240",
+    "content": "턴 시작 시 자신의 HP가 50% 이상일 경우 현재 HP의 10% 차감, [항진] 1스택 획득. 자신의 HP가 미만일 경우 잃은 HP 10% 회복"
+  },
+  {
+    "key": "language_10027241",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌, [합주]를 2스택 이상 보유 시, [합주] 2스택을 소모해 자신 공격×50%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027242",
+    "content": "공격 유형 주문 직접 사용 후 자신이 [합주] 1스택 획득"
+  },
+  {
+    "key": "language_10027243",
+    "content": "광역 공격, 적군 2명에게 150%의 정신 피해를 줌, 목표에게 1턴 동안 [침묵] 상태 부여"
+  },
+  {
+    "key": "language_10027244",
+    "content": "광역 공격, 적군 2명에게 200%의 정신 피해를 줌, 목표에게 1턴 동안 [침묵] 상태 부여"
+  },
+  {
+    "key": "language_10027245",
+    "content": "광역 약화, 모든 적군이 받는 피해 15% 증가, 2턴 지속, 또한 [항진] 1스택 부여"
+  },
+  {
+    "key": "language_10027246",
+    "content": "광역 약화, 모든 적군이 받는 피해 20% 증가, 2턴 지속, 또한 [항진] 1스택 부여"
+  },
+  {
+    "key": "language_10027247",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 400%의 정신 피해를 줌, 목표에게 [혼란] 2턴간 부여"
+  },
+  {
+    "key": "language_10027248",
+    "content": "전투 진입 시 자신이 [페이즈 상쇄] 5스택 획득. 공격 후 자신이 [페이즈 상쇄] 2스택 획득. 모든 스택의 [페이즈 상쇄] 차감 후 자신이 1턴 동안 [기절]에 빠짐"
+  },
+  {
+    "key": "language_10027249",
+    "content": "턴 종료 시 자신이 [페이즈 상쇄]를 보유하고 아군이 없을 경우 톱니 가오리 환영 1개 소환"
+  },
+  {
+    "key": "language_10027250",
+    "content": "공격받은 후 [페이즈 상쇄] 1스택 차감"
+  },
+  {
+    "key": "language_10027251",
+    "content": "광역 공격, 적군 2명에게 150%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 10%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027252",
+    "content": "광역 공격, 적군 2명에게 200%의 현실 피해를 줌. 자신의 현재 HP 10% 소실, 명중 시 목표에게 최대 HP 10%의 고정 피해 부여"
+  },
+  {
+    "key": "language_10027253",
+    "content": "광역 강화, 모든 아군이 받는 피해 15% 감소, 2턴 지속. 또한 누쿠타이오 사람 1명을 아군 후열로 소환"
+  },
+  {
+    "key": "language_10027254",
+    "content": "광역 강화, 모든 아군이 받는 피해 20% 감소, 2턴 지속. 또한 누쿠타이오 사람 1명을 아군 후열로 소환"
+  },
+  {
+    "key": "language_10027255",
+    "content": "단일 공격, 적군 가장 전방의 목표에게 300%의 현실 피해를 줌, 자신이 [갑각질]을 보유한 경우 [갑각질] 1스택 소모하여 해당 공격으로 목표에게 현재 HP×20%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027256",
+    "content": "행동 후 모든 아군 현재 HP의 5% 차감, 자신이 [갑각질] 1스택 획득. 아군 사망 후 자신의 [갑각질] 1스택 차감"
+  },
+  {
+    "key": "language_10027257",
+    "content": "턴 시작 시 아군 후열에 존재하는 아군 1명마다, 자신의 피해 감면 10% 증가, 1턴 지속(최대 50%까지 중첩 가능)"
+  },
+  {
+    "key": "language_10027258",
+    "content": "단일 공격, 150%의 정신 피해를 줌, 공격 후 신기한 빛을 1포인트 소모해 해당 턴에 시전하는 [즉흥 연주] 반드시 치명타"
+  },
+  {
+    "key": "language_10027259",
+    "content": "단일 공격, 200%의 정신 피해를 줌, 공격 후 신기한 빛을 1포인트 소모해 해당 턴에 시전하는 [즉흥 연주] 반드시 치명타"
+  },
+  {
+    "key": "language_10027260",
+    "content": "단일 공격, 150%의 정신 피해를 주고 자신 공격×50%의 고정 피해를 동반함. 해당 턴 [즉흥 연주] 시전 후 자신의 신기한 빛 +1"
+  },
+  {
+    "key": "language_10027261",
+    "content": "단일 공격, 200%의 정신 피해를 주고 자신 공격×50%의 고정 피해를 동반함. 해당 턴 [즉흥 연주] 시전 후 자신의 신기한 빛 +1"
+  },
+  {
+    "key": "language_10027262",
+    "content": "자신 강화, 모든 아군이 [다중주] 상태 진입, 2턴간 지속"
+  },
+  {
+    "key": "language_10027263",
+    "content": "아군 임의의 캐릭터가 공격 유형 주문 직접 사용 후 자신 신기한 빛 +1"
+  },
+  {
+    "key": "language_10027264",
+    "content": "턴 종료 시 신기한 빛 2포인트 소모, 랜덤 적군에게 [즉흥 연주] 시전하여 추가 공격 진행. 자신이 [다중주] 상태일 경우 모든 신기한 빛을 소모하여, 소모한 신기한 빛 수/2의 [즉흥 연주] 시전"
+  },
+  {
+    "key": "language_10027265",
+    "content": "단일 공격, 50%의 정신 피해를 줌, 목표 공격×10%의 고정 피해를 추가로 줌"
+  },
+  {
+    "key": "language_10027266",
+    "content": "모든 적군에게 목표 최대 HP×10%의 고정 피해를 줌. 또한 모든 아군이 최대 HP×25%의 보호막을 받음, 2턴간 지속. 목표가 이미 보호막을 보유한 경우 해당 보호막 수치가 기존 보호막에 누적됨, 기존 보호막 최대치의 500%를 초과하지 않음"
+  },
+  {
+    "key": "language_10027267",
+    "content": "턴 종료 시, 랜덤 적군에게 목표 공격×50%의 고정 피해를 줌, 발동 횟수는 [동음이명] 레벨과 같음"
+  },
+  {
+    "key": "language_10027268",
+    "content": "랜덤 적군에게 목표에게 공격×200%의 고정 피해를 줌"
+  },
+  {
+    "key": "language_10027269",
+    "content": "[동음이명]이 2레벨 이상일 경우, 턴 종료 시 [가호의 협주]가 충전 1 획득"
+  },
+  {
+    "key": "language_10027270",
+    "content": "3턴 종료 시마다 누쿠타이오 사람 1명을 아군 후열로 소환(최대 3회 발동)"
+  },
+  {
+    "key": "language_10027271",
+    "content": "3턴 종료 시마다 누쿠타이오 사람 2명을 아군 후열로 소환(최대 3회 발동)"
+  },
+  {
+    "key": "language_10027272",
+    "content": "행동 후 현재 HP 10% 차감, 자신 스트레스 +10"
+  },
+  {
+    "key": "language_10027273",
+    "content": "행동 후 자신의 스트레스 +5"
+  },
+  {
+    "key": "language_10027274",
+    "content": "자신의 스트레스 50 도달 시, 가면 쓴 누쿠타이오 사람으로 변경"
+  },
+  {
+    "key": "language_10027275",
+    "content": "자신의 스트레스 50 도달 시, 랜덤 재건의 손 멤버로 변경"
+  },
+  {
+    "key": "language_10027276",
+    "content": "기억의 껍질 획득 불가, 최종 피해 감면 -20%, 해제 불가. 모든 몬스터 턴 시작 시, 해당 상태 턴 -1"
+  },
+  {
+    "key": "language_10027277",
+    "content": "행동 불가, 연무 농도 획득 불가"
+  },
+  {
+    "key": "language_10027278",
+    "content": "추가 행동 시 마법 위력 10% 증가, 방어 무시율 10% 증가(최대 5스택 중첩)"
+  },
+  {
+    "key": "language_10027279",
+    "content": "추가 행동으로 받는 공격의 피해 30% 증가(최대 1스택 중첩, 적용 후 제거)"
+  },
+  {
+    "key": "language_10027280",
+    "content": "치명타 피해+10%"
+  },
+  {
+    "key": "language_10027281",
+    "content": "치명타 방어 +10%"
+  },
+  {
+    "key": "language_10027282",
+    "content": "턴 종료 시, HP가 50% 이상일 경우 현재 HP의 15%를 잃음, 이번에 잃은 HP 200%의 보호막 획득. HP가 50% 미만일 경우 자신 공격×100%의 보호막 획득(해당 효과로 획득한 보호막 1턴간 지속 및 받는 피해 20% 감소)"
+  },
+  {
+    "key": "language_10027283",
+    "content": "행동 불가, 받는 피해 100% 감소"
+  },
+  {
+    "key": "language_10027284",
+    "content": "5회 누적 후 [휴식일] 진입"
+  },
+  {
+    "key": "language_10027285",
+    "content": "(미표시) 받는 고정 피해 5% 증가"
+  },
+  {
+    "key": "language_10027286",
+    "content": "(미표시)받는 고정 피해 5% 감소"
+  },
+  {
+    "key": "language_10027287",
+    "content": "피해 보너스 +3%, 피해 감면 -3%"
+  },
+  {
+    "key": "language_10027288",
+    "content": "공격받을 시 피해를 모든 아군이 분담 및 1스택 제거"
+  },
+  {
+    "key": "language_10027289",
+    "content": "피해 보너스 -5%, 피해 감면 -5%, 턴 종료 후 최대 HP 5%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027290",
+    "content": "공격 +20%, 현실 방어 +20%, 정신 방어 +20%, 피해 보너스 20% 증가, 피해 감면 +20%(해제 불가)"
+  },
+  {
+    "key": "language_10027291",
+    "content": "공격받은 후 [수호의 방패]를 사용해 반격"
+  },
+  {
+    "key": "language_10027292",
+    "content": "턴 종료 시 3스택일 경우 즉시 최종 술식 시전"
+  },
+  {
+    "key": "language_10027293",
+    "content": "피해 감면 +15%(해제 불가, 최대 5스택 중첩 가능)"
+  },
+  {
+    "key": "language_10027294",
+    "content": "피해 감면 -5%(중첩 가능)"
+  },
+  {
+    "key": "language_10027295",
+    "content": "(미표시)열정 감소하지 않음"
+  },
+  {
+    "key": "language_10027296",
+    "content": "(미표시)현실 방어, 정신 방어 50% 증가"
+  },
+  {
+    "key": "language_10027297",
+    "content": "공격 전 모든 스택 소모, 1스택 소모할 때마다 목표에게 1턴 동안 [중독] 부여"
+  },
+  {
+    "key": "language_10027298",
+    "content": "주는 중독 피해 +1%, 최대 30스택 중첩 가능(해제 불가)"
+  },
+  {
+    "key": "language_10027299",
+    "content": "다음에 3단계 주문을 사용하여 공격 시 치명타율 +50%, 중첩 불가"
+  },
+  {
+    "key": "language_10027300",
+    "content": "다음에 최종 술식 사용하여 공격 시 방어 무시율+30%, 중첩 불가"
+  },
+  {
+    "key": "language_10027301",
+    "content": "받는 최종 술식 피해 +10%, 중첩 가능"
+  },
+  {
+    "key": "language_10027302",
+    "content": "피해 감면 +60%(해제 불가)"
+  },
+  {
+    "key": "language_10027303",
+    "content": "피해 감면 -15%, 10회 중첩 가능(해제 불가)"
+  },
+  {
+    "key": "language_10027304",
+    "content": "피해 감면 +80%(해제 불가)"
+  },
+  {
+    "key": "language_10027305",
+    "content": "피해 감면 -10%, 10회 중첩 가능(해제 불가)"
+  },
+  {
+    "key": "language_10027306",
+    "content": "피해 감면 -10%, 중첩 가능"
+  },
+  {
+    "key": "language_10027307",
+    "content": "소환물 수량 -1"
+  },
+  {
+    "key": "language_10027308",
+    "content": "카벙클에 모종의 변화 발생. 공격받을 시 해당 상태 1스택 차감"
+  },
+  {
+    "key": "language_10027309",
+    "content": "피해 감면-30%, 주는 피해 1로 고정"
+  },
+  {
+    "key": "language_10027310",
+    "content": "피해 보너스 +10%, 중첩 가능"
+  },
+  {
+    "key": "language_10027311",
+    "content": "피해 감면 +10%, 중첩 가능"
+  },
+  {
+    "key": "language_10027312",
+    "content": "방어 무시율 +5%, 중첩 가능"
+  },
+  {
+    "key": "language_10027313",
+    "content": "행동 불가, 주문 1장 시전 불가 후 제거"
+  },
+  {
+    "key": "language_10027314",
+    "content": "폭주 표식"
+  },
+  {
+    "key": "language_10027315",
+    "content": "보유자가 공격받을 시/피해 분담 시 설치 1회 발동"
+  },
+  {
+    "key": "language_10027316",
+    "content": "①보유자가 추가 행동 공격받을 시 스택당 받는 피해 5% 증가, 치명타 방어 5% 감소\n보유자가 공격받을 시 회수 1회 발동\n보유자 사망 시 모든 조개껍데기 회수"
+  },
+  {
+    "key": "language_10027317",
+    "content": "공격받을 시 피해를 모든 아군이 분담. 분담 시마다 1스택 제거"
+  },
+  {
+    "key": "language_10027318",
+    "content": "해당 목표에게 [조개껍데기] 회수를 발동할 때마다 같은 개수의 [조개껍데기] 설치 1회 발동"
+  },
+  {
+    "key": "language_10027319",
+    "content": "공격받거나 피해 분담 후 공격자에게 [영혼의 조개껍데기<id:31090112>] 1스택 설치"
+  },
+  {
+    "key": "language_10027320",
+    "content": "추가 행동 공격을 받을 시 이번 공격이 주는 피해 5% 증가, 치명타 피해 5% 증가(효과 중첩 가능)\n공격받은 후 파투투가 [영혼의 조개껍데기<id:31090112>] 1스택 회수"
+  },
+  {
+    "key": "language_10027321",
+    "content": "공격받을 시 피해를 모든 아군이 분담 및 1스택 제거. 최대 30스택 중첩"
+  },
+  {
+    "key": "language_10027322",
+    "content": "해당 목표에게 [영혼의 조개껍데기<id:31090112>]를 회수할 때마다 같은 스택의 [영혼의 조개껍데기<id:31090112>] 설치"
+  },
+  {
+    "key": "language_10027323",
+    "content": "공격받거나 피해 분담 후 공격자에게 [영혼의 조개껍데기<id:31090114>] 1스택 설치"
+  },
+  {
+    "key": "language_10027324",
+    "content": "추가 행동 공격을 받을 시 이번 공격이 주는 피해 5% 증가, 치명타 피해 5% 증가(효과 중첩 가능)\n공격받은 후 파투투가 [영혼의 조개껍데기<id:31090114>] 1스택 회수"
+  },
+  {
+    "key": "language_10027325",
+    "content": "공격받거나 피해 분담 후 공격자에게 [영혼의 조개껍데기<id:31090116>] 1스택 설치"
+  },
+  {
+    "key": "language_10027326",
+    "content": "추가 행동 공격을 받을 시 이번 공격이 주는 피해 5% 증가, 치명타 피해 5% 증가(효과 중첩 가능)\n공격받은 후 파투투가 [영혼의 조개껍데기<id:31090116>] 1스택 회수"
+  },
+  {
+    "key": "language_10027327",
+    "content": "공격받거나 피해 분담 후 공격자에게 [영혼의 조개껍데기<id:31090118>] 1스택 설치"
+  },
+  {
+    "key": "language_10027328",
+    "content": "추가 행동 공격을 받을 시 이번 공격이 주는 피해 6% 증가, 치명타 피해 6% 증가(효과 중첩 가능)\n공격받은 후 파투투가 [영혼의 조개껍데기<id:31090118>] 1스택 회수"
+  },
+  {
+    "key": "language_10027329",
+    "content": "피해 보너스 0.3% 증가, 최대 20스택 중첩"
+  },
+  {
+    "key": "language_10027330",
+    "content": "피해 보너스 0.4% 증가, 최대 20스택 중첩"
+  },
+  {
+    "key": "language_10027331",
+    "content": "피해 보너스 0.5% 증가, 최대 20스택 중첩"
+  },
+  {
+    "key": "language_10027332",
+    "content": "피해 보너스 0.6% 증가, 최대 20스택 중첩"
+  },
+  {
+    "key": "language_10027333",
+    "content": "오의 비탄 횟수 +1"
+  },
+  {
+    "key": "language_10027334",
+    "content": "치료율 4% 증가, 최대 3스택 중첩"
+  },
+  {
+    "key": "language_10027335",
+    "content": "치료율 5% 증가, 최대 3스택 중첩"
+  },
+  {
+    "key": "language_10027336",
+    "content": "치료율 6% 증가, 최대 3스택 중첩"
+  },
+  {
+    "key": "language_10027337",
+    "content": "치료율 7% 증가, 최대 3스택 중첩"
+  },
+  {
+    "key": "language_10027338",
+    "content": "치료율 8% 증가, 최대 3스택 중첩"
+  },
+  {
+    "key": "language_10027339",
+    "content": "치명타 피해 1.2% 증가, 3턴간 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10027340",
+    "content": "치명타 피해 1.5% 증가, 3턴간 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10027341",
+    "content": "치명타 피해 1.8% 증가, 3턴간 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10027342",
+    "content": "치명타 피해 2.1% 증가, 3턴간 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10027343",
+    "content": "치명타 피해 2.4% 증가, 3턴간 지속, 최대 12스택 중첩"
+  },
+  {
+    "key": "language_10027344",
+    "content": "피해 보너스 2% 증가"
+  },
+  {
+    "key": "language_10027345",
+    "content": "피해 보너스 2.5% 증가"
+  },
+  {
+    "key": "language_10027346",
+    "content": "피해 보너스 3% 증가"
+  },
+  {
+    "key": "language_10027347",
+    "content": "피해 보너스 3.5% 증가"
+  },
+  {
+    "key": "language_10027348",
+    "content": "피해 보너스 4% 증가"
+  },
+  {
+    "key": "language_10027349",
+    "content": "공격받을 시 피해 감면 -90%(적용 후 1스택 감소)"
+  },
+  {
+    "key": "language_10027350",
+    "content": "공격받을 시 피해 감면 -110%(적용 후 1스택 감소)"
+  },
+  {
+    "key": "language_10027351",
+    "content": "공격받을 시 피해 감면 -130%(적용 후 1스택 감소)"
+  },
+  {
+    "key": "language_10027352",
+    "content": "공격받을 시 피해 감면 -150%(적용 후 1스택 감소)"
+  },
+  {
+    "key": "language_10027353",
+    "content": "턴 시작 후 여전히 해당 음송 상태일 경우, 모든 적군에게 30%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027354",
+    "content": "턴 시작 후 여전히 해당 음송 상태일 경우, 모든 적군에게 40%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027355",
+    "content": "턴 시작 후 여전히 해당 음송 상태일 경우, 모든 적군에게 50%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027356",
+    "content": "턴 시작 후 여전히 해당 음송 상태일 경우, 모든 적군에게 60%의 현실 피해를 줌, 적군 주문칸의 [원한] 폭발, [원한] 1개마다 모든 적군이 자신 최대 HP×10%의 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027357",
+    "content": "고통과 역경의 동반자가 [원한]으로 전환"
+  },
+  {
+    "key": "language_10027358",
+    "content": "받는 정신 피해 3% 증가(중첩 가능, 최대치 30 스택)"
+  },
+  {
+    "key": "language_10027359",
+    "content": "치명타 저항률 -5%, 치명타 방어 -5%(최대치 20스택, 스택별 지속 시간 개별 계산)"
+  },
+  {
+    "key": "language_10027360",
+    "content": "턴 종료 시 [폭탄] 1장을 적군 주문칸에 놓음"
+  },
+  {
+    "key": "language_10027361",
+    "content": "턴 시작 후 해당 음송 상태일 경우 모든 적군에게 140%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10027362",
+    "content": "턴 시작 후 해당 음송 상태일 경우 모든 적군에게 160%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10027363",
+    "content": "턴 시작 후 해당 음송 상태일 경우 모든 적군에게 180%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10027364",
+    "content": "턴 시작 후 해당 음송 상태일 경우 모든 적군에게 200%의 정신 피해를 줌"
+  },
+  {
+    "key": "language_10027365",
+    "content": "모든 아군이 주는 피해 증가, 수치는 스택 수×3%와 같음(최대치는 32스택, 해제 불가)"
+  },
+  {
+    "key": "language_10027366",
+    "content": "공격 +10%, 현실 방어 -15%, 정신 방어 -15%"
+  },
+  {
+    "key": "language_10027367",
+    "content": "턴 시작 시 해당 상태를 10스택 보유한 경우 해당 턴 동안 자신이 처음 주문을 직접 사용 해 공격할 경우 주 목표에게 1턴 동안 석화] 추가 부여, 턴 종료 시 해당 상태 해제"
+  },
+  {
+    "key": "language_10027368",
+    "content": "[석화] 상태의 적군 유닛 공격 시 [석화] 상태가 해제되지 않음"
+  },
+  {
+    "key": "language_10027369",
+    "content": "즉흥 주문 발사원 생성(미표시)"
+  },
+  {
+    "key": "language_10027370",
+    "content": "즉흥 주문 공격 +100%(미표시)"
+  },
+  {
+    "key": "language_10027371",
+    "content": "즉흥 주문 공격 횟수 +5(미표시)"
+  },
+  {
+    "key": "language_10027372",
+    "content": "즉흥 주문 피해 +100%(미표시)"
+  },
+  {
+    "key": "language_10027373",
+    "content": "즉흥 주문 영감 천체로 변경(미표시)"
+  },
+  {
+    "key": "language_10027374",
+    "content": "즉흥 주문 공격 유형 일반 주문 분배 가중 +100(미표시)"
+  },
+  {
+    "key": "language_10027375",
+    "content": "피해 보너스 X 증가, X=10%+부대 영혼 에너지×2.5%"
+  },
+  {
+    "key": "language_10027376",
+    "content": "공격 X 증가의 버프, X=(500+10×부대 누적 영혼 에너지)×(1+해당 버프 보유 캐릭터 수×50%)"
+  },
+  {
+    "key": "language_10027377",
+    "content": "해당 버프를 보유한 캐릭터가 공격 유형 주문 직접 사용 시 해당 버프 유형을 보유한 모든 캐릭터는 신기한 빛 1포인트 소모 및 현재 턴의 오의 비탄 영혼 에너지 누적치 +1"
+  },
+  {
+    "key": "language_10027378",
+    "content": "추가 오의 비탄 분열 +1"
+  },
+  {
+    "key": "language_10027379",
+    "content": "1회차 공격 시작, 2회 공격마다 오의 비탄 1회 추가 분열"
+  },
+  {
+    "key": "language_10027380",
+    "content": "오의 비탄의 영감이 5 이상일 경우 버프 보유자에게 버프 추가: 공격 횟수 +5\n##해당 버프 보유자 오의 비탄 필요"
+  },
+  {
+    "key": "language_10027381",
+    "content": "오의 비탄 공격을 받은 후 시전자 공격×100%의 고정 피해를 1회 받음, 단일 턴에서 발동 횟수는 최대 5회로 제한됨"
+  },
+  {
+    "key": "language_10027382",
+    "content": "오의 비탄이 적 탐색 유닛 선택 시 해당 유닛으로 수정하여 선택\n표식 버프, 파라미터 없음"
+  },
+  {
+    "key": "language_10027383",
+    "content": "즉흥 주문 계시 10 이상일 경우 공격 횟수 +5"
+  },
+  {
+    "key": "language_10027384",
+    "content": "즉흥 주문 반드시 치명타(미표시)"
+  },
+  {
+    "key": "language_10027385",
+    "content": "즉흥 주문 공격 횟수 +1(미표시)"
+  },
+  {
+    "key": "language_10027386",
+    "content": "즉흥 주문 피해 보너스 +20%(미표시)"
+  },
+  {
+    "key": "language_10027387",
+    "content": "즉흥 주문 피해 보너스 +35%(미표시)"
+  },
+  {
+    "key": "language_10027388",
+    "content": "공격 +▩1%s. 공격 유형 주문 사용 후 [즉흥 주문]에 계시 1 추가 계산, 해당 상태의 모든 캐릭터 신기한 빛 1 소모(해제 불가)"
+  },
+  {
+    "key": "language_10027389",
+    "content": "공격 +▩1%s. 공격 유형 주문 사용 후 [즉흥 주문]에 계시 2 추가 계산, 해당 상태의 모든 캐릭터 신기한 빛 1 소모(해제 불가)"
+  },
+  {
+    "key": "language_10027390",
+    "content": "즉흥 주문 공격 유형 일반 주문 분배 가중 +300(미표시)"
+  },
+  {
+    "key": "language_10027391",
+    "content": "피해 보너스 +▩1%s"
+  },
+  {
+    "key": "language_10027392",
+    "content": "즉흥 주문으로 공격 후마다 자신의 치명타율 7.5% 증가, 치명타 피해 7.5% 증가(미표시)"
+  },
+  {
+    "key": "language_10027393",
+    "content": "즉흥 주문 치명타율 +7.5%(미표시)"
+  },
+  {
+    "key": "language_10027394",
+    "content": "즉흥 주문 치명타 피해 +7.5%(미표시)"
+  },
+  {
+    "key": "language_10027395",
+    "content": "즉흥 주문으로 공격 후마다 자신의 치명타율 15% 증가, 치명타 피해 15% 증가(미표시)"
+  },
+  {
+    "key": "language_10027396",
+    "content": "즉흥 주문 치명타율 +15%(미표시)"
+  },
+  {
+    "key": "language_10027397",
+    "content": "즉흥 주문 치명타 피해 +15%(미표시)"
+  },
+  {
+    "key": "language_10027398",
+    "content": "[즉흥 주문] 계시가 3/6/12/20 이상일 시 [즉흥 주문] 공격 횟수 +1/2/3/5"
+  },
+  {
+    "key": "language_10027399",
+    "content": "즉흥 주문 공격 횟수 +2(미표시)"
+  },
+  {
+    "key": "language_10027400",
+    "content": "추가 오의 비탄 분열 +1(미표시)"
+  },
+  {
+    "key": "language_10027401",
+    "content": "1회차 공격 시작, 2회 공격마다 오의 비탄 1회 추가 분열(미표시)"
+  },
+  {
+    "key": "language_10027402",
+    "content": "즉흥 주문의 우선 공격 목표가 됨, 즉흥 주문의 공격을 받을 시 사용자 공격에 기반한 고정 피해를 받음, 50%+50%×[현 위의 은하]로 추가 발생하는 정신 피해의 비율만큼 받음(턴마다 최대 5회 발동)"
+  },
+  {
+    "key": "language_10027403",
+    "content": "즉흥 주문 치명타율 15% 추가 증가"
+  },
+  {
+    "key": "language_10027404",
+    "content": "즉흥 주문 계시 5 이상일 경우, 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027405",
+    "content": "즉흥 주문 치명타 피해 20% 추가 증가"
+  },
+  {
+    "key": "language_10027406",
+    "content": "즉흥 주문 계시 10 이상일 경우, 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027407",
+    "content": "즉흥 주문 치명타 피해 30% 추가 증가"
+  },
+  {
+    "key": "language_10027408",
+    "content": "즉흥 주문 계시 10 이상일 경우, 치명타 피해 50% 증가"
+  },
+  {
+    "key": "language_10027409",
+    "content": "즉흥 주문 치명타 피해 50% 추가 증가"
+  },
+  {
+    "key": "language_10027410",
+    "content": "즉흥 주문 계시 10 이상일 경우 반드시 치명타"
+  },
+  {
+    "key": "language_10027411",
+    "content": "술식 위력 +150%"
+  },
+  {
+    "key": "language_10027412",
+    "content": "고정 피해 100%"
+  },
+  {
+    "key": "language_10027413",
+    "content": "모든 팀 신기한 빛 최대치 1 증가"
+  },
+  {
+    "key": "language_10027414",
+    "content": "마법 위력+200%, 공격 시마다 자신의 현재 HP 10% 소모"
+  },
+  {
+    "key": "language_10027415",
+    "content": "술식 위력 +600%, 궁극기 시전 후 모든 HP 회복"
+  },
+  {
+    "key": "language_10027416",
+    "content": "술식 위력 +10%, 중첩 가능"
+  },
+  {
+    "key": "language_10027417",
+    "content": "자신의 치명타 피해 30% 증가(효과 중첩 가능)"
+  },
+  {
+    "key": "language_10027418",
+    "content": "흡혈률 200% 증가"
+  },
+  {
+    "key": "language_10027419",
+    "content": "표식"
+  },
+  {
+    "key": "language_10027420",
+    "content": "궁극기로 위력 40% 무한 중첩"
+  },
+  {
+    "key": "language_10027421",
+    "content": "자신이 주문 직접 사용 후 주문함에 불운 주문 3장을 넣음, 해제 불가"
+  },
+  {
+    "key": "language_10027422",
+    "content": "피해 감면 +5%, 피해 보너스 +5%, 해제 불가, 중첩 가능"
+  },
+  {
+    "key": "language_10027423",
+    "content": "dlc2 난이도 증가, 공격 +10% 방어 +10%"
+  },
+  {
+    "key": "language_10027424",
+    "content": "dlc2 난이도 증가, 공격 +20% 방어 +20%"
+  },
+  {
+    "key": "language_10027425",
+    "content": "dlc2 난이도 증가, 공격 +30% 방어 +40%"
+  },
+  {
+    "key": "language_10027426",
+    "content": "dlc2 난이도 증가, 공격 +40% 방어 +60%"
+  },
+  {
+    "key": "language_10027427",
+    "content": "최대 HP 10% 증가"
+  },
+  {
+    "key": "language_10027428",
+    "content": "즉흥 주문 공격 횟수 +4(미표시)"
+  },
+  {
+    "key": "language_10027429",
+    "content": "즉흥 주문 공격 횟수 +8(미표시)"
+  },
+  {
+    "key": "language_10027430",
+    "content": "3스택 중첩 시, [심오]로 전환, 자신 공격력 50% 증가"
+  },
+  {
+    "key": "language_10027431",
+    "content": "공격력 50% 증가"
+  },
+  {
+    "key": "language_10027432",
+    "content": "피해 감면 -5%, 턴 종료 시 보유자 현재 HP×3%의 고정 피해를 줌. 턴 종료 시 10스택 도달, 현재 HP의 90% 추가 차감(최대 10스택 중첩)"
+  },
+  {
+    "key": "language_10027433",
+    "content": "추가 행동 피해 +100%"
+  },
+  {
+    "key": "language_10027434",
+    "content": "공격력 +15%, 중첩 가능"
+  },
+  {
+    "key": "language_10027435",
+    "content": "공격 100% 증가, 치명타율 100% 증가, 치명타 피해 200% 증가"
+  },
+  {
+    "key": "language_10027436",
+    "content": "치명타율과 치명타 피해 50% 증가, 1턴간 지속(효과 중첩 가능)"
+  },
+  {
+    "key": "language_10027437",
+    "content": "릴리아 출전 시 적용: 턴 시작 시 3단계 주문 [바람을 타고] 1장 생성"
+  },
+  {
+    "key": "language_10027438",
+    "content": "찰리 출전 시 적용, [폭군] 상태에서 턴 시작 시마다 1단계의 [전기를 내리노라]와 [바람을 하사하노라] 1장 생성"
+  },
+  {
+    "key": "language_10027439",
+    "content": "피해 감면 5% 증가"
+  },
+  {
+    "key": "language_10027440",
+    "content": "음송 3턴, 종료 후 모든 적군에게 [소박한 어둠에서의 시작] 시전"
+  },
+  {
+    "key": "language_10027441",
+    "content": "음송 1턴, 종료 후 모든 적군에게 [소박한 어둠에서의 시작] 시전"
+  },
+  {
+    "key": "language_10027442",
+    "content": "음송 3턴, 종료 후 모든 적군에게 [빛 없는 점액 속의 변태] 시전"
+  },
+  {
+    "key": "language_10027443",
+    "content": "(미표시)빛 표식 선택 불가"
+  },
+  {
+    "key": "language_10027444",
+    "content": "피해 감면 10% 증가, 또한 한 번에 받는 피해가 최대 HP×10% 초과하지 않음(최대 10스택 중첩 가능, 공격받은 후 1스택 차감, 해제 불가)"
+  },
+  {
+    "key": "language_10027445",
+    "content": "피해 감면 30% 감소"
+  },
+  {
+    "key": "language_10027446",
+    "content": "음송 2턴, 종료 후 모든 적군에게 300%의 현실 피해를 주고 2턴 동안 [열상Ⅱ] 상태 부여"
+  },
+  {
+    "key": "language_10027447",
+    "content": "치명적 공격을 받을 시 퇴장하지 않음, 1스택 보유할 때마다 자신의 잃은 HP 15% 회복(적용 후 1스택 감소)"
+  },
+  {
+    "key": "language_10027448",
+    "content": "자신의 공격, 방어 +2%(최대 10스택 중첩)"
+  },
+  {
+    "key": "language_10027449",
+    "content": "행동 포인트 +1, 현실, 정신 방어 -20%"
+  },
+  {
+    "key": "language_10027450",
+    "content": "[상태 이상] 획득 시 1턴 연장"
+  },
+  {
+    "key": "language_10027451",
+    "content": "한 번에 받는 피해가 최대 HP×10% 초과하지 않음(최대 10스택 중첩 가능, 공격받은 후 1스택 차감, 해제 불가)"
+  },
+  {
+    "key": "language_10027452",
+    "content": "피해 감면 +10%(최대 5스택 중첩 가능)"
+  },
+  {
+    "key": "language_10027453",
+    "content": "봄 그늘의 보호를 받는 자갈"
+  },
+  {
+    "key": "language_10027454",
+    "content": "불꽃색의 공모자"
+  },
+  {
+    "key": "language_10027455",
+    "content": "억겁의 세월을 넘어 울리는 소나타"
+  },
+  {
+    "key": "language_10027456",
+    "content": "수정처럼 맑은 내일"
+  },
+  {
+    "key": "language_10027457",
+    "content": "통행 안내"
+  },
+  {
+    "key": "language_10027458",
+    "content": "국제 해적의 날"
+  },
+  {
+    "key": "language_10027459",
+    "content": "초콜릿 반 쪽"
+  },
+  {
+    "key": "language_10027460",
+    "content": "연출 전 1분"
+  },
+  {
+    "key": "language_10027461",
+    "content": "로큰롤 네버 다이!"
+  },
+  {
+    "key": "language_10027462",
+    "content": "바르카롤라"
+  },
+  {
+    "key": "language_10027463",
+    "content": "파투투"
+  },
+  {
+    "key": "language_10027464",
+    "content": "티케틀러"
+  },
+  {
+    "key": "language_10027465",
+    "content": "아방 아쿠"
+  },
+  {
+    "key": "language_10027466",
+    "content": "허리케인 캣"
+  },
+  {
+    "key": "language_10027467",
+    "content": "원더랜드 도도새"
+  },
+  {
+    "key": "language_10027468",
+    "content": "액스핸들 하운드"
+  },
+  {
+    "key": "language_10027469",
+    "content": "감귤 카벙클"
+  },
+  {
+    "key": "language_10027470",
+    "content": "피콕 드릴"
+  },
+  {
+    "key": "language_10027471",
+    "content": "모피 고기"
+  },
+  {
+    "key": "language_10027472",
+    "content": "사르마틱 달팽이"
+  },
+  {
+    "key": "language_10027473",
+    "content": "비스트 카벙클"
+  },
+  {
+    "key": "language_10027474",
+    "content": "뼈의 늑대"
+  },
+  {
+    "key": "language_10027475",
+    "content": "끝이 없는 항해"
+  },
+  {
+    "key": "language_10027476",
+    "content": "한밤의 맘보"
+  },
+  {
+    "key": "language_10027477",
+    "content": "선의의 입찰"
+  },
+  {
+    "key": "language_10027478",
+    "content": "은빛 총신"
+  },
+  {
+    "key": "language_10027479",
+    "content": "심금의 살롱"
+  },
+  {
+    "key": "language_10027480",
+    "content": "스펙트럼 공유 코드 클립보드로 복사"
+  },
+  {
+    "key": "language_10027481",
+    "content": "▩1%s 스펙트럼 적용 완료"
+  },
+  {
+    "key": "language_10027482",
+    "content": "생각 용량 부족 또는 생각의 단편 부족 시, ▩1%s 스펙트럼 복사 불가"
+  },
+  {
+    "key": "language_10027483",
+    "content": "생각이 비어 있음, ▩1%s 스펙트럼 생성 불가"
+  },
+  {
+    "key": "language_10027484",
+    "content": "스펙트럼 오류, 공유 코드 사용 불가"
+  },
+  {
+    "key": "language_10027485",
+    "content": "공유 코드가 비어 있음, ▩1%s 스펙트럼 복사 불가"
+  },
+  {
+    "key": "language_10027486",
+    "content": "시설 [▩1%s] ▩2%s레벨 달성 후 잠금 해제"
+  },
+  {
+    "key": "language_10027487",
+    "content": "▩1%s일 휴식 후 사용 가능"
+  },
+  {
+    "key": "language_10027488",
+    "content": "침체도가 가득 차서 탐색할 수 없습니다."
+  },
+  {
+    "key": "language_10027489",
+    "content": "과학 기술 [▩1%s] 잠금 해제"
+  },
+  {
+    "key": "language_10027490",
+    "content": "판다누스 회당 ▩1%s레벨 달성 시 해제"
+  },
+  {
+    "key": "language_10027491",
+    "content": "선행 노드 만족하지 않음, 그리기 불가"
+  },
+  {
+    "key": "language_10027492",
+    "content": "시선에 포함되지 않음"
+  },
+  {
+    "key": "language_10027493",
+    "content": "현재 조작이 많습니다. 잠시 후 다시 시도하세요."
+  },
+  {
+    "key": "language_10027494",
+    "content": "해당 키는 설정되었습니다."
+  },
+  {
+    "key": "language_10027495",
+    "content": "이벤트 메인 LEE.23-바다에서 떠오른 그녀 클리어 후 해제"
+  },
+  {
+    "key": "language_10027496",
+    "content": "해당 정보는 교체할 수 없습니다."
+  },
+  {
+    "key": "language_10027497",
+    "content": "상대 정보를 확인할 수 없습니다."
+  },
+  {
+    "key": "language_10027498",
+    "content": "집중 발동 시, 랜덤 적의 스트레스 +5\n폭주 발동 시, 모든 출전 캐릭터 스트레스 -10\n<color=#587FA1>(쿨타임 3턴)</color>"
+  },
+  {
+    "key": "language_10027499",
+    "content": "제멜바이스는 창문의 반대편으로 걸어가며 결말을 뒤로 남겼다."
+  },
+  {
+    "key": "language_10027500",
+    "content": "실크 스카프(삭제 예정)"
+  },
+  {
+    "key": "language_10027501",
+    "content": "올리펀트"
+  },
+  {
+    "key": "language_10027502",
+    "content": "청동 정찰경"
+  },
+  {
+    "key": "language_10027503",
+    "content": "잃어버린 별"
+  },
+  {
+    "key": "language_10027504",
+    "content": "요동치는 불길"
+  },
+  {
+    "key": "language_10027505",
+    "content": "펜 속의 시"
+  },
+  {
+    "key": "language_10027506",
+    "content": "이해와 인도"
+  },
+  {
+    "key": "language_10027507",
+    "content": "실컷 마시기"
+  },
+  {
+    "key": "language_10027508",
+    "content": "부드러운 평온"
+  },
+  {
+    "key": "language_10027509",
+    "content": "연극 감상용 안경"
+  },
+  {
+    "key": "language_10027510",
+    "content": "배터리팩"
+  },
+  {
+    "key": "language_10027511",
+    "content": "대나무 국자"
+  },
+  {
+    "key": "language_10027512",
+    "content": "염소 두개골"
+  },
+  {
+    "key": "language_10027513",
+    "content": "연금 도가니"
+  },
+  {
+    "key": "language_10027514",
+    "content": "리본 단검"
+  },
+  {
+    "key": "language_10027515",
+    "content": "종이접기 새"
+  },
+  {
+    "key": "language_10027516",
+    "content": "잔잔한 악장"
+  },
+  {
+    "key": "language_10027517",
+    "content": "변장 망토"
+  },
+  {
+    "key": "language_10027518",
+    "content": "참나무 완드"
+  },
+  {
+    "key": "language_10027519",
+    "content": "점술 수정구"
+  },
+  {
+    "key": "language_10027520",
+    "content": "입체 기하"
+  },
+  {
+    "key": "language_10027521",
+    "content": "진동 뼈 바이크"
+  },
+  {
+    "key": "language_10027522",
+    "content": "신호 케이블"
+  },
+  {
+    "key": "language_10027523",
+    "content": "파쇄 손거울"
+  },
+  {
+    "key": "language_10027524",
+    "content": "대양 컬렉션"
+  },
+  {
+    "key": "language_10027525",
+    "content": "피펫 건"
+  },
+  {
+    "key": "language_10027526",
+    "content": "행운의 금화 목걸이"
+  },
+  {
+    "key": "language_10027527",
+    "content": "강력한 약제"
+  },
+  {
+    "key": "language_10027528",
+    "content": "입술 가방"
+  },
+  {
+    "key": "language_10027529",
+    "content": "번역기"
+  },
+  {
+    "key": "language_10027530",
+    "content": "음상"
+  },
+  {
+    "key": "language_10027531",
+    "content": "바닷바람의 선물"
+  },
+  {
+    "key": "language_10027532",
+    "content": "바다의 선물"
+  },
+  {
+    "key": "language_10027533",
+    "content": "합주의 기념"
+  },
+  {
+    "key": "language_10027534",
+    "content": "귀향의 기념"
+  },
+  {
+    "key": "language_10027535",
+    "content": "눈 내리는 밤의 항해"
+  },
+  {
+    "key": "language_10027536",
+    "content": "먼 마도학자 이웃"
+  },
+  {
+    "key": "language_10027537",
+    "content": "106#표류하는 조개껍데기 섬#The Shelled Isle"
+  },
+  {
+    "key": "language_10027538",
+    "content": "조개껍데기 울림"
+  },
+  {
+    "key": "language_10027539",
+    "content": "귀향의 신호등"
+  },
+  {
+    "key": "language_10027540",
+    "content": "산의 눈물"
+  },
+  {
+    "key": "language_10027541",
+    "content": "타향으로의 항해"
+  },
+  {
+    "key": "language_10027542",
+    "content": "나무 그림자 등불"
+  },
+  {
+    "key": "language_10027543",
+    "content": "물 속의 밀림"
+  },
+  {
+    "key": "language_10027544",
+    "content": "섬의 한 모퉁이Ⅰ"
+  },
+  {
+    "key": "language_10027545",
+    "content": "섬의 한 모퉁이Ⅱ"
+  },
+  {
+    "key": "language_10027546",
+    "content": "백사장 해변Ⅰ"
+  },
+  {
+    "key": "language_10027547",
+    "content": "백사장 해변Ⅱ"
+  },
+  {
+    "key": "language_10027548",
+    "content": "만의 마을Ⅰ"
+  },
+  {
+    "key": "language_10027549",
+    "content": "만의 마을Ⅱ"
+  },
+  {
+    "key": "language_10027550",
+    "content": "바르카롤라의 기념 플래그"
+  },
+  {
+    "key": "language_10027551",
+    "content": "파투투의 기념 플래그"
+  },
+  {
+    "key": "language_10027552",
+    "content": "밤바람의 갑판 폐점 알림"
+  },
+  {
+    "key": "language_10027553",
+    "content": "‘가방 속 귀환자’ 보상 보충 지급"
+  },
+  {
+    "key": "language_10027554",
+    "content": "레인보우 악보"
+  },
+  {
+    "key": "language_10027555",
+    "content": "조개껍데기 표류기"
+  },
+  {
+    "key": "language_10027556",
+    "content": "바르카롤라 캐릭터 이벤트의 모든 스테이지 완료(최종 패키지 아님)"
+  },
+  {
+    "key": "language_10027557",
+    "content": "파투투 캐릭터 이벤트의 모든 스테이지 완료(최종 패키지 아님)"
+  },
+  {
+    "key": "language_10027558",
+    "content": "이별 변주곡"
+  },
+  {
+    "key": "language_10027559",
+    "content": "고향의 소리와 현악은 단지 고루한 교훈을 위해 울린다.\n갓난아기 같은 음표들이 몸부림치며 포대기에서 벗어나\n마치 바닷바람처럼 자유롭게 지나고 헤엄치려 한다.\n가장 가까운 이여, 근심하지 마라, 슬퍼하지 마라.\n눈물 또한 이별의 변주곡이 된다."
+  },
+  {
+    "key": "language_10027560",
+    "content": "두려워하는 조개껍데기"
+  },
+  {
+    "key": "language_10027561",
+    "content": "끈적한 흑야 속에서, 나는 너를 바라보았다.\n나의 가족이여, 나의 혈육이여,\n모닥불에 비춰 빛나던 고향의 꿈.\n이제 나는 너를 건져 올려,\n문자의 결을 만지며 바다 소금의 향기를 맡는다.\n찾을 수 없어, 찾을 수 없어, 나는 진정한 너를 찾을 수 없다."
+  },
+  {
+    "key": "language_10027562",
+    "content": "열정의 노래"
+  },
+  {
+    "key": "language_10027563",
+    "content": "나의 무대, 나의 섬.\n오직 이곳에서만, 상상은 현실의 경계를 넘어 날아다니고,\n지루한 규율을 잊는다.\n촛불 심지를 문질러 밝히며 흔들리는 생명을 바라본다."
+  },
+  {
+    "key": "language_10027564",
+    "content": "파괴의 바람"
+  },
+  {
+    "key": "language_10027565",
+    "content": "·기억의 껍질의 보호를 받는 적의 최종 피해 감면+20%\n·기억의 껍질의 스택이 공격받은 후 감소, 단일/광역 공격 시 2/1스택 감소, 영감 상성, 고급 또는 술식 주문으로 스택 추가 증가 또는 감소\n·기억의 껍질 스택이 0까지 감소하면 파괴되면 진실 폭로 상태에 들어가 최종 피해 감면 -20%, 고정 피해를 받음"
+  },
+  {
+    "key": "language_10027566",
+    "content": "2.4 초보자 통찰 이벤트"
+  },
+  {
+    "key": "language_10027567",
+    "content": "울리히 콘텐츠"
+  },
+  {
+    "key": "language_10027568",
+    "content": "다음 소식 전해드립니다.\n\n오늘 밤 8시, 트위스트 댄스 파티가 열립니다.\n참석하시는 여러분께는 무제한으로 제공되는 닥터 페퍼, 밤새도록 울려 퍼질 로큰롤, 특별히 다시 돌아오는 미러볼, 그리고 천재 조사원과 그녀의... (신호가 몇 초간 끊겼다.)\n\n마지막으로, 나와 나의 꽃이 당신께 전하는 한 마디——\n어서 오세요, 타임키퍼."
+  },
+  {
+    "key": "language_10027569",
+    "content": "쉬이잇—! 버틴, 당신이 없는 사이에 여기엔 또 셀 수 없는 비밀들이 쌓였어요! 하지만 걱정 마세요 전부 제 화면 속에 기록해 뒀으니, 언제든 재생 가능해요!\n예를 들면— 아이스크림 가게를 구한 ‘숫자’ 소녀, 여기저기 날뛰는 크리, 영적인 치유와 차 지붕을 뛰어넘은 보더콜리까지...! \n치직—! …어라, 신호가 왜 이러지? 나머지 비밀들은, 타임키퍼가 직접 찾아야겠어요!"
+  },
+  {
+    "key": "language_10027570",
+    "content": "5556, 5557, 이 속도라면 10년, 아니, 어쩌면 5년이면 충분할지도... 음? 너구나. 돌아왔어!\n저 하늘에 걸린 달보다, 바로 눈앞의, 너무도 평범한 중국 음식점에서—— 나는 그 어떤 재산보다 소중한 것을 손에 넣었어.\n자, 앉아. 타코를 만들어 줄게."
+  },
+  {
+    "key": "language_10027571",
+    "content": "버틴에게\n\n최근에 황무지에 새로운 친구들이 찾아왔어요! 이름은 ‘느림보’. 크기는 모피 고기보다 조금 크고, 기존 크리터들과는 전혀 다른 독특한 습성을 가졌죠. 제 생각엔, 다음 크리터 순회 전시의 테마로 이 친구들을 선정하면 우린 또 다시 <UTTU> 표지를 장식하게 될거예요.\n시간은 우리를 기다려주지 않아요. ‘뉴 바벨’ 크리터 회사의 경영 계획에 대해 함께 논의해야 할 게 많으니 계속 따라와 주세요, 나의 소중한 파트너."
+  },
+  {
+    "key": "language_10027572",
+    "content": "창문의 경계에서, 나는 나만의 가능성을 엿보았고, 마치 가시 돋친 장미를 쥐듯 그것을 붙잡았어.\n나는 홀로 유화 뒤의 창을 밀어 열지도, 끝없이 이어지는 황금빛 무대로 나아가지도 않았어.\n네가 없던 날들 동안, 우리 둘 다 변했지. 예를 들면, 나는 작은 날아다니는 숟가락 속에 숨겨진 마도학의 원리를 이해하게 되었어.\n하지만 당신도 알잖아. 나에게도, 당신에게도 \"변화\"란 결코 나쁜 것이 아니라는 걸."
+  },
+  {
+    "key": "language_10027573",
+    "content": "혹시, 당신이 안 계시는 동안 다른 무대에 오르셨습니까? [네! 무대는 언제나 우리 곁에 있어요. 배경이 없어도, 반짝이는 조명이 없어도, 대본이 없어도 말이에요!]\n우리는 어제를 이야기하지 않고, 내일을 논하지 않습니다. 오직 오늘, 바로 지금 이 순간을 위해 노래할 뿐입니다! [저도 잘 알고 있어요! 당신께서 다시 커튼을 올려야만 이 무대가 다시 시작될 수 있다는 것을!]"
+  },
+  {
+    "key": "language_10027574",
+    "content": "후우...! 드디어 오셨군요! 딱 맞춰 왔어요, 방금 막 이 소설을 다 읽었거든요.\n이야기가 마지막까지 닿았을 때, 문득 깨달았어요. 결말 너머엔... 어쩌면 그분만 있는 게 아닐지도 모른다고요.\n왜냐하면... 언제나 새로운 페이지가 저를 기다리고 있으니까!"
+  },
+  {
+    "key": "language_10027575",
+    "content": "황야를 홀로 거닐던 어느 날, 문득 바라본 시계탑 꼭대기에서 가는 먼지비가 조용히 내려왔어요. 그 순간, 저는 뒤를 돌아보았지요. 당신이... 바로 거기 있을 것만 같았으니까요."
+  },
+  {
+    "key": "language_10027576",
+    "content": "버틴! 네가 없는 사이에 여기 엄청 재미있는 크리터 친구들이 찾아왔어! 트위스트 댄스 파티에서 전부 소개해 줄게! 좋은 친구 하나와 거기에 ‘편안한 숙면 푸시 스프레이’ 한 병이면... 오~ 이건 분명 너한테 도움이 될 거야!"
+  },
+  {
+    "key": "language_10027577",
+    "content": "헤이, 버틴! 돌아왔네! 자, 맞혀봐— 그동안 몇 번이나 라디오 방송을 놓쳤을 것 같아? 하지만 걱정 마! 이 해적만 있으면, 언제든 가장 쿨한 록 음악을 들을 수 있으니까! 지금이야, 바로 지금! 너무 깊게 생각하지 말고, 나랑 같이 흔들어보자고!"
+  },
+  {
+    "key": "language_10027578",
+    "content": "기억하고 계시나요? 당신이 떠나던 그날, 저는 이 겨우살이를 돌보고 있었습니다. 그리고 이제, 새로운 꽃봉오리가 피어났습니다. 바로 그것이 저에게 속삭였지요. 당신이 곧 돌아오실 거라고."
+  },
+  {
+    "key": "language_10027579",
+    "content": "소더비 씨가 요즘 게점술에 푹 빠져서 수정구의 힘을 의심하고 있더군! 흥! 하지만 나는 일주일 전부터 수정구 속에서 네가 오는 모습을 보았는 걸!"
+  },
+  {
+    "key": "language_10027580",
+    "content": "아, 별일 아닙니다. 그저 당신의 사무실에 약간의... 무해한 개조를 했을 뿐이에요. 보세요, 여기 \"아이스크림 분사 배급기\"를 설치해 두었어요. 사용 후기는 꼭 작성해 주시길 바랍니다."
+  },
+  {
+    "key": "language_10027581",
+    "content": "(미소) *기쁨과 그리움을 담은 한 곡의 선율, 이 작은 별의 사람들은 그것을 <귀향>이라 부릅니다.*"
+  },
+  {
+    "key": "language_10027582",
+    "content": "헤이! 돌아왔네! 나와 드라이브하던 날들이 그렇게 그리웠다면서? 어디로 가고 싶어? 자, 어서 타!"
+  },
+  {
+    "key": "language_10027583",
+    "content": "6 연동스킨"
+  },
+  {
+    "key": "language_10027584",
+    "content": "2번째 전조"
+  },
+  {
+    "key": "language_10027585",
+    "content": "파투투 연동스킨"
+  },
+  {
+    "key": "language_10027586",
+    "content": "폭풍우와 동행"
+  },
+  {
+    "key": "language_10027587",
+    "content": "봄의 손님"
+  },
+  {
+    "key": "language_10027588",
+    "content": "이번 유후 주크박스의 데시벨 증가"
+  },
+  {
+    "key": "language_10027589",
+    "content": "당신의 가장 충성스러운 병 친구입니다. 오픈 시 특정 5성 캐릭터 1명을 선택할 수 있습니다. 해당 아이템은 <color=#AC5320>2025년 5월 10일 05:00에 만료됩니다.</color>"
+  },
+  {
+    "key": "language_10027590",
+    "content": "세 가지 언어의 찬사"
+  },
+  {
+    "key": "language_10027591",
+    "content": "파도의 집"
+  },
+  {
+    "key": "language_90001095",
+    "content": "실패"
+  },
+  {
+    "key": "language_90001096",
+    "content": "실컷 마시기"
+  },
+  {
+    "key": "language_90001097",
+    "content": "출발일"
+  },
+  {
+    "key": "language_90001098",
+    "content": "이별"
+  },
+  {
+    "key": "language_90001099",
+    "content": "전쟁과 평화"
+  },
+  {
+    "key": "language_90001100",
+    "content": "불협화음"
+  },
+  {
+    "key": "language_90001101",
+    "content": "알겠어!"
+  },
+  {
+    "key": "language_90001102",
+    "content": "약속의 땅"
+  },
+  {
+    "key": "language_90001103",
+    "content": "녹화"
+  },
+  {
+    "key": "language_90001104",
+    "content": "손뼉을 친다"
+  },
+  {
+    "key": "language_90001105",
+    "content": "반주"
+  },
+  {
+    "key": "language_90001106",
+    "content": "레벨업"
+  },
+  {
+    "key": "language_90001108",
+    "content": "네"
+  },
+  {
+    "key": "language_90001109",
+    "content": "강화"
+  },
+  {
+    "key": "language_90001110",
+    "content": "묘사"
+  },
+  {
+    "key": "language_90001111",
+    "content": "요청을\n받아들인다"
+  },
+  {
+    "key": "language_90001112",
+    "content": "예스!"
+  },
+  {
+    "key": "language_90001113",
+    "content": "끝없는 황무지"
+  },
+  {
+    "key": "language_90001114",
+    "content": "더블 재회 보상"
+  },
+  {
+    "key": "language_90001115",
+    "content": "따르릉 따르릉 \n불길한 전화"
+  },
+  {
+    "key": "language_90001116",
+    "content": "해당 의상 중복 획득 시 전환"
   },
   {
     "key": "language_90001082",

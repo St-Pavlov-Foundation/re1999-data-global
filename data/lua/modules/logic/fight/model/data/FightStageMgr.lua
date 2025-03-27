@@ -3,7 +3,6 @@ module("modules.logic.fight.model.data.FightStageMgr", package.seeall)
 slot0 = FightDataBase("FightStageMgr")
 slot0.StageType = {
 	Normal = GameUtil.getEnumId(),
-	Enter = GameUtil.getEnumId(),
 	Play = GameUtil.getEnumId(),
 	End = GameUtil.getEnumId()
 }
@@ -12,9 +11,14 @@ slot0.PlayType = {
 	Normal = 1
 }
 slot0.FightStateType = {
+	Enter = GameUtil.getEnumId(),
 	Auto = GameUtil.getEnumId(),
 	Replay = GameUtil.getEnumId(),
-	DouQuQu = GameUtil.getEnumId()
+	DouQuQu = GameUtil.getEnumId(),
+	Season2AutoChangeHero = GameUtil.getEnumId(),
+	Distribute1Card = GameUtil.getEnumId(),
+	SendOperation2Server = GameUtil.getEnumId(),
+	PlaySeasonChangeHero = GameUtil.getEnumId()
 }
 slot0.OperateStateType = {
 	Discard = GameUtil.getEnumId(),
@@ -37,7 +41,6 @@ function slot0.ctor(slot0)
 	slot0.operateParam = {}
 	slot0.fightStates = {}
 	slot0.fightStateParam = {}
-	slot0.enterFinish = false
 end
 
 function slot0.getStages(slot0)
@@ -59,8 +62,6 @@ end
 function slot0.enterStage(slot0, slot1, slot2)
 	for slot6 = #slot0.stages, 1, -1 do
 		if slot1 == slot0.stages[slot6] then
-			logError("重复进入stage:" .. uv0[slot1] .. "请检查代码")
-
 			slot0.stageParam[slot6] = slot2 or 0
 
 			return
@@ -68,11 +69,7 @@ function slot0.enterStage(slot0, slot1, slot2)
 	end
 
 	table.insert(slot0.stages, slot1)
-
-	slot2 = slot2 or 0
-
-	table.insert(slot0.stageParam, slot2)
-	FightController.instance:dispatchEvent(FightEvent.EnterStage, slot1, slot2)
+	table.insert(slot0.stageParam, slot2 or 0)
 end
 
 function slot0.exitStage(slot0, slot1)
@@ -96,13 +93,7 @@ function slot0.exitStage(slot0, slot1)
 
 	table.remove(slot0.stages, slot2)
 
-	slot3 = table.remove(slot0.stageParam, slot2)
-
-	if slot1 == uv1.StageType.Enter then
-		slot0.enterFinish = true
-	end
-
-	FightController.instance:dispatchEvent(FightEvent.ExitStage, slot1, slot3)
+	return table.remove(slot0.stageParam, slot2)
 end
 
 function slot0.enterFightState(slot0, slot1, slot2)
@@ -120,6 +111,8 @@ function slot0.exitFightState(slot0, slot1)
 	for slot6 = #slot0.fightStates, 1, -1 do
 		if slot1 == slot0.fightStates[slot6] then
 			slot2 = slot6
+
+			break
 		end
 	end
 
@@ -146,6 +139,8 @@ function slot0.exitOperateState(slot0, slot1)
 	for slot6 = #slot0.operateStates, 1, -1 do
 		if slot1 == slot0.operateStates[slot6] then
 			slot2 = slot6
+
+			break
 		end
 	end
 
@@ -157,13 +152,39 @@ function slot0.exitOperateState(slot0, slot1)
 	FightController.instance:dispatchEvent(FightEvent.ExitOperateState, slot1, table.remove(slot0.operateParam, slot2))
 end
 
-function slot0.isEmptyOperateState(slot0)
-	return #slot0.operateStates == 0
+function slot0.isEmptyOperateState(slot0, slot1)
+	if #slot0.operateStates == 0 then
+		return true
+	end
+
+	for slot5, slot6 in ipairs(slot0.operateStates) do
+		if not slot1 or not slot1[slot6] then
+			return false
+		end
+	end
+
+	return true
 end
 
-function slot0.inFightState(slot0, slot1)
-	for slot5 = #slot0.fightStates, 1, -1 do
-		if slot1 == slot0.fightStates[slot5] then
+function slot0.inOperateState(slot0, slot1, slot2)
+	if slot2 and slot2[slot1] then
+		return false
+	end
+
+	for slot6 = #slot0.operateStates, 1, -1 do
+		if slot1 == slot0.operateStates[slot6] then
+			return true
+		end
+	end
+end
+
+function slot0.inFightState(slot0, slot1, slot2)
+	if slot2 and slot2[slot1] then
+		return false
+	end
+
+	for slot6 = #slot0.fightStates, 1, -1 do
+		if slot1 == slot0.fightStates[slot6] then
 			return true
 		end
 	end
@@ -173,11 +194,19 @@ function slot0.isNormalStage(slot0)
 	return slot0:getCurStage() == uv0.StageType.Normal
 end
 
+function slot0.isPlayStage(slot0)
+	return slot0:getCurStage() == uv0.StageType.Play
+end
+
 function slot0.inAutoFightState(slot0)
 	return slot0:inFightState(uv0.FightStateType.Auto)
 end
 
-function slot0.isFree(slot0)
+function slot0.isFree(slot0, slot1, slot2)
+	if slot0:inReplay() then
+		return
+	end
+
 	if not slot0:isNormalStage() then
 		return
 	end
@@ -186,23 +215,27 @@ function slot0.isFree(slot0)
 		return
 	end
 
-	if slot0:inFightState(uv0.FightStateType.DouQuQu) then
+	if slot0:inFightState(uv0.FightStateType.SendOperation2Server) then
 		return
 	end
 
-	if slot0:inReplay() then
+	if slot0:inFightState(uv0.FightStateType.Enter) then
 		return
 	end
 
-	if not slot0:isEmptyOperateState() then
+	if slot0:inFightState(uv0.FightStateType.DouQuQu, slot2) then
+		return
+	end
+
+	if not slot0:isEmptyOperateState(slot1) then
+		return
+	end
+
+	if #slot0.dataMgr.operationMgr.operationStates > 0 then
 		return
 	end
 
 	return true
-end
-
-function slot0.enterFinished(slot0)
-	return slot0.enterFinish
 end
 
 function slot0.inReplay(slot0)

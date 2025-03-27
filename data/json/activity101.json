@@ -1437,17 +1437,87 @@
   {
     "activityId": 12321,
     "id": 1,
-    "bonus": ""
+    "bonus": "10#11#1"
   },
   {
     "activityId": 12321,
     "id": 2,
-    "bonus": ""
+    "bonus": "2#2#60"
   },
   {
     "activityId": 12321,
     "id": 3,
-    "bonus": ""
+    "bonus": "1#481021#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 1,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 2,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 3,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 4,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 5,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 6,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12432,
+    "id": 7,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 1,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 2,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 3,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 4,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 5,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 6,
+    "bonus": "1#140001#1"
+  },
+  {
+    "activityId": 12433,
+    "id": 7,
+    "bonus": "1#140001#1"
   },
   {
     "activityId": 12244,

@@ -10,10 +10,13 @@ end
 function slot0.updateInfo(slot0, slot1, slot2)
 	slot0.playerInfo = slot2
 
-	slot0:updateShowSetting(slot1.showSettings)
+	slot0:updateProgressSetting(slot1.progressSetting)
+	slot0:updateBaseInfoSetting(slot1.baseSetting)
 	slot0:updateHeroCover(slot1.heroCover)
 	slot0:updateThemeId(slot1.themeId)
+	slot0:updateCritter(slot1.critter)
 
+	slot0.showAchievement = slot1.showAchievement
 	slot0.roomCollection = slot1.roomCollection
 	slot0.layerId = slot1.layerId
 	slot0.weekwalkDeepLayerId = slot1.weekwalkDeepLayerId
@@ -21,40 +24,65 @@ function slot0.updateInfo(slot0, slot1, slot2)
 	slot0.rougeDifficulty = slot1.rougeDifficulty
 	slot0.act128SSSCount = slot1.act128SSSCount
 	slot0.achievementCount = slot1.achievementCount
+	slot0.assistTimes = slot1.assistTimes
+	slot0.heroCoverTimes = slot1.heroCoverTimes
+	slot0.maxFaithHeroCount = slot1.maxFaithHeroCount
+	slot0.totalCostPower = slot1.totalCostPower
+	slot0.skinCount = slot1.skinCount
+	slot0.towerLayer = slot1.towerLayer
+	slot0.towerBossPassCount = slot1.towerBossPassCount
+	slot0.maxLevelHero = slot1.heroMaxLevelCount
 end
 
 function slot0.updateThemeId(slot0, slot1)
 	slot0.themeId = slot1
 end
 
-function slot0.updateShowSetting(slot0, slot1)
-	slot0.showSettings = slot1
-	slot0.settingDict = slot0:parseSetting(slot1)
+function slot0.updateProgressSetting(slot0, slot1)
+	slot0.progressSettings = slot1
+	slot0.progressSettingsDict = GameUtil.splitString2(slot1, true)
+
+	slot0:setEmptyPosList()
 end
 
-function slot0.parseSetting(slot0, slot1)
-	slot2 = {}
+function slot0.updateBaseInfoSetting(slot0, slot1)
+	slot0.baseInfoSettings = slot1
+	slot0.baseInfoSettingsDict = GameUtil.splitString2(slot1, true)
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = string.split(slot7, "|")
-			slot2[tonumber(slot8[1])] = slot8[2]
-		end
-	end
-
-	return slot2
+	slot0:setEmptyBaseInfoPosList()
 end
 
-function slot0.makeSetting(slot0, slot1)
-	slot2 = {}
+function slot0.updateCritter(slot0, slot1)
+	slot2 = string.splitToNumber(slot1, "#")
+	slot5 = slot2[3]
+	slot0.critterUid = slot2[1]
+	slot0.critterId = slot2[2]
 
-	if slot1 then
-		for slot6, slot7 in pairs(slot1) do
-			table.insert(slot2, string.format("%s|%s", slot6, slot7))
-		end
+	if not slot0.critterId then
+		return
 	end
 
-	return slot2
+	if slot5 == 1 then
+		slot0.critterSkinId = CritterConfig.instance:getCritterMutateSkin(tonumber(slot0.critterId))
+	else
+		slot0.critterSkinId = CritterConfig.instance:getCritterNormalSkin(tonumber(slot0.critterId))
+	end
+end
+
+function slot0.updateAchievement(slot0, slot1)
+	slot0.showAchievement = slot1
+end
+
+function slot0.getShowAchievement(slot0)
+	return slot0.showAchievement
+end
+
+function slot0.getSelectCritterUid(slot0)
+	return slot0.critterUid
+end
+
+function slot0.setSelectCritterUid(slot0, slot1)
+	slot0.critterUid = slot1
 end
 
 function slot0.updateHeroCover(slot0, slot1)
@@ -73,36 +101,91 @@ function slot0.isSelf(slot0)
 	return PlayerModel.instance:isPlayerSelf(slot0.userId)
 end
 
-function slot0.getLayoutData(slot0)
-	slot2 = {}
-
-	if GameUtil.splitString2(slot0.settingDict[PlayerCardEnum.SettingKey.RightLayout], true, "&", "_") then
-		for slot7, slot8 in ipairs(slot3) do
-			slot2[slot8[1]] = slot8[2]
-		end
-	end
-
-	return slot2
-end
-
-function slot0.getCardData(slot0)
-	if string.nilorempty(slot0.settingDict[PlayerCardEnum.SettingKey.CardShow]) then
-		slot1 = "1#2#3"
-	end
-
+function slot0.setSetting(slot0, slot1)
 	return string.splitToNumber(slot1, "#")
 end
 
-function slot0.getSetting(slot0, slot1)
-	slot2 = slot0:parseSetting(slot0.showSettings)
+function slot0.getProgressSetting(slot0)
+	return slot0.progressSettingsDict
+end
 
-	if slot1 then
-		for slot6, slot7 in pairs(slot1) do
-			slot2[slot6] = slot7
+function slot0.setEmptyBaseInfoPosList(slot0)
+	slot0.emptyBaseInfoPosList = {
+		false,
+		true,
+		true,
+		true
+	}
+
+	if slot0.baseInfoSettingsDict and #slot0.baseInfoSettingsDict > 0 then
+		for slot4 = 1, 4 do
+			for slot8, slot9 in ipairs(slot0.baseInfoSettingsDict) do
+				if slot9[1] == slot4 then
+					slot0.emptyBaseInfoPosList[slot4] = false
+				end
+			end
 		end
 	end
+end
 
-	return slot0:makeSetting(slot2)
+function slot0.getEmptyBaseInfoPosList(slot0)
+	return slot0.emptyBaseInfoPosList
+end
+
+function slot0.setEmptyPosList(slot0)
+	slot0.emptyPosList = {
+		true,
+		true,
+		true,
+		true,
+		true
+	}
+
+	if slot0.progressSettingsDict and #slot0.progressSettingsDict > 0 then
+		for slot4 = 1, 5 do
+			for slot8, slot9 in ipairs(slot0.progressSettingsDict) do
+				if slot9[1] == slot4 then
+					slot0.emptyPosList[slot4] = false
+				end
+			end
+		end
+	end
+end
+
+function slot0.getEmptyPosList(slot0)
+	return slot0.emptyPosList
+end
+
+function slot0.setEmptyPosList(slot0)
+	slot0.emptyPosList = {
+		true,
+		true,
+		true,
+		true,
+		true
+	}
+
+	if slot0.progressSettingsDict and #slot0.progressSettingsDict > 0 then
+		for slot4 = 1, 5 do
+			for slot8, slot9 in ipairs(slot0.progressSettingsDict) do
+				if slot9[1] == slot4 then
+					slot0.emptyPosList[slot4] = false
+				end
+			end
+		end
+	end
+end
+
+function slot0.getEmptyPosList(slot0)
+	return slot0.emptyPosList
+end
+
+function slot0.getBaseInfoSetting(slot0)
+	return slot0.baseInfoSettingsDict
+end
+
+function slot0.getCritter(slot0)
+	return slot0.critterId, slot0.critterSkinId
 end
 
 function slot0.getMainHero(slot0, slot1)
@@ -155,11 +238,106 @@ function slot0.getDefaultHeroId(slot0)
 end
 
 function slot0.getThemeId(slot0)
-	if not PlayerCardConfig.instance:getCardThemeConfig(slot0.themeId) then
-		slot1 = 1
+	return slot0.themeId
+end
+
+function slot0.getProgressByIndex(slot0, slot1)
+	if slot1 == PlayerCardEnum.LeftContent.RougeDifficulty then
+		if slot0.rougeDifficulty > 0 then
+			return RougeConfig1.instance:getDifficultyCOTitle(slot0.rougeDifficulty)
+		else
+			return -1
+		end
+	elseif slot1 == PlayerCardEnum.LeftContent.WeekWalkDeep then
+		if slot0.weekwalkDeepLayerId > 0 and WeekWalkConfig.instance:getMapConfig(slot0.weekwalkDeepLayerId) and slot2.sceneId and lua_weekwalk_scene.configDict[slot2.sceneId] and slot3.typeName and slot3.name then
+			return slot3.typeName .. slot3.name
+		end
+
+		return -1
+	elseif slot1 == PlayerCardEnum.LeftContent.RoomCollection then
+		return slot0.roomCollection
+	elseif slot1 == PlayerCardEnum.LeftContent.ExploreCollection then
+		return slot0.exploreCollection
+	elseif slot1 == PlayerCardEnum.LeftContent.Act148SSSCount then
+		if slot0.act128SSSCount > 0 then
+			return luaLang("playercard_act128SSSCount") .. slot0.act128SSSCount
+		else
+			return -1
+		end
+	elseif slot1 == PlayerCardEnum.LeftContent.TowerLayer then
+		if slot0.towerLayer > 0 then
+			slot3 = string.splitToNumber(TowerConfig.instance:getPermanentEpisodeCo(slot0.towerLayer).episodeIds, "|")
+
+			return DungeonConfig.instance:getEpisodeCO(slot3[#slot3]).name
+		end
+
+		return -1
+	elseif slot1 == PlayerCardEnum.LeftContent.TowerBossPassCount then
+		if slot0.towerBossPassCount > 0 then
+			return luaLang("playercard_towerbosspasscount") .. slot0.towerBossPassCount
+		else
+			return -1
+		end
+	end
+end
+
+function slot0.getBaseInfoByIndex(slot0, slot1, slot2)
+	if not slot0:getPlayerInfo() then
+		return
 	end
 
-	return slot1
+	if slot1 == PlayerCardEnum.RightContent.LoginDay then
+		if slot2 then
+			return slot3.totalLoginDays, luaLang("time_day")
+		else
+			return slot3.totalLoginDays .. luaLang("time_day")
+		end
+	elseif slot1 == PlayerCardEnum.RightContent.HeroCount then
+		return slot0:getHeroCount()
+	elseif slot1 == PlayerCardEnum.RightContent.CreatTime then
+		return TimeUtil.timestampToString3(ServerTime.timeInLocal(slot3.registerTime / 1000))
+	elseif slot1 == PlayerCardEnum.RightContent.AssitCount then
+		return slot0.assistTimes or 0
+	elseif slot1 == PlayerCardEnum.RightContent.CompleteConfidence then
+		return slot0.maxFaithHeroCount or 0
+	elseif slot1 == PlayerCardEnum.RightContent.MaxLevelHero then
+		return slot0.maxLevelHero or 0
+	elseif slot1 == PlayerCardEnum.RightContent.SkinCount then
+		return slot0.skinCount or 0
+	elseif slot1 == PlayerCardEnum.RightContent.TotalCostPower then
+		if slot2 then
+			return slot0.totalCostPower or 0, luaLang("NewPlayerCardView_activity_only")
+		else
+			return string.format(luaLang("NewPlayerCardView_activity"), slot4)
+		end
+	elseif slot1 == PlayerCardEnum.RightContent.HeroCoverTimes then
+		if slot2 then
+			return slot0.heroCoverTimes or 0, luaLang("NewPlayerCardView_times_only")
+		else
+			return string.format(luaLang("NewPlayerCardView_times"), slot4)
+		end
+	end
+end
+
+function slot0.getHeroCount(slot0)
+	if not slot0:getPlayerInfo() then
+		return
+	end
+
+	return slot1.heroRareNNCount + slot1.heroRareNCount + slot1.heroRareRCount + slot1.heroRareSRCount + slot1.heroRareSSRCount
+end
+
+function slot0.getHeroRarePercent(slot0)
+	if not slot0:getPlayerInfo() then
+		return nil
+	end
+
+	slot3 = HeroConfig.instance:getAnyOnlineRareCharacterCount(2)
+	slot4 = HeroConfig.instance:getAnyOnlineRareCharacterCount(3)
+	slot5 = HeroConfig.instance:getAnyOnlineRareCharacterCount(4)
+	slot6 = HeroConfig.instance:getAnyOnlineRareCharacterCount(5)
+
+	return math.min(HeroConfig.instance:getAnyOnlineRareCharacterCount(1) > 0 and slot1.heroRareNNCount / slot2 or 1, 1), math.min(slot3 > 0 and slot1.heroRareNCount / slot3 or 1, 1), math.min(slot4 > 0 and slot1.heroRareRCount / slot4 or 1, 1), math.min(slot5 > 0 and slot1.heroRareSRCount / slot5 or 1, 1), math.min(slot6 > 0 and slot1.heroRareSSRCount / slot6 or 1, 1)
 end
 
 return slot0

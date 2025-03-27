@@ -8,18 +8,18 @@ function slot0.onInit(slot0)
 	slot0._roleType = ""
 end
 
-function slot0.reInit(slot0)
-	slot0._basePropertiesStr = nil
-	slot0._tempEventCommonProperties = nil
-	slot0._roleType = ""
-end
-
 function slot0.setRoleType(slot0, slot1)
 	slot0._roleType = slot1
 end
 
 function slot0.getRoleType(slot0)
 	return slot0._roleType
+end
+
+function slot0.reInit(slot0)
+	slot0._basePropertiesStr = nil
+	slot0._tempEventCommonProperties = nil
+	slot0._roleType = ""
 end
 
 function slot0.updateBaseProperties(slot0, slot1)

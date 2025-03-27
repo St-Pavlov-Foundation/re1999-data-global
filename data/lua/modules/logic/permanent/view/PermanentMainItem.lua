@@ -37,6 +37,7 @@ function slot0.addEventListeners(slot0)
 	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.UnlockPermanent, slot0._onUnlcokPermanent, slot0)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.GetActivityInfoWithParamSuccess, slot0._refreshAllGetFlag, slot0)
+	slot0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, slot0.refreshRedDot, slot0, LuaEventSystem.Low)
 end
 
 function slot0.removeEventListeners(slot0)
@@ -44,6 +45,15 @@ function slot0.removeEventListeners(slot0)
 	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
 	slot0:removeEventCb(ActivityController.instance, ActivityEvent.UnlockPermanent, slot0._onUnlcokPermanent, slot0)
 	slot0:removeEventCb(ActivityController.instance, ActivityEvent.GetActivityInfoWithParamSuccess, slot0._refreshAllGetFlag, slot0)
+	slot0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, slot0.refreshRedDot, slot0)
+end
+
+function slot0.refreshRedDot(slot0)
+	if not slot0.notEventRedDot then
+		return
+	end
+
+	slot0.notEventRedDot:refreshRedDot()
 end
 
 function slot0.onUpdateMO(slot0, slot1)
@@ -71,10 +81,26 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	if slot1.config.redDotId ~= 0 then
 		RedDotController.instance:addRedDot(slot0._goreddot, slot1.config.redDotId)
+	else
+		slot0.notEventRedDot = RedDotController.instance:addNotEventRedDot(slot0._goreddot, slot0._checkNotEventReddotShow, slot0)
 	end
 
 	slot0:_refreshState()
 	slot0:_refreshCost()
+end
+
+function slot0._checkNotEventReddotShow(slot0)
+	slot1 = false
+
+	for slot6, slot7 in ipairs(ActivityConfig.instance:getPermanentChildActList(slot0._mo.id)) do
+		if RedDotModel.instance:isDotShow(ActivityConfig.instance:getActivityCo(slot7).redDotId, slot7) then
+			slot1 = true
+
+			break
+		end
+	end
+
+	return slot1
 end
 
 function slot0.onDestroy(slot0)

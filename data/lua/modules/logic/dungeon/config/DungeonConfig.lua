@@ -808,7 +808,9 @@ function slot0._initVersionActivityEpisodeList(slot0)
 		VersionActivity2_1DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity2_1DungeonEnum.DungeonChapterId.Story3,
 		VersionActivity2_3DungeonEnum.DungeonChapterId.Story2,
-		VersionActivity2_3DungeonEnum.DungeonChapterId.Story3
+		VersionActivity2_3DungeonEnum.DungeonChapterId.Story3,
+		VersionActivity2_4DungeonEnum.DungeonChapterId.Story2,
+		VersionActivity2_4DungeonEnum.DungeonChapterId.Story3
 	}) do
 		for slot11, slot12 in ipairs(slot0._chapterEpisodeDict[slot7]) do
 			slot0.versionActivityPreEpisodeDict[slot12.preEpisode] = slot12

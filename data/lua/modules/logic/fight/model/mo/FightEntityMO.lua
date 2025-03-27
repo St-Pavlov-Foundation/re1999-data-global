@@ -263,9 +263,9 @@ function slot0.getCO(slot0)
 		return lua_monster.configDict[slot0.modelId]
 	elseif slot0:isAssistBoss() then
 		return lua_tower_assist_boss.configDict[slot0.modelId]
+	elseif slot0:isASFDEmitter() then
+		return FightASFDConfig.instance:getASFDEmitterConfig(slot0.side)
 	end
-
-	logError("实体配置表找不到,实体类型:" .. slot0.entityType .. "  modelId:" .. slot0.modelId)
 
 	return lua_character.configDict[slot0.modelId] or lua_monster.configDict[slot0.modelId]
 end
@@ -275,11 +275,15 @@ function slot0.isCharacter(slot0)
 end
 
 function slot0.isMonster(slot0)
-	return slot0.entityType == FightEnum.EntityType.Monster or slot0.entityType == FightEnum.EntityType.Special
+	return slot0.entityType == FightEnum.EntityType.Monster
 end
 
 function slot0.isAssistBoss(slot0)
 	return slot0.entityType == FightEnum.EntityType.AssistBoss
+end
+
+function slot0.isASFDEmitter(slot0)
+	return slot0.entityType == FightEnum.EntityType.ASFDEmitter
 end
 
 function slot0.getSpineSkinCO(slot0)
@@ -316,7 +320,11 @@ function slot0.changeExpointMaxAdd(slot0, slot1)
 end
 
 function slot0.getMaxExPoint(slot0)
-	return slot0:getCO().uniqueSkill_point + slot0:getExpointMaxAddNum()
+	if not slot0:getCO() then
+		return 0
+	end
+
+	return slot1.uniqueSkill_point + slot0:getExpointMaxAddNum()
 end
 
 function slot0.getExpointMaxAddNum(slot0)
@@ -431,6 +439,18 @@ function slot0.hasBuffFeature(slot0, slot1)
 	end
 end
 
+function slot0.hasBuffActId(slot0, slot1)
+	for slot5, slot6 in pairs(slot0.buffDic) do
+		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
+			for slot12, slot13 in ipairs(slot8) do
+				if slot13[1] == slot1 then
+					return true
+				end
+			end
+		end
+	end
+end
+
 function slot0.hasBuffTypeId(slot0, slot1)
 	for slot5, slot6 in pairs(slot0.buffDic) do
 		if slot6:getCO() and slot7.typeId == slot1 then
@@ -448,12 +468,28 @@ function slot0.hasBuffId(slot0, slot1)
 end
 
 function slot0.setHp(slot0, slot1)
+	if slot0:isASFDEmitter() then
+		return slot0:setASFDEmitterHp(slot1)
+	end
+
+	slot0:defaultSetHp(slot1)
+end
+
+function slot0.defaultSetHp(slot0, slot1)
 	if slot1 < 0 then
 		slot1 = 0
 	end
 
 	if slot0.attrMO.hp < slot1 then
 		slot1 = slot0.attrMO.hp
+	end
+
+	slot0.currentHp = slot1
+end
+
+function slot0.setASFDEmitterHp(slot0, slot1)
+	if slot1 < 0 then
+		slot1 = 0
 	end
 
 	slot0.currentHp = slot1
@@ -473,12 +509,16 @@ function slot0.setPowerInfos(slot0, slot1)
 	slot0._powerInfos = {}
 
 	for slot5, slot6 in ipairs(slot1) do
-		slot7 = slot0._powerInfos[slot6.powerId] or {}
-		slot7.powerId = slot6.powerId
-		slot7.num = slot6.num
-		slot7.max = slot6.max
-		slot0._powerInfos[slot6.powerId] = slot7
+		slot0:refreshPowerInfo(slot6)
 	end
+end
+
+function slot0.refreshPowerInfo(slot0, slot1)
+	slot2 = slot0._powerInfos[slot1.powerId] or {}
+	slot2.powerId = slot1.powerId
+	slot2.num = slot1.num
+	slot2.max = slot1.max
+	slot0._powerInfos[slot1.powerId] = slot2
 end
 
 function slot0.getPowerInfos(slot0)
@@ -602,6 +642,20 @@ function slot0.isFullResistance(slot0, slot1)
 	return slot3 >= 1000
 end
 
+function slot0.isPartResistance(slot0, slot1)
+	if not FightModel.instance:getSpAttributeMo(slot0.uid) then
+		return false
+	end
+
+	if not slot2[slot1] then
+		logError(string.format("%s 不存在 %s 的sp attr", slot0:getEntityName(), slot1))
+
+		return false
+	end
+
+	return slot3 > 0
+end
+
 function slot0.setNotifyBindContract(slot0)
 	slot0.notifyBindContract = true
 end
@@ -616,6 +670,28 @@ end
 
 function slot0.setDead(slot0)
 	slot0.status = FightEnum.EntityStatus.Dead
+end
+
+function slot0.getCareer(slot0)
+	if slot0:isASFDEmitter() then
+		return slot0:getASFDCareer()
+	end
+
+	return slot0.career
+end
+
+function slot0.getASFDCareer(slot0)
+	for slot4, slot5 in pairs(slot0.buffDic) do
+		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
+			for slot11, slot12 in ipairs(slot7) do
+				if lua_buff_act.configDict[slot12[1]] and slot13.type == FightEnum.BuffType_EmitterCareerChange then
+					return tonumber(slot12[2])
+				end
+			end
+		end
+	end
+
+	return slot0.career
 end
 
 return slot0

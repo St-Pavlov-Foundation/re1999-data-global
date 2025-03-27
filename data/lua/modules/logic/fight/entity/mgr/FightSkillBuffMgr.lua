@@ -83,7 +83,7 @@ function slot0.getStackedCount(slot0, slot1, slot2)
 		return 1
 	end
 
-	if FightHelper.getEntity(slot1):getMO():getBuffDic() then
+	if FightDataHelper.entityMgr:getById(slot1) and slot4:getBuffDic() then
 		for slot11, slot12 in pairs(slot5) do
 			if FightBuffHelper.getBuffMoSignKey(slot2) == FightBuffHelper.getBuffMoSignKey(slot12) then
 				if slot12.layer and slot12.layer ~= 0 then

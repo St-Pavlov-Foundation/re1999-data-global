@@ -39,5 +39,10 @@ slot2("CharacterView_OnClickCheckMotion")
 slot2("StoreView_ShowAllTabIdUpdate")
 slot2("NormalStoreView_ShowAllTabIdUpdate")
 slot2("NormalStoreView_ShowAllGoodsIdUpdate")
+slot2("SummonPoolHistoryView_ShowAllTabIdUpdate")
+slot2("SummonHeroDetailView_ShowAllTabIdUpdate")
+slot2("MailView_ShowAllTabIdUpdate")
+slot2("ActivityBeginnerView_ShowAllTabIdUpdate")
+slot2("ActivityWelfareView_ShowAllTabIdUpdate")
 
 return _M

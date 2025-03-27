@@ -2,36 +2,113 @@
   {
     "turnbackId": 1,
     "day": 1,
-    "bonus": "2#2#100|10#11#1"
+    "bonus": "2#2#100|10#11#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 2,
-    "bonus": "2#2#100|9#1005#1"
+    "bonus": "2#2#100|9#1005#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 3,
-    "bonus": "2#2#100|10#11#1"
+    "bonus": "2#2#100|10#11#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 4,
-    "bonus": "2#2#100|9#1005#1"
+    "bonus": "2#2#100|9#1005#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 5,
-    "bonus": "2#2#100|10#11#1"
+    "bonus": "2#2#100|10#11#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 6,
-    "bonus": "2#2#100|9#1005#1"
+    "bonus": "2#2#100|9#1005#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
   },
   {
     "turnbackId": 1,
     "day": 7,
-    "bonus": "2#2#100|10#11#1"
+    "bonus": "2#2#100|10#11#1",
+    "characterId": 0,
+    "name": "",
+    "content": ""
+  },
+  {
+    "turnbackId": 2,
+    "day": 1,
+    "bonus": "10#11#1|1#620103#1",
+    "characterId": 3027,
+    "name": "无线电小姐",
+    "content": "language_10065765"
+  },
+  {
+    "turnbackId": 2,
+    "day": 2,
+    "bonus": "2#2#100|1#620102#20",
+    "characterId": 3033,
+    "name": "TTT",
+    "content": "language_10065766"
+  },
+  {
+    "turnbackId": 2,
+    "day": 3,
+    "bonus": "1#530001#1|1#120013#1",
+    "characterId": 3055,
+    "name": "斯普特尼克",
+    "content": "language_10065767"
+  },
+  {
+    "turnbackId": 2,
+    "day": 4,
+    "bonus": "1#620103#1|1#620102#20",
+    "characterId": 3052,
+    "name": "新巴别塔",
+    "content": "language_10065768"
+  },
+  {
+    "turnbackId": 2,
+    "day": 5,
+    "bonus": "1#530001#1|1#180003#1",
+    "characterId": 3088,
+    "name": "塞梅尔维斯",
+    "content": "language_10065769"
+  },
+  {
+    "turnbackId": 2,
+    "day": 6,
+    "bonus": "10#11#1|1#620102#20",
+    "characterId": 3012,
+    "name": "弄臣",
+    "content": "language_10065770"
+  },
+  {
+    "turnbackId": 2,
+    "day": 7,
+    "bonus": "2#2#200|10#11#1|1#620103#1|2#3#10000|2#5#10000",
+    "characterId": 3065,
+    "name": "马库斯",
+    "content": "language_10065771"
   }
 ]

@@ -10,6 +10,7 @@ function slot0.reInit(slot0)
 	slot0._actInfo = {}
 	slot0._battleContext = nil
 	slot0.localPrefsDict = {}
+	slot0._fightTalentData = {}
 end
 
 function slot0.setActInfo(slot0, slot1)
@@ -120,15 +121,25 @@ function slot0.clearFightResult(slot0)
 end
 
 function slot0.setPrefsTalent(slot0)
-	PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Season166EquipTalentId, slot0)
+	PlayerPrefsHelper.setNumber(uv0.getKey(), slot0)
 end
 
 function slot0.getPrefsTalent()
-	if PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Season166EquipTalentId, 0) == 0 then
+	if PlayerPrefsHelper.getNumber(uv0.getKey(), 0) == 0 then
 		return
 	end
 
-	return slot1
+	return slot0
+end
+
+function slot0.getKey()
+	slot0 = PlayerModel.instance:getMyUserId()
+
+	if (uv0.instance:getCurSeasonId() or 0) == 0 then
+		logError("赛季id为空,请检查")
+	end
+
+	return tostring(slot0) .. PlayerPrefsKey.Season166EquipTalentId .. slot1
 end
 
 function slot0.checkHasNewUnlockInfo(slot0)
@@ -227,12 +238,44 @@ function slot0.checkIsBaseSpotEpisode(slot0)
 	return slot0:getBattleContext() and slot1.baseId and slot1.baseId > 0
 end
 
+function slot0.checkCanShowSeasonTalent(slot0)
+	slot1 = slot0:getBattleContext()
+
+	if FightModel.instance:getFightParam() and slot2.episodeId and not Season166Controller.instance.isSeason166EpisodeType(DungeonConfig.instance:getEpisodeCO(slot2.episodeId).type) then
+		return false
+	end
+
+	return slot1 and (slot1.baseId and slot1.baseId > 0 or slot1.trainId and slot1.trainId > 0)
+end
+
 function slot0.isTrainPass(slot0, slot1, slot2)
 	if slot0:getActInfo(slot1) then
 		return slot3:isTrainPass(slot2)
 	end
 
 	return false
+end
+
+function slot0.unpackFightReconnectData(slot0, slot1)
+	if cjson.decode(slot1) then
+		slot0:setFightTalentParam(slot2.talentId, slot2.talentSkillIds, slot2.talentLevel)
+	end
+end
+
+function slot0.setFightTalentParam(slot0, slot1, slot2, slot3)
+	slot0._fightTalentData = {
+		talentId = slot1,
+		talentSkillIds = {},
+		talentLevel = slot3
+	}
+
+	for slot7, slot8 in ipairs(slot2) do
+		table.insert(slot0._fightTalentData.talentSkillIds, slot8)
+	end
+end
+
+function slot0.getFightTalentParam(slot0)
+	return slot0._fightTalentData
 end
 
 function slot0.getLocalPrefsTab(slot0, slot1)

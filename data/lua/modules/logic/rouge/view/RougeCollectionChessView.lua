@@ -1,6 +1,6 @@
 module("modules.logic.rouge.view.RougeCollectionChessView", package.seeall)
 
-slot0 = class("RougeCollectionChessView", BaseView)
+slot0 = class("RougeCollectionChessView", RougeBaseDLCViewComp)
 
 function slot0.onInitView(slot0)
 	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
@@ -65,11 +65,13 @@ function slot0._btnhandbookOnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	uv0.super._editableInitView(slot0)
 	slot0:initAllContainerPosition()
 	slot0:checkAndSetHandBookIconVisible()
 end
 
 function slot0.onOpen(slot0)
+	uv0.super.onOpen(slot0)
 	slot0:startCheckCollectionCfgs()
 	RougeCollectionChessController.instance:onOpen()
 	RougeStatController.instance:startAdjustBackPack()

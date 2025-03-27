@@ -722,6 +722,10 @@ function slot0.getLimitedHeroSkinIdsByPopupParam(slot0)
 end
 
 function slot0.getMvSkinIdByHeroId(slot0, slot1)
+	if VersionValidator.instance:isInReviewing() then
+		return nil
+	end
+
 	if not slot1 then
 		return nil
 	end

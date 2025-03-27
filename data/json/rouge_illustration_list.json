@@ -2,7 +2,7 @@
   {
     "season": 1,
     "id": 1,
-    "order": 41,
+    "order": 42,
     "name": "language_10000894",
     "nameEn": "Treasure Hunt",
     "desc": "language_10043460",
@@ -14,7 +14,7 @@
   {
     "season": 1,
     "id": 2,
-    "order": 40,
+    "order": 41,
     "name": "language_10043461",
     "nameEn": "A Place to Rest",
     "desc": "language_10043462",
@@ -26,7 +26,7 @@
   {
     "season": 1,
     "id": 3,
-    "order": 39,
+    "order": 40,
     "name": "language_10043463",
     "nameEn": "Time for a Drink",
     "desc": "language_10043464",
@@ -38,7 +38,7 @@
   {
     "season": 1,
     "id": 4,
-    "order": 38,
+    "order": 39,
     "name": "language_10043465",
     "nameEn": "End of the Road",
     "desc": "language_10043466",
@@ -50,7 +50,7 @@
   {
     "season": 1,
     "id": 5,
-    "order": 37,
+    "order": 38,
     "name": "language_10043467",
     "nameEn": "Record Player",
     "desc": "language_10043468",
@@ -62,7 +62,7 @@
   {
     "season": 1,
     "id": 6,
-    "order": 36,
+    "order": 37,
     "name": "language_10043469",
     "nameEn": "Mirage",
     "desc": "language_10043470",
@@ -74,7 +74,7 @@
   {
     "season": 1,
     "id": 7,
-    "order": 35,
+    "order": 36,
     "name": "language_10043471",
     "nameEn": "Gentleman's Tea Party",
     "desc": "language_10043472",
@@ -86,7 +86,7 @@
   {
     "season": 1,
     "id": 8,
-    "order": 34,
+    "order": 35,
     "name": "language_10043473",
     "nameEn": "Art in the Headlines",
     "desc": "language_10043474",
@@ -98,7 +98,7 @@
   {
     "season": 1,
     "id": 9,
-    "order": 33,
+    "order": 34,
     "name": "language_10042580",
     "nameEn": "Trunks",
     "desc": "language_10043475",
@@ -110,7 +110,7 @@
   {
     "season": 1,
     "id": 10,
-    "order": 32,
+    "order": 33,
     "name": "language_10043476",
     "nameEn": "Finding the Light",
     "desc": "language_10043477",
@@ -122,7 +122,7 @@
   {
     "season": 1,
     "id": 11,
-    "order": 31,
+    "order": 32,
     "name": "language_10042584",
     "nameEn": "A Shop of Wonders",
     "desc": "language_10043478",
@@ -134,7 +134,7 @@
   {
     "season": 1,
     "id": 12,
-    "order": 30,
+    "order": 31,
     "name": "language_10043479",
     "nameEn": "Cracked",
     "desc": "language_10043480",
@@ -146,7 +146,7 @@
   {
     "season": 1,
     "id": 13,
-    "order": 29,
+    "order": 30,
     "name": "language_10001061",
     "nameEn": "Wishing Fountain",
     "desc": "language_10043481",
@@ -158,7 +158,7 @@
   {
     "season": 1,
     "id": 14,
-    "order": 28,
+    "order": 29,
     "name": "language_10042590",
     "nameEn": "Fortune Telling",
     "desc": "language_10043482",
@@ -170,7 +170,7 @@
   {
     "season": 1,
     "id": 15,
-    "order": 27,
+    "order": 28,
     "name": "language_10043485",
     "nameEn": "Merge with the Medium",
     "desc": "language_10043486",
@@ -182,7 +182,7 @@
   {
     "season": 1,
     "id": 16,
-    "order": 26,
+    "order": 27,
     "name": "language_10042598",
     "nameEn": "Begging Children",
     "desc": "language_10043487",
@@ -194,7 +194,7 @@
   {
     "season": 1,
     "id": 17,
-    "order": 25,
+    "order": 26,
     "name": "language_10043490",
     "nameEn": "A Bold Headline",
     "desc": "language_10043491",
@@ -206,7 +206,7 @@
   {
     "season": 1,
     "id": 18,
-    "order": 24,
+    "order": 25,
     "name": "language_10042604",
     "nameEn": "A Noisy Suitcase",
     "desc": "language_10043492",
@@ -218,7 +218,7 @@
   {
     "season": 1,
     "id": 19,
-    "order": 23,
+    "order": 24,
     "name": "language_10043493",
     "nameEn": "Mazes of Alleyways",
     "desc": "language_10043494",
@@ -230,7 +230,7 @@
   {
     "season": 1,
     "id": 20,
-    "order": 22,
+    "order": 23,
     "name": "language_10043495",
     "nameEn": "In a Tight Corner",
     "desc": "language_10043496",
@@ -242,7 +242,7 @@
   {
     "season": 1,
     "id": 21,
-    "order": 21,
+    "order": 22,
     "name": "language_10043497",
     "nameEn": "Proof Positive",
     "desc": "language_10043498",
@@ -254,7 +254,7 @@
   {
     "season": 1,
     "id": 22,
-    "order": 20,
+    "order": 21,
     "name": "language_10043499",
     "nameEn": "Diving In",
     "desc": "language_10043500",
@@ -266,7 +266,7 @@
   {
     "season": 1,
     "id": 23,
-    "order": 19,
+    "order": 20,
     "name": "language_10042614",
     "nameEn": "Critter's Pawn Shop",
     "desc": "language_10043501",
@@ -278,7 +278,7 @@
   {
     "season": 1,
     "id": 24,
-    "order": 18,
+    "order": 19,
     "name": "language_10022231",
     "nameEn": "Secret Base",
     "desc": "language_10043502",
@@ -290,7 +290,7 @@
   {
     "season": 1,
     "id": 25,
-    "order": 17,
+    "order": 18,
     "name": "language_10043503",
     "nameEn": "Veins of the City",
     "desc": "language_10043504",
@@ -302,7 +302,7 @@
   {
     "season": 1,
     "id": 26,
-    "order": 16,
+    "order": 17,
     "name": "language_10043505",
     "nameEn": "\"Dead End\"",
     "desc": "language_10043506",
@@ -314,7 +314,7 @@
   {
     "season": 1,
     "id": 27,
-    "order": 15,
+    "order": 16,
     "name": "language_10043507",
     "nameEn": "A Risky Jump",
     "desc": "language_10043508",
@@ -326,7 +326,7 @@
   {
     "season": 1,
     "id": 28,
-    "order": 14,
+    "order": 15,
     "name": "language_10043509",
     "nameEn": "Melted",
     "desc": "language_10043510",
@@ -338,7 +338,7 @@
   {
     "season": 1,
     "id": 29,
-    "order": 13,
+    "order": 14,
     "name": "language_10042626",
     "nameEn": "Starving Artist",
     "desc": "language_10043511",
@@ -350,7 +350,7 @@
   {
     "season": 1,
     "id": 30,
-    "order": 12,
+    "order": 13,
     "name": "language_10001156",
     "nameEn": "A Soda Bottle",
     "desc": "language_10043512",
@@ -362,7 +362,7 @@
   {
     "season": 1,
     "id": 31,
-    "order": 11,
+    "order": 12,
     "name": "language_10042630",
     "nameEn": "Rail-Free Tramcar",
     "desc": "language_10043513",
@@ -374,7 +374,7 @@
   {
     "season": 1,
     "id": 32,
-    "order": 10,
+    "order": 11,
     "name": "language_10042635",
     "nameEn": "Atypical Tea Break",
     "desc": "language_10043514",
@@ -386,7 +386,7 @@
   {
     "season": 1,
     "id": 33,
-    "order": 9,
+    "order": 10,
     "name": "language_10042638",
     "nameEn": "No Vacancy",
     "desc": "language_10043515",
@@ -398,7 +398,7 @@
   {
     "season": 1,
     "id": 34,
-    "order": 8,
+    "order": 9,
     "name": "language_10043516",
     "nameEn": "Heart in the Mirror",
     "desc": "language_10043517",
@@ -410,7 +410,7 @@
   {
     "season": 1,
     "id": 35,
-    "order": 7,
+    "order": 8,
     "name": "language_10043518",
     "nameEn": "Submerged in the Stars",
     "desc": "language_10043519",
@@ -422,7 +422,7 @@
   {
     "season": 1,
     "id": 36,
-    "order": 6,
+    "order": 7,
     "name": "language_10042645",
     "nameEn": "What Goes Up",
     "desc": "language_10043520",
@@ -434,7 +434,7 @@
   {
     "season": 1,
     "id": 37,
-    "order": 5,
+    "order": 6,
     "name": "language_10043521",
     "nameEn": "Windfall",
     "desc": "language_10043522",
@@ -446,7 +446,7 @@
   {
     "season": 1,
     "id": 38,
-    "order": 4,
+    "order": 5,
     "name": "language_10043523",
     "nameEn": "Box of Divergence",
     "desc": "language_10043524",
@@ -458,7 +458,7 @@
   {
     "season": 1,
     "id": 39,
-    "order": 3,
+    "order": 4,
     "name": "language_10043525",
     "nameEn": "Lively Trading Post",
     "desc": "language_10043526",
@@ -470,7 +470,7 @@
   {
     "season": 1,
     "id": 40,
-    "order": 2,
+    "order": 3,
     "name": "language_10043527",
     "nameEn": "Promise Keeper",
     "desc": "language_10043528",
@@ -482,13 +482,25 @@
   {
     "season": 1,
     "id": 41,
-    "order": 1,
+    "order": 2,
     "name": "language_10043529",
     "nameEn": "Well-Disguised Trap",
     "desc": "language_10043530",
     "image": "singlebg/rouge/illustration/rouge_illustration_item_45.png",
     "fullImage": "singlebg/rouge/episode/rouge_episode_cg_45.png",
     "eventId": "106145|1061451|1061452|106147|1061471|1061472|106149|1061491|1061492|101913|101926|101927|101928|101929|101930",
+    "dlc": 0
+  },
+  {
+    "season": 1,
+    "id": 42,
+    "order": 1,
+    "name": "language_10062452",
+    "nameEn": "\"Gruß an Aachen\"",
+    "desc": "language_10064640",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_57.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_57.png",
+    "eventId": "306104|301901",
     "dlc": 0
   },
   {
@@ -573,6 +585,54 @@
     "image": "singlebg/rouge/illustration/rouge_illustration_item_52.png",
     "fullImage": "singlebg/rouge/episode/rouge_episode_cg_52.png",
     "eventId": "211101|2111011|2111012|211102|2111021|2111022|211103|2111031|2111032|211104|2111041|2111042|211105|2111051|2111052|211106|2111061|2111062|211107|2111071|2111072|211108|2111081|2111082|211109|2111091|2111092|212101|212102|212103|212104|212105|212106|212107|212108|212109|212110|212111|212112|212113|212114|212115|212116|212117|212118|212119|212120|212121|212122|212123|212124|212125|212126|212127",
+    "dlc": 1
+  },
+  {
+    "season": 3,
+    "id": 10201,
+    "order": 8999,
+    "name": "language_10064519",
+    "nameEn": "Tuning Hall Collection",
+    "desc": "language_10064641",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_54.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_54.png",
+    "eventId": "314101|3141011|3141012|314102|314103|314104|314105|314106|314107|314108|314109|314110|314111|314112|314113|314114|314115|314116|314117|314118|314119|314120|314121|314122|314123|314124|314125|314126|314127|314128|314129|314130|314131|314132|314133|314134|314135|314136|314137|314138|314139|314140",
+    "dlc": 1
+  },
+  {
+    "season": 3,
+    "id": 10202,
+    "order": 8998,
+    "name": "language_10062453",
+    "nameEn": "Street Duel",
+    "desc": "language_10064642",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_53.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_53.png",
+    "eventId": "306101|3061011|302101|302201|302202|302203|302204|302205|302206|302301|302302|302303|302304|302305|302306|302307|302308|302401|302402|302403|302404|302405",
+    "dlc": 1
+  },
+  {
+    "season": 3,
+    "id": 10203,
+    "order": 8997,
+    "name": "language_10064525",
+    "nameEn": "Counseling",
+    "desc": "language_10064643",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_55.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_55.png",
+    "eventId": "306102",
+    "dlc": 1
+  },
+  {
+    "season": 3,
+    "id": 10204,
+    "order": 8996,
+    "name": "language_10064527",
+    "nameEn": "Emergency Aid",
+    "desc": "language_10064644",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_56.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_56.png",
+    "eventId": "306103",
     "dlc": 1
   }
 ]

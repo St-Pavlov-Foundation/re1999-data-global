@@ -51,7 +51,7 @@ function slot0.jump(slot0, slot1, slot2, slot3, slot4, slot5)
 				slot6 = WebViewController.instance:getRecordUserUrl(slot6)
 			end
 
-			UnityEngine.Application.OpenURL(slot6)
+			GameUtil.openURL(slot6)
 		end
 	elseif slot1 == NoticeContentType.LinkType.DeepLink then
 		slot6 = slot2

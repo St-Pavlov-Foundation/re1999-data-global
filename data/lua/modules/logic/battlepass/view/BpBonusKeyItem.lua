@@ -72,10 +72,10 @@ function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 		slot12:SetCountLocalY(43.6)
 		slot12:SetCountBgHeight(40)
 		slot12:SetCountBgScale(1, 1.3, 1)
-		slot12:showStackableNum2()
+		slot12:showStackableNum()
 		slot12:setHideLvAndBreakFlag(true)
 		slot12:hideEquipLvAndBreak(true)
-		slot12:isShowCount(slot11[1] ~= MaterialEnum.MaterialType.Hero)
+		slot12:isShowCount(true)
 
 		if slot6 then
 			slot12:setAlpha(0.45, 0.8)

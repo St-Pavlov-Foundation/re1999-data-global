@@ -6,7 +6,7 @@ function slot0.onStart(slot0)
 	if FightCardModel.instance:getHandCards()[slot0._actEffectMO.effectNum] then
 		table.remove(slot1, slot2)
 
-		slot0._finalCards = FightCardDataHelper.combineCardList(FightDataHelper.coverData(slot1))
+		slot0._finalCards = FightCardDataHelper.combineCardListForPerformance(FightDataHelper.coverData(slot1))
 
 		slot0:com_registTimer(slot0._delayAfterPerformance, 5)
 		slot0:com_registFightEvent(FightEvent.PlayCardOver, slot0._onPlayCardOver)

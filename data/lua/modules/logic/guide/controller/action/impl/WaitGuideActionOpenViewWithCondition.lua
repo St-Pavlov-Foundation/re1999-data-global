@@ -200,4 +200,12 @@ function slot0.checkInEliminateEpisode(slot0)
 	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(slot0)
 end
 
+function slot0.checkInWindows(slot0)
+	return BootNativeUtil.isWindows()
+end
+
+function slot0.enterWuErLiXiMap(slot0)
+	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(slot0)
+end
+
 return slot0

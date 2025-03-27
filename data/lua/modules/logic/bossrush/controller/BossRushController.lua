@@ -187,12 +187,12 @@ end
 
 function slot0._onIndicatorChange(slot0, slot1)
 	if FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips == slot1 then
-		slot0._temp11235 = (slot0._temp11235 or 0) + FightModel.instance:getIndicatorNum(slot1)
+		slot0._temp11235 = (slot0._temp11235 or 0) + FightDataHelper.fieldMgr:getIndicatorNum(slot1)
 
 		slot0._model:noticeFightScore(slot0._temp11235)
 		slot0._model:setFightScore(slot0._temp11235)
 	elseif slot2.BossInfiniteHPCount == slot1 then
-		slot0._model:setInfiniteBossDeadSum(FightModel.instance:getIndicatorNum(slot1))
+		slot0._model:setInfiniteBossDeadSum(FightDataHelper.fieldMgr:getIndicatorNum(slot1))
 	end
 end
 

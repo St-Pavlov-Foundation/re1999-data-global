@@ -137,6 +137,7 @@ function slot0.refreshOptionUI(slot0)
 	gohelper.setActive(slot0._toggleoption.gameObject, true)
 
 	slot0.optionType = slot0.viewParam.optionType
+	slot0.messageBoxId = slot0.viewParam.messageBoxId
 
 	if slot0.optionType == MsgBoxEnum.optionType.Daily then
 		slot0._txtoption.text = luaLang("messageoptionbox_daily")
@@ -153,7 +154,7 @@ function slot0.saveOptionData(slot0)
 	end
 
 	if slot0.optionType == MsgBoxEnum.optionType.Daily then
-		TimeUtil.setDayFirstLoginRed(MessageBoxController.instance:getOptionLocalKey(slot0.optionType))
+		TimeUtil.setDayFirstLoginRed(MessageBoxController.instance:getOptionLocalKey(slot0.messageBoxId, slot0.optionType))
 	elseif slot0.optionType == MsgBoxEnum.optionType.NotShow then
 		PlayerPrefsHelper.setString(slot1, slot0.optionType)
 	end

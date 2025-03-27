@@ -1,0 +1,44 @@
+[
+  {
+    "activityId": 12404,
+    "id": 1,
+    "name": "language_10065208",
+    "icon": "v2a4_tutushizi_icon_6",
+    "tips": "language_10065209"
+  },
+  {
+    "activityId": 12404,
+    "id": 2,
+    "name": "language_10065210",
+    "icon": "v2a4_tutushizi_icon_5",
+    "tips": "language_10065211"
+  },
+  {
+    "activityId": 12404,
+    "id": 3,
+    "name": "language_10065212",
+    "icon": "v2a4_tutushizi_icon_4",
+    "tips": "language_10065213"
+  },
+  {
+    "activityId": 12404,
+    "id": 4,
+    "name": "language_10065214",
+    "icon": "v2a4_tutushizi_icon_2",
+    "tips": "language_10065215"
+  },
+  {
+    "activityId": 12404,
+    "id": 11,
+    "name": "language_10065216",
+    "icon": "v2a4_tutushizi_icon_3",
+    "tips": "language_10065217"
+  },
+  {
+    "activityId": 12404,
+    "id": 21,
+    "name": "language_10064134",
+    "icon": "v2a4_tutushizi_icon_1",
+    "tips": ""
+  }
+]

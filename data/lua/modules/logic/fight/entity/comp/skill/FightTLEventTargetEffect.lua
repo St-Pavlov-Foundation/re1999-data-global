@@ -74,20 +74,26 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		end
 	else
 		for slot15, slot16 in ipairs(slot1.actEffectMOs) do
-			if not uv0[slot16.effectType] and FightHelper.getEntity(slot16.targetId) then
-				slot18 = FightHelper.getEntity(slot0._fightStepMO.fromId)
-				slot19 = false
+			slot17 = false
+
+			if slot16.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(slot18) then
+				slot17 = true
+			end
+
+			if not slot17 and not uv0[slot16.effectType] and FightHelper.getEntity(slot16.targetId) then
+				slot20 = FightHelper.getEntity(slot0._fightStepMO.fromId)
+				slot21 = false
 
 				if slot3[6] == "2" then
-					slot19 = true
+					slot21 = true
 				elseif slot3[6] == "3" then
-					slot19 = slot17:getSide() == slot18:getSide()
+					slot21 = slot19:getSide() == slot20:getSide()
 				elseif slot3[6] == "4" then
-					slot19 = slot17:getSide() ~= slot18:getSide()
+					slot21 = slot19:getSide() ~= slot20:getSide()
 				end
 
-				if slot19 and not tabletool.indexOf(slot11, slot17) then
-					table.insert(slot11, slot17)
+				if slot21 and not tabletool.indexOf(slot11, slot19) then
+					table.insert(slot11, slot19)
 				end
 			end
 		end

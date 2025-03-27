@@ -41,13 +41,17 @@ function slot0._onReceiveEvent(slot0, slot1)
 		return
 	end
 
+	slot3 = false
+
 	if type(slot1) == "number" then
 		slot1 = tostring(slot1)
 	elseif slot2 == "boolean" then
 		slot1 = tostring(slot1)
+	elseif slot2 == "function" then
+		slot3 = slot1(slot0._param)
 	end
 
-	if slot0._param and slot0._param ~= slot1 then
+	if not slot3 and slot0._param and slot0._param ~= slot1 then
 		return
 	end
 

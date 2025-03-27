@@ -9,7 +9,8 @@
     "type": 1,
     "icon": "rouge_reward_role",
     "rewardName": "language_10040103",
-    "rewardType": 1
+    "rewardType": 1,
+    "offset": ""
   },
   {
     "season": 1,
@@ -21,7 +22,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -33,7 +35,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -45,7 +48,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -57,7 +61,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -69,7 +74,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -81,7 +87,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -93,7 +100,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -105,7 +113,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -117,7 +126,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -129,7 +139,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -141,7 +152,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -153,7 +165,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -165,7 +178,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -177,7 +191,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -189,7 +204,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -201,7 +217,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -213,7 +230,8 @@
     "type": 1,
     "icon": "rouge_reward_roomskin",
     "rewardName": "language_10039549",
-    "rewardType": 2
+    "rewardType": 2,
+    "offset": ""
   },
   {
     "season": 1,
@@ -225,7 +243,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -237,7 +256,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -249,7 +269,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -261,7 +282,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -273,7 +295,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -285,7 +308,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -297,7 +321,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -309,7 +334,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -321,7 +347,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -333,7 +360,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -345,7 +373,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -357,7 +386,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -369,7 +399,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -381,7 +412,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -393,7 +425,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -405,7 +438,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -417,7 +451,8 @@
     "type": 1,
     "icon": "rouge_reward_new_1",
     "rewardName": "language_10042229",
-    "rewardType": 3
+    "rewardType": 3,
+    "offset": ""
   },
   {
     "season": 1,
@@ -429,7 +464,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -441,7 +477,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -453,7 +490,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -465,7 +503,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -477,7 +516,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -489,7 +529,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -501,7 +542,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -513,7 +555,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -525,7 +568,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -537,7 +581,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -549,7 +594,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -561,7 +607,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -573,7 +620,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -585,7 +633,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -597,7 +646,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -609,7 +659,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -621,7 +672,8 @@
     "type": 1,
     "icon": "rouge_reward_new_1",
     "rewardName": "language_10042229",
-    "rewardType": 3
+    "rewardType": 3,
+    "offset": ""
   },
   {
     "season": 1,
@@ -633,7 +685,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -645,7 +698,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -657,7 +711,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -669,7 +724,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -681,7 +737,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -693,7 +750,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -705,7 +763,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -717,7 +776,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -729,7 +789,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -741,7 +802,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -753,7 +815,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -765,7 +828,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -777,7 +841,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -789,7 +854,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -801,7 +867,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -813,7 +880,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -825,7 +893,8 @@
     "type": 1,
     "icon": "rouge_reward_new_2",
     "rewardName": "language_10047842",
-    "rewardType": 4
+    "rewardType": 4,
+    "offset": ""
   },
   {
     "season": 1,
@@ -837,7 +906,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -849,7 +919,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -861,7 +932,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -873,7 +945,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -885,7 +958,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -897,7 +971,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -909,7 +984,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -921,7 +997,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -933,7 +1010,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -945,7 +1023,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -957,7 +1036,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -969,7 +1049,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -981,7 +1062,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -993,7 +1075,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1005,7 +1088,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1017,7 +1101,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1029,7 +1114,8 @@
     "type": 1,
     "icon": "rouge_reward_new_4",
     "rewardName": "language_10051697",
-    "rewardType": 2
+    "rewardType": 2,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1041,7 +1127,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1053,7 +1140,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1065,7 +1153,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1077,7 +1166,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1089,7 +1179,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1101,7 +1192,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1113,7 +1205,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1125,7 +1218,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1137,7 +1231,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1149,7 +1244,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1161,7 +1257,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1173,7 +1270,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1185,7 +1283,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1197,7 +1296,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1209,7 +1309,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1221,7 +1322,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1233,7 +1335,8 @@
     "type": 1,
     "icon": "rouge_reward_new_3",
     "rewardName": "language_10051698",
-    "rewardType": 4
+    "rewardType": 4,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1245,7 +1348,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1257,7 +1361,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1269,7 +1374,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1281,7 +1387,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1293,7 +1400,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1305,7 +1413,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1317,7 +1426,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1329,7 +1439,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1341,7 +1452,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1353,7 +1465,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1365,7 +1478,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1377,7 +1491,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1389,7 +1504,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1401,7 +1517,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1413,7 +1530,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1425,7 +1543,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1437,7 +1556,8 @@
     "type": 1,
     "icon": "rouge_reward_new_5",
     "rewardName": "language_10053753",
-    "rewardType": 2
+    "rewardType": 2,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1449,7 +1569,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1461,7 +1582,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1473,7 +1595,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1485,7 +1608,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1497,7 +1621,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1509,7 +1634,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1521,7 +1647,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1533,7 +1660,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1545,7 +1673,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1557,7 +1686,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1569,7 +1699,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1581,7 +1712,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1593,7 +1725,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1605,7 +1738,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1617,7 +1751,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1629,7 +1764,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1641,7 +1777,8 @@
     "type": 1,
     "icon": "rouge_reward_new_6",
     "rewardName": "language_10061455",
-    "rewardType": 4
+    "rewardType": 4,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1653,7 +1790,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1665,7 +1803,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1677,7 +1816,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1689,7 +1829,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1701,7 +1842,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1713,7 +1855,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1725,7 +1868,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1737,7 +1881,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1749,7 +1894,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1761,7 +1907,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1773,7 +1920,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1785,7 +1933,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1797,7 +1946,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1809,7 +1959,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1821,7 +1972,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1833,7 +1985,8 @@
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1841,11 +1994,12 @@
     "preId": 0,
     "stage": 10,
     "pos": "",
-    "value": "1#481010#1|9#1000#1",
+    "value": "1#620103#12|1#620102#165|1#620101#2600",
     "type": 1,
-    "icon": "rouge_reward_new_4",
-    "rewardName": "language_10051697",
-    "rewardType": 2
+    "icon": "rouge_reward_new_7",
+    "rewardName": "language_10064636",
+    "rewardType": 2,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1857,7 +2011,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1865,11 +2020,12 @@
     "preId": 1011,
     "stage": 10,
     "pos": "1#2",
-    "value": "1#110403#4",
+    "value": "1#110703#4",
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1877,11 +2033,12 @@
     "preId": 1012,
     "stage": 10,
     "pos": "1#3",
-    "value": "1#110304#1",
+    "value": "1#110404#1",
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1889,11 +2046,12 @@
     "preId": 1013,
     "stage": 10,
     "pos": "1#4",
-    "value": "1#111007#1",
+    "value": "1#111004#1",
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1905,7 +2063,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1917,7 +2076,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1925,11 +2085,12 @@
     "preId": 1022,
     "stage": 10,
     "pos": "2#3",
-    "value": "1#110704#1",
+    "value": "1#111013#1",
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1937,11 +2098,12 @@
     "preId": 1023,
     "stage": 10,
     "pos": "2#4",
-    "value": "1#111008#1",
+    "value": "1#111007#1",
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1953,7 +2115,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1965,7 +2128,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1977,7 +2141,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -1985,11 +2150,12 @@
     "preId": 1033,
     "stage": 10,
     "pos": "3#4",
-    "value": "1#111006#1",
+    "value": "1#111008#1",
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -2001,7 +2167,8 @@
     "type": 3,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -2013,7 +2180,8 @@
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -2021,11 +2189,12 @@
     "preId": 1042,
     "stage": 10,
     "pos": "4#3",
-    "value": "1#110204#1",
+    "value": "1#110104#1",
     "type": 0,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
   },
   {
     "season": 1,
@@ -2033,10 +2202,453 @@
     "preId": 1043,
     "stage": 10,
     "pos": "4#4",
+    "value": "1#111005#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1100,
+    "preId": 0,
+    "stage": 11,
+    "pos": "",
+    "value": "5#305203#1",
+    "type": 1,
+    "icon": "rouge_reward_new_8",
+    "rewardName": "language_10064637",
+    "rewardType": 5,
+    "offset": "-40#-230"
+  },
+  {
+    "season": 1,
+    "id": 1111,
+    "preId": 0,
+    "stage": 11,
+    "pos": "1#1",
+    "value": "2#3#30000",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1112,
+    "preId": 1111,
+    "stage": 11,
+    "pos": "1#2",
+    "value": "1#110503#4",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1113,
+    "preId": 1112,
+    "stage": 11,
+    "pos": "1#3",
+    "value": "1#110604#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1114,
+    "preId": 1113,
+    "stage": 11,
+    "pos": "1#4",
+    "value": "1#111006#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1121,
+    "preId": 0,
+    "stage": 11,
+    "pos": "2#1",
+    "value": "9#1003#10",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1122,
+    "preId": 1121,
+    "stage": 11,
+    "pos": "2#2",
+    "value": "1#180002#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1123,
+    "preId": 1122,
+    "stage": 11,
+    "pos": "2#3",
+    "value": "1#110804#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1124,
+    "preId": 1123,
+    "stage": 11,
+    "pos": "2#4",
+    "value": "1#111007#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1131,
+    "preId": 0,
+    "stage": 11,
+    "pos": "3#1",
+    "value": "1#120011#4",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1132,
+    "preId": 1131,
+    "stage": 11,
+    "pos": "3#2",
+    "value": "1#120012#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1133,
+    "preId": 1132,
+    "stage": 11,
+    "pos": "3#3",
+    "value": "1#120013#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1134,
+    "preId": 1133,
+    "stage": 11,
+    "pos": "3#4",
+    "value": "1#111005#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1141,
+    "preId": 0,
+    "stage": 11,
+    "pos": "4#1",
+    "value": "2#5#30000",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1142,
+    "preId": 1141,
+    "stage": 11,
+    "pos": "4#2",
+    "value": "1#110403#4",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1143,
+    "preId": 1142,
+    "stage": 11,
+    "pos": "4#3",
+    "value": "1#110204#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1144,
+    "preId": 1143,
+    "stage": 11,
+    "pos": "4#4",
     "value": "1#111004#1",
     "type": 2,
     "icon": "",
     "rewardName": "",
-    "rewardType": 0
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1200,
+    "preId": 0,
+    "stage": 12,
+    "pos": "",
+    "value": "1#481010#1|9#1000#1",
+    "type": 1,
+    "icon": "rouge_reward_new_4",
+    "rewardName": "language_10051697",
+    "rewardType": 2,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1211,
+    "preId": 0,
+    "stage": 12,
+    "pos": "1#1",
+    "value": "2#3#30000",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1212,
+    "preId": 1211,
+    "stage": 12,
+    "pos": "1#2",
+    "value": "1#110403#4",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1213,
+    "preId": 1212,
+    "stage": 12,
+    "pos": "1#3",
+    "value": "1#110304#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1214,
+    "preId": 1213,
+    "stage": 12,
+    "pos": "1#4",
+    "value": "1#111007#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1221,
+    "preId": 0,
+    "stage": 12,
+    "pos": "2#1",
+    "value": "9#1003#10",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1222,
+    "preId": 1221,
+    "stage": 12,
+    "pos": "2#2",
+    "value": "1#180002#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1223,
+    "preId": 1222,
+    "stage": 12,
+    "pos": "2#3",
+    "value": "1#110704#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1224,
+    "preId": 1223,
+    "stage": 12,
+    "pos": "2#4",
+    "value": "1#111008#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1231,
+    "preId": 0,
+    "stage": 12,
+    "pos": "3#1",
+    "value": "1#120011#4",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1232,
+    "preId": 1231,
+    "stage": 12,
+    "pos": "3#2",
+    "value": "1#120012#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1233,
+    "preId": 1232,
+    "stage": 12,
+    "pos": "3#3",
+    "value": "1#120013#2",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1234,
+    "preId": 1233,
+    "stage": 12,
+    "pos": "3#4",
+    "value": "1#111006#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1241,
+    "preId": 0,
+    "stage": 12,
+    "pos": "4#1",
+    "value": "2#5#30000",
+    "type": 3,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1242,
+    "preId": 1241,
+    "stage": 12,
+    "pos": "4#2",
+    "value": "1#110603#4",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1243,
+    "preId": 1242,
+    "stage": 12,
+    "pos": "4#3",
+    "value": "1#110204#1",
+    "type": 0,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
+  },
+  {
+    "season": 1,
+    "id": 1244,
+    "preId": 1243,
+    "stage": 12,
+    "pos": "4#4",
+    "value": "1#111004#1",
+    "type": 2,
+    "icon": "",
+    "rewardName": "",
+    "rewardType": 0,
+    "offset": ""
   }
 ]

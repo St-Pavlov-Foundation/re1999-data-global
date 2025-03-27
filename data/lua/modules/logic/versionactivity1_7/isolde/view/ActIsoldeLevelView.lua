@@ -119,6 +119,7 @@ function slot0._editableInitView(slot0)
 	ActIsoldeModel.instance:initData()
 	slot0:_initStageItems()
 	gohelper.setActive(slot0._btnPlayBtn, slot0.actConfig.storyId > 0)
+	gohelper.setActive(slot0._gotime, false)
 end
 
 function slot0.onOpen(slot0)
@@ -128,7 +129,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0.OnStoryFinish, slot0)
 	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, slot0.OnEndDungeonPush, slot0)
 	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0.OnDotChange, slot0)
-	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId)
+	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), RedDotEnum.DotNode.PermanentRoleActivityTask, slot0.actId)
 	slot0:OnDotChange()
 	slot0:_showLeftTime()
 	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
@@ -226,7 +227,7 @@ function slot0.OnEndDungeonPush(slot0)
 end
 
 function slot0.OnDotChange(slot0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId) then
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, slot0.actId) then
 		slot0._animTask:Play("loop")
 	else
 		slot0._animTask:Play("idle")

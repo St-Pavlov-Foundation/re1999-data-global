@@ -16,7 +16,7 @@ function slot0.init(slot0)
 end
 
 function slot0.addPopTip(slot0, slot1)
-	if string.nilorempty(slot1) then
+	if not slot0.waitTipsList or string.nilorempty(slot1) then
 		return
 	end
 

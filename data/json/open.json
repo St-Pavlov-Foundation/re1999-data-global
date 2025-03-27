@@ -1588,5 +1588,35 @@
     "verifingHide": 1,
     "bindActivityId": 0,
     "roomLevel": 0
+  },
+  {
+    "id": 240101,
+    "name": "language_10062527",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 2410123,
+    "elementId": 0,
+    "verifingEpisodeId": 2410123,
+    "isAlwaysShowBtn": 0,
+    "showInEpisode": 0,
+    "dec": 240017,
+    "verifingHide": 0,
+    "bindActivityId": 12406,
+    "roomLevel": 0
+  },
+  {
+    "id": 81,
+    "name": "language_10062528",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 10115,
+    "elementId": 0,
+    "verifingEpisodeId": 10101,
+    "isAlwaysShowBtn": 1,
+    "showInEpisode": 0,
+    "dec": 2001,
+    "verifingHide": 0,
+    "bindActivityId": 0,
+    "roomLevel": 0
   }
 ]

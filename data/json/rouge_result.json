@@ -322,5 +322,23 @@
     "priority": 1,
     "trigger": 16,
     "triggerParam": ""
+  },
+  {
+    "season": 1,
+    "id": 37,
+    "type": 6,
+    "desc": "language_10064657",
+    "priority": 1,
+    "trigger": 13,
+    "triggerParam": "103"
+  },
+  {
+    "season": 1,
+    "id": 38,
+    "type": 6,
+    "desc": "language_10064658",
+    "priority": 1,
+    "trigger": 14,
+    "triggerParam": "103"
   }
 ]

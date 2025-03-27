@@ -3030,6 +3030,786 @@
     "bankName": "activity_shenghuo2_3_sfx_part05"
   },
   {
+    "id": 24500001,
+    "eventName": "play_activitystorysfx_diqiu_parking",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500002,
+    "eventName": "play_activitystorysfx_diqiu_water",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500003,
+    "eventName": "play_activitystorysfx_diqiu_window",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500004,
+    "eventName": "play_activitystorysfx_diqiu_fall",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500005,
+    "eventName": "play_activitystorysfx_diqiu_cloth",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500006,
+    "eventName": "play_activitystorysfx_diqiu_laba",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500007,
+    "eventName": "play_activitystorysfx_diqiu_bass",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500008,
+    "eventName": "play_activitystorysfx_diqiu_gu",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500009,
+    "eventName": "play_activitystorysfx_diqiu_speakers",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500010,
+    "eventName": "play_activitystorysfx_diqiu_fireworks",
+    "bankName": "activitystory_diqiu2_4_yishi_xingti_sfx"
+  },
+  {
+    "id": 24500011,
+    "eventName": "play_activitystorysfx_diqiu_feiji",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500012,
+    "eventName": "play_activitystorysfx_diqiu_footstep1",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500013,
+    "eventName": "play_activitystorysfx_diqiu_tidyup",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500014,
+    "eventName": "play_activitystorysfx_diqiu_bibi",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500015,
+    "eventName": "play_activitystorysfx_diqiu_clink",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500016,
+    "eventName": "play_activitystorysfx_diqiu_boo",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500017,
+    "eventName": "play_activitystorysfx_diqiu_wry",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500018,
+    "eventName": "play_activitystorysfx_diqiu_hilarity",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500019,
+    "eventName": "play_activitystorysfx_diqiu_switch",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500020,
+    "eventName": "play_activitystorysfx_diqiu_dada",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500021,
+    "eventName": "play_activitystorysfx_diqiu_revolve",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500022,
+    "eventName": "play_activitystorysfx_diqiu_pa",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500023,
+    "eventName": "play_activitystorysfx_diqiu_bibi2",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500024,
+    "eventName": "play_activitystorysfx_diqiu_bibi3",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500025,
+    "eventName": "play_activitystorysfx_diqiu_hum",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500026,
+    "eventName": "play_activitystorysfx_diqiu_breathe",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500027,
+    "eventName": "play_activitystorysfx_diqiu_ke",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500028,
+    "eventName": "play_activitystorysfx_diqiu_apart",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500029,
+    "eventName": "play_activitystorysfx_diqiu_office",
+    "bankName": "activitystory_diqiu2_4_wuerlixi_sfx"
+  },
+  {
+    "id": 24500030,
+    "eventName": "play_activitystorysfx_diqiu_clap_hands",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500031,
+    "eventName": "play_activitystorysfx_diqiu_get_up",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500032,
+    "eventName": "play_activitystorysfx_diqiu_Paper_feeding",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500033,
+    "eventName": "play_activitystorysfx_diqiu_sit_bucket",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500034,
+    "eventName": "play_activitystorysfx_diqiu_hold_paper",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500035,
+    "eventName": "play_activitystorysfx_diqiu_metal_splicing",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500036,
+    "eventName": "play_activitystorysfx_diqiu_hold_breath",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500037,
+    "eventName": "play_activitystorysfx_diqiu_harp",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500038,
+    "eventName": "play_activitystorysfx_diqiu_pull_cabinet",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500039,
+    "eventName": "play_activitystorysfx_diqiu_run_out",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500040,
+    "eventName": "play_activitystorysfx_diqiu_take_tape",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500041,
+    "eventName": "play_activitystorysfx_diqiu_paper_plane",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500042,
+    "eventName": "play_activitystorysfx_diqiu_paper_fold",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500043,
+    "eventName": "play_activitystorysfx_diqiu_tape_start",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500044,
+    "eventName": "play_activitystorysfx_diqiu_continuous_tape",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500045,
+    "eventName": "play_activitystorysfx_diqiu_girl_panting",
+    "bankName": "activitystory_diqiu2_4_barcarole_sfx"
+  },
+  {
+    "id": 24500046,
+    "eventName": "play_activitysfx_diqiu_cruise_hall",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500047,
+    "eventName": "play_activitysfx_diqiu_rock_and_roll_01",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500048,
+    "eventName": "play_activitysfx_diqiu_rock_and_roll_02",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500049,
+    "eventName": "play_activitysfx_diqiu_rock_and_roll_03",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500050,
+    "eventName": "play_activitysfx_diqiu_publicity",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500051,
+    "eventName": "play_activitysfx_diqiu_lead_music",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500052,
+    "eventName": "play_activitysfx_diqiu_tsunami_01",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500053,
+    "eventName": "play_activitysfx_diqiu_tsunami_02",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500054,
+    "eventName": "play_activitysfx_diqiu_tread_water",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500055,
+    "eventName": "play_activitysfx_diqiu_push_box",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500056,
+    "eventName": "play_activitysfx_diqiu_storm_cat",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500057,
+    "eventName": "play_activitysfx_diqiu_fiddler_crab",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500058,
+    "eventName": "play_activitysfx_diqiu_crab_tap",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500059,
+    "eventName": "play_activitysfx_diqiu_multiple_monsters",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500060,
+    "eventName": "play_activitysfx_diqiu_shell_collision",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500061,
+    "eventName": "play_activitysfx_diqiu_collapse",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500062,
+    "eventName": "play_activitysfx_diqiu_radio_ringtone",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500063,
+    "eventName": "play_activitysfx_diqiu_waterfront_street",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500064,
+    "eventName": "play_activitysfx_diqiu_broadcast",
+    "bankName": "activity_diqiu2_4_sfx_part01"
+  },
+  {
+    "id": 24500065,
+    "eventName": "play_activitysfx_diqiu_double_step",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500066,
+    "eventName": "play_activitysfx_diqiu_iron_door",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500067,
+    "eventName": "play_activitysfx_diqiu_sunglasses_drop",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500068,
+    "eventName": "play_activitysfx_diqiu_push_crowd",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500069,
+    "eventName": "play_activitysfx_diqiu_lantern_fell",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500070,
+    "eventName": "play_activitysfx_diqiu_pick_lantern",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500071,
+    "eventName": "play_activitysfx_diqiu_make_lamps",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500072,
+    "eventName": "play_activitysfx_diqiu_beat_time",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500073,
+    "eventName": "play_activitysfx_diqiu_microphone",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500074,
+    "eventName": "play_activitysfx_diqiu_flying_skate",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500075,
+    "eventName": "play_activitysfx_diqiu_command_room",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500076,
+    "eventName": "play_activitysfx_diqiu_bare_foot",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500077,
+    "eventName": "play_activitysfx_diqiu_turn_rudder",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500078,
+    "eventName": "play_activitysfx_diqiu_up_stairs",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500079,
+    "eventName": "play_activitysfx_diqiu_coffee_maker",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500080,
+    "eventName": "play_activitysfx_diqiu_knock_table",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500081,
+    "eventName": "play_activitysfx_diqiu_beat_table",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500082,
+    "eventName": "play_activitysfx_diqiu_nipper_badge",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500083,
+    "eventName": "play_activitysfx_diqiu_violent_letter",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500084,
+    "eventName": "play_activitysfx_diqiu_pat_shoulder",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500085,
+    "eventName": "play_activitysfx_diqiu_rustling",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500086,
+    "eventName": "play_activitysfx_diqiu_striking_plate",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500087,
+    "eventName": "play_activitysfx_diqiu_throw_things",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500088,
+    "eventName": "play_activitysfx_diqiu_quiet_down",
+    "bankName": "activity_diqiu2_4_sfx_part02"
+  },
+  {
+    "id": 24500089,
+    "eventName": "play_activitysfx_diqiu_adjusting",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500090,
+    "eventName": "play_activitysfx_diqiu_metal_foots_01",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500091,
+    "eventName": "play_activitysfx_diqiu_metal_foots_02",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500092,
+    "eventName": "play_activitysfx_diqiu_whispering",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500093,
+    "eventName": "play_activitysfx_diqiu_metal_step",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500094,
+    "eventName": "play_activitysfx_diqiu_metal_jump",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500095,
+    "eventName": "play_activitysfx_diqiu_metal_run_01",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500096,
+    "eventName": "play_activitysfx_diqiu_metal_run_02",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500097,
+    "eventName": "play_activitysfx_diqiu_apparatus_beep",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500098,
+    "eventName": "play_activitysfx_diqiu_apparatus_failure",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500099,
+    "eventName": "play_activitysfx_diqiu_rain_porthole",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500100,
+    "eventName": "play_activitysfx_diqiu_groan",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500101,
+    "eventName": "play_activitysfx_diqiu_metal_collision",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500102,
+    "eventName": "play_activitysfx_diqiu_broadcast_tone",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500103,
+    "eventName": "play_activitysfx_diqiu_mad",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500104,
+    "eventName": "play_activitysfx_diqiu_tap_instrument",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500105,
+    "eventName": "play_activitysfx_diqiu_touch_instrument",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500106,
+    "eventName": "play_activitysfx_diqiu_string",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500107,
+    "eventName": "play_activitysfx_diqiu_mask_drop",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500108,
+    "eventName": "play_activitysfx_diqiu_engine",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500109,
+    "eventName": "play_activitysfx_diqiu_old_cabin",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500110,
+    "eventName": "play_activitysfx_diqiu_close_door",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500111,
+    "eventName": "play_activitysfx_diqiu_unlock_door",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500112,
+    "eventName": "play_activitysfx_diqiu_cabin_pacing",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500113,
+    "eventName": "play_activitysfx_diqiu_exsufflation",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500114,
+    "eventName": "play_activitysfx_diqiu_scrubbed_shell",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500115,
+    "eventName": "play_activitysfx_diqiu_cabin_crash",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500116,
+    "eventName": "play_activitysfx_diqiu_shaking_glass_jar",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500117,
+    "eventName": "play_activitysfx_diqiu_knock_hatch_door",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500118,
+    "eventName": "play_activitysfx_diqiu_slam_door",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500119,
+    "eventName": "play_activitysfx_diqiu_opening_hatch",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500120,
+    "eventName": "play_activitysfx_diqiu_many_people",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500121,
+    "eventName": "play_activitysfx_diqiu_impact_hatch_01",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500122,
+    "eventName": "play_activitysfx_diqiu_impact_hatch_02",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500123,
+    "eventName": "play_activitysfx_diqiu_bow_drop",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500124,
+    "eventName": "play_activitysfx_diqiu_bare_approach",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500125,
+    "eventName": "play_activitysfx_diqiu_shell_roll",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500126,
+    "eventName": "play_activitysfx_diqiu_against_door",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500127,
+    "eventName": "play_activitysfx_diqiu_grace_attack",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500128,
+    "eventName": "play_activitysfx_diqiu_poison_arrow",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500129,
+    "eventName": "play_activitysfx_diqiu_tutu_mystique",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500130,
+    "eventName": "play_activitysfx_diqiu_thought_current",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500131,
+    "eventName": "play_activitysfx_diqiu_liquid_spatter",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500132,
+    "eventName": "play_activitysfx_diqiu_lightning",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500133,
+    "eventName": "play_activitysfx_diqiu_sea_blood",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500134,
+    "eventName": "play_activitysfx_diqiu_light_landing",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500135,
+    "eventName": "play_activitysfx_diqiu_thunderbolt",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500136,
+    "eventName": "play_activitysfx_diqiu_insane",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500137,
+    "eventName": "play_activitysfx_diqiu_digital_universe_01",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500138,
+    "eventName": "play_activitysfx_diqiu_digital_universe_02",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500139,
+    "eventName": "play_activitysfx_diqiu_digital_universe_03",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500140,
+    "eventName": "play_activitysfx_diqiu_digital_universe_04",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500141,
+    "eventName": "play_activitysfx_diqiu_data_generation_01",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500142,
+    "eventName": "play_activitysfx_diqiu_data_generation_02",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500143,
+    "eventName": "play_activitysfx_diqiu_data_generation_03",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500144,
+    "eventName": "play_activitysfx_diqiu_data_generation_noise",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500145,
+    "eventName": "play_activitysfx_diqiu_signature",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500146,
+    "eventName": "play_activitysfx_diqiu_snail_crawl_fast",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500147,
+    "eventName": "play_activitysfx_diqiu_metal_crash",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500148,
+    "eventName": "play_activitysfx_diqiu_trashcan_bump",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500149,
+    "eventName": "play_activitysfx_diqiu_children_laugh",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500150,
+    "eventName": "play_activitysfx_diqiu_trashcan_crash",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500151,
+    "eventName": "play_activitysfx_diqiu_jiqi1",
+    "bankName": "activity_diqiu2_4_sfx_part05"
+  },
+  {
+    "id": 24500152,
+    "eventName": "play_activitystory_diqiu2_4_flung",
+    "bankName": "activitystory_diqiu2_4_yishi_fuyong_sfx"
+  },
+  {
+    "id": 24500153,
+    "eventName": "play_activitystory_diqiu2_4_crowd_near",
+    "bankName": "activitystory_diqiu2_4_yishi_fuyong_sfx"
+  },
+  {
+    "id": 24500154,
+    "eventName": "play_activitysfx_diqiu_burn_bonfire",
+    "bankName": "activity_diqiu2_4_sfx_part04"
+  },
+  {
+    "id": 24500155,
+    "eventName": "play_activitysfx_diqiu_guitar_01",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
+    "id": 24500156,
+    "eventName": "play_activitysfx_diqiu_guitar_02",
+    "bankName": "activity_diqiu2_4_sfx_part03"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -3118,6 +3898,31 @@
     "id": 22530010,
     "eventName": "play_activitymusic_2_3_swanlake_distortion",
     "bankName": "activity2_3_music"
+  },
+  {
+    "id": 24530001,
+    "eventName": "play_activitymusic_theme_2_4",
+    "bankName": "activity2_4_music"
+  },
+  {
+    "id": 24530002,
+    "eventName": "play_activitymusic_lastday_2_4",
+    "bankName": "activity2_4_music"
+  },
+  {
+    "id": 24530003,
+    "eventName": "play_activitymusic_sailing_2_4",
+    "bankName": "activity2_4_music"
+  },
+  {
+    "id": 24530004,
+    "eventName": "play_activitymusic_fatutu_harmonica_2_4",
+    "bankName": "activity2_4_music"
+  },
+  {
+    "id": 21530004,
+    "eventName": "play_activitymusic_seasonmain_2_1",
+    "bankName": "activity2_1_music"
   },
   {
     "id": 520105,
@@ -3263,5 +4068,45 @@
     "id": 23520007,
     "eventName": "play_shenghuo2_3_pv_sfx_vo_music",
     "bankName": "shenghuo2_3_cutscene_sfx_vo"
+  },
+  {
+    "id": 24520001,
+    "eventName": "play_activitysfx_diqiu_chapter_open",
+    "bankName": "activity_diqiu2_4_sfx"
+  },
+  {
+    "id": 24520002,
+    "eventName": "play_activitysfx_diqiu_subsection_open",
+    "bankName": "activity_diqiu2_4_sfx"
+  },
+  {
+    "id": 24520003,
+    "eventName": "play_activitysfx_diqiu_chapter_continue",
+    "bankName": "activity_diqiu2_4_sfx"
+  },
+  {
+    "id": 24520004,
+    "eventName": "play_diqiu2_4_cutscene_solar_eclipse_sfx",
+    "bankName": "diqiu2_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 24520005,
+    "eventName": "play_diqiu2_4_cutscene_nukutai_song_sfx",
+    "bankName": "diqiu2_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 24520006,
+    "eventName": "play_diqiu2_4_cutscene_unpack_instrument_sfx",
+    "bankName": "diqiu2_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 24520007,
+    "eventName": "play_diqiu2_4_cutscene_rafting_sfx",
+    "bankName": "diqiu2_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 24520008,
+    "eventName": "play_diqiu2_4_pv_sfx_vo_music",
+    "bankName": "diqiu2_4_cutscene_sfx_vo"
   }
 ]

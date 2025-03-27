@@ -135,16 +135,19 @@ end
 
 function slot0._checkActivityImgVisible(slot0)
 	slot1 = MainActivityCenterView.showActivityEffect()
+	slot3 = true
 
 	if ActivityConfig.instance:getMainActAtmosphereConfig() then
-		for slot6, slot7 in ipairs(slot2.mainThumbnailView) do
-			if gohelper.findChild(slot0.viewGO, slot7) then
-				gohelper.setActive(slot8, slot1)
+		for slot7, slot8 in ipairs(slot2.mainThumbnailView) do
+			if gohelper.findChild(slot0.viewGO, slot8) then
+				gohelper.setActive(slot9, slot1)
+
+				slot3 = slot1
 			end
 		end
 	end
 
-	gohelper.setActive(slot0._simageleftbg, not slot1)
+	gohelper.setActive(slot0._simageleftbg, slot3)
 end
 
 function slot0.refreshRedDot(slot0)

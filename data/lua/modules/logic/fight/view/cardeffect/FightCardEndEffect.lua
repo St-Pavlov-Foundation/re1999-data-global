@@ -13,7 +13,7 @@ function slot0.onStart(slot0, slot1)
 	slot0._playCardCount = 0
 
 	for slot6, slot7 in ipairs(FightCardModel.instance:getCardOps()) do
-		if slot7:isPlayCard() or slot7:isAssistBossPlayCard() then
+		if slot7:isPlayCard() or slot7:isAssistBossPlayCard() or slot7:isPlayerFinisherSkill() then
 			slot0._playCardCount = slot0._playCardCount + 1
 		end
 	end
@@ -112,7 +112,7 @@ function slot0._playCardFlow(slot0)
 
 	if ViewMgr.instance:getContainer(ViewName.FightView) and slot9.fightViewPlayCard then
 		for slot14, slot15 in ipairs(slot8) do
-			if slot15:isPlayCard() or slot15:isAssistBossPlayCard() then
+			if slot15:isPlayCard() or slot15:isAssistBossPlayCard() or slot15:isPlayerFinisherSkill() then
 				if slot10:getShowIndex(slot15) then
 					slot7[slot16] = true
 

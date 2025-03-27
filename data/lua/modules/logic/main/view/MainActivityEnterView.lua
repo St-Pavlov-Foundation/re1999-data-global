@@ -252,17 +252,11 @@ function slot0.getActivityHandleFunc(slot0, slot1)
 			[ActivityEnum.VersionActivityIdDict.Activity1_51] = slot0.enterVersionActivity1_5,
 			[ActivityEnum.VersionActivityIdDict.Activity1_52] = slot0.enterVersionActivity1_5,
 			[ActivityEnum.VersionActivityIdDict.Activity1_6] = slot0.enterVersionActivity1_6,
-			[ActivityEnum.VersionActivityIdDict.Activity1_7] = slot0.enterVersionActivity1_7,
-			[ActivityEnum.VersionActivityIdDict.Activity1_8] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity1_9] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity2_0] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity2_1] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity2_2] = slot0.commonEnterVersionActivity,
-			[ActivityEnum.VersionActivityIdDict.Activity2_3] = slot0.commonEnterVersionActivity
+			[ActivityEnum.VersionActivityIdDict.Activity1_7] = slot0.enterVersionActivity1_7
 		}
 	end
 
-	return slot0.activityHandleFuncDict[slot1]
+	return slot0.activityHandleFuncDict[slot1] or slot0.commonEnterVersionActivity
 end
 
 function slot0.getActivityEnterHandleFunc(slot0, slot1)
@@ -273,7 +267,8 @@ function slot0.getActivityEnterHandleFunc(slot0, slot1)
 			[ActivityEnum.VersionActivityIdDict.Activity2_0] = VersionActivity2_0EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_1] = VersionActivity2_1EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance
 		}
 	end
 
@@ -332,11 +327,9 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.showKeyTips(slot0)
-	if PlayerPrefsHelper.getNumber("keyTips", 0) == 1 then
-		PCInputController.instance:showkeyTips(slot0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
-		PCInputController.instance:showkeyTips(slot0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
-		PCInputController.instance:showkeyTips(slot0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
-	end
+	PCInputController.instance:showkeyTips(slot0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
+	PCInputController.instance:showkeyTips(slot0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+	PCInputController.instance:showkeyTips(slot0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
 end
 
 return slot0

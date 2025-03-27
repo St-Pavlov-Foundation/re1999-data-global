@@ -85,7 +85,9 @@ function slot0._loadRes(slot0)
 		[StoryEnum.BgTransType.RightDarkFade] = slot0._rightDarkTrans,
 		[StoryEnum.BgTransType.Fragmentate] = slot0._fragmentTrans,
 		[StoryEnum.BgTransType.Dissolve] = slot0._dissolveTrans,
-		[StoryEnum.BgTransType.LeftDarkFade] = slot0._leftDarkTrans
+		[StoryEnum.BgTransType.LeftDarkFade] = slot0._leftDarkTrans,
+		[StoryEnum.BgTransType.MovieChangeStart] = slot0._movieChangeStartTrans,
+		[StoryEnum.BgTransType.MovieChangeSwitch] = slot0._movieChangeSwitchTrans
 	}
 end
 
@@ -200,6 +202,16 @@ function slot0._resetData(slot0)
 
 	if slot0._bgCo.transType ~= StoryEnum.BgTransType.RightDarkFade and slot0._goLeftFade then
 		gohelper.setActive(slot0._goLeftFade, false)
+	end
+
+	if slot0._bgCo.transType ~= StoryEnum.BgTransType.MovieChangeStart and slot0._bgCo.transType ~= StoryEnum.BgTransType.MovieChangeSwitch then
+		if slot0._bgMovieGo then
+			gohelper.setActive(slot0._bgMovieGo, false)
+		end
+
+		if slot0._moveCameraAnimator and slot0._moveCameraAnimator.runtimeAnimatorController == slot0._cameraMovieAnimator then
+			slot0._moveCameraAnimator.runtimeAnimatorController = nil
+		end
 	end
 
 	gohelper.setActive(slot0._goblur, false)
@@ -435,6 +447,7 @@ function slot0._loadTopBg(slot0)
 			slot0:_onNewBgImgTopLoaded()
 		else
 			slot0._simagebgimgtop:UnLoadImage()
+			gohelper.setActive(slot0._simagebgimgtop.gameObject, true)
 			slot0._simagebgimgtop:LoadImage(ResUrl.getStoryRes(slot1.path), slot0._onNewBgImgTopLoaded, slot0)
 			transformhelper.setLocalPosXY(slot0._simagebgimgtop.gameObject.transform, slot1.offsetX, slot1.offsetY)
 		end
@@ -773,6 +786,71 @@ function slot0._leftDarkTransFinished(slot0)
 end
 
 function slot0._fragmentTrans(slot0)
+end
+
+function slot0._movieChangeStartTrans(slot0)
+	slot0._curTransType = StoryEnum.BgTransType.MovieChangeStart
+
+	if not slot0._bgMovieGo then
+		slot0._moviePrefabPath = ResUrl.getStoryBgEffect(StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(slot0._curTransType).prefab)
+
+		table.insert({}, slot0._moviePrefabPath)
+	end
+
+	if not slot0._cameraMovieAnimator then
+		slot0._cameraAnimPath = "ui/animations/dynamic/custommaterialpass.controller"
+
+		table.insert(slot2, slot0._cameraAnimPath)
+	end
+
+	slot0:loadRes(slot2, slot0._onMoveChangeBgResLoaded, slot0)
+end
+
+function slot0._onMoveChangeBgResLoaded(slot0)
+	if not slot0._bgMovieGo and slot0._moviePrefabPath then
+		slot0._bgMovieGo = gohelper.clone(slot0._loader:getAssetItem(slot0._moviePrefabPath):GetResource(), slot0._imagebg.gameObject)
+		slot0._simageMovieCurBg = gohelper.findChildSingleImage(slot0._bgMovieGo, "#now/#simage_dec")
+		slot0._simageMovieNewBg = gohelper.findChildSingleImage(slot0._bgMovieGo, "#next/#simage_dec")
+	end
+
+	gohelper.setActive(slot0._bgMovieGo, true)
+
+	slot0._movieAnim = slot0._bgMovieGo:GetComponent(gohelper.Type_Animator)
+
+	if not slot0._cameraMovieAnimator then
+		slot0._cameraMovieAnimator = slot0._loader:getAssetItem(slot0._cameraAnimPath):GetResource()
+	end
+
+	slot0._moveCameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	slot0._moveCameraAnimator.enabled = true
+	slot0._moveCameraAnimator.runtimeAnimatorController = slot0._cameraMovieAnimator
+
+	slot0:_setMovieNowBg()
+	slot0._movieAnim:Play("idle", 0, 0)
+end
+
+function slot0._movieChangeSwitchTrans(slot0)
+	slot0._curTransType = StoryEnum.BgTransType.MovieChangeSwitch
+
+	if not slot0._bgMovieGo then
+		return
+	end
+
+	slot0._moveCameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	slot0._moveCameraAnimator.enabled = true
+	slot0._moveCameraAnimator.runtimeAnimatorController = slot0._cameraMovieAnimator
+
+	slot0._simageMovieNewBg:LoadImage(ResUrl.getStoryRes(slot0._bgCo.bgImg))
+
+	if slot0._movieAnim then
+		slot0._movieAnim:Play("switch", 0, 0)
+		slot0._moveCameraAnimator:Play("dynamicblur", 0, 0)
+		TaskDispatcher.runDelay(slot0._setMovieNowBg, slot0, 0.3)
+	end
+end
+
+function slot0._setMovieNowBg(slot0)
+	slot0._simageMovieCurBg:LoadImage(ResUrl.getStoryRes(slot0._bgCo.bgImg))
 end
 
 function slot0._dissolveTrans(slot0)

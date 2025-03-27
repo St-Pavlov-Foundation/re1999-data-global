@@ -64,12 +64,16 @@ function slot0._addSkinRes(slot0, slot1, slot2)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.format("roles/%s/", string.split(slot1.spine, "/")[1]), slot2)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, string.format("roles/%s/", string.split(slot1.alternateSpine, "/")[1]), slot2)
 
+	if lua_character_limited.configDict[slot1.id] and not string.nilorempty(slot8.entranceMv) then
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, slot8.entranceMv, true)
+	end
+
 	if slot2 == false then
 		FightConfig.instance:_checkskinSkill()
 
 		if FightConfig.instance._skinSkillTLDict[slot1.id] then
-			for slot12, slot13 in pairs(slot8) do
-				ResSplitModel.instance:addIncludeTimeline(slot13)
+			for slot13, slot14 in pairs(slot9) do
+				ResSplitModel.instance:addIncludeTimeline(slot14)
 			end
 		end
 	end

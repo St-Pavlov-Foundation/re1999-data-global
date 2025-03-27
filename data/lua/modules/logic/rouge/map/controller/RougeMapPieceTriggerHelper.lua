@@ -58,7 +58,8 @@ function slot0._initHandle()
 		[RougeMapEnum.PieceTriggerType.Compound] = uv0.handleCompound,
 		[RougeMapEnum.PieceTriggerType.Shop] = uv0.handleShop,
 		[RougeMapEnum.PieceTriggerType.Exchange] = uv0.handleExchange,
-		[RougeMapEnum.PieceTriggerType.EndFight] = uv0.handleEndFight
+		[RougeMapEnum.PieceTriggerType.EndFight] = uv0.handleEndFight,
+		[RougeMapEnum.PieceTriggerType.LevelUpSp] = uv0.handleLevelUpSp
 	}
 end
 
@@ -99,6 +100,14 @@ function slot0.handleEndFight(slot0, slot1)
 
 	RougeMapModel.instance:setEndId(slot3[2])
 	DungeonFightController.instance:enterFight(RougeMapEnum.ChapterId, slot3[1])
+end
+
+function slot0.handleLevelUpSp(slot0, slot1)
+	logNormal("专武升级")
+	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionLevelUpView, {
+		closeBtnVisible = true,
+		maxLevelUpNum = slot0.triggerStr and slot0.triggerStr.collectionLevelUpNum or 0
+	})
 end
 
 function slot0._initGetTipHandle()

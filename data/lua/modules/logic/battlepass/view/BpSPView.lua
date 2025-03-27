@@ -78,7 +78,7 @@ function slot0._updateLevelScore(slot0, slot1)
 	slot0._txtLevel.text = math.floor(BpModel.instance.score / slot2)
 	slot0._txtScore.text = BpModel.instance.score % slot2 .. "/" .. slot2
 
-	if CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore) <= BpModel.instance.weeklyScore then
+	if BpModel.instance:getWeeklyMaxScore() <= BpModel.instance.weeklyScore then
 		slot0._txtWeeklyLimit.text = slot5 .. "/" .. slot6
 	else
 		slot0._txtWeeklyLimit.text = "<color=#CAC8C5>" .. slot5 .. "/" .. slot6

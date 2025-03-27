@@ -24,7 +24,7 @@ function slot0.refreshMo(slot0, slot1, slot2, slot3, slot4)
 	slot0.rank = slot1
 	slot0.level = slot2
 	slot0.curUseStoneId = slot3
-	slot0.unlockStoneIds = slot4
+	slot0.unlockStoneIds = slot4 or {}
 
 	slot0:setStoneMo()
 end
@@ -162,6 +162,12 @@ end
 
 function slot0.getRedDot(slot0)
 	return slot0.reddot or 0
+end
+
+function slot0.setTrial(slot0)
+	if slot0.maxLevel and slot0.maxRank then
+		slot0.level = slot0.maxLevel[slot0.maxRank] or 1
+	end
 end
 
 return slot0

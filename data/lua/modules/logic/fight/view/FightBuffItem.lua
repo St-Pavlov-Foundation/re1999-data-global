@@ -70,14 +70,19 @@ function slot0.updateBuffMO(slot0, slot1)
 	if lua_skill_buff.configDict[slot1.buffId] then
 		gohelper.onceAddComponent(slot0.go, gohelper.Type_CanvasGroup).alpha = 1
 
-		UISpriteSetMgr.instance:setBuffSprite(slot0._imgIcon, slot2.iconId)
+		if string.nilorempty(slot2.iconId) or slot3 == "0" then
+			logError(string.format("try show buff icon, but buffId : %s, buffName : %s, buffIconId : %s", slot2.id, slot2.name, slot3))
+		else
+			UISpriteSetMgr.instance:setBuffSprite(slot0._imgIcon, slot2.iconId)
+		end
+
 		slot0:refreshTxt(slot1, slot2)
 
 		if slot0:isTimeBuff(slot2) then
 			gohelper.setActive(slot0._bgIcon.gameObject, true)
 			UISpriteSetMgr.instance:setFightSprite(slot0._bgIcon, "buff_jishiqi_" .. slot0:calculateBuffType(lua_skill_bufftype.configDict[slot2.typeId].type))
-		elseif slot3.cannotRemove then
-			UISpriteSetMgr.instance:setFightSprite(slot0._bgIcon, "buff_bukechexiao_" .. slot0:calculateBuffType(slot3.type))
+		elseif slot4.cannotRemove then
+			UISpriteSetMgr.instance:setFightSprite(slot0._bgIcon, "buff_bukechexiao_" .. slot0:calculateBuffType(slot4.type))
 			gohelper.setActive(slot0._bgIcon.gameObject, true)
 		else
 			gohelper.setActive(slot0._bgIcon.gameObject, false)

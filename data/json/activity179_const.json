@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 12405,
+    "id": 1,
+    "value1": 5,
+    "value2": ""
+  },
+  {
+    "activityId": 12405,
+    "id": 2,
+    "value1": 180,
+    "value2": ""
+  },
+  {
+    "activityId": 12405,
+    "id": 4,
+    "value1": 0,
+    "value2": "450#250#100"
+  },
+  {
+    "activityId": 12405,
+    "id": 5,
+    "value1": 0,
+    "value2": "-1#1|-0.2#0.2|-0.4#0.4"
+  },
+  {
+    "activityId": 12405,
+    "id": 6,
+    "value1": 9000000,
+    "value2": ""
+  }
+]

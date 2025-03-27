@@ -9,14 +9,24 @@ function slot0.initView(slot0)
 	slot0.goLoading = gohelper.findChild(slot0.go, "content_bg/#go_loading")
 	slot0.contentBgRectTr = gohelper.findChildComponent(slot0.go, "content_bg", gohelper.Type_RectTransform)
 	slot0.txtRectTr = slot0.txtContent:GetComponent(gohelper.Type_RectTransform)
+	slot0._txtmarktop = IconMgr.instance:getCommonTextMarkTop(slot0.txtContent.gameObject):GetComponent(gohelper.Type_TextMesh)
+	slot0._conMark = gohelper.onceAddComponent(slot0.txtContent.gameObject, typeof(ZProj.TMPMark))
+
+	slot0._conMark:SetMarkTopGo(slot0._txtmarktop.gameObject)
+	slot0._conMark:SetTopOffset(0, -2)
 end
 
 function slot0.refresh(slot0)
 	slot0.simageAvatar:LoadImage(ResUrl.getHeadIconSmall(slot0.stepCo.avatar))
 
 	slot0.txtName.text = slot0.stepCo.name
-	slot0.txtContent.text = slot0.stepCo.content
+	slot1 = slot0.stepCo.content
+	slot2 = StoryTool.getMarkTopTextList(slot1)
+	slot0.txtContent.text = StoryTool.filterMarkTop(slot1)
 
+	TaskDispatcher.runDelay(function ()
+		uv0._conMark:SetMarksTop(uv1)
+	end, nil, 0.01)
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
 end
 

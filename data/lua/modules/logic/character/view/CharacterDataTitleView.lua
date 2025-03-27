@@ -81,6 +81,24 @@ function slot0.onOpen(slot0)
 
 	slot0._uiSpine:setModelVisible(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_cover_open_1)
+	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0, LuaEventSystem.Low)
+	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
+end
+
+function slot0._onOpenViewFinish(slot0, slot1)
+	slot0:_setModelVisible(ViewHelper.instance:checkViewOnTheTop(ViewName.CharacterDataView))
+end
+
+function slot0._onCloseViewFinish(slot0, slot1)
+	slot0:_setModelVisible(ViewHelper.instance:checkViewOnTheTop(ViewName.CharacterDataView))
+end
+
+function slot0._setModelVisible(slot0, slot1)
+	if slot1 then
+		slot0._uiSpine:showModelEffect()
+	else
+		slot0._uiSpine:hideModelEffect()
+	end
 end
 
 function slot0._refreshUI(slot0)
@@ -345,6 +363,8 @@ function slot0.onSignatureOnClick(slot0)
 end
 
 function slot0.onClose(slot0)
+	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 	TaskDispatcher.cancelTask(slot0._playPercentAni, slot0)
 
 	if slot0._faithTweenId then

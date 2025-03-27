@@ -74,7 +74,10 @@ function slot0.buildRoundFlows(slot0)
 	end
 
 	slot0:addWork(FightWorkClearAfterRound.New())
-	slot0:addWork(FightWorkCompareServerData.New())
+	slot0:addWork(FunctionWork.New(function ()
+		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+	end))
+	slot0:addWork(FightWorkCompareDataAfterPlay.New())
 	slot0:addWork(FunctionWork.New(slot0._refreshPosition, slot0))
 end
 

@@ -22,7 +22,8 @@ slot0.IgnoreExceptionStatus = {
 	-310,
 	-311,
 	-312,
-	-314
+	-314,
+	-321
 }
 
 function slot0.ctor(slot0)

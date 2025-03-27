@@ -17,14 +17,24 @@ function slot0.onOpen(slot0)
 	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, slot1, true)
 	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, slot1, true)
 	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, slot1, true)
+	FightDataHelper.entityMgr:getMyPlayerList(slot1, true)
 
 	if FightDataHelper.entityMgr:getAssistBoss() then
 		table.insert(slot1, slot2)
 	end
 
+	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide) then
+		table.insert(slot1, slot3)
+	end
+
 	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, slot1, true)
 	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, slot1, true)
 	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, slot1, true)
+
+	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide) then
+		table.insert(slot1, slot3)
+	end
+
 	slot0:setList(slot1)
 end
 

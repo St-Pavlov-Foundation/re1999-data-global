@@ -5,6 +5,7 @@ slot1 = {}
 slot2 = false
 slot3 = {}
 slot4 = {}
+slot5 = {}
 
 function slot0.registMsg(slot0, slot1, slot2)
 	if not uv0[slot0] then
@@ -23,40 +24,39 @@ function slot0.sendMsg(slot0, ...)
 		return
 	end
 
-	if not uv1[slot0] then
-		slot2 = {}
-		uv1[slot0] = slot2
-		slot2.index = 0
-		slot2.list = {}
-	end
+	uv1[slot0] = (uv1[slot0] or 0) + 1
 
-	slot2.index = slot2.index + 1
-
-	for slot8 = 1, #slot1 do
-		if not slot1[slot8].isDone and not slot9.isLock then
-			slot9:sendMsg(...)
+	for slot7 = 1, #slot1 do
+		if not slot1[slot7].isDone and not slot8.isLock then
+			slot8:sendMsg(...)
 		end
 	end
 
-	slot2.index = slot3 - 1
+	uv1[slot0] = slot2 - 1
 
-	if slot2.list[slot3] then
-		slot2.list[slot3] = nil
+	if uv2[slot0] and slot4.list[slot2] then
+		slot4.list[slot2] = nil
 
 		return slot5[1], slot5
 	end
 end
 
 function slot0.replyMsg(slot0, slot1)
-	if not uv0[slot0] then
+	if (uv0[slot0] or 0) == 0 then
 		return
 	end
 
-	if not slot2.list[slot2.index] then
-		slot2.list[slot2.index] = {}
+	if not uv1[slot0] then
+		slot3 = {}
+		uv1[slot0] = slot3
+		slot3.list = {}
 	end
 
-	table.insert(slot3, slot1)
+	if not slot3.list[slot2] then
+		slot3.list[slot2] = {}
+	end
+
+	table.insert(slot4, slot1)
 end
 
 function slot0.removeMsg(slot0)

@@ -1,16 +1,20 @@
 module("modules.configs.excel2json.lua_turnback_task_bonus", package.seeall)
 
 slot1 = {
+	needPoint = 6,
+	character = 4,
 	id = 2,
 	turnbackId = 1,
-	needPoint = 4,
+	content = 5,
 	bonus = 3
 }
 slot2 = {
 	"turnbackId",
 	"id"
 }
-slot3 = {}
+slot3 = {
+	content = 1
+}
 
 return {
 	onLoad = function (slot0)

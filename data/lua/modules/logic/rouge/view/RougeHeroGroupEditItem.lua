@@ -23,7 +23,6 @@ function slot0.init(slot0, slot1)
 
 	slot0:_initCapacity()
 	slot0:_initObj(slot1)
-	slot0:initDLCs()
 end
 
 function slot0._initCapacity(slot0)

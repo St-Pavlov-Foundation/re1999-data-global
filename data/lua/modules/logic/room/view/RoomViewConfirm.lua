@@ -53,6 +53,21 @@ function slot0._editableInitView(slot0)
 	slot0._allFocusItem[1] = slot0._btncancel.transform
 	slot0._allFocusItem[2] = slot0._gorotate.transform
 	slot0._allFocusItem[3] = slot0._btnconfirm.transform
+	slot0._inputhandle = TaskDispatcher.runRepeat(slot0._handleMouseInput, slot0, 0.01)
+end
+
+function slot0._handleMouseInput(slot0)
+	if UnityEngine.Input.mouseScrollDelta and slot1.y ~= 0 then
+		slot0:_btnrotateOnClick()
+	end
+
+	if UnityEngine.Input.GetMouseButtonDown(1) then
+		slot0:_btncancelOnClick()
+	end
+
+	if UnityEngine.Input.GetKey("space") then
+		slot0:_btnconfirmOnClick()
+	end
 end
 
 function slot0._btnconfirmOnClick(slot0)
@@ -508,6 +523,7 @@ function slot0.onDestroyView(slot0)
 	slot0._btncancelcharacter:RemoveClickListener()
 	slot0._rotateClick:RemoveClickListener()
 	slot0._rotatePress:RemoveLongPressListener()
+	TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
 end
 
 slot0.prefabPath = "ui/viewres/room/roomviewconfirm.prefab"

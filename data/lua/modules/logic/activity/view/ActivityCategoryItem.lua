@@ -113,6 +113,19 @@ function slot0._refreshItem(slot0)
 			end
 
 			RedDotController.instance:addRedDot(slot0._goreddot, slot8, nil, slot0.checkIsV1A9WarmupRed, slot0)
+		elseif slot0._mo.id == ActivityEnum.Activity.V2a4_WarmUp then
+			if ActivityConfig.instance:getActivityCo(slot0._mo.id).redDotId == 0 then
+				slot8 = RedDotEnum.DotNode.Activity125Task
+			end
+
+			if slot0._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(slot7)
+				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
+					[tonumber(RedDotConfig.instance:getRedDotCO(slot2).parent)] = true
+				})
+			end
+
+			RedDotController.instance:addRedDot(slot0._goreddot, slot8, nil, slot0._checkIsV2a4WarmupRed, slot0)
 		elseif slot6 == ActivityEnum.ActivityTypeID.Act189 then
 			RedDotController.instance:addMultiRedDot(slot0._goreddot, {
 				{
@@ -204,6 +217,12 @@ function slot0.playEnterAnim(slot0)
 end
 
 function slot0.onDestroy(slot0)
+end
+
+function slot0._checkIsV2a4WarmupRed(slot0, slot1)
+	slot1.show = Activity125Controller.instance:checkActRed3(slot0._mo.id)
+
+	slot1:showRedDot(RedDotEnum.Style.Normal)
 end
 
 return slot0

@@ -35,20 +35,6 @@ function slot0.buildAchievementCfgs(slot0, slot1)
 
 	slot0._waitOnlineList = {}
 	slot0._waitOfflineList = {}
-
-	for slot5, slot6 in ipairs(slot1.configList) do
-		slot7, slot8, slot9 = slot0:checkAchievementState(slot6)
-
-		table.insert(slot0._achievementState[slot7], slot6)
-
-		if slot8 then
-			table.insert(slot0._waitOnlineList, slot6)
-		end
-
-		if slot9 then
-			table.insert(slot0._waitOfflineList, slot6)
-		end
-	end
 end
 
 function slot0.initAchievementStateDict(slot0)
@@ -56,6 +42,24 @@ function slot0.initAchievementStateDict(slot0)
 
 	for slot4, slot5 in pairs(AchievementEnum.AchievementState) do
 		slot0._achievementState[slot5] = {}
+	end
+end
+
+function slot0.initWaitAchievements(slot0)
+	slot0:initAchievementStateDict()
+
+	for slot4, slot5 in ipairs(slot0._achievementConfig.configList) do
+		slot6, slot7, slot8 = slot0:checkAchievementState(slot5)
+
+		table.insert(slot0._achievementState[slot6], slot5)
+
+		if slot7 then
+			table.insert(slot0._waitOnlineList, slot5)
+		end
+
+		if slot8 then
+			table.insert(slot0._waitOfflineList, slot5)
+		end
 	end
 end
 

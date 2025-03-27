@@ -240,12 +240,13 @@ function slot0.addInputText(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	slot9 = gohelper.findChildText(slot8, "Text")
 
 	slot0._setFontSize(slot9, slot6, 36)
+	slot0._setFontSize(gohelper.findChildText(slot8, "Placeholder"), slot6, 36)
 	slot0._setRectTransSize(slot8, slot6, 300, 80)
 	slot0._adjustGroupWidthHeight(slot8, slot7)
 	slot0._setTextAlign(slot9, slot6)
 
 	SLFramework.UGUI.InputFieldWrap.Get(slot8).inputField.lineType = System.Enum.Parse(tolua.findtype("UnityEngine.UI.InputField+LineType"), "MultiLineSubmit")
-	gohelper.findChildText(slot8, "Placeholder").text = slot3 or ""
+	slot10.text = slot3 or ""
 
 	if string.nilorempty(slot2) then
 		slot11:SetText(PlayerPrefsHelper.getString(string.format("GM_%s_%s_%s", slot0.__cname, slot1, slot3)))
@@ -356,9 +357,11 @@ function slot0.addDropDown(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	slot9 = gohelper.findChildText(slot8, "Text")
 	slot9.text = slot2
 
+	slot0._setFontSize(slot9, slot6, 36)
 	slot0._setGraphicsColor(slot9, slot6)
-	slot0._setRectTransSize(slot8, slot6, slot9.preferredWidth + 300, 90)
-	slot0._setRectTransSize(gohelper.findChild(slot8, "Dropdown"), slot6, slot9.preferredWidth + 150, 90)
+	slot0._setRectTransSize(slot8, slot6, slot6 and slot6.total_w or slot9.preferredWidth + 300, 90)
+	slot0._setRectTransSize(slot9, slot6, slot6 and slot6.label_w or slot9.preferredWidth + 300, 90)
+	slot0._setRectTransSize(gohelper.findChild(slot8, "Dropdown"), slot6, slot6 and slot6.drop_w or slot9.preferredWidth + 150, 90)
 
 	slot11 = gohelper.findChildDropdown(slot8, "Dropdown")
 
@@ -416,10 +419,7 @@ function slot0._setRectTransSize(slot0, slot1, slot2, slot3)
 end
 
 function slot0._setFontSize(slot0, slot1, slot2)
-	if slot1 and slot1.fsize then
-		slot0.enableAutoSizing = false
-	end
-
+	slot3 = slot1 and slot1.fsize
 	slot0.fontSize = slot3 and slot3 or slot2
 end
 

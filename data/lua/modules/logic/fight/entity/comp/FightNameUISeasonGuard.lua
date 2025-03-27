@@ -25,6 +25,7 @@ function slot0.init(slot0, slot1)
 	slot0._btnGuard = gohelper.findChildClick(slot0.viewGO, "btn_guard")
 
 	slot0:addClickCb(slot0._btnGuard, slot0._onBtnGuardClick, slot0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, slot0._onStageChanged, slot0)
 end
 
 function slot0._onBtnGuardClick(slot0)
@@ -100,8 +101,13 @@ function slot0._refreshUI(slot0)
 	slot0._shieldText.text = slot0._entity:getMO().guard
 end
 
+function slot0._onStageChanged(slot0)
+	slot0:_refreshAni()
+end
+
 function slot0.releaseSelf(slot0)
 	FightController.instance:unregisterCallback(FightEvent.EntityGuardChange, slot0._onEntityGuardChange, slot0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, slot0._onStageChanged, slot0)
 	slot0:__onDispose()
 end
 

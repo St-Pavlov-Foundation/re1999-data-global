@@ -5,6 +5,9 @@ slot1 = "_OutlineWidth"
 slot2 = "buff/buff_outline"
 
 function slot0.onInitView(slot0)
+end
+
+function slot0.onOpen(slot0)
 	slot0._effectWrapDict = {}
 	slot0._matDict = slot0:getUserDataTb_()
 end

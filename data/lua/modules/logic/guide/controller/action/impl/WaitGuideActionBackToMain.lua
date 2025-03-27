@@ -20,6 +20,10 @@ function slot0._onEnterMainScene(slot0, slot1, slot2)
 end
 
 function slot0._checkInMain(slot0)
+	if slot0:checkGuideLock() then
+		return
+	end
+
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GameSceneMgr.instance:isLoading() and not GameSceneMgr.instance:isClosing() then
 		slot4 = false
 

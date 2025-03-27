@@ -3,15 +3,28 @@ module("modules.logic.achievement.controller.AchievementStateController", packag
 slot0 = class("AchievementStateController", BaseController)
 
 function slot0.addConstEvents(slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, slot0._onLoginEnterMainScene, slot0)
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, slot0._onCheckFuncUnlock, slot0)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, slot0._onNewFuncOpen, slot0)
 end
 
 function slot0.reInit(slot0)
 	slot0:release()
 end
 
-function slot0._onLoginEnterMainScene(slot0)
+function slot0._onCheckFuncUnlock(slot0)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
+		return
+	end
+
+	AchievementConfig.instance:initWaitAchievements()
 	slot0:checkReadyAchievmeentOnline()
+end
+
+function slot0._onNewFuncOpen(slot0, slot1)
+	if tabletool.indexOf(slot1, OpenEnum.UnlockFunc.Achievement) then
+		AchievementConfig.instance:initWaitAchievements()
+		slot0:checkReadyAchievmeentOnline()
+	end
 end
 
 function slot0.checkReadyAchievmeentOnline(slot0)

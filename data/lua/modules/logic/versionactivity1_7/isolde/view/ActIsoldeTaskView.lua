@@ -5,6 +5,7 @@ slot0 = class("ActIsoldeTaskView", BaseView)
 function slot0.onInitView(slot0)
 	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
 	slot0._simagelangtxt = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_langtxt")
+	slot0._gotime = gohelper.findChild(slot0.viewGO, "Left/LimitTime")
 	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 	slot0._scrollTaskList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_TaskList")
 	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_lefttop")
@@ -21,6 +22,7 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	gohelper.setActive(slot0._gotime, false)
 end
 
 function slot0.onUpdateParam(slot0)

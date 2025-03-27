@@ -237,7 +237,7 @@ function slot0._handleNewKeyInput(slot0)
 end
 
 function slot0._handleMouseInput(slot0)
-	if UnityEngine.Input.mouseScrollDelta and slot1.y ~= 0 then
+	if UnityEngine.Input.mouseScrollDelta and slot1.y ~= 0 and not (gohelper.findChild(slot0._hudGO, "RoomView/go_normalroot/go_confirm/roomviewconfirm(Clone)/go_confirm/go_container") and slot2.activeSelf) then
 		RoomMapController.instance:dispatchEvent(RoomEvent.TouchScale, -3 * slot1.y * Time.deltaTime)
 	end
 
@@ -256,64 +256,64 @@ function slot0._handleMouseInput(slot0)
 	end
 
 	slot0._needDispatchUp = true
-	slot2 = UnityEngine.Input.mousePosition
+	slot4 = UnityEngine.Input.mousePosition
 
 	if not slot0._lastMousePosition then
-		slot0._lastMousePosition = slot2
+		slot0._lastMousePosition = slot4
 	end
 
-	slot3, slot4 = slot0:_getCoverUIList(slot2)
+	slot5, slot6 = slot0:_getCoverUIList(slot4)
 
-	if (UnityEngine.Input.GetMouseButtonDown(0) or UnityEngine.Input.GetMouseButtonDown(1)) and #slot3 > 0 then
+	if (UnityEngine.Input.GetMouseButtonDown(0) or UnityEngine.Input.GetMouseButtonDown(1)) and #slot5 > 0 then
 		slot0._coverUI = true
 
 		return
 	end
 
 	if UnityEngine.Input.GetMouseButtonDown(0) then
-		if #slot4 > 0 then
-			slot0._coverUI3DGO = slot4[1]
+		if #slot6 > 0 then
+			slot0._coverUI3DGO = slot6[1]
 		else
 			slot0._coverUI3DGO = nil
 		end
 	end
 
 	if UnityEngine.Input.GetMouseButtonDown(0) or UnityEngine.Input.GetMouseButtonDown(1) then
-		slot0._mouseDownPosition = slot2
-		slot5, slot0._startOnBuildingUid = slot0:_getPressEntity(slot0._mouseDownPosition)
+		slot0._mouseDownPosition = slot4
+		slot7, slot0._startOnBuildingUid = slot0:_getPressEntity(slot0._mouseDownPosition)
 
-		if slot5 == RoomEnum.TouchTab.RoomBuilding then
+		if slot7 == RoomEnum.TouchTab.RoomBuilding then
 			-- Nothing
-		elseif slot5 == RoomEnum.TouchTab.RoomCharacter then
-			slot0._startOnHeroId = slot6
+		elseif slot7 == RoomEnum.TouchTab.RoomCharacter then
+			slot0._startOnHeroId = slot8
 		end
 	elseif UnityEngine.Input.GetMouseButton(0) or UnityEngine.Input.GetMouseButton(1) then
 		if not slot0._mouseDownPosition then
-			slot0._mouseDownPosition = slot2
+			slot0._mouseDownPosition = slot4
 		end
 
 		if slot0._hasMoved then
-			slot5 = slot2 - slot0._lastMousePosition
+			slot7 = slot4 - slot0._lastMousePosition
 
 			if UnityEngine.Input.GetMouseButton(0) then
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchDrag, Vector2(slot5.x * slot0._screenScaleX, slot5.y * slot0._screenScaleY))
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchDrag, Vector2(slot7.x * slot0._screenScaleX, slot7.y * slot0._screenScaleY))
 			else
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchRotate, slot5.x * slot0._screenScaleX / 800)
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchRotate, slot7.x * slot0._screenScaleX / 800)
 			end
 		elseif slot0._press then
 			if slot0._startOnBuildingUid then
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, slot2)
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, slot4)
 			elseif slot0._startOnHeroId then
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, slot2)
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, slot4)
 			end
 
-			slot0:_screenScroll(slot2)
+			slot0:_screenScroll(slot4)
 		else
-			if slot0._stationaryRadius < Vector2.Distance(slot0._mouseDownPosition, slot2) then
+			if slot0._stationaryRadius < Vector2.Distance(slot0._mouseDownPosition, slot4) then
 				if slot0._startOnBuildingUid then
 					slot0._press = true
 
-					RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, slot2, slot0._startOnBuildingUid)
+					RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, slot4, slot0._startOnBuildingUid)
 				else
 					slot0._hasMoved = true
 				end
@@ -325,15 +325,15 @@ function slot0._handleMouseInput(slot0)
 				if (RoomCharacterController.instance:isCharacterListShow() and slot0._characterPressThreshold or slot0._characterPressThresholdNormal) < slot0._pressTime and slot0._startOnHeroId then
 					slot0._press = true
 
-					RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, slot2, slot0._startOnHeroId)
+					RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, slot4, slot0._startOnHeroId)
 				end
 			end
 		end
 	elseif UnityEngine.Input.GetMouseButtonUp(0) then
 		if not slot0._hasMoved and not slot0._press then
 			if not slot0._coverUI3DGO then
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchClickScene, slot2)
-			elseif slot0._coverUI3DGO == slot4[1] then
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchClickScene, slot4)
+			elseif slot0._coverUI3DGO == slot6[1] then
 				RoomMapController.instance:dispatchEvent(RoomEvent.TouchClickUI3D, slot0._coverUI3DGO)
 			end
 		end
@@ -342,7 +342,7 @@ function slot0._handleMouseInput(slot0)
 		slot0:_resetState(false)
 	end
 
-	slot0._lastMousePosition = slot2
+	slot0._lastMousePosition = slot4
 end
 
 function slot0._dispatchMouseUp(slot0)

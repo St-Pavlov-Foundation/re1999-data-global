@@ -308,7 +308,7 @@ function slot0.canJumpToAct1_3Act305(slot0, slot1)
 end
 
 function slot0.canJumpToTurnback(slot0, slot1)
-	if not TurnbackModel.instance:canShowTurnbackPop() then
+	if not TurnbackModel.instance:isNewType() and not TurnbackModel.instance:canShowTurnbackPop() then
 		return false, ToastEnum.ActivityNotInOpenTime
 	end
 
@@ -458,6 +458,21 @@ function slot0.canJumpToRougeMainView(slot0, slot1)
 	return slot2, slot3, slot4
 end
 
+function slot0.canJumpToRougeRewardView(slot0, slot1)
+	slot2 = true
+	slot3, slot4 = nil
+
+	if not RougeOutsideModel.instance:isUnlock() then
+		slot2 = false
+		slot3, slot4 = OpenHelper.getToastIdAndParam(RougeOutsideModel.instance:openUnlockId())
+	elseif not RougeRewardModel.instance:isStageOpen(string.splitToNumber(slot1, "#")[3]) then
+		slot2 = false
+		slot3 = ToastEnum.RougeRewardStageLock
+	end
+
+	return slot2, slot3, slot4
+end
+
 function slot0.canJumpToTower(slot0, slot1)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
 		slot2, slot3 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Tower)
@@ -508,7 +523,7 @@ slot0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.V1a6Dungeon] = slot0.canJumpToAct1_6DungeonView,
 	[JumpEnum.JumpView.Season123] = slot0.canJumpToSeason123,
 	[JumpEnum.JumpView.VersionEnterView] = slot0.canJumpToVersionEnterView,
-	[JumpEnum.JumpView.RougeRewardView] = slot0.canJumpToRougeMainView,
+	[JumpEnum.JumpView.RougeRewardView] = slot0.canJumpToRougeRewardView,
 	[JumpEnum.JumpView.RougeMainView] = slot0.canJumpToRougeMainView
 }
 slot0.CanJumpActFunc = {

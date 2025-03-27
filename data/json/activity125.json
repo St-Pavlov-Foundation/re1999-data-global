@@ -10,6 +10,7 @@
     "name": "language_10027181",
     "text": "language_10027182",
     "bonus": "10#10#1|2#3#4000|1#110202#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -25,6 +26,7 @@
     "name": "language_10027183",
     "text": "language_10027184",
     "bonus": "10#10#1|2#5#4000|1#110102#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -40,6 +42,7 @@
     "name": "language_10027185",
     "text": "language_10027186",
     "bonus": "10#10#1|2#3#4000|1#110302#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -55,6 +58,7 @@
     "name": "language_10027187",
     "text": "language_10027188",
     "bonus": "10#10#1|2#5#4000|1#110402#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -70,6 +74,7 @@
     "name": "language_10027189",
     "text": "language_10027190",
     "bonus": "10#10#1|2#3#4000|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -85,6 +90,7 @@
     "name": "language_10027191",
     "text": "language_10027192",
     "bonus": "10#10#1|9#1003#2|1#110202#2",
+    "clientbonus": "",
     "musictime": 16,
     "time": 6,
     "key": ""
@@ -100,6 +106,7 @@
     "name": "language_10027193",
     "text": "language_10027194",
     "bonus": "10#10#1|2#5#4000|1#110102#2",
+    "clientbonus": "",
     "musictime": 24,
     "time": 6,
     "key": ""
@@ -115,6 +122,7 @@
     "name": "language_10027195",
     "text": "language_10027196",
     "bonus": "10#10#1|2#3#4000|1#110302#2",
+    "clientbonus": "",
     "musictime": 12,
     "time": 6,
     "key": ""
@@ -130,6 +138,7 @@
     "name": "language_10027197",
     "text": "language_10027198",
     "bonus": "10#10#1|9#1003#2|1#110402#2",
+    "clientbonus": "",
     "musictime": 19,
     "time": 6,
     "key": ""
@@ -145,6 +154,7 @@
     "name": "language_10027199",
     "text": "language_10027200",
     "bonus": "10#10#1|2#3#4000|1#110502#2",
+    "clientbonus": "",
     "musictime": 16,
     "time": 6,
     "key": ""
@@ -160,6 +170,7 @@
     "name": "language_10036600",
     "text": "language_10036601",
     "bonus": "2#2#80|10#10#1|1#111001#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -175,6 +186,7 @@
     "name": "language_10036602",
     "text": "language_10036603",
     "bonus": "2#2#80|10#10#1|9#1003#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -190,6 +202,7 @@
     "name": "language_10036604",
     "text": "language_10036605",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -205,6 +218,7 @@
     "name": "language_10036606",
     "text": "language_10036607",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -220,6 +234,7 @@
     "name": "language_10036608",
     "text": "language_10036609",
     "bonus": "2#2#80|10#10#1|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -235,6 +250,7 @@
     "name": "language_10039286",
     "text": "language_10039287",
     "bonus": "2#2#80|10#10#1|1#111001#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": "boring"
@@ -250,6 +266,7 @@
     "name": "language_10039288",
     "text": "language_10039289",
     "bonus": "2#2#80|10#10#1|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": "mrfishjar"
@@ -265,6 +282,7 @@
     "name": "language_10039290",
     "text": "language_10039291",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": "msuncanny"
@@ -280,6 +298,7 @@
     "name": "language_10039292",
     "text": "language_10039293",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": "ihatearts"
@@ -295,6 +314,7 @@
     "name": "language_10039294",
     "text": "language_10039295",
     "bonus": "2#2#80|10#10#1|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": "goodbye"
@@ -310,6 +330,7 @@
     "name": "language_10045348",
     "text": "language_10045349",
     "bonus": "2#2#80|10#10#1|1#110102#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -325,6 +346,7 @@
     "name": "language_10045350",
     "text": "language_10045351",
     "bonus": "2#2#80|10#10#1|9#1003#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -340,6 +362,7 @@
     "name": "language_10045352",
     "text": "language_10045353",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -355,6 +378,7 @@
     "name": "language_10045354",
     "text": "language_10045355",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -370,6 +394,7 @@
     "name": "language_10045356",
     "text": "language_10045357",
     "bonus": "2#2#80|10#10#1|1#110302#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -385,6 +410,7 @@
     "name": "language_10048364",
     "text": "language_10048365",
     "bonus": "2#2#80|10#10#1|1#110402#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -400,6 +426,7 @@
     "name": "language_10048366",
     "text": "language_10048367",
     "bonus": "2#2#80|10#10#1|9#1003#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -415,6 +442,7 @@
     "name": "language_10048368",
     "text": "language_10048369",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -430,6 +458,7 @@
     "name": "language_10048370",
     "text": "language_10048371",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -445,6 +474,7 @@
     "name": "language_10048372",
     "text": "language_10048373",
     "bonus": "2#2#80|10#10#1|1#110102#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -460,6 +490,7 @@
     "name": "language_10052740",
     "text": "language_10052741",
     "bonus": "2#2#80|10#10#1|1#110702#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -475,6 +506,7 @@
     "name": "language_10052742",
     "text": "language_10052743",
     "bonus": "2#2#80|10#10#1|9#1003#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -490,6 +522,7 @@
     "name": "language_10052744",
     "text": "language_10052745",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -505,6 +538,7 @@
     "name": "language_10052746",
     "text": "language_10052747",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -520,6 +554,7 @@
     "name": "language_10052748",
     "text": "language_10052749",
     "bonus": "2#2#80|10#10#1|1#110602#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -535,6 +570,7 @@
     "name": "language_10057745",
     "text": "language_10057746",
     "bonus": "1#110804#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -550,6 +586,7 @@
     "name": "language_10057747",
     "text": "language_10057748",
     "bonus": "1#111003#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -565,6 +602,7 @@
     "name": "language_10057749",
     "text": "language_10057750",
     "bonus": "1#110504#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -580,6 +618,7 @@
     "name": "language_10057751",
     "text": "language_10057752",
     "bonus": "1#110304#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -595,6 +634,7 @@
     "name": "language_10057753",
     "text": "language_10057754",
     "bonus": "1#110204#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -610,6 +650,7 @@
     "name": "language_10040525",
     "text": "language_10057755",
     "bonus": "1#110104#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -625,6 +666,7 @@
     "name": "language_10057756",
     "text": "language_10057757",
     "bonus": "1#110704#1",
+    "clientbonus": "",
     "musictime": 0,
     "time": 0,
     "key": ""
@@ -640,6 +682,7 @@
     "name": "language_10057758",
     "text": "language_10057759",
     "bonus": "2#2#80|10#10#1|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": ""
@@ -655,6 +698,7 @@
     "name": "language_10057760",
     "text": "language_10057761",
     "bonus": "2#2#80|10#10#1|1#111001#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": ""
@@ -670,6 +714,7 @@
     "name": "language_10057762",
     "text": "language_10057763",
     "bonus": "2#2#80|10#10#1|1#110502#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": ""
@@ -685,6 +730,7 @@
     "name": "language_10057764",
     "text": "language_10057765",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": ""
@@ -700,6 +746,7 @@
     "name": "language_10057766",
     "text": "language_10057767",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 3,
     "key": ""
@@ -715,6 +762,7 @@
     "name": "language_10062039",
     "text": "language_10062040",
     "bonus": "2#2#80|10#10#1|1#110202#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -730,6 +778,7 @@
     "name": "language_10062041",
     "text": "language_10062042",
     "bonus": "2#2#80|10#10#1|9#1003#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -745,6 +794,7 @@
     "name": "language_10062043",
     "text": "language_10062044",
     "bonus": "2#2#80|10#10#1|2#3#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -760,6 +810,7 @@
     "name": "language_10062045",
     "text": "language_10062046",
     "bonus": "2#2#80|10#10#1|2#5#4000",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -775,6 +826,7 @@
     "name": "language_10062047",
     "text": "language_10062048",
     "bonus": "2#2#80|10#10#1|1#110802#2",
+    "clientbonus": "",
     "musictime": 0,
     "time": 5,
     "key": ""
@@ -790,6 +842,87 @@
     "name": "",
     "text": "",
     "bonus": "1#620103#12|1#530001#9|1#620102#165|1#510010#7|1#620101#2600",
+    "clientbonus": "",
+    "musictime": 0,
+    "time": 0,
+    "key": ""
+  },
+  {
+    "activityId": 12436,
+    "id": 1,
+    "preId": 0,
+    "openDay": 1,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "language_10065109",
+    "bonus": "",
+    "clientbonus": "2#2#400|10#10#5|9#1003#4|1#110602#2|2#3#4000|2#5#4000",
+    "musictime": 0,
+    "time": 5,
+    "key": ""
+  },
+  {
+    "activityId": 12436,
+    "id": 2,
+    "preId": 1,
+    "openDay": 2,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "language_10065109",
+    "bonus": "",
+    "clientbonus": "2#2#400|10#10#5|9#1003#4|1#110602#2|2#3#4000|2#5#4000",
+    "musictime": 0,
+    "time": 0,
+    "key": ""
+  },
+  {
+    "activityId": 12436,
+    "id": 3,
+    "preId": 2,
+    "openDay": 3,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "language_10065109",
+    "bonus": "",
+    "clientbonus": "2#2#400|10#10#5|9#1003#4|1#110602#2|2#3#4000|2#5#4000",
+    "musictime": 0,
+    "time": 0,
+    "key": ""
+  },
+  {
+    "activityId": 12436,
+    "id": 4,
+    "preId": 3,
+    "openDay": 4,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "language_10065109",
+    "bonus": "",
+    "clientbonus": "2#2#400|10#10#5|9#1003#4|1#110602#2|2#3#4000|2#5#4000",
+    "musictime": 0,
+    "time": 0,
+    "key": ""
+  },
+  {
+    "activityId": 12436,
+    "id": 5,
+    "preId": 4,
+    "openDay": 5,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "language_10065109",
+    "bonus": "",
+    "clientbonus": "2#2#400|10#10#5|9#1003#4|1#110602#2|2#3#4000|2#5#4000",
     "musictime": 0,
     "time": 0,
     "key": ""

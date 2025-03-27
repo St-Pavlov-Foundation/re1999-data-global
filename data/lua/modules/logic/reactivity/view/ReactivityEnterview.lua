@@ -8,8 +8,8 @@ function slot0.onInitView(slot0)
 	slot0._btnstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Store")
 	slot0._txtstoretime = gohelper.findChildTextMesh(slot0.viewGO, "Right/#btn_Store/#go_taglimit/#txt_limit")
 	slot0._txtNum = gohelper.findChildTextMesh(slot0.viewGO, "Right/#btn_Store/#txt_Num")
-	slot0._txttime = gohelper.findChildTextMesh(slot0.viewGO, "Right/#simage_Title/image_LimitTimeBG/#txt_LimitTime")
-	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "Right/#txt_Descr")
+	slot0._txttime = gohelper.findChildTextMesh(slot0.viewGO, "Logo/image_LimitTimeBG/#txt_LimitTime")
+	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "Logo/#txt_Descr")
 	slot0._btnExchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Exchange")
 	slot0._btnEnter = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Enter")
 	slot0._goreddot = gohelper.findChild(slot0.viewGO, "Right/#btn_Enter/#image_reddot")
@@ -72,7 +72,7 @@ function slot0.initRedDot(slot0)
 		return
 	end
 
-	slot0.actId = VersionActivity2_0Enum.ActivityId.Reactivity
+	slot0.actId = VersionActivity2_4Enum.ActivityId.Reactivity
 
 	RedDotController.instance:addRedDot(slot0._goreddot, ActivityConfig.instance:getActivityCo(slot0.actId).redDotId)
 end
@@ -158,7 +158,7 @@ function slot0._onClickEnter(slot0)
 		return
 	end
 
-	VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView()
+	VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
 function slot0._onClickReplay(slot0)

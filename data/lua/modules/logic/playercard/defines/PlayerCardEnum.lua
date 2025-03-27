@@ -1,30 +1,40 @@
 module("modules.logic.playercard.defines.PlayerCardEnum", package.seeall)
 
 slot0 = _M
-slot0.RightLayout = {
-	Chapter = 3,
-	Assit = 2,
-	PlayerInfo = 1,
-	CardGroup = 4,
-	Achievement = 5
+slot0.LeftContent = {
+	ExploreCollection = 5,
+	TowerBossPassCount = 7,
+	Act148SSSCount = 4,
+	RoomCollection = 3,
+	TowerLayer = 6,
+	WeekWalkDeep = 2,
+	RougeDifficulty = 1
 }
-slot0.SettingKey = {
-	CardShow = 2,
-	RightLayout = 1
+slot0.ProgressShowType = {
+	Explore = 4,
+	Room = 5,
+	Normal = 1
 }
-slot0.CardKey = {
-	LoginDay = 2,
-	ExploreCollection = 6,
-	Act148SSSCount = 8,
-	RoomCollection = 4,
-	HeroCount = 3,
-	CreateTime = 1,
-	WeekWalkDeep = 5,
-	RougeDifficulty = 7
+slot0.RightContent = {
+	LoginDay = 3,
+	AssitCount = 5,
+	CreatTime = 2,
+	HeroCount = 1,
+	MaxLevelHero = 4,
+	HeroCoverTimes = 9,
+	SkinCount = 7,
+	TotalCostPower = 8,
+	CompleteConfidence = 6
+}
+slot0.BaseInfoType = {
+	HeroCount = 1,
+	CreatTime = 3,
+	Normal = 2
 }
 slot0.EmptyString = "—"
 slot0.EmptyString2 = "— —"
-slot0.MaxCardNum = 4
+slot0.MaxProgressCardNum = 5
+slot0.MaxBaseInfoNum = 4
 slot0.CompType = {
 	Layout = 2,
 	Normal = 1

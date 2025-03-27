@@ -37,20 +37,28 @@ function slot0.onUpdateMO(slot0, slot1)
 		slot0._imgIcon.enabled = true
 	end
 
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot1.career))
+	if slot1:getCareer() ~= 0 then
+		UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot4))
+	end
 
-	slot4 = slot0._mo:isCharacter()
-	slot7 = FightDataHelper.entityMgr:isDeadUid(slot0._mo.id)
-	slot8 = slot0._mo.side == FightEnum.EntitySide.MySide
-	slot0._txtName.text = string.format("%s--%s", FightDataHelper.entityMgr:isSp(slot0._mo.id) and "特殊怪" or (FightDataHelper.entityMgr:isSub(slot0._mo.id) and "<color=#FFA500>替补</color>" or "") .. (slot4 and "角色" or "怪物"), slot0._mo:getEntityName())
+	slot8 = FightDataHelper.entityMgr:isDeadUid(slot0._mo.id)
+	slot9 = slot0._mo.side == FightEnum.EntitySide.MySide
+	slot10 = FightDataHelper.entityMgr:isSp(slot0._mo.id) and "特殊怪" or (FightDataHelper.entityMgr:isSub(slot0._mo.id) and "<color=#FFA500>替补</color>" or "") .. (slot0._mo:isCharacter() and "角色" or "怪物")
+
+	if slot0._mo.id == FightEntityScene.MySideId then
+		slot0._txtName.text = "维尔汀"
+	else
+		slot0._txtName.text = string.format("%s--%s", slot10, slot0._mo:getEntityName())
+	end
+
 	slot0._txtId.text = "ID" .. tostring(slot0._mo.id)
 	slot0._txtUid.text = "UID" .. tostring(slot0._mo.modelId)
-	slot10 = slot7 and "#AAAAAA" or slot4 and "#539450" or "#9C4F30"
+	slot11 = slot8 and "#AAAAAA" or slot5 and "#539450" or "#9C4F30"
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtName, slot10)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtId, slot10)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtUid, slot10)
-	ZProj.UGUIHelper.SetGrayscale(slot0._icon.gameObject, slot7)
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtName, slot11)
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtId, slot11)
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtUid, slot11)
+	ZProj.UGUIHelper.SetGrayscale(slot0._icon.gameObject, slot8)
 end
 
 function slot0.onDestroy(slot0)

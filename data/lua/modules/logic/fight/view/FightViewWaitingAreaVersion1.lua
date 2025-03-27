@@ -29,6 +29,8 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, slot0._beforePlaySkill, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ASFD_OnStart, slot0.onASFDStart, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.ASFD_OnDone, slot0.onASFDDone, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.InvalidUsedCard, slot0._onInvalidUsedCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.InvalidPreUsedCard, slot0._onInvalidPreUsedCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, slot0._fixWaitingAreaItemCount, slot0)
@@ -205,6 +207,33 @@ function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
 	end
 
 	slot0._cardItemList[slot3.cardIndex]:playUsedCardFinish(slot0._skillTipsGO, slot0._waitingAreaGO)
+end
+
+function slot0.onASFDStart(slot0, slot1, slot2, slot3)
+	if slot3.cardIndex <= FightPlayCardModel.instance:getCurIndex() then
+		return
+	end
+
+	FightPlayCardModel.instance:playCard(slot3.cardIndex)
+
+	if FightModel.instance:getCurStage() == FightEnum.Stage.Play then
+		slot4 = lua_skill.configDict[slot2]
+
+		recthelper.setHeight(slot0._skillTipsGO.transform, GameUtil.getTextHeightByLine(slot0._txtCardDesc, FightConfig.instance:getEntitySkillDesc(slot1.id, slot4), 38) + 83)
+
+		slot0._txtCardTitle.text = slot4 and slot4.name or ""
+		slot0._txtCardDesc.text = slot4 and HeroSkillModel.instance:skillDesToSpot(slot5) or ""
+
+		slot0:_displayFlow(slot1.id, slot2, FightPlayCardModel.instance:getCurIndex())
+	end
+end
+
+function slot0.onASFDDone(slot0, slot1)
+	if not slot0._cardItemList[slot1] then
+		return
+	end
+
+	slot0._cardItemList[slot1]:playUsedCardFinish(slot0._skillTipsGO, slot0._waitingAreaGO)
 end
 
 function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)

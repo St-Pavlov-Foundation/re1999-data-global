@@ -55,11 +55,17 @@ function slot0.onStart(slot0)
 				return
 			end
 
-			slot10 = slot2.effect:addHangEffect("v1a9_kkny/kkny_innate2_s1", "special1", nil, slot1)
+			if not lua_fight_sp_effect_kkny_heal.configDict[slot5.skin] then
+				slot0:onDone(true)
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot2.id, slot10)
-			slot10:setLocalPos(0, 0, 0)
-			FightAudioMgr.instance:playAudio(430800102)
+				return
+			end
+
+			slot11 = slot2.effect:addHangEffect(slot10.path, slot10.hangPoint, nil, slot1)
+
+			FightRenderOrderMgr.instance:onAddEffectWrap(slot2.id, slot11)
+			slot11:setLocalPos(0, 0, 0)
+			FightAudioMgr.instance:playAudio(slot10.audio)
 		end
 	end
 

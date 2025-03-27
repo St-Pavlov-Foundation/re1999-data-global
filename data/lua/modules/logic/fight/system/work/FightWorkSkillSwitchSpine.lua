@@ -15,6 +15,12 @@ function slot0.onStart(slot0)
 		return
 	end
 
+	if FightEntityDataHelper.isPlayerUid(slot2.id) then
+		slot0:onDone(true)
+
+		return
+	end
+
 	if not slot0._fightStepMO.supportHeroId then
 		slot0:onDone(true)
 

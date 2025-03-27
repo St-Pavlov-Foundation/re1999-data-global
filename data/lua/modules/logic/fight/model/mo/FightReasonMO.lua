@@ -37,6 +37,8 @@ function slot0._parseData(slot0)
 		slot2 = string.splitToNumber(slot0.data, "#")
 
 		TowerModel.instance:setRecordFightParam(slot2[1], slot2[2], slot2[3], slot2[4], slot2[5])
+	elseif slot1.type == DungeonEnum.EpisodeType.Season166Base or slot1.type == DungeonEnum.EpisodeType.Season166Train then
+		Season166Model.instance:unpackFightReconnectData(slot0.data)
 	end
 end
 

@@ -208,4 +208,14 @@ function slot0.getPlayerSoliderChessPath(slot0)
 	end
 end
 
+function slot0.getAct178OperHolePath(slot0, slot1)
+	slot2 = ""
+
+	if type(slot1) == "table" then
+		slot2 = table.concat(slot1, "#")
+	end
+
+	return string.format("UIRoot/POPUP_TOP/PinballCityView/#go_buildingui/UI_%s%s", PinballModel.instance.guideHole, slot2)
+end
+
 return slot0

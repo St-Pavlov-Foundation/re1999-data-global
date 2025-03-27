@@ -11,7 +11,6 @@ function slot0.init(slot0, slot1)
 	slot0.goSelect2 = gohelper.findChild(slot0.viewGO, "goOpen/goSelect2")
 	slot0.txtCurEpisode = gohelper.findChildTextMesh(slot0.viewGO, "goOpen/txtCurEpisode")
 	slot0.goLock = gohelper.findChild(slot0.viewGO, "goOpen/goLock")
-	slot0.uiEffect = gohelper.findChildComponent(slot0.viewGO, "goOpen/IndexBG", typeof(Coffee.UIEffects.BaseMaterialEffect))
 	slot0.btnClick = gohelper.findButtonWithAudio(slot0.viewGO)
 	slot0.towerType = TowerEnum.TowerType.Boss
 end
@@ -48,12 +47,8 @@ function slot0.updateItem(slot0, slot1, slot2, slot3)
 
 	if slot6 then
 		slot0.txtCurEpisode.text = tostring(slot2)
-		slot7 = slot4:isLayerUnlock(slot0.layerId, slot0.parentView.episodeMo)
 
-		gohelper.setActive(slot0.goLock, not slot7)
-
-		slot0.uiEffect.enabled = not slot7
-
+		gohelper.setActive(slot0.goLock, not slot4:isLayerUnlock(slot0.layerId, slot0.parentView.episodeMo))
 		slot0:updateSelect()
 	end
 end

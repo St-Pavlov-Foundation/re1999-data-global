@@ -9,8 +9,29 @@ function slot0.startFight(slot0, slot1, slot2)
 	slot0:com_sendFightEvent(FightEvent.BeforeStartFight)
 	FightDataHelper.initDataMgr()
 	FightDataHelper.initFightData(slot1)
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Normal)
-	FightDataHelper.stageMgr:enterStage(FightStageMgr.StageType.Enter)
+	uv0.instance:enterStage(FightStageMgr.StageType.Normal)
+	uv0.instance:enterStage(FightStageMgr.StageType.Play)
+	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.Enter)
+end
+
+function slot0.enterStage(slot0, slot1, slot2)
+	FightDataMgr.instance:enterStage(slot1, slot2)
+	FightLocalDataMgr.instance:enterStage(slot1, slot2)
+	slot0:com_sendFightEvent(FightEvent.EnterStage, slot1, slot2)
+	slot0:com_sendFightEvent(FightEvent.StageChanged, slot1, FightDataMgr.instance.stageMgr:getCurStage())
+end
+
+function slot0.exitStage(slot0, slot1)
+	FightDataMgr.instance:exitStage(slot1)
+	FightLocalDataMgr.instance:exitStage(slot1)
+	slot0:com_sendFightEvent(FightEvent.ExitStage, slot1)
+	slot0:com_sendFightEvent(FightEvent.StageChanged, FightDataMgr.instance.stageMgr:getCurStage(), slot1)
+end
+
+function slot0.cancelOperation(slot0)
+	FightDataMgr.instance:cancelOperation()
+	FightLocalDataMgr.instance:cancelOperation()
+	slot0:com_sendFightEvent(FightEvent.CancelOperation)
 end
 
 function slot0.playDouQuQu(slot0, slot1, slot2, slot3, slot4, slot5, slot6)

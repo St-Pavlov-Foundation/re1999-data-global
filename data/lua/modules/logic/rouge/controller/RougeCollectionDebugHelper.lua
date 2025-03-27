@@ -9,7 +9,7 @@ function slot0.checkCollectionStaticItmeCfgs()
 
 	if RougeCollectionConfig.instance:getAllItemStaticDescCfgs() then
 		for slot4, slot5 in ipairs(slot0) do
-			RougeCollectionHelper.translateCollectionEffectDescByCfgId(slot5.id, {
+			RougeCollectionDescHelper.setCollectionDescInfos3(slot5.id, {
 				tonumber(slot5.item1),
 				tonumber(slot5.item2),
 				tonumber(slot5.item3)
@@ -27,7 +27,7 @@ function slot0.checkCollectionDescCfgs()
 
 	if RougeCollectionConfig.instance:getAllCollectionDescCfgs() then
 		for slot5, slot6 in ipairs(slot1) do
-			RougeCollectionHelper.translateCollectionEffectDesc(slot6.desc, slot0)
+			RougeCollectionExpressionHelper.getDescExpressionResult(slot6.desc, slot0)
 		end
 	end
 end

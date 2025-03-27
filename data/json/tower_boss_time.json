@@ -25,5 +25,32 @@
     "endTime": "2025-05-04",
     "taskGroupId": 0,
     "isOnline": 1
+  },
+  {
+    "towerId": 4,
+    "round": 1,
+    "isPermanent": 0,
+    "startTime": "2025-04-07",
+    "endTime": "2025-05-19",
+    "taskGroupId": 0,
+    "isOnline": 1
+  },
+  {
+    "towerId": 1,
+    "round": 2,
+    "isPermanent": 0,
+    "startTime": "2025-04-21",
+    "endTime": "2025-06-02",
+    "taskGroupId": 900102,
+    "isOnline": 1
+  },
+  {
+    "towerId": 2,
+    "round": 2,
+    "isPermanent": 0,
+    "startTime": "2025-01-13",
+    "endTime": "2025-02-24",
+    "taskGroupId": 900202,
+    "isOnline": 1
   }
 ]

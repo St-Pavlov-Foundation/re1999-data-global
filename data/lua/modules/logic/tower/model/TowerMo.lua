@@ -13,6 +13,7 @@ function slot0.updateInfo(slot0, slot1)
 
 	slot0:updateLayerInfos(slot1.layerNOs)
 	slot0:updateLayerScore(slot1.layerNOs)
+	slot0:updateHistoryHighScore(slot1.historyHighScore)
 	slot0:updateOpenSpLayer(slot1.openSpLayerIds)
 end
 
@@ -117,28 +118,29 @@ end
 function slot0.resetLayerScore(slot0, slot1)
 	if slot1 then
 		slot0.layerScoreMap[slot1.layerId] = slot1.currHighScore
-		slot0.layerHistoryScoreMap[slot1.layerId] = slot1.historyHighScore
 	end
+end
+
+function slot0.updateHistoryHighScore(slot0, slot1)
+	slot0.historyHighScore = slot1
+end
+
+function slot0.getHistoryHighScore(slot0)
+	return slot0.historyHighScore or 0
 end
 
 function slot0.updateLayerScore(slot0, slot1)
 	slot0.layerScoreMap = {}
-	slot0.layerHistoryScoreMap = {}
 
 	if slot1 then
 		for slot5, slot6 in ipairs(slot1) do
 			slot0.layerScoreMap[slot6.layerId] = slot6.currHighScore
-			slot0.layerHistoryScoreMap[slot6.layerId] = slot6.historyHighScore
 		end
 	end
 end
 
-function slot0.getLayerScore(slot0, slot1, slot2)
-	if slot2 then
-		return slot0.layerHistoryScoreMap[slot1] or 0
-	else
-		return slot0.layerScoreMap[slot1] or 0
-	end
+function slot0.getLayerScore(slot0, slot1)
+	return slot0.layerScoreMap[slot1] or 0
 end
 
 function slot0.getLayerSubEpisodeList(slot0, slot1, slot2)
@@ -173,8 +175,6 @@ end
 
 function slot0.getTaskGroupId(slot0)
 	if TowerModel.instance:getTowerOpenInfo(slot0.type, slot0.towerId) == nil then
-		logError(string.format("爬塔开启信息异常, towerType:%s, towerId:%s", slot0.type, slot0.towerId))
-
 		return
 	end
 

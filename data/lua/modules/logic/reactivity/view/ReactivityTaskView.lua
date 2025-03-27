@@ -1,6 +1,7 @@
 module("modules.logic.reactivity.view.ReactivityTaskView", package.seeall)
 
 slot0 = class("ReactivityTaskView", BaseView)
+slot1 = 0.8
 
 function slot0.refreshRemainTime_overseas(slot0)
 	slot0.txtTime.text = formatLuaLang("remain", ActivityModel.instance:getActMO(slot0.actId):getRemainTimeStr3())
@@ -43,6 +44,12 @@ function slot0.onOpen(slot0)
 	slot0:refreshRemainTime_overseas()
 	slot0:refreshTask()
 	slot0:refreshActivityCurrency()
+	UIBlockMgr.instance:startBlock(UIBlockKey.WaitItemAnimeDone)
+	TaskDispatcher.runDelay(slot0._delayEndBlock, slot0, uv0)
+end
+
+function slot0._delayEndBlock(slot0)
+	UIBlockMgr.instance:endBlock(UIBlockKey.WaitItemAnimeDone)
 end
 
 function slot0.refreshActivityCurrency(slot0)
@@ -64,6 +71,9 @@ function slot0.refreshTask(slot0)
 end
 
 function slot0.onClose(slot0)
+	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+	TaskDispatcher.cancelTask(slot0._delayEndBlock, slot0)
+	slot0:_delayEndBlock()
 	TaskDispatcher.cancelTask(slot0.refreshRemainTime_overseas, slot0)
 end
 

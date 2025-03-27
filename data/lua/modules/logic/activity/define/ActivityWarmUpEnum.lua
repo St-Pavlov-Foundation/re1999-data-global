@@ -13,5 +13,10 @@ slot0.Quality2FramePath = {
 	"bg_ka2",
 	"bg_ka1"
 }
+slot0.Activity125TaskTag = {
+	sum_help_npc = 1,
+	perfect_win = 3,
+	help_npc = 2
+}
 
 return slot0

@@ -437,13 +437,23 @@ function slot0._toAutoPlayCard(slot0)
 			slot0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New())
 		end
 
-		for slot5, slot6 in ipairs(slot1) do
-			if slot6:isAssistBossPlayCard() then
+		slot2 = 0
+
+		for slot6, slot7 in ipairs(slot1) do
+			if slot7:isAssistBossPlayCard() then
 				slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.3))
-				slot0._autoPlayCardFlow:addWork(FightAutoPlayAssistBossCardWork.New(slot6))
+				slot0._autoPlayCardFlow:addWork(FightAutoPlayAssistBossCardWork.New(slot7))
+			elseif slot7:isSeason2ChangeHero() then
+				if slot2 + 1 == 3 then
+					slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.1))
+					slot0._autoPlayCardFlow:addWork(FightWorkAutoSeason2ChangeHero.New(slot1, slot6))
+				end
+			elseif slot7:isPlayerFinisherSkill() then
+				slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.1))
+				slot0._autoPlayCardFlow:addWork(FightWorkAutoPlayerFinisherSkill.New(slot7))
 			else
 				slot0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.01))
-				slot0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New(slot6))
+				slot0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New(slot7))
 			end
 		end
 
@@ -557,6 +567,10 @@ function slot0._playCardAudio(slot0, slot1)
 		return
 	end
 
+	if FightEntityDataHelper.isPlayerUid(slot3.id) then
+		return
+	end
+
 	slot4 = FightCardModel.instance:getCardOps()
 
 	if not FightViewHandCardItemLock.canUseCardSkill(slot1.uid, slot1.skillId, FightBuffHelper.simulateBuffList(slot3, slot4[#slot4])) then
@@ -614,12 +628,26 @@ function slot0._playRedealCardEffect(slot0, slot1, slot2, slot3)
 		slot9:refreshCardMO(slot8, slot2[slot8])
 	end
 
+	slot0:beforeRedealCardFlow()
 	slot0._redealCardFlow:registerDoneListener(slot0._onRedealCardDone, slot0)
 	slot0._redealCardFlow:start(slot4)
 end
 
+function slot0.beforeRedealCardFlow(slot0)
+	for slot4, slot5 in ipairs(slot0._handCardItemList) do
+		slot5:playASFDAnim("close")
+	end
+end
+
+function slot0.afterRedealCardFlow(slot0)
+	for slot4, slot5 in ipairs(slot0._handCardItemList) do
+		slot5:playASFDAnim("open")
+	end
+end
+
 function slot0._onRedealCardDone(slot0)
 	slot0._redealCardFlow:unregisterDoneListener(slot0._onRedealCardDone, slot0)
+	slot0:afterRedealCardFlow()
 	slot0:_updateNow()
 
 	if slot0._canCombineAfterRedealCards then
@@ -1089,8 +1117,6 @@ function slot0._onClothSkillRoundSequenceFinish(slot0)
 end
 
 function slot0._onDragHandCardBegin(slot0, slot1, slot2)
-	logNormal("FightViewHandCard _onDragHandCardBegin")
-
 	if slot0._cardDragFlow.status == WorkStatus.Running then
 		return
 	end
@@ -1121,8 +1147,6 @@ function slot0._onDragHandCardBegin(slot0, slot1, slot2)
 end
 
 function slot0._onDragHandCardEnd(slot0, slot1, slot2)
-	logNormal("FightViewHandCard _onDragHandCardEnd")
-
 	if slot0._cardCount < slot1 then
 		slot0:_updateNow()
 

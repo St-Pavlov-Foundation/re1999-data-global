@@ -22,6 +22,9 @@ function slot0.onInitView(slot0)
 	slot0._goCostItem = gohelper.findChild(slot0.viewGO, "container/skinStore/skinSwitch/dressState/#btn_buy/#go_txtbuy/#go_pay/#go_costItem")
 	slot0._gohas = gohelper.findChild(slot0.viewGO, "container/skinStore/skinSwitch/dressState/#go_has")
 	slot0._goskinCard = gohelper.findChild(slot0.viewGO, "container/skinStore/skinSwitch/#go_skinCard")
+	slot0._goSkinTips = gohelper.findChild(slot0.viewGO, "container/#go_SkinTips")
+	slot0._imgProp = gohelper.findChildImage(slot0.viewGO, "container/#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
+	slot0._txtPropNum = gohelper.findChildTextMesh(slot0.viewGO, "container/#go_SkinTips/image/#txt_Tips/#txt_Num")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -38,6 +41,15 @@ end
 
 function slot0._btnbuyOnClick(slot0)
 	if slot0._allSkinList[slot0._currentSelectSkinIndex] and StoreModel.instance:getGoodsMO(slot1.goodsId) then
+		if StoreModel.instance:isSkinCanShowMessageBox(slot0.skinCo and slot0.skinCo.id) then
+			GameFacade.showMessageBox(MessageBoxIdDefine.SkinGoodsJumpTips, MsgBoxEnum.BoxType.Yes_No, function ()
+				StoreController.instance:openStoreView(StoreEnum.StoreId.VersionPackage, uv0)
+				uv1:closeThis()
+			end, nil, , , , , StoreModel.instance:getGoodsMO(slot0.skinCo.skinStoreId).config.name)
+
+			return
+		end
+
 		if slot0._isChargeBuy then
 			slot2 = nil
 
@@ -272,7 +284,9 @@ function slot0._onViewDragEnd(slot0, slot1, slot2)
 end
 
 function slot0._refreshStatus(slot0)
-	gohelper.setActive(slot0._btnbuy.gameObject, slot0._allSkinList[slot0._currentSelectSkinIndex]:alreadyHas() == false)
+	slot2 = slot0._allSkinList[slot0._currentSelectSkinIndex]:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(slot1)
+
+	gohelper.setActive(slot0._btnbuy.gameObject, slot2 == false)
 	gohelper.setActive(slot0._gohas, slot2)
 
 	if slot2 == false then
@@ -289,6 +303,8 @@ function slot0._refreshStatus(slot0)
 
 		slot0:refreshPayItem()
 	end
+
+	slot0:refreshSkinTips(slot1)
 end
 
 function slot0.getDeductionPrice(slot0)
@@ -362,6 +378,20 @@ end
 
 function slot0.disAbleShader(slot0)
 	slot0:setShaderKeyWord(false)
+end
+
+function slot0.refreshSkinTips(slot0, slot1)
+	if StoreModel.instance:isSkinGoodsCanRepeatBuy(slot1) then
+		gohelper.setActive(slot0._goSkinTips, true)
+
+		slot2 = string.splitToNumber(slot0.skinCo.compensate, "#")
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imgProp, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot2[2]).icon))
+
+		slot0._txtPropNum.text = tostring(slot2[3])
+	else
+		gohelper.setActive(slot0._goSkinTips, false)
+	end
 end
 
 function slot0.onClose(slot0)

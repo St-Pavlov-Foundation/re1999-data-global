@@ -16,7 +16,10 @@ function slot0.ctor(slot0)
 	slot0.remainAdditionCount = 0
 	slot0.leaveTime = 0
 	slot0.monthCardAddedBuyCount = 0
+	slot0.newType = true
+	slot0.hasBuyDoubleBonus = false
 	slot0.config = nil
+	slot0.dropinfos = {}
 end
 
 function slot0.init(slot0, slot1)
@@ -35,7 +38,10 @@ function slot0.init(slot0, slot1)
 
 	slot0:setRemainAdditionCount(slot1.remainAdditionCount, true)
 
+	slot0.newType = slot1.version == TurnbackEnum.type.New and true or false
+	slot0.hasBuyDoubleBonus = slot1.buyDoubleBonus
 	slot0.config = TurnbackConfig.instance:getTurnbackCo(slot0.id)
+	slot0.dropinfos = slot1.dropInfos
 end
 
 function slot0.isStart(slot0)
@@ -52,6 +58,10 @@ end
 
 function slot0.isInOpenTime(slot0)
 	return slot0:isStart() and not slot0:isEnd()
+end
+
+function slot0.isNewType(slot0)
+	return slot0.newType
 end
 
 function slot0.updateHasGetTaskBonus(slot0, slot1)
@@ -86,6 +96,10 @@ end
 
 function slot0.getRemainAdditionCount(slot0)
 	return slot0.remainAdditionCount
+end
+
+function slot0.getBuyDoubleBonus(slot0)
+	return slot0.hasBuyDoubleBonus
 end
 
 return slot0

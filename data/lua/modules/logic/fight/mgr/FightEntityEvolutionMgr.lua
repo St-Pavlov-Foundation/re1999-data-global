@@ -1,6 +1,6 @@
 module("modules.logic.fight.mgr.FightEntityEvolutionMgr", package.seeall)
 
-slot0 = class("FightEntityEvolutionMgr", FightBaseClass)
+slot0 = class("FightEntityEvolutionMgr", FightPerformanceMgrBase)
 
 function slot0.onInitialization(slot0)
 	slot0._entityDic = {}
@@ -17,6 +17,21 @@ function slot0.onInitialization(slot0)
 	slot0:com_registMsg(FightMsgId.ReleaseAllEntrustedEntity, slot0._onReleaseAllEntrustedEntity)
 	slot0:com_registMsg(FightMsgId.SpineLoadFinish, slot0._onSpineLoadFinish)
 	slot0:com_registMsg(FightMsgId.IsEvolutionSkin, slot0._onIsEvolutionSkin)
+	slot0:com_registFightEvent(FightEvent.BeforeDestroyEntity, slot0._onBeforeDestroyEntity)
+end
+
+function slot0._onBeforeDestroyEntity(slot0, slot1)
+	if slot0._entityDic[slot1.id] == slot1 then
+		slot0:_releaseEntity(slot1)
+
+		for slot5, slot6 in ipairs(slot0._delayReleaseEntity) do
+			if slot6.entity == slot1 then
+				slot0._entityVisible[slot1.id] = 0
+
+				table.remove(slot0._delayReleaseEntity, slot5)
+			end
+		end
+	end
 end
 
 function slot0._onIsEvolutionSkin(slot0, slot1)
@@ -24,7 +39,7 @@ function slot0._onIsEvolutionSkin(slot0, slot1)
 end
 
 function slot0._onSetBossEvolution(slot0, slot1, slot2)
-	if slot0._entityDic[slot1.id] then
+	if slot0._entityDic[slot1.id] and slot1 ~= slot0._entityDic[slot3] then
 		slot0:_releaseEntity(slot0._entityDic[slot3])
 	end
 
@@ -73,9 +88,11 @@ end
 
 function slot0._onPlayTimelineSkill(slot0)
 	for slot4, slot5 in pairs(slot0._entityDic) do
-		slot0._entityVisible[slot5.id] = (slot0._entityVisible[slot5.id] or 0) + 1
+		if not slot5.IS_REMOVED then
+			slot0._entityVisible[slot5.id] = (slot0._entityVisible[slot5.id] or 0) + 1
 
-		slot5:setAlpha(0, 0.2)
+			slot5:setAlpha(0, 0.2)
+		end
 	end
 end
 

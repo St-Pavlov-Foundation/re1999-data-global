@@ -22,7 +22,7 @@ function slot0.onLoadCallback(slot0)
 	slot0.instanceGo = slot0.loader:getInstGO()
 	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.instanceGo)
 	slot0.txtIndicatorProcess = gohelper.findChildText(slot0.instanceGo, "txt_itemProcess")
-	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightModel.instance:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
+	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
 end
 
 function slot0.onIndicatorChange(slot0)
@@ -38,7 +38,7 @@ function slot0.updateUI(slot0)
 		return
 	end
 
-	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightModel.instance:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
+	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
 
 	FightModel.instance:setWaitIndicatorAnimation(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_collect)
@@ -46,7 +46,7 @@ function slot0.updateUI(slot0)
 end
 
 function slot0.onAddAnimationDone(slot0)
-	if FightModel.instance:getIndicatorNum(slot0.indicatorId) == slot0.totalIndicatorNum then
+	if FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId) == slot0.totalIndicatorNum then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_achieve)
 		slot0.animatorPlayer:Play("finish", slot0.onFinishAnimationDone, slot0)
 	else

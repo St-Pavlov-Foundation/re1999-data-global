@@ -431,7 +431,7 @@
     "id": 8,
     "description": "视角调整",
     "key": "",
-    "editable": 1
+    "editable": 0
   },
   {
     "hud": 4,
@@ -502,5 +502,68 @@
     "description": "镜头逆时针旋转",
     "key": "E",
     "editable": 1
+  },
+  {
+    "hud": 1,
+    "id": 16,
+    "description": "图鉴",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 17,
+    "description": "成就",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 18,
+    "description": "好友",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 19,
+    "description": "旅券集",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 20,
+    "description": "公告",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 21,
+    "description": "签到",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 22,
+    "description": "设置",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 23,
+    "description": "反馈",
+    "key": "",
+    "editable": 0
+  },
+  {
+    "hud": 1,
+    "id": 24,
+    "description": "周边",
+    "key": "",
+    "editable": 0
   }
 ]

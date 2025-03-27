@@ -68,7 +68,7 @@ function slot0.updateInfo(slot0, slot1)
 	end
 
 	gohelper.setActive(slot0.goMaxRareEffect, slot8 >= 5)
-	UISpriteSetMgr.instance:setV1a7ReprintSprite(slot0.imageRare, "v1a7_v1a2reprint_quality_" .. slot8)
+	UISpriteSetMgr.instance:setV1a8MainActivitySprite(slot0.imageRare, "v1a8_store_quality_" .. slot8)
 
 	if slot6 and slot0.remainBuyCount > 0 then
 		gohelper.setActive(slot0.goIconExchange, true)
@@ -94,7 +94,9 @@ function slot0.updateInfo(slot0, slot1)
 	gohelper.setActive(slot0.txtName, false)
 
 	if MaterialEnum.ItemRareR <= slot8 then
-		slot0.txtName = gohelper.findChildText(slot0.go, "txt_name" .. slot8)
+		if gohelper.findChildText(slot0.go, "txt_name" .. slot8) then
+			slot0.txtName = slot9
+		end
 	else
 		slot0.txtName = gohelper.findChildText(slot0.go, "txt_name")
 	end

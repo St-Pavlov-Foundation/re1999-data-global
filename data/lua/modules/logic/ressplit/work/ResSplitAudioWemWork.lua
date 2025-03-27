@@ -76,7 +76,28 @@ function slot0.onStart(slot0, slot1)
 		end
 	end
 
+	slot0:_dealActivitySoundBank()
 	slot0:onDone(true)
+end
+
+function slot0._dealActivitySoundBank(slot0)
+	slot2 = {}
+
+	for slot6 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/../../../audios/iOS/", false).Length - 1 do
+		if string.find(slot1[slot6], "ui_activity", 1, true) == 1 or string.find(slot7, "activity", 1, true) then
+			table.insert(slot2, SLFramework.FileHelper.GetFileName(slot7, false))
+		end
+	end
+
+	for slot6, slot7 in ipairs(slot2) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.CommonAudioBank, slot7, true)
+
+		if slot0.bank2wenDic[slot7] then
+			for slot12, slot13 in ipairs(slot8) do
+				ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, slot13, true)
+			end
+		end
+	end
 end
 
 function slot0._dealSingleSoundBank(slot0, slot1)

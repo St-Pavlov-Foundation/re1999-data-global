@@ -141,12 +141,10 @@ function slot0.enterActivity11706(slot0, slot1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(slot0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function ()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_7EnterView)
-		VersionActivity1_7EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
-			ActIsoldeController.instance:openLevelView({
-				needShowFight = true
-			})
-		end, nil, VersionActivity1_7Enum.ActivityId.Isolde)
+		PermanentController.instance:jump2Activity(VersionActivity1_7Enum.ActivityId.EnterView)
+		ActIsoldeController.instance:openLevelView({
+			needShowFight = true
+		})
 	end)
 end
 
@@ -154,12 +152,10 @@ function slot0.enterActivity11707(slot0, slot1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(slot0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function ()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_7EnterView)
-		VersionActivity1_7EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
-			ActMarcusController.instance:openLevelView({
-				needShowFight = true
-			})
-		end, nil, VersionActivity1_7Enum.ActivityId.Marcus)
+		PermanentController.instance:jump2Activity(VersionActivity1_7Enum.ActivityId.EnterView)
+		ActMarcusController.instance:openLevelView({
+			needShowFight = true
+		})
 	end)
 end
 

@@ -99,6 +99,7 @@ function slot0._editableInitView(slot0)
 	slot0:_setAllSelected(true)
 
 	slot0._enchantList = {}
+	slot0._itemInstTab = slot0:getUserDataTb_()
 	slot0._gocontenttransform = slot0._gocontent.transform
 
 	slot0._scrollcollection:AddOnValueChanged(slot0._onScrollChange, slot0)
@@ -245,12 +246,12 @@ function slot0._refreshSelectCollectionInfo(slot0)
 
 	slot0._productId = slot2
 
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot2, slot0._enchantList, slot0._godescContent, slot0._godescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot2, slot0._enchantList, slot0._godescContent, slot0._itemInstTab)
 	RougeCollectionHelper.loadShapeGrid(slot2, slot0._goshapecell1, slot0._goshapecell1Icon, slot0._cellModelTab, false)
 end
 
 function slot0._onSwitchCollectionInfoType(slot0)
-	RougeCollectionHelper.refreshCollectionEffectInfos(slot0._productId, slot0._enchantList, slot0._godescContent, slot0._godescitem)
+	RougeCollectionDescHelper.setCollectionDescInfos2(slot0._productId, slot0._enchantList, slot0._godescContent, slot0._itemInstTab)
 end
 
 function slot0.onOpen(slot0)

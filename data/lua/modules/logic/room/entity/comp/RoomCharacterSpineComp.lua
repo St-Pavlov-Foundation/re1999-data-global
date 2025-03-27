@@ -123,7 +123,7 @@ function slot0.touch(slot0, slot1)
 	if slot1 then
 		slot0._touchAction = true
 
-		TaskDispatcher.runDelay(slot0._touchAfter, slot0, 10)
+		TaskDispatcher.runDelay(slot0._touchAfter, slot0, 13)
 
 		if slot0:isRandomSpecialRate() then
 			slot0:tryPlaySpecialIdle()
@@ -186,7 +186,9 @@ function slot0.refreshAnimState(slot0)
 		slot3 = RoomCharacterModel.instance:getTempCharacterMO()
 
 		if slot0:getAnimState() ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(slot0._moveState, slot1.heroId) ~= RoomCharacterHelper.getIdleAnimStateName(slot1.heroId) or slot3 and slot3.id == slot0.entity.id then
-			slot0:play(RoomCharacterHelper.getAnimStateName(slot0._moveState, slot1.heroId), RoomCharacterEnum.CharacterLoopAnimState[slot0._moveState] or false, false)
+			slot4 = RoomCharacterEnum.CharacterLoopAnimState[slot0._moveState] or false
+
+			slot0:play(RoomCharacterHelper.getAnimStateName(slot0._moveState, slot1.heroId), slot4, not slot4 and slot0._isAnimalActionComplete and true or false)
 		end
 	end
 end
@@ -388,6 +390,7 @@ end
 
 function slot0._onAnimCallback(slot0, slot1, slot2, slot3)
 	slot5 = slot0.entity:getMO()
+	slot0._isAnimalActionComplete = slot2 == SpineAnimEvent.ActionComplete
 
 	if slot0._isAnimal and slot1 == RoomCharacterEnum.CharacterAnimalAnimStateName.Jump and slot2 == SpineAnimEvent.ActionComplete then
 		GameSceneMgr.instance:getCurScene().character:setCharacterAnimal(slot0.entity.id, false)
