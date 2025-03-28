@@ -48,6 +48,12 @@ function slot0._btnnotfinishbgOnClick(slot0)
 		return
 	end
 
+	if slot0._isLimit then
+		slot0:_showToast()
+
+		return
+	end
+
 	if GameFacade.jump(slot3) then
 		if ViewMgr.instance:isOpen(ViewName.ShortenAct_PanelView) then
 			ViewMgr.instance:closeView(ViewName.ShortenAct_PanelView)
@@ -247,6 +253,8 @@ function slot0._secondAnimationDone(slot0)
 end
 
 function slot0._setActive_limite(slot0, slot1)
+	slot0._isLimit = slot1
+
 	gohelper.setActive(slot0._golimit, slot1)
 end
 

@@ -82748,7 +82748,7 @@
     "notForce": 0,
     "touchGOPath": "",
     "delay": 0.0,
-    "action": "206#NewPlayerCardContentView",
+    "action": "206#NewPlayerCardView",
     "additionCmd": "",
     "againSteps": "",
     "exception": "",
