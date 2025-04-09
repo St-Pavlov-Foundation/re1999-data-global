@@ -8,7 +8,7 @@ function slot0.trackNoticeLoad(slot0, slot1)
 	end
 
 	SDKDataTrackMgr.instance:trackNoticeLoad({
-		notice_id = slot1.id
+		notice_id = tonumber(slot1.id)
 	})
 end
 
@@ -22,8 +22,8 @@ function slot0.trackNoticeJump(slot0, slot1)
 	end
 
 	SDKDataTrackMgr.instance:trackNoticeJump({
-		notice_jump_id = slot1.id,
-		notice_id = slot2.id
+		notice_jump_id = tonumber(slot1.id),
+		notice_id = tonumber(slot2.id)
 	})
 end
 

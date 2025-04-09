@@ -62,24 +62,28 @@ function slot0.refreshCharacterBuilding(slot0)
 		if not slot1[slot5].hasInteraction then
 			slot6.hasInteraction = slot6:isCanByRandom()
 		end
+
+		if slot6.hasInteraction and not RoomConditionHelper.isConditionStr(slot6.config and slot6.config.conditionStr) then
+			slot6.hasInteraction = false
+		end
 	end
 end
 
 function slot0.tryPlaceCharacterInteraction(slot0)
 	for slot5 = 1, #RoomMapInteractionModel.instance:getBuildingInteractionMOList() do
-		if slot1[slot5].hasInteraction then
-			slot9 = false
+		slot7 = false
 
+		if slot1[slot5].hasInteraction and RoomConditionHelper.isConditionStr(slot6.config and slot6.config.conditionStr) then
 			for slot13, slot14 in ipairs(slot6:getBuildingUids()) do
 				if slot0:_tryPlaceCharacterById(slot14, slot6.config.heroId, slot6:getBuildingNodeList()) then
-					slot9 = true
+					slot7 = true
 
 					break
 				end
 			end
-
-			slot6.hasInteraction = slot9
 		end
+
+		slot6.hasInteraction = slot7
 	end
 end
 

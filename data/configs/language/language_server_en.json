@@ -103837,15 +103837,15 @@
   },
   {
     "key": "language_10025962",
-    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, Penetration Rate +15%; Druvis III gains an additional DMG Bonus +1% for every 200 ATK she has (undispellable)."
+    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, Penetration Rate +15%; for every 200 ATK Druvis III has, gain an additional DMG Bonus +1% (undispellable)."
   },
   {
     "key": "language_10025963",
-    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; Druvis III gains an additional DMG Bonus +1% for every 200 ATK she has; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status (undispellable)."
+    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; for every 200 ATK Druvis III has, gain an additional DMG Bonus +1%; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status (undispellable)."
   },
   {
     "key": "language_10025964",
-    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; Druvis III gains an additional DMG Bonus +1% for every 200 ATK she has; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status. Gain ATK based on 7.5% of Druvis III's Mental DEF (undispellable)."
+    "content": "DMG Heal +10%, Leech Rate +10%, DMG Bonus +15%, and Penetration Rate +15%; for every 200 ATK Druvis III has, gain an additional DMG Bonus +1%; attacking enemies in the [Petrify] status does not remove the [Petrify] status, and gains an additional Penetration Rate +25% against targets in the [Petrify] status. Gain ATK based on 7.5% of Druvis III's Mental DEF (undispellable)."
   },
   {
     "key": "language_10025965",

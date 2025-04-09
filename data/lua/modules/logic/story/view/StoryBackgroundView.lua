@@ -371,12 +371,6 @@ function slot0._refreshBg(slot0)
 end
 
 function slot0._onNewBgImgLoaded(slot0)
-	if slot0._cloneBgImgTop then
-		gohelper.destroy(slot0._cloneBgImgTop)
-
-		slot0._cloneBgImgTop = nil
-	end
-
 	if not slot0._imagebg or not slot0._imagebg.sprite then
 		return
 	end
@@ -434,15 +428,9 @@ function slot0._loadBottomBg(slot0)
 end
 
 function slot0._loadTopBg(slot0)
-	slot1 = StoryBgZoneModel.instance:getBgZoneByPath(slot0._bgCo.bgImg)
-
-	if slot0._simagebgimgtop.gameObject.activeSelf then
-		slot0._cloneBgImgTop = gohelper.cloneInPlace(slot0._simagebgimgtop.gameObject)
-	end
-
 	gohelper.setActive(slot0._simagebgimgtop.gameObject, false)
 
-	if slot1 then
+	if StoryBgZoneModel.instance:getBgZoneByPath(slot0._bgCo.bgImg) then
 		if slot0._simagebgimgtop.curImageUrl == ResUrl.getStoryRes(slot1.path) then
 			slot0:_onNewBgImgTopLoaded()
 		else

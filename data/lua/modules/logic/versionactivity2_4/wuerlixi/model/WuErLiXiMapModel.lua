@@ -188,9 +188,17 @@ function slot0.setNodeUnitByUnitMo(slot0, slot1, slot2, slot3)
 
 	if slot2.unitType == WuErLiXiEnum.UnitType.SignalMulti then
 		if slot2.dir == WuErLiXiEnum.Dir.Up or slot2.dir == WuErLiXiEnum.Dir.Down then
+			if not slot4[slot1.y][slot1.x - 1] or not slot4[slot1.y][slot1.x + 1] then
+				return
+			end
+
 			table.insert(slot5, slot4[slot1.y][slot1.x - 1])
 			table.insert(slot5, slot4[slot1.y][slot1.x + 1])
 		else
+			if not slot4[slot1.y - 1] or not slot4[slot1.y + 1] then
+				return
+			end
+
 			table.insert(slot5, slot4[slot1.y - 1][slot1.x])
 			table.insert(slot5, slot4[slot1.y + 1][slot1.x])
 		end
@@ -216,9 +224,17 @@ function slot0.setNodeUnitByActUnitMo(slot0, slot1, slot2)
 
 	if slot2.type == WuErLiXiEnum.UnitType.SignalMulti then
 		if slot2.dir == WuErLiXiEnum.Dir.Up or slot2.dir == WuErLiXiEnum.Dir.Down then
+			if not slot3[slot1.y][slot1.x - 1] or not slot3[slot1.y][slot1.x + 1] then
+				return
+			end
+
 			table.insert(slot4, slot3[slot1.y][slot1.x - 1])
 			table.insert(slot4, slot3[slot1.y][slot1.x + 1])
 		else
+			if not slot3[slot1.y - 1] or not slot3[slot1.y + 1] then
+				return
+			end
+
 			table.insert(slot4, slot3[slot1.y - 1][slot1.x])
 			table.insert(slot4, slot3[slot1.y + 1][slot1.x])
 		end
