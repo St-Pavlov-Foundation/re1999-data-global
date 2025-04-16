@@ -111,6 +111,7 @@ function slot0.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
 	slot0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
+	slot0:_initLinkageActivity_FullView()
 
 	slot0._needSetSortInfos = true
 
@@ -219,6 +220,40 @@ function slot0.setCategoryListInteractable(slot0, slot1)
 end
 
 function slot0.onDestroyView(slot0)
+end
+
+slot3 = false
+
+function slot0._initRole_FullSignView(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+	uv1[GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)] = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.V2a5_Role_FullSignView_Part1)
+	uv1[GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)] = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.V2a5_Role_FullSignView_Part2)
+end
+
+slot4 = false
+
+function slot0._initSpecial_FullSignView(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+	uv1[GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)] = GameBranchMgr.instance:Vxax_ViewName("Special_FullSignView", ViewName.V2a3_Special_FullSignView)
+end
+
+slot5 = false
+
+function slot0._initLinkageActivity_FullView(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+	uv1[GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)] = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.V2a7_LinkageActivity_FullView)
 end
 
 return slot0

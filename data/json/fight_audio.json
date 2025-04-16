@@ -12706,5 +12706,89 @@
     "eventName": "play_monster630305_born",
     "bankName": "monster630305",
     "weapon": 0
+  },
+  {
+    "id": 431090391,
+    "eventName": "play_hero310903_born",
+    "bankName": "hero310903_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790411,
+    "eventName": "play_hero307904_skill01",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 4
+  },
+  {
+    "id": 430790412,
+    "eventName": "play_hero307904_skill01_voc",
+    "bankName": "hero307904_vo_skin",
+    "weapon": 4
+  },
+  {
+    "id": 430790421,
+    "eventName": "play_hero307904_skill02_1",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790422,
+    "eventName": "play_hero307904_skill02_voc",
+    "bankName": "hero307904_vo_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790423,
+    "eventName": "play_hero307904_skill02_2",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790424,
+    "eventName": "play_hero307904_skill02_3",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790441,
+    "eventName": "play_buff_hero307904_passive01",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790442,
+    "eventName": "play_buff_hero307904_passive02",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790443,
+    "eventName": "play_buff_hero307904_passive03",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790431,
+    "eventName": "play_hero307904_skillmax",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 4
+  },
+  {
+    "id": 430790432,
+    "eventName": "play_hero307904_fightingvoc_65",
+    "bankName": "hero307904_vo_skin",
+    "weapon": 4
+  },
+  {
+    "id": 430790491,
+    "eventName": "play_hero307904_born",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
+  },
+  {
+    "id": 430790492,
+    "eventName": "play_hero307904_death",
+    "bankName": "hero307904_skill_skin",
+    "weapon": 0
   }
 ]

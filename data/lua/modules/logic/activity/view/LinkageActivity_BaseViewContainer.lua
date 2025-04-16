@@ -54,4 +54,39 @@ function slot0.getAssetItem_VideoLoadingPng(slot0)
 	return slot0:getRes(slot0._viewSetting.otherRes[1])
 end
 
+function slot0.Vxax_LinkageActivity_xxxView_Container(slot0, slot1)
+	function slot0.buildViews(slot0)
+		slot0._view = uv0.New()
+
+		return {
+			slot0._view
+		}
+	end
+
+	function slot0.view(slot0)
+		return slot0._view
+	end
+end
+
+function slot0.Vxax_LinkageActivity_FullView(slot0, slot1, slot2)
+end
+
+function slot0.Vxax_LinkageActivity_PanelView(slot0, slot1, slot2)
+end
+
+function slot1(slot0)
+	slot1 = GameBranchMgr.instance:getMajorVer()
+	slot2 = GameBranchMgr.instance:getMinorVer()
+
+	return _G[string.format(slot0, 2, 7)]
+end
+
+function slot0.Vxax_LinkageActivity_FullView_ContainerImpl()
+	return uv0("V%sa%s_LinkageActivity_FullViewContainer")
+end
+
+function slot0.Vxax_LinkageActivity_PanelView_ContainerImpl()
+	return uv0("V%sa%s_LinkageActivity_PanelViewContainer")
+end
+
 return slot0

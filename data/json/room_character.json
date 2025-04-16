@@ -3414,5 +3414,33 @@
     "effectPath": "",
     "waterDistance": 0,
     "roleVoice": "62080103|62080110"
+  },
+  {
+    "skinId": 310903,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 600,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6210902|6210904|6210906"
+  },
+  {
+    "skinId": 307904,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 150,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6207912|6207914"
   }
 ]

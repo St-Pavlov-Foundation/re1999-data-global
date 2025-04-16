@@ -194,7 +194,7 @@ function slot0._getYearOptions(slot0)
 	slot1 = {}
 
 	for slot7 = MinorsConfig.instance:getDateOfBirthSelectionViewStartYear(), os.date("*t", os.time()).year do
-		slot1[#slot1 + 1] = tostring(slot7) .. luaLang("time_year")
+		slot1[#slot1 + 1] = tostring(slot7) .. luaLang("DateOfBirthSelectionView_year")
 	end
 
 	return slot1
@@ -204,7 +204,7 @@ function slot0._getMonthOptions(slot0)
 	slot1 = {}
 
 	for slot5 = 1, 12 do
-		slot1[#slot1 + 1] = tostring(slot5) .. luaLang("time_month")
+		slot1[#slot1 + 1] = tostring(slot5) .. luaLang("DateOfBirthSelectionView_month")
 	end
 
 	return slot1
@@ -214,7 +214,7 @@ function slot0._getDayOptions(slot0)
 	slot1 = {}
 
 	for slot6 = 1, slot0:_getMaxDayOfMonth() do
-		slot1[#slot1 + 1] = tostring(slot6) .. luaLang("time_day2")
+		slot1[#slot1 + 1] = tostring(slot6) .. luaLang("DateOfBirthSelectionView_day")
 	end
 
 	return slot1

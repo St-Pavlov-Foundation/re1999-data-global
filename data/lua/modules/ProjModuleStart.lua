@@ -222,6 +222,7 @@ function slot0.startLogic(slot0)
 	BootLoadingView.instance:addEventListeners()
 	SDKDataTrackMgr.instance:trackResourceLoadFinishEvent(SDKDataTrackMgr.Result.success)
 	StatViewController.instance:init()
+	GameBranchMgr.instance:inject()
 	BootLoadingView.instance:playClose()
 
 	if VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() and GameChannelConfig.isGpGlobal() then

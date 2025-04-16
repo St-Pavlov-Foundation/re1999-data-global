@@ -1718,5 +1718,61 @@
     "target": 1,
     "simulate": 1,
     "condition": "5#308003"
+  },
+  {
+    "id": "tutushizi_310901_skill1",
+    "timeline": "tutushizi_310903_skill1",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310903"
+  },
+  {
+    "id": "tutushizi_310901_skill2",
+    "timeline": "tutushizi_310903_skill2",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310903"
+  },
+  {
+    "id": "tutushizi_310901_unique",
+    "timeline": "tutushizi_310903_unique",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310903"
+  },
+  {
+    "id": "liu_307901_innate1",
+    "timeline": "liu_307904_innate1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#307904"
+  },
+  {
+    "id": "liu_307901_skill1",
+    "timeline": "liu_307904_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#307904"
+  },
+  {
+    "id": "liu_307901_skill2",
+    "timeline": "liu_307904_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#307904"
+  },
+  {
+    "id": "liu_307901_unique",
+    "timeline": "liu_307904_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#307904"
   }
 ]

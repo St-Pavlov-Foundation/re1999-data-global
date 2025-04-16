@@ -430,5 +430,17 @@
     "effectCompName": "CommonRoleEffect",
     "motion": "b_tanzou",
     "node": "Drawables/bone2/effect-Bone/roleeffect_bkle_tanzou2#Drawables/bone3/effect-Bone/roleeffect_bkle_tanzou3"
+  },
+  {
+    "heroResName": "307904_6",
+    "effectCompName": "RoleEffect307904_6",
+    "motion": "b_idle|b_gaoju|b_chuimie|b_shishu",
+    "node": "Drawables/bone1/effect-Bone/roleeffect_6_idle1|Drawables/bone1/effect-Bone/roleeffect_6_gj1|Drawables/bone1/effect-Bone/roleeffect_6_cm1|Drawables/bone1/effect-Bone/roleeffect_6_gj1#Drawables/bone1/effect-Bone/roleeffect_6_ss1"
+  },
+  {
+    "heroResName": "310903_ttsz",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_beike2|b_tideng|b_sinian",
+    "node": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike|Drawables/bone2/effect-Bone/roleeffect_ttsz_td2|Drawables/bone6/effect-Bone/roleeffect_ttsz_sinian6#Drawables/bone/effect-Bone/roleeffect_ttsz_sinian"
   }
 ]

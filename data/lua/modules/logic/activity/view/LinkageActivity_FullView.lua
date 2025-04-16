@@ -21,6 +21,11 @@ function slot0.removeEvents(slot0)
 	uv0.super.removeEvents(slot0)
 end
 
+slot1 = {
+	SkinShop = 1,
+	Sign = 2
+}
+
 function slot0.ctor(slot0, ...)
 	uv0.super.ctor(slot0, ...)
 end
@@ -37,13 +42,13 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.onStart(slot0)
-	slot0:addPage(1, slot0._pageGo1, LinkageActivity_FullView_Page1)
-	slot0:addPage(2, slot0._pageGo2, LinkageActivity_FullView_Page2)
+	slot0:addPage(uv0.SkinShop, slot0._pageGo1, LinkageActivity_FullView_Page1)
+	slot0:addPage(uv0.Sign, slot0._pageGo2, LinkageActivity_FullView_Page2)
 
 	if ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot0:actId()) then
-		slot0:selectedPage(2)
+		slot0:selectedPage_Sign()
 	else
-		slot0:selectedPage(1)
+		slot0:selectedPage_SkinShop()
 	end
 end
 
@@ -60,6 +65,14 @@ end
 
 function slot0._refreshTimeTick(slot0)
 	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+end
+
+function slot0.selectedPage_Sign(slot0)
+	slot0:selectedPage(uv0.Sign)
+end
+
+function slot0.selectedPage_SkinShop(slot0)
+	slot0:selectedPage(uv0.SkinShop)
 end
 
 return slot0

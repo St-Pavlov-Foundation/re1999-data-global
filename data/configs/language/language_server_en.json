@@ -106765,7 +106765,7 @@
   },
   {
     "key": "language_10026694",
-    "content": "At the start of the round, gains an additional Smog Density +50%."
+    "content": "When entering battle, gains an additional Smog Density +50%."
   },
   {
     "key": "language_10026695",
@@ -110356,6 +110356,22 @@
     "content": "Residence of Ripples"
   },
   {
+    "key": "language_10027592",
+    "content": "The Fading Warmth of Time"
+  },
+  {
+    "key": "language_10027593",
+    "content": "Bone and Sea"
+  },
+  {
+    "key": "language_10027594",
+    "content": "Casa of the Curved Lines"
+  },
+  {
+    "key": "language_10027595",
+    "content": "By the Razed Polis"
+  },
+  {
     "key": "language_90001095",
     "content": "Failed"
   },
@@ -110438,6 +110454,18 @@
   {
     "key": "language_90001116",
     "content": "Repeated garments will be converted to"
+  },
+  {
+    "key": "language_90001134",
+    "content": "年"
+  },
+  {
+    "key": "language_90001135",
+    "content": "月"
+  },
+  {
+    "key": "language_90001136",
+    "content": "日"
   },
   {
     "key": "language_90001082",

@@ -3,6 +3,8 @@ module("modules.logic.fight.entity.comp.specialeffect.FightEntityCustomSpecialEf
 slot0 = class("FightEntityCustomSpecialEffect", FightEntitySpecialEffectBase)
 
 function slot0.initClass(slot0)
+	slot0:registClass(FightEntitySpecialEffectBuffLayerEnemySkin)
+
 	for slot5, slot6 in pairs(FightDataHelper.entityMgr:getAllEntityMO()) do
 		if slot6.modelId == 3079 then
 			slot0:registClass(FightEntitySpecialEffect3079_Buff)

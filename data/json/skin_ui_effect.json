@@ -376,5 +376,23 @@
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": "1"
+  },
+  {
+    "id": 307904,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_6_ss1/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310903,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike/root|Drawables/bone2/effect-Bone/roleeffect_ttsz_td2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
   }
 ]

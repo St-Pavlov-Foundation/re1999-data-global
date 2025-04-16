@@ -280,6 +280,13 @@
     "patFaceOrder": 20401
   },
   {
+    "id": 20703,
+    "patFaceActivityId": 12721,
+    "patFaceViewName": "V2a7_LinkageActivity_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 21111
+  },
+  {
     "id": 20602,
     "patFaceActivityId": 12481,
     "patFaceViewName": "ShortenAct_PanelView",

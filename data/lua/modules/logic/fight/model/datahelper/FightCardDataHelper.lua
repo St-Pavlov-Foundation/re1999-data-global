@@ -24,6 +24,13 @@ slot1 = {
 }
 
 return {
+	isBigSkill = function (slot0)
+		if not lua_skill.configDict[slot0] then
+			return false
+		end
+
+		return slot1.isBigSkill == 1
+	end,
 	combineCardListForLocal = function (slot0)
 		return uv0.combineCardList(slot0, FightLocalDataMgr.instance)
 	end,

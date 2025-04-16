@@ -16840,6 +16840,9 @@
   "singlebg/characterskin/live2dbg/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/305304.png"
   ],
+  "singlebg/characterskin/live2dbg/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/307904.png"
+  ],
   "singlebg/characterskin/live2dbg/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/308003.png"
   ],
@@ -16851,6 +16854,9 @@
   ],
   "singlebg/characterskin/live2dbg/309503.png.dat": [
     "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/309503.png"
+  ],
+  "singlebg/characterskin/live2dbg/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/310903.png"
   ],
   "singlebg/characterskin/live2dbg/v2a2_springfestival_fullbg.png.dat": [
     "Assets/ZResourcesLib/singlebg/characterskin/live2dbg/v2a2_springfestival_fullbg.png"
@@ -16942,6 +16948,15 @@
   "singlebg/data_pic/305309.png.dat": [
     "Assets/ZResourcesLib/singlebg/data_pic/305309.png"
   ],
+  "singlebg/data_pic/307907.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/307907.png"
+  ],
+  "singlebg/data_pic/307908.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/307908.png"
+  ],
+  "singlebg/data_pic/307909.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/307909.png"
+  ],
   "singlebg/data_pic/308004.png.dat": [
     "Assets/ZResourcesLib/singlebg/data_pic/308004.png"
   ],
@@ -17022,6 +17037,15 @@
   ],
   "singlebg/data_pic/310903.png.dat": [
     "Assets/ZResourcesLib/singlebg/data_pic/310903.png"
+  ],
+  "singlebg/data_pic/310904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/310904.png"
+  ],
+  "singlebg/data_pic/310905.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/310905.png"
+  ],
+  "singlebg/data_pic/310906.png.dat": [
+    "Assets/ZResourcesLib/singlebg/data_pic/310906.png"
   ],
   "singlebg/dialogue/chess/dialogue_bailangmu.png.dat": [
     "Assets/ZResourcesLib/singlebg/dialogue/chess/dialogue_bailangmu.png"
@@ -17776,6 +17800,9 @@
   "singlebg/headicon_middle/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_middle/305304.png"
   ],
+  "singlebg/headicon_middle/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_middle/307904.png"
+  ],
   "singlebg/headicon_middle/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_middle/308003.png"
   ],
@@ -17817,6 +17844,9 @@
   ],
   "singlebg/headicon_middle/310902.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_middle/310902.png"
+  ],
+  "singlebg/headicon_middle/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_middle/310903.png"
   ],
   "singlebg/headicon_middle/413101.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_middle/413101.png"
@@ -17881,6 +17911,9 @@
   "singlebg/headicon_monster/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_monster/305304.png"
   ],
+  "singlebg/headicon_monster/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_monster/307904.png"
+  ],
   "singlebg/headicon_monster/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_monster/308003.png"
   ],
@@ -17922,6 +17955,9 @@
   ],
   "singlebg/headicon_monster/310902.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_monster/310902.png"
+  ],
+  "singlebg/headicon_monster/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_monster/310903.png"
   ],
   "singlebg/headicon_monster/610406.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_monster/610406.png"
@@ -18031,6 +18067,9 @@
   "singlebg/headicon_room/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_room/305304.png"
   ],
+  "singlebg/headicon_room/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_room/307904.png"
+  ],
   "singlebg/headicon_room/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_room/308003.png"
   ],
@@ -18072,6 +18111,9 @@
   ],
   "singlebg/headicon_room/310902.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_room/310902.png"
+  ],
+  "singlebg/headicon_room/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_room/310903.png"
   ],
   "singlebg/headicon_small/300404.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_small/300404.png"
@@ -18120,6 +18162,9 @@
   ],
   "singlebg/headicon_small/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_small/305304.png"
+  ],
+  "singlebg/headicon_small/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_small/307904.png"
   ],
   "singlebg/headicon_small/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_small/308003.png"
@@ -18276,6 +18321,9 @@
   ],
   "singlebg/headicon_small/310902.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_small/310902.png"
+  ],
+  "singlebg/headicon_small/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/headicon_small/310903.png"
   ],
   "singlebg/headicon_small/310910.png.dat": [
     "Assets/ZResourcesLib/singlebg/headicon_small/310910.png"
@@ -19264,6 +19312,12 @@
   "singlebg/help/v2a4_tower_help_1.png.dat": [
     "Assets/ZResourcesLib/singlebg/help/v2a4_tower_help_1.png"
   ],
+  "singlebg/linkageactivity_singlebg/linkageactivity_fullbg.png.dat": [
+    "Assets/ZResourcesLib/singlebg/linkageactivity_singlebg/linkageactivity_fullbg.png"
+  ],
+  "singlebg/linkageactivity_singlebg/linkageactivity_panelbg.png.dat": [
+    "Assets/ZResourcesLib/singlebg/linkageactivity_singlebg/linkageactivity_panelbg.png"
+  ],
   "singlebg/mainsceneswitch_singlebg/mainsceneswitch_mask.png.dat": [
     "Assets/ZResourcesLib/singlebg/mainsceneswitch_singlebg/mainsceneswitch_mask.png"
   ],
@@ -19341,6 +19395,12 @@
   ],
   "singlebg/playerheadicon/171406.png.dat": [
     "Assets/ZResourcesLib/singlebg/playerheadicon/171406.png"
+  ],
+  "singlebg/playerheadicon/171704.png.dat": [
+    "Assets/ZResourcesLib/singlebg/playerheadicon/171704.png"
+  ],
+  "singlebg/playerheadicon/171705.png.dat": [
+    "Assets/ZResourcesLib/singlebg/playerheadicon/171705.png"
   ],
   "singlebg/propitem/block/1223100.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/block/1223100.png"
@@ -19501,6 +19561,12 @@
   "singlebg/propitem/building/12512.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/building/12512.png"
   ],
+  "singlebg/propitem/building/12723.png.dat": [
+    "Assets/ZResourcesLib/singlebg/propitem/building/12723.png"
+  ],
+  "singlebg/propitem/building/12724.png.dat": [
+    "Assets/ZResourcesLib/singlebg/propitem/building/12724.png"
+  ],
   "singlebg/propitem/hero/3104.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/hero/3104.png"
   ],
@@ -19537,6 +19603,9 @@
   "singlebg/propitem/heroskin/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/heroskin/305304.png"
   ],
+  "singlebg/propitem/heroskin/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/propitem/heroskin/307904.png"
+  ],
   "singlebg/propitem/heroskin/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/heroskin/308003.png"
   ],
@@ -19548,6 +19617,9 @@
   ],
   "singlebg/propitem/heroskin/309503.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/heroskin/309503.png"
+  ],
+  "singlebg/propitem/heroskin/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/propitem/heroskin/310903.png"
   ],
   "singlebg/propitem/prop/133104.png.dat": [
     "Assets/ZResourcesLib/singlebg/propitem/prop/133104.png"
@@ -19852,6 +19924,12 @@
   "singlebg/room/building/12512.png.dat": [
     "Assets/ZResourcesLib/singlebg/room/building/12512.png"
   ],
+  "singlebg/room/building/12723.png.dat": [
+    "Assets/ZResourcesLib/singlebg/room/building/12723.png"
+  ],
+  "singlebg/room/building/12724.png.dat": [
+    "Assets/ZResourcesLib/singlebg/room/building/12724.png"
+  ],
   "singlebg/room/critter/22101.png.dat": [
     "Assets/ZResourcesLib/singlebg/room/critter/22101.png"
   ],
@@ -19966,6 +20044,9 @@
   "singlebg/room/headicon/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/room/headicon/305304.png"
   ],
+  "singlebg/room/headicon/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/room/headicon/307904.png"
+  ],
   "singlebg/room/headicon/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/room/headicon/308003.png"
   ],
@@ -20007,6 +20088,9 @@
   ],
   "singlebg/room/headicon/310902.png.dat": [
     "Assets/ZResourcesLib/singlebg/room/headicon/310902.png"
+  ],
+  "singlebg/room/headicon/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/room/headicon/310903.png"
   ],
   "singlebg/roomget/blockpackage/2201.jpg.dat": [
     "Assets/ZResourcesLib/singlebg/roomget/blockpackage/2201.jpg"
@@ -20139,6 +20223,12 @@
   ],
   "singlebg/roomget/building/12512.jpg.dat": [
     "Assets/ZResourcesLib/singlebg/roomget/building/12512.jpg"
+  ],
+  "singlebg/roomget/building/12723.jpg.dat": [
+    "Assets/ZResourcesLib/singlebg/roomget/building/12723.jpg"
+  ],
+  "singlebg/roomget/building/12724.jpg.dat": [
+    "Assets/ZResourcesLib/singlebg/roomget/building/12724.jpg"
   ],
   "singlebg/roomget/shop/1701300.jpg.dat": [
     "Assets/ZResourcesLib/singlebg/roomget/shop/1701300.jpg"
@@ -20671,6 +20761,9 @@
   "singlebg/store/v2a5_giftbg3.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/v2a5_giftbg3.png"
   ],
+  "singlebg/store/v2a7_storeroleskinview_bg2.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/v2a7_storeroleskinview_bg2.png"
+  ],
   "singlebg/store/firstchargeview/bg.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/firstchargeview/bg.png"
   ],
@@ -20785,6 +20878,9 @@
   "singlebg/store/package/detail_v2a7_02.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/package/detail_v2a7_02.png"
   ],
+  "singlebg/store/package/detail_v2a7_11.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/package/detail_v2a7_11.png"
+  ],
   "singlebg/store/package/detail_versiongiftpackage_12_1.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/package/detail_versiongiftpackage_12_1.png"
   ],
@@ -20890,6 +20986,12 @@
   "singlebg/store/package/v2a5_10.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/package/v2a5_10.png"
   ],
+  "singlebg/store/package/v2a7_02.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/package/v2a7_02.png"
+  ],
+  "singlebg/store/package/v2a7_11.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/package/v2a7_11.png"
+  ],
   "singlebg/store/package/versiongiftpackage_12_1.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/package/versiongiftpackage_12_1.png"
   ],
@@ -20935,6 +21037,9 @@
   "singlebg/store/skin/305304.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/skin/305304.png"
   ],
+  "singlebg/store/skin/307904.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/skin/307904.png"
+  ],
   "singlebg/store/skin/308003.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/skin/308003.png"
   ],
@@ -20946,6 +21051,9 @@
   ],
   "singlebg/store/skin/309503.png.dat": [
     "Assets/ZResourcesLib/singlebg/store/skin/309503.png"
+  ],
+  "singlebg/store/skin/310903.png.dat": [
+    "Assets/ZResourcesLib/singlebg/store/skin/310903.png"
   ],
   "singlebg/storybg/item/1_5_anshentieji.png.dat": [
     "Assets/ZResourcesLib/singlebg/storybg/item/1_5_anshentieji.png"
@@ -24541,6 +24649,12 @@
   "singlebg_lang/txt_adventuretask/v2a5_shop_3.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_adventuretask/v2a5_shop_3.png"
   ],
+  "singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png"
+  ],
+  "singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png"
+  ],
   "singlebg_lang/txt_adventuretask/yisuerde.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_adventuretask/yisuerde.png"
   ],
@@ -24717,6 +24831,12 @@
   ],
   "singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png"
+  ],
+  "singlebg_lang/txt_store/v2a7_storeroleskinview_btn_buy.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_store/v2a7_storeroleskinview_btn_buy.png"
+  ],
+  "singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png"
   ],
   "singlebg_lang/txt_story/1_2tanchuang.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_story/1_2tanchuang.png"
@@ -25828,6 +25948,12 @@
   "lang/common/singlebg_lang/txt_adventuretask/v2a3_goodsstore_en.png.dat": [
     "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a3_goodsstore_en.png"
   ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a5_live_en.jpg.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a5_live_en.jpg"
+  ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a5_live_jp.png.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a5_live_jp.png"
+  ],
   "lang/common/singlebg_lang/txt_adventuretask/welcome.png.dat": [
     "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/welcome.png"
   ],
@@ -26587,6 +26713,12 @@
   "lang/en/singlebg_lang/txt_adventuretask/v2a5_shop_3.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_adventuretask/v2a5_shop_3.png"
   ],
+  "lang/en/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png"
+  ],
+  "lang/en/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png"
+  ],
   "lang/en/singlebg_lang/txt_adventuretask/weixiukai.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_adventuretask/weixiukai.png"
   ],
@@ -27016,6 +27148,9 @@
   "lang/en/singlebg_lang/txt_store/img_zi04.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_store/img_zi04.png"
   ],
+  "lang/en/singlebg_lang/txt_store/linkageactivity_title.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_store/linkageactivity_title.png"
+  ],
   "lang/en/singlebg_lang/txt_store/storenewbiechoose_title.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_store/storenewbiechoose_title.png"
   ],
@@ -27162,6 +27297,9 @@
   ],
   "lang/en/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png"
+  ],
+  "lang/en/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png"
   ],
   "lang/en/singlebg_lang/txt_story/1_2tanchuang.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_story/1_2tanchuang.png"
@@ -29623,6 +29761,12 @@
   "lang/jp/singlebg_lang/txt_adventuretask/v2a5_shop_3.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_adventuretask/v2a5_shop_3.png"
   ],
+  "lang/jp/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png"
+  ],
+  "lang/jp/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png"
+  ],
   "lang/jp/singlebg_lang/txt_adventuretask/weixiukai.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_adventuretask/weixiukai.png"
   ],
@@ -30031,6 +30175,9 @@
   "lang/jp/singlebg_lang/txt_store/img_zi04.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_store/img_zi04.png"
   ],
+  "lang/jp/singlebg_lang/txt_store/linkageactivity_title.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_store/linkageactivity_title.png"
+  ],
   "lang/jp/singlebg_lang/txt_store/storenewbiechoose_title.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_store/storenewbiechoose_title.png"
   ],
@@ -30177,6 +30324,9 @@
   ],
   "lang/jp/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png"
+  ],
+  "lang/jp/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png"
   ],
   "lang/jp/singlebg_lang/txt_story/1_2tanchuang.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_story/1_2tanchuang.png"
@@ -32812,6 +32962,12 @@
   "lang/kr/singlebg_lang/txt_adventuretask/v2a5_shop_3.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a5_shop_3.png"
   ],
+  "lang/kr/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png"
+  ],
+  "lang/kr/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png"
+  ],
   "lang/kr/singlebg_lang/txt_adventuretask/weixiukai.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/weixiukai.png"
   ],
@@ -33217,6 +33373,9 @@
   "lang/kr/singlebg_lang/txt_store/img_zi04.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_store/img_zi04.png"
   ],
+  "lang/kr/singlebg_lang/txt_store/linkageactivity_title.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_store/linkageactivity_title.png"
+  ],
   "lang/kr/singlebg_lang/txt_store/storenewbiechoose_title.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_store/storenewbiechoose_title.png"
   ],
@@ -33366,6 +33525,9 @@
   ],
   "lang/kr/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png"
+  ],
+  "lang/kr/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png"
   ],
   "lang/kr/singlebg_lang/txt_story/1_2tanchuang.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_story/1_2tanchuang.png"
@@ -36010,6 +36172,12 @@
   "lang/tw/singlebg_lang/txt_adventuretask/v2a5_shop_3.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a5_shop_3.png"
   ],
+  "lang/tw/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a7_shop_skin3.png"
+  ],
+  "lang/tw/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a7_shop_skin4.png"
+  ],
   "lang/tw/singlebg_lang/txt_adventuretask/weixiukai.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/weixiukai.png"
   ],
@@ -36415,6 +36583,9 @@
   "lang/tw/singlebg_lang/txt_store/img_zi04.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_store/img_zi04.png"
   ],
+  "lang/tw/singlebg_lang/txt_store/linkageactivity_title.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_store/linkageactivity_title.png"
+  ],
   "lang/tw/singlebg_lang/txt_store/storenewbiechoose_title.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_store/storenewbiechoose_title.png"
   ],
@@ -36564,6 +36735,9 @@
   ],
   "lang/tw/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_store/v2a5_storeroleskinview_title2.png"
+  ],
+  "lang/tw/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_store/v2a7_storeroleskinview_title2.png"
   ],
   "lang/tw/singlebg_lang/txt_story/1_2tanchuang.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_story/1_2tanchuang.png"
@@ -38679,6 +38853,9 @@
   ],
   "lang/zh/singlebg_lang/txt_store/img_zi.png.dat": [
     "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_store/img_zi.png"
+  ],
+  "lang/zh/singlebg_lang/txt_store/linkageactivity_title.png.dat": [
+    "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_store/linkageactivity_title.png"
   ],
   "lang/zh/singlebg_lang/txt_store/store_monthcard_title.png.dat": [
     "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_store/store_monthcard_title.png"

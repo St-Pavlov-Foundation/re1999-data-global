@@ -565,5 +565,23 @@
     "triggerEffect": "",
     "delEffect": "",
     "audio": 0
+  },
+  {
+    "buffId": 30790601,
+    "orEnemy": 2,
+    "skinId": 307904,
+    "effectPath": "v2a7_6/6_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430790423
+  },
+  {
+    "buffId": 30790602,
+    "orEnemy": 2,
+    "skinId": 307904,
+    "effectPath": "v2a7_6/6_skill2_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430790424
   }
 ]

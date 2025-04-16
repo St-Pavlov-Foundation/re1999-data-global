@@ -161,6 +161,8 @@ function slot0.checkGetActivityInfo(slot0)
 end
 
 function slot0.updateAct101Infos(slot0, slot1)
+	slot0:_initLinkageActivity_kAct101RedList()
+
 	if not slot1 then
 		for slot5, slot6 in ipairs(uv0) do
 			if ActivityType101Model.instance:isOpen(slot6) then
@@ -182,6 +184,47 @@ end
 
 function slot0._onDailyRefresh(slot0)
 	slot0:updateAct101Infos()
+end
+
+slot3 = false
+
+function slot0._initRoleSign_kAct101RedList(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+
+	table.insert(uv1, GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1))
+	table.insert(uv1, GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2))
+end
+
+function slot0.onModuleViews(slot0, slot1, slot2)
+	ActivityType101Model.instance:onModuleViews(slot1, slot2)
+end
+
+slot4 = false
+
+function slot0._initSpecialSign_kAct101RedList(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+
+	table.insert(uv1, GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special))
+end
+
+slot5 = false
+
+function slot0._initLinkageActivity_kAct101RedList(slot0)
+	if uv0 then
+		return
+	end
+
+	uv0 = true
+
+	table.insert(uv1, GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity))
 end
 
 slot0.instance = slot0.New()

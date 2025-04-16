@@ -195,11 +195,391 @@ function slot3.isVer(slot0, slot1, slot2)
 		return false
 	end
 
-	if slot1 == slot0:getMajorVer() then
+	if slot0:getMajorVer() == slot1 then
+		return math.max(0, slot2 or 0) <= slot0:getMinorVer()
+	end
+
+	return slot1 < slot3
+end
+
+function slot3.isOnVer(slot0, slot1, slot2)
+	if not slot1 then
+		return false
+	end
+
+	return slot0:getMajorVer() == slot1 and slot0:getMinorVer() == math.max(0, slot2 or 0)
+end
+
+function slot3.isOnPreVer(slot0, slot1, slot2)
+	if not slot1 then
+		return false
+	end
+
+	if slot0:getMajorVer() == slot1 then
 		return slot0:getMinorVer() <= math.max(0, slot2 or 0)
 	end
 
 	return slot3 < slot1
+end
+
+function slot3.isV1a0(slot0)
+	return slot0:isVer(1, 0)
+end
+
+function slot3.isV1a1(slot0)
+	return slot0:isVer(1, 1)
+end
+
+function slot3.isV1a2(slot0)
+	return slot0:isVer(1, 2)
+end
+
+function slot3.isV1a3(slot0)
+	return slot0:isVer(1, 3)
+end
+
+function slot3.isV1a4(slot0)
+	return slot0:isVer(1, 4)
+end
+
+function slot3.isV1a5(slot0)
+	return slot0:isVer(1, 5)
+end
+
+function slot3.isV1a6(slot0)
+	return slot0:isVer(1, 6)
+end
+
+function slot3.isV1a7(slot0)
+	return slot0:isVer(1, 7)
+end
+
+function slot3.isV1a8(slot0)
+	return slot0:isVer(1, 8)
+end
+
+function slot3.isV1a9(slot0)
+	return slot0:isVer(1, 9)
+end
+
+function slot3.isV2a0(slot0)
+	return slot0:isVer(2, 0)
+end
+
+function slot3.isV2a1(slot0)
+	return slot0:isVer(2, 1)
+end
+
+function slot3.isV2a2(slot0)
+	return slot0:isVer(2, 2)
+end
+
+function slot3.isV2a3(slot0)
+	return slot0:isVer(2, 3)
+end
+
+function slot3.isV2a4(slot0)
+	return slot0:isVer(2, 4)
+end
+
+function slot3.isV2a5(slot0)
+	return slot0:isVer(2, 5)
+end
+
+function slot3.isV2a6(slot0)
+	return slot0:isVer(2, 6)
+end
+
+function slot3.isV2a7(slot0)
+	return slot0:isVer(2, 7)
+end
+
+function slot3.isV2a8(slot0)
+	return slot0:isVer(2, 8)
+end
+
+function slot3.isV2a9(slot0)
+	return slot0:isVer(2, 9)
+end
+
+function slot3.isV3a0(slot0)
+	return slot0:isVer(3, 0)
+end
+
+function slot3.isV3a1(slot0)
+	return slot0:isVer(3, 1)
+end
+
+function slot3.isV3a2(slot0)
+	return slot0:isVer(3, 2)
+end
+
+function slot3.isV3a3(slot0)
+	return slot0:isVer(3, 3)
+end
+
+function slot3.isV3a4(slot0)
+	return slot0:isVer(3, 4)
+end
+
+function slot3.isV3a5(slot0)
+	return slot0:isVer(3, 5)
+end
+
+function slot3.isV3a6(slot0)
+	return slot0:isVer(3, 6)
+end
+
+function slot3.isV3a7(slot0)
+	return slot0:isVer(3, 7)
+end
+
+function slot3.isV3a8(slot0)
+	return slot0:isVer(3, 8)
+end
+
+function slot3.isV3a9(slot0)
+	return slot0:isVer(3, 9)
+end
+
+function slot3.isV4a0(slot0)
+	return slot0:isVer(4, 0)
+end
+
+function slot3.isV4a1(slot0)
+	return slot0:isVer(4, 1)
+end
+
+function slot3.isV4a2(slot0)
+	return slot0:isVer(4, 2)
+end
+
+function slot3.isV4a3(slot0)
+	return slot0:isVer(4, 3)
+end
+
+function slot3.isV4a4(slot0)
+	return slot0:isVer(4, 4)
+end
+
+function slot3.isV4a5(slot0)
+	return slot0:isVer(4, 5)
+end
+
+function slot3.isV4a6(slot0)
+	return slot0:isVer(4, 6)
+end
+
+function slot3.isV4a7(slot0)
+	return slot0:isVer(4, 7)
+end
+
+function slot3.isV4a8(slot0)
+	return slot0:isVer(4, 8)
+end
+
+function slot3.isV4a9(slot0)
+	return slot0:isVer(4, 9)
+end
+
+function slot3.isV5a0(slot0)
+	return slot0:isVer(5, 0)
+end
+
+function slot3.isV5a1(slot0)
+	return slot0:isVer(5, 1)
+end
+
+function slot3.isV5a2(slot0)
+	return slot0:isVer(5, 2)
+end
+
+function slot3.isV5a3(slot0)
+	return slot0:isVer(5, 3)
+end
+
+function slot3.isV5a4(slot0)
+	return slot0:isVer(5, 4)
+end
+
+function slot3.isV5a5(slot0)
+	return slot0:isVer(5, 5)
+end
+
+function slot3.isV5a6(slot0)
+	return slot0:isVer(5, 6)
+end
+
+function slot3.isV5a7(slot0)
+	return slot0:isVer(5, 7)
+end
+
+function slot3.isV5a8(slot0)
+	return slot0:isVer(5, 8)
+end
+
+function slot3.isV5a9(slot0)
+	return slot0:isVer(5, 9)
+end
+
+function slot3.isV6a0(slot0)
+	return slot0:isVer(6, 0)
+end
+
+function slot3.isV6a1(slot0)
+	return slot0:isVer(6, 1)
+end
+
+function slot3.isV6a2(slot0)
+	return slot0:isVer(6, 2)
+end
+
+function slot3.isV6a3(slot0)
+	return slot0:isVer(6, 3)
+end
+
+function slot3.isV6a4(slot0)
+	return slot0:isVer(6, 4)
+end
+
+function slot3.isV6a5(slot0)
+	return slot0:isVer(6, 5)
+end
+
+function slot3.isV6a6(slot0)
+	return slot0:isVer(6, 6)
+end
+
+function slot3.isV6a7(slot0)
+	return slot0:isVer(6, 7)
+end
+
+function slot3.isV6a8(slot0)
+	return slot0:isVer(6, 8)
+end
+
+function slot3.isV6a9(slot0)
+	return slot0:isVer(6, 9)
+end
+
+function slot3.isV7a0(slot0)
+	return slot0:isVer(7, 0)
+end
+
+function slot3.isV7a1(slot0)
+	return slot0:isVer(7, 1)
+end
+
+function slot3.isV7a2(slot0)
+	return slot0:isVer(7, 2)
+end
+
+function slot3.isV7a3(slot0)
+	return slot0:isVer(7, 3)
+end
+
+function slot3.isV7a4(slot0)
+	return slot0:isVer(7, 4)
+end
+
+function slot3.isV7a5(slot0)
+	return slot0:isVer(7, 5)
+end
+
+function slot3.isV7a6(slot0)
+	return slot0:isVer(7, 6)
+end
+
+function slot3.isV7a7(slot0)
+	return slot0:isVer(7, 7)
+end
+
+function slot3.isV7a8(slot0)
+	return slot0:isVer(7, 8)
+end
+
+function slot3.isV7a9(slot0)
+	return slot0:isVer(7, 9)
+end
+
+function slot3.isV8a0(slot0)
+	return slot0:isVer(8, 0)
+end
+
+function slot3.isV8a1(slot0)
+	return slot0:isVer(8, 1)
+end
+
+function slot3.isV8a2(slot0)
+	return slot0:isVer(8, 2)
+end
+
+function slot3.isV8a3(slot0)
+	return slot0:isVer(8, 3)
+end
+
+function slot3.isV8a4(slot0)
+	return slot0:isVer(8, 4)
+end
+
+function slot3.isV8a5(slot0)
+	return slot0:isVer(8, 5)
+end
+
+function slot3.isV8a6(slot0)
+	return slot0:isVer(8, 6)
+end
+
+function slot3.isV8a7(slot0)
+	return slot0:isVer(8, 7)
+end
+
+function slot3.isV8a8(slot0)
+	return slot0:isVer(8, 8)
+end
+
+function slot3.isV8a9(slot0)
+	return slot0:isVer(8, 9)
+end
+
+function slot3.isV9a0(slot0)
+	return slot0:isVer(9, 0)
+end
+
+function slot3.isV9a1(slot0)
+	return slot0:isVer(9, 1)
+end
+
+function slot3.isV9a2(slot0)
+	return slot0:isVer(9, 2)
+end
+
+function slot3.isV9a3(slot0)
+	return slot0:isVer(9, 3)
+end
+
+function slot3.isV9a4(slot0)
+	return slot0:isVer(9, 4)
+end
+
+function slot3.isV9a5(slot0)
+	return slot0:isVer(9, 5)
+end
+
+function slot3.isV9a6(slot0)
+	return slot0:isVer(9, 6)
+end
+
+function slot3.isV9a7(slot0)
+	return slot0:isVer(9, 7)
+end
+
+function slot3.isV9a8(slot0)
+	return slot0:isVer(9, 8)
+end
+
+function slot3.isV9a9(slot0)
+	return slot0:isVer(9, 9)
 end
 
 slot3.instance = slot3.New()

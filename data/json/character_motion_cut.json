@@ -123,5 +123,10 @@
     "heroId": 3052,
     "motion": "baoxiong",
     "onlyStopCut": 1
+  },
+  {
+    "heroId": 3109,
+    "motion": "wojin1|wojin2|wojin3|baoyu1|baoyu2|baoyu3|beike1|beike2|beike3",
+    "onlyStopCut": 1
   }
 ]

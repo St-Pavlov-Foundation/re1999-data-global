@@ -77,7 +77,11 @@ end
 slot9 = "https://re.bluepoch.com/event/ShowdowninChinatown/"
 
 function slot0._btnplaylOnClick(slot0)
-	WebViewController.instance:simpleOpenWebView(slot0.viewContainer:getH5BaseUrl(), false, slot0._onWebViewCb, slot0)
+	if SettingsModel.instance:isTwRegion() or SettingsModel.instance:isKrRegion() then
+		WebViewController.instance:openWebView(slot0.viewContainer:getH5BaseUrl(), false, slot0._onWebViewCb, slot0)
+	else
+		WebViewController.instance:simpleOpenWebView(slot0.viewContainer:getH5BaseUrl(), false, slot0._onWebViewCb, slot0)
+	end
 end
 
 function slot0._onWebViewCb(slot0, slot1, slot2)

@@ -35,6 +35,7 @@ slot1 = {
 	notShowInRecommend = 39,
 	currencyCodetw = 27,
 	order = 4,
+	showLinkageTag = 41,
 	isOnline = 11,
 	originalCosttw = 28,
 	offlineTime = 13,

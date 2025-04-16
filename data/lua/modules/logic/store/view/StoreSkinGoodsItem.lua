@@ -37,6 +37,10 @@ function slot0.onInitView(slot0)
 	slot0._govx_iconbg = gohelper.findChild(slot0.viewGO, "#go_UniqueSkin/vx_iconbg")
 	slot0._govx_bg = gohelper.findChild(slot0.viewGO, "#go_UniqueSkin/vx_bg")
 	slot0._mask = slot0._goUniqueImageicon2:GetComponent(typeof(UnityEngine.UI.Mask))
+	slot0._goLinkageLetterG = gohelper.findChild(slot0.viewGO, "#go_Linkage/#simage_g")
+	slot0._goLinkageLetterA = gohelper.findChild(slot0.viewGO, "#go_Linkage/#image_A")
+	slot0._goLinkageBgG = gohelper.findChildSingleImage(slot0.viewGO, "#go_Linkage/#simage_bg")
+	slot0._goLinkageBgA = gohelper.findChildSingleImage(slot0.viewGO, "#go_Linkage/#simage_bgA")
 	slot0._simagesign = gohelper.findChildSingleImage(slot0.viewGO, "#simage_sign")
 	slot0._godeduction = gohelper.findChild(slot0.viewGO, "cost/#go_deduction")
 	slot0._txtdeduction = gohelper.findChildTextMesh(slot0.viewGO, "cost/#go_deduction/txt_materialNum")
@@ -149,8 +153,19 @@ function slot0.onUpdateMO(slot0, slot1)
 	else
 		slot11 = nil
 
+		if slot2 then
+			slot11 = slot0._linkage_simageicon
+
+			gohelper.setActive(slot0._goLinkageBgA, slot0:_isAdvanceSkin())
+			gohelper.setActive(slot0._goLinkageBgG, slot0:_isNormalSkin())
+			gohelper.setActive(slot0._goLinkageLetterA, slot0:_isAdvanceSkin())
+			gohelper.setActive(slot0._goLinkageLetterG, slot0:_isNormalSkin())
+		else
+			slot11 = (not slot4 or slot0._advanceImageicon) and slot0._simageicon
+		end
+
 		if string.nilorempty(slot0._mo.config.bigImg) == false then
-			((not slot2 or slot0._linkage_simageicon) and (not slot4 or slot0._advanceImageicon) and slot0._simageicon):LoadImage(slot0._mo.config.bigImg)
+			slot11:LoadImage(slot0._mo.config.bigImg)
 		else
 			slot11:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 		end

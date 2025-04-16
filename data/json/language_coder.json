@@ -5476,6 +5476,18 @@
     "lang": "language_10065817"
   },
   {
+    "id": "DateOfBirthSelectionView_year",
+    "lang": "language_90001134"
+  },
+  {
+    "id": "DateOfBirthSelectionView_month",
+    "lang": "language_90001135"
+  },
+  {
+    "id": "DateOfBirthSelectionView_day",
+    "lang": "language_90001136"
+  },
+  {
     "id": "SkillDescComp_buildSkillNameLinkTag_overseas",
     "lang": "language_10053330"
   },

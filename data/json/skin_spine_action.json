@@ -5731,5 +5731,41 @@
     "effectRemoveTime": 0.0,
     "audioId": 431080192,
     "dieAnim": ""
+  },
+  {
+    "skinId": 310903,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a7_ttsz_born_s2#buff/born/pre_v2a7_ttsz_born_s5",
+    "effectHangPoint": "special2#special5",
+    "effectRemoveTime": 0.0,
+    "audioId": 431090391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 310903,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431090192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 307904,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a7_6_born_01",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430790491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 307904,
+    "actionName": "die",
+    "effect": "v2a7_6/6_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430790492,
+    "dieAnim": ""
   }
 ]

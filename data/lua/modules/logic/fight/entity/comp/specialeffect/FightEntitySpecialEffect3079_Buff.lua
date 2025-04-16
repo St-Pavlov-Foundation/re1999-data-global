@@ -10,70 +10,27 @@ end
 
 slot1 = 1.5
 slot2 = 0.9
-slot3 = {
-	[30790201] = {
-		"v1a4_6/6_innate2_01"
-	},
-	[30790202] = {
-		"v1a4_6/6_innate2_02"
-	},
-	[30790203] = {
-		"v1a4_6/6_innate2_03"
-	},
-	[30790204] = {
-		"v1a4_6/6_innate2_04"
-	},
-	[30790205] = {
-		"v1a4_6/6_innate2_05"
-	},
-	[30790206] = {
-		"v1a4_6/6_innate2_06"
-	},
-	[30790101] = {
-		"v1a4_6/6_innate3_01"
-	},
-	[30790102] = {
-		"v1a4_6/6_innate3_02"
-	},
-	[30790103] = {
-		"v1a4_6/6_innate3_03"
-	},
-	[30790104] = {
-		"v1a4_6/6_innate3_04"
-	},
-	[30790105] = {
-		"v1a4_6/6_innate3_05"
-	},
-	[30790106] = {
-		"v1a4_6/6_innate3_06"
-	},
-	[30790304] = {
-		"v1a4_6/6_innate3_01"
-	},
-	[30790305] = {
-		"v1a4_6/6_innate3_02"
-	},
-	[30790306] = {
-		"v1a4_6/6_innate3_03"
-	},
-	[30790307] = {
-		"v1a4_6/6_innate3_04"
-	},
-	[30790308] = {
-		"v1a4_6/6_innate3_05"
-	},
-	[30790309] = {
-		"v1a4_6/6_innate3_06"
-	}
-}
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
+function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	if slot1 ~= slot0._entity.id then
 		return
 	end
 
-	if uv0[slot3] and slot2 == FightEnum.EffectType.BUFFADD then
-		table.insert(slot0._showBuffIdList, slot3)
+	if not slot6 then
+		return
+	end
+
+	if not FightDataHelper.entityMgr:getById(slot6.fromUid) then
+		return
+	end
+
+	slot8 = lua_fight_6_buff_effect.configDict[slot7.skin] or lua_fight_6_buff_effect.configDict[0]
+
+	if slot8 and slot8[slot3] and slot2 == FightEnum.EffectType.BUFFADD then
+		table.insert(slot0._showBuffIdList, {
+			buffId = slot3,
+			config = slot8
+		})
 
 		if not slot0._playing then
 			slot0:_showBuffEffect()
@@ -84,12 +41,15 @@ end
 function slot0._showBuffEffect(slot0)
 	if table.remove(slot0._showBuffIdList, 1) then
 		slot0._playing = true
-		slot2 = uv0[slot1]
-		slot3 = slot0._entity.effect:addHangEffect(slot2[1], slot2[2] or ModuleEnum.SpineHangPointRoot, nil, uv1)
+		slot4 = slot0._entity.effect:addHangEffect(slot2.effect, string.nilorempty(slot1.config.effectHang) and ModuleEnum.SpineHangPointRoot or slot2.effectHang, nil, uv0)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot3)
-		slot3:setLocalPos(0, 0, 0)
-		TaskDispatcher.runDelay(slot0._showBuffEffect, slot0, uv2)
+		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot4)
+		slot4:setLocalPos(0, 0, 0)
+		TaskDispatcher.runDelay(slot0._showBuffEffect, slot0, uv1)
+
+		if slot2.audioId ~= 0 then
+			AudioMgr.instance:trigger(slot2.audioId)
+		end
 	else
 		slot0._playing = false
 	end

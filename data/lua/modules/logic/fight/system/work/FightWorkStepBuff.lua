@@ -54,7 +54,7 @@ function slot0.onStart(slot0)
 		slot1.buff:updateBuff(slot0._newBuffMO, slot0._oldBuffMO or slot0._newBuffMO, slot0._actEffectMO)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot0._entityId, slot2, slot0._buffId, slot0._buffUid, slot0._actEffectMO.configEffect)
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot0._entityId, slot2, slot0._buffId, slot0._buffUid, slot0._actEffectMO.configEffect, slot0._newBuffMO)
 
 	if uv0.canPlayDormantBuffAni then
 		slot0:com_registTimer(slot0._delayDone, 2 / FightModel.instance:getSpeed())

@@ -25,18 +25,17 @@ function slot0.ctor(slot0, slot1)
 end
 
 function slot0.onDestroyView(slot0)
+	GameUtil.onDestroyViewMember(slot0, "_itemIcon")
 	FrameTimerController.onDestroyViewMember(slot0, "_frameTimer")
 	uv0.super.onDestroyView(slot0)
 end
 
 function slot0._editableAddEvents(slot0)
 	uv0.super._editableInitView(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._OnOpenView, slot0)
 end
 
 function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._OnOpenView, slot0)
 end
 
@@ -46,32 +45,42 @@ function slot0._editableInitView(slot0)
 	slot0:setActive_goGet(false)
 	slot0:setActive_goCanGet(false)
 
-	slot0._imageReward = gohelper.findChildImage(slot0.viewGO, "image_Reward")
-	slot0._simageReward = gohelper.findChildSingleImage(slot0.viewGO, "image_Reward")
+	slot0._imageRewardGo = gohelper.findChild(slot0.viewGO, "image_Reward")
+	slot0._itemIcon = IconMgr.instance:getCommonPropItemIcon(slot0._imageRewardGo)
 	slot0._imageRewardBG = gohelper.findChildImage(slot0.viewGO, "image_RewardBG")
 	slot0._imageTipsBGGo = gohelper.findChild(slot0.viewGO, "image_TipsBG")
-	slot0._click = gohelper.getClick(slot0._imageReward.gameObject)
 end
 
 function slot0.onUpdateMO(slot0, slot1)
 	uv0.super.onUpdateMO(slot0, slot1)
 
 	slot3 = slot0:isType101RewardGet() and "#808080" or "#ffffff"
+	slot5 = slot0._index
 
 	assert(#uv1(slot0:getNorSignActivityCo().bonus, "|") == 1, string.format("[LinkageActivity_Page2Reward] rewardCount=%s", tostring(slot7)))
 
 	slot8 = string.splitToNumber(slot6[1], "#")
 	slot1._itemCo = slot8
 
-	GameUtil.loadSImage(slot0._simageReward, slot0:_assetGetViewContainer():getItemIconResUrl(slot8[1], slot8[2]))
-	UIColorHelper.set(slot0._imageReward, slot3)
+	slot0._itemIcon:setMOValue(slot8[1], slot8[2], slot8[3])
+	slot0._itemIcon:isShowQuality(false)
+	slot0._itemIcon:isShowEquipAndItemCount(false)
+	slot0._itemIcon:customOnClickCallback(slot0._onClick, slot0)
+
+	if slot0._itemIcon:isEquipIcon() then
+		slot0._itemIcon:setScale(0.7)
+	else
+		slot0._itemIcon:setScale(0.8)
+	end
+
+	slot0._itemIcon:setItemColor(slot3)
 	UIColorHelper.set(slot0._imageRewardBG, slot3)
 
-	slot0._txtNum.text = luaLang("multiple") .. slot8[3]
+	slot0._txtNum.text = luaLang("multiple") .. slot11
 
 	slot0:setActive_goGet(slot2)
 	slot0:setActive_goCanGet(slot0:isType101RewardCouldGet())
-	slot0:setActive_goTmr(slot0:getType101LoginCount() + 1 == slot0._index)
+	slot0:setActive_goTmr(slot0:getType101LoginCount() + 1 == slot5)
 end
 
 function slot0.setActive_goCanGet(slot0, slot1)

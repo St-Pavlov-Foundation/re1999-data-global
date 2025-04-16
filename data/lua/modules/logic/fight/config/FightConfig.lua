@@ -18,6 +18,8 @@ end
 
 function slot0.reqConfigNames(slot0)
 	slot1 = {
+		"fight_6_buff_effect",
+		"fight_buff_layer_effect_enemy_skin",
 		"card_description",
 		"stance",
 		"character",
