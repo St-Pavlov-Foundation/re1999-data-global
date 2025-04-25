@@ -243,6 +243,10 @@ function slot0._overrideCloseFunc(slot0)
 	RoomController.instance:exitRoom()
 end
 
+function slot0._overrideHelpFunc(slot0)
+	ViewMgr.instance:openView(ViewName.HelpPageTabView)
+end
+
 function slot0._onEscape(slot0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)

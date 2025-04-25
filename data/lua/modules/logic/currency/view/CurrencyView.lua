@@ -217,7 +217,7 @@ function slot0._onCurrencyChange(slot0)
 				slot7.go:SetActive(true)
 
 				if slot8.isCurrencySprite then
-					UISpriteSetMgr.instance:setCurrencyItemSprite(slot7.image, tostring(slot11) .. "_1")
+					UISpriteSetMgr.instance:setCurrencyItemSprite(slot7.image, tostring(slot8.icon or slot11) .. "_1")
 				else
 					if not slot8.icon then
 						if slot12 then
@@ -321,13 +321,15 @@ function slot0.isNeedShieldAddBtn(slot0)
 			[ViewName.RoomStoreGoodsTipView] = 1,
 			[ViewName.PackageStoreGoodsView] = 1,
 			[ViewName.StoreSkinGoodsView] = 1,
+			[ViewName.DecorateStoreGoodsView] = 1,
 			[ViewName.VersionActivityStoreView] = 1,
 			[ViewName.VersionActivityNormalStoreGoodsView] = 1,
 			[ViewName.SeasonStoreView] = 1,
 			[ViewName.VersionActivity1_2StoreView] = 1,
 			[ViewName.V1a5BuildingView] = 1,
 			[ViewName.V1a5BuildingDetailView] = 1,
-			[ViewName.PowerActChangeView] = 1
+			[ViewName.PowerActChangeView] = 1,
+			[ViewName.SummonStoreGoodsView] = 1
 		}
 	end
 

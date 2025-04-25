@@ -128,6 +128,7 @@ function slot0.openVersionActivityDungeonMapView(slot0, slot1, slot2, slot3, slo
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
 	}, slot0._onReceiveTaskReply, slot0)
+	Activity113Rpc.instance:sendGetAct113InfoRequest(VersionActivity1_6Enum.ActivityId.Dungeon)
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101) then
 		VersionActivity1_6DungeonRpc.instance:sendGet148InfoRequest(slot0._onReceiveAct148InfoReply, slot0)

@@ -193,6 +193,20 @@ function slot0.getRemainExpireTime(slot0)
 	return 0
 end
 
+function slot0.getRemainExpireTimeDeep(slot0)
+	if uv0.getRemainExpireTime(slot0) == 0 then
+		slot6 = true
+
+		for slot6 = 1, #StoreModel.instance:getSecondTabs(slot0.id, true, slot6) do
+			if uv0.getRemainExpireTime(slot2[slot6]) > 0 then
+				slot1 = math.max(slot7, slot1)
+			end
+		end
+	end
+
+	return slot1
+end
+
 function slot0.checkIsShowCoBrandedTag(slot0)
 	if not slot0 then
 		return false

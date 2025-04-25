@@ -423,6 +423,11 @@ function slot0.onOpen(slot0)
 
 	slot0:_refreshManufactureExpand()
 	slot0:_addReddot()
+	Activity186Model.instance:checkReadTasks({
+		Activity186Enum.ReadTaskId.Task1,
+		Activity186Enum.ReadTaskId.Task2,
+		Activity186Enum.ReadTaskId.Task3
+	})
 end
 
 function slot0.onOpenFinish(slot0)

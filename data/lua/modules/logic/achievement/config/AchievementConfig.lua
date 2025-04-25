@@ -32,13 +32,12 @@ function slot0.buildAchievementCfgs(slot0, slot1)
 	slot0._achievementConfig = slot1
 
 	slot0:initAchievementStateDict()
-
-	slot0._waitOnlineList = {}
-	slot0._waitOfflineList = {}
 end
 
 function slot0.initAchievementStateDict(slot0)
 	slot0._achievementState = {}
+	slot0._waitOnlineList = {}
+	slot0._waitOfflineList = {}
 
 	for slot4, slot5 in pairs(AchievementEnum.AchievementState) do
 		slot0._achievementState[slot5] = {}

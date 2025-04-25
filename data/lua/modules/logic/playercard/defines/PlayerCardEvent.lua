@@ -20,5 +20,6 @@ slot0.OnCloseCritterView = 1016
 slot0.RefreshProgressView = 1017
 slot0.RefreshBaseInfoView = 1018
 slot0.OnCloseBottomView = 1019
+slot0.ChangeSkin = 1020
 
 return slot0

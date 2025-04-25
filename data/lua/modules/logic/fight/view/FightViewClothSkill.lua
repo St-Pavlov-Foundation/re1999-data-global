@@ -87,7 +87,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, slot0._onCombineOneCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, slot0._onStartPlayClothSkill, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, slot0._onAfterPlayClothSkill, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RespResetCard, slot0._onResetCard, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, slot0._simulateClickClothSkillIcon, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.StartReplay, slot0._checkStartReplay, slot0)
@@ -117,7 +117,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, slot0._onCombineOneCard, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.StartPlayClothSkill, slot0._onStartPlayClothSkill, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, slot0._onAfterPlayClothSkill, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RespResetCard, slot0._onResetCard, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, slot0._simulateClickClothSkillIcon, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.StartReplay, slot0._checkStartReplay, slot0)
@@ -357,7 +357,7 @@ function slot0._onAfterPlayClothSkill(slot0)
 	slot0._cardOpAddPower = 0
 end
 
-function slot0._onResetCard(slot0)
+function slot0._onCancelOperation(slot0)
 	slot0._cardOpAddPower = 0
 
 	slot0:_updateUI()

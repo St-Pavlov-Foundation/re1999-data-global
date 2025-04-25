@@ -47,7 +47,7 @@ function slot0.onOpen(slot0)
 
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, slot0._itemClick, slot0)
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, slot0._onSceneSwitchUIVisible, slot0)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, slot0._onStartSwitchScene, slot0)
+	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, slot0._onStartSwitchScene, slot0)
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, slot0._onCloseSwitchSceneLoading, slot0)
 end
 

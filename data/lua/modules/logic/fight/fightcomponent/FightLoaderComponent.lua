@@ -2,10 +2,10 @@ module("modules.logic.fight.fightcomponent.FightLoaderComponent", package.seeall
 
 slot0 = class("FightLoaderComponent", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._urlDic = {}
 	slot0._callback = {}
-	slot0._assetDic = slot0:registTable()
+	slot0._assetDic = slot0:newUserDataTable()
 	slot0._failedDic = {}
 	slot0._listLoadCallback = {}
 end
@@ -61,7 +61,7 @@ function slot0.loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5)
 	end
 
 	for slot9, slot10 in ipairs(slot1) do
-		slot0:loadAsset(slot10, slot2, slot4, slot5[slot9])
+		slot0:loadAsset(slot10, slot2, slot4, (slot5 or {})[slot9])
 	end
 
 	slot0:_invokeUrlListCallback()

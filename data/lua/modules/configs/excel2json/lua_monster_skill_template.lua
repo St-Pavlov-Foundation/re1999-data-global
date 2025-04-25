@@ -1,26 +1,27 @@
 module("modules.configs.excel2json.lua_monster_skill_template", package.seeall)
 
 slot1 = {
-	gender = 6,
+	gender = 7,
 	name = 2,
-	career = 7,
-	baseStress = 17,
-	uniqueSkill = 11,
-	uniqueSkill_point = 12,
+	career = 8,
+	baseStress = 18,
+	uniqueSkill = 12,
+	uniqueSkill_point = 13,
 	nameEng = 3,
-	identity = 19,
-	race = 20,
-	camp = 16,
-	dmgType = 8,
-	activeSkill = 10,
-	powerMax = 14,
+	identity = 20,
+	race = 21,
+	camp = 17,
+	dmgType = 9,
+	activeSkill = 11,
+	powerMax = 15,
 	des = 4,
-	passiveSkill = 9,
-	property = 15,
-	resistance = 13,
+	passiveSkill = 10,
+	instance = 6,
+	property = 16,
+	resistance = 14,
 	template = 5,
 	id = 1,
-	maxStress = 18
+	maxStress = 19
 }
 slot2 = {
 	"id"

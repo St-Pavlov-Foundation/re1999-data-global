@@ -198,7 +198,9 @@ function slot0.setAlpha(slot0, slot1)
 		slot0.canvasGroup = gohelper.onceAddComponent(slot0._dynamicIconObj, gohelper.Type_CanvasGroup)
 	end
 
-	slot0.canvasGroup.alpha = slot1
+	if slot0.canvasGroup then
+		slot0.canvasGroup.alpha = slot1
+	end
 end
 
 function slot0.setAnimationTime(slot0, slot1)

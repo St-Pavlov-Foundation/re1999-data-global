@@ -3,7 +3,7 @@ module("modules.logic.fight.system.work.FightWorkDoneFlowSequence", package.seea
 slot0 = class("FightWorkDoneFlowSequence", FightWorkFlowSequence)
 
 function slot0.start(slot0, slot1)
-	if slot0.PARENTROOTCLASS and slot0.PARENTROOTCLASS.PARENTROOTCLASS and slot2.cancelFightWorkSafeTimer then
+	if slot0.PARENT_ROOT_CLASS and slot0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS and slot2.cancelFightWorkSafeTimer then
 		slot2:cancelFightWorkSafeTimer()
 	end
 

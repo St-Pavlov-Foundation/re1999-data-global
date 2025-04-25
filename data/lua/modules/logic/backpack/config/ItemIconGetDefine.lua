@@ -21,7 +21,8 @@ function slot0.ctor(slot0)
 		[MaterialEnum.MaterialType.Antique] = uv0._getAntique,
 		[MaterialEnum.MaterialType.V1a5AiZiLa] = uv0._getV1a5AiZiLaItem,
 		[MaterialEnum.MaterialType.Season123EquipCard] = uv0._getEquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight
+		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = uv0._getCritterIcon
 	}
 end
 
@@ -91,6 +92,10 @@ end
 
 function slot0._getNewInsight(slot0)
 	return ResUrl.getPropItemIcon(slot0.icon)
+end
+
+function slot0._getCritterIcon(slot0)
+	return ResUrl.getCritterItemIcon(slot0.icon)
 end
 
 function slot0.getItemIconFunc(slot0, slot1)

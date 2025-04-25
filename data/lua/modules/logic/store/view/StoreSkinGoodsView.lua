@@ -6,7 +6,13 @@ slot1 = {
 	-46,
 	0
 }
-slot2 = 0.85
+slot2 = {
+	-460,
+	0,
+	0
+}
+slot3 = 0.85
+slot4 = "singlebg/signature/color/img_dressing1.png"
 
 function slot0.onInitView(slot0)
 	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_rightbg")
@@ -99,7 +105,6 @@ end
 function slot0._editableInitView(slot0)
 	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
 	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simagedreesing:LoadImage(ResUrl.getCharacterSkinIcon("img_dressing"))
 
 	slot0._goremain = gohelper.findChild(slot0.viewGO, "view/propinfo/content/remain")
 	slot0._gonormaltitle = gohelper.findChild(slot0.viewGO, "view/bgroot/#go_normal_title")
@@ -267,65 +272,77 @@ function slot0._refreshSkinIcon(slot0, slot1)
 	if slot3 then
 		slot0._simagedreesing:LoadImage(ResUrl.getCharacterSkinIcon("bg_zhuangshi"))
 
-		slot4 = slot0._mo.config.bigImg
+		slot5 = slot0._mo.config.bigImg
 
 		if not string.nilorempty(slot0._mo.config.spineParams) then
-			slot6 = string.split(slot5, "#")
-			slot8 = slot6[2]
-			slot9 = string.splitToNumber(slot6[3], ",")
-			slot10 = slot6[6]
+			slot7 = string.split(slot6, "#")
+			slot9 = slot7[1]
+			slot10 = slot7[2]
+			slot11 = string.splitToNumber(slot7[3], ",")
+			slot12 = slot7[6]
+
+			if #slot7 > 6 then
+				slot4 = slot7[7] or uv0
+			end
 
 			if slot0._skinSpine then
-				slot0._skinSpine:setResPath(slot6[1], slot0._onSpine1Loaded, slot0, true)
+				slot0._skinSpine:setResPath(slot9, slot0._onSpine1Loaded, slot0, true)
 			else
 				slot0._skinSpineGO = gohelper.create2d(slot0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
 
-				transformhelper.setLocalPos(slot0._skinSpineGO.transform, slot9[1], slot9[2], 0)
+				transformhelper.setLocalPos(slot0._skinSpineGO.transform, slot11[1], slot11[2], 0)
 
 				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
 
-				slot0._skinSpine:setResPath(slot7, slot0._onSpine1Loaded, slot0, true)
+				slot0._skinSpine:setResPath(slot9, slot0._onSpine1Loaded, slot0, true)
 
-				if not string.nilorempty(slot8) then
+				if not string.nilorempty(slot10) then
 					slot0._skinSpineGO2 = gohelper.create2d(slot0._goUniqueSkinsSpineRoot2, "uniqueSkinSpine2")
 
-					transformhelper.setLocalPos(slot0._skinSpineGO2.transform, slot9[1], slot9[2], 0)
+					transformhelper.setLocalPos(slot0._skinSpineGO2.transform, slot11[1], slot11[2], 0)
 
 					slot0._skinSpine2 = GuiSpine.Create(slot0._skinSpineGO2, false)
 
-					slot0._skinSpine2:setResPath(slot8, slot0._onSpine2Loaded, slot0, true)
+					slot0._skinSpine2:setResPath(slot10, slot0._onSpine2Loaded, slot0, true)
 				end
 			end
 
-			if not string.nilorempty(slot10) then
-				slot0._simageUniqueSkinIcon:LoadImage(slot10)
-				slot0._simageUniqueSkinSpineRoot:LoadImage(slot10)
+			if not string.nilorempty(slot12) then
+				slot0._simageUniqueSkinIcon:LoadImage(slot12)
+				slot0._simageUniqueSkinSpineRoot:LoadImage(slot12)
 			else
 				gohelper.setActive(slot0._uniqueImagebg.gameObject, false)
 			end
 
 			gohelper.setActive(slot0._skinSpineGO, true)
-		elseif string.find(slot4, "prefab") then
-			slot6 = string.split(slot4, "#")
-			slot8 = slot6[3]
+		elseif string.find(slot5, "prefab") then
+			gohelper.setActive(slot0._goUniqueSkinsTitle, false)
 
-			if slot0._skinSpine then
-				slot0._skinSpine:setResPath(slot6[1], slot0._onSpineLoaded, slot0, true)
-			else
-				slot0._skinSpineGO = gohelper.create2d(slot0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
+			slot7 = string.split(slot5, "#")
+			slot9 = slot7[1]
+			slot10 = slot7[3]
 
-				transformhelper.setLocalPos(slot0._skinSpineGO.transform, uv0[1], uv0[2], uv0[3])
-
-				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
-
-				slot0._skinSpine:setResPath(slot7, slot0._onSpineLoaded, slot0, true)
+			if #slot7 > 3 then
+				slot4 = slot7[4] or slot4
 			end
 
-			slot0._simageUniqueSkinIcon:LoadImage(slot8)
+			if slot0._skinSpine then
+				slot0._skinSpine:setResPath(slot9, slot0._onSpineLoaded, slot0, true)
+			else
+				slot0._skinSpineGO = gohelper.create2d(slot0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
+				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
+
+				transformhelper.setLocalPos(slot0._skinSpineGO.transform, uv1[1], uv1[2], uv1[3])
+				slot0._skinSpine:setResPath(slot9, slot0._onSpineLoaded, slot0, true)
+				transformhelper.setLocalPos(slot0._goUniqueSkinsSpineRoot.transform, uv2[1], uv2[2], 0)
+			end
+
+			slot0._simageUniqueSkinIcon:LoadImage(slot10, slot0._loadedSpineBgDone, slot0)
+			transformhelper.setLocalPos(slot0._simageUniqueSkinIcon.transform, uv2[1], uv2[2], uv2[3])
 			slot0._imageUniqueSkinIcon:SetNativeSize()
 			slot0._imageUniqueSkinSpineRoot:SetNativeSize()
 			gohelper.setActive(slot0._skinSpineGO, true)
-		elseif not string.nilorempty(slot4) then
+		elseif not string.nilorempty(slot5) then
 			slot0._simageUniqueSkinIcon:LoadImage(slot0._mo.config.bigImg)
 		else
 			slot0._simageUniqueSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
@@ -335,6 +352,16 @@ function slot0._refreshSkinIcon(slot0, slot1)
 	else
 		slot0._simageGeneralSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 	end
+
+	slot0._simagedreesing:LoadImage(slot4, slot0._loadedSignImage, slot0)
+end
+
+function slot0._loadedSignImage(slot0)
+	gohelper.onceAddComponent(slot0._simagedreesing.gameObject, gohelper.Type_Image):SetNativeSize()
+end
+
+function slot0._loadedSpineBgDone(slot0)
+	gohelper.onceAddComponent(slot0._simageUniqueSkinIcon.gameObject, gohelper.Type_Image):SetNativeSize()
 end
 
 function slot0._onSpine1Loaded(slot0)

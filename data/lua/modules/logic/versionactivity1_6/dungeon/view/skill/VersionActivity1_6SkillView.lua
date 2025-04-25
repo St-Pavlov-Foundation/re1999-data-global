@@ -153,7 +153,7 @@ function slot1._refreshSkillEffects(slot0)
 		slot8:GetComponent(gohelper.Type_TextMesh).text = gohelper.getRichColorText(GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity1_6skillview_skilleff_overseas"), {
 			Activity148Config.instance:getAct148SkillTypeCfg(slot6.type).skillName,
 			slot6.level
-		}), "#E99B56") .. (FightConfig.instance:getSkillEffectCO(slot6.skillId) and slot10.desc)
+		}), "#E99B56") .. (FightConfig.instance:getSkillEffectCO(slot6.skillId) and FightConfig.instance:getSkillEffectDesc(nil, slot10))
 	end
 
 	gohelper.setActive(slot0._goSkillEffectEmpty, #slot1 == 0)

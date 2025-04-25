@@ -51,7 +51,7 @@ function slot0._onWorkDone(slot0)
 	slot0._sequence:unregisterDoneListener(slot0._onWorkDone, slot0)
 
 	if slot0.context.handCardItemList[slot0.context.index].cardInfoMO and slot1.cardInfoMO.skillId then
-		FightController.instance:dispatchEvent(FightEvent.ShowCardSkillTips, slot2, slot1.cardInfoMO.uid)
+		FightController.instance:dispatchEvent(FightEvent.ShowCardSkillTips, slot2, slot1.cardInfoMO.uid, slot1.cardInfoMO)
 	end
 
 	slot0:onDone(true)

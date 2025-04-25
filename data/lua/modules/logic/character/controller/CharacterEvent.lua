@@ -11,6 +11,7 @@ return {
 	ShowGuideDragEffect = 8,
 	TakeoffAllTalentCube = 9,
 	OnGuideAttenuation = 10,
+	ChangeMainHero = 11,
 	HeroInfoListReply = 1001,
 	HeroUpdatePush = 1002,
 	successHeroRankUp = 1003,

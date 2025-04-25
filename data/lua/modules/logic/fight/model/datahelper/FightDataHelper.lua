@@ -2,19 +2,17 @@ module("modules.logic.fight.model.datahelper.FightDataHelper", package.seeall)
 
 slot0 = {
 	defineMgrRef = function ()
-		uv0.calMgr = FightDataMgr.instance.calMgr
-		uv0.entityMgr = FightDataMgr.instance.entityMgr
-		uv0.handCardMgr = FightDataMgr.instance.handCardMgr
-		uv0.fieldMgr = FightDataMgr.instance.fieldMgr
-		uv0.operationMgr = FightDataMgr.instance.operationMgr
-		uv0.simulateMgr = FightDataMgr.instance.simulateMgr
-		uv0.stageMgr = FightDataMgr.instance.stageMgr
-		uv0.paTaMgr = FightDataMgr.instance.paTaMgr
-		uv0.playCardMgr = FightDataMgr.instance.playCardMgr
-		uv0.tempMgr = FightDataMgr.instance.tempMgr
-		uv0.simulationMgr = FightDataMgr.instance.simulationMgr
-		uv0.entityExMgr = FightDataMgr.instance.entityExMgr
-		uv0.ASFDDataMgr = FightDataMgr.instance.ASFDDataMgr
+		slot0 = FightDataMgr.instance.mgrList
+
+		for slot4, slot5 in pairs(FightDataMgr.instance) do
+			for slot9, slot10 in ipairs(slot0) do
+				if slot10 == slot5 then
+					uv0[slot4] = slot10
+
+					break
+				end
+			end
+		end
 	end,
 	initDataMgr = function ()
 		uv0.lastFightResult = nil

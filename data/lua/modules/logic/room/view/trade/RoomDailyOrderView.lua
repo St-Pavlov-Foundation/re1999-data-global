@@ -29,6 +29,7 @@ function slot0.addEvents(slot0)
 	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
 	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnRefreshDailyOrder, slot0.refreshOrder, slot0)
 	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTracedDailyOrder, slot0.refreshTraced, slot0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnLockedDailyOrder, slot0.refreshLocked, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -37,6 +38,7 @@ function slot0.removeEvents(slot0)
 	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
 	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnRefreshDailyOrder, slot0.refreshOrder, slot0)
 	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnTracedDailyOrder, slot0.refreshTraced, slot0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnLockedDailyOrder, slot0.refreshLocked, slot0)
 end
 
 function slot0._editableInitView(slot0)
@@ -84,6 +86,8 @@ end
 function slot0.refreshRefreshCount(slot0)
 	slot2, slot3 = RoomTradeModel.instance:getRefreshCount()
 	slot0._txttip2.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("room_tade_dailyorder_active_refresh_tip"), slot3 <= slot3 - slot2 and "#a63838" or "#EFEFEF", slot2, slot3)
+
+	gohelper.setActive(slot0._txttip2, slot3 > 0)
 end
 
 function slot0.refreshFinishBarrage(slot0, slot1)
@@ -192,6 +196,12 @@ function slot0.refreshTraced(slot0, slot1)
 	slot2, slot3 = RoomTradeModel.instance:getDailyOrderById(slot1)
 
 	slot0:_getOrderItem(slot3):refreshTraced()
+end
+
+function slot0.refreshLocked(slot0, slot1)
+	slot2, slot3 = RoomTradeModel.instance:getDailyOrderById(slot1)
+
+	slot0:_getOrderItem(slot3):refreshLocked()
 end
 
 function slot0.onClose(slot0)

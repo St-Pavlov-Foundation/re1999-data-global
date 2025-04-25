@@ -1,0 +1,30 @@
+[
+  {
+    "groupId": 1001,
+    "unlock": 0
+  },
+  {
+    "groupId": 1002,
+    "unlock": 172800
+  },
+  {
+    "groupId": 1003,
+    "unlock": 345600
+  },
+  {
+    "groupId": 1004,
+    "unlock": 518400
+  },
+  {
+    "groupId": 1005,
+    "unlock": 691200
+  },
+  {
+    "groupId": 1006,
+    "unlock": 864000
+  },
+  {
+    "groupId": 1007,
+    "unlock": 1036800
+  }
+]

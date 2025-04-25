@@ -14,7 +14,8 @@
     "sort": 101,
     "audioType": 1,
     "audioLength": 0.0,
-    "audioEvaluates": "language_10039348"
+    "audioEvaluates": "language_10039348",
+    "isNonLoop": 0
   },
   {
     "id": 2001,
@@ -31,7 +32,8 @@
     "sort": 2051,
     "audioType": 1,
     "audioLength": 68.571,
-    "audioEvaluates": "language_10039351"
+    "audioEvaluates": "language_10039351",
+    "isNonLoop": 0
   },
   {
     "id": 2002,
@@ -48,7 +50,8 @@
     "sort": 2031,
     "audioType": 1,
     "audioLength": 132.284,
-    "audioEvaluates": "language_10039354"
+    "audioEvaluates": "language_10039354",
+    "isNonLoop": 0
   },
   {
     "id": 2003,
@@ -65,7 +68,8 @@
     "sort": 2001,
     "audioType": 1,
     "audioLength": 104.554,
-    "audioEvaluates": "language_10039357"
+    "audioEvaluates": "language_10039357",
+    "isNonLoop": 0
   },
   {
     "id": 2004,
@@ -82,7 +86,8 @@
     "sort": 2011,
     "audioType": 1,
     "audioLength": 90.0,
-    "audioEvaluates": "language_10039360"
+    "audioEvaluates": "language_10039360",
+    "isNonLoop": 0
   },
   {
     "id": 2005,
@@ -98,8 +103,9 @@
     "audioicon": "2005_2",
     "sort": 2041,
     "audioType": 1,
-    "audioLength": 81.0,
-    "audioEvaluates": "language_10039363"
+    "audioLength": 87.636,
+    "audioEvaluates": "language_10039363",
+    "isNonLoop": 0
   },
   {
     "id": 1010501,
@@ -116,7 +122,8 @@
     "sort": 10502,
     "audioType": 5,
     "audioLength": 105.6,
-    "audioEvaluates": "language_10039366"
+    "audioEvaluates": "language_10039366",
+    "isNonLoop": 0
   },
   {
     "id": 1010502,
@@ -133,7 +140,8 @@
     "sort": 10501,
     "audioType": 5,
     "audioLength": 80.0,
-    "audioEvaluates": "language_10039369"
+    "audioEvaluates": "language_10039369",
+    "isNonLoop": 0
   },
   {
     "id": 1010601,
@@ -150,7 +158,8 @@
     "sort": 10601,
     "audioType": 8,
     "audioLength": 116.225,
-    "audioEvaluates": "language_10039372"
+    "audioEvaluates": "language_10039372",
+    "isNonLoop": 0
   },
   {
     "id": 1010602,
@@ -167,7 +176,8 @@
     "sort": 10602,
     "audioType": 8,
     "audioLength": 131.669,
-    "audioEvaluates": "language_10039375"
+    "audioEvaluates": "language_10039375",
+    "isNonLoop": 0
   },
   {
     "id": 1010701,
@@ -184,7 +194,8 @@
     "sort": 10701,
     "audioType": 10,
     "audioLength": 145.116,
-    "audioEvaluates": "language_10039378"
+    "audioEvaluates": "language_10039378",
+    "isNonLoop": 0
   },
   {
     "id": 1010702,
@@ -201,7 +212,8 @@
     "sort": 10702,
     "audioType": 10,
     "audioLength": 96.0,
-    "audioEvaluates": "language_10039381"
+    "audioEvaluates": "language_10039381",
+    "isNonLoop": 0
   },
   {
     "id": 1021901,
@@ -218,7 +230,8 @@
     "sort": 21901,
     "audioType": 10,
     "audioLength": 110.118,
-    "audioEvaluates": "language_10039384"
+    "audioEvaluates": "language_10039384",
+    "isNonLoop": 0
   },
   {
     "id": 1021902,
@@ -235,7 +248,8 @@
     "sort": 21902,
     "audioType": 10,
     "audioLength": 107.294,
-    "audioEvaluates": "language_10039387"
+    "audioEvaluates": "language_10039387",
+    "isNonLoop": 0
   },
   {
     "id": 2006,
@@ -252,7 +266,8 @@
     "sort": 2021,
     "audioType": 1,
     "audioLength": 68.966,
-    "audioEvaluates": "language_10045503"
+    "audioEvaluates": "language_10045503",
+    "isNonLoop": 0
   },
   {
     "id": 1022001,
@@ -269,7 +284,8 @@
     "sort": 22001,
     "audioType": 11,
     "audioLength": 162.0,
-    "audioEvaluates": "language_10045516"
+    "audioEvaluates": "language_10045516",
+    "isNonLoop": 0
   },
   {
     "id": 1022002,
@@ -286,7 +302,8 @@
     "sort": 22002,
     "audioType": 11,
     "audioLength": 127.103,
-    "audioEvaluates": "language_10045519"
+    "audioEvaluates": "language_10045519",
+    "isNonLoop": 0
   },
   {
     "id": 1022101,
@@ -302,8 +319,9 @@
     "audioicon": "1022101_2",
     "sort": 22101,
     "audioType": 12,
-    "audioLength": 117.0,
-    "audioEvaluates": "language_10048440"
+    "audioLength": 136.216,
+    "audioEvaluates": "language_10048440",
+    "isNonLoop": 0
   },
   {
     "id": 1022102,
@@ -320,7 +338,8 @@
     "sort": 22102,
     "audioType": 12,
     "audioLength": 142.042,
-    "audioEvaluates": "language_10048443"
+    "audioEvaluates": "language_10048443",
+    "isNonLoop": 0
   },
   {
     "id": 1010801,
@@ -337,7 +356,8 @@
     "sort": 10801,
     "audioType": 13,
     "audioLength": 117.0,
-    "audioEvaluates": "language_10053428"
+    "audioEvaluates": "language_10053428",
+    "isNonLoop": 0
   },
   {
     "id": 1010802,
@@ -354,7 +374,8 @@
     "sort": 10802,
     "audioType": 13,
     "audioLength": 129.909,
-    "audioEvaluates": "language_10053431"
+    "audioEvaluates": "language_10053431",
+    "isNonLoop": 0
   },
   {
     "id": 1022201,
@@ -371,7 +392,8 @@
     "sort": 22201,
     "audioType": 13,
     "audioLength": 153.6,
-    "audioEvaluates": "language_10053434"
+    "audioEvaluates": "language_10053434",
+    "isNonLoop": 0
   },
   {
     "id": 1022202,
@@ -387,8 +409,9 @@
     "audioicon": "1022202_2",
     "sort": 22202,
     "audioType": 13,
-    "audioLength": 92.0,
-    "audioEvaluates": "language_10053437"
+    "audioLength": 97.0,
+    "audioEvaluates": "language_10053437",
+    "isNonLoop": 0
   },
   {
     "id": 1022203,
@@ -405,7 +428,8 @@
     "sort": 22203,
     "audioType": 13,
     "audioLength": 54.857,
-    "audioEvaluates": "language_10053440"
+    "audioEvaluates": "language_10053440",
+    "isNonLoop": 0
   },
   {
     "id": 1022301,
@@ -422,7 +446,8 @@
     "sort": 22301,
     "audioType": 14,
     "audioLength": 115.135,
-    "audioEvaluates": "language_10058487"
+    "audioEvaluates": "language_10058487",
+    "isNonLoop": 0
   },
   {
     "id": 1022302,
@@ -439,7 +464,8 @@
     "sort": 22302,
     "audioType": 14,
     "audioLength": 131.2,
-    "audioEvaluates": "language_10058490"
+    "audioEvaluates": "language_10058490",
+    "isNonLoop": 0
   },
   {
     "id": 1022303,
@@ -456,7 +482,8 @@
     "sort": 22303,
     "audioType": 14,
     "audioLength": 128.0,
-    "audioEvaluates": "language_10058493"
+    "audioEvaluates": "language_10058493",
+    "isNonLoop": 0
   },
   {
     "id": 1022401,
@@ -473,7 +500,8 @@
     "sort": 22401,
     "audioType": 15,
     "audioLength": 189.0,
-    "audioEvaluates": "language_10062126"
+    "audioEvaluates": "language_10062126",
+    "isNonLoop": 0
   },
   {
     "id": 1032401,
@@ -489,8 +517,9 @@
     "audioicon": "1032401_2",
     "sort": 30001,
     "audioType": 15,
-    "audioLength": 157.655,
-    "audioEvaluates": "language_10062129"
+    "audioLength": 161.143,
+    "audioEvaluates": "language_10062129",
+    "isNonLoop": 1
   },
   {
     "id": 1032402,
@@ -507,7 +536,8 @@
     "sort": 30002,
     "audioType": 15,
     "audioLength": 180.857,
-    "audioEvaluates": "language_10062132"
+    "audioEvaluates": "language_10062132",
+    "isNonLoop": 1
   },
   {
     "id": 1032403,
@@ -523,7 +553,80 @@
     "audioicon": "1032403_2",
     "sort": 30003,
     "audioType": 15,
-    "audioLength": 139.4,
-    "audioEvaluates": "language_10062135"
+    "audioLength": 142.21,
+    "audioEvaluates": "language_10062135",
+    "isNonLoop": 1
+  },
+  {
+    "id": 1032404,
+    "audio": 20245005,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 222004,
+    "defaultUnlock": 0,
+    "audioName": "language_10006104",
+    "audioNameEn": "The Doors",
+    "audioIntroduce": "language_10062136",
+    "audioBg": "1032404_1",
+    "audioicon": "1032404_2",
+    "sort": 30004,
+    "audioType": 15,
+    "audioLength": 149.237,
+    "audioEvaluates": "language_10062137",
+    "isNonLoop": 1
+  },
+  {
+    "id": 1032405,
+    "audio": 20245006,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 222005,
+    "defaultUnlock": 0,
+    "audioName": "language_10062138",
+    "audioNameEn": "Полярная ночь",
+    "audioIntroduce": "language_10062139",
+    "audioBg": "1032405_1",
+    "audioicon": "1032405_2",
+    "sort": 30005,
+    "audioType": 15,
+    "audioLength": 233.455,
+    "audioEvaluates": "language_10062140",
+    "isNonLoop": 1
+  },
+  {
+    "id": 1032406,
+    "audio": 20245007,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 222006,
+    "defaultUnlock": 0,
+    "audioName": "language_10039627",
+    "audioNameEn": "Hymnus Ad Bacchum",
+    "audioIntroduce": "language_10062141",
+    "audioBg": "1032406_1",
+    "audioicon": "1032406_2",
+    "sort": 30006,
+    "audioType": 15,
+    "audioLength": 106.763,
+    "audioEvaluates": "language_10062142",
+    "isNonLoop": 1
+  },
+  {
+    "id": 1022501,
+    "audio": 20250101,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221151,
+    "defaultUnlock": 0,
+    "audioName": "language_10065870",
+    "audioNameEn": "The truth will come",
+    "audioIntroduce": "language_10066256",
+    "audioBg": "1022501_1",
+    "audioicon": "1022501_2",
+    "sort": 22501,
+    "audioType": 16,
+    "audioLength": 198.75,
+    "audioEvaluates": "language_10066257",
+    "isNonLoop": 1
   }
 ]

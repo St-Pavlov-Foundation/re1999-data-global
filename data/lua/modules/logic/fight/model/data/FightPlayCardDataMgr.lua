@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightPlayCardDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightPlayCardDataMgr")
+slot0 = FightDataClass("FightPlayCardDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0.playCard = {}
 	slot0.enemyPlayCard = {}
 	slot0.enemyAct174PlayCard = {}

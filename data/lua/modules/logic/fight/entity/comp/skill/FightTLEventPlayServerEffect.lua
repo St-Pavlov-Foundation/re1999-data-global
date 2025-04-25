@@ -33,6 +33,36 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 	if slot3[7] == "1" then
 		slot0:_playEffect(FightEnum.EffectType.AVERAGELIFE)
 	end
+
+	if slot3[8] == "1" then
+		slot0:_playEffect(FightEnum.EffectType.BUFFADD)
+	end
+
+	if slot3[9] == "1" then
+		slot0:_playEffect(FightEnum.EffectType.BUFFDEL)
+	end
+
+	if not string.nilorempty(slot3[10]) then
+		for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
+			if slot8.effectType == FightEnum.EffectType.BUFFADD and lua_skill_buff.configDict[slot8.buff.buddId] and lua_skill_bufftype.configDict[slot10.typeId] and slot11.type == tonumber(slot3[10]) then
+				slot12 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFADD], slot0._fightStepMO, slot8)
+
+				slot12:onStart()
+				table.insert(slot0._list, slot12)
+			end
+		end
+	end
+
+	if not string.nilorempty(slot3[11]) then
+		for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
+			if slot8.effectType == FightEnum.EffectType.BUFFDEL and lua_skill_buff.configDict[slot8.buff.buddId] and lua_skill_bufftype.configDict[slot10.typeId] and slot11.type == tonumber(slot3[11]) then
+				slot12 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFDEL], slot0._fightStepMO, slot8)
+
+				slot12:onStart()
+				table.insert(slot0._list, slot12)
+			end
+		end
+	end
 end
 
 function slot0._playEffect(slot0, slot1)

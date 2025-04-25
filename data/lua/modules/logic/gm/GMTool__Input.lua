@@ -207,8 +207,8 @@ _G.getGlobal("Partial_GMTool")._input = ({
 		if uv0.GetKeyDown(uv1.F12) then
 			logNormal("F12 logout")
 			uv2()
-		elseif uv0.GetKeyDown(uv1.F2) then
-			logNormal("F2 super")
+		elseif slot9 and slot3 and uv0.GetKeyDown(uv1.Alpha4) then
+			logNormal("Ctrl + Alt + 4 super")
 			slot0:_super()
 		elseif slot9 and uv0.GetMouseButtonUp(0) then
 			logNormal("Ctrl + Left Mouse Click")

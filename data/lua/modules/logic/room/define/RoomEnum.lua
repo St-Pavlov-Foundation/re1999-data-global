@@ -330,9 +330,10 @@ slot0.EffectRebuildCompNames = {
 	"vehickleTransport",
 	"atmosphere"
 }
-slot0.AtmosphereCacheKey = "RoomAtmosphereKey"
+slot0.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
 slot0.AtmosphereTriggerType = {
 	IntegralPoint = 2,
+	CDTime = 3,
 	Disposable = 1,
 	None = 0
 }

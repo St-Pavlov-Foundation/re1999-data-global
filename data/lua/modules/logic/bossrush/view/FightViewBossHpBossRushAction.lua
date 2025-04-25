@@ -91,7 +91,7 @@ end
 
 function slot0._refreshActData(slot0, slot1)
 	slot0._curRound = FightModel.instance:getCurRoundId() + (slot1 or 0)
-	slot0._maxRound = FightModel.instance.maxRound
+	slot0._maxRound = FightModel.instance:getMaxRound()
 	slot0._actList = {}
 	slot0._curDataList = {}
 	slot2 = FightModel.instance:getBattleId()

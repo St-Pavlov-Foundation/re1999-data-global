@@ -4,24 +4,30 @@ slot0 = class("PlayerCardThemeListModel", ListScrollModel)
 
 function slot0.init(slot0)
 	slot1 = {}
+	slot3 = PlayerCardModel.instance:getCardInfo():getThemeId()
 
-	for slot6, slot7 in ipairs(ItemModel.instance:getItemsBySubType(ItemEnum.SubType.PlayerBg)) do
-		slot8 = PlayerCardSkinMo.New()
+	for slot7, slot8 in ipairs(ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)) do
+		slot9 = PlayerCardSkinMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot1, slot8)
+		slot9:init(slot8)
+		table.insert(slot1, slot9)
+
+		if slot3 == slot9.id then
+			PlayerCardModel.instance:setSelectSkinMO(slot9)
+		end
 	end
 
-	slot3 = PlayerCardSkinMo.New()
+	slot4 = PlayerCardSkinMo.New()
 
-	slot3:setEmpty()
-	table.insert(slot1, slot3)
+	slot4:setEmpty()
+	table.insert(slot1, slot4)
 	table.sort(slot1, uv0.sort)
-	slot0:setList(slot1)
 
-	if #slot1 == 1 then
-		PlayerCardModel.instance:setSelectSkinMO(slot3)
+	if #slot1 == 1 or slot3 == 0 then
+		PlayerCardModel.instance:setSelectSkinMO(slot4)
 	end
+
+	slot0:setList(slot1)
 end
 
 function slot0.sort(slot0, slot1)
@@ -32,7 +38,12 @@ function slot0.sort(slot0, slot1)
 	end
 end
 
-function slot0.checkSkinUnlock(slot0)
+function slot0.getMoById(slot0, slot1)
+	for slot6, slot7 in ipairs(slot0:getList()) do
+		if slot1 == slot7.id then
+			return slot7
+		end
+	end
 end
 
 function slot0.getSelectIndex(slot0)

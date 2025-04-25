@@ -17,6 +17,7 @@ for slot5, slot6 in pairs({
 	Act174MonsterAiCard = GameUtil.getMsgId(),
 	MaybeCrashed = GameUtil.getMsgId(),
 	AfterInitDataMgrRef = GameUtil.getMsgId(),
+	AddHandCardWork = GameUtil.getMsgId(),
 	Distribute1Card = GameUtil.getMsgId(),
 	Distribute2Card = GameUtil.getMsgId(),
 	SimulateAddExPoint = GameUtil.getMsgId(),
@@ -37,6 +38,7 @@ for slot5, slot6 in pairs({
 	CheckAliveOperationWork = GameUtil.getMsgId(),
 	PlayAtOperationView = GameUtil.getMsgId(),
 	RegistPlayAtOperationView = GameUtil.getMsgId(),
+	EntrustFightWork = GameUtil.getMsgId(),
 	GMDouQuQuSkip2IndexRound = GameUtil.getMsgId()
 }) do
 	-- Nothing

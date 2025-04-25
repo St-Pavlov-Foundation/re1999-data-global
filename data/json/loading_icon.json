@@ -30,12 +30,6 @@
     "weight": 100
   },
   {
-    "id": 6,
-    "pic": "loading_6",
-    "scenes": "4",
-    "weight": 100
-  },
-  {
     "id": 7,
     "pic": "loading_7",
     "scenes": "4",
@@ -50,12 +44,6 @@
   {
     "id": 10,
     "pic": "loading_10",
-    "scenes": "1#2#3#5",
-    "weight": 100
-  },
-  {
-    "id": 11,
-    "pic": "loading_11",
     "scenes": "1#2#3#5",
     "weight": 100
   },

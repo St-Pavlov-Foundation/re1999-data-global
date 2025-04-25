@@ -11,6 +11,11 @@ end
 function slot0.updateInfo(slot0, slot1, slot2, slot3)
 	slot0._txtComp = slot1
 	slot0._heroId = slot3
+
+	if slot0._skillNameList ~= nil then
+		tabletool.clear(slot0._skillNameList)
+	end
+
 	slot0._hyperLinkClick = gohelper.onceAddComponent(slot0.viewGO, typeof(ZProj.TMPHyperLinkClick))
 
 	slot0._hyperLinkClick:SetClickListener(slot0._onHyperLinkClick, slot0)

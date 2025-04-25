@@ -298,5 +298,105 @@
     "firstReward": "1#171305#1|2#2#240|1#620103#8|1#620102#30|1#620101#400",
     "spReward": "1#171305#1",
     "index": 10
+  },
+  {
+    "layerId": 31,
+    "stageId": 4,
+    "preLayerId": 30,
+    "isElite": 0,
+    "episodeIds": "90003101",
+    "firstReward": "1#620102#15|1#620101#200|1#111002#2",
+    "spReward": "",
+    "index": 1
+  },
+  {
+    "layerId": 32,
+    "stageId": 4,
+    "preLayerId": 31,
+    "isElite": 0,
+    "episodeIds": "90003201",
+    "firstReward": "1#620102#15|1#620101#200|1#110603#2",
+    "spReward": "",
+    "index": 2
+  },
+  {
+    "layerId": 33,
+    "stageId": 4,
+    "preLayerId": 32,
+    "isElite": 0,
+    "episodeIds": "90003301",
+    "firstReward": "1#620102#15|1#620101#200|1#110703#2",
+    "spReward": "",
+    "index": 3
+  },
+  {
+    "layerId": 34,
+    "stageId": 4,
+    "preLayerId": 33,
+    "isElite": 0,
+    "episodeIds": "90003401",
+    "firstReward": "1#620102#15|1#620101#200|1#111012#2",
+    "spReward": "",
+    "index": 4
+  },
+  {
+    "layerId": 35,
+    "stageId": 4,
+    "preLayerId": 34,
+    "isElite": 1,
+    "episodeIds": "90003501|90003502|90003503",
+    "firstReward": "2#2#120|1#620103#4|1#620102#20|1#620101#250|1#110404#1",
+    "spReward": "2#2#120",
+    "index": 5
+  },
+  {
+    "layerId": 36,
+    "stageId": 4,
+    "preLayerId": 35,
+    "isElite": 0,
+    "episodeIds": "90003601",
+    "firstReward": "1#620102#15|1#620101#200|1#110803#2",
+    "spReward": "",
+    "index": 6
+  },
+  {
+    "layerId": 37,
+    "stageId": 4,
+    "preLayerId": 36,
+    "isElite": 0,
+    "episodeIds": "90003701",
+    "firstReward": "1#620102#15|1#620101#200|1#110103#2",
+    "spReward": "",
+    "index": 7
+  },
+  {
+    "layerId": 38,
+    "stageId": 4,
+    "preLayerId": 37,
+    "isElite": 0,
+    "episodeIds": "90003801",
+    "firstReward": "1#620102#15|1#620101#200|1#110203#2",
+    "spReward": "",
+    "index": 8
+  },
+  {
+    "layerId": 39,
+    "stageId": 4,
+    "preLayerId": 38,
+    "isElite": 0,
+    "episodeIds": "90003901",
+    "firstReward": "1#620102#15|1#620101#200|1#110303#2",
+    "spReward": "",
+    "index": 9
+  },
+  {
+    "layerId": 40,
+    "stageId": 4,
+    "preLayerId": 39,
+    "isElite": 1,
+    "episodeIds": "90004001|90004002|90004003|90004004",
+    "firstReward": "9#1000#1|2#2#240|1#620103#8|1#620102#30|1#620101#400",
+    "spReward": "9#1000#1",
+    "index": 10
   }
 ]

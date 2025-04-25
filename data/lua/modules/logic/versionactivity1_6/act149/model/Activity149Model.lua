@@ -93,7 +93,7 @@ function slot0.getAct149EpisodeCfgIdByOrder(slot0, slot1)
 end
 
 function slot0.getMaxOrderAct149EpisodeCfg(slot0, slot1)
-	return Activity149Config.instance:getAct149EpisodeCfg(math.floor(slot1 % 12 / 3) + 5)
+	return Activity149Config.instance:getAct149EpisodeCfg(slot1 % Activity149Config.instance:getAlternateDay() + VersionActivity1_6DungeonEnum.bossMaxOrder)
 end
 
 function slot0.getCurBossEpisodeRemainDay(slot0)

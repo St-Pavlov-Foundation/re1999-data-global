@@ -8,7 +8,11 @@ slot2 = {
 	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
 	[FightEnum.BuffType_ExPointOverflowBank] = FightBuffStoredExPoint,
 	[FightEnum.BuffType_ContractBuff] = FightBuffContractBuff,
-	[FightEnum.BuffType_BeContractedBuff] = FightBuffBeContractedBuff
+	[FightEnum.BuffType_BeContractedBuff] = FightBuffBeContractedBuff,
+	[FightEnum.BuffType_CardAreaRedOrBlue] = FightBuffCardAreaRedOrBlueBuff,
+	[FightEnum.BuffType_RedOrBlueCount] = FightBuffRedOrBlueCountBuff,
+	[FightEnum.BuffType_RedOrBlueChangeTrigger] = FightBuffRedOrBlueChangeTriggerBuff,
+	[FightEnum.BuffType_SaveFightRecord] = FightBuffSaveFightRecord
 }
 slot3 = {
 	[31080132] = FightBuffAddBKLESpBuff,
@@ -140,10 +144,10 @@ function slot0.addBuff(slot0, slot1, slot2, slot3)
 	slot6 = FightSkillBuffMgr.instance:hasPlayBuffEffect(slot0._entity.id, slot1, slot3)
 	slot7 = slot5.effectloop ~= 0 or not slot2
 	slot8 = nil
-	slot9, slot10 = FightHelper.processBuffEffectPath(slot5.effect, slot0._entity, slot1.buffId, "effectPath", slot5.audio)
-	slot9, slot12 = FightHelper.filterBuffEffectBySkin(slot1.buffId, slot0._entity, slot9, slot10)
+	slot9, slot10, slot11 = FightHelper.processBuffEffectPath(slot5.effect, slot0._entity, slot1.buffId, "effectPath", slot5.audio)
+	slot9, slot13 = FightHelper.filterBuffEffectBySkin(slot1.buffId, slot0._entity, slot9, slot10)
 
-	if slot12 > 0 and not AudioEffectMgr.instance:isPlaying(slot10) then
+	if slot13 > 0 and not AudioEffectMgr.instance:isPlaying(slot10) then
 		AudioEffectMgr.instance:playAudio(slot10)
 	end
 
@@ -151,26 +155,31 @@ function slot0.addBuff(slot0, slot1, slot2, slot3)
 		slot8 = string.find(slot9, "/") and slot9 or "buff/" .. slot9
 	end
 
-	if not slot6 and slot11 and slot7 then
+	if not slot6 and slot12 and slot7 then
 		if not (slot0._entity.effect:getEffectWrap(slot8) and slot0._addBuffEffectPathDic[FightHelper.getEffectUrlWithLod(slot8)]) then
-			slot0._addBuffEffectPathDic[slot12] = true
-			slot14 = nil
+			slot0._addBuffEffectPathDic[slot13] = true
+			slot15 = nil
+			slot16 = slot5.effectHangPoint
 
-			if not string.nilorempty(slot5.effectHangPoint) then
-				slot0._entity.effect:addHangEffect(slot8, slot5.effectHangPoint):setLocalPos(0, 0, 0)
-
-				if slot5.effectHangPoint == ModuleEnum.SpineHangPointRoot then
-					slot14:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(slot0._entity, slot8))
-				end
-			else
-				slot15, slot16, slot17 = transformhelper.getPos(slot0._entity.go.transform)
-
-				slot0._entity.effect:addGlobalEffect(slot8):setWorldPos(slot15, slot16, slot17)
+			if slot11 and not string.nilorempty(slot11.effectHang) then
+				slot16 = slot11.effectHang
 			end
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot14)
+			if not string.nilorempty(slot16) then
+				slot0._entity.effect:addHangEffect(slot8, slot16):setLocalPos(0, 0, 0)
 
-			slot0._buffEffectDict[slot1.uid] = slot14
+				if slot16 == ModuleEnum.SpineHangPointRoot then
+					slot15:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(slot0._entity, slot8))
+				end
+			else
+				slot17, slot18, slot19 = transformhelper.getPos(slot0._entity.go.transform)
+
+				slot0._entity.effect:addGlobalEffect(slot8):setWorldPos(slot17, slot18, slot19)
+			end
+
+			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot15)
+
+			slot0._buffEffectDict[slot1.uid] = slot15
 
 			if slot5.effectloop == 0 then
 				slot0._onceEffectDict[slot1.uid] = Time.time + uv0
@@ -178,9 +187,9 @@ function slot0.addBuff(slot0, slot1, slot2, slot3)
 				TaskDispatcher.runRepeat(slot0._onTickCheckRemoveEffect, slot0, 0.2)
 			end
 		elseif slot5.effectloop ~= 0 then
-			for slot17, slot18 in pairs(slot0._buffEffectDict) do
-				if slot18.path == slot12 then
-					slot0._buffEffectDict[slot1.uid] = slot18
+			for slot18, slot19 in pairs(slot0._buffEffectDict) do
+				if slot19.path == slot13 then
+					slot0._buffEffectDict[slot1.uid] = slot19
 
 					break
 				end
@@ -188,12 +197,12 @@ function slot0.addBuff(slot0, slot1, slot2, slot3)
 		end
 
 		if slot5.effectloop ~= 0 then
-			slot0._buff_loop_effect_name[slot12] = (slot0._buff_loop_effect_name[slot12] or 0) + 1
+			slot0._buff_loop_effect_name[slot13] = (slot0._buff_loop_effect_name[slot13] or 0) + 1
 		end
 	end
 
 	if not string.nilorempty(slot5.animationName) and slot5.animationName ~= "0" or not uv1.isEmptyMat(slot5.mat) or not (string.nilorempty(slot5.bloommat) or slot5.bloommat == "0") then
-		if not slot14 then
+		if not slot15 then
 			slot0._entity:resetAnimState()
 		end
 
@@ -433,6 +442,10 @@ slot4 = {
 }
 
 function slot0.delBuff(slot0, slot1, slot2)
+	if not slot0._buffDic then
+		return
+	end
+
 	if not slot0._buffDic[slot1] then
 		return
 	end

@@ -7,6 +7,7 @@ function slot0.onInitView(slot0)
 	slot0._btnoneKeyManu = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottomBtns/#btn_oneKeyManu")
 	slot0._btnpopBlock = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_popBlock")
 	slot0._goscrollbuilding = gohelper.findChild(slot0.viewGO, "centerArea/#go_building/#scroll_building")
+	slot0._scrollbuilding = gohelper.findChildScrollRect(slot0.viewGO, "centerArea/#go_building/#scroll_building")
 	slot0._transscrollbuilding = slot0._goscrollbuilding.transform
 	slot0._gobuildingContent = gohelper.findChild(slot0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content")
 	slot0._gobuildingItem = gohelper.findChild(slot0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content/#go_buildingItem")
@@ -28,6 +29,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureOverViewFocusAddPop, slot0._focusBuildingItemAddPop, slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.GuideFocusCritter, slot0._onGuideFocusCritter, slot0)
 end
 
@@ -42,6 +44,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
 	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
 	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureOverViewFocusAddPop, slot0._focusBuildingItemAddPop, slot0)
 	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.GuideFocusCritter, slot0._onGuideFocusCritter, slot0)
 end
 
@@ -93,15 +96,44 @@ function slot0._onBuildingLevelUp(slot0, slot1)
 	end
 end
 
+slot1 = {
+	ViewName.RoomManufactureAddPopView,
+	ViewName.RoomCritterListView,
+	ViewName.RoomManufactureWrongTipView
+}
+
 function slot0._onViewChange(slot0, slot1)
-	if slot1 ~= ViewName.RoomManufactureAddPopView and slot1 ~= ViewName.RoomCritterListView then
+	slot2 = false
+
+	for slot6, slot7 in ipairs(uv0) do
+		if slot1 == slot7 then
+			slot2 = true
+
+			break
+		end
+	end
+
+	if slot2 then
+		slot0:refreshPopBlock()
+	end
+end
+
+function slot0._focusBuildingItemAddPop(slot0, slot1, slot2)
+	if not (slot0._overBuildingItemDict[slot1] and slot3:getIndex()) then
 		return
 	end
 
-	slot0:refreshPopBlock()
+	slot0._scrollbuilding.verticalNormalizedPosition = Mathf.Clamp(1 - (slot4 - 1) * (slot0._buildingItemHeight + slot0._layoutSpace) / (recthelper.getHeight(slot0._contentRect) - slot0._scrollHeight), 0, 1)
+
+	ManufactureController.instance:clickSlotItem(slot1, nil, true, true, nil, slot2)
 end
 
 function slot0._editableInitView(slot0)
+	slot0._scrollHeight = recthelper.getHeight(slot0._goscrollbuilding:GetComponent(gohelper.Type_RectTransform))
+	slot0._buildingItemHeight = recthelper.getHeight(slot0._gobuildingItem:GetComponent(gohelper.Type_RectTransform))
+	slot0._contentRect = slot0._gobuildingContent:GetComponent(gohelper.Type_RectTransform)
+	slot0._layoutSpace = slot0._gobuildingContent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup)).spacing
+
 	slot0:clearVar()
 end
 
@@ -122,7 +154,7 @@ function slot0._setBuildingList(slot0)
 end
 
 function slot0._onSetBuildingItem(slot0, slot1, slot2, slot3)
-	slot1:setData(slot2, slot0)
+	slot1:setData(slot2, slot3, slot0)
 
 	slot0._overBuildingItemDict[slot2.uid] = slot1
 end
@@ -144,10 +176,19 @@ end
 function slot0.closePopView(slot0)
 	ManufactureController.instance:clearSelectedSlotItem()
 	ManufactureController.instance:clearSelectCritterSlotItem()
+	ManufactureController.instance:closeWrongTipView()
 end
 
 function slot0.refreshPopBlock(slot0)
-	gohelper.setActive(slot0._btnpopBlock, ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) or ViewMgr.instance:isOpen(ViewName.RoomCritterListView))
+	gohelper.setActive(slot0._btnpopBlock, false)
+
+	for slot4, slot5 in ipairs(uv0) do
+		if ViewMgr.instance:isOpen(slot5) then
+			gohelper.setActive(slot0._btnpopBlock, true)
+
+			break
+		end
+	end
 end
 
 function slot0.everySecondCall(slot0)

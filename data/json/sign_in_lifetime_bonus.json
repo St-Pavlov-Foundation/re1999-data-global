@@ -1,0 +1,68 @@
+[
+  {
+    "stageid": 1,
+    "logindaysid": 1,
+    "stagetitle": "",
+    "bonus": "10#21#1|1#481006#3"
+  },
+  {
+    "stageid": 2,
+    "logindaysid": 3,
+    "stagetitle": "",
+    "bonus": "1#481022#1|1#481006#5"
+  },
+  {
+    "stageid": 3,
+    "logindaysid": 7,
+    "stagetitle": "",
+    "bonus": "1#481010#1|1#481007#3"
+  },
+  {
+    "stageid": 4,
+    "logindaysid": 15,
+    "stagetitle": "",
+    "bonus": "1#600002#2|1#481007#5"
+  },
+  {
+    "stageid": 5,
+    "logindaysid": 30,
+    "stagetitle": "language_10068731",
+    "bonus": "9#1000#1|1#481007#8"
+  },
+  {
+    "stageid": 6,
+    "logindaysid": 60,
+    "stagetitle": "language_10068731",
+    "bonus": "1#140001#2|1#510010#3"
+  },
+  {
+    "stageid": 7,
+    "logindaysid": 90,
+    "stagetitle": "language_10068732",
+    "bonus": "1#510010#5|1#171506#1"
+  },
+  {
+    "stageid": 8,
+    "logindaysid": 180,
+    "stagetitle": "language_10068733",
+    "bonus": "10#21#5|1#510010#8"
+  },
+  {
+    "stageid": 9,
+    "logindaysid": 280,
+    "stagetitle": "language_10068733",
+    "bonus": "1#140001#3|1#510010#10"
+  },
+  {
+    "stageid": 10,
+    "logindaysid": 365,
+    "stagetitle": "language_10068734",
+    "bonus": "1#550001#1|1#530001#3"
+  },
+  {
+    "stageid": 11,
+    "logindaysid": 5000,
+    "stagetitle": "",
+    "bonus": ""
+  }
+]

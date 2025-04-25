@@ -49,7 +49,7 @@ function slot0.OnItemClick(slot0, slot1)
 	SkillEditorMgr.instance[slot0.cur_select .. "stance_id"] = slot1.id
 	slot2 = SkillEditorMgr.instance.cur_select_side
 
-	for slot7 = 1, 4 do
+	for slot7 = 1, 5 do
 		if #slot1["pos" .. slot7] ~= 0 then
 			slot3 = 0 + 1
 		end
@@ -82,7 +82,7 @@ function slot0._onSelectStance(slot0, slot1, slot2, slot3)
 	slot0.cur_select = slot1 == FightEnum.EntitySide.EnemySide and "enemy_" or ""
 	SkillEditorMgr.instance[slot0.cur_select .. "stance_id"] = slot4.id
 
-	for slot9 = 1, 4 do
+	for slot9 = 1, 5 do
 		if #slot4["pos" .. slot9] ~= 0 then
 			slot5 = 0 + 1
 		end

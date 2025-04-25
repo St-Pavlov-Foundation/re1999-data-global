@@ -262,7 +262,7 @@ function slot0._setCombinativeEntitysPos(slot0)
 
 		for slot5, slot6 in ipairs(slot0._combinative_entitys) do
 			if FightHelper.getEntity(slot6.id) then
-				if not gohelper.isNil(slot7.go) then
+				if not gohelper.isNil(slot7.go) and not gohelper.isNil(slot0._follow_entity.go) then
 					slot7.go.transform.position = slot0._follow_entity.go.transform.position + slot0._combinative_pos_offsets[slot5] * slot7:getScale()
 				end
 			end

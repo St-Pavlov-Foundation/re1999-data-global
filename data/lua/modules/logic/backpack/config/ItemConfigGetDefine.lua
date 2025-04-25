@@ -21,7 +21,8 @@ function slot0.ctor(slot0)
 		[MaterialEnum.MaterialType.Antique] = uv0._getAntique,
 		[MaterialEnum.MaterialType.V1a5AiZiLa] = uv0._getV1a5AiZiLaItem,
 		[MaterialEnum.MaterialType.Season123EquipCard] = uv0._getSeason123EquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight
+		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = uv0._getCritter
 	}
 end
 
@@ -95,6 +96,10 @@ end
 
 function slot0._getNewInsight(slot0)
 	return ItemConfig.instance:getInsightItemCo(slot0)
+end
+
+function slot0._getCritter(slot0)
+	return CritterConfig.instance:getCritterCfg(slot0)
 end
 
 function slot0.getItemConfigFunc(slot0, slot1)

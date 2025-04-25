@@ -57,6 +57,7 @@ function slot0.init(slot0, slot1, slot2, slot3)
 	slot0._spineVoice = slot1
 	slot0._voiceConfig = slot2
 	slot0._spine = slot3
+	slot0._skinId = slot3 and slot3._skinId
 
 	slot0:_initCutMotion(slot2)
 	slot0:_initPlayCutMotion(slot2)
@@ -90,6 +91,10 @@ function slot0._initCutMotion(slot0, slot1)
 		return
 	end
 
+	if not (slot0._skinId and slot2[slot0._skinId] or slot2[1]) then
+		return
+	end
+
 	slot0._motionCutConfig = slot2
 
 	for slot8, slot9 in ipairs(string.split(slot2.motion, "|")) do
@@ -102,6 +107,10 @@ function slot0._initPlayCutMotion(slot0, slot1)
 	slot0._motionPlayCutConfig = nil
 
 	if not lua_character_motion_play_cut.configDict[slot0:_getHeroId(slot1)] then
+		return
+	end
+
+	if not (slot0._skinId and slot2[slot0._skinId] or slot2[1]) then
 		return
 	end
 

@@ -50,6 +50,10 @@ function slot0._updateDragHandCards(slot0)
 	transformhelper.setLocalScale(slot2.tr, slot4, slot4, 1)
 
 	if slot0.context.handCardItemList then
+		if slot3 == nil then
+			return
+		end
+
 		for slot10 = 1, slot3 do
 			slot11 = slot5[slot10]
 			slot12 = recthelper.getAnchorX(slot11.tr)

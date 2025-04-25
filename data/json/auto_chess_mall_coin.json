@@ -1,0 +1,50 @@
+[
+  {
+    "round": 1,
+    "coinNum": 3
+  },
+  {
+    "round": 2,
+    "coinNum": 4
+  },
+  {
+    "round": 3,
+    "coinNum": 5
+  },
+  {
+    "round": 4,
+    "coinNum": 6
+  },
+  {
+    "round": 5,
+    "coinNum": 7
+  },
+  {
+    "round": 6,
+    "coinNum": 8
+  },
+  {
+    "round": 7,
+    "coinNum": 9
+  },
+  {
+    "round": 8,
+    "coinNum": 10
+  },
+  {
+    "round": 9,
+    "coinNum": 10
+  },
+  {
+    "round": 10,
+    "coinNum": 10
+  },
+  {
+    "round": 11,
+    "coinNum": 10
+  },
+  {
+    "round": 12,
+    "coinNum": 10
+  }
+]

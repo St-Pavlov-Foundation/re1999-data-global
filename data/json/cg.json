@@ -2462,5 +2462,16 @@
     "episodeId": 192007,
     "image": "story_atcg/2_4/2_4_at_ys_xingti.jpg",
     "preCgId": 0
+  },
+  {
+    "id": 102101,
+    "order": 0,
+    "storyChapterId": 1021,
+    "name": "language_10068762",
+    "nameEn": "Lurking in Silence",
+    "desc": "language_10068763",
+    "episodeId": 192108,
+    "image": "story_atcg/2_5/2_5_at_ys_lily.jpg",
+    "preCgId": 0
   }
 ]

@@ -60,10 +60,10 @@ function slot0.getActivityStatusAndToast(slot0, slot1)
 	return ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.getActivityRemainTimeStr(slot0)
+function slot0.getActivityRemainTimeStr(slot0, slot1)
 	if ActivityModel.instance:getRemainTimeSec(slot0) then
-		if slot1 >= 0 then
-			return TimeUtil.SecondToActivityTimeFormat(slot1)
+		if slot2 >= 0 then
+			return TimeUtil.SecondToActivityTimeFormat(slot2, slot1)
 		else
 			return luaLang("turnback_end")
 		end

@@ -129,6 +129,20 @@ function slot0.openVoicePackageView(slot0)
 	end
 end
 
+function slot0.RequsetVoiceInfo(slot0, slot1, slot2)
+	if not slot0._httpGetter then
+		slot0._httpGetter = SettingVoiceHttpGetter.New()
+	end
+
+	slot0._httpGetter:start(function ()
+		uv0:_onGetVoiceInfo()
+
+		if uv1 then
+			uv1(uv2)
+		end
+	end, slot0)
+end
+
 function slot0.onSettingVoiceDropDown(slot0)
 	if not slot0._httpGetter then
 		slot0._httpGetter = SettingVoiceHttpGetter.New()
@@ -250,30 +264,37 @@ end
 
 function slot0.deleteVoicePack(slot0, slot1)
 	slot2 = SettingsVoicePackageModel.instance:getPackInfo(slot1)
-	slot7 = {
+
+	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, {
 		current_language = GameConfig:GetCurLangShortcut(),
 		current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList(),
 		current_voice_pack_used = GameConfig:GetCurVoiceShortcut(),
 		voice_pack_delete = slot2.lang
-	}
-
-	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, slot7)
+	})
 	slot2:setLocalSize(0)
 	slot0._optionalUpdateInst:RemovePackInfo(slot1)
 
-	for slot7, slot8 in pairs(OptionPackageEnum.Package) do
-		slot0._optionalUpdateInst:RemovePackInfo(HotUpdateOptionPackageMgr.instance:formatLangPackName(slot1, slot8))
+	if slot1 == "res-HD" then
+		slot4 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/HD"
+
+		SLFramework.FileHelper.ClearDir(slot4)
+		logNormal("removeVoicePack  hdDir=" .. slot4)
+	else
+		for slot7, slot8 in pairs(OptionPackageEnum.Package) do
+			slot0._optionalUpdateInst:RemovePackInfo(HotUpdateOptionPackageMgr.instance:formatLangPackName(slot1, slot8))
+		end
+
+		slot4 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/audios/" .. SLFramework.FrameworkSettings.CurPlatformName .. "/" .. slot1
+
+		SLFramework.FileHelper.ClearDir(slot4)
+
+		slot5 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/" .. slot1
+
+		SLFramework.FileHelper.ClearDir(slot5)
+		logNormal("removeVoicePack  audiosDir=" .. slot4)
+		logNormal("removeVoicePack  voideoDir=" .. slot5)
 	end
 
-	slot4 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/audios/" .. SLFramework.FrameworkSettings.CurPlatformName .. "/" .. slot1
-
-	SLFramework.FileHelper.ClearDir(slot4)
-
-	slot5 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/" .. slot1
-
-	SLFramework.FileHelper.ClearDir(slot5)
-	logNormal("removeVoicePack  audiosDir=" .. slot4)
-	logNormal("removeVoicePack  voideoDir=" .. slot5)
 	ToastController.instance:showToast(183, luaLang(slot2.nameLangId))
 	SettingsVoicePackageModel.instance:onDeleteVoicePack(slot1)
 	slot0:dispatchEvent(SettingsEvent.OnPackItemStateChange, slot1)

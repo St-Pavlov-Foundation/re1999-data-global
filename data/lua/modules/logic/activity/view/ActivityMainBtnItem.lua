@@ -12,7 +12,6 @@ function slot0.init(slot0, slot1, slot2)
 	gohelper.setActive(slot0.go, true)
 
 	slot0._imgGo = gohelper.findChild(slot0.go, "bg")
-	slot0._imgitem = gohelper.findChildImage(slot0._imgGo, "")
 	slot0._imgitem = gohelper.findChildImage(slot0.go, "bg")
 	slot0._btnitem = gohelper.getClick(slot0._imgGo)
 
@@ -53,7 +52,16 @@ function slot0.openActivityBeginnerView(slot0)
 end
 
 function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, slot0._centerCo.icon, true)
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. slot0._centerCo.icon or slot0._centerCo.icon, true)
+
+	if not slot1 and ActivityConfig.instance:getMainActAtmosphereConfig() then
+		for slot8, slot9 in ipairs(slot4.mainViewActBtn) do
+			if gohelper.findChild(slot0.go, slot9) then
+				gohelper.setActive(slot10, slot1)
+			end
+		end
+	end
+
 	slot0._redDot:refreshDot()
 end
 
@@ -183,7 +191,7 @@ function slot0._checkIsShowRed_ActivityBeginner(slot0, slot1, slot2)
 			return true
 		end
 
-		if (slot8 == ActivityEnum.Activity.Activity1_9WarmUp or slot8 == ActivityEnum.Activity.V2a0_WarmUp or slot8 == ActivityEnum.Activity.V2a1_WarmUp or slot8 == ActivityEnum.Activity.V2a2_WarmUp or slot8 == ActivityEnum.Activity.V2a3_WarmUp) and Activity125Controller.instance:checkActRed2(slot8) then
+		if (slot8 == ActivityEnum.Activity.Activity1_9WarmUp or slot8 == ActivityEnum.Activity.V2a0_WarmUp or slot8 == ActivityEnum.Activity.V2a1_WarmUp or slot8 == ActivityEnum.Activity.V2a2_WarmUp or slot8 == ActivityEnum.Activity.V2a3_WarmUp or slot8 == ActivityEnum.Activity.V2a5_WarmUp) and Activity125Controller.instance:checkActRed2(slot8) then
 			return true
 		end
 
@@ -198,6 +206,14 @@ function slot0._checkIsShowRed_ActivityBeginner(slot0, slot1, slot2)
 		if slot8 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(slot8) then
 			return true
 		end
+
+		if typeId == ActivityEnum.ActivityTypeID.Act125 and Activity125Controller.instance:checkActRed2(slot8) then
+			return true
+		end
+
+		if typeId == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(slot8) then
+			return true
+		end
 	end
 
 	return false
@@ -208,7 +224,14 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 
 	if not slot1.show then
 		for slot6, slot7 in pairs(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)) do
+			slot9 = ActivityConfig.instance:getActivityCo(slot7).typeId
 			slot0._curActId = slot7
+
+			if slot7 == VoyageConfig.instance:getActivityId() and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
+				slot0:_showRedDotType(slot1, slot7)
+
+				return
+			end
 
 			if slot7 == DoubleDropModel.instance:getActId() and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
 				slot0:_showRedDotType(slot1, slot7)
@@ -216,7 +239,7 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
-			if slot7 == ActivityEnum.Activity.DreamShow and TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow) and slot8[1] and slot9.config and slot9.finishCount < slot9.config.maxFinishCount and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
+			if slot7 == ActivityEnum.Activity.DreamShow and TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow) and slot10[1] and slot11.config and slot11.finishCount < slot11.config.maxFinishCount and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
 				slot0:_showRedDotType(slot1, slot7)
 
 				return
@@ -240,7 +263,7 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
-			if (slot7 == ActivityEnum.Activity.Activity1_9WarmUp or slot7 == ActivityEnum.Activity.V2a0_WarmUp or slot7 == ActivityEnum.Activity.V2a1_WarmUp or slot7 == ActivityEnum.Activity.V2a2_WarmUp or slot7 == ActivityEnum.Activity.V2a3_WarmUp) and Activity125Controller.instance:checkActRed2(slot7) then
+			if (slot7 == ActivityEnum.Activity.Activity1_9WarmUp or slot7 == ActivityEnum.Activity.V2a0_WarmUp or slot7 == ActivityEnum.Activity.V2a1_WarmUp or slot7 == ActivityEnum.Activity.V2a2_WarmUp or slot7 == ActivityEnum.Activity.V2a3_WarmUp or slot7 == ActivityEnum.Activity.V2a5_WarmUp) and Activity125Controller.instance:checkActRed2(slot7) then
 				slot0:_showRedDotType(slot1, slot7)
 
 				return
@@ -270,7 +293,7 @@ function slot0._checkActivityShowRedDotData(slot0, slot1)
 				return
 			end
 
-			if slot7 == VoyageConfig.instance:getActivityId() and string.nilorempty(slot0:getActivityShowRedDotData(slot7)) then
+			if slot9 == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(slot7) then
 				slot0:_showRedDotType(slot1, slot7)
 
 				return

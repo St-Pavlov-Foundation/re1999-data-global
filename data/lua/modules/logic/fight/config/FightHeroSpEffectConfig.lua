@@ -10,7 +10,8 @@ function slot0.reqConfigNames(slot0)
 		"fight_sp_effect_kkny_bear_damage",
 		"fight_sp_effect_kkny_heal",
 		"fight_sp_effect_kkny_bear_damage_hit",
-		"fight_sp_effect_bkle"
+		"fight_sp_effect_bkle",
+		"fight_sp_effect_ly"
 	}
 end
 
@@ -43,6 +44,10 @@ function slot0.initBKLERandomList(slot0, slot1)
 	for slot7, slot8 in pairs(FightStrUtil.instance:getSplitCache(lua_fight_sp_effect_bkle.configDict[slot1].path, "|")) do
 		slot0.BKLEEffectList[slot7] = slot8
 	end
+end
+
+function slot0.getLYEffectCo(slot0, slot1)
+	return lua_fight_sp_effect_ly.configDict[slot1] or lua_fight_sp_effect_ly.configDict[1]
 end
 
 slot0.instance = slot0.New()

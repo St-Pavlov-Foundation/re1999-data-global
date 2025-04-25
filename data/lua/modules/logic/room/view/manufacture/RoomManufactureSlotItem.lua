@@ -27,11 +27,16 @@ function slot0._editableInitView(slot0)
 	slot0._goitem = gohelper.findChild(slot0.go, "content/#go_unlocked/slotItemHead/#go_item")
 	slot0._imgquality = gohelper.findChildImage(slot0.go, "content/#go_unlocked/slotItemHead/#go_item/#image_quality")
 	slot0._txtitemName = gohelper.findChildText(slot0.go, "content/#go_unlocked/slotItemHead/#go_item/#txt_itemName")
+	slot0._gowrong = gohelper.findChild(slot0.go, "content/#go_unlocked/slotItemHead/#go_wrong")
+	slot0._gowrongwait = gohelper.findChild(slot0.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_wait")
+	slot0._gowrongstop = gohelper.findChild(slot0.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_stop")
 	slot0._goget = gohelper.findChild(slot0.go, "content/#go_unlocked/slotItemHead/#go_get")
 	slot0._btngetclick = gohelper.findChildClickWithDefaultAudio(slot0.go, "content/#go_unlocked/slotItemHead/#go_get")
 	slot0._goitemBar = gohelper.findChild(slot0.go, "content/#go_unlocked/#go_itemBar")
 	slot0._gowait = gohelper.findChild(slot0.go, "content/#go_unlocked/#go_itemBar/wait")
 	slot0._gopause = gohelper.findChild(slot0.go, "content/#go_unlocked/#go_itemBar/pause")
+	slot0._iconwrongstatus = gohelper.findChildImage(slot0.go, "content/#go_unlocked/#go_itemBar/pause/#simage_status")
+	slot0._txtwrongstatus = gohelper.findChildText(slot0.go, "content/#go_unlocked/#go_itemBar/pause/#simage_status/#txt_status")
 	slot0._simagepausebarValue = gohelper.findChildImage(slot0.go, "content/#go_unlocked/#go_itemBar/pause/#simage_totalBarValue")
 	slot0._txtpauseTime = gohelper.findChildText(slot0.go, "content/#go_unlocked/#go_itemBar/pause/#go_totalTime/#txt_totalTime")
 	slot0._gorunning = gohelper.findChild(slot0.go, "content/#go_unlocked/#go_itemBar/producing")
@@ -148,6 +153,7 @@ function slot0.refresh(slot0)
 	slot0:refreshTime()
 	slot0:refreshSelected()
 	slot0:checkBtnShow()
+	slot0:refreshWrong()
 end
 
 function slot0.checkState(slot0)
@@ -203,21 +209,11 @@ function slot0.refreshManufactureItem(slot0)
 		slot0._itemIcon:isShowQuality(false)
 	end
 
-	slot6 = nil
-
-	if not string.nilorempty(ManufactureConfig.instance:getBatchIcon(slot3)) then
-		slot6 = ResUrl.getPropItemIcon(slot5)
-	end
-
 	slot0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot4, nil, , , {
-		specificIcon = slot6
+		specificIcon = ManufactureConfig.instance:getBatchIconPath(slot3)
 	})
 
-	if string.nilorempty(ManufactureConfig.instance:getBatchName(slot3)) then
-		slot7 = ItemConfig.instance:getItemNameById(slot4)
-	end
-
-	slot0._txtitemName.text = slot7 or ""
+	slot0._txtitemName.text = ManufactureConfig.instance:getManufactureItemName(slot3) or ""
 
 	UISpriteSetMgr.instance:setCritterSprite(slot0._imgquality, RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()])
 end
@@ -277,6 +273,32 @@ function slot0.checkBtnShow(slot0)
 
 	gohelper.setActive(slot0._gobtnremove, slot1)
 	gohelper.setActive(slot0._gobtnmove, slot2)
+end
+
+function slot0.refreshWrong(slot0)
+	slot2 = ""
+	slot3 = RoomManufactureEnum.DefaultPauseIcon
+
+	if ManufactureModel.instance:getManufactureWrongType(slot0:getViewBuilding(), slot0.slotId) then
+		if RoomManufactureEnum.ManufactureWrongDisplay[slot4] then
+			slot3 = slot5.icon
+			slot2 = luaLang(slot5.desc)
+		end
+
+		slot6 = slot4 == RoomManufactureEnum.ManufactureWrongType.WaitPreMat
+
+		gohelper.setActive(slot0._gowrongwait, slot6)
+		gohelper.setActive(slot0._gowrongstop, not slot6)
+	end
+
+	slot0._txtwrongstatus.text = slot2
+
+	if not string.nilorempty(slot3) then
+		UISpriteSetMgr.instance:setRoomSprite(slot0._iconwrongstatus, slot3)
+	end
+
+	gohelper.setActive(slot0._iconwrongstatus, slot3)
+	gohelper.setActive(slot0._gowrong, slot4)
 end
 
 function slot0.checkPlayGuideTween(slot0)

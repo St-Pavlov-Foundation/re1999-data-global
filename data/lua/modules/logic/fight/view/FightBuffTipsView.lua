@@ -290,6 +290,12 @@ function slot0.showBuffTime(slot0, slot1, slot2, slot3)
 		return
 	end
 
+	if slot1 and FightConfig.instance:hasBuffFeature(slot1.buffId, FightEnum.BuffFeature.CountUseSelfSkillContinueChannel) then
+		slot0.text = string.format(luaLang("enemytip_buff_time"), slot1.exInfo)
+
+		return
+	end
+
 	if FightBuffHelper.isDuduBoneContinueChannelBuff(slot1) then
 		slot0.text = string.format(luaLang("buff_tip_duration"), slot1.exInfo)
 

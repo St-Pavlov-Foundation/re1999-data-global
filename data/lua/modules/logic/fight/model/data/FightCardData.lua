@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightCardData", package.seeall)
 
-slot0 = FightDataBase("FightCardData")
+slot0 = FightDataClass("FightCardData")
 
-function slot0.ctor(slot0, slot1)
+function slot0.onConstructor(slot0, slot1)
 	slot0.uid = slot1.uid
 	slot0.skillId = slot1.skillId
 	slot0.cardEffect = slot1.cardEffect or 0
@@ -30,6 +30,8 @@ function slot0.ctor(slot0, slot1)
 	slot0.status = slot1.status or FightEnum.CardInfoStatus.STATUS_NONE
 	slot0.targetUid = slot1.targetUid or "0"
 	slot0.energy = slot1.energy or 0
+	slot0.areaRedOrBlue = slot1.areaRedOrBlue
+	slot0.heatId = slot1.heatId
 end
 
 function slot0.isUniqueSkill(slot0)

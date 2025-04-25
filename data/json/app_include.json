@@ -68,29 +68,10 @@
   {
     "id": 2,
     "character": [
-      3108,
-      3109,
-      3037,
-      3095,
-      3052,
-      3026,
-      3080
-    ],
-    "chapter": [],
-    "story": [],
-    "seasonIds": [],
-    "guide": [],
-    "video": [],
-    "path": [],
-    "maxWeekWalk": 0,
-    "roomTheme": [],
-    "heroStoryIds": []
-  },
-  {
-    "id": 3,
-    "character": [
-      3047,
-      3075
+      3066,
+      3087,
+      3065,
+      3072
     ],
     "chapter": [],
     "story": [],

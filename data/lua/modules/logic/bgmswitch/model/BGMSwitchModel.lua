@@ -79,6 +79,16 @@ function slot0.updateBgmInfos(slot0, slot1)
 	slot0._isUnfilteredFavoriteListDirty = true
 end
 
+function slot0.hasUnreadBgm(slot0)
+	for slot4, slot5 in pairs(slot0._bgmInfos) do
+		if not slot5.isRead then
+			return true
+		end
+	end
+
+	return false
+end
+
 function slot0.getBgmInfo(slot0, slot1)
 	return slot0._bgmInfos[slot1]
 end
@@ -281,6 +291,14 @@ end
 
 function slot0.setPlayingState(slot0, slot1)
 	slot0._playingState = slot1
+end
+
+function slot0.setEggHideState(slot0, slot1)
+	slot0._eggShowState = slot1
+end
+
+function slot0.getEggHideState(slot0)
+	return slot0._eggShowState
 end
 
 function slot0.setBgmFavorite(slot0, slot1, slot2)

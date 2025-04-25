@@ -1,0 +1,1452 @@
+[
+  {
+    "id": 10002,
+    "job": 1,
+    "score": "6#5#5#6",
+    "life": 10320,
+    "attack": 9800,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 10000
+  },
+  {
+    "id": 10202,
+    "job": 1,
+    "score": "7#5#5#4",
+    "life": 10000,
+    "attack": 10250,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 8000
+  },
+  {
+    "id": 10302,
+    "job": 1,
+    "score": "6#6#5#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 10800,
+    "mdefense": 10000,
+    "technic": 8000
+  },
+  {
+    "id": 10402,
+    "job": 1,
+    "score": "6#5#6#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 10000,
+    "mdefense": 10800,
+    "technic": 8000
+  },
+  {
+    "id": 20002,
+    "job": 2,
+    "score": "6#5#5#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 13700
+  },
+  {
+    "id": 20602,
+    "job": 2,
+    "score": "5#5#5#7",
+    "life": 9900,
+    "attack": 9300,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 16100
+  },
+  {
+    "id": 20302,
+    "job": 2,
+    "score": "6#6#4#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 10800,
+    "mdefense": 9200,
+    "technic": 13700
+  },
+  {
+    "id": 20402,
+    "job": 2,
+    "score": "6#4#6#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 9200,
+    "mdefense": 10800,
+    "technic": 13700
+  },
+  {
+    "id": 30002,
+    "job": 3,
+    "score": "7#5#5#4",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 8200
+  },
+  {
+    "id": 30102,
+    "job": 3,
+    "score": "7#4#4#4",
+    "life": 10000,
+    "attack": 10600,
+    "defense": 9200,
+    "mdefense": 9200,
+    "technic": 8400
+  },
+  {
+    "id": 30302,
+    "job": 3,
+    "score": "7#6#4#4",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 10800,
+    "mdefense": 9200,
+    "technic": 8200
+  },
+  {
+    "id": 30402,
+    "job": 3,
+    "score": "7#4#6#4",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 9200,
+    "mdefense": 10800,
+    "technic": 8200
+  },
+  {
+    "id": 60002,
+    "job": 6,
+    "score": "5#6#6#3",
+    "life": 11400,
+    "attack": 9100,
+    "defense": 10800,
+    "mdefense": 10800,
+    "technic": 7000
+  },
+  {
+    "id": 60202,
+    "job": 6,
+    "score": "6#5#5#3",
+    "life": 11400,
+    "attack": 9500,
+    "defense": 10000,
+    "mdefense": 10000,
+    "technic": 7000
+  },
+  {
+    "id": 60302,
+    "job": 6,
+    "score": "5#7#5#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 11100,
+    "mdefense": 10000,
+    "technic": 7000
+  },
+  {
+    "id": 60402,
+    "job": 6,
+    "score": "5#5#7#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 10000,
+    "mdefense": 11100,
+    "technic": 7000
+  },
+  {
+    "id": 10001,
+    "job": 1,
+    "score": "4#4#4#4",
+    "life": 9288,
+    "attack": 8820,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 8800
+  },
+  {
+    "id": 10201,
+    "job": 1,
+    "score": "5#4#4#3",
+    "life": 9000,
+    "attack": 9225,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 7040
+  },
+  {
+    "id": 10301,
+    "job": 1,
+    "score": "4#5#4#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 9720,
+    "mdefense": 9000,
+    "technic": 7040
+  },
+  {
+    "id": 10401,
+    "job": 1,
+    "score": "4#4#5#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 9000,
+    "mdefense": 9720,
+    "technic": 7040
+  },
+  {
+    "id": 20001,
+    "job": 2,
+    "score": "4#4#4#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 12056
+  },
+  {
+    "id": 20601,
+    "job": 2,
+    "score": "3#4#4#6",
+    "life": 8910,
+    "attack": 8370,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 14168
+  },
+  {
+    "id": 20301,
+    "job": 2,
+    "score": "4#5#4#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 9720,
+    "mdefense": 8280,
+    "technic": 12056
+  },
+  {
+    "id": 20401,
+    "job": 2,
+    "score": "4#4#5#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 8280,
+    "mdefense": 9720,
+    "technic": 12056
+  },
+  {
+    "id": 30001,
+    "job": 3,
+    "score": "6#4#4#3",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 7216
+  },
+  {
+    "id": 30101,
+    "job": 3,
+    "score": "6#4#4#3",
+    "life": 9000,
+    "attack": 9540,
+    "defense": 8280,
+    "mdefense": 8280,
+    "technic": 7392
+  },
+  {
+    "id": 30301,
+    "job": 3,
+    "score": "6#5#4#3",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 9720,
+    "mdefense": 8280,
+    "technic": 7216
+  },
+  {
+    "id": 30401,
+    "job": 3,
+    "score": "6#4#5#3",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 8280,
+    "mdefense": 9720,
+    "technic": 7216
+  },
+  {
+    "id": 60001,
+    "job": 6,
+    "score": "2#5#5#2",
+    "life": 10260,
+    "attack": 8190,
+    "defense": 9720,
+    "mdefense": 9720,
+    "technic": 6160
+  },
+  {
+    "id": 60201,
+    "job": 6,
+    "score": "3#4#4#2",
+    "life": 10260,
+    "attack": 8550,
+    "defense": 9000,
+    "mdefense": 9000,
+    "technic": 6160
+  },
+  {
+    "id": 60301,
+    "job": 6,
+    "score": "2#5#4#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 9990,
+    "mdefense": 9000,
+    "technic": 6160
+  },
+  {
+    "id": 60401,
+    "job": 6,
+    "score": "2#4#5#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 9000,
+    "mdefense": 9990,
+    "technic": 6160
+  },
+  {
+    "id": 10000,
+    "job": 1,
+    "score": "3#4#4#3",
+    "life": 8772,
+    "attack": 8330,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 7392
+  },
+  {
+    "id": 10200,
+    "job": 1,
+    "score": "4#4#4#1",
+    "life": 8500,
+    "attack": 8713,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 5914
+  },
+  {
+    "id": 10300,
+    "job": 1,
+    "score": "3#4#4#1",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 9180,
+    "mdefense": 8500,
+    "technic": 5914
+  },
+  {
+    "id": 10400,
+    "job": 1,
+    "score": "3#4#4#1",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 8500,
+    "mdefense": 9180,
+    "technic": 5914
+  },
+  {
+    "id": 20000,
+    "job": 2,
+    "score": "2#4#4#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 10127
+  },
+  {
+    "id": 20600,
+    "job": 2,
+    "score": "2#4#4#6",
+    "life": 8415,
+    "attack": 7905,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 11901
+  },
+  {
+    "id": 20300,
+    "job": 2,
+    "score": "2#4#3#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 9180,
+    "mdefense": 7820,
+    "technic": 10127
+  },
+  {
+    "id": 20400,
+    "job": 2,
+    "score": "2#3#4#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 7820,
+    "mdefense": 9180,
+    "technic": 10127
+  },
+  {
+    "id": 30000,
+    "job": 3,
+    "score": "5#4#4#2",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 6061
+  },
+  {
+    "id": 30100,
+    "job": 3,
+    "score": "5#3#3#2",
+    "life": 8500,
+    "attack": 9010,
+    "defense": 7820,
+    "mdefense": 7820,
+    "technic": 6209
+  },
+  {
+    "id": 30300,
+    "job": 3,
+    "score": "5#4#3#2",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 9180,
+    "mdefense": 7820,
+    "technic": 6061
+  },
+  {
+    "id": 30400,
+    "job": 3,
+    "score": "5#3#4#2",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 7820,
+    "mdefense": 9180,
+    "technic": 6061
+  },
+  {
+    "id": 60000,
+    "job": 6,
+    "score": "1#4#4#1",
+    "life": 9690,
+    "attack": 7735,
+    "defense": 9180,
+    "mdefense": 9180,
+    "technic": 5174
+  },
+  {
+    "id": 60200,
+    "job": 6,
+    "score": "2#4#4#1",
+    "life": 9690,
+    "attack": 8075,
+    "defense": 8500,
+    "mdefense": 8500,
+    "technic": 5174
+  },
+  {
+    "id": 60300,
+    "job": 6,
+    "score": "1#5#4#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 9435,
+    "mdefense": 8500,
+    "technic": 5174
+  },
+  {
+    "id": 60400,
+    "job": 6,
+    "score": "1#4#5#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 8500,
+    "mdefense": 9435,
+    "technic": 5174
+  },
+  {
+    "id": 13102,
+    "job": 1,
+    "score": "6#7#5#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 12500,
+    "mdefense": 10000,
+    "technic": 8000
+  },
+  {
+    "id": 13202,
+    "job": 1,
+    "score": "6#7#5#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 14000,
+    "mdefense": 10000,
+    "technic": 8000
+  },
+  {
+    "id": 13302,
+    "job": 1,
+    "score": "6#8#5#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 16000,
+    "mdefense": 10000,
+    "technic": 8000
+  },
+  {
+    "id": 14102,
+    "job": 1,
+    "score": "6#5#7#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 10000,
+    "mdefense": 12500,
+    "technic": 8000
+  },
+  {
+    "id": 14202,
+    "job": 1,
+    "score": "6#5#7#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 10000,
+    "mdefense": 14000,
+    "technic": 8000
+  },
+  {
+    "id": 14302,
+    "job": 1,
+    "score": "6#5#8#4",
+    "life": 10400,
+    "attack": 9800,
+    "defense": 10000,
+    "mdefense": 16000,
+    "technic": 8000
+  },
+  {
+    "id": 10502,
+    "job": 1,
+    "score": "6#7#7#4",
+    "life": 8000,
+    "attack": 9800,
+    "defense": 13000,
+    "mdefense": 13000,
+    "technic": 8000
+  },
+  {
+    "id": 15102,
+    "job": 1,
+    "score": "6#8#8#4",
+    "life": 6000,
+    "attack": 9800,
+    "defense": 16000,
+    "mdefense": 16000,
+    "technic": 8000
+  },
+  {
+    "id": 23102,
+    "job": 2,
+    "score": "6#7#4#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 12500,
+    "mdefense": 9200,
+    "technic": 13700
+  },
+  {
+    "id": 23202,
+    "job": 2,
+    "score": "6#7#4#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 14000,
+    "mdefense": 9200,
+    "technic": 13700
+  },
+  {
+    "id": 23302,
+    "job": 2,
+    "score": "6#8#4#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 16000,
+    "mdefense": 9200,
+    "technic": 13700
+  },
+  {
+    "id": 24102,
+    "job": 2,
+    "score": "6#4#7#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 9200,
+    "mdefense": 12500,
+    "technic": 13700
+  },
+  {
+    "id": 24202,
+    "job": 2,
+    "score": "6#4#7#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 9200,
+    "mdefense": 14000,
+    "technic": 13700
+  },
+  {
+    "id": 24302,
+    "job": 2,
+    "score": "6#4#8#6",
+    "life": 9900,
+    "attack": 9600,
+    "defense": 9200,
+    "mdefense": 16000,
+    "technic": 13700
+  },
+  {
+    "id": 20502,
+    "job": 2,
+    "score": "6#7#7#6",
+    "life": 8000,
+    "attack": 9600,
+    "defense": 13000,
+    "mdefense": 13000,
+    "technic": 13700
+  },
+  {
+    "id": 25102,
+    "job": 2,
+    "score": "6#8#8#6",
+    "life": 6000,
+    "attack": 9600,
+    "defense": 16000,
+    "mdefense": 16000,
+    "technic": 13700
+  },
+  {
+    "id": 33102,
+    "job": 3,
+    "score": "7#7#4#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 12500,
+    "mdefense": 9200,
+    "technic": 7000
+  },
+  {
+    "id": 33202,
+    "job": 3,
+    "score": "7#7#4#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 14000,
+    "mdefense": 9200,
+    "technic": 7000
+  },
+  {
+    "id": 33302,
+    "job": 3,
+    "score": "7#8#4#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 16000,
+    "mdefense": 9200,
+    "technic": 7000
+  },
+  {
+    "id": 34102,
+    "job": 3,
+    "score": "7#4#7#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 9200,
+    "mdefense": 12500,
+    "technic": 7000
+  },
+  {
+    "id": 34202,
+    "job": 3,
+    "score": "7#4#7#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 9200,
+    "mdefense": 14000,
+    "technic": 7000
+  },
+  {
+    "id": 34302,
+    "job": 3,
+    "score": "7#4#8#3",
+    "life": 9400,
+    "attack": 10600,
+    "defense": 9200,
+    "mdefense": 16000,
+    "technic": 7000
+  },
+  {
+    "id": 30502,
+    "job": 3,
+    "score": "7#7#7#3",
+    "life": 8000,
+    "attack": 10600,
+    "defense": 13000,
+    "mdefense": 13000,
+    "technic": 7000
+  },
+  {
+    "id": 35102,
+    "job": 3,
+    "score": "7#8#8#3",
+    "life": 6000,
+    "attack": 10600,
+    "defense": 16000,
+    "mdefense": 16000,
+    "technic": 7000
+  },
+  {
+    "id": 63102,
+    "job": 6,
+    "score": "5#7#5#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 12500,
+    "mdefense": 10000,
+    "technic": 7000
+  },
+  {
+    "id": 63202,
+    "job": 6,
+    "score": "5#7#5#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 14000,
+    "mdefense": 10000,
+    "technic": 7000
+  },
+  {
+    "id": 63302,
+    "job": 6,
+    "score": "5#8#5#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 16000,
+    "mdefense": 10000,
+    "technic": 7000
+  },
+  {
+    "id": 64102,
+    "job": 6,
+    "score": "5#5#7#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 10000,
+    "mdefense": 12500,
+    "technic": 7000
+  },
+  {
+    "id": 64202,
+    "job": 6,
+    "score": "5#5#7#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 10000,
+    "mdefense": 14000,
+    "technic": 7000
+  },
+  {
+    "id": 64302,
+    "job": 6,
+    "score": "5#5#8#3",
+    "life": 11600,
+    "attack": 9100,
+    "defense": 10000,
+    "mdefense": 16000,
+    "technic": 7000
+  },
+  {
+    "id": 60502,
+    "job": 6,
+    "score": "5#7#7#3",
+    "life": 9000,
+    "attack": 9100,
+    "defense": 13000,
+    "mdefense": 13000,
+    "technic": 7000
+  },
+  {
+    "id": 65102,
+    "job": 6,
+    "score": "5#8#8#3",
+    "life": 7000,
+    "attack": 9100,
+    "defense": 16000,
+    "mdefense": 16000,
+    "technic": 7000
+  },
+  {
+    "id": 13101,
+    "job": 1,
+    "score": "4#7#4#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 11625,
+    "mdefense": 9000,
+    "technic": 7040
+  },
+  {
+    "id": 13201,
+    "job": 1,
+    "score": "4#7#4#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 13020,
+    "mdefense": 9000,
+    "technic": 7040
+  },
+  {
+    "id": 13301,
+    "job": 1,
+    "score": "4#8#4#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 14880,
+    "mdefense": 9000,
+    "technic": 7040
+  },
+  {
+    "id": 14101,
+    "job": 1,
+    "score": "4#4#7#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 9000,
+    "mdefense": 11625,
+    "technic": 7040
+  },
+  {
+    "id": 14201,
+    "job": 1,
+    "score": "4#4#7#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 9000,
+    "mdefense": 13020,
+    "technic": 7040
+  },
+  {
+    "id": 14301,
+    "job": 1,
+    "score": "4#4#8#3",
+    "life": 9360,
+    "attack": 8820,
+    "defense": 9000,
+    "mdefense": 14880,
+    "technic": 7040
+  },
+  {
+    "id": 10501,
+    "job": 1,
+    "score": "4#7#7#3",
+    "life": 7200,
+    "attack": 8820,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 7040
+  },
+  {
+    "id": 15101,
+    "job": 1,
+    "score": "4#8#8#3",
+    "life": 5400,
+    "attack": 8820,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 7040
+  },
+  {
+    "id": 23101,
+    "job": 2,
+    "score": "4#7#4#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 11625,
+    "mdefense": 8280,
+    "technic": 12056
+  },
+  {
+    "id": 23201,
+    "job": 2,
+    "score": "4#7#4#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 13020,
+    "mdefense": 8280,
+    "technic": 12056
+  },
+  {
+    "id": 23301,
+    "job": 2,
+    "score": "4#8#4#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 14880,
+    "mdefense": 8280,
+    "technic": 12056
+  },
+  {
+    "id": 24101,
+    "job": 2,
+    "score": "4#4#7#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 8280,
+    "mdefense": 11625,
+    "technic": 12056
+  },
+  {
+    "id": 24201,
+    "job": 2,
+    "score": "4#4#7#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 8280,
+    "mdefense": 13020,
+    "technic": 12056
+  },
+  {
+    "id": 24301,
+    "job": 2,
+    "score": "4#4#8#6",
+    "life": 8910,
+    "attack": 8640,
+    "defense": 8280,
+    "mdefense": 14880,
+    "technic": 12056
+  },
+  {
+    "id": 20501,
+    "job": 2,
+    "score": "4#7#7#6",
+    "life": 7200,
+    "attack": 8640,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 12056
+  },
+  {
+    "id": 25101,
+    "job": 2,
+    "score": "4#8#8#6",
+    "life": 5400,
+    "attack": 8640,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 12056
+  },
+  {
+    "id": 33101,
+    "job": 3,
+    "score": "6#7#4#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 11625,
+    "mdefense": 8280,
+    "technic": 6160
+  },
+  {
+    "id": 33201,
+    "job": 3,
+    "score": "6#7#4#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 13020,
+    "mdefense": 8280,
+    "technic": 6160
+  },
+  {
+    "id": 33301,
+    "job": 3,
+    "score": "6#8#4#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 14880,
+    "mdefense": 8280,
+    "technic": 6160
+  },
+  {
+    "id": 34101,
+    "job": 3,
+    "score": "6#4#7#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 8280,
+    "mdefense": 11625,
+    "technic": 6160
+  },
+  {
+    "id": 34201,
+    "job": 3,
+    "score": "6#4#7#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 8280,
+    "mdefense": 13020,
+    "technic": 6160
+  },
+  {
+    "id": 34301,
+    "job": 3,
+    "score": "6#4#8#2",
+    "life": 8460,
+    "attack": 9540,
+    "defense": 8280,
+    "mdefense": 14880,
+    "technic": 6160
+  },
+  {
+    "id": 30501,
+    "job": 3,
+    "score": "6#7#7#2",
+    "life": 7200,
+    "attack": 9540,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 6160
+  },
+  {
+    "id": 35101,
+    "job": 3,
+    "score": "6#8#8#2",
+    "life": 5400,
+    "attack": 9540,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 6160
+  },
+  {
+    "id": 63101,
+    "job": 6,
+    "score": "2#7#4#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 11625,
+    "mdefense": 9000,
+    "technic": 6160
+  },
+  {
+    "id": 63201,
+    "job": 6,
+    "score": "2#7#4#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 13020,
+    "mdefense": 9000,
+    "technic": 6160
+  },
+  {
+    "id": 63301,
+    "job": 6,
+    "score": "2#8#4#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 14880,
+    "mdefense": 9000,
+    "technic": 6160
+  },
+  {
+    "id": 64101,
+    "job": 6,
+    "score": "2#4#7#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 9000,
+    "mdefense": 11625,
+    "technic": 6160
+  },
+  {
+    "id": 64201,
+    "job": 6,
+    "score": "2#4#7#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 9000,
+    "mdefense": 13020,
+    "technic": 6160
+  },
+  {
+    "id": 64301,
+    "job": 6,
+    "score": "2#4#8#2",
+    "life": 10440,
+    "attack": 8190,
+    "defense": 9000,
+    "mdefense": 14880,
+    "technic": 6160
+  },
+  {
+    "id": 60501,
+    "job": 6,
+    "score": "2#7#7#2",
+    "life": 8100,
+    "attack": 8190,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 6160
+  },
+  {
+    "id": 65101,
+    "job": 6,
+    "score": "2#8#8#2",
+    "life": 6300,
+    "attack": 8190,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 6160
+  },
+  {
+    "id": 13100,
+    "job": 1,
+    "score": "3#7#4#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 11625,
+    "mdefense": 8500,
+    "technic": 6720
+  },
+  {
+    "id": 13200,
+    "job": 1,
+    "score": "3#7#4#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 13020,
+    "mdefense": 8500,
+    "technic": 6720
+  },
+  {
+    "id": 13300,
+    "job": 1,
+    "score": "3#8#4#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 14880,
+    "mdefense": 8500,
+    "technic": 6720
+  },
+  {
+    "id": 14100,
+    "job": 1,
+    "score": "3#4#7#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 8500,
+    "mdefense": 11625,
+    "technic": 6720
+  },
+  {
+    "id": 14200,
+    "job": 1,
+    "score": "3#4#7#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 8500,
+    "mdefense": 13020,
+    "technic": 6720
+  },
+  {
+    "id": 14300,
+    "job": 1,
+    "score": "3#4#8#2",
+    "life": 8840,
+    "attack": 8330,
+    "defense": 8500,
+    "mdefense": 14880,
+    "technic": 6720
+  },
+  {
+    "id": 10500,
+    "job": 1,
+    "score": "3#7#7#2",
+    "life": 6800,
+    "attack": 8330,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 6720
+  },
+  {
+    "id": 15100,
+    "job": 1,
+    "score": "3#8#8#2",
+    "life": 5100,
+    "attack": 8330,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 6720
+  },
+  {
+    "id": 23100,
+    "job": 2,
+    "score": "2#7#3#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 11625,
+    "mdefense": 7820,
+    "technic": 11508
+  },
+  {
+    "id": 23200,
+    "job": 2,
+    "score": "2#7#3#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 13020,
+    "mdefense": 7820,
+    "technic": 11508
+  },
+  {
+    "id": 23300,
+    "job": 2,
+    "score": "2#8#3#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 14880,
+    "mdefense": 7820,
+    "technic": 11508
+  },
+  {
+    "id": 24100,
+    "job": 2,
+    "score": "2#3#7#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 7820,
+    "mdefense": 11625,
+    "technic": 11508
+  },
+  {
+    "id": 24200,
+    "job": 2,
+    "score": "2#3#7#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 7820,
+    "mdefense": 13020,
+    "technic": 11508
+  },
+  {
+    "id": 24300,
+    "job": 2,
+    "score": "2#3#8#6",
+    "life": 8415,
+    "attack": 8160,
+    "defense": 7820,
+    "mdefense": 14880,
+    "technic": 11508
+  },
+  {
+    "id": 20500,
+    "job": 2,
+    "score": "2#7#7#6",
+    "life": 6800,
+    "attack": 8160,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 11508
+  },
+  {
+    "id": 25100,
+    "job": 2,
+    "score": "2#8#8#6",
+    "life": 5100,
+    "attack": 8160,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 11508
+  },
+  {
+    "id": 33100,
+    "job": 3,
+    "score": "5#7#3#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 11625,
+    "mdefense": 7820,
+    "technic": 5880
+  },
+  {
+    "id": 33200,
+    "job": 3,
+    "score": "5#7#3#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 13020,
+    "mdefense": 7820,
+    "technic": 5880
+  },
+  {
+    "id": 33300,
+    "job": 3,
+    "score": "5#8#3#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 14880,
+    "mdefense": 7820,
+    "technic": 5880
+  },
+  {
+    "id": 34100,
+    "job": 3,
+    "score": "5#3#7#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 7820,
+    "mdefense": 11625,
+    "technic": 5880
+  },
+  {
+    "id": 34200,
+    "job": 3,
+    "score": "5#3#7#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 7820,
+    "mdefense": 13020,
+    "technic": 5880
+  },
+  {
+    "id": 34300,
+    "job": 3,
+    "score": "5#3#8#1",
+    "life": 7990,
+    "attack": 9010,
+    "defense": 7820,
+    "mdefense": 14880,
+    "technic": 5880
+  },
+  {
+    "id": 30500,
+    "job": 3,
+    "score": "5#7#7#1",
+    "life": 6800,
+    "attack": 9010,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 5880
+  },
+  {
+    "id": 35100,
+    "job": 3,
+    "score": "5#8#8#1",
+    "life": 5100,
+    "attack": 9010,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 5880
+  },
+  {
+    "id": 63100,
+    "job": 6,
+    "score": "1#7#4#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 11625,
+    "mdefense": 8500,
+    "technic": 5880
+  },
+  {
+    "id": 63200,
+    "job": 6,
+    "score": "1#7#4#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 13020,
+    "mdefense": 8500,
+    "technic": 5880
+  },
+  {
+    "id": 63300,
+    "job": 6,
+    "score": "1#8#4#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 14880,
+    "mdefense": 8500,
+    "technic": 5880
+  },
+  {
+    "id": 64100,
+    "job": 6,
+    "score": "1#4#7#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 8500,
+    "mdefense": 11625,
+    "technic": 5880
+  },
+  {
+    "id": 64200,
+    "job": 6,
+    "score": "1#4#7#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 8500,
+    "mdefense": 13020,
+    "technic": 5880
+  },
+  {
+    "id": 64300,
+    "job": 6,
+    "score": "1#4#8#1",
+    "life": 9860,
+    "attack": 7735,
+    "defense": 8500,
+    "mdefense": 14880,
+    "technic": 5880
+  },
+  {
+    "id": 60500,
+    "job": 6,
+    "score": "1#7#7#1",
+    "life": 7650,
+    "attack": 7735,
+    "defense": 12090,
+    "mdefense": 12090,
+    "technic": 5880
+  },
+  {
+    "id": 65100,
+    "job": 6,
+    "score": "1#8#8#1",
+    "life": 5950,
+    "attack": 7735,
+    "defense": 14880,
+    "mdefense": 14880,
+    "technic": 5880
+  },
+  {
+    "id": 15202,
+    "job": 1,
+    "score": "6#8#7#6",
+    "life": 10320,
+    "attack": 9800,
+    "defense": 14500,
+    "mdefense": 12500,
+    "technic": 10000
+  }
+]

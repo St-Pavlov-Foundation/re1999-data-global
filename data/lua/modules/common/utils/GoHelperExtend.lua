@@ -87,6 +87,16 @@ function slot0.findChildScrollbar(slot0, slot1)
 	return ZProj.ScrollbarWrap.GetWithPath(slot0, slot1)
 end
 
+function slot0.findChildUIMesh(slot0, slot1)
+	if string.nilorempty(slot1) then
+		return slot0:GetComponent(typeof(UIMesh))
+	end
+
+	if uv0.findChild(slot0, slot1) then
+		return slot2:GetComponent(typeof(UIMesh))
+	end
+end
+
 function slot0.setActiveCanvasGroup(slot0, slot1)
 	uv0.SetActiveCanvasGroup(slot0, slot1)
 end

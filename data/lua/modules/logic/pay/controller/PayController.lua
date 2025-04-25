@@ -170,6 +170,72 @@ function slot0._hidePayFinishBlock(slot0)
 	UIBlockMgr.instance:endBlock(UIBlockKey.PayFinish)
 end
 
+function slot0.onReceiveMaterialChangePush(slot0, slot1)
+	if not slot1 or #slot1 == 0 then
+		return
+	end
+
+	if not PayModel.instance:getQuickUseInfo() then
+		return
+	end
+
+	slot3 = {}
+
+	for slot7, slot8 in ipairs(slot1) do
+		slot9 = slot8.materilType
+		slot10 = slot8.materilId
+		slot3[slot9] = slot3[slot9] or {}
+		slot3[slot9][slot10] = (slot3[slot9][slot10] or 0) + (slot8.quantity or 0)
+	end
+
+	slot4 = {}
+
+	for slot8, slot9 in ipairs(slot2.itemList) do
+		slot11 = slot9[2]
+		slot12 = slot9[3]
+
+		if slot3[slot9[1]] and slot3[slot10][slot11] then
+			slot4[slot10] = slot4[slot10] or {}
+
+			if not slot4[slot10][slot11] then
+				slot4[slot10][slot11] = math.min(ItemModel.instance:getItemQuantity(slot10, slot11) or 0, slot3[slot10][slot11])
+			end
+
+			if slot13 - slot12 < 0 then
+				slot12 = slot13
+				slot13 = 0
+			end
+
+			if slot12 > 0 then
+				slot15 = slot12 == 1
+				slot16 = slot15 and MessageBoxIdDefine.ChargeStoreQuickUseTip or MessageBoxIdDefine.ChargeStoreQuickUseTipWithNum
+
+				PopupController.instance:addPopupView(PopupEnum.PriorityType.ChargeStoreQuickUseTip, ViewName.MessageBoxView, {
+					messageBoxId = slot16,
+					msg = MessageBoxConfig.instance:getMessage(slot16),
+					msgBoxType = MsgBoxEnum.BoxType.Yes_No,
+					yesCallback = function ()
+						CharacterModel.instance:setGainHeroViewShowState(false)
+						CharacterModel.instance:setGainHeroViewNewShowState(false)
+						ItemRpc.instance:sendUseItemRequest({
+							{
+								materialId = uv0,
+								quantity = uv1
+							}
+						}, 0)
+					end,
+					extra = {
+						ItemModel.instance:getItemConfig(slot10, slot11).name,
+						not slot15 and slot12 or nil
+					}
+				})
+			end
+
+			slot4[slot10][slot11] = slot13
+		end
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

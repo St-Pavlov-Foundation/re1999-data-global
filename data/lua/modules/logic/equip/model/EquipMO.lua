@@ -15,6 +15,8 @@ function slot0.init(slot0, slot1)
 	slot0.isLock = slot1.isLock
 	slot0.refineLv = slot1.refineLv
 	slot0.equipType = EquipEnum.ClientEquipType.Normal
+
+	slot0:clearRecommend()
 end
 
 function slot0.getBreakLvByLevel(slot0, slot1)
@@ -89,6 +91,10 @@ function slot0.clone(slot0, slot1)
 	slot2.id = slot1
 
 	return slot2
+end
+
+function slot0.clearRecommend(slot0)
+	slot0.recommondIndex = -1
 end
 
 return slot0

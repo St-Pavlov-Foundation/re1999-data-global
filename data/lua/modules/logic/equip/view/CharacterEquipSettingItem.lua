@@ -50,6 +50,7 @@ function slot0.onUpdateMO(slot0, slot1)
 	slot0._commonEquipIcon:setCountFontSize(33)
 	slot0._commonEquipIcon:setLevelPos(24, -2)
 	slot0._commonEquipIcon:setLevelFontColor("#ffffff")
+	slot0._commonEquipIcon:checkRecommend()
 	slot0:refreshSelect()
 end
 

@@ -152,7 +152,10 @@ function slot0.removeEvents(slot0)
 	slot0._inputvalue:RemoveOnEndEdit()
 end
 
-slot1 = {
+slot1 = math.floor
+slot2 = string.format
+slot3 = table.insert
+slot4 = {
 	[MaterialEnum.MaterialType.Item] = {
 		[BpEnum.ScoreItemId] = true
 	},
@@ -169,7 +172,7 @@ function slot0._btndetailOnClick(slot0)
 		return
 	end
 
-	JumpController.instance:jumpByParamWithCondition(string.format("51#%d", slot0.viewParam.id), slot0._onJumpFinish, slot0)
+	JumpController.instance:jumpByParamWithCondition(uv0("51#%d", slot0.viewParam.id), slot0._onJumpFinish, slot0)
 end
 
 function slot0._btnplayerbgOnClick(slot0)
@@ -179,11 +182,15 @@ function slot0._btnplayerbgOnClick(slot0)
 end
 
 function slot0._btnsummonsimulationOnClick(slot0)
-	if not slot0._config or not slot0._config.activityId then
+	if not slot0._config then
 		return
 	end
 
-	SummonSimulationPickController.instance:openSummonTips(slot0._config.activityId)
+	if slot0:_isPackageSkin() then
+		HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", slot0:_getPackageSkinDesc())
+	elseif slot0._config.activityId then
+		SummonSimulationPickController.instance:openSummonTips(slot0._config.activityId)
+	end
 end
 
 function slot0._onEndEdit(slot0, slot1)
@@ -263,9 +270,9 @@ function slot0.sendGMRequest(slot0, slot1)
 	GameFacade.showToast(ToastEnum.GMTool5, slot0.viewParam.id)
 
 	if slot0.viewParam.type == MaterialEnum.MaterialType.Item and slot0.viewParam.id == 510001 then
-		GMRpc.instance:sendGMRequest(string.format("add heroStoryTicket %d", slot1))
+		GMRpc.instance:sendGMRequest(uv0("add heroStoryTicket %d", slot1))
 	else
-		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", slot0.viewParam.type, slot0.viewParam.id, slot1))
+		GMRpc.instance:sendGMRequest(uv0("add material %d#%d#%d", slot0.viewParam.type, slot0.viewParam.id, slot1))
 	end
 end
 
@@ -291,6 +298,7 @@ function slot0._editableInitView(slot0)
 	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
 	slot0._txtsource.text = luaLang("materialview_source")
+	slot0._txtSummonsimulationtips = gohelper.findChildText(slot0._goSummonsimulationtips, "txt_tips")
 end
 
 function slot0._cloneJumpItem(slot0)
@@ -342,8 +350,8 @@ function slot0._cloneJumpItem(slot0)
 					gohelper.setActive(slot12.probalityBg, slot13 and true or false)
 					gohelper.setActive(slot12.jumpHardTagGO, false)
 
-					slot12.jumpText.text = string.format(luaLang("p_materialtip_jump"), "")
-					slot12.originText.text = string.format("<color=#3f485f><size=32>%s</size></color>", string.format(luaLang("material_storage"), ItemConfig.instance:getItemCo(tonumber(slot9.sourceParam)).name))
+					slot12.jumpText.text = luaLang("MaterialTipView_jumpText_unlock")
+					slot12.originText.text = uv0("<color=#3f485f><size=32>%s</size></color>", uv0(luaLang("material_storage"), ItemConfig.instance:getItemCo(tonumber(slot9.sourceParam)).name))
 					slot12.indexText.text = ""
 
 					table.insert(slot0._boxItemGos, slot12)
@@ -407,7 +415,7 @@ function slot0._cloneJumpItem(slot0)
 				sourceId = -1,
 				probability = slot12.probability,
 				episodeId = slot12.episodeId,
-				jumpParam = string.format("4#%s", slot12.episodeId)
+				jumpParam = uv0("4#%s", slot12.episodeId)
 			}
 			slot14 = false
 
@@ -484,7 +492,7 @@ function slot0._cloneJumpItem(slot0)
 		slot12.originText.text = slot15 or ""
 		slot12.indexText.text = slot16 or ""
 		slot17 = slot13.episodeId and slot13.probability and MaterialEnum.JumpProbabilityDisplay[slot13.probability]
-		slot12.txtProbality.text = slot17 and string.format("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[slot13.probability])) or ""
+		slot12.txtProbality.text = slot17 and uv0("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[slot13.probability])) or ""
 		slot12.jumpText.text = luaLang("p_materialtip_jump")
 
 		gohelper.setActive(slot12.probalityBg, slot17 and true or false)
@@ -584,6 +592,9 @@ function slot0._btnuseOnClick(slot0)
 		return
 	end
 
+	slot1 = slot0._config.id
+	slot2 = slot0._value
+
 	if slot0.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
 		CurrencyController.instance:openPowerView()
 
@@ -595,16 +606,22 @@ function slot0._btnuseOnClick(slot0)
 		return
 	end
 
-	if slot0._config.subType == ItemEnum.SubType.SpecifiedGift then
+	if slot0:_isSummonSkin() then
+		MaterialTipController.instance:_openView_LifeCirclePickChoice(slot0._config, slot2)
+	elseif slot0:_isPackageSkin() then
+		CharacterModel.instance:setGainHeroViewShowState(false)
+		CharacterModel.instance:setGainHeroViewNewShowState(false)
+		ItemRpc.instance:simpleSendUseItemRequest(slot1, slot2)
+	elseif slot0._config.subType == ItemEnum.SubType.SpecifiedGift then
 		GiftController.instance:openGiftMultipleChoiceView({
 			param = slot0.viewParam,
-			quantity = slot0._value,
+			quantity = slot2,
 			subType = slot0._config.subType
 		})
 	elseif slot0._config.subType == ItemEnum.SubType.OptionalGift then
 		GiftController.instance:openOptionalGiftMultipleChoiceView({
 			param = slot0.viewParam,
-			quantity = slot0._value,
+			quantity = slot2,
 			subType = slot0._config.subType
 		})
 	elseif slot0._config.subType == ItemEnum.SubType.OptionalHeroGift then
@@ -615,14 +632,16 @@ function slot0._btnuseOnClick(slot0)
 		if slot0._config.id == ItemEnum.NewbiePackGiftId then
 			CustomPickChoiceController.instance:openNewBiePickChoiceView(string.splitToNumber(slot0._config.effect, "#"), MaterialTipController.onUseOptionalHeroGift, MaterialTipController, {
 				id = slot0._config.id,
-				quantity = slot0._value,
+				quantity = slot2,
 				styleId = CustomPickChoiceEnum.style.OptionalHeroGift
 			})
 		else
-			CustomPickChoiceController.instance:openCustomPickChoiceView(slot1, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, slot3)
+			CustomPickChoiceController.instance:openCustomPickChoiceView(slot3, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, slot5)
 		end
 	elseif slot0._config.subType == ItemEnum.SubType.SkinTicket then
 		StoreController.instance:openStoreView(500)
+	elseif slot0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+		StoreController.instance:openStoreView(801)
 	elseif slot0._config.subType == ItemEnum.SubType.RoomTicket then
 		GameFacade.showMessageBox(MessageBoxIdDefine.GoToUseRoomTicket, MsgBoxEnum.BoxType.Yes_No, slot0._useRoomTicket, nil, , slot0, nil, )
 	elseif slot0._config.subType == ItemEnum.SubType.SummonSimulationPick then
@@ -630,13 +649,7 @@ function slot0._btnuseOnClick(slot0)
 
 		return
 	else
-		slot1 = {}
-
-		table.insert(slot1, {
-			materialId = slot0._config.id,
-			quantity = slot0._value
-		})
-		ItemRpc.instance:sendUseItemRequest(slot1, 0)
+		ItemRpc.instance:simpleSendUseItemRequest(slot1, slot2)
 	end
 
 	slot0:closeThis()
@@ -806,6 +819,8 @@ function slot0._refreshUI(slot0)
 			slot1 = false
 		elseif slot0._config.subType == ItemEnum.SubType.SkinTicket then
 			slot1 = false
+		elseif slot0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+			slot1 = false
 		elseif slot0.viewParam.type == MaterialEnum.MaterialType.NewInsight then
 			slot1 = false
 		end
@@ -869,21 +884,21 @@ function slot0._refreshUI(slot0)
 	slot0:_refreshItemQuantity()
 	slot0:_refreshItemQuantityVisible()
 	gohelper.setActive(slot0._btndetail.gameObject, slot0.viewParam.type == MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(slot0._btnplayerbg, slot0.viewParam.type == MaterialEnum.MaterialType.Item and slot0._config.subType == ItemEnum.SubType.PlayerBg)
+	gohelper.setActive(slot0._btnplayerbg, false)
 	gohelper.setActive(slot0._goplayericon, slot0._config.subType == ItemEnum.SubType.Portrait)
 
-	slot2 = slot0._config.subType == ItemEnum.SubType.SummonSimulationPick
+	slot3 = slot0._config.subType == ItemEnum.SubType.SummonSimulationPick or slot0:_isPackageSkin()
 
-	gohelper.setActive(slot0._goSummonsimulationtips, slot2)
-	gohelper.setActive(slot0._btnsummonsimulation, slot2)
+	gohelper.setActive(slot0._goSummonsimulationtips, slot3)
+	gohelper.setActive(slot0._btnsummonsimulation, slot3)
 	gohelper.setActive(slot0._gohadnumber, not (slot0.viewParam.type == MaterialEnum.MaterialType.Exp) and slot0._config.subType ~= ItemEnum.SubType.Portrait and not slot0:_checkIsFakeIcon())
 	gohelper.setActive(slot0._goupgrade, slot0._config.subType == ItemEnum.SubType.Portrait and not string.nilorempty(slot0._config.effect))
 
-	slot4 = string.split(slot0._config.effect, "#")
+	slot5 = string.split(slot0._config.effect, "#")
 
 	if slot0._config.subType == ItemEnum.SubType.Portrait then
-		if #slot4 > 1 then
-			if slot0._config.id == tonumber(slot4[#slot4]) then
+		if #slot5 > 1 then
+			if slot0._config.id == tonumber(slot5[#slot5]) then
 				gohelper.setActive(slot0._goupgrade, false)
 				gohelper.setActive(slot0._goframe, false)
 				gohelper.setActive(slot0._goframenode, true)
@@ -906,6 +921,16 @@ function slot0._refreshUI(slot0)
 		recthelper.setHeight(slot0._scrolldesc.transform, 162)
 	else
 		recthelper.setHeight(slot0._scrolldesc.transform, 415)
+	end
+
+	if slot3 then
+		if slot2 then
+			slot0._txtSummonsimulationtips.text = luaLang("p_normalstoregoodsview_txt_summonpicktips")
+		end
+
+		if slot0:_isPackageSkin() then
+			slot0._txtSummonsimulationtips.text = luaLang("ruledetail")
+		end
 	end
 end
 
@@ -934,8 +959,13 @@ function slot0._onRefreshPowerPotionDeadline(slot0)
 end
 
 function slot0._onRefreshNewInsightDeadline(slot0)
-	if slot0._config.expireType ~= 0 and slot0.viewParam.uid then
-		if ItemInsightModel.instance:getInsightItemDeadline(slot0.viewParam.uid) <= ServerTime.now() then
+	slot1 = ItemInsightModel.instance:getInsightItemDeadline(slot0.viewParam.uid)
+
+	if slot0._config.expireHours == ItemEnum.NoExpiredNum then
+		slot0._txtproptip.text = ""
+		slot0._txtexpire.text = ""
+	elseif slot0._config.expireType ~= 0 and slot0.viewParam.uid then
+		if slot1 <= ServerTime.now() then
 			slot0._txtproptip.text = ""
 			slot0._txtexpire.text = luaLang("hasExpire")
 		else
@@ -950,7 +980,7 @@ function slot0._onRefreshNewInsightDeadline(slot0)
 end
 
 function slot0.getRemainTimeStr(slot0, slot1)
-	return string.format(luaLang("remain"), TimeUtil.getFormatTime_overseas(slot1))
+	return TimeUtil.getFormatTime_overseas(slot1, false) and uv0(luaLang("remain"), " " .. slot2) or ""
 end
 
 function slot0.getInsightItemRemainTimeStr(slot0, slot1)
@@ -993,7 +1023,7 @@ function slot0._setIconNativeSize(slot0)
 end
 
 function slot0._refreshInclude(slot0)
-	slot1 = MaterialEnum.SubTypePackages[slot0._config.subType] == true and slot0.viewParam.inpack ~= true
+	slot1 = (MaterialEnum.SubTypePackages[slot0._config.subType] == true or slot0:_isPackageSkin()) and slot0.viewParam.inpack ~= true
 
 	gohelper.setActive(slot0._goinclude, slot1)
 
@@ -1003,7 +1033,9 @@ function slot0._refreshInclude(slot0)
 	if slot1 then
 		slot4 = nil
 
-		if slot0._config.subType == ItemEnum.SubType.OptionalGift then
+		if slot0:_isPackageSkin() then
+			slot4 = slot0:_getPackageSkinIncludeItems()
+		elseif slot0._config.subType == ItemEnum.SubType.OptionalGift then
 			slot4 = GiftMultipleChoiceListModel.instance:getOptionalGiftInfo(slot0._config.id)
 		elseif slot0._config.subType == ItemEnum.SubType.OptionalHeroGift then
 			slot4 = {
@@ -1041,6 +1073,11 @@ function slot0._refreshInclude(slot0)
 
 					slot10:setMOValue(slot11, slot12, slot13, nil, true)
 					slot10:isShowCount(false)
+				elseif slot11 == MaterialEnum.MaterialType.HeroSkin then
+					slot10 = IconMgr.instance:getCommonItemIcon(slot0._goincludeContent)
+
+					slot10:setMOValue(slot11, slot12, slot13, nil, true)
+					slot10:isShowCount(false)
 				else
 					slot10 = IconMgr.instance:getCommonItemIcon(slot0._goincludeContent)
 
@@ -1068,6 +1105,9 @@ function slot0._refreshInclude(slot0)
 end
 
 function slot0._isUseBtnShow(slot0)
+	slot1 = ItemConfig.instance:getItemUseCo(slot0._config.subType)
+	slot2 = slot0.viewParam.inpack and slot1 and slot1.useType ~= 1
+
 	if slot0.viewParam.type == MaterialEnum.MaterialType.PowerPotion and slot0.viewParam.inpack and slot0:_isFromBackpackView() then
 		return true
 	end
@@ -1081,7 +1121,7 @@ function slot0._isUseBtnShow(slot0)
 			return false
 		end
 
-		return true
+		return slot2
 	end
 
 	if slot0._config.subType == ItemEnum.SubType.SkinTicket then
@@ -1092,9 +1132,15 @@ function slot0._isUseBtnShow(slot0)
 		return ItemModel.instance:getItemQuantity(slot0.viewParam.type, slot0.viewParam.id, slot0.viewParam.uid, slot0.viewParam.fakeQuantity) > 0
 	end
 
-	slot1 = ItemConfig.instance:getItemUseCo(slot0._config.subType)
+	if slot0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+		if ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
 
-	return slot0.viewParam.inpack and slot1 and slot1.useType ~= 1
+		return ItemModel.instance:getItemQuantity(slot0.viewParam.type, slot0.viewParam.id, slot0.viewParam.uid, slot0.viewParam.fakeQuantity) > 0
+	end
+
+	return slot2
 end
 
 function slot0._isFromBackpackView(slot0)
@@ -1149,6 +1195,50 @@ function slot0.onClose(slot0)
 	slot0._simageequipicon:UnLoadImage()
 	slot0._simagebg1:UnLoadImage()
 	slot0._simagebg2:UnLoadImage()
+end
+
+function slot0._isPackageSkin(slot0)
+	return slot0._config.clienttag == ItemEnum.Tag.PackageSkin
+end
+
+function slot0._getPackageSkinDesc(slot0)
+	slot2 = {}
+
+	for slot6, slot7 in ipairs(ItemConfig.instance:getRewardGroupRateInfoList(slot0._config.effect)) do
+		slot8 = slot7.rate * 100
+
+		if slot8 - uv0(slot8) ~= 0 then
+			slot8 = uv1("%s.%s", slot9, uv0(slot10 * 1000 / 100))
+		end
+
+		slot12 = lua_skin.configDict[slot7.materialId]
+
+		uv2(slot2, GameUtil.getSubPlaceholderLuaLang(luaLang("material_packageskin_rate_desc"), {
+			lua_character.configDict[slot12.characterId].name,
+			slot12.characterSkin,
+			slot8
+		}))
+	end
+
+	return luaLang("MaterialTipViewPackageSkinDesc") .. table.concat(slot2, "\n")
+end
+
+function slot0._getPackageSkinIncludeItems(slot0)
+	slot2 = {}
+
+	for slot6, slot7 in ipairs(ItemConfig.instance:getRewardGroupRateInfoList(slot0._config.effect)) do
+		uv0(slot2, {
+			slot7.materialType,
+			slot7.materialId,
+			[3.0] = 1
+		})
+	end
+
+	return slot2
+end
+
+function slot0._isSummonSkin(slot0)
+	return slot0._config.clienttag == ItemEnum.Tag.SummonSkin
 end
 
 return slot0

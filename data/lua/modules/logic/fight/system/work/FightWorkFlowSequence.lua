@@ -2,7 +2,7 @@ module("modules.logic.fight.system.work.FightWorkFlowSequence", package.seeall)
 
 slot0 = class("FightWorkFlowSequence", FightWorkFlowBase)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._workList = {}
 	slot0._curIndex = 0
 	slot0._startIndex = 0
@@ -14,28 +14,26 @@ function slot0.registWork(slot0, slot1, ...)
 end
 
 function slot0.registWorkAtIndex(slot0, slot1, slot2, ...)
-	slot3 = slot0:registClass(slot2, ...)
+	slot3 = slot0:newClass(slot2, ...)
 
-	slot3:registFinishCallback(slot0.onWorkItemDone, slot0, slot3)
 	table.insert(slot0._workList, slot1, slot3)
 
 	return slot3
 end
 
 function slot0.addWork(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
 	slot0:addWorkAtIndex(#slot0._workList + 1, slot1)
 end
 
 function slot0.addWorkAtIndex(slot0, slot1, slot2)
-	if slot2.PARENTROOTCLASS and slot2.PARENTROOTCLASS.PARENTROOTCLASS then
-		logError("战斗任务流添加work,但是此work是被组件初始化的,已经拥有父节点,请检查代码,类名:" .. slot2.PARENTROOTCLASS.PARENTROOTCLASS.__cname)
-		slot0:listen2WorkAtIndex(slot1, slot2)
+	if not slot2 then
+		return
 	end
 
-	slot2.PARENTROOTCLASS = slot0
-
-	table.insert(slot0._instantiateClass, slot2)
-	slot2:registFinishCallback(slot0.onWorkItemDone, slot0, slot2)
 	table.insert(slot0._workList, slot1, slot2)
 end
 
@@ -57,7 +55,7 @@ function slot0._playNext(slot0)
 	slot0._curIndex = slot0._curIndex + 1
 
 	if slot0._workList[slot0._curIndex] then
-		if slot1.WORKFINISHED then
+		if slot1.WORKFINISHED or slot1.IS_DISPOSED then
 			return slot0:_playNext()
 		elseif not slot1.STARTED then
 			slot0._playStartCount = slot0._playStartCount + 1
@@ -68,6 +66,7 @@ function slot0._playNext(slot0)
 				while slot0._playStartCount ~= 0 do
 					slot2 = slot0._workList[slot0._startIndex]
 
+					slot2:registFinishCallback(slot0.onWorkItemDone, slot0, slot2)
 					xpcall(slot2.start, __G__TRACKBACK__, slot2, slot0.context)
 
 					slot0._playStartCount = slot0._playStartCount - 1
@@ -92,11 +91,21 @@ function slot0.onWorkItemDone(slot0, slot1)
 	end
 end
 
+function slot0.onDestructor(slot0)
+	for slot4 = #slot0._workList, 1, -1 do
+		slot0._workList[slot4]:disposeSelf()
+	end
+end
+
 function slot0.registWorkAtNext(slot0, slot1, ...)
 	return slot0:registWorkAtIndex(slot0._curIndex + 1, slot1, ...)
 end
 
 function slot0.addWorkAtNext(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
 	slot0:addWorkAtIndex(slot0._curIndex + 1, slot1)
 end
 

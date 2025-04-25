@@ -183,7 +183,7 @@ function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 		slot13:showStackableNum()
 		slot13:setHideLvAndBreakFlag(true)
 		slot13:hideEquipLvAndBreak(true)
-		slot13:isShowCount(true)
+		slot13:isShowCount(slot12[1] ~= MaterialEnum.MaterialType.HeroSkin)
 
 		if slot6 then
 			slot13:setAlpha(0.45, 0.8)

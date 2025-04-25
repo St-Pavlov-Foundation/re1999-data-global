@@ -20,6 +20,12 @@ function slot0.removeEvents(slot0)
 	slot0._btnbuy:RemoveClickListener()
 end
 
+function slot0.ctor(slot0, ...)
+	uv0.super.ctor(slot0, ...)
+
+	slot0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreBlockPackageView)
+end
+
 function slot0._btnbuyOnClick(slot0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
@@ -45,7 +51,6 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.refreshUI(slot0)
-	slot0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreBlockPackageView)
 	slot0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(slot0.config)
 end
 

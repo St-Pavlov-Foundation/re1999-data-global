@@ -180,6 +180,16 @@ function slot0.addTrainPreviewMO(slot0, slot1)
 	return RoomHelper.add2KeyValue(slot0._trainPreveiewMODict, slot1.id, slot1.trainInfo.heroId, slot1)
 end
 
+function slot0.getCritterCntById(slot0, slot1)
+	for slot7, slot8 in ipairs(slot0:getList()) do
+		if slot8.defineId == slot1 then
+			slot2 = 0 + 1
+		end
+	end
+
+	return slot2
+end
+
 slot0.instance = slot0.New()
 
 return slot0

@@ -2,6 +2,13 @@ module("modules.common.others.SDKDataTrackExt", package.seeall)
 
 slot0 = SDKDataTrackMgr
 
+function slot0.trackClickEnterActivityButton(slot0, slot1, slot2)
+	StatController.instance:track(StatEnum.EventName.ButtonClick, {
+		[StatEnum.EventProperties.ViewName] = slot1 or "",
+		[StatEnum.EventProperties.ButtonName] = slot2 or ""
+	})
+end
+
 function slot0.activateExtend()
 	uv0.EventProperties.notice_jump_id = "jump_id"
 	uv0.EventName.voice_pack_UI_manager = "voice_pack_UI_manager"

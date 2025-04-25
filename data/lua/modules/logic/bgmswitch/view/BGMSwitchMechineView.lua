@@ -538,19 +538,19 @@ function slot0._pauseBgm(slot0)
 	BGMSwitchController.instance:pauseMainBgm()
 end
 
-function slot0._playBgm(slot0)
-	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio)
+function slot0._playBgm(slot0, slot1)
+	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio, false, slot1)
 end
 
 function slot0._forcePlayBgm(slot0)
-	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio, true)
+	BGMSwitchController.instance:playMainBgm(slot0._bgmCo.audio, true, true)
 end
 
 function slot0._progressFinished(slot0)
 	if BGMSwitchModel.instance:isRandomMode() then
 		slot0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(BGMSwitchModel.instance:nextBgm(1, false))
 
-		slot0:_playBgm()
+		slot0:_playBgm(true)
 		slot0:_refreshView()
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.RandomFinished)
 		StatController.instance:track(StatEnum.EventName.SwitchBGM, {

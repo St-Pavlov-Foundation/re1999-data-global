@@ -3,9 +3,9 @@ module("modules.logic.bgmswitch.config.BGMSwitchConfig", package.seeall)
 slot0 = class("BGMSwitchConfig", BaseConfig)
 
 function slot0.ctor(slot0)
-	slot0._bgmswitchconfig = nil
-	slot0._bgmtypeconfig = nil
-	slot0._bgmeggconfig = nil
+	slot0._bgmSwitchConfig = nil
+	slot0._bgmTypeConfig = nil
+	slot0._bgmEasterEggConfig = nil
 end
 
 function slot0.reqConfigNames(slot0)
@@ -18,46 +18,48 @@ end
 
 function slot0.onConfigLoaded(slot0, slot1, slot2)
 	if slot1 == "bgm_switch" then
-		slot0._bgmswitchconfig = slot2
+		slot0._bgmSwitchConfig = slot2
 	elseif slot1 == "bgm_type" then
-		slot0._bgmtypeconfig = slot2
+		slot0._bgmTypeConfig = slot2
 	elseif slot1 == "bgm_easteregg" then
-		slot0._bgmeggconfig = slot2
+		slot0._bgmEasterEggConfig = slot2
 	end
 end
 
 function slot0.getBGMSwitchCos(slot0)
-	return slot0._bgmswitchconfig.configDict
+	return slot0._bgmSwitchConfig.configDict
 end
 
 function slot0.getBGMSwitchCO(slot0, slot1)
-	return slot0._bgmswitchconfig.configDict[slot1]
+	return slot0._bgmSwitchConfig.configDict[slot1]
 end
 
 function slot0.getBGMSwitchCoByAudioId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._bgmswitchconfig.configDict) do
+	for slot5, slot6 in pairs(slot0._bgmSwitchConfig.configDict) do
 		if slot6.audio == slot1 then
 			return slot6
 		end
 	end
+
+	return nil
 end
 
 function slot0.getBGMTypeCos(slot0)
-	return slot0._bgmtypeconfig.configDict
+	return slot0._bgmTypeConfig.configDict
 end
 
 function slot0.getBGMTypeCO(slot0, slot1)
-	return slot0._bgmtypeconfig.configDict[slot1]
+	return slot0._bgmTypeConfig.configDict[slot1]
 end
 
 function slot0.getBgmEasterEggCos(slot0)
-	return slot0._bgmeggconfig.configDict
+	return slot0._bgmEasterEggConfig.configDict
 end
 
 function slot0.getBgmEasterEggCosByType(slot0, slot1)
 	slot2 = {}
 
-	for slot6, slot7 in pairs(slot0._bgmeggconfig.configDict) do
+	for slot6, slot7 in pairs(slot0._bgmEasterEggConfig.configDict) do
 		if slot7.type == slot1 then
 			table.insert(slot2, slot7)
 		end
@@ -67,7 +69,7 @@ function slot0.getBgmEasterEggCosByType(slot0, slot1)
 end
 
 function slot0.getBgmEasterEggCo(slot0, slot1)
-	return slot0._bgmeggconfig.configDict[slot1]
+	return slot0._bgmEasterEggConfig.configDict[slot1]
 end
 
 function slot0.getBgmNames(slot0, slot1)

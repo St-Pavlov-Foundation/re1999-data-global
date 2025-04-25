@@ -517,6 +517,7 @@ function slot0._onClickCancelForbidFightEffect(slot0)
 end
 
 function slot0._onClickTest1(slot0)
+	ViewMgr.instance:openView(ViewName.GMLangTxtView)
 end
 
 function slot0._onQueryProductDetailsCallBack(slot0)

@@ -55,9 +55,11 @@ function slot0.getItem(slot0)
 end
 
 function slot0.getOrderPrice(slot0)
-	if slot0.co then
-		return slot0.co.orderPrice * slot0.quantity
-	end
+	return slot0:getOneOrderPrice() * slot0.quantity
+end
+
+function slot0.getOneOrderPrice(slot0)
+	return slot0.co and slot0.co.orderPrice * (ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.OrderPriceMul) or 1) or 0
 end
 
 return slot0

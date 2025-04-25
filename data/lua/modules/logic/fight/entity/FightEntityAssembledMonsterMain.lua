@@ -68,11 +68,23 @@ function slot0.setAlphaData(slot0, slot1, slot2, slot3)
 		if slot8 ~= slot2 then
 			uv0.super.setAlpha(slot0, 1, 0)
 
+			if FightHelper.getEntity(slot7) ~= slot0 then
+				slot9.super.setAlpha(slot9, 1, 0)
+			end
+
 			return
 		end
 	end
 
-	uv0.super.setAlpha(slot0, slot2, slot3)
+	slot7 = slot3
+
+	uv0.super.setAlpha(slot0, slot2, slot7)
+
+	for slot7, slot8 in pairs(slot0._alphaDic) do
+		if FightHelper.getEntity(slot7) ~= slot0 then
+			slot9.super.setAlpha(slot9, slot2, slot3)
+		end
+	end
 end
 
 function slot0.initComponents(slot0)

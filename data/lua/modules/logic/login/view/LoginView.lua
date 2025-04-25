@@ -2,6 +2,8 @@ module("modules.logic.login.view.LoginView", package.seeall)
 
 slot0 = class("LoginView", BaseView)
 slot1 = -8
+slot2 = 3
+slot3 = 10
 
 function slot0.ctor(slot0)
 	slot0._loginFlow = nil
@@ -23,6 +25,8 @@ function slot0.onInitView(slot0)
 	slot0._btnPolicy = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_policy")
 	slot0._btnAccount = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_account")
 	slot0._btnNotice = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_notice")
+	slot0._goBtnNotice = gohelper.findChild(slot0.viewGO, "rightbtn_group/#btn_notice")
+	slot0._btnNoticeLongPress = SLFramework.UGUI.UILongPressListener.Get(slot0._goBtnNotice)
 	slot0._btnFix = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_fix")
 	slot0._btnScan = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_scan")
 	slot0._btnSet = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtn_group/#btn_set")
@@ -50,6 +54,11 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.SystemLoginFail, slot0._onSystemLoginFail, slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.OnLogout, slot0._onLoginOut, slot0)
 	slot0:addEventCb(LoginController.instance, LoginEvent.OnLoginBgLoaded, slot0._onBgLoaded, slot0)
+	slot0._btnNoticeLongPress:SetLongPressTime({
+		isDebugBuild and uv0 or uv1,
+		1
+	})
+	slot0._btnNoticeLongPress:AddLongPressListener(slot0._onNoticeLongPress, slot0)
 	slot0._btnQuit:AddClickListener(slot0._onClickQuit, slot0)
 	slot0._btnSet:AddClickListener(slot0._onClickSet, slot0)
 end
@@ -66,6 +75,7 @@ function slot0.removeEvents(slot0)
 	slot0._btnexit:RemoveClickListener()
 	slot0._btnQuit:RemoveClickListener()
 	slot0._btnSet:RemoveClickListener()
+	slot0._btnNoticeLongPress:RemoveLongPressListener()
 	TaskDispatcher.cancelTask(slot0._delayForLogout, slot0)
 	TaskDispatcher.cancelTask(slot0._endSdkBlock, slot0)
 	TaskDispatcher.cancelTask(slot0._onLoginTimeout, slot0)
@@ -455,6 +465,15 @@ function slot0._onClickNotice(slot0)
 		return
 	end
 
+	if slot0._noticeBtnPressed and not slot0._noticeBtnClickable then
+		slot0._noticeBtnClickable = true
+
+		return
+	else
+		slot0._noticeBtnPressed = false
+		slot0._noticeBtnClickable = true
+	end
+
 	NoticeController.instance:openNoticeView()
 end
 
@@ -471,10 +490,23 @@ function slot0._onClickSet(slot0)
 end
 
 function slot0._onClickFix(slot0)
-	ViewMgr.instance:openView(ViewName.FixResTipView, {
-		callback = slot0.reallyFix,
-		callbackObj = slot0
-	})
+	if slot0._noticeBtnPressed then
+		GMController.instance:initProfilerCmdFileCheck()
+
+		slot0._noticeBtnPressed = false
+	else
+		ViewMgr.instance:openView(ViewName.FixResTipView, {
+			callback = slot0.reallyFix,
+			callbackObj = slot0
+		})
+	end
+end
+
+function slot0._onNoticeLongPress(slot0)
+	slot0._noticeBtnPressed = true
+	slot0._noticeBtnClickable = false
+
+	BenchmarkApi.AndroidLog("_onNoticeLongPress")
 end
 
 function slot0._onClickPolicy(slot0)

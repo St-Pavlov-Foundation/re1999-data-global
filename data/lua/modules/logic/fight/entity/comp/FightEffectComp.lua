@@ -43,6 +43,12 @@ function slot0.setTimeScale(slot0, slot1)
 	end
 end
 
+function slot0.addPlayingEffectWrap(slot0, slot1)
+	if slot0._playingEffectDict then
+		slot0._playingEffectDict[slot1.uniqueId] = slot1
+	end
+end
+
 function slot0._onSpineLoaded(slot0, slot1)
 	if slot1 and slot1.unitSpawn == slot0.entity then
 		for slot5, slot6 in pairs(slot0.cache_effect) do

@@ -83,7 +83,7 @@ function slot0.initChargeInfo(slot0, slot1)
 
 	for slot6, slot7 in pairs(slot1) do
 		if StoreConfig.instance:getChargeGoodsConfig(slot7.id, true) then
-			if slot8.belongStoreId == StoreEnum.StoreId.Charge then
+			if slot8.belongStoreId == StoreEnum.StoreId.Charge or slot8.belongStoreId == StoreEnum.StoreId.PubbleCharge or slot8.belongStoreId == StoreEnum.StoreId.GlowCharge then
 				slot9 = StoreChargeGoodsMO.New()
 
 				slot9:init(StoreEnum.StoreId.Charge, slot7)
@@ -112,7 +112,6 @@ function slot0.initChargeInfo(slot0, slot1)
 	end
 
 	slot0:_updateSkinChargePackage(slot2)
-	StoreChargeGoodsItemListModel.instance:setMOList(slot0._chargeStoreDic)
 	slot0:updatePackageStoreList(slot0._curPackageStore)
 end
 
@@ -156,7 +155,7 @@ function slot0.chargeOrderComplete(slot0, slot1)
 	if slot2 then
 		slot2.buyCount = slot2.buyCount + 1
 
-		if slot2.config.id == StoreEnum.MonthCardGoodsId or slot3 == StoreEnum.LittleMonthCardGoodsId then
+		if slot2.config.id == StoreEnum.MonthCardGoodsId or slot3 == StoreEnum.LittleMonthCardGoodsId or slot3 == StoreEnum.SeasonCardGoodsId then
 			ChargeRpc.instance:sendGetMonthCardInfoRequest(slot0.updateGoodsInfo, slot0)
 		else
 			slot0:updateGoodsInfo()
@@ -166,10 +165,18 @@ end
 
 function slot0.updateGoodsInfo(slot0)
 	if slot0.updateChargeStore then
-		StoreChargeGoodsItemListModel.instance:setMOList(slot0._chargeStoreDic)
+		StoreChargeGoodsItemListModel.instance:setMOList(slot0._chargeStoreDic, slot0:getCurChargetStoreId())
 	else
 		slot0:updatePackageStoreList(slot0._curPackageStore)
 	end
+end
+
+function slot0.getCurChargetStoreId(slot0)
+	return slot0._curChargeStoreId or 0
+end
+
+function slot0.setCurChargeStoreId(slot0, slot1)
+	slot0._curChargeStoreId = slot1
 end
 
 function slot0.setCurPackageStore(slot0, slot1)
@@ -221,6 +228,10 @@ function slot0.getGoodsMO(slot0, slot1)
 			end
 		end
 	end
+end
+
+function slot0.getChargeGoods(slot0)
+	return slot0._chargeStoreDic
 end
 
 function slot0.getChargeGoodsMo(slot0, slot1)
@@ -547,8 +558,16 @@ function slot0.getFirstTabs(slot0, slot1, slot2)
 	slot3 = {}
 
 	for slot7, slot8 in ipairs(lua_store_entrance.configList) do
-		if not StoreConfig.instance:hasTab(slot8.belongFirstTab) and not StoreConfig.instance:hasTab(slot8.belongSecondTab) and not LuaUtil.tableContains(StoreEnum.BossRushStore, slot8.id) and (not slot1 or slot0:isTabOpen(slot8.id)) then
-			table.insert(slot3, slot8)
+		if not StoreConfig.instance:hasTab(slot8.belongFirstTab) and not StoreConfig.instance:hasTab(slot8.belongSecondTab) then
+			slot9 = LuaUtil.tableContains(StoreEnum.BossRushStore, slot8.id)
+
+			if slot8.id == StoreEnum.StoreId.DecorateStore and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore) == 0 and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.OldDecorateStore) == 0 then
+				slot9 = true
+			end
+
+			if not slot9 and (not slot1 or slot0:isTabOpen(slot8.id)) then
+				table.insert(slot3, slot8)
+			end
 		end
 	end
 
@@ -694,6 +713,16 @@ function slot0.jumpTabIdToSelectTabId(slot0, slot1)
 			end
 
 			slot4 = 0
+		elseif slot2 == StoreEnum.StoreId.DecorateStore then
+			for slot10 = 1, #slot6 do
+				if #DecorateStoreModel.instance:getDecorateGoodList(slot6[slot10].id) > 0 then
+					slot3 = slot6[slot10].id
+
+					break
+				end
+			end
+
+			slot4 = 0
 		elseif slot6 and #slot6 > 0 then
 			if slot0:getThirdTabs(slot6[1].id, true, true) and #slot7 > 0 then
 				slot4 = slot7[1].id
@@ -810,7 +839,21 @@ function slot0.isSkinGoodsCanRepeatBuy(slot0, slot1, slot2)
 		slot2 = string.splitToNumber(slot3.config.product, "#")[2]
 	end
 
-	if not SkinConfig.instance:getSkinCo(slot2) or string.nilorempty(slot5.repeatBuyTime) then
+	if not SkinConfig.instance:getSkinCo(slot2) then
+		return false
+	end
+
+	slot6 = slot3.config.storeId
+
+	if not string.nilorempty(slot5.unavailableStore) then
+		for slot12, slot13 in ipairs(string.split(slot7, "#") or {}) do
+			if slot6 == slot13 then
+				return false
+			end
+		end
+	end
+
+	if string.nilorempty(slot5.repeatBuyTime) then
 		return false
 	end
 
@@ -819,10 +862,10 @@ function slot0.isSkinGoodsCanRepeatBuy(slot0, slot1, slot2)
 	end
 
 	if not slot3:isSoldOut() and slot4 and StoreConfig.instance:getSkinChargeGoodsId(slot2) then
-		slot8 = slot0._skinChargeDict[slot9] and slot10:isSoldOut()
+		slot10 = slot0._skinChargeDict[slot11] and slot12:isSoldOut()
 	end
 
-	return HeroModel.instance:checkHasSkin(slot2) and not slot8
+	return HeroModel.instance:checkHasSkin(slot2) and not slot10
 end
 
 function slot0.isSkinCanShowMessageBox(slot0, slot1)

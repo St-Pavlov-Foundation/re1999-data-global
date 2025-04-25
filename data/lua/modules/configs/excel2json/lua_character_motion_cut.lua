@@ -1,12 +1,14 @@
 module("modules.configs.excel2json.lua_character_motion_cut", package.seeall)
 
 slot1 = {
-	onlyStopCut = 3,
+	onlyStopCut = 4,
 	heroId = 1,
-	motion = 2
+	motion = 3,
+	skinId = 2
 }
 slot2 = {
-	"heroId"
+	"heroId",
+	"skinId"
 }
 slot3 = {}
 

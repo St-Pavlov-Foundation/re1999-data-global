@@ -32,9 +32,11 @@ function slot0.initViewContent(slot0)
 	slot0:addTitleSplitLine("检查")
 	slot0:addButton("L1", "资源完整性验证", slot0._onClickCheckMD5, slot0)
 	slot0:addButton("L1", "配置描述Tag检测", slot0._onClickCheckSkillTag, slot0)
+	slot0:addButton("L1", "扫描无用配置", slot0._onClickCheckUnuseConfig, slot0)
 
 	slot0._langDrop = slot0:addDropDown("L1", "UI多语言", nil, slot0._onLangDropChange, slot0)
 
+	slot0:addButton("L1.2", "多语言文本查找", slot0._onClickLangTxtSearch, slot0)
 	slot0:addTitleSplitLine("报错提示")
 	slot0:addButton("L5", "开启报错提示", slot0._onClickShowLog, slot0)
 	slot0:addButton("L5", "关闭报错提示", slot0._onClickHideLog, slot0)
@@ -258,6 +260,30 @@ function slot0._onClickCheckSkillTag(slot0)
 	FightConfig.instance:setGetDescFlag(false)
 end
 
+function slot0._onClickCheckUnuseConfig(slot0)
+	slot1 = {}
+
+	for slot5, slot6 in ipairs(ModuleMgr.instance._moduleSettingList) do
+		if slot6.config then
+			for slot11, slot12 in ipairs(slot7) do
+				if _G[slot12] and slot13.instance:reqConfigNames() then
+					for slot18, slot19 in ipairs(slot14) do
+						slot1[slot19] = true
+					end
+				end
+			end
+		end
+	end
+
+	for slot9 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/configs/excel2json/").Length - 1 do
+		if not string.find(slot3[slot9], ".meta") and not slot1[string.gsub(SLFramework.FileHelper.GetFileName(slot10, false), "json_", "")] then
+			slot4 = "" .. slot11 .. "\n"
+		end
+	end
+
+	logError(slot4)
+end
+
 function slot0._isCheckBuff(slot0, slot1)
 	if slot1 and slot1.isNoShow == 1 then
 		return false
@@ -299,6 +325,10 @@ function slot0._checkDescHaveTag(slot0, slot1, slot2, slot3, slot4)
 			end
 		end
 	end
+end
+
+function slot0._onClickLangTxtSearch(slot0, slot1)
+	ViewMgr.instance:openView(ViewName.GMLangTxtView)
 end
 
 function slot0._onLangDropChange(slot0, slot1)

@@ -181,20 +181,20 @@
   },
   {
     "id": 1601,
-    "angle": "5#5",
+    "angle": "10#10",
     "distance": "2.8392#2.8392",
-    "rotate": "74.7",
-    "focusXYZ": "2.343#0#-0.640",
-    "nodesXYZ": "0.219#0.11#-1.435",
+    "rotate": "272.8",
+    "focusXYZ": "-0.683#-0.1#-0.177",
+    "nodesXYZ": "1.235#0.11#-0.357",
     "nextCameraParams": ""
   },
   {
     "id": 1602,
-    "angle": "5#5",
-    "distance": "2.8392#2.8392",
-    "rotate": "284.3",
-    "focusXYZ": "-0.876#0.05#0.003",
-    "nodesXYZ": "1.341#0.11#-0.325",
+    "angle": "10#10",
+    "distance": "2.5#2.5",
+    "rotate": "85.8",
+    "focusXYZ": "1.995#-0.1#-1.126",
+    "nodesXYZ": "0.289#0.11#-1.423",
     "nextCameraParams": ""
   },
   {
@@ -798,6 +798,60 @@
     "rotate": "271.6",
     "focusXYZ": "-1.549#0.24#-0.344",
     "nodesXYZ": "0.540#0.11#-0.938",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 2501,
+    "angle": "9#9",
+    "distance": "2.5#2.5",
+    "rotate": "23.8",
+    "focusXYZ": "0.317#0#1.578",
+    "nodesXYZ": "-0.669#0.11#-0.113",
+    "nextCameraParams": "2503#4"
+  },
+  {
+    "id": 2502,
+    "angle": "8#8",
+    "distance": "2.5#2.5",
+    "rotate": "190.8",
+    "focusXYZ": "-0.348#0#-1.343",
+    "nodesXYZ": "-0.080#0.11#0.545",
+    "nextCameraParams": "2503#4"
+  },
+  {
+    "id": 2511,
+    "angle": "10#10",
+    "distance": "2.5#2.5",
+    "rotate": "40",
+    "focusXYZ": "1.188#0#0.386",
+    "nodesXYZ": "-0.327#0.11#-0.370",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 2512,
+    "angle": "10#10",
+    "distance": "2.5#2.5",
+    "rotate": "39.5",
+    "focusXYZ": "1.174#0#0.375",
+    "nodesXYZ": "0.080#0.11#-1.409",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 2503,
+    "angle": "9#9",
+    "distance": "2.5#2.5",
+    "rotate": "189.1",
+    "focusXYZ": "-0.633#0.4#-1.513",
+    "nodesXYZ": "-0.583#0.11#0.350",
+    "nextCameraParams": "2501#3"
+  },
+  {
+    "id": 2521,
+    "angle": "6#6",
+    "distance": "1.1#1.1",
+    "rotate": "252.6",
+    "focusXYZ": "0.372#0.08#-0.546",
+    "nodesXYZ": "",
     "nextCameraParams": ""
   },
   {

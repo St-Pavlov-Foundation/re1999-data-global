@@ -213,7 +213,7 @@ function slot0.refreshSelectCritterUI(slot0)
 
 		slot0.critterIcon:setMOValue(slot2:getId(), slot2:getDefineId())
 
-		slot0._txtcrittername.text = slot2:getDefineCfg() and slot5.name
+		slot0._txtcrittername.text = slot2:getName()
 		slot4 = slot2:getAttributeInfos()
 	else
 		slot0._txtcrittername.text = luaLang("critter_train_noselect_critter_text")

@@ -44,16 +44,20 @@ end
 
 function slot0._convert2PropItem(slot0, slot1)
 	slot2 = nil
-	slot3 = slot1 and slot1.id
 	slot4 = slot1 and slot1.quantity
-	slot5 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, slot3)
 
-	if slot3 and slot4 and slot4 > 0 and slot5 then
+	if ManufactureConfig.instance:getManufactureItemListByItemId(slot1 and slot1.id)[1] then
+		slot4 = ManufactureModel.instance:getManufactureItemCount(slot6)
+	end
+
+	slot7 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, slot3)
+
+	if slot3 and slot4 and slot4 > 0 and slot7 then
 		slot2 = {
 			type = MaterialEnum.MaterialType.Item,
 			id = slot3,
 			quantity = slot4,
-			config = slot5
+			config = slot7
 		}
 	end
 

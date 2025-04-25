@@ -25,6 +25,10 @@ function slot0.onInitView(slot0)
 	slot0._btnvideo = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn")
 	slot0._govideoon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn/on")
 	slot0._govideooff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/switch/btn/off")
+	slot0._videoHD = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/strength")
+	slot0._btnHdMode = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/strength/switch/btn")
+	slot0._goHdModeOn = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/strength/switch/btn/on")
+	slot0._goHdModeOff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/strength/switch/btn/off")
 	slot0._golowfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_lowfps")
 	slot0._gohighfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_highfps")
 	slot0._goscreen = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen")
@@ -65,8 +69,9 @@ function slot0.addEvents(slot0)
 	slot0._btnhigh:AddClickListener(slot0._btnhighOnClick, slot0)
 	slot0._btnenergy:AddClickListener(slot0._btnenergyOnClick, slot0)
 	slot0._btnvideo:AddClickListener(slot0._btnvideoOnClick, slot0)
-	slot0._btnEnableVideo:AddClickListener(slot0._btnEnableVideoOnClick, slot0)
+	slot0._btnHdMode:AddClickListener(slot0._btnvideoHDOnClick, slot0)
 	slot0._btnVerticalmode:AddClickListener(slot0._btnVerticalmodeClick, slot0)
+	slot0._btnEnableVideo:AddClickListener(slot0._btnEnableVideoOnClick, slot0)
 
 	if BootNativeUtil.isWindows() then
 		slot0._btnfullscreenswitch:AddClickListener(slot0._btnfullscreenswitchOnClick, slot0)
@@ -88,6 +93,7 @@ function slot0.addEvents(slot0)
 	end
 
 	SettingsController.instance:registerCallback(SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
+	SettingsController.instance:registerCallback(SettingsEvent.OnChangeHDType, slot0._refreshVideoUI, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -96,8 +102,9 @@ function slot0.removeEvents(slot0)
 	slot0._btnhigh:RemoveClickListener()
 	slot0._btnenergy:RemoveClickListener()
 	slot0._btnvideo:RemoveClickListener()
-	slot0._btnEnableVideo:RemoveClickListener()
+	slot0._btnHdMode:RemoveClickListener()
 	slot0._btnVerticalmode:RemoveClickListener()
+	slot0._btnEnableVideo:RemoveClickListener()
 
 	if BootNativeUtil.isWindows() then
 		slot0._btnfullscreenswitch:RemoveClickListener()
@@ -113,6 +120,7 @@ function slot0.removeEvents(slot0)
 	end
 
 	SettingsController.instance:unregisterCallback(SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
+	SettingsController.instance:unregisterCallback(SettingsEvent.OnChangeHDType, slot0._refreshVideoUI, slot0)
 end
 
 function slot0._btnlowOnClick(slot0)
@@ -154,6 +162,25 @@ end
 
 function slot0._switchVideoCompatible(slot0)
 	SettingsModel.instance:setVideoCompatible(SettingsModel.instance:getVideoCompatible() == false)
+	slot0:_refreshVideoUI()
+end
+
+function slot0._btnvideoHDOnClick(slot0)
+	slot2 = SettingsVoicePackageModel.instance:getPackInfo("res-HD")
+
+	if not SettingsModel.instance:getVideoHDMode() and slot2 and slot2:needDownload() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SettingVideoHD, MsgBoxEnum.BoxType.Yes_No, function ()
+			SettingsVoicePackageController.instance:RequsetVoiceInfo(function ()
+				SettingsVoicePackageController.instance:tryDownload(uv0)
+			end)
+		end)
+	else
+		slot0:_switchVideoHDMode()
+	end
+end
+
+function slot0._switchVideoHDMode(slot0)
+	SettingsModel.instance:setVideoHDMode(SettingsModel.instance:getVideoHDMode() == false)
 	slot0:_refreshVideoUI()
 end
 
@@ -222,6 +249,7 @@ function slot0._editableInitView(slot0)
 	slot0._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() + 1)
 	slot0:_refreshVerticalUI()
 	gohelper.setActive(slot0.verticalmode, BootNativeUtil.isWindows())
+	gohelper.setActive(slot0._videoHD, not VersionValidator.instance:isInReviewing())
 end
 
 function slot0._onChangeLangTxt(slot0)
@@ -308,9 +336,19 @@ end
 
 function slot0._refreshVideoUI(slot0)
 	slot1 = SettingsModel.instance:getVideoCompatible()
+	slot2 = SettingsModel.instance:getVideoHDMode()
 
 	gohelper.setActive(slot0._govideoon, slot1)
 	gohelper.setActive(slot0._govideooff, not slot1)
+	gohelper.setActive(slot0._goHdModeOn, slot2)
+	gohelper.setActive(slot0._goHdModeOff, not slot2)
+end
+
+function slot0._refreshVerticalUI(slot0)
+	slot1 = UnityEngine.QualitySettings.vSyncCount == 1
+
+	gohelper.setActive(slot0._goVerticalmodeOn, slot1)
+	gohelper.setActive(slot0._goVerticalmodeOff, not slot1)
 end
 
 function slot0._refreshVideoEnabledUI(slot0)

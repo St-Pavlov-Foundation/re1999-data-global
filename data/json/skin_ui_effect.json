@@ -378,6 +378,87 @@
     "realtime": "1"
   },
   {
+    "id": 308303,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_qn_idle0/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311002,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ly_rc0/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 307703,
+    "effect": "Drawables/bone1/effect-Bone/roleeffect_bfsg_miaohui1/root|Drawables/bone1/effect-Bone/roleeffect_bfsg_huaxian1/root|Drawables/bone/effect-Bone/roleeffect_bfsg_huaxian2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311101,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_flsd_kaiji1/root|Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311102,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_flsd_kaiji1/root|Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311201,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_knd_qidai2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311202,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_knd_qidai2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 305602,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_wu/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 308202,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_xyns_yushui",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
     "id": 307904,
     "effect": "Drawables/bone1/effect-Bone/roleeffect_6_ss1/root",
     "scale": 1.0,

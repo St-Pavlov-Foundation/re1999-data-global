@@ -37,9 +37,11 @@ function slot0._editableInitView(slot0)
 end
 
 function slot0._editableAddEvents(slot0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshReddot, slot0)
 end
 
 function slot0._editableRemoveEvents(slot0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshReddot, slot0)
 end
 
 function slot0.onUpdateMO(slot0, slot1)
@@ -53,6 +55,19 @@ function slot0.refreshStatus(slot0)
 
 	gohelper.setActive(slot0._bgs[1], not slot1)
 	gohelper.setActive(slot0._bgs[2], slot1)
+	slot0:_refreshReddot()
+end
+
+function slot0._refreshReddot(slot0)
+	slot1 = false
+
+	if slot0._mo.id == MainEnum.SwitchType.Scene and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) and slot0:_isSelected() then
+		MainSceneSwitchController.closeReddot()
+
+		slot1 = false
+	end
+
+	gohelper.setActive(slot0._goreddot1, slot1)
 end
 
 function slot0._isSelected(slot0)

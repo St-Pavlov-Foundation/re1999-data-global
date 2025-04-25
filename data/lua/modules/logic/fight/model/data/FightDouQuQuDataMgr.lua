@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightDouQuQuDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightDouQuQuDataMgr")
+slot0 = FightDataClass("FightDouQuQuDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 end
 
 function slot0.cachePlayIndex(slot0, slot1)

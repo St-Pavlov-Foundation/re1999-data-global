@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightClientPlayCardData", package.seeall)
 
-slot0 = FightDataBase("FightClientPlayCardData", FightCardData)
+slot0 = FightDataClass("FightClientPlayCardData", FightCardData)
 
-function slot0.ctor(slot0, slot1, slot2)
+function slot0.onConstructor(slot0, slot1, slot2)
 	slot0.index = slot2
 end
 

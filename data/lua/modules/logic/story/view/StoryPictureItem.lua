@@ -31,6 +31,10 @@ function slot0._build(slot0)
 		slot0._pictureLoader = nil
 	end
 
+	if slot0:_isSpImg() then
+		return
+	end
+
 	if slot0._picCo.picType == StoryEnum.PictureType.FullScreen then
 		slot0._pictureLoader = PrefabInstantiate.Create(slot0._picParentGo)
 
@@ -220,6 +224,10 @@ function slot0.reset(slot0, slot1, slot2)
 
 	TaskDispatcher.cancelTask(slot0._realDestroy, slot0)
 
+	if slot0:_isSpImg() then
+		return
+	end
+
 	if slot0._picCo.picType == StoryEnum.PictureType.FullScreen then
 		slot0:_setFullPicture()
 	else
@@ -256,6 +264,10 @@ end
 function slot0._setNormalPicture(slot0)
 	slot0._simg:UnLoadImage()
 	slot0._simg:LoadImage(ResUrl.getStoryItem(slot0._picCo.picture), slot0._onPictureLoaded, slot0)
+end
+
+function slot0._isSpImg(slot0)
+	return string.match(slot0._picCo.picture, "v2a5_liangyue_story") and not (GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP)
 end
 
 function slot0._setFullPicture(slot0)

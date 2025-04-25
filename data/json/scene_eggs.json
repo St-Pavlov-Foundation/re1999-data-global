@@ -1,0 +1,44 @@
+[
+  {
+    "id": 301,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_mj01",
+    "actionClass": "SceneEggRandomShow",
+    "actionParams": "",
+    "parallel": 1
+  },
+  {
+    "id": 302,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_mj02",
+    "actionClass": "SceneEggLightModeAnimShow",
+    "actionParams": "v2a5_m_s01_mojing2_eye1#v2a5_m_s01_mojing2_eye2#v2a5_m_s01_mojing2_eye3#v2a5_m_s01_mojing2_eye4",
+    "parallel": 0
+  },
+  {
+    "id": 303,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_mj03",
+    "actionClass": "SceneEggLightModeAnimShow",
+    "actionParams": "v2a5_m_s01_mojing3_eye1#v2a5_m_s01_mojing3_eye2#v2a5_m_s01_mojing3_eye3#v2a5_m_s01_mojing3_eye4",
+    "parallel": 0
+  },
+  {
+    "id": 304,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_guizi_j3|s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_white",
+    "actionClass": "SceneEggTv",
+    "actionParams": "",
+    "parallel": 0
+  },
+  {
+    "id": 305,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_wxdxj",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "3027",
+    "parallel": 1
+  },
+  {
+    "id": 306,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v2a5_m_s01_build_a_noise",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  }
+]

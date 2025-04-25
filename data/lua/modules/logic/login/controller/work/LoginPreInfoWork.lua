@@ -16,6 +16,7 @@ function slot0.clearWork(slot0)
 	CurrencyController.instance:unregisterCallback(CurrencyEvent.GetCurrencyInfoSuccess, slot0._onGetCurrencyInfoSuccess, slot0)
 	OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, slot0._onGetPlayerInfoSuccess, slot0)
 	GuideController.instance:unregisterCallback(GuideEvent.GetGuideInfoSuccess, slot0._onGetGuideInfoSuccess, slot0)
+	TaskDispatcher.cancelTask(slot0._getInfoTimeout, slot0)
 end
 
 function slot0._getPlayerInfoBeforeLoading(slot0)
@@ -23,6 +24,7 @@ function slot0._getPlayerInfoBeforeLoading(slot0)
 	slot0._getCurrencyInfo = nil
 	slot0._getGuideInfo = nil
 
+	TaskDispatcher.runDelay(slot0._getInfoTimeout, slot0, 60)
 	CommonRpc.instance:sendGetServerTimeRequest()
 	PlayerRpc.instance:sendGetPlayerInfoRequest()
 	CurrencyRpc.instance:sendGetAllCurrency()
@@ -33,8 +35,17 @@ function slot0._sendPlayerBaseProperties(slot0)
 	StatController.instance:onLogin()
 end
 
+function slot0._getInfoTimeout(slot0)
+	if not slot0._getPlayerInfo or not slot0._getCurrencyInfo or not slot0._getGuideInfo then
+		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function ()
+			LoginController.instance:logout()
+		end, nil)
+	end
+end
+
 function slot0._checkPreInfo(slot0)
 	if slot0._getPlayerInfo and slot0._getCurrencyInfo and slot0._getGuideInfo then
+		TaskDispatcher.cancelTask(slot0._getInfoTimeout, slot0)
 		slot0:_sendPlayerBaseProperties()
 
 		if SDKDataTrackMgr then

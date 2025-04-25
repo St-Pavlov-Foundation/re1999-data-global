@@ -526,5 +526,53 @@
     "skinIds": "630409",
     "skinScales": "1",
     "skinOffsetXYs": "-241#-473"
+  },
+  {
+    "activityId": 12516,
+    "stage": 1,
+    "name": "language_10036610",
+    "name_en": "Isle Cryptid",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a7_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a7_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a7_bossrush_bossname_1",
+    "skinIds": "670404",
+    "skinScales": "1.2",
+    "skinOffsetXYs": "-390.5#-411"
+  },
+  {
+    "activityId": 12516,
+    "stage": 2,
+    "name": "language_10065120",
+    "name_en": "Wind of the Ravages",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v2a4_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v2a4_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v2a4_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v2a4_bossrush_bossname_1",
+    "skinIds": "610405#610404",
+    "skinScales": "1#1",
+    "skinOffsetXYs": "-290#-485|-345#-513"
+  },
+  {
+    "activityId": 12516,
+    "stage": 3,
+    "name": "language_10027236",
+    "name_en": "Projection of Nightmare",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a6_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a6_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a6_bossrush_bossname_1",
+    "skinIds": "680403#680404#680401#680402",
+    "skinScales": "1#1#1#1",
+    "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   }
 ]

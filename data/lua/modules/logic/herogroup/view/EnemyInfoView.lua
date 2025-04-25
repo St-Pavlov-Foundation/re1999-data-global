@@ -415,7 +415,7 @@ function slot0._refreshPassiveSkill(slot0, slot1, slot2)
 			slot9.name.text = slot11.name
 			slot14 = 0
 
-			for slot18 = 1, #HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(slot11.desc) do
+			for slot18 = 1, #HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(FightConfig.instance:getSkillEffectDesc(nil, slot11)) do
 				if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot13[slot18]).name) and not slot4[slot19] then
 					slot4[slot19] = true
 					slot21 = SkillConfig.instance:getSkillEffectDescCo(slot13[slot18]).desc
@@ -558,7 +558,8 @@ function slot0._refreshAttribute(slot0, slot1)
 end
 
 function slot0._getMontBaseAttr(slot0, slot1)
-	slot3 = string.splitToNumber(lua_monster_skill_template.configDict[slot1.skillTemplate].template, "#")
+	slot2 = lua_monster_skill_template.configDict[slot1.skillTemplate]
+	slot3 = CharacterDataConfig.instance:getMonsterAttributeScoreList(slot1.id)
 	slot9 = 4
 
 	table.insert(slot3, 2, table.remove(slot3, slot9))
@@ -644,7 +645,9 @@ function slot0.onOpen(slot0)
 end
 
 function slot0._detectBossMultiHp(slot0, slot1)
-	gohelper.setActive(slot0._multiHpRoot, #string.split(lua_monster_template.configDict[slot1.template].multiHp, "#") > 1)
+	slot2 = lua_monster_template.configDict[slot1.template]
+
+	gohelper.setActive(slot0._multiHpRoot, #FightConfig.instance:getMultiHpListByMonsterId(slot1.id) > 1)
 
 	if slot3 > 1 then
 		slot0:com_createObjList(nil, slot3, slot0._multiHpRoot, slot0._multiHpItem)

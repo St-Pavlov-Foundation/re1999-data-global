@@ -2,71 +2,9 @@ module("modules.logic.fight.FightBaseCoreClass", package.seeall)
 
 slot0 = class("FightBaseCoreClass")
 
-function slot0.ctor(slot0, ...)
-	slot0:initializationInternal(slot0.class, slot0, ...)
-
-	return slot0:onAwake(...)
-end
-
-function slot0.onInitialization(slot0)
-	slot0._instantiateClass = {}
-	slot0.components_internal = {}
-	slot0.USERDATA = {}
-end
-
-function slot0.onDestructor(slot0)
-	slot1 = slot0.keyword_gameObject
-
-	for slot5 = #slot0.USERDATA, 1, -1 do
-		if type(slot0.USERDATA[slot5]) == "table" then
-			for slot10 in pairs(slot6) do
-				rawset(slot6, slot10, nil)
-			end
-		else
-			rawset(slot0, slot6, nil)
-		end
-	end
-
-	if slot0.REGISTAFTERDISPOSE then
-		for slot5 = #slot0._instantiateClass, 1, -1 do
-			if not slot0._instantiateClass[slot5].INVOKEDDISPOSE then
-				slot6:disposeSelf()
-			end
-		end
-	end
-
-	for slot5, slot6 in pairs(slot0.components_internal) do
-		if not slot6.INVOKEDDISPOSE then
-			slot6:disposeSelf()
-		end
-	end
-
-	if slot0.components_list_internal then
-		for slot5 = #slot0.components_list_internal, 1, -1 do
-			if not slot0.components_list_internal[slot5].INVOKEDDISPOSE then
-				slot6:disposeSelf()
-			end
-		end
-
-		slot0.components_list_internal = nil
-	end
-
-	for slot5, slot6 in pairs(slot0) do
-		if type(slot6) == "userdata" then
-			rawset(slot0, slot5, nil)
-		end
-	end
-
-	slot0._instantiateClass = nil
-	slot0.components_internal = nil
-	slot0.USERDATA = nil
-
-	if slot1 then
-		gohelper.destroy(slot1)
-	end
-end
-
-function slot0.onDestructorFinish(slot0)
+function slot0.onConstructor(slot0)
+	slot0.INSTANTIATE_CLASS_LIST = {}
+	slot0.COMPONENT_LIST = {}
 end
 
 function slot0.onAwake(slot0, ...)
@@ -75,16 +13,68 @@ end
 function slot0.releaseSelf(slot0)
 end
 
-function slot0.registTable(slot0)
-	if slot0.INVOKEDDISPOSE then
-		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. slot0.__cname)
+function slot0.onDestructor(slot0)
+	slot0:disposeClassList(slot0.COMPONENT_LIST)
+
+	slot0.INSTANTIATE_CLASS_LIST = nil
+	slot0.COMPONENT_LIST = nil
+end
+
+function slot0.onDestructorFinish(slot0)
+end
+
+function slot0.newClass(slot0, slot1, ...)
+	if slot0.IS_DISPOSED or slot0.IS_RELEASING then
+		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. slot0.__cname)
 	end
 
-	slot1 = {}
+	slot2 = slot1.New(...)
+	slot2.PARENT_ROOT_CLASS = slot0
 
-	table.insert(slot0.USERDATA, slot1)
+	table.insert(slot0.INSTANTIATE_CLASS_LIST, slot2)
 
-	return slot1
+	return slot2
+end
+
+function slot0.addComponent(slot0, slot1)
+	if slot0.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. slot0.__cname)
+	end
+
+	slot2 = slot1.New()
+	slot2.PARENT_ROOT_CLASS = slot0
+
+	table.insert(slot0.COMPONENT_LIST, slot2)
+
+	return slot2
+end
+
+function slot0.removeComponent(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
+	slot1:disposeSelf()
+end
+
+function slot0.disposeSelf(slot0)
+	if slot0.IS_DISPOSED then
+		return
+	end
+
+	slot0.IS_DISPOSED = true
+
+	xpcall(slot0.disposeSelfInternal, __G__TRACKBACK__, slot0)
+
+	if slot0.keyword_gameObject then
+		gohelper.destroy(slot1)
+	end
+end
+
+function slot0.ctor(slot0, ...)
+	slot0:initializationInternal(slot0.class, slot0, ...)
+
+	return slot0:onAwake(...)
 end
 
 function slot0.initializationInternal(slot0, slot1, slot2, ...)
@@ -92,32 +82,29 @@ function slot0.initializationInternal(slot0, slot1, slot2, ...)
 		slot0:initializationInternal(slot3, slot2, ...)
 	end
 
-	if rawget(slot1, "onInitialization") then
+	if rawget(slot1, "onConstructor") then
 		return slot4(slot2, ...)
 	end
 end
 
-function slot0.registClass(slot0, slot1, ...)
-	if slot0.INVOKEDDISPOSE then
-		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. slot0.__cname)
+function slot0.disposeSelfInternal(slot0)
+	if not slot0.IS_RELEASING then
+		if slot0.PARENT_ROOT_CLASS then
+			slot0.PARENT_ROOT_CLASS:clearDeadInstantiatedClass()
+		end
 
-		slot0.REGISTAFTERDISPOSE = true
+		slot0:markReleasing()
+		slot0:releaseChildRoot()
 	end
 
-	if slot0.DISPOSING then
-		slot0.REGISTAFTERDISPOSE = true
-	end
+	slot0:releaseSelf()
+	slot0:destructorInternal(slot0.class, slot0)
 
-	slot2 = slot1.New(...)
-	slot2.PARENTROOTCLASS = slot0
-
-	table.insert(slot0._instantiateClass, slot2)
-
-	return slot2
+	return slot0:onDestructorFinish()
 end
 
 function slot0.clearDeadInstantiatedClass(slot0)
-	if slot0.INVOKEDDISPOSE then
+	if slot0.IS_DISPOSED then
 		return
 	end
 
@@ -125,87 +112,77 @@ function slot0.clearDeadInstantiatedClass(slot0)
 		return
 	end
 
-	if not slot0.com_registTimer then
-		return
-	end
-
 	slot0.CLEARTIMER = slot0:com_registRepeatTimer(slot0.internalClearDeadInstantiatedClass, 1, 1)
 end
 
 function slot0.internalClearDeadInstantiatedClass(slot0)
-	if slot0.INVOKEDDISPOSE then
+	if slot0.IS_DISPOSED then
 		logError("生命周期已经结束了,但是又调用了清除已经死亡的类的方法,请检查代码,类名:" .. slot0.__cname)
 	end
 
 	slot0.CLEARTIMER = nil
 
-	for slot4 = #slot0._instantiateClass, 1, -1 do
-		if slot0._instantiateClass[slot4].INVOKEDDISPOSE then
-			table.remove(slot0._instantiateClass, slot4)
+	for slot4 = #slot0.INSTANTIATE_CLASS_LIST, 1, -1 do
+		if slot0.INSTANTIATE_CLASS_LIST[slot4].IS_DISPOSED then
+			table.remove(slot0.INSTANTIATE_CLASS_LIST, slot4)
 		end
 	end
 end
 
-function slot0.disposeSelf(slot0)
-	if slot0.INVOKEDDISPOSE then
-		return
-	end
+function slot0.markReleasing(slot0)
+	slot1 = slot0
 
-	slot0.INVOKEDDISPOSE = true
+	while slot1 do
+		slot2 = slot1.INSTANTIATE_CLASS_LIST
 
-	if slot0.DISPOSEINDEX ~= 0 then
-		if slot0.PARENTROOTCLASS and not slot0.PARENTROOTCLASS.INVOKEDDISPOSE and slot0.PARENTROOTCLASS.clearDeadInstantiatedClass then
-			slot0.PARENTROOTCLASS:clearDeadInstantiatedClass()
+		if not slot1.IS_RELEASING then
+			slot1.IS_RELEASING = 0
 		end
 
-		slot1 = slot0
-
-		while slot1 do
-			if not slot1.DISPOSEINDEX then
-				slot1.DISPOSEINDEX = #slot1._instantiateClass
-				slot1.DISPOSING = true
-				slot2 = slot1.DISPOSEINDEX
+		if not slot2[slot1.IS_RELEASING + 1] then
+			if slot1 == slot0 then
+				return
 			end
 
-			if slot2 > 0 then
-				slot3 = slot1
+			slot1 = slot1.PARENT_ROOT_CLASS
+		else
+			slot1.IS_RELEASING = slot3
 
-				for slot7 = slot2, 1, -1 do
-					if not slot3._instantiateClass[slot7].INVOKEDDISPOSE then
-						slot3.DISPOSEINDEX = slot7
-						slot1 = slot8
-
-						break
-					end
-				end
-
-				if slot3 == slot1 then
-					slot3.DISPOSEINDEX = 0
-				end
-			else
-				if slot1 == slot0 then
-					break
-				end
-
-				if not slot1.INVOKEDDISPOSE then
-					slot1:disposeSelf()
-				end
-
-				if slot1.PARENTROOTCLASS then
-					slot1.DISPOSEINDEX = slot1.DISPOSEINDEX - 1
-
-					if slot1.DISPOSEINDEX < 0 then
-						break
-					end
-				end
+			if not slot4.IS_RELEASING then
+				slot1 = slot4
 			end
 		end
 	end
+end
 
-	slot0:releaseSelf()
-	slot0:destructorInternal(slot0.class, slot0)
+function slot0.releaseChildRoot(slot0)
+	slot1 = slot0
 
-	return slot0:onDestructorFinish()
+	while slot1 do
+		slot2 = slot1.INSTANTIATE_CLASS_LIST
+
+		if not slot1.DISPOSEINDEX then
+			slot1.DISPOSEINDEX = #slot2 + 1
+		end
+
+		if not slot2[slot1.DISPOSEINDEX - 1] then
+			if slot1 == slot0 then
+				return
+			end
+
+			if not slot1.IS_DISPOSED then
+				slot1:disposeSelf()
+			end
+
+			slot1 = slot1.PARENT_ROOT_CLASS
+		else
+			slot1.DISPOSEINDEX = slot3
+
+			if not slot4.DISPOSEINDEX then
+				slot1 = slot4
+			end
+		end
+	end
 end
 
 function slot0.destructorInternal(slot0, slot1, slot2)
@@ -218,49 +195,12 @@ function slot0.destructorInternal(slot0, slot1, slot2)
 	end
 end
 
-function slot0.registComponent(slot0, slot1)
-	if slot0.INVOKEDDISPOSE then
-		logError("生命周期已经结束了,但是又调用了注册组件的方法,请检查代码,类名:" .. slot0.__cname)
+function slot0.disposeClassList(slot0, slot1)
+	for slot5 = #slot1, 1, -1 do
+		if not slot1[slot5].IS_DISPOSED then
+			slot6:disposeSelf()
+		end
 	end
-
-	if slot0.components_internal[slot1.__cname] then
-		return slot0.components_internal[slot1.__cname]
-	end
-
-	slot2 = slot1.New()
-	slot2.PARENTROOTCLASS = slot0
-	slot0.components_internal[slot1.__cname] = slot2
-
-	return slot2
-end
-
-function slot0.releaseComponent(slot0, slot1)
-	if not slot1 then
-		return
-	end
-
-	if slot0.components_internal[slot1.__cname] then
-		slot0.components_internal[slot2]:disposeSelf()
-
-		slot0.components_internal[slot2] = nil
-	end
-end
-
-function slot0.addComponent(slot0, slot1)
-	if slot0.INVOKEDDISPOSE then
-		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. slot0.__cname)
-	end
-
-	if not slot0.components_list_internal then
-		slot0.components_list_internal = {}
-	end
-
-	slot2 = slot1.New()
-	slot2.PARENTROOTCLASS = slot0
-
-	table.insert(slot0.components_list_internal, slot2)
-
-	return slot2
 end
 
 return slot0

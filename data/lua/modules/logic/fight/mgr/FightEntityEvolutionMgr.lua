@@ -1,8 +1,8 @@
 module("modules.logic.fight.mgr.FightEntityEvolutionMgr", package.seeall)
 
-slot0 = class("FightEntityEvolutionMgr", FightPerformanceMgrBase)
+slot0 = class("FightEntityEvolutionMgr", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._entityDic = {}
 	slot0._entityVisible = {}
 	slot0._skinId2Entity = {}

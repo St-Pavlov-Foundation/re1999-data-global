@@ -99,7 +99,6 @@ function slot0.onReceiveResetRoundReply(slot0, slot1, slot2)
 		end
 
 		FightMgr.instance:cancelOperation()
-		FightController.instance:dispatchEvent(FightEvent.RespResetCard)
 		FightController.instance:dispatchEvent(FightEvent.ResetCard, slot3)
 	end
 end

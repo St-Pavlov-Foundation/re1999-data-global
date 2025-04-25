@@ -23,7 +23,7 @@ function slot0.InitList(slot0)
 		if pcInputConfig.instance:getKeyBlock()[slot7.id] then
 			table.insert(slot1, {
 				id = slot7.id,
-				name = slot8[PCInputModel.blockField.mlstring]
+				name = slot8.name
 			})
 		end
 	end

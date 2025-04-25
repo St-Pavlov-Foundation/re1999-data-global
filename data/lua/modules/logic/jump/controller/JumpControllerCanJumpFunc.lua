@@ -399,7 +399,7 @@ function slot0.canJumpToActivity142(slot0, slot1)
 end
 
 function slot0.canJumpToAct1_6DungeonView(slot0, slot1)
-	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_6Enum.ActivityId.EnterView)
+	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_5Enum.ActivityId.EnterView)
 
 	if slot2 ~= ActivityEnum.ActivityStatus.Normal then
 		return false, slot3, slot4

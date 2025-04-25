@@ -46,6 +46,7 @@ function slot0.loadUnmatchResFinish(slot0)
 end
 
 function slot0.init(slot0)
+	slot0:addCrashsightResCheckerV()
 	logNormal("ProjModuleStart:init()!!!")
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.resource_load)
 	GameResMgr:InitAbDependencies(slot0.onAbDependenciesInited, slot0)
@@ -54,6 +55,14 @@ end
 
 function slot0.addCrashsightSceneData(slot0)
 	CrashSightAgent.AddSceneData("K#resVersion", SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr)
+end
+
+function slot0.addCrashsightResCheckerV(slot0)
+	if string.nilorempty(SLFramework.FileHelper.ReadText(SLFramework.ResChecker.OutVersionPath)) then
+		slot1 = "0"
+	end
+
+	CrashSightAgent.AddSceneData("K#resCheckerV", slot1)
 end
 
 function slot0.onAbDependenciesInited(slot0)
@@ -71,7 +80,7 @@ function slot0.initFramework(slot0)
 end
 
 function slot0.initModuleLogic(slot0)
-	GameBranchMgr.instance:init()
+	GameBranchMgr.instance:init(2, 5)
 	ModuleMgr.instance:init(addGlobalModule("modules.setting.module_mvc", "module_mvc"), slot0._onModuleIniFinish, slot0)
 end
 

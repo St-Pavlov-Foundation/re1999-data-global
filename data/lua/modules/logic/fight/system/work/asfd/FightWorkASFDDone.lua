@@ -8,7 +8,7 @@ function slot0.ctor(slot0, slot1)
 end
 
 function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, FightASFDFlow.DelayWaitTime)
+	TaskDispatcher.runDelay(slot0._delayDone, slot0, 3)
 
 	if FightHelper.getASFDMgr() then
 		slot1:onASFDFlowDone(slot0.stepMo)

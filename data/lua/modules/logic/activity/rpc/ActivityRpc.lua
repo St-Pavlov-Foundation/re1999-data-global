@@ -19,8 +19,8 @@ function slot0.onReceiveUpdateActivityPush(slot0, slot1, slot2)
 		ServerTime.update(slot2.time)
 		ActivityModel.instance:updateActivityInfo(slot2.activityInfo)
 		ActivityController.instance:updateAct101Infos(slot2.activityInfo.id)
-		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, slot2.activityInfo.id)
 		ActivityController.instance:dispatchEvent(ActivityEvent.UpdateActivity, slot2.activityInfo.id)
+		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, slot2.activityInfo.id)
 	end
 end
 

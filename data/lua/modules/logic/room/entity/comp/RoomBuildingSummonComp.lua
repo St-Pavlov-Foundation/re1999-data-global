@@ -32,7 +32,7 @@ function slot0.getMO(slot0)
 	return slot0.entity:getMO()
 end
 
-function slot0.getBuildingGOAnimator(slot0)
+function slot0.getBuildingGOAnimatorPlayer(slot0)
 	if not slot0._buildingGOAnimatorPlayer then
 		slot0._buildingGOAnimatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.entity:getBuildingGO())
 	end
@@ -40,14 +40,24 @@ function slot0.getBuildingGOAnimator(slot0)
 	return slot0._buildingGOAnimatorPlayer
 end
 
+function slot0.getBuildingGOAnimator(slot0)
+	if not slot0._buildingGOAnimator then
+		slot0._buildingGOAnimator = slot0.entity:getBuildingGO():GetComponent(typeof(UnityEngine.Animator))
+	end
+
+	return slot0._buildingGOAnimator
+end
+
 function slot0._onStartSummonAnim(slot0, slot1)
-	slot3 = slot0:getBuildingGOAnimator()
+	slot2 = slot1.mode
+	slot0.mode = slot2
+	slot3 = slot0:getBuildingGOAnimatorPlayer()
 
 	function slot5()
 		CritterSummonController.instance:onCanDrag()
 	end
 
-	if RoomSummonEnum.SummonMode[slot1.mode].EntityAnimKey and slot3 then
+	if RoomSummonEnum.SummonMode[slot2].EntityAnimKey and slot3 then
 		if slot2 == RoomSummonEnum.SummonType.Incubate then
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan2)
 		end
@@ -59,7 +69,7 @@ function slot0._onStartSummonAnim(slot0, slot1)
 end
 
 function slot0._onDragEnd(slot0, slot1, slot2)
-	slot3 = slot0:getBuildingGOAnimator()
+	slot3 = slot0:getBuildingGOAnimatorPlayer()
 
 	function slot5()
 		CritterSummonController.instance:onFinishSummonAnim(uv0)
@@ -79,13 +89,15 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 end
 
 function slot0._onSummonSkip(slot0)
-	slot0:getBuildingGOAnimator():Play("idle", nil, slot0)
+	slot0:getBuildingGOAnimator():Play(RoomSummonEnum.SummonMode[slot0.mode].EntityAnimKey.operateEnd, 0, 1)
 end
 
 function slot0._onCloseGetCritter(slot0)
 	if RoomSummonEnum.SummonType then
 		for slot4, slot5 in pairs(RoomSummonEnum.SummonType) do
-			slot0:_activeEggRoot(slot5, false)
+			if RoomSummonEnum.SummonMode[slot5] then
+				slot0:_activeEggRoot(slot5, false)
+			end
 		end
 	end
 end

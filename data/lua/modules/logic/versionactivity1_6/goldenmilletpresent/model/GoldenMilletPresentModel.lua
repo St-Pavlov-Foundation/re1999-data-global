@@ -3,7 +3,7 @@ module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletP
 slot0 = class("GoldenMilletPresentModel", BaseModel)
 
 function slot0.getGoldenMilletPresentActId(slot0)
-	return ActivityEnum.Activity.GoldenMilletPresent
+	return ActivityEnum.Activity.V2a5_GoldenMilletPresent
 end
 
 function slot0.isGoldenMilletPresentOpen(slot0, slot1)

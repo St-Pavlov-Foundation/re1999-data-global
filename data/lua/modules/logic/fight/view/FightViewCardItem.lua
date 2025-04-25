@@ -3,8 +3,13 @@ module("modules.logic.fight.view.FightViewCardItem", package.seeall)
 slot0 = class("FightViewCardItem", LuaCompBase)
 slot0.TagPosForLvs = nil
 
+function slot0.ctor(slot0, slot1)
+	slot0.handCardType = slot1 or FightEnum.CardShowType.Default
+end
+
 function slot0.init(slot0, slot1)
 	slot0.go = slot1
+	slot0._canvasGroup = slot1:GetComponent(gohelper.Type_CanvasGroup)
 	slot0.tr = slot1.transform
 	slot0._lvGOs = slot0:getUserDataTb_()
 	slot0._lvImgIcons = slot0:getUserDataTb_()
@@ -33,6 +38,7 @@ function slot0.init(slot0, slot1)
 	end
 
 	slot0.goTag = gohelper.findChild(slot1, "tag")
+	slot0.tagCanvas = gohelper.onceAddComponent(slot0.goTag, typeof(UnityEngine.CanvasGroup))
 	slot0._tagRootTr = gohelper.findChild(slot1, "tag/tag").transform
 	slot0._tag = gohelper.findChildSingleImage(slot1, "tag/tag/tagIcon")
 	slot0._txt = gohelper.findChildText(slot1, "Text")
@@ -48,6 +54,10 @@ function slot0.init(slot0, slot1)
 		table.insert(slot0._starItemCanvas, gohelper.onceAddComponent(slot6, typeof(UnityEngine.CanvasGroup)))
 	end
 
+	slot0._layout = gohelper.findChild(slot0.go, "layout")
+
+	gohelper.setActive(slot0._layout, true)
+
 	slot0._predisplay = gohelper.findChild(slot1, "layout/predisplay")
 	slot5 = UnityEngine.Animator
 	slot0._cardAni = gohelper.onceAddComponent(slot1, typeof(slot5))
@@ -60,7 +70,7 @@ function slot0.init(slot0, slot1)
 	end
 
 	slot0._resistanceComp = MonoHelper.addLuaComOnceToGo(slot0.go, FightViewCardItemResistance, slot0)
-	slot0._loader = slot0._loader or LoaderComponent.New()
+	slot0._loader = slot0._loader or FightLoaderComponent.New()
 	slot0._countRoot = gohelper.findChild(slot0.go, "layout/count")
 	slot0._countText = gohelper.findChildText(slot0.go, "layout/count/#txt_count")
 
@@ -92,6 +102,44 @@ function slot0.init(slot0, slot1)
 	slot0.goASFDSkill = gohelper.findChild(slot1, "asfd")
 	slot0.asfdSkillSimage = gohelper.findChildSingleImage(slot1, "asfd/imgIcon")
 	slot0.asfdNumTxt = gohelper.findChildText(slot1, "asfd/#txt_Num")
+	slot0.goPreDelete = gohelper.findChild(slot1, "go_predelete")
+	slot0.goPreDeleteNormal = gohelper.findChild(slot1, "go_predelete/normal")
+	slot0.goPreDeleteUnique = gohelper.findChild(slot1, "go_predelete/ultimate")
+	slot0.goPreDeleteLeft = gohelper.findChild(slot1, "go_predelete/Left")
+	slot0.goPreDeleteRight = gohelper.findChild(slot1, "go_predelete/Right")
+	slot0.goPreDeleteBoth = gohelper.findChild(slot1, "go_predelete/Both")
+
+	slot0:resetPreDelete()
+
+	slot0.goPreDeleteCard = gohelper.findChild(slot1, "go_predeletecard")
+
+	gohelper.setActive(slot0.goPreDeleteCard, false)
+
+	slot0.goRedAndBlue = gohelper.findChild(slot1, "#go_Liangyue")
+	slot0.goLyMask = gohelper.findChild(slot1, "#go_Liangyue/mask")
+	slot0.goRed = gohelper.findChild(slot1, "#go_Liangyue/red")
+	slot0.goBlue = gohelper.findChild(slot1, "#go_Liangyue/green")
+	slot0.goBoth = gohelper.findChild(slot1, "#go_Liangyue/both")
+
+	slot0:resetRedAndBlue()
+
+	slot0._heatRoot = gohelper.findChild(slot1, "#go_heat")
+end
+
+function slot0.resetPreDelete(slot0)
+	gohelper.setActive(slot0.goPreDeleteNormal, false)
+	gohelper.setActive(slot0.goPreDeleteUnique, false)
+	gohelper.setActive(slot0.goPreDeleteLeft, false)
+	gohelper.setActive(slot0.goPreDeleteRight, false)
+	gohelper.setActive(slot0.goPreDeleteBoth, false)
+end
+
+function slot0.resetRedAndBlue(slot0)
+	gohelper.setActive(slot0.goRedAndBlue, true)
+	gohelper.setActive(slot0.goLyMask, false)
+	gohelper.setActive(slot0.goRed, false)
+	gohelper.setActive(slot0.goBlue, false)
+	gohelper.setActive(slot0.goBoth, false)
 end
 
 function slot0.addEventListeners(slot0)
@@ -120,17 +168,34 @@ function slot0.onEmitterEnergyChange(slot0)
 	slot0.asfdSkillAnimator:Play("aggrandizement", 0, 0)
 end
 
+function slot0.resetAllNode(slot0)
+	for slot5 = 1, slot0.tr.childCount do
+		gohelper.setActive(slot0.tr:GetChild(slot5 - 1).gameObject, false)
+	end
+end
+
 function slot0.updateItem(slot0, slot1, slot2, slot3)
 	slot0.entityId = slot1
 	slot0.skillId = slot2
 	slot0._cardInfoMO = slot3
 
+	slot0:resetAllNode()
+	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(slot0.goTag, true)
+	gohelper.setActive(slot0.goRedAndBlue, true)
+	gohelper.setActive(slot0._layout, true)
+
+	slot0._canvasGroup.alpha = 1
+	slot0.tagCanvas.alpha = 1
+
 	if FightHelper.isASFDSkill(slot2) then
 		return slot0:refreshASFDSkill(slot1, slot2, slot3)
 	end
 
-	gohelper.setActive(slot0._countRoot, false)
-	gohelper.setActive(slot0.goASFDSkill, false)
+	if FightHelper.isPreDeleteSkill(slot2) then
+		return slot0:refreshPreDeleteSkill(slot1, slot2, slot3)
+	end
+
 	slot0:_hideAniEffect()
 
 	slot4 = lua_skill.configDict[slot2]
@@ -164,20 +229,14 @@ function slot0.updateItem(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	slot0._tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot4.showTag))
-
-	if uv0.TagPosForLvs[slot5] then
-		recthelper.setAnchor(slot0._tagRootTr, slot6[1], slot6[2])
-	end
-
-	gohelper.setActive(slot0._tag.gameObject, slot5 < FightEnum.UniqueSkillCardLv)
+	slot0:refreshTag()
 
 	slot0._txt.text = slot4.id .. "\nLv." .. slot5
 
 	if FightCardModel.instance:isUniqueSkill(slot0.entityId, slot0.skillId) then
 		if not slot0._uniqueCardEffect then
-			slot7 = ResUrl.getUIEffect(FightPreloadViewWork.ui_dazhaoka)
-			slot0._uniqueCardEffect = gohelper.clone(FightHelper.getPreloadAssetItem(slot7):GetResource(slot7), slot0.go)
+			slot6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_dazhaoka)
+			slot0._uniqueCardEffect = gohelper.clone(FightHelper.getPreloadAssetItem(slot6):GetResource(slot6), slot0.go)
 		end
 
 		gohelper.setActive(slot0._uniqueCardEffect, true)
@@ -190,6 +249,104 @@ function slot0.updateItem(slot0, slot1, slot2, slot3)
 	slot0:_showEnchantsEffect()
 	slot0:_refreshGray()
 	slot0:_refreshASFD()
+	slot0:_refreshPreDeleteArrow()
+	slot0:showCardHeat()
+end
+
+function slot0.refreshTag(slot0)
+	slot0._tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. lua_skill.configDict[slot0.skillId].showTag))
+
+	if uv0.TagPosForLvs[FightCardModel.instance:getSkillLv(slot0.entityId, slot0.skillId)] then
+		recthelper.setAnchor(slot0._tagRootTr, slot3[1], slot3[2])
+	end
+
+	gohelper.setActive(slot0._tag.gameObject, slot2 < FightEnum.UniqueSkillCardLv)
+end
+
+function slot0.showCardHeat(slot0)
+	if slot0._cardInfoMO and slot0._cardInfoMO.heatId and slot0._cardInfoMO.heatId ~= 0 then
+		slot0:setHeatRootVisible(true)
+
+		if slot0._heatObj then
+			slot0:_refreshCardHeat()
+		elseif not slot0._loadHeat then
+			slot0._loadHeat = true
+
+			slot0._loader:loadAsset("ui/viewres/fight/fightheatview.prefab", slot0._onHeatLoadFinish, slot0)
+		end
+	else
+		slot0:setHeatRootVisible(false)
+	end
+end
+
+function slot0.setHeatRootVisible(slot0, slot1)
+	gohelper.setActive(slot0._heatRoot, slot1)
+end
+
+function slot0._refreshCardHeat(slot0)
+	if slot0._cardInfoMO and slot0._cardInfoMO.heatId ~= 0 then
+		if FightDataHelper.teamDataMgr.myData.cardHeat.values[slot0._cardInfoMO.heatId] then
+			slot0._heatText.text = Mathf.Clamp(slot3.value + (FightDataHelper.teamDataMgr.myCardHeatOffset[slot1] or 0), slot3.lowerLimit, slot3.upperLimit)
+		else
+			slot0._heatText.text = ""
+		end
+	end
+end
+
+function slot0._onHeatLoadFinish(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot0._heatObj = gohelper.clone(slot2:GetResource(), slot0._heatRoot)
+	slot0._heatText = gohelper.findChildText(slot0._heatObj, "heatText")
+
+	slot0:_refreshCardHeat()
+end
+
+function slot0._refreshPreDeleteArrow(slot0)
+	slot1 = slot0.handCardType == FightEnum.CardShowType.HandCard
+
+	gohelper.setActive(slot0.goPreDelete, slot1)
+
+	if slot1 then
+		gohelper.setActive(slot0.goPreDeleteBoth, false)
+		gohelper.setActive(slot0.goPreDeleteLeft, false)
+		gohelper.setActive(slot0.goPreDeleteRight, false)
+
+		slot2 = slot0._cardInfoMO and slot0._cardInfoMO.skillId
+
+		if slot2 and lua_fight_card_pre_delete.configDict[slot2] then
+			if slot3.left > 0 and slot3.right > 0 then
+				gohelper.setActive(slot0.goPreDeleteBoth, true)
+			elseif slot4 then
+				gohelper.setActive(slot0.goPreDeleteLeft, true)
+			elseif slot5 then
+				gohelper.setActive(slot0.goPreDeleteRight, true)
+			end
+
+			gohelper.setActive(slot0._starGO, false)
+		end
+	end
+end
+
+function slot0._refreshPreDeleteImage(slot0, slot1)
+	slot2 = slot0.handCardType == FightEnum.CardShowType.HandCard
+
+	gohelper.setActive(slot0.goPreDelete, slot2)
+
+	if slot2 then
+		gohelper.setActive(slot0.goPreDeleteNormal, not FightCardModel.instance:isUniqueSkill(slot0.entityId, slot0.skillId) and slot1)
+		gohelper.setActive(slot0.goPreDeleteUnique, slot3 and slot1)
+	end
+end
+
+function slot0.refreshPreDeleteSkill(slot0, slot1, slot2, slot3)
+	gohelper.setActive(slot0.goPreDeleteCard, true)
+	gohelper.setActive(slot0.goPreDeleteNormal, false)
+	gohelper.setActive(slot0.goPreDeleteUnique, false)
+	slot0:refreshTag()
+	slot0:_refreshPreDeleteArrow()
 end
 
 function slot0.refreshASFDSkill(slot0, slot1, slot2, slot3)
@@ -262,7 +419,8 @@ end
 slot1 = {
 	[FightEnum.EnchantedType.Frozen] = "ui/viewres/fight/card_freeze.prefab",
 	[FightEnum.EnchantedType.Burn] = "ui/viewres/fight/card_flaring.prefab",
-	[FightEnum.EnchantedType.Chaos] = "ui/viewres/fight/card_chaos.prefab"
+	[FightEnum.EnchantedType.Chaos] = "ui/viewres/fight/card_chaos.prefab",
+	[FightEnum.EnchantedType.depresse] = "ui/viewres/fight/card_qmyj.prefab"
 }
 
 function slot0._showEnchantsEffect(slot0)
@@ -338,7 +496,7 @@ function slot0._hideEnchantsEffect(slot0)
 	end
 end
 
-function slot0._onEnchantEffectLoaded(slot0)
+function slot0._onEnchantEffectLoaded(slot0, slot1, slot2)
 end
 
 function slot0._onEnchantEffectsLoaded(slot0)
@@ -391,23 +549,27 @@ function slot0._hideUpgradeEffects(slot0)
 	end
 end
 
-function slot0._onUpgradeEffectLoaded(slot0, slot1)
+function slot0._onUpgradeEffectLoaded(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
 	if slot0._upgradeEffects then
 		return
 	end
 
 	slot0._upgradeEffects = slot0:getUserDataTb_()
 
-	if slot0._lvGOs and slot1:GetResource() then
-		for slot6, slot7 in ipairs(slot0._lvGOs) do
-			slot12 = "#cardeffect"
-			slot8 = gohelper.clone(slot2, gohelper.findChild(slot7, slot12))
+	if slot0._lvGOs and slot2:GetResource() then
+		for slot7, slot8 in ipairs(slot0._lvGOs) do
+			slot13 = "#cardeffect"
+			slot9 = gohelper.clone(slot3, gohelper.findChild(slot8, slot13))
 
-			for slot12 = 1, 4 do
-				gohelper.setActive(gohelper.findChild(slot8, "lv" .. slot12), slot12 == slot6)
+			for slot13 = 1, 4 do
+				gohelper.setActive(gohelper.findChild(slot9, "lv" .. slot13), slot13 == slot7)
 			end
 
-			table.insert(slot0._upgradeEffects, slot8)
+			table.insert(slot0._upgradeEffects, slot9)
 		end
 	end
 
@@ -430,6 +592,10 @@ function slot0.dissolveCard(slot0, slot1)
 	end
 
 	if FightHelper.isASFDSkill(slot0.skillId) then
+		return slot0:disappearCard()
+	end
+
+	if FightHelper.isPreDeleteSkill(slot0.skillId) then
 		return slot0:disappearCard()
 	end
 
@@ -649,14 +815,18 @@ function slot0.playCardAni(slot0, slot1, slot2)
 	slot0._loader:loadAsset(slot1, slot0._onCardAniLoaded, slot0)
 end
 
-function slot0._onCardAniLoaded(slot0, slot1)
+function slot0._onCardAniLoaded(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
 	if not slot0._cardAniName then
 		slot0:_hideAniEffect()
 
 		return
 	end
 
-	slot0._cardAni.runtimeAnimatorController = slot1:GetResource()
+	slot0._cardAni.runtimeAnimatorController = slot2:GetResource()
 	slot0._cardAni.enabled = true
 	slot0._cardAni.speed = FightModel.instance:getUISpeed()
 
@@ -691,8 +861,12 @@ function slot0.playAppearEffect(slot0)
 	end
 end
 
-function slot0._onAppearEffectLoaded(slot0, slot1)
-	slot0._appearEffect = gohelper.clone(slot1:GetResource(), slot0._cardAppearEffectRoot)
+function slot0._onAppearEffectLoaded(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot0._appearEffect = gohelper.clone(slot2:GetResource(), slot0._cardAppearEffectRoot)
 
 	gohelper.addChild(slot0._cardAppearEffectRoot.transform.parent.parent.gameObject, slot0._cardAppearEffectRoot)
 	slot0:showAppearEffect()
@@ -713,6 +887,25 @@ function slot0.getASFDScreenPos(slot0)
 	slot0.rectTrASFD = slot0.rectTrASFD or slot0.goASFD:GetComponent(gohelper.Type_RectTransform)
 
 	return recthelper.uiPosToScreenPos2(slot0.rectTrASFD)
+end
+
+function slot0.setActiveRed(slot0, slot1)
+	gohelper.setActive(slot0.goRed, slot1)
+	slot0:refreshLyMaskActive()
+end
+
+function slot0.setActiveBlue(slot0, slot1)
+	gohelper.setActive(slot0.goBlue, slot1)
+	slot0:refreshLyMaskActive()
+end
+
+function slot0.setActiveBoth(slot0, slot1)
+	gohelper.setActive(slot0.goBoth, slot1)
+	slot0:refreshLyMaskActive()
+end
+
+function slot0.refreshLyMaskActive(slot0)
+	gohelper.setActive(slot0.goLyMask, slot0.goRed.activeInHierarchy or slot0.goBlue.activeInHierarchy or slot0.goBoth.activeInHierarchy)
 end
 
 function slot0.releaseEffectFlow(slot0)
@@ -754,7 +947,7 @@ end
 
 function slot0.onDestroy(slot0)
 	if slot0._loader then
-		slot0._loader:releaseSelf()
+		slot0._loader:disposeSelf()
 
 		slot0._loader = nil
 	end
@@ -771,6 +964,7 @@ end
 function slot0._hideAllEffect(slot0)
 	slot0:_hideUpgradeEffects()
 	slot0:_hideEnchantsEffect()
+	gohelper.setActive(slot0.goPreDelete, false)
 end
 
 function slot0.IsUniqueSkill(slot0)

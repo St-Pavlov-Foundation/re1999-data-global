@@ -507,36 +507,48 @@ end
 function slot0.playTextFadeIn(slot0, slot1, slot2, slot3)
 	slot0._stepCo = slot1
 
-	gohelper.setActive(slot0._txtscreentext.gameObject, true)
+	gohelper.setActive(slot0._markScreenText.gameObject, true)
 
 	slot0._finishCallback = slot2
 	slot0._finishCallbackObj = slot3
 
-	ZProj.TweenHelper.KillByObj(slot0._txtscreentext)
+	ZProj.TweenHelper.KillByObj(slot0._markScreenText)
+
+	slot0._txtCanvasGroup = gohelper.onceAddComponent(slot0._markScreenText, typeof(UnityEngine.CanvasGroup))
 
 	if slot0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		ZProj.UGUIHelper.SetColorAlpha(slot0._txtscreentext, 1)
 		slot0:_fadeFinished()
 	else
-		if string.match(slot0._txtscreentext.text, "<color=#%x+>") then
-			slot0._txtscreentext.text = string.gsub(slot4, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
+		if string.match(slot0._markScreenText.text, "<color=#%x+>") then
+			slot4 = string.gsub(slot4, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
 		end
+
+		slot5 = StoryTool.getMarkTopTextList(slot4)
+		slot0._markScreenText.text = StoryTool.filterSpTag(StoryTool.filterMarkTop(slot4))
+
+		TaskDispatcher.runDelay(function ()
+			if uv0._conMark and uv1 and #uv1 > 0 then
+				uv0._conMark:SetMarksTop(uv1)
+			end
+		end, nil, 0.01)
 
 		slot0._floatTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, slot0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], slot0._fadeUpdate, slot0._fadeFinished, slot0, nil, EaseType.Linear)
 	end
 end
 
 function slot0._fadeUpdate(slot0, slot1)
-	if string.match(slot0._txtscreentext.text, "<color=#%x+>") then
-		slot0._txtscreentext.text = string.gsub(slot2, "<color=#(%x%x%x%x%x%x)(%x+)>", "<color=#%1" .. string.format("%02x", math.ceil(255 * slot1)) .. ">")
+	if string.match(slot0._markScreenText.text, "<color=#%x+>") then
+		slot0._markScreenText.text = string.gsub(slot2, "<color=#(%x%x%x%x%x%x)(%x+)>", "<color=#%1" .. string.format("%02x", math.ceil(255 * slot1)) .. ">")
 
 		return
 	end
 
-	ZProj.UGUIHelper.SetColorAlpha(slot0._txtscreentext, slot1)
+	slot0._txtCanvasGroup.alpha = slot1
 end
 
 function slot0._fadeFinished(slot0)
+	slot0._txtCanvasGroup.alpha = 1
+
 	if slot0._finishCallback then
 		slot0._finishCallback(slot0._finishCallbackObj)
 	end

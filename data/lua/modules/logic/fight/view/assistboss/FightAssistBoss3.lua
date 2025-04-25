@@ -7,7 +7,7 @@ function slot0.setPrefabPath(slot0)
 end
 
 function slot0.initView(slot0)
-	FightAssistBoss2.super.initView(slot0)
+	uv0.super.initView(slot0)
 
 	slot0.goStage1 = gohelper.findChild(slot0.viewGo, "head/stage1")
 	slot0.goStage2 = gohelper.findChild(slot0.viewGo, "head/stage2")

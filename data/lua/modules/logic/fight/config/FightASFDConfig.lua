@@ -26,10 +26,12 @@ function slot0.buildFightASFDConfig(slot0, slot1)
 	slot0.defaultEmitterCo = slot2[1]
 	slot0.defaultMissileCo = slot2[2]
 	slot0.defaultExplosionCo = slot2[3]
+	slot0.defaultBornCo = slot2[7]
 	slot0.unitListDict = {
 		[FightEnum.ASFDUnit.Emitter] = {},
 		[FightEnum.ASFDUnit.Missile] = {},
-		[FightEnum.ASFDUnit.Explosion] = {}
+		[FightEnum.ASFDUnit.Explosion] = {},
+		[FightEnum.ASFDUnit.Born] = {}
 	}
 
 	for slot6, slot7 in ipairs(slot1.configList) do
@@ -41,6 +43,7 @@ function slot0.buildFightASFDConfig(slot0, slot1)
 	table.sort(slot0.unitListDict[FightEnum.ASFDUnit.Emitter], slot0.sortASFDCo)
 	table.sort(slot0.unitListDict[FightEnum.ASFDUnit.Missile], slot0.sortASFDCo)
 	table.sort(slot0.unitListDict[FightEnum.ASFDUnit.Explosion], slot0.sortASFDCo)
+	table.sort(slot0.unitListDict[FightEnum.ASFDUnit.Born], slot0.sortASFDCo)
 end
 
 function slot0.sortASFDCo(slot0, slot1)

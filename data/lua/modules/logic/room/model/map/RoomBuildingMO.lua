@@ -368,6 +368,16 @@ function slot0.checkSameType(slot0, slot1)
 	return false
 end
 
+function slot0.getSlot2CritterDict(slot0)
+	slot1 = {}
+
+	if ManufactureModel.instance:getManufactureMOById(slot0.id) then
+		slot1 = slot2:getSlot2CritterDict()
+	end
+
+	return slot1
+end
+
 function slot0.isBuildingArea(slot0)
 	if slot0.config and RoomBuildingEnum.BuildingArea[slot0.config.buildingType] then
 		return true

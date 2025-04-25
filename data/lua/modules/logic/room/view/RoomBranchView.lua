@@ -166,7 +166,7 @@ function slot0._getSpeakerName(slot0, slot1)
 		if slot1.speakerType == RoomEnum.DialogSpeakerType.Hero then
 			return HeroConfig.instance:getHeroCO(slot0._heroId) and slot2.name
 		elseif slot1.speakerType == RoomEnum.DialogSpeakerType.Critter then
-			return slot0._critterMO:getDefineCfg() and slot2.name
+			return slot0._critterMO:getName()
 		end
 	end
 

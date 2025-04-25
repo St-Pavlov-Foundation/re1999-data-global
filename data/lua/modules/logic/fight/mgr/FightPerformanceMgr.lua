@@ -1,8 +1,8 @@
 module("modules.logic.fight.mgr.FightPerformanceMgr", package.seeall)
 
-slot0 = class("FightPerformanceMgr", FightPerformanceMgrBase)
+slot0 = class("FightPerformanceMgr", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0.gamePlayMgr = {}
 	slot0.userDataMgrList = {}
 
@@ -20,13 +20,15 @@ end
 function slot0.registGamePlayMgr(slot0)
 	slot0:registGamePlayClass(FightOperationMgr)
 	slot0:registGamePlayClass(FightEntityEvolutionMgr)
+	slot0:registGamePlayClass(FightBuffTypeId2EffectMgr)
+	slot0:registGamePlayClass(FightEntrustedWorkMgr)
 	slot0:registGamePlayClass(FightPlayMgr)
 
 	slot0.asfdMgr = slot0:registerUserDataClass(FightASFDMgr)
 end
 
 function slot0.registGamePlayClass(slot0, slot1)
-	slot2 = slot0:registClass(slot1)
+	slot2 = slot0:newClass(slot1)
 
 	table.insert(slot0.gamePlayMgr, slot2)
 

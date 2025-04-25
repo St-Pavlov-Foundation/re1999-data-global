@@ -325,6 +325,8 @@ function slot0.getCardInfoString(slot0, slot1, slot2)
 	table.insert(slot5, string.format("%s status : %s", slot6, slot0.status))
 	table.insert(slot5, string.format("%s targetUid : %s %s", slot6, slot0.targetUid, uv0.getEntityName(slot0.targetUid)))
 	table.insert(slot5, string.format("%s energy : %s", slot6, slot0.energy))
+	table.insert(slot5, string.format("%s areaRedOrBlue : %s", slot6, slot0.areaRedOrBlue))
+	table.insert(slot5, string.format("%s heatId : %s", slot6, slot0.heatId))
 	table.insert(slot5, uv0.getEnchantListString(slot0.enchants, slot1, "enchants"))
 	table.insert(slot5, slot3 .. "}")
 

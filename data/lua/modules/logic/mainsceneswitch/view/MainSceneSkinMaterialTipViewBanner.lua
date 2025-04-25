@@ -215,6 +215,7 @@ function slot0._createInfoItemUserDataTb_(slot0, slot1)
 		end
 
 		ViewMgr.instance:openView(ViewName.MainSceneSwitchInfoView, {
+			isPreview = true,
 			noInfoEffect = true,
 			sceneSkinId = uv0._sceneSkinId
 		})

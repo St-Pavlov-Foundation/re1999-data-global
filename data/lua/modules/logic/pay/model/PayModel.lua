@@ -311,6 +311,30 @@ function slot0.getGameRoleInfo(slot0, slot1)
 	return slot5
 end
 
+function slot0.getQuickUseInfo(slot0)
+	if not slot0._orderInfo then
+		return
+	end
+
+	if not StoreConfig.instance:getChargeGoodsConfig(slot0._orderInfo.id) then
+		return
+	end
+
+	if string.nilorempty(slot2.quickUseItemList) then
+		return
+	end
+
+	if not GameUtil.splitString2(slot3, true, "|", "#") or #slot4 == 0 then
+		return
+	end
+
+	return {
+		goodsId = slot1,
+		chargeGoodsConfig = slot2,
+		itemList = slot4
+	}
+end
+
 slot0.instance = slot0.New()
 
 return slot0

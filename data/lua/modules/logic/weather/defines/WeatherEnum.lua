@@ -11,6 +11,20 @@ slot0.LightModeDuring = 1
 slot0.LightModeOvercast = 2
 slot0.LightModeDusk = 3
 slot0.LightModeNight = 4
+slot0.DayTimeFireworks = 9
+slot0.NightTimeFireworks = 10
+slot0.EffectAudioTime = {
+	[slot0.DayTimeFireworks] = 40,
+	[slot0.NightTimeFireworks] = 40
+}
+slot0.EffectPlayAudio = {
+	[slot0.DayTimeFireworks] = 20250601,
+	[slot0.NightTimeFireworks] = 20250601
+}
+slot0.EffectStopAudio = {
+	[slot0.DayTimeFireworks] = 20250602,
+	[slot0.NightTimeFireworks] = 20250602
+}
 slot0.EffectMode = {
 	"Normal",
 	"Sunny",
@@ -19,7 +33,9 @@ slot0.EffectMode = {
 	"Heavy_Rainstorm",
 	"Little_Snow",
 	"Heavy_Snow",
-	"Heavy_Fog"
+	"Heavy_Fog",
+	"Normal",
+	"Normal"
 }
 slot0.EffectAirColor = {
 	{
@@ -154,6 +170,9 @@ slot0.RainEmission = {
 	[slot0.Default] = Vector4(0, 0, 0, 0),
 	[slot0.Heavy_Rain] = Vector4(0, 3.5, 1.86, 0),
 	[slot0.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
+}
+slot0.EffectTag = {
+	Frame = "frame"
 }
 
 return slot0

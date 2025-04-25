@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "path": "v2a5_ly/ly_bd",
+    "pos": [
+      6.6,
+      -0.05,
+      0
+    ],
+    "spine1Res": "v2a5_311001_ly_z/311001_ly_z_fight",
+    "spine1EffectRes": "roleeffects/roleeffect_ly",
+    "spine2Res": "v2a5_311001_lyblur_z/311001_lyblur_z_fight",
+    "spine2EffectRes": "roleeffects/roleeffect_lyblur",
+    "audioId": 431100151,
+    "fadeAudioId": 431100152
+  },
+  {
+    "id": 311001,
+    "path": "v2a5_ly/ly_bd",
+    "pos": [
+      6.6,
+      -0.05,
+      0
+    ],
+    "spine1Res": "v2a5_311001_ly_z/311001_ly_z_fight",
+    "spine1EffectRes": "roleeffects/roleeffect_ly",
+    "spine2Res": "v2a5_311001_lyblur_z/311001_lyblur_z_fight",
+    "spine2EffectRes": "roleeffects/roleeffect_lyblur",
+    "audioId": 431100151,
+    "fadeAudioId": 431100152
+  },
+  {
+    "id": 311002,
+    "path": "v2a5_ly/ly_bd",
+    "pos": [
+      6.6,
+      -0.05,
+      0
+    ],
+    "spine1Res": "v2a5_311001_ly_z/311001_ly_z_fight",
+    "spine1EffectRes": "roleeffects/roleeffect_ly",
+    "spine2Res": "v2a5_311001_lyblur_z/311001_lyblur_z_fight",
+    "spine2EffectRes": "roleeffects/roleeffect_lyblur",
+    "audioId": 431100151,
+    "fadeAudioId": 431100152
+  }
+]

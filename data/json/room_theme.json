@@ -178,5 +178,17 @@
     "collectionBonus": "11#12405#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 2501,
+    "name": "language_10065879",
+    "nameEn": "When Spring Arrives",
+    "desc": "language_10068855",
+    "rewardIcon": "1701600",
+    "building": "12501|12502|12503|12504|12505|12506|12507",
+    "packages": "2501|2502|2503|2504|2505|2506",
+    "collectionBonus": "11#12505#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

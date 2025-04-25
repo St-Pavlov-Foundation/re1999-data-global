@@ -99,15 +99,28 @@ function slot0.refreshUI(slot0)
 end
 
 function slot0.InitTowerItemData(slot0)
-	slot3 = TowerTaskModel.instance.bossTaskList
+	slot1 = {}
+	slot2 = TowerTaskModel.instance.limitTimeTaskList
+	slot3 = {}
+	slot4 = {}
 
-	if slot0:buildTowerItemData(TowerTaskModel.instance.limitTimeTaskList, TowerEnum.TowerType.Limited) then
-		table.insert({}, slot4)
+	for slot8 in pairs(TowerTaskModel.instance.bossTaskList) do
+		table.insert(slot4, slot8)
 	end
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot0:buildTowerItemData(slot9, TowerEnum.TowerType.Boss) then
-			table.insert(slot1, slot10)
+	table.sort(slot4)
+
+	for slot8, slot9 in ipairs(slot4) do
+		table.insert(slot3, TowerTaskModel.instance.bossTaskList[slot9])
+	end
+
+	if slot0:buildTowerItemData(slot2, TowerEnum.TowerType.Limited) then
+		table.insert(slot1, slot5)
+	end
+
+	for slot9, slot10 in ipairs(slot3) do
+		if slot0:buildTowerItemData(slot10, TowerEnum.TowerType.Boss) then
+			table.insert(slot1, slot11)
 		end
 	end
 
@@ -187,12 +200,22 @@ function slot0.createOrRefreshTowerItem(slot0, slot1)
 			slot8.select = false
 			slot8.data = slot7
 			slot0.towerItemTab[slot7.type][slot7.towerId] = slot8
+
+			gohelper.setAsLastSibling(slot8.go)
 		end
 
 		slot8.towerItemUI = slot7.type == TowerEnum.TowerType.Boss and slot8.bossTowerUI or slot8.timeTowerUI
 
 		slot0:refreshTowerItem(slot8)
 		table.insert(slot0.towerItemList, slot8)
+	end
+
+	for slot6, slot7 in pairs(slot0.towerItemList) do
+		if slot7.data.type == TowerEnum.TowerType.Limited then
+			gohelper.setAsFirstSibling(slot7.go)
+
+			break
+		end
 	end
 
 	for slot6 = #slot1 + 1, #slot0.towerItemList do

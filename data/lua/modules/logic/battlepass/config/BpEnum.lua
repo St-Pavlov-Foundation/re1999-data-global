@@ -14,5 +14,10 @@ slot0.TaskMaskTime = 0.6
 slot0.BonusTweenMin = 5
 slot0.BonusTweenTime = 3.5
 slot0.AddScoreTime = 1
+slot0.ButtonName = {
+	Goto = "前往解锁",
+	Close = "关闭",
+	CloseBg = "空白处关闭"
+}
 
 return slot0

@@ -35,6 +35,13 @@ return {
 	showToastWithIcon = function (slot0, slot1, ...)
 		ToastController.instance:showToastWithIcon(slot0, slot1, ...)
 	end,
+	showIconToastWithTableParam = function (slot0, slot1, slot2)
+		if type(slot2) == "table" then
+			uv0.showToastWithIcon(slot0, slot1, unpack(slot2))
+		else
+			uv0.showToastWithIcon(slot0, slot1)
+		end
+	end,
 	isExternalTest = function ()
 		return GameConfig:GetCurServerType() == 6 and SettingsModel.instance:isZhRegion()
 	end,

@@ -59,9 +59,7 @@ function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
 	if uv0.buffId2EffectPath[slot3] then
 		if slot2 == FightEnum.EffectType.BUFFADD then
 			slot0:_releaseEffect(slot3)
-
-			slot8 = slot0._entity.effect:addHangEffect(slot7[slot6.skin] or slot7[uv1], ModuleEnum.SpineHangPointRoot)
-
+			slot0._entity.effect:addHangEffect(slot7[slot6.skin] or slot7[uv1], ModuleEnum.SpineHangPointRoot):setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 9)
 			slot8:setLocalPos(slot0._entity:isMySide() and 1 or -1, 3.1, 0)
 
 			slot0._ballEffect[slot3] = slot8

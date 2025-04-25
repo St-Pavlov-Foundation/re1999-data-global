@@ -87,7 +87,7 @@ function slot0.ctor(slot0)
 end
 
 function slot0.OnkeyUp(slot0, slot1)
-	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
+	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) then
 		return
 	end
 

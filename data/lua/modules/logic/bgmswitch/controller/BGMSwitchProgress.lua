@@ -70,17 +70,17 @@ function slot0._onTick(slot0)
 		return
 	end
 
-	if slot2 < slot0._progressTimeSec and slot0._progressTimeSec - slot2 > (slot0._bgmAudioLength and slot0._bgmAudioLength > 0 and slot0._bgmAudioLength or 10) * 0.5 then
-		if BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId and not ViewMgr.instance:isOpen(ViewName.BGMSwitchView) then
-			slot0._progressTimeSec = 0
+	slot0._progressTimeSec = slot2
 
-			BGMSwitchController.instance:checkStartMainBGM()
+	if (slot0._bgmAudioLength and slot0._bgmAudioLength > 0 and slot0._bgmAudioLength or 10) <= slot2 + 0.5 then
+		slot0._progressTimeSec = 0
+
+		if BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId and not ViewMgr.instance:isOpen(ViewName.BGMSwitchView) then
+			BGMSwitchController.instance:checkStartMainBGM(false)
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmProgressEnd)
 	end
-
-	slot0._progressTimeSec = slot2
 
 	slot0:_updateGMProgress()
 end
@@ -99,7 +99,9 @@ slot0.WeatherEffect = {
 	"暴风雨",
 	"小雪",
 	"大雪",
-	"大雾"
+	"大雾",
+	"白天烟花",
+	"夜晚烟花"
 }
 
 function slot0._updateGMProgress(slot0)

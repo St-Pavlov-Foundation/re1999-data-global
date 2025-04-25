@@ -1633,5 +1633,65 @@
     "id": 2830101,
     "eventName": "play_ui_checkpoint_noise_highland_air_loop",
     "bankName": "activtiy_gudu_combataudio_noise"
+  },
+  {
+    "id": 3251821,
+    "eventName": "play_autochess_2_5_music",
+    "bankName": "autochess_2_5_music"
+  },
+  {
+    "id": 3250001,
+    "eventName": "play_battle_tangren_2_5_normalfight",
+    "bankName": "activtiy_tangren_combataudio"
+  },
+  {
+    "id": 3250002,
+    "eventName": "play_battle_tangren_2_5_bossfight",
+    "bankName": "activtiy_tangren_combataudio"
+  },
+  {
+    "id": 3251822,
+    "eventName": "play_ui_checkpoint_noise_chinatown_boss",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251823,
+    "eventName": "play_ui_checkpoint_noise_chinatown",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251824,
+    "eventName": "play_ui_checkpoint_noise_hotel",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251825,
+    "eventName": "play_ui_checkpoint_noise_los_angeles",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251826,
+    "eventName": "play_ui_checkpoint_noise_film",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251827,
+    "eventName": "play_ui_checkpoint_noise_alley",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251828,
+    "eventName": "play_ui_checkpoint_noise_hotel_room",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251829,
+    "eventName": "play_ui_checkpoint_noise_alley_night",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3251830,
+    "eventName": "play_ui_checkpoint_noise_admin_hall",
+    "bankName": "activtiy_tangren_combataudio_noise"
   }
 ]

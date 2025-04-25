@@ -47,26 +47,54 @@ function slot0._editableInitView(slot0)
 	slot0._rotatePress:SetLongPressTime(slot1)
 
 	slot0._confirmCanvasGroup = slot0._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	slot0._animators = slot0._gocontainer:GetComponentsInChildren(typeof(UnityEngine.Animator), true)
 	slot0._scene = GameSceneMgr.instance:getCurScene()
 	slot0._isCharacter = false
 	slot0._allFocusItem = slot0:getUserDataTb_()
 	slot0._allFocusItem[1] = slot0._btncancel.transform
 	slot0._allFocusItem[2] = slot0._gorotate.transform
 	slot0._allFocusItem[3] = slot0._btnconfirm.transform
-	slot0._inputhandle = TaskDispatcher.runRepeat(slot0._handleMouseInput, slot0, 0.01)
+end
+
+function slot0._isAnimatorPlaying(slot0)
+	slot1 = slot0._animators:GetEnumerator()
+
+	while slot1:MoveNext() do
+		if slot1.Current:IsInTransition(0) then
+			return true
+		end
+
+		if slot1.Current:GetCurrentAnimatorStateInfo(0).normalizedTime < 1 then
+			return true
+		end
+	end
+
+	return false
 end
 
 function slot0._handleMouseInput(slot0)
-	if UnityEngine.Input.mouseScrollDelta and slot1.y ~= 0 then
+	if not PCInputController.instance:getIsUse() then
+		return
+	end
+
+	slot1 = UnityEngine.Input.mouseScrollDelta
+
+	if slot0:_isAnimatorPlaying() then
+		return
+	end
+
+	if slot1 and slot1.y ~= 0 then
 		slot0:_btnrotateOnClick()
 	end
 
 	if UnityEngine.Input.GetMouseButtonDown(1) then
 		slot0:_btncancelOnClick()
+		TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
 	end
 
 	if UnityEngine.Input.GetKey("space") then
 		slot0:_btnconfirmOnClick()
+		TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
 	end
 end
 
@@ -349,6 +377,8 @@ function slot0._refreshBuildingUI(slot0)
 
 	recthelper.setAnchor(slot0._btncancel.gameObject.transform, recthelper.getAnchor(slot0._gocancelpos.transform))
 	recthelper.setAnchor(slot0._btnconfirm.gameObject.transform, recthelper.getAnchor(slot0._goconfirmpos.transform))
+	TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
+	TaskDispatcher.runRepeat(slot0._handleMouseInput, slot0, 0.01)
 end
 
 function slot0._refreshBlockUI(slot0)
@@ -372,6 +402,8 @@ function slot0._refreshBlockUI(slot0)
 
 	recthelper.setAnchor(slot0._btncancel.gameObject.transform, recthelper.getAnchor(slot0._gocancelpos.transform))
 	recthelper.setAnchor(slot0._btnconfirm.gameObject.transform, recthelper.getAnchor(slot0._goconfirmpos.transform))
+	TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
+	TaskDispatcher.runRepeat(slot0._handleMouseInput, slot0, 0.01)
 end
 
 function slot0._refreshCharacterUI(slot0)
@@ -394,6 +426,8 @@ function slot0._refreshCharacterUI(slot0)
 
 	recthelper.setAnchor(slot0._btncancel.gameObject.transform, recthelper.getAnchor(slot0._gocancelposcharacter.transform))
 	recthelper.setAnchor(slot0._btnconfirm.gameObject.transform, recthelper.getAnchor(slot0._goconfirmposcharacter.transform))
+	TaskDispatcher.cancelTask(slot0._handleMouseInput, slot0)
+	TaskDispatcher.runRepeat(slot0._handleMouseInput, slot0, 0.01)
 end
 
 function slot0._setRotateAudio(slot0, slot1)

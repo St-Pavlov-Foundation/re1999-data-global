@@ -6,6 +6,7 @@ function slot0.onInitView(slot0)
 	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
 	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/#simage_icon")
 	slot0._goLocked = gohelper.findChild(slot0.viewGO, "#go_normal/#go_Locked")
+	slot0._goreddot = gohelper.findChild(slot0.viewGO, "#go_normal/#go_reddot")
 	slot0._goTag = gohelper.findChild(slot0.viewGO, "#go_Tag")
 	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_selected")
 
@@ -39,6 +40,11 @@ function slot0._onClick(slot0)
 		return
 	end
 
+	if slot0._showReddot then
+		MainSceneSwitchController.closeSceneReddot(slot0._mo.id)
+		slot0:_updateReddot()
+	end
+
 	AudioMgr.instance:trigger(AudioEnum.MainSceneSkin.play_ui_main_switch_scene)
 	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.ClickSwitchItem, slot0._mo, slot0._index)
 end
@@ -65,6 +71,13 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	gohelper.setActive(slot0._goLocked, not slot5)
 	ZProj.UGUIHelper.SetGrayscale(slot0._simageicon.gameObject, not slot5)
+	slot0:_updateReddot()
+end
+
+function slot0._updateReddot(slot0)
+	slot0._showReddot = MainSceneSwitchController.sceneHasReddot(slot0._mo.id)
+
+	gohelper.setActive(slot0._goreddot, slot0._showReddot)
 end
 
 function slot0.onSelect(slot0, slot1)

@@ -9520,6 +9520,536 @@
     "bankName": "ui_activity_2_4_diqiu_yure"
   },
   {
+    "id": 20250001,
+    "eventName": "play_challenge_main_2_5",
+    "bankName": "challenge_2_5_music"
+  },
+  {
+    "id": 20250002,
+    "eventName": "play_ui_tangren_open1",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 20250003,
+    "eventName": "play_activitymusic_themesong_2_5",
+    "bankName": "activity2_5_music"
+  },
+  {
+    "id": 20250101,
+    "eventName": "play_replay_music_themesong_2_5",
+    "bankName": "ui_replay_mainmusic2_5"
+  },
+  {
+    "id": 20250401,
+    "eventName": "stop_ui_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 20250402,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20250403,
+    "eventName": "play_ui_tangren_toycar_appear",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250404,
+    "eventName": "play_ui_tangren_toycar_standby_loop",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250405,
+    "eventName": "play_ui_tangren_qishou_confirm",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250406,
+    "eventName": "play_ui_tangren_shopping_enter",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250407,
+    "eventName": "play_ui_tangren_chess_purchase",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250408,
+    "eventName": "play_ui_tangren_battle_enter",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250409,
+    "eventName": "play_ui_tangren_store_upgrade",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250410,
+    "eventName": "play_ui_tangren_copy_enter",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250411,
+    "eventName": "play_ui_tangren_chess_attack",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250412,
+    "eventName": "play_ui_tangren_chess_death",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250413,
+    "eventName": "play_ui_tangren_chess_buff",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250414,
+    "eventName": "play_ui_tangren_chess_swallow",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250415,
+    "eventName": "play_ui_tangren_chess_upgrade",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250416,
+    "eventName": "play_ui_tangren_chess_wrath",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250417,
+    "eventName": "play_ui_tangren_chess_hat",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250418,
+    "eventName": "play_ui_tangren_star_collect",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250419,
+    "eventName": "play_ui_tangren_stone_attack",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250420,
+    "eventName": "play_ui_tangren_split_attack",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250421,
+    "eventName": "play_ui_mln_details_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20250422,
+    "eventName": "play_ui_tangren_chess_lock",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250423,
+    "eventName": "play_ui_tangren_award_get",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250424,
+    "eventName": "play_ui_tangren_chess_move",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 20250500,
+    "eventName": "play_ui_fight_ly_card_open2_5",
+    "bankName": "fight_ui_sfx_liangyueux2_5"
+  },
+  {
+    "id": 20250501,
+    "eventName": "play_ui_fight_ly_card_close2_5",
+    "bankName": "fight_ui_sfx_liangyueux2_5"
+  },
+  {
+    "id": 20250502,
+    "eventName": "play_ui_fight_boss_addcard2_5",
+    "bankName": "fight_ui_sfx_boss2_5"
+  },
+  {
+    "id": 20250503,
+    "eventName": "play_ui_fight_boss_removecard2_5",
+    "bankName": "fight_ui_sfx_boss2_5"
+  },
+  {
+    "id": 20250601,
+    "eventName": "play_ui_replay_noise_yanhua1",
+    "bankName": "ui_replay_mainnoise2_5"
+  },
+  {
+    "id": 20250602,
+    "eventName": "stop_ui_replay_noise_yanhua1",
+    "bankName": "ui_replay_mainnoise2_5"
+  },
+  {
+    "id": 20250701,
+    "eventName": "play_activitymusic_themesong_2_5",
+    "bankName": "activity2_5_music"
+  },
+  {
+    "id": 20250702,
+    "eventName": "play_ui_feichi_stanzas",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 20250703,
+    "eventName": "play_ui_tangren_anzhu",
+    "bankName": "ui_activity_2_5_tangren_liangyue"
+  },
+  {
+    "id": 20250704,
+    "eventName": "play_ui_tangren_fangru",
+    "bankName": "ui_activity_2_5_tangren_liangyue"
+  },
+  {
+    "id": 20250705,
+    "eventName": "play_ui_tangren_delete",
+    "bankName": "ui_activity_2_5_tangren_liangyue"
+  },
+  {
+    "id": 20250706,
+    "eventName": "play_ui_tangren_pen1",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20250707,
+    "eventName": "play_ui_tangren_pen2",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20250801,
+    "eventName": "play_plot_music_comfortable",
+    "bankName": "plot_music_comfortable"
+  },
+  {
+    "id": 20250802,
+    "eventName": "play_ui_tangren_move_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250803,
+    "eventName": "stop_ui_tangren_move_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250804,
+    "eventName": "play_ui_tangren_box_push_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250805,
+    "eventName": "stop_ui_tangren_box_push_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250806,
+    "eventName": "play_ui_tangren_ladder_crawl_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250807,
+    "eventName": "stop_ui_tangren_ladder_crawl_loop",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250808,
+    "eventName": "play_ui_tangren_landing",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250809,
+    "eventName": "play_ui_tangren_bounced",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250810,
+    "eventName": "play_ui_tangren_spikes_death",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250811,
+    "eventName": "play_ui_tangren_revival",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250812,
+    "eventName": "play_ui_tangren_scene_switch",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250813,
+    "eventName": "play_ui_tangren_door_open",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250814,
+    "eventName": "play_ui_tangren_door_close",
+    "bankName": "ui_activity_2_5_tangren_feilinshiduo"
+  },
+  {
+    "id": 20250815,
+    "eventName": "play_ui_pkls_endpoint_arrival",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20250816,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20250817,
+    "eventName": "play_ui_leimi_level_difficulty",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20250818,
+    "eventName": "play_ui_jinye_story_star",
+    "bankName": "ui_activity_1_7_jinye_story"
+  },
+  {
+    "id": 20250819,
+    "eventName": "play_ui_formationsave",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20250820,
+    "eventName": "play_ui_activity_organ_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20250901,
+    "eventName": "play_hero3110_mainsfx_adm_action",
+    "bankName": "hero3110_mainsfx"
+  },
+  {
+    "id": 20250902,
+    "eventName": "stop_hero3110_mainsfx_adm_action",
+    "bankName": "hero3110_mainsfx"
+  },
+  {
+    "id": 20250903,
+    "eventName": "play_hero308303_mainsfx_adm_action",
+    "bankName": "hero308303_mainsfx_skin"
+  },
+  {
+    "id": 20250904,
+    "eventName": "stop_hero308303_mainsfx_adm_action",
+    "bankName": "hero308303_mainsfx_skin"
+  },
+  {
+    "id": 20251001,
+    "eventName": "play_ui_tangren_ding",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251002,
+    "eventName": "play_ui_tangren_fei",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251003,
+    "eventName": "play_ui_tangren_pen1",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251004,
+    "eventName": "play_ui_tangren_win1",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251005,
+    "eventName": "play_ui_tangren_jieshu",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251006,
+    "eventName": "play_ui_tangren_transition",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20251007,
+    "eventName": "play_ui_tangren_pen2",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 25251108,
+    "eventName": "play_ui_shuori_qiyuan_unlock",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 25251109,
+    "eventName": "play_ui_shuori_qiyuan_unlock",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 25251110,
+    "eventName": "play_ui_tangren_qiandao_open",
+    "bankName": "ui_activity_2_5_tangren_qiandao"
+  },
+  {
+    "id": 25251111,
+    "eventName": "play_ui_tangren_qiandao_leiji",
+    "bankName": "ui_activity_2_5_tangren_qiandao"
+  },
+  {
+    "id": 25251201,
+    "eventName": "play_ui_tangren_songpifu_loop",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251202,
+    "eventName": "stop_ui_tangren_songpifu_loop",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251301,
+    "eventName": "play_ui_home_niudan_shilian1",
+    "bankName": "ui_home_niudan_2_5"
+  },
+  {
+    "id": 25251401,
+    "eventName": "stop_ui_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 25251402,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 25251403,
+    "eventName": "play_ui_leimi_theft_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 25251404,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 25251405,
+    "eventName": "play_ui_tangren_qiuqian",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251407,
+    "eventName": "play_ui_tangren_cloud",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251408,
+    "eventName": "play_ui_tangren_firework",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251409,
+    "eventName": "play_ui_tangren_mysticism",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251410,
+    "eventName": "play_ui_tangren_banger",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251411,
+    "eventName": "play_ui_mln_unlock",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 25251412,
+    "eventName": "play_ui_mln_details_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 25251413,
+    "eventName": "play_ui_help_switch",
+    "bankName": "ui_role"
+  },
+  {
+    "id": 25251414,
+    "eventName": "play_ui_tangren_cookies_open",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251406,
+    "eventName": "play_ui_wangshi_carton_open",
+    "bankName": "ui_activity_2_1_wangshi"
+  },
+  {
+    "id": 25251501,
+    "eventName": "play_ui_tangren_yuanxiao_open",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251502,
+    "eventName": "play_ui_tangren_yuanxiao_pop",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251503,
+    "eventName": "play_ui_tangren_yuanxiao_switch",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251504,
+    "eventName": "play_ui_tangren_yuanxiao_draw_loop",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251505,
+    "eventName": "stop_ui_tangren_yuanxiao_draw_loop",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251506,
+    "eventName": "play_ui_shuori_dreamsong_open",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 25251507,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 25251415,
+    "eventName": "play_ui_tangren_scissors_cut",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251416,
+    "eventName": "play_ui_tangren_telegram",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 25251417,
+    "eventName": "stop_ui_tangren_telegram",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 20260020,
+    "eventName": "play_ui_wenming_tarot_click",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260144,
+    "eventName": "play_ui_permit_pailian",
+    "bankName": "ui_permit_2_6"
+  },
+  {
+    "id": 20260130,
+    "eventName": "play_ui_permit_lens_move",
+    "bankName": "ui_permit_2_6"
+  },
+  {
     "id": 20260901,
     "eventName": "play_ui_mln_page_turn",
     "bankName": "ui_activity"

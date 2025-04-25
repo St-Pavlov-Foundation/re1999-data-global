@@ -9,6 +9,7 @@ function slot0.onInitView(slot0)
 	slot0._goqualityhigh = gohelper.findChild(slot0.viewGO, "page1/top/#go_qualityhigh")
 	slot0._goqualitylow = gohelper.findChild(slot0.viewGO, "page1/top/#go_qualitylow")
 	slot0._txtname = gohelper.findChildText(slot0.viewGO, "page1/top/#txt_name")
+	slot0._btnnameedit = gohelper.findChildButtonWithAudio(slot0.viewGO, "page1/top/#txt_name/#btn_nameedit")
 	slot0._gocrittericon = gohelper.findChild(slot0.viewGO, "page1/top/critter/#go_crittericon")
 	slot0._gostarList = gohelper.findChild(slot0.viewGO, "page1/top/#go_starList")
 	slot0._scrolldes = gohelper.findChildScrollRect(slot0.viewGO, "page1/top/#scroll_des")
@@ -46,6 +47,7 @@ end
 
 function slot0.addEvents(slot0)
 	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+	slot0._btnnameedit:AddClickListener(slot0._btnnameeditOnClick, slot0)
 	slot0._btnsubtag1:AddClickListener(slot0._btnsubtag1OnClick, slot0)
 	slot0._btnsubtag2:AddClickListener(slot0._btnsubtag2OnClick, slot0)
 	slot0._btnsubtag3:AddClickListener(slot0._btnsubtag3OnClick, slot0)
@@ -53,9 +55,14 @@ end
 
 function slot0.removeEvents(slot0)
 	slot0._btnclose:RemoveClickListener()
+	slot0._btnnameedit:RemoveClickListener()
 	slot0._btnsubtag1:RemoveClickListener()
 	slot0._btnsubtag2:RemoveClickListener()
 	slot0._btnsubtag3:RemoveClickListener()
+end
+
+function slot0._btnnameeditOnClick(slot0)
+	RoomCritterController.instance:openRenameView(slot0._critterUid)
 end
 
 function slot0._btnsubtag1OnClick(slot0)
@@ -109,6 +116,8 @@ function slot0.onUpdateParam(slot0)
 end
 
 function slot0.onOpen(slot0)
+	slot0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, slot0._onCritterRenameReply, slot0)
+
 	slot0._critterUid = slot0.viewParam and slot0.viewParam.critterUid
 	slot0._heroId = slot0.viewParam and slot0.viewParam.heroId
 	slot0._trainNum = slot0.viewParam and slot0.viewParam.tranNum or 1
@@ -149,6 +158,12 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
+end
+
+function slot0._onCritterRenameReply(slot0, slot1)
+	if slot0._critterMO and slot0._critterUid == slot1 then
+		slot0._txtname.text = slot0._critterMO:getName()
+	end
 end
 
 function slot0._createTagTB(slot0, slot1)
@@ -225,8 +240,8 @@ function slot0._refreshCritterUI(slot0)
 	UISpriteSetMgr.instance:setCritterSprite(slot0._imagelvheart, slot0:_getLevelIconName(slot4))
 	UISpriteSetMgr.instance:setCritterSprite(slot0._imagelvlucky, slot0:_getLevelIconName(slot5))
 
-	slot0._txtname.text = slot0._critterMO:getDefineCfg() and slot1.name or ""
-	slot0._txtDesc.text = slot1 and slot1.desc or ""
+	slot0._txtname.text = slot0._critterMO:getName()
+	slot0._txtDesc.text = slot0._critterMO:getDefineCfg() and slot1.desc or ""
 
 	gohelper.setActive(slot0._txttag2, slot0._critterMO.specialSkin)
 	gohelper.setActive(slot0._goqualityhigh, slot2)

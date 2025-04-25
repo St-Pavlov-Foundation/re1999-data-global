@@ -549,9 +549,15 @@ function slot0.setPPMaskType(slot0, slot1)
 end
 
 function slot0.setMainPPLevel(slot0, slot1)
+	slot0._ppGrade = slot1
+
+	slot0._unitPPVolume:SetProfile(slot0:getProfile())
+end
+
+function slot0.getProfile(slot0)
 	slot2 = slot0._highProfile
 
-	if slot1 == ModuleEnum.Performance.High then
+	if slot0._ppGrade == ModuleEnum.Performance.High then
 		slot2 = slot0._highProfile
 	elseif slot1 == ModuleEnum.Performance.Middle then
 		slot2 = slot0._middleProfile
@@ -559,7 +565,7 @@ function slot0.setMainPPLevel(slot0, slot1)
 		slot2 = slot0._lowProfile
 	end
 
-	slot0._unitPPVolume:SetProfile(slot2)
+	return slot2
 end
 
 function slot0.ClearPPRenderRts(slot0)

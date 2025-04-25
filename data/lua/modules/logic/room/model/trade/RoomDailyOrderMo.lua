@@ -11,6 +11,7 @@ function slot0.ctor(slot0)
 	slot0.isTraced = nil
 	slot0.waitRefresh = nil
 	slot0.refreshType = nil
+	slot0.isLocked = nil
 	slot0.isFinish = nil
 end
 
@@ -21,6 +22,7 @@ function slot0.initMo(slot0, slot1, slot2)
 	slot0.isAdvanced = slot1.isAdvanced
 	slot0.isTraced = slot1.isTraced
 	slot0.refreshType = slot1.refreshType
+	slot0.isLocked = slot1.isLocked
 	slot0.goodsInfo = {}
 	slot0._orderPrice = 0
 
@@ -44,7 +46,7 @@ function slot0.initMo(slot0, slot1, slot2)
 end
 
 function slot0.getAdvancedRate(slot0)
-	return 1 + RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyHighOrderAddRate, true) * 0.0001
+	return 1 + (RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyHighOrderAddRate, true) or 0) * 0.0001
 end
 
 function slot0.setFinish(slot0)
@@ -73,6 +75,14 @@ end
 
 function slot0.setTraced(slot0, slot1)
 	slot0.isTraced = slot1
+end
+
+function slot0.setLocked(slot0, slot1)
+	slot0.isLocked = slot1
+end
+
+function slot0.getLocked(slot0)
+	return slot0.isLocked
 end
 
 function slot0.checkGoodsCanProduct(slot0)

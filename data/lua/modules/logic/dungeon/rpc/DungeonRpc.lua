@@ -81,6 +81,8 @@ function slot0.packStartDungeonRequest(slot0, slot1, slot2, slot3, slot4, slot5,
 
 		if slot9 and slot9.type == DungeonEnum.EpisodeType.Rouge then
 			slot1.params = tostring(RougeConfig1.instance:season())
+		elseif slot9 and slot9.type == DungeonEnum.EpisodeType.Act183 then
+			slot1.params = Act183Helper.generateStartDungeonParams(slot9.id)
 		end
 	end
 

@@ -67,8 +67,6 @@ function slot0._refreshTitle(slot0, slot1)
 		slot0._txttitleen.text = string.format("「%s」%s", slot4, "Rules")
 	end
 
-	gohelper.setActive(slot0._gotitleline, slot5)
-	gohelper.setActive(slot0._txttitleen, slot5)
 	slot0:_refreshline(slot1)
 end
 

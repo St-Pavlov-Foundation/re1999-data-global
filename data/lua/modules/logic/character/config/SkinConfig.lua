@@ -4,6 +4,7 @@ slot0 = class("SkinConfig", BaseConfig)
 
 function slot0.ctor(slot0)
 	slot0._skinConfig = nil
+	slot0._skinStoreTagConfig = nil
 end
 
 function slot0.reqConfigNames(slot0)

@@ -192,7 +192,8 @@ slot0.InteractBuildingSelectHero = 42001
 slot0.InteractBuildingShowChanged = 42002
 slot0.CritterTrainAttributeSelected = 50001
 slot0.SceneTrainChangeSpine = 50002
-slot0.CritterTrainLevelFinished = 500003
+slot0.CritterTrainLevelFinished = 50003
+slot0.CritterTrainAttributeCancel = 50004
 slot0.NewLog = 600001
 slot0.SwitchRecordView = 600002
 

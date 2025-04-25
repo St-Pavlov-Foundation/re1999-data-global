@@ -18,7 +18,7 @@ function slot0.addConstEvents(slot0)
 end
 
 function slot0._onDailyRefresh(slot0)
-	SignInRpc.instance:sendGetSignInInfoRequest()
+	slot0:sendGetSignInInfoRequestIfUnlock()
 end
 
 function slot0._onFuncUnlock(slot0)
@@ -50,9 +50,7 @@ function slot0._onCheckSignIn(slot0, slot1)
 
 			slot0._curMonth = slot2.month
 
-			if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
-				SignInRpc.instance:sendGetSignInInfoRequest()
-			end
+			slot0:sendGetSignInInfoRequestIfUnlock()
 		end
 	else
 		TaskDispatcher.runRepeat(slot0._onCheckEnterMainView, slot0, 0.5)
@@ -84,11 +82,7 @@ function slot0._onCheckEnterMainView(slot0)
 
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
 		SignInModel.instance:setAutoSign(true)
-
-		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
-			SignInRpc.instance:sendGetSignInInfoRequest()
-		end
-
+		slot0:sendGetSignInInfoRequestIfUnlock()
 		slot0:openSignInDetailView({
 			isBirthday = false
 		})
@@ -155,6 +149,14 @@ function slot0.checkIsBirthdayBlock(slot0, slot1)
 	end
 
 	return false
+end
+
+function slot0.sendGetSignInInfoRequestIfUnlock(slot0)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
+		return
+	end
+
+	SignInRpc.instance:sendGetSignInInfoRequest()
 end
 
 slot0.instance = slot0.New()

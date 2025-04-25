@@ -23,15 +23,9 @@ end
 function slot0._editableInitView(slot0)
 end
 
-function slot0._editableAddEvents(slot0)
-end
-
-function slot0._editableRemoveEvents(slot0)
-end
-
 function slot0.onUpdateMO(slot0, slot1)
 	slot4 = slot1[3]
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot1[1], slot1[2], true)
+	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(tonumber(slot1[1]), slot1[2], true)
 
 	if not slot0._itemIcon then
 		slot0._itemIcon = IconMgr.instance:getCommonPropItemIcon(slot0._goicon)
@@ -41,9 +35,7 @@ function slot0.onUpdateMO(slot0, slot1)
 	slot0._itemIcon:hideExpEquipState()
 	slot0._itemIcon:isShowName(false)
 
-	if tonumber(slot2) == MaterialEnum.MaterialType.HeroSkin then
-		slot0._itemIcon:isShowEquipAndItemCount(false)
-	else
+	if slot0._itemIcon:isEquipIcon() then
 		slot0._itemIcon:isShowEquipAndItemCount(true)
 	end
 
@@ -60,6 +52,7 @@ function slot0.setActive(slot0, slot1)
 end
 
 function slot0.onDestroyView(slot0)
+	slot0:__onDispose()
 end
 
 return slot0

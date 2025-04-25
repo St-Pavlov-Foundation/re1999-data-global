@@ -1,6 +1,9 @@
 module("modules.logic.fight.view.FightViewContainer", package.seeall)
 
 slot0 = class("FightViewContainer", BaseViewContainer)
+slot0.hanCardClass = FightViewHandCard
+slot0.operationClass = FightViewPlayCard
+slot0.playCardClass = FightViewWaitingAreaVersion1
 
 function slot0.buildViews(slot0)
 	slot1 = ListScrollParam.New()
@@ -16,12 +19,12 @@ function slot0.buildViews(slot0)
 	slot1.cellSpaceV = 25.1
 	slot1.startSpace = 0
 	slot0.fightView = FightView.New()
-	slot0.fightViewHandCard = FightViewHandCard.New()
-	slot0.fightViewPlayCard = FightViewPlayCard.New()
+	slot0.fightViewHandCard = uv0.hanCardClass.New()
+	slot0.fightViewPlayCard = uv0.operationClass.New()
 	slot0.waitingArea = nil
 
 	if FightModel.instance:getVersion() and slot2 >= 1 then
-		slot0.waitingArea = FightViewWaitingAreaVersion1.New()
+		slot0.waitingArea = uv0.playCardClass.New()
 	else
 		slot0.waitingArea = FightViewWaitingArea.New()
 	end
@@ -52,7 +55,8 @@ function slot0.buildViews(slot0)
 		FightViewRougeMgr.New(),
 		FightViewAssistBoss.New(),
 		FightViewDissolveCard.New(),
-		FightViewASFDEnergy.New()
+		FightViewASFDEnergy.New(),
+		FightViewRedAndBlueArea.New()
 	}
 
 	table.insert(slot3, FightViewBossHpMgr.New())

@@ -105,7 +105,8 @@ function slot0.getRestMultiView(slot0)
 
 	return MultiView.New({
 		RoomCritterRestView.New(),
-		LuaListScrollView.New(RoomCritterFoodListModel.instance, slot1)
+		LuaListScrollView.New(RoomCritterFoodListModel.instance, slot1),
+		RoomCritterRestViewMapUI.New()
 	})
 end
 
@@ -153,6 +154,7 @@ end
 function slot0._overrideCloseFunc(slot0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
 		ViewMgr.instance:closeView(ViewName.RoomCritterPlaceView)
+		CritterController.instance:clearSelectedCritterSeatSlot()
 
 		return
 	end

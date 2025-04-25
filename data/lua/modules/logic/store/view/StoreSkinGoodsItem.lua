@@ -137,44 +137,173 @@ end
 
 function slot0.onUpdateMO(slot0, slot1)
 	slot0._mo = slot1
+	slot3 = not slot0:_isLinkageSkin() and slot0:_isNormalSkin()
+	slot4 = not slot2 and slot0:_isAdvanceSkin()
 	slot5 = not slot2 and slot0:_isUniqueSkin()
 	slot6 = uv0
-	slot0.skinCo = SkinConfig.instance:getSkinCo(string.splitToNumber(slot0._mo.config.product, "#")[2])
-	slot10 = HeroConfig.instance:getHeroCO(slot0.skinCo.characterId)
+	slot7 = slot0._mo.config.product
+	slot8 = slot0._mo.config.isAdvancedSkin or slot0._mo.config.skinLevel == 1
+
+	gohelper.setActive(slot0._goNormalSkin, slot0._mo.config.skinLevel == 0)
+	gohelper.setActive(slot0._goAdvanceSkin, slot0._mo.config.isAdvancedSkin or slot0._mo.config.skinLevel == 1)
+	gohelper.setActive(slot0._goUniqueSkin, slot0._mo.config.skinLevel == 2)
+
+	if slot0._mo.config.skinLevel == 2 then
+		slot0:clearSpine()
+		slot0:addEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, slot0._onDraggingBegin, slot0)
+		slot0:addEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, slot0._onDraggingEnd, slot0)
+		slot0:addEventCb(StoreController.instance, StoreEvent.DraggingSkinList, slot0._onDragging, slot0)
+		gohelper.setAsLastSibling(slot0.viewGO.transform.parent.gameObject)
+
+		slot11 = slot0._mo.config.bigImg
+
+		if not string.nilorempty(slot0._mo.config.spineParams) then
+			slot13 = string.split(slot12, "#")
+			slot15 = slot13[1]
+			slot16 = #slot13 > 1 and slot13[2]
+			slot17 = slot14 > 2 and string.splitToNumber(slot13[3], ",")
+			slot18 = slot14 > 3 and tonumber(slot13[4])
+			slot19 = slot14 > 4 and slot13[5]
+
+			if slot14 > 6 then
+				slot10 = slot13[7] or uv0
+			end
+
+			if slot0._skinSpine then
+				slot0._skinSpine:setResPath(slot15, slot0._onSkinSpineLoaded, slot0, true)
+			else
+				slot0._skinSpineGO = slot0._skinSpineGO or gohelper.create2d(slot0._goUniqueSkinsImage, "uniqueSkinSpine")
+				slot20 = slot0._skinSpineGO.transform
+
+				recthelper.setWidth(slot20, uv1[1])
+				transformhelper.setLocalPos(slot20, slot17[1], slot17[2], 0)
+				transformhelper.setLocalScale(slot20, slot18, slot18, slot18)
+
+				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
+
+				slot0._skinSpine:setResPath(slot15, slot0._onSkinSpineLoaded, slot0, true)
+
+				if not string.nilorempty(slot16) then
+					slot0._skinSpineGO2 = slot0._skinSpineGO2 or gohelper.create2d(slot0._goUniqueImageicon2, "uniqueSkinSpine2")
+					slot21 = slot0._skinSpineGO2.transform
+
+					recthelper.setWidth(slot21, uv1[1])
+					transformhelper.setLocalPos(slot21, slot17[1], slot17[2], 0)
+					transformhelper.setLocalScale(slot21, slot18, slot18, slot18)
+
+					slot0._skinSpine2 = GuiSpine.Create(slot0._skinSpineGO2, false)
+
+					slot0._skinSpine2:setResPath(slot16, slot0._onSkinSpine2Loaded, slot0, true)
+				end
+
+				transformhelper.setLocalPos(slot0._uniqueImageicon.transform, 0, 0, 0)
+
+				slot0._uniqueImageicon.transform.sizeDelta = Vector2.New(uv2[1], uv2[2])
+			end
+
+			gohelper.setActive(slot0._skinSpineGO, true)
+			gohelper.setActive(slot0._goUniqueSkinBubble, false)
+			gohelper.setActive(slot0._govx_iconbg, false)
+			gohelper.setActive(slot0._govx_bg, false)
+
+			if not string.nilorempty(slot19) then
+				slot0._uniqueImagebg:LoadImage(slot19)
+
+				slot0._uniqueImageicon.enabled = true
+
+				slot0._uniqueSingleImageicon:LoadImage(slot19)
+			else
+				gohelper.setActive(slot0._uniqueImagebg.gameObject, false)
+
+				slot0._uniqueImageicon.enabled = false
+			end
+		elseif string.find(slot11, "prefab") then
+			slot13 = string.split(slot11, "#")
+			slot15 = slot13[1]
+			slot16 = slot13[2]
+
+			if #slot13 > 3 then
+				slot10 = slot13[4] or slot10
+			end
+
+			if slot0._skinSpine then
+				slot0._skinSpine:setResPath(slot15, slot0._onSpineLoaded, slot0, true)
+			else
+				slot0._skinSpineGO = slot0._skinSpineGO or gohelper.create2d(slot0._goUniqueSkinsImage, "uniqueSkinSpine")
+
+				transformhelper.setLocalPos(slot0._skinSpineGO.transform, uv3[1], uv3[2], uv3[3])
+
+				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
+
+				slot0._skinSpine:setResPath(slot15, slot0._onSpineLoaded, slot0, true)
+			end
+
+			gohelper.setActive(slot0._skinSpineGO, true)
+
+			if not string.nilorempty(slot16) then
+				slot0._uniqueImagebg:LoadImage(slot16)
+			else
+				slot0._uniqueImagebg:LoadImage(uv4)
+			end
+
+			slot0._uniqueImageicon.enabled = true
+		else
+			slot0._uniqueImageicon.enabled = true
+
+			if not string.nilorempty(slot11) then
+				slot0._uniqueSingleImageicon:LoadImage(slot0._mo.config.bigImg)
+			else
+				slot0._uniqueSingleImageicon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+			end
+		end
+	else
+		slot0:clearSpine()
+
+		if string.nilorempty(slot0._mo.config.bigImg) == false then
+			(slot8 and slot0._advanceImageicon or slot0._simageicon):LoadImage(slot0._mo.config.bigImg)
+		else
+			slot11:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+		end
+	end
+
+	slot0._simagesign:LoadImage(slot10, slot0._loadedSignImage, slot0)
+
+	slot0.skinCo = SkinConfig.instance:getSkinCo(string.splitToNumber(slot7, "#")[2])
+	slot13 = HeroConfig.instance:getHeroCO(slot0.skinCo.characterId)
 
 	slot0:clearSpine()
-	gohelper.setActive(slot0._goNormalSkin, not slot0:_isLinkageSkin() and slot0:_isNormalSkin())
-	gohelper.setActive(slot0._goAdvanceSkin, not slot2 and slot0:_isAdvanceSkin())
+	gohelper.setActive(slot0._goNormalSkin, slot3)
+	gohelper.setActive(slot0._goAdvanceSkin, slot4)
 	gohelper.setActive(slot0._goUniqueSkin, slot5)
 	gohelper.setActive(slot0._goLinkage, slot2)
 
 	if slot5 then
 		slot0:_onUpdateMO_uniqueSkin()
 	else
-		slot11 = nil
+		slot14 = nil
 
 		if slot2 then
-			slot11 = slot0._linkage_simageicon
+			slot14 = slot0._linkage_simageicon
 
 			gohelper.setActive(slot0._goLinkageBgA, slot0:_isAdvanceSkin())
 			gohelper.setActive(slot0._goLinkageBgG, slot0:_isNormalSkin())
 			gohelper.setActive(slot0._goLinkageLetterA, slot0:_isAdvanceSkin())
 			gohelper.setActive(slot0._goLinkageLetterG, slot0:_isNormalSkin())
 		else
-			slot11 = (not slot4 or slot0._advanceImageicon) and slot0._simageicon
+			slot14 = (not slot4 or slot0._advanceImageicon) and slot0._simageicon
 		end
 
 		if string.nilorempty(slot0._mo.config.bigImg) == false then
-			slot11:LoadImage(slot0._mo.config.bigImg)
+			slot14:LoadImage(slot0._mo.config.bigImg)
 		else
-			slot11:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+			slot14:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 		end
 	end
 
-	slot0._simagesign:LoadImage(slot6, slot0._loadedSignImage, slot0)
+	slot0._simagesign:LoadImage(slot10, slot0._loadedSignImage, slot0)
 
 	slot0._txtskinname.text = slot0.skinCo.characterSkin
-	slot0._txtname.text = slot10.name
+	slot0._txtname.text = slot13.name
 
 	if slot1:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(slot1) then
 		gohelper.setActive(slot0._goowned, true)
@@ -184,24 +313,24 @@ function slot0.onUpdateMO(slot0, slot1)
 		gohelper.setActive(slot0._goowned, false)
 		gohelper.setActive(slot0._goprice, true)
 
-		slot12 = 0
+		slot15 = 0
 
 		if not string.nilorempty(slot0._mo.config.deductionItem) then
-			slot13 = GameUtil.splitString2(slot0._mo.config.deductionItem, true)
-			slot12 = ItemModel.instance:getItemCount(slot13[1][2])
-			slot0._txtdeduction.text = -slot13[2][1]
+			slot16 = GameUtil.splitString2(slot0._mo.config.deductionItem, true)
+			slot15 = ItemModel.instance:getItemCount(slot16[1][2])
+			slot0._txtdeduction.text = -slot16[2][1]
 		end
 
-		gohelper.setActive(slot0._godeduction, slot12 > 0)
+		gohelper.setActive(slot0._godeduction, slot15 > 0)
 	end
 
-	slot12 = string.splitToNumber(slot0._mo.config.cost, "#")
-	slot0._costType = slot12[1]
-	slot0._costId = slot12[2]
-	slot0._costQuantity = slot12[3]
-	slot13, slot14 = ItemModel.instance:getItemConfigAndIcon(slot0._costType, slot0._costId)
+	slot15 = string.splitToNumber(slot0._mo.config.cost, "#")
+	slot0._costType = slot15[1]
+	slot0._costId = slot15[2]
+	slot0._costQuantity = slot15[3]
+	slot16, slot17 = ItemModel.instance:getItemConfigAndIcon(slot0._costType, slot0._costId)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._simagematerial, string.format("%s_1", slot13.icon), true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._simagematerial, string.format("%s_1", slot16.icon), true)
 
 	slot0._txtmaterialNum.text = slot0._costQuantity
 
@@ -213,13 +342,13 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	gohelper.setActive(slot0._gonewtag, slot1:needShowNew())
 
-	slot18 = slot1:getOfflineTime()
+	slot21 = slot1:getOfflineTime()
 
-	gohelper.setActive(slot0._goremaintime, slot18 > 0 and slot11 == false)
+	gohelper.setActive(slot0._goremaintime, slot21 > 0 and slot14 == false)
 
-	if slot18 - ServerTime.now() > 3600 then
-		slot20, slot21 = TimeUtil.secondToRoughTime(slot19)
-		slot0._txtremaintime.text = formatLuaLang("remain", slot20 .. slot21)
+	if slot21 - ServerTime.now() > 3600 then
+		slot23, slot24 = TimeUtil.secondToRoughTime(slot22)
+		slot0._txtremaintime.text = formatLuaLang("remain", slot23 .. slot24)
 	else
 		slot0._txtremaintime.text = luaLang("not_enough_one_hour")
 	end
@@ -319,6 +448,18 @@ function slot0.refreshSkinTips(slot0)
 end
 
 function slot0.clearSpine(slot0)
+	if slot0._skinSpine then
+		slot0._skinSpine:doClear()
+
+		slot0._skinSpine = nil
+	end
+
+	if slot0._skinSpine2 then
+		slot0._skinSpine2:doClear()
+
+		slot0._skinSpine2 = nil
+	end
+
 	GameUtil.doClearMember(slot0, "_skinSpine")
 	GameUtil.doClearMember(slot0, "_skinSpine2")
 end

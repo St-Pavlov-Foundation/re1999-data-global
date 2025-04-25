@@ -126,7 +126,7 @@ function slot0._btnsettingOnClick(slot0)
 end
 
 function slot0._btnzhoubianOnClick(slot0)
-	if GameUtil.openDeepLink(CommonConfig.instance:getConstStr(ConstEnum.MallWebUrl), CommonConfig.instance:getConstStr(ConstEnum.MallDeepLink)) then
+	if GameUtil.openDeepLink(SettingsModel.instance:extractByRegion(CommonConfig.instance:getConstStr(ConstEnum.MallWebUrl)), SettingsModel.instance:extractByRegion(CommonConfig.instance:getConstStr(ConstEnum.MallDeepLink))) then
 		return
 	end
 
@@ -316,10 +316,20 @@ end
 
 function slot0._refreshRedDot(slot0)
 	RedDotController.instance:addRedDot(slot0._gosocialreddot, RedDotEnum.DotNode.FriendBtn)
-	RedDotController.instance:addRedDot(slot0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn)
+	RedDotController.instance:addRedDot(slot0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn, nil, slot0._checkSignInRed, slot0)
 	RedDotController.instance:addRedDot(slot0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
 
 	slot0.noticeRedDot = RedDotController.instance:addNotEventRedDot(slot0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
+end
+
+function slot0._checkSignInRed(slot0, slot1)
+	slot1:defaultRefreshDot()
+
+	if not slot1.show then
+		slot1.show = LifeCircleController.instance:isShowRed()
+
+		slot1:showRedDot(RedDotEnum.Style.Normal)
+	end
 end
 
 function slot0._onRefreshNoticeRedDot(slot0)

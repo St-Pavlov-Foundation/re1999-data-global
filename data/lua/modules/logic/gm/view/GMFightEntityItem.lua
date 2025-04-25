@@ -47,6 +47,8 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	if slot0._mo.id == FightEntityScene.MySideId then
 		slot0._txtName.text = "维尔汀"
+	elseif slot0._mo.id == FightEntityScene.EnemySideId then
+		slot0._txtName.text = "敌方维尔汀"
 	else
 		slot0._txtName.text = string.format("%s--%s", slot10, slot0._mo:getEntityName())
 	end

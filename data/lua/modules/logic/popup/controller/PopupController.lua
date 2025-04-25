@@ -94,7 +94,11 @@ function slot0._showPopupView(slot0)
 	slot2 = slot0._curPopup[3]
 
 	if slot0._curPopup[2] == ViewName.MessageBoxView then
-		GameFacade.showMessageBox(slot2.messageBoxId, slot2.msgBoxType, slot2.yesCallback, slot2.noCallback, slot2.openCallback, slot2.yesCallbackObj, slot2.noCallbackObj, slot2.openCallbackObj)
+		if type(slot2.extra) == "table" then
+			GameFacade.showMessageBox(slot2.messageBoxId, slot2.msgBoxType, slot2.yesCallback, slot2.noCallback, slot2.openCallback, slot2.yesCallbackObj, slot2.noCallbackObj, slot2.openCallbackObj, unpack(slot2.extra))
+		else
+			GameFacade.showMessageBox(slot2.messageBoxId, slot2.msgBoxType, slot2.yesCallback, slot2.noCallback, slot2.openCallback, slot2.yesCallbackObj, slot2.noCallbackObj, slot2.openCallbackObj)
+		end
 	else
 		ViewMgr.instance:openView(slot1, slot2)
 	end

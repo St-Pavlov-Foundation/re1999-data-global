@@ -15,7 +15,7 @@ end
 function slot0.initClass(slot0)
 end
 
-function slot0.registClass(slot0, slot1)
+function slot0.newClass(slot0, slot1)
 	table.insert(slot0._internalClass, slot1.New(slot0._entity))
 end
 

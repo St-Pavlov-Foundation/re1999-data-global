@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "life": 10000,
+    "attack": 8000,
+    "defense": 8000,
+    "mdefense": 8000,
+    "technic": 8000,
+    "level": 95,
+    "sub": 10000,
+    "multiHp": 1
+  }
+]

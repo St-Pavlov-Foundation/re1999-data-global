@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "type": "Normal",
+    "desc": "language_10069241",
+    "descParam": "curValue"
+  },
+  {
+    "id": 2,
+    "type": "Normal",
+    "desc": "language_10069242",
+    "descParam": ""
+  }
+]

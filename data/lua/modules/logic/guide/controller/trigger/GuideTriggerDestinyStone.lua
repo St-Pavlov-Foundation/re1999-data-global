@@ -18,26 +18,26 @@ function slot0.assertGuideSatisfy(slot0, slot1, slot2)
 end
 
 function slot0._characterLevelUp(slot0)
-	if slot0.heroMo and slot0.heroMo:isCanOpenDestinySystem() then
+	if slot0.heroMo and slot0.heroMo:isOwnHero() and slot0.heroMo:isCanOpenDestinySystem() then
 		slot0:checkStartGuide(23301)
 	end
 end
 
 function slot0._onOpenView(slot0, slot1, slot2)
 	if slot1 == ViewName.CharacterView then
-		if slot2 and slot3:isCanOpenDestinySystem() then
+		if slot2 and slot3:isOwnHero() and slot3:isCanOpenDestinySystem() then
 			slot0:checkStartGuide(23301)
 		end
 
 		slot0.heroMo = slot3
 	end
 
-	if slot1 == ViewName.CharacterDestinySlotView then
-		if slot2.heroMo and slot3.destinyStoneMo:isUnlockSlot() then
+	if slot1 == ViewName.CharacterDestinySlotView and slot2.heroMo and slot3:isOwnHero() then
+		if slot3.destinyStoneMo:isUnlockSlot() then
 			slot0:checkStartGuide(23302)
 		end
 
-		if slot3 and slot3.destinyStoneMo.curUseStoneId ~= 0 then
+		if slot3.destinyStoneMo.curUseStoneId ~= 0 then
 			slot0:checkStartGuide(23303)
 		end
 	end

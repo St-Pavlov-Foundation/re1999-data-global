@@ -7,14 +7,9 @@ function slot0.onInitView(slot0)
 	slot0._scrollitem = gohelper.findChild(slot0.viewGO, "#scroll")
 	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll/itemcontent")
 	slot0._goeff = gohelper.findChild(slot0.viewGO, "#go_eff")
-	slot0._govideo = gohelper.findChild(slot0.viewGO, "#go_video")
 	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btnOK")
 	slot0._btnBuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btnBuy")
-	slot0._contentGrid = slot0._gocontent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	slot0._videoPlayer, slot0._displauUGUI = AvProMgr.instance:getVideoPlayer(slot0._govideo)
-
-	slot0._videoPlayer:Play(slot0._displauUGUI, "videos/commonprop.mp4", true, nil, )
-
+	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "title/level/#txt_lv")
 	slot0._scrollContent2 = gohelper.findChild(slot0.viewGO, "#scroll2/Viewport/#go_rewards")
 	slot0._item = gohelper.findChild(slot0.viewGO, "#scroll2/Viewport/#go_rewards/#go_Items")
 end
@@ -52,7 +47,6 @@ end
 function slot0.onOpen(slot0)
 	slot0._openDt = UnityEngine.Time.time
 	CommonPropListItem.hasOpen = false
-	slot0._contentGrid.enabled = true
 
 	slot0:_setPropItems()
 	NavigateMgr.instance:addEscape(ViewName.BpPropView2, slot0._onClickBG, slot0)
@@ -63,18 +57,88 @@ function slot0.onOpen(slot0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 	end
 
+	slot1 = BpModel.instance:getBpLv()
+	slot0._txtlv.text = slot1
+
 	gohelper.setActive(slot0._item, false)
-	gohelper.CreateObjList(slot0, slot0._createItem, GameUtil.splitString2(BpConfig.instance:getBpCO(BpModel.instance.id).showBonus, true), slot0._scrollContent2, slot0._item)
+
+	slot3 = {}
+
+	for slot7 = 1, slot1 do
+		slot0:_calcBonus({}, slot3, BpConfig.instance:getBonusCO(BpModel.instance.id, slot7).payBonus)
+	end
+
+	slot0:_sortList(slot3)
+	gohelper.CreateObjList(slot0, slot0._createItem, slot3, slot0._scrollContent2, slot0._item)
+end
+
+function slot0._sortList(slot0, slot1)
+	table.sort(slot1, function (slot0, slot1)
+		if uv0:getIsSkin(slot0) ~= uv0:getIsSkin(slot1) then
+			return uv0:getIsSkin(slot0)
+		elseif uv0:getIsSummon(slot0) ~= uv0:getIsSummon(slot1) then
+			return uv0:getIsSummon(slot0)
+		elseif uv0:getIsEquip(slot0) ~= uv0:getIsEquip(slot1) then
+			return uv0:getIsEquip(slot0)
+		elseif CommonPropListModel.instance:_getQuality(slot0) ~= CommonPropListModel.instance:_getQuality(slot1) then
+			return CommonPropListModel.instance:_getQuality(slot1) < CommonPropListModel.instance:_getQuality(slot0)
+		elseif slot0.materilType ~= slot1.materilType then
+			return slot1.materilType < slot0.materilType
+		elseif slot0.materilType == MaterialEnum.MaterialType.Item and slot1.materilType == MaterialEnum.MaterialType.Item and CommonPropListModel.instance:_getSubType(slot0) ~= CommonPropListModel.instance:_getSubType(slot1) then
+			return CommonPropListModel.instance:_getSubType(slot0) < CommonPropListModel.instance:_getSubType(slot1)
+		elseif slot0.materilId ~= slot1.materilId then
+			return slot1.materilId < slot0.materilId
+		end
+	end)
+end
+
+function slot0.getIsSkin(slot0, slot1)
+	return slot1.materilType == MaterialEnum.MaterialType.HeroSkin
+end
+
+function slot0.getIsEquip(slot0, slot1)
+	return slot1.materilType == MaterialEnum.MaterialType.Equip and slot1.materilId == 1000
+end
+
+function slot0.getIsSummon(slot0, slot1)
+	return slot1.materilType == MaterialEnum.MaterialType.Item and slot1.materilId == 140001
+end
+
+function slot0._calcBonus(slot0, slot1, slot2, slot3)
+	slot7 = "|"
+
+	for slot7, slot8 in pairs(string.split(slot3, slot7)) do
+		slot9 = string.splitToNumber(slot8, "#")
+		slot11 = slot9[3]
+
+		if not slot1[slot9[2]] then
+			slot1[slot10] = {
+				materilType = slot9[1],
+				materilId = slot9[2],
+				quantity = slot9[3],
+				[4] = slot9[4],
+				[5] = slot9[5]
+			}
+
+			table.insert(slot2, slot1[slot10])
+		else
+			slot1[slot10].quantity = slot1[slot10].quantity + slot11
+		end
+	end
 end
 
 function slot0._createItem(slot0, slot1, slot2, slot3)
 	slot4 = gohelper.findChild(slot1, "#go_Limit")
 	slot6 = gohelper.findChild(slot1, "#go_new")
-	slot9 = slot2[3]
+	slot9 = slot2.quantity
 
-	IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot1, "#go_item")):setMOValue(slot2[1], slot2[2], slot9, nil, true)
+	IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot1, "#go_item")):setMOValue(slot2.materilType, slot2.materilId, slot9, nil, true)
 
 	slot11 = slot9 and slot9 ~= 0
+
+	if slot0:getIsSkin(slot2) then
+		slot11 = false
+	end
 
 	slot10:isShowEquipAndItemCount(slot11)
 
@@ -109,12 +173,6 @@ function slot0._setPropItems(slot0)
 			uv0:setCountFontSize(43)
 		end
 	end
-
-	recthelper.setHeight(slot0._gocontent.transform, math.ceil(#slot1 / 6) * 182)
-
-	if #slot1 <= 6 then
-		transformhelper.setLocalPosXY(slot0._scrollitem.transform, 0, 169)
-	end
 end
 
 function slot0.openChargeView(slot0)
@@ -133,12 +191,6 @@ function slot0.onClose(slot0)
 end
 
 function slot0.onDestroyView(slot0)
-	if slot0._videoPlayer then
-		slot0._videoPlayer:Stop()
-		slot0._videoPlayer:Clear()
-
-		slot0._videoPlayer = nil
-	end
 end
 
 return slot0

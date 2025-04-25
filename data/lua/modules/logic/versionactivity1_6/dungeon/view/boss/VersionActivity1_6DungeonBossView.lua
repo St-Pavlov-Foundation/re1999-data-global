@@ -163,7 +163,7 @@ function slot0._refreshBossLvArea(slot0)
 
 	gohelper.setActive(slot0._goBtnNextLv, true)
 	gohelper.setActive(slot0._goBtnPreLv, true)
-	gohelper.setActive(slot0._goBtnNextLvLock, slot0._curMaxOrder < slot0._curBossEpisodeOrder)
+	gohelper.setActive(slot0._goBtnNextLvLock, false)
 
 	slot3 = slot0._curBossEpisodeOrder == uv1
 
@@ -306,9 +306,11 @@ function slot0._onClicClosekRewardBtn(slot0)
 end
 
 function slot0._btnInfoOnClick(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6BossInfoView, {
-		bossEpisodeId = slot0._curBossCfg.id
-	})
+	slot1 = slot0._curBossCfg and DungeonConfig.instance:getEpisodeCO(slot0._curBossCfg.episodeId)
+
+	if slot1 and slot1.battleId then
+		EnemyInfoController.instance:openEnemyInfoViewByBattleId(slot2)
+	end
 end
 
 function slot0._btnScoreDetailOnClick(slot0)

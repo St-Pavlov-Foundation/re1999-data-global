@@ -12,6 +12,11 @@ function slot0.initViewContent(slot0)
 	end
 
 	GMSubViewBase.initViewContent(slot0)
+	slot0:addLabel("L0", "2.5春节活动")
+
+	slot0._act186TalkId = slot0:addInputText("L0", nil, "对话id")
+
+	slot0:addButton("L0", "播放对话", slot0._playAct186Talk, slot0)
 	slot0:addTitleSplitLine("活动状态")
 
 	slot0._dropActivity = slot0:addDropDown("L1", "活动ID：", nil, slot0._onActivityDropValueChange, slot0)
@@ -86,6 +91,11 @@ end
 
 function slot0._onAct178ToggleChange2(slot0)
 	PinballModel.instance._gmkey = slot0._act178Toggle2.isOn
+end
+
+function slot0._playAct186Talk(slot0)
+	Activity186Controller.instance:dispatchEvent(Activity186Event.PlayTalk, tonumber(slot0._act186TalkId:GetText()))
+	slot0:closeThis()
 end
 
 function slot0._enterAct178Game(slot0)

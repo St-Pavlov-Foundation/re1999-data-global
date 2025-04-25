@@ -133,5 +133,20 @@
     "storyId": 0,
     "iconArea": 0,
     "effect": "v1a9_caidai"
+  },
+  {
+    "id": 251001,
+    "name": "language_10068757",
+    "nameen": "Fortune Knot Lantern",
+    "icon": "v2a5_antique_icon_1",
+    "gifticon": "v2a5_antique_icon_1",
+    "sign": "501205",
+    "title": "language_10068757",
+    "titleen": "Fortune Knot Lantern",
+    "desc": "language_10068758",
+    "sources": "",
+    "storyId": 800002,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

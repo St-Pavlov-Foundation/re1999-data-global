@@ -5,6 +5,9 @@ slot0 = class("EnemyInfoTipView", BaseViewExtended)
 function slot0.onInitView(slot0)
 	slot0._gotipconatiner = gohelper.findChild(slot0.viewGO, "#go_tip_container")
 	slot0._goruletip = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_ruletip")
+
+	gohelper.setActive(slot0._goruletip, false)
+
 	slot0._gobufftip = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_bufftip")
 
 	if slot0._editableInitView then
@@ -41,13 +44,11 @@ function slot0.onShowTip(slot0, slot1)
 
 	slot0.showTip = slot1
 
-	gohelper.setActive(slot0._goruletip, slot0.showTip == EnemyInfoEnum.Tip.RuleTip)
 	gohelper.setActive(slot0._gobufftip, slot0.showTip == EnemyInfoEnum.Tip.BuffTip)
 end
 
 function slot0.hideAllTip(slot0)
 	gohelper.setActive(slot0._gotipconatiner, false)
-	gohelper.setActive(slot0._goruletip, false)
 	gohelper.setActive(slot0._gobufftip, false)
 end
 

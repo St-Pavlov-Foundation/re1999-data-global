@@ -4,8 +4,6 @@ slot0 = class("CommonBuffTipView", BaseView)
 
 function slot0._refreshScrollHeight(slot0)
 	recthelper.setHeight(slot0.rectTrScrollTip, math.min(slot0.maxHeight, recthelper.getHeight(slot0.rectTrContent)))
-
-	slot0.scrollTip.verticalNormalizedPosition = 0
 end
 
 function slot0.onInitView(slot0)
@@ -88,6 +86,10 @@ end
 
 function slot0.calculateMaxHeight(slot0)
 	slot0.maxHeight = recthelper.getHeight(slot0.rectTrViewGo) / 2 + recthelper.getAnchorY(slot0.rectTrScrollTip) - CommonBuffTipEnum.BottomMargin
+
+	if slot0.rectTrScrollTip.pivot.y == 0 then
+		slot0.maxHeight = slot1 / 2 - slot2 - CommonBuffTipEnum.BottomMargin
+	end
 end
 
 function slot0.addBuffTip(slot0, slot1)

@@ -57,7 +57,7 @@ function slot0._btnTabClick(slot0, slot1)
 end
 
 function slot0._onViewChange(slot0, slot1)
-	if slot1 ~= ViewName.RoomManufactureAddPopView and slot1 ~= ViewName.RoomCritterListView then
+	if slot1 ~= ViewName.RoomManufactureAddPopView and slot1 ~= ViewName.RoomCritterListView and slot1 ~= ViewName.RoomManufactureBuildingDetailView then
 		return
 	end
 
@@ -72,7 +72,7 @@ end
 function slot0._delayCheckLeft(slot0)
 	slot1 = false
 
-	if ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) or ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
+	if ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) or (ViewMgr.instance:isOpen(ViewName.RoomCritterListView) or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingDetailView)) then
 		slot1 = true
 	end
 

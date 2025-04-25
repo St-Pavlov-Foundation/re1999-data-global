@@ -33,7 +33,8 @@ end
 
 function slot0.onInitView(slot0)
 	slot0._clothSkillGO = gohelper.findChild(slot0.viewGO, "root/heroSkill")
-	slot0._handCardGO = gohelper.findChild(slot0.viewGO, "root/handcards/handcards")
+	slot0._handCardGO = gohelper.findChild(slot0.viewGO, "root/handcards")
+	slot0._handCardInnerGO = gohelper.findChild(slot0.viewGO, "root/handcards/handcards")
 	slot0._playCardGO = gohelper.findChild(slot0.viewGO, "root/playcards")
 	slot0._enemyRoundGO = gohelper.findChild(slot0.viewGO, "root/enemyRound")
 	slot0._enemyRoundTextGO = gohelper.findChild(slot0.viewGO, "root/enemyRoundText")
@@ -119,7 +120,7 @@ end
 
 function slot0._tweenHandCardContainerScale(slot0)
 	slot2 = FightCardModel.instance:getHandCardContainerScale(slot0._clothSkillExpand)
-	slot0._scaleTweenId = ZProj.TweenHelper.DOScale(slot0._handCardGO.transform.parent, slot2, slot2, slot2, FightWorkEffectDistributeCard.getHandCardScaleTime())
+	slot0._scaleTweenId = ZProj.TweenHelper.DOScale(slot0._handCardGO.transform, slot2, slot2, slot2, FightWorkEffectDistributeCard.getHandCardScaleTime())
 end
 
 function slot0._onCancelVisibleViewScaleTween(slot0)
@@ -155,7 +156,7 @@ function slot0._updateUI(slot0)
 	gohelper.setActive(slot0._enemyRoundGO, uv3 and GMFightShowState.bottomEnemyRound)
 	gohelper.setActive(slot0._enemyRoundTextGO, uv3 and GMFightShowState.bottomEnemyRound)
 	gohelper.setActive(slot0._waitingAreaGO, uv4 and GMFightShowState.cards)
-	slot0:setActiveCanvasGroup(slot0._handCardGO, GMFightShowState.cards)
+	slot0:setActiveCanvasGroup(slot0._handCardInnerGO, GMFightShowState.cards)
 	slot0:setActiveCanvasGroup(slot0._playCardGO, GMFightShowState.cards)
 	slot0:setActiveCanvasGroup(slot0._waitingAreaGO, GMFightShowState.cards)
 end

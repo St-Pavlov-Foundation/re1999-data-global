@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "identity": "CardLevelChange",
+    "desc": "剩余无代价使用次数",
+    "defaultValue": "7",
+    "valueRange": "7#-99",
+    "takeType1": "skillDeduct",
+    "takeTypeParam1": "6250001#1",
+    "takeType2": "skillDeduct",
+    "takeTypeParam2": "6250002#1",
+    "takeType3": "skillDeduct",
+    "takeTypeParam3": "6250003#1"
+  },
+  {
+    "id": 2,
+    "identity": "CardLevelChange",
+    "desc": "可使用次数",
+    "defaultValue": "10",
+    "valueRange": "10#0",
+    "takeType1": "skillDeduct",
+    "takeTypeParam1": "6250001#1",
+    "takeType2": "skillDeduct",
+    "takeTypeParam2": "6250002#1",
+    "takeType3": "",
+    "takeTypeParam3": ""
+  }
+]

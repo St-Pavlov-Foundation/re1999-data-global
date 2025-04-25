@@ -13,6 +13,11 @@ function slot0.init(slot0, slot1)
 	slot0._gonull = gohelper.findChild(slot1, "#go_null")
 	slot0._anim = slot1:GetComponent(typeof(UnityEngine.Animator))
 	slot0._simagebg = gohelper.findChildSingleImage(slot1, "#simage_bg")
+	slot0._gobossItem = gohelper.findChild(slot1, "#go_info/#go_bossitem")
+	slot0._gobossEmpty = gohelper.findChild(slot1, "#go_info/#go_bossitem/go_empty")
+	slot0._gobossContainer = gohelper.findChild(slot1, "#go_info/#go_bossitem/go_container")
+	slot0._simageBossIcon = gohelper.findChildSingleImage(slot1, "#go_info/#go_bossitem/go_container/simage_bossicon")
+	slot0._imageBossCareer = gohelper.findChildImage(slot1, "#go_info/#go_bossitem/go_container/image_career")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -101,13 +106,46 @@ function slot0._btnuseOnClick(slot0)
 		end
 	end
 
-	slot8:initWithBattle({
+	slot10 = {
 		groupId = slot8.id,
 		name = slot8.name,
 		clothId = slot9,
 		heroList = slot2
-	}, slot5, slot4.roleNum, slot4.playerMax, true, slot6)
+	}
+
+	if TowerModel.instance:isInTowerBattle() then
+		slot0:onTowerUse(slot10, slot8, slot5, slot4.roleNum, slot4.playerMax, true, slot6)
+
+		return
+	end
+
+	slot8:initWithBattle(slot10, slot5, slot4.roleNum, slot4.playerMax, true, slot6)
 	HeroSingleGroupModel.instance:setSingleGroup(slot8, true)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
+	HeroGroupModel.instance:saveCurGroupData()
+	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
+end
+
+function slot0.onTowerUse(slot0, slot1, slot2, ...)
+	if TowerModel.instance:getRecordFightParam() and slot3.isHeroGroupLock then
+		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
+		ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
+
+		return
+	end
+
+	if slot0._mo.assistBossId and slot4 > 0 and slot3 and not slot3.isHeroGroupLock and not TowerModel.instance:isBossBan(slot4) and not TowerModel.instance:isLimitTowerBossBan(slot3.towerType, slot3.towerId, slot4) and TowerAssistBossModel.instance:getById(slot4) and TowerController.instance:isBossTowerOpen() then
+		slot1.assistBossId = slot4
+	end
+
+	for slot8, slot9 in ipairs(slot1.heroList) do
+		if HeroModel.instance:getById(slot9) and TowerModel.instance:isHeroBan(slot10.heroId) then
+			slot1.heroList[slot8] = tostring(0)
+		end
+	end
+
+	slot2:initWithBattle(slot1, ...)
+	HeroSingleGroupModel.instance:setSingleGroup(slot2, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
@@ -147,6 +185,8 @@ function slot0.onUpdateMO(slot0, slot1)
 	slot0:_refreshHeroItem()
 
 	slot0._txtnum.text = GameUtil.getEnglishOrderNumber(slot0._index)
+
+	slot0:refreshTowerBossUI()
 end
 
 function slot0._refreshHeroItem(slot0)
@@ -201,6 +241,25 @@ function slot0._refreshHeroItem(slot0)
 	end
 end
 
+function slot0.refreshTowerBossUI(slot0)
+	slot1 = slot0._mo.cloth and slot0._mo.cloth ~= 0 and lua_cloth.configDict[slot0._mo.cloth]
+	slot2 = slot1 ~= nil
+	slot3 = TowerModel.instance:isInTowerBattle()
+	slot5 = slot0._mo.assistBossId and slot4 > 0
+
+	gohelper.setActive(slot0._simagecloth.gameObject, slot1 and not slot3)
+	gohelper.setActive(slot0._gobossItem, slot3)
+	gohelper.setActive(slot0._gobossEmpty, slot3 and not slot5)
+	gohelper.setActive(slot0._gobossContainer, slot3 and slot5)
+
+	if slot3 and slot5 then
+		slot6 = TowerConfig.instance:getAssistBossConfig(slot4)
+
+		UISpriteSetMgr.instance:setCommonSprite(slot0._imageBossCareer, string.format("lssx_%s", slot6.career))
+		slot0._simageBossIcon:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(slot6.skinId) and slot7.headIcon))
+	end
+end
+
 function slot0.getShowLevelText(slot0, slot1)
 	return "<size=12>Lv.</size>" .. tostring(slot1)
 end
@@ -212,6 +271,7 @@ end
 function slot0.onDestroy(slot0)
 	slot0._simagecloth:UnLoadImage()
 	slot0._simagebg:UnLoadImage()
+	slot0._simageBossIcon:UnLoadImage()
 
 	for slot4, slot5 in ipairs(slot0._heroItemList) do
 		slot5.simageheroicon:UnLoadImage()

@@ -11,23 +11,26 @@ function slot0.reInit(slot0)
 end
 
 function slot0._buildMOList(slot0)
-	slot1 = {}
-
-	for slot5 = 1, ModuleEnum.MaxHeroCountInGroup do
-		table.insert(slot1, HeroSingleGroupMO.New())
-	end
-
-	slot0:setList(slot1)
+	slot0:setMaxHeroCount()
 end
 
 function slot0.isTemp(slot0)
 	return slot0.temp
 end
 
-function slot0.setSingleGroup(slot0, slot1, slot2)
-	slot3 = slot0:getList()
+function slot0.setMaxHeroCount(slot0, slot1)
+	slot2 = {}
 
-	for slot7 = 1, ModuleEnum.MaxHeroCountInGroup do
+	for slot6 = 1, slot1 or ModuleEnum.MaxHeroCountInGroup do
+		table.insert(slot2, HeroSingleGroupMO.New())
+	end
+
+	slot0:clear()
+	slot0:setList(slot2)
+end
+
+function slot0.setSingleGroup(slot0, slot1, slot2)
+	for slot7 = 1, #slot0:getList() do
 		slot3[slot7]:init(slot7, slot1 and slot1.heroList[slot7])
 	end
 

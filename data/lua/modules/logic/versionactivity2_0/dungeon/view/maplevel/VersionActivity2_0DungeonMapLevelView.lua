@@ -553,6 +553,7 @@ function slot0.refreshReward(slot0)
 		slot2 = #slot1
 	end
 
+	tabletool.addValues(slot1, DungeonModel.instance:getEpisodeReward(slot0.showEpisodeCo.id))
 	tabletool.addValues(slot1, DungeonModel.instance:getEpisodeRewardDisplayList(slot0.showEpisodeCo.id))
 	gohelper.setActive(slot0._gorewards, #slot1 > 0)
 	gohelper.setActive(slot0._gonorewards, slot4 == 0)
@@ -601,13 +602,19 @@ function slot0.refreshReward(slot0)
 		else
 			gohelper.setActive(slot7.gonormal, true)
 
-			slot7.txtnormal.text = luaLang("dungeon_prob_flag" .. slot6[3])
+			slot16 = slot6[3]
+			slot15 = true
 
-			if #slot6 >= 4 then
+			if slot6.tagType then
+				slot16 = slot6.tagType
+				slot15 = slot14 ~= 0
+			elseif #slot6 >= 4 then
 				slot14 = slot6[4]
 			else
 				slot15 = false
 			end
+
+			slot7.txtnormal.text = luaLang("dungeon_prob_flag" .. slot16)
 		end
 
 		slot7.iconItem:setMOValue(slot6[1], slot6[2], slot14, nil, true)

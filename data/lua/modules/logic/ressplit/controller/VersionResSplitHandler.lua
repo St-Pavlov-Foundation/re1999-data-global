@@ -112,18 +112,22 @@ function slot1._generateResSplitCfg(slot0)
 			slot14:addResSplitInfo(ResSplitEnum.Path, uv1.SingleFile, slot26)
 		end
 
-		for slot26, slot27 in pairs(slot14:getAllResDict()) do
-			for slot31, slot32 in pairs(slot27) do
-				if slot5:checkResSplitInfo(slot26, slot31) then
-					slot14:deleteResSplitInfo(slot26, nil, slot31)
+		for slot26, slot27 in ipairs(slot13.videoPath or {}) do
+			slot14:addResSplitInfo(ResSplitEnum.Video, uv1.SingleFile, slot27)
+		end
+
+		for slot27, slot28 in pairs(slot14:getAllResDict()) do
+			for slot32, slot33 in pairs(slot28) do
+				if slot5:checkResSplitInfo(slot27, slot32) then
+					slot14:deleteResSplitInfo(slot27, nil, slot32)
 				end
 			end
 		end
 
-		for slot27, slot28 in pairs(slot14:getAllResTypeDict()) do
-			for slot32, slot33 in pairs(slot28) do
-				if slot5:checkResTypeSplitInfo(slot27, slot32) then
-					slot14:deleteResSplitInfo(nil, slot27, slot32)
+		for slot28, slot29 in pairs(slot14:getAllResTypeDict()) do
+			for slot33, slot34 in pairs(slot29) do
+				if slot5:checkResTypeSplitInfo(slot28, slot33) then
+					slot14:deleteResSplitInfo(nil, slot28, slot33)
 				end
 			end
 		end
@@ -168,14 +172,9 @@ function slot1._mergeSplitResult(slot0)
 		end
 	end
 
-	slot3 = io.open(ResSplitEnum.SingleBgAbCfgPath, "r")
-
-	slot3:close()
-
-	for slot10, slot11 in pairs(slot2) do
-		if slot11.pathList then
-			slot0:_checkSingleBgAb(slot11.pathList, cjson.decode(string.gsub(slot3:read("*a"), "\\/", "/")))
-			slot0:_checkResWhiteList(slot11.pathList, slot0:_getResWhiteListDict())
+	for slot7, slot8 in pairs(slot2) do
+		if slot8.pathList then
+			slot0:_checkResWhiteList(slot8.pathList, slot0:_getResWhiteListDict())
 		end
 	end
 

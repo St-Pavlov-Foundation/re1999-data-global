@@ -137,6 +137,14 @@ function slot0.selectFinishEvent(slot0, slot1)
 	end
 end
 
+function slot0.getEvents(slot0, slot1)
+	for slot5, slot6 in ipairs(slot0.events) do
+		if slot6.eventId == slot1 then
+			return slot6
+		end
+	end
+end
+
 function slot0.getEventOptions(slot0, slot1)
 	for slot5, slot6 in ipairs(slot0.events) do
 		if slot6.eventId == slot1 then

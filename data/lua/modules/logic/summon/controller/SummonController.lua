@@ -20,6 +20,8 @@ function slot0.onInit(slot0)
 end
 
 function slot0.reInit(slot0)
+	GameUtil.onDestroyViewMember(slot0, "_simpleFlow")
+
 	slot0.summonViewParam = nil
 	slot0._lastViewPoolId = 0
 	slot0._viewTime = nil
@@ -771,6 +773,14 @@ function slot0.trackSummonClientEvent(slot0, slot1, slot2)
 
 		uv1.instance:_trackSummonClientEvent(slot3, slot4, slot5)
 	end
+end
+
+function slot0.simpleEnterSummonScene(slot0, slot1, slot2)
+	GameUtil.onDestroyViewMember(slot0, "_simpleFlow")
+
+	slot0._simpleFlow = VirtualSummonBehaviorFlow.New()
+
+	slot0._simpleFlow:start(slot1, slot2)
 end
 
 slot0.instance = slot0.New()

@@ -33,6 +33,8 @@ function slot0.initViewContent(slot0)
 	slot0:addButton("L7", "复制最后一回合处理前的数据_前端用", slot0.onClickCopyLatRoundProtoDataForClient, slot0)
 	slot0:addLabel("L8", "设定战斗版本号(本次登录有效)")
 	slot0:addInputText("L8", FightModel.GMForceVersion or "版本号", nil, slot0._onVersionChange, slot0)
+	slot0:addButton("L9", "使用新卡牌代码逻辑", slot0.onClickUseNewCardScript, slot0)
+	slot0:addButton("L9", "使用旧卡牌代码逻辑", slot0.onClickUseOldCardScript, slot0)
 
 	slot0._isInit = true
 end
@@ -188,6 +190,16 @@ function slot0.onStatBuffToggleValueChange(slot0)
 	else
 		GMFightController.instance:stopStatBuffType()
 	end
+end
+
+function slot0.onClickUseNewCardScript(slot0)
+	FightMgr.instance:changeCardScript(true)
+	logError("使用新卡牌逻辑")
+end
+
+function slot0.onClickUseOldCardScript(slot0)
+	FightMgr.instance:changeCardScript(false)
+	logError("使用旧卡牌逻辑")
 end
 
 function slot0.onDestroyView(slot0)

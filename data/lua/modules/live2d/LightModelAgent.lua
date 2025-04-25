@@ -103,12 +103,14 @@ function slot0.setResPath(slot0, slot1, slot2, slot3)
 		slot0._curModel = slot0:_getSpine()
 
 		slot0._curModel:setHeroId(slot1.characterId)
+		slot0._curModel:setSkinId(slot1.id)
 		slot0._curModel:setResPath(ResUrl.getLightSpine(slot1.verticalDrawing), slot2, slot3)
 	else
 		slot0._isLive2D = true
 		slot0._curModel = slot0:_getLive2d()
 
 		slot0._curModel:setHeroId(slot1.characterId)
+		slot0._curModel:setSkinId(slot1.id)
 		slot0._curModel:setResPath(ResUrl.getLightLive2d(slot1.live2d), slot2, slot3)
 	end
 end
@@ -217,6 +219,14 @@ function slot0.stopVoice(slot0)
 	end
 
 	slot0._curModel:stopVoice()
+end
+
+function slot0.play(slot0, slot1, slot2)
+	if not slot0._curModel then
+		return
+	end
+
+	slot0._curModel:play(slot1, slot2)
 end
 
 function slot0.doDestroy(slot0)

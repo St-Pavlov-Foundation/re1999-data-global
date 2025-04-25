@@ -22,10 +22,10 @@
   },
   {
     "id": 4,
-    "patFaceActivityId": 11918,
-    "patFaceViewName": "DecalogPresentView",
+    "patFaceActivityId": 12524,
+    "patFaceViewName": "V2a5DecalogPresentView",
     "patFaceStoryId": 0,
-    "patFaceOrder": 20204
+    "patFaceOrder": 3
   },
   {
     "id": 5,
@@ -280,6 +280,48 @@
     "patFaceOrder": 20401
   },
   {
+    "id": 20500,
+    "patFaceActivityId": 12508,
+    "patFaceViewName": "V2a5_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 5
+  },
+  {
+    "id": 20501,
+    "patFaceActivityId": 12509,
+    "patFaceViewName": "V2a5_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 6
+  },
+  {
+    "id": 20502,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "BPFaceView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 7
+  },
+  {
+    "id": 20504,
+    "patFaceActivityId": 12523,
+    "patFaceViewName": "V2a5_DecorateStoreView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 4
+  },
+  {
+    "id": 20505,
+    "patFaceActivityId": 12522,
+    "patFaceViewName": "V2a5_GoldenMilletPresentView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2
+  },
+  {
+    "id": 20702,
+    "patFaceActivityId": 12710,
+    "patFaceViewName": "V2a7_Labor_PanelSignView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20702
+  },
+  {
     "id": 20703,
     "patFaceActivityId": 12721,
     "patFaceViewName": "V2a7_LinkageActivity_PanelView",
@@ -288,7 +330,7 @@
   },
   {
     "id": 20602,
-    "patFaceActivityId": 12481,
+    "patFaceActivityId": 12581,
     "patFaceViewName": "ShortenAct_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 20602

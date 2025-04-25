@@ -82,6 +82,25 @@ function slot0.canShowPage(slot0, slot1)
 	return slot1.unlockGuideId == 0 or GuideModel.instance:isGuideFinish(slot1.unlockGuideId)
 end
 
+function slot0.canShowVideo(slot0, slot1)
+	return slot1.unlockGuideId == 0 or GuideModel.instance:isGuideFinish(slot1.unlockGuideId)
+end
+
+function slot0.openStoreTipView(slot0, slot1, slot2)
+	ViewMgr.instance:openView(ViewName.StoreTipView, {
+		desc = slot1,
+		title = slot2
+	})
+end
+
+function slot0.openBpRuleTipsView(slot0, slot1, slot2, slot3)
+	ViewMgr.instance:openView(ViewName.BpRuleTipsView, {
+		title = slot1,
+		titleEn = slot2,
+		ruleDesc = slot3
+	})
+end
+
 slot0.instance = slot0.New()
 
 return slot0

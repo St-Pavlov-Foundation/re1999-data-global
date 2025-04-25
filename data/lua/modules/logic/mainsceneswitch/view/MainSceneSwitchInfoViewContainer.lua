@@ -5,8 +5,8 @@ slot0 = class("MainSceneSwitchInfoViewContainer", BaseViewContainer)
 function slot0.buildViews(slot0)
 	slot1 = {}
 
+	table.insert(slot1, MainSceneSwitchInfoDisplayView.New())
 	table.insert(slot1, MainSceneSwitchInfoView.New())
-	table.insert(slot1, MainSceneSwitchInfoPageView.New())
 	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
 
 	return slot1

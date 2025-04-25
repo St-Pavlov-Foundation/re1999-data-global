@@ -48,7 +48,6 @@ function slot0.onStart(slot0, slot1)
 		"tips",
 		"toast",
 		"video",
-		"turnback",
 		"gm",
 		"newwelfare",
 		"share",

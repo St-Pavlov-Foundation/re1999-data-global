@@ -1505,7 +1505,7 @@
   {
     "id": 788,
     "type": "DelBuffByBuffTypeId",
-    "effectTime": 301,
+    "effectTime": 303,
     "effectCondition": 0,
     "effect": "",
     "effectHangPoint": "",
@@ -2450,6 +2450,186 @@
   {
     "id": 894,
     "type": "MustCrit",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 895,
+    "type": "UseCardFixExPoint",
+    "effectTime": 0,
+    "effectCondition": 3,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 896,
+    "type": "CardAreaRedOrBlue",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 897,
+    "type": "RedOrBlueCount",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 898,
+    "type": "RedOrBlueChangeTrigger",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 899,
+    "type": "ProtectTargetUseSkill",
+    "effectTime": 307,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 900,
+    "type": "RandomBuffByCasterDamage",
+    "effectTime": 209,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 901,
+    "type": "ModifyMaxBuffLayers",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 902,
+    "type": "ProbabilityAddBuffToSelf",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 903,
+    "type": "AddBuffAfterBeHit",
+    "effectTime": 2091,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 904,
+    "type": "AddBuffToSelf",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 906,
+    "type": "CountUseSelfSkillContinueChannel",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 907,
+    "type": "ImmunityDamage",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 908,
+    "type": "ImmunityDamage",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 909,
+    "type": "SaveFightRecord",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 910,
+    "type": "RecordSkill",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 911,
+    "type": "Elusive",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 912,
+    "type": "CountContinueChannel",
+    "effectTime": 102,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 913,
+    "type": "CopyPrepareSummon",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 914,
+    "type": "Drive",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 915,
+    "type": "NonCareerRestraint",
     "effectTime": 0,
     "effectCondition": 0,
     "effect": "",

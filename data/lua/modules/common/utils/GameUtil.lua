@@ -243,12 +243,12 @@ slot0 = {
 		return uv0[slot0]
 	end,
 	getNum2Chinese = function (slot0)
-		if GameConfig:GetCurLangType() ~= LangSettings.zh then
+		if not LangSettings.instance:isZh() then
 			return slot0
 		end
 
 		if slot0 < 10 then
-			return uv0[slot0]
+			return uv0[slot0] or slot0
 		else
 			slot1 = uv0
 			slot2 = uv1
@@ -297,7 +297,15 @@ slot1 = {
 	"IX",
 	"X",
 	"XI",
-	"XII"
+	"XII",
+	"XIII",
+	"XIV",
+	"XV",
+	"XVI",
+	"XVII",
+	"XVIII",
+	"XIX",
+	"XX"
 }
 slot2 = {
 	[0] = "零",
@@ -824,6 +832,14 @@ function slot0.onDestroyViewMember_ClickListener(slot0, slot1)
 	end
 end
 
+function slot0.onDestroyViewMember_ClickDownListener(slot0, slot1)
+	if slot0[slot1] then
+		slot0[slot1]:RemoveClickDownListener()
+
+		slot0[slot1] = nil
+	end
+end
+
 function slot0.setActive01(slot0, slot1)
 	if slot1 then
 		transformhelper.setLocalScale(slot0, 1, 1, 1)
@@ -975,11 +991,11 @@ function slot0.setActiveUIBlock(slot0, slot1, slot2)
 	end
 end
 
-function slot0.loadSImage(slot0, slot1)
+function slot0.loadSImage(slot0, slot1, slot2, slot3)
 	if string.nilorempty(slot1) then
 		slot0:UnLoadImage()
 	else
-		slot0:LoadImage(slot1)
+		slot0:LoadImage(slot1, slot2, slot3)
 	end
 end
 

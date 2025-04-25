@@ -44,11 +44,16 @@ function slot0.initDefaultSelectStage(slot0, slot1)
 end
 
 function slot0.getNewtStageAndLayer(slot0)
-	slot1 = 1
-	slot2 = 1
+	slot4 = TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer + 1)
 
-	if not TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer + 1) then
-		slot1 = TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer).stageId
+	if not TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer) then
+		logError("该层配置为空，请检查：" .. slot0.curPassLayer)
+
+		return 1, 1
+	end
+
+	if not slot4 then
+		slot1 = slot3.stageId
 		slot2 = slot0:getPassLayerIndex()
 	elseif slot3.stageId ~= slot4.stageId then
 		if slot0:checkStageIsOnline(slot4.stageId) then

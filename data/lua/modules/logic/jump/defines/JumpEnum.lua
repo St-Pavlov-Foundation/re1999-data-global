@@ -77,7 +77,9 @@ slot0.HandbookType = {
 	CG = 4
 }
 slot0.JumpId = {
+	GlowCharge = 10175,
 	Activity173 = 10012236,
+	DecorateStorePay = 10177,
 	RoomStoreTabFluff = 10012240,
 	RoomStore = 10172
 }

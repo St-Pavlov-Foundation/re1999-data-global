@@ -21,6 +21,20 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		end
 	end
 
+	if not string.nilorempty(slot3[3]) then
+		slot8 = false
+
+		for slot12, slot13 in ipairs(string.splitToNumber(slot3[3], "#")) do
+			if slot13 == slot1.actId then
+				slot8 = true
+			end
+		end
+
+		if not slot8 then
+			slot5 = false
+		end
+	end
+
 	if slot5 then
 		slot0._binder:SetTime(slot4)
 	end

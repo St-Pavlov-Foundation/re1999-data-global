@@ -127,6 +127,7 @@ end
 
 function slot0.startAllOnLogin(slot0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
+		BGMSwitchModel.instance:setMechineGear(BGMSwitchModel.instance:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear))
 		slot0:checkStartMainBGM(true)
 		WeatherController.instance:playWeatherAudio()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Replay_Noise_Daytime)
@@ -143,7 +144,7 @@ function slot0.checkStartMainBGM(slot0, slot1)
 	end
 
 	if slot2 then
-		slot0:playMainBgm(slot2, slot1)
+		slot0:playMainBgm(slot2, slot1, true)
 	end
 
 	if isDebugBuild then
@@ -160,7 +161,7 @@ function slot0.checkStartMainBGM(slot0, slot1)
 	end
 end
 
-function slot0.playMainBgm(slot0, slot1, slot2)
+function slot0.playMainBgm(slot0, slot1, slot2, slot3)
 	if not slot2 and slot1 == slot0._mainAudioId then
 		return
 	end
@@ -174,7 +175,11 @@ function slot0.playMainBgm(slot0, slot1, slot2)
 	slot0:stopMainBgm()
 	uv0.instance:resumeMainBgm()
 
-	slot0._playingId = AudioMgr.instance:triggerEx(slot1, 1048576)
+	if slot0._preAudioId ~= nil and slot0._preAudioId ~= slot1 and slot3 and slot0._playingId and BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot0._preAudioId) and slot4.isNonLoop == 1 then
+		AudioMgr.instance:stopPlayingID(slot0._playingId)
+	end
+
+	slot0._playingId = AudioMgr.instance:triggerEx(slot1, bit.bor(AkCallbackEnum.Type.AK_EnableGetSourcePlayPosition, AkCallbackEnum.Type.AK_Duration), nil)
 	slot0._preAudioId = slot1
 
 	slot0._bgmProgress:playMainBgm(slot1)
@@ -208,7 +213,7 @@ function slot0.backMainBgm(slot0)
 	end
 
 	if slot0:getBgmAudioId() and slot0._preAudioId ~= slot1 then
-		slot0:playMainBgm(slot1, true)
+		slot0:playMainBgm(slot1, true, true)
 	end
 end
 

@@ -28,6 +28,10 @@ function slot0.clearWork(slot0)
 end
 
 function slot0._checkOpenView(slot0, slot1, slot2)
+	if slot1 == ViewName.CharacterView then
+		uv0.heroMo = slot2
+	end
+
 	slot0:checkDone()
 end
 
@@ -105,6 +109,12 @@ function slot0.activity109ChessOpenNextStage()
 	end
 
 	return true
+end
+
+function slot0.checkDestinyStone()
+	if uv0.heroMo and slot0:isOwnHero() and slot0:isCanOpenDestinySystem() then
+		return true
+	end
 end
 
 return slot0

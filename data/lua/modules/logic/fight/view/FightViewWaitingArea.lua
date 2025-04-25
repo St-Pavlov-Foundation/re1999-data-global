@@ -333,7 +333,7 @@ function slot0._updateView(slot0)
 			slot12 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._cardItemGOList[slot6], "card")
 
 			gohelper.setAsFirstSibling(slot12)
-			table.insert(slot0._cardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(slot12, FightViewCardItem))
+			table.insert(slot0._cardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(slot12, FightViewCardItem, FightEnum.CardShowType.PlayCard))
 		end
 
 		transformhelper.setLocalScale(slot10.tr, 1, 1, 1)

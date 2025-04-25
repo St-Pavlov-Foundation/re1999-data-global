@@ -16,6 +16,10 @@ function slot0.onStart(slot0, slot1)
 
 	slot3:setASFDActive(false)
 
+	if slot3._cardItem then
+		slot3._cardItem:setHeatRootVisible(false)
+	end
+
 	slot0._cardInfoMO = slot3.cardInfoMO:clone()
 	slot0._cardInfoMO.playCanAddExpoint = slot1.cards[slot1.from].playCanAddExpoint
 	slot0._clonePlayCardGO = gohelper.cloneInPlace(slot3.go)

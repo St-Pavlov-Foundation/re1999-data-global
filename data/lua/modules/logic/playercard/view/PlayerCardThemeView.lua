@@ -2,6 +2,12 @@ module("modules.logic.playercard.view.PlayerCardThemeView", package.seeall)
 
 slot0 = class("PlayerCardThemeView", BaseView)
 
+function slot0.init(slot0, slot1)
+	slot0.viewGO = slot1
+
+	slot0:onInitView()
+end
+
 function slot0.onInitView(slot0)
 	slot0.goBottom = gohelper.findChild(slot0.viewGO, "bottom")
 	slot0.btnConfirm = gohelper.findChildButtonWithAudio(slot0.goBottom, "#btn_confirm")
@@ -13,19 +19,23 @@ function slot0.onInitView(slot0)
 	slot0.goSourceLock = gohelper.findChild(slot0.goSource, "locked")
 end
 
+function slot0.canOpen(slot0)
+	slot0:addEvents()
+end
+
 function slot0.addEvents(slot0)
 	slot0:addClickCb(slot0.btnConfirm, slot0.onClickConfirm, slot0)
 	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowTheme, slot0.refreshView, slot0)
 	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, slot0.onSwitchView, slot0)
+	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, slot0.onSwitchView, slot0)
 end
 
 function slot0.removeEvents(slot0)
+	slot0:removeClickCb(slot0.btnConfirm, slot0.onClickConfirm, slot0)
 end
 
 function slot0.onClickConfirm(slot0)
-end
-
-function slot0.onOpen(slot0)
+	PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(PlayerCardModel.instance:getSelectSkinMO().id)
 end
 
 function slot0.onUpdateParam(slot0)
@@ -42,7 +52,7 @@ end
 
 function slot0.onSwitchView(slot0)
 	slot1 = PlayerCardModel.instance:getSelectSkinMO()
-	slot2 = slot1:checkIsUse()
+	slot2 = slot1:isUnLock()
 
 	gohelper.setActive(slot0.goLocked, not slot2)
 	gohelper.setActive(slot0.goSourceLock, not slot2)
@@ -62,7 +72,7 @@ function slot0.onSwitchView(slot0)
 	end
 end
 
-function slot0.onClose(slot0)
+function slot0.onDestroy(slot0)
 end
 
 return slot0

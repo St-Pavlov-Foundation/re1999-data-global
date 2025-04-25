@@ -22,6 +22,9 @@ function slot0.loadUnmatchRes(slot0, slot1, slot2)
 	elseif slot6 == 3 then
 		slot3 = slot3 .. "/" .. slot5
 		slot4 = slot4 .. "/" .. slot5
+	elseif string.find(GameConfig.BranchName, "stable") then
+		slot3 = slot3 .. "/" .. slot5
+		slot4 = slot4 .. "/" .. slot5
 	else
 		slot3 = slot3 .. "/overseas"
 		slot4 = slot4 .. "/overseas"

@@ -15,9 +15,9 @@ function slot0._getFormatStr_overseas(slot0, slot1)
 		return slot0:_getFormatStr(slot1)
 	else
 		slot3, slot4 = slot0:SwitchLangTab()
-		slot5 = "\n" .. string.rep(" ", slot3)
+		slot5 = string.rep(" ", slot3)
 
-		return "", slot5 .. string.gsub(slot1, "\n", slot5)
+		return "", slot5 .. string.gsub(slot1, "\n", "\n" .. slot5)
 	end
 end
 

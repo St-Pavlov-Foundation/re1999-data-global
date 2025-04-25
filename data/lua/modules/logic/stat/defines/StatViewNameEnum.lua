@@ -2,6 +2,7 @@ module("modules.logic.stat.defines.StatViewNameEnum", package.seeall)
 
 slot0 = _M
 slot0.ChineseViewName = {
+	[ViewName.TurnBackFullView] = "海外人拉人H5活动界面",
 	[ViewName.MainView] = "主界面",
 	[ViewName.MainThumbnailView] = "主界面缩略图",
 	[ViewName.BpView] = "吼吼点唱机",
@@ -109,9 +110,20 @@ slot0.ChineseViewName = {
 	[ViewName.TurnbackNewSignInView] = "回归界面-归途七日",
 	[ViewName.TurnbackNewTaskView] = "回归界面-箱中再会",
 	[ViewName.TurnbackNewBenfitView] = "回归界面-归途礼遇",
-	[ViewName.TurnbackNewProgressView] = "回归界面-雨的归处"
+	[ViewName.TurnbackNewProgressView] = "回归界面-雨的归处",
+	[ViewName.VersionActivity2_5EnterView] = "2.5版本活动页",
+	[ViewName.VersionActivity2_5DungeonMapView] = "副本地图-唐人街影话",
+	[ViewName.VersionActivity2_5StoreView] = "2.5副本商店",
+	[ViewName.Permanent1_8EnterView] = "1.8活动常驻",
+	[ViewName.LiangYueLevelView] = "梁月角色活动",
+	[ViewName.LiangYueTaskView] = "梁月角色任务",
+	[ViewName.FeiLinShiDuoEpisodeLevelView] = "菲林士多角色活动",
+	[ViewName.FeiLinShiDuoTaskView] = "菲林士多角色任务",
+	[ViewName.Act183MainView] = "挑战玩法",
+	[ViewName.AutoChessMainView] = "魔精自走棋"
 }
 slot0.NeedTrackViewDict = {
+	[ViewName.TurnBackFullView] = true,
 	[ViewName.VersionActivity1_8EnterView] = true,
 	[ViewName.VersionActivity1_8DungeonMapView] = true,
 	[ViewName.VersionActivity1_8StoreView] = true,
@@ -201,7 +213,17 @@ slot0.NeedTrackViewDict = {
 	[ViewName.TurnbackNewTaskView] = true,
 	[ViewName.TurnbackNewBenfitView] = true,
 	[ViewName.TurnbackNewProgressView] = true,
-	[ViewName.WuErLiXiLevelView] = true
+	[ViewName.WuErLiXiLevelView] = true,
+	[ViewName.VersionActivity2_5EnterView] = true,
+	[ViewName.VersionActivity2_5DungeonMapView] = true,
+	[ViewName.VersionActivity2_5StoreView] = true,
+	[ViewName.Permanent1_8EnterView] = true,
+	[ViewName.LiangYueLevelView] = true,
+	[ViewName.LiangYueTaskView] = true,
+	[ViewName.FeiLinShiDuoEpisodeLevelView] = true,
+	[ViewName.FeiLinShiDuoTaskView] = true,
+	[ViewName.Act183MainView] = true,
+	[ViewName.AutoChessMainView] = true
 }
 slot0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
@@ -211,6 +233,7 @@ slot0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity2_2EnterView,
 	ViewName.VersionActivity2_3EnterView,
 	ViewName.VersionActivity2_4EnterView,
+	ViewName.VersionActivity2_5EnterView,
 	ViewName.StoreView
 }
 slot0.TabViewContainerID = {
@@ -221,6 +244,7 @@ slot0.TabViewContainerID = {
 	[ViewName.VersionActivity2_2EnterView] = 2,
 	[ViewName.VersionActivity2_3EnterView] = 2,
 	[ViewName.VersionActivity2_4EnterView] = 2,
+	[ViewName.VersionActivity2_5EnterView] = 2,
 	[ViewName.StoreView] = 3
 }
 slot0.TabViewName = {
@@ -232,14 +256,20 @@ slot0.TabViewName = {
 	VersionActivity2_4RougeEnterView = "常驻肉鸽",
 	TowerMainEntryView = "爬塔玩法",
 	V2a4_Season166EnterView = "赛季",
+	V2a5_v1a6_ReactivityEnterview = "1.6活动复刻",
+	VersionActivity2_5ChallengeEnterView = "挑战玩法",
 	ReactivityEnterview = "1.8活动复刻",
 	VersionActivity2_3DungeonEnterView = "圣火纪行：东区黎明",
+	VersionActivity2_5AutoChessEnterView = "魔精自走棋",
 	V2a2_LoperaEnterView = "洛佩拉",
 	V2a2_RoomCritterEnterView = "魔精公司",
+	VersionActivity2_5FeiLinShiDuoEnterView = "菲林士多",
+	VersionActivity2_5DungeonEnterView = "唐人街影话",
 	VersionActivity2_4MusicEnterView = "芭卡洛儿",
 	VersionActivity2_4DungeonEnterView = "地球上最后的夜晚",
 	V2a2_DungeonEnterView = "忧郁的热带",
 	V2a2_TianShiNaNaEnterView = "天使娜娜",
+	VersionActivity2_5LiangYueEnterView = "梁月",
 	V2a2_EliminateEnterView = "小队玩法",
 	V2a4_PinballEnterView = "图图石子",
 	V2a3_Season123EnterView = "赛季",

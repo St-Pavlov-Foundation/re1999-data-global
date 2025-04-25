@@ -77,6 +77,11 @@ function slot0._onAct178Click(slot0)
 	slot0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, , slot0._act178ActId)
 end
 
+function slot0._onAct182Click(slot0)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+	slot0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, , slot0._act182ActId)
+end
+
 function slot0._getEnterController(slot0)
 	return slot0.viewContainer:getMainActivityEnterView():getCurEnterController()
 end
@@ -86,6 +91,7 @@ function slot0._editableInitView(slot0)
 	slot0._rougeActId = ActivityConfig.instance:getRougeActivityConfig() and slot2.id
 	slot0._douququActId = VersionActivity2_3Enum.ActivityId.Act174
 	slot0._act178ActId = VersionActivity2_4Enum.ActivityId.Pinball
+	slot0._act182ActId = VersionActivity2_5Enum.ActivityId.AutoChess
 
 	slot0:_initActs()
 end
@@ -102,16 +108,19 @@ function slot0._initActs(slot0)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.Rouge, slot0._getRougeStatus, slot0._getRougeStartTime)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0._getDouQuQuStatus, slot0._getDouQuQuStartTime)
 	slot0:_addActHandler(ActivityEnum.MainViewActivityState.Act178, slot0._getAct178Status, slot0._getAct178StartTime)
+	slot0:_addActHandler(ActivityEnum.MainViewActivityState.Act182, slot0._getAct182Status, slot0._getAct182StartTime)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, slot0._onRoleStoryClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.SeasonActivity, slot0._onSeasonClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.Rouge, slot0._onRougeClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0._onDouQuQuClick)
 	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.Act178, slot0._onAct178Click)
+	slot0:_addClickHandler(ActivityEnum.MainViewActivityState.Act182, slot0._onAct182Click)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, slot0.refreshRoleStoryBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, slot0.refreshSeasonBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge, slot0.refreshRougeBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.DouQuQu, slot0.refreshDouQuQuBtn)
 	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act178, slot0.refreshAct178Btn)
+	slot0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act182, slot0.refreshAct182Btn)
 end
 
 function slot0._addRefreshBtnHandler(slot0, slot1, slot2)
@@ -183,6 +192,14 @@ function slot0._getAct178StartTime(slot0)
 	return ActivityModel.instance:getActMO(slot0._act178ActId) and slot2:getRealStartTimeStamp() * 1000
 end
 
+function slot0._getAct182Status(slot0)
+	return (slot0._act182ActId and ActivityHelper.getActivityStatus(slot1)) == ActivityEnum.ActivityStatus.Normal
+end
+
+function slot0._getAct182StartTime(slot0)
+	return ActivityModel.instance:getActMO(slot0._act182ActId) and slot2:getRealStartTimeStamp() * 1000
+end
+
 function slot0._onStoryChange(slot0)
 	slot0:onRefreshActivityState()
 end
@@ -218,6 +235,13 @@ end
 function slot0.refreshAct178Btn(slot0)
 	gohelper.setActive(slot0._btnrolestory, true)
 	slot0:_roleStoryLoadImage(ActivityConfig.instance:getActivityCo(slot0._act178ActId).extraDisplayIcon, slot0.onLoadImage, slot0)
+
+	slot0._txtrolestory.text = ""
+end
+
+function slot0.refreshAct182Btn(slot0)
+	gohelper.setActive(slot0._btnrolestory, true)
+	slot0:_roleStoryLoadImage(ActivityConfig.instance:getActivityCo(slot0._act182ActId).extraDisplayIcon, slot0.onLoadImage, slot0)
 
 	slot0._txtrolestory.text = ""
 end

@@ -1,8 +1,17 @@
 module("modules.logic.activity.controller.ActivityController", package.seeall)
 
 slot0 = class("ActivityController", BaseController)
+slot1 = string.format
 
 function slot0.onInit(slot0)
+	slot0._versionInfo = {}
+
+	slot0:_getLatestVersion(slot0._versionInfo)
+
+	if isDebugBuild then
+		logNormal(uv0("<color=#FFFF00>[ActivityController] 当前版本: %s</color>", slot0:getV_a()))
+	end
+
 	slot0:reInit()
 end
 
@@ -56,12 +65,13 @@ function slot0.openActivityWelfareView(slot0)
 	end
 end
 
-slot1 = {
+slot2 = {
 	ActivityEnum.Activity.HarvestSeasonView_1_5,
 	ActivityEnum.Activity.V2a0_SummerSign,
 	ActivityEnum.Activity.V2a1_MoonFestival,
 	ActivityEnum.Activity.LinkageActivity_FullView,
 	ActivityEnum.Activity.V2a2_SpringFestival,
+	ActivityEnum.Activity.V2a7_Labor_Sign,
 	ActivityEnum.Activity.NorSign,
 	ActivityEnum.Activity.NoviceSign,
 	ActivityEnum.Activity.SummerSignPart1_1_2,
@@ -97,9 +107,13 @@ slot1 = {
 	ActivityEnum.Activity.LinkageActivity_FullView,
 	ActivityEnum.Activity.V2a3_Special,
 	ActivityEnum.Activity.V2a4_Role_SignView_Part1,
-	ActivityEnum.Activity.V2a4_Role_SignView_Part2
+	ActivityEnum.Activity.V2a4_Role_SignView_Part2,
+	ActivityEnum.Activity.V2a5_Role_SignView_Part1,
+	ActivityEnum.Activity.V2a5_Role_SignView_Part2,
+	ActivityEnum.Activity.V2a5_DecorateStore,
+	ActivityEnum.Activity.V2a5_Act186Sign
 }
-slot2 = {
+slot3 = {
 	ActivityEnum.Activity.VersionActivity1_3Radio,
 	ActivityEnum.Activity.Activity1_6WarmUp,
 	ActivityEnum.Activity.Activity1_7WarmUp,
@@ -109,7 +123,8 @@ slot2 = {
 	ActivityEnum.Activity.V2a1_WarmUp,
 	ActivityEnum.Activity.RoomSign,
 	ActivityEnum.Activity.V2a3_WarmUp,
-	ActivityEnum.Activity.V2a4_WarmUp
+	ActivityEnum.Activity.V2a4_WarmUp,
+	ActivityEnum.Activity.V2a5_WarmUp
 }
 
 function slot0.checkGetActivityInfo(slot0)
@@ -153,10 +168,26 @@ function slot0.checkGetActivityInfo(slot0)
 		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a4_NewInsight)
 	end
 
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_NewInsight) then
+		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a5_NewInsight)
+	end
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Tower
 		})
+	end
+
+	slot0:requestAct186Info()
+end
+
+function slot0.requestAct186Info(slot0)
+	if Activity186Model.instance:getActId() and ActivityModel.instance:isActOnLine(slot1) then
+		Activity186Rpc.instance:sendGetAct186InfoRequest(slot1)
+	end
+
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_Act186Sign) and slot1 then
+		Activity101Rpc.instance:sendGetAct186SpBonusInfoRequest(ActivityEnum.Activity.V2a5_Act186Sign, slot1)
 	end
 end
 
@@ -186,7 +217,76 @@ function slot0._onDailyRefresh(slot0)
 	slot0:updateAct101Infos()
 end
 
-slot3 = false
+function slot0._getLatestVersion(slot0, slot1)
+	slot2 = "AudioEnum%s_%s"
+	slot1.V = 1
+	slot1.A = 5
+
+	while slot3 < math.huge do
+		while slot4 < 10 do
+			if not _G[uv0(slot2, slot3, slot4)] then
+				slot7 = slot4
+
+				while slot4 < 10 do
+					if _G[uv0(slot2, slot3, slot4 + 1)] then
+						break
+					end
+				end
+
+				if slot7 == 0 and not slot6 then
+					return
+				end
+
+				if slot4 >= 10 then
+					break
+				end
+			end
+
+			if slot4 == 0 and not slot6 then
+				return
+			elseif not slot6 then
+				break
+			end
+
+			slot1.V = slot3
+			slot1.A = slot4
+			slot4 = slot4 + 1
+		end
+
+		slot3 = slot3 + 1
+		slot4 = 0
+	end
+end
+
+function slot0.getMajorVer(slot0)
+	return slot0._versionInfo.V
+end
+
+function slot0.getMinorVer(slot0)
+	return slot0._versionInfo.A
+end
+
+function slot0.getVxax_(slot0)
+	return "V" .. slot0:getMajorVer() .. "a" .. slot0:getMinorVer() .. "_"
+end
+
+function slot0.getV_a(slot0)
+	return slot0:getMajorVer() .. "_" .. slot0:getMinorVer()
+end
+
+function slot0.Vxax_(slot0, slot1)
+	return slot0:getVxax_() .. slot1
+end
+
+function slot0.V_a(slot0, slot1, slot2)
+	return (slot1 or "") .. slot0:getV_a() .. (slot2 or "")
+end
+
+function slot0.Vxax_ActId(slot0, slot1, slot2)
+	return ActivityEnum.Activity[slot0:Vxax_(slot1)] or slot2
+end
+
+slot4 = false
 
 function slot0._initRoleSign_kAct101RedList(slot0)
 	if uv0 then
@@ -203,7 +303,7 @@ function slot0.onModuleViews(slot0, slot1, slot2)
 	ActivityType101Model.instance:onModuleViews(slot1, slot2)
 end
 
-slot4 = false
+slot5 = false
 
 function slot0._initSpecialSign_kAct101RedList(slot0)
 	if uv0 then
@@ -215,7 +315,7 @@ function slot0._initSpecialSign_kAct101RedList(slot0)
 	table.insert(uv1, GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special))
 end
 
-slot5 = false
+slot6 = false
 
 function slot0._initLinkageActivity_kAct101RedList(slot0)
 	if uv0 then

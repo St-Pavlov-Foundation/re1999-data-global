@@ -1,131 +1,169 @@
 [
   {
     "heroId": 3018,
+    "skinId": 1,
     "motion": "chadai",
     "onlyStopCut": 0
   },
   {
     "heroId": 3011,
+    "skinId": 1,
     "motion": "wuzui",
     "onlyStopCut": 0
   },
   {
     "heroId": 3023,
+    "skinId": 1,
     "motion": "yangtou|qidao|moxiaba",
     "onlyStopCut": 0
   },
   {
     "heroId": 3017,
+    "skinId": 1,
     "motion": "zhanshi",
     "onlyStopCut": 0
   },
   {
     "heroId": 3007,
+    "skinId": 1,
     "motion": "cashi|jujian|lianxi|xuanshi",
     "onlyStopCut": 0
   },
   {
     "heroId": 3020,
+    "skinId": 1,
     "motion": "lingting",
     "onlyStopCut": 0
   },
   {
     "heroId": 3024,
+    "skinId": 1,
     "motion": "xingfen|sikao|dazhaohu",
     "onlyStopCut": 0
   },
   {
     "heroId": 3055,
+    "skinId": 1,
     "motion": "shikong",
     "onlyStopCut": 0
   },
   {
     "heroId": 3038,
+    "skinId": 1,
     "motion": "liaofa|fumo",
     "onlyStopCut": 0
   },
   {
     "heroId": 3031,
+    "skinId": 1,
     "motion": "dushu",
     "onlyStopCut": 0
   },
   {
     "heroId": 3045,
+    "skinId": 1,
     "motion": "shouzhang",
     "onlyStopCut": 0
   },
   {
     "heroId": 3053,
+    "skinId": 1,
     "motion": "liaofa|fumo|changge|huipai",
     "onlyStopCut": 1
   },
   {
     "heroId": 3073,
+    "skinId": 1,
     "motion": "hequan|cashi|chashou|queyue",
     "onlyStopCut": 1
   },
   {
     "heroId": 3087,
+    "skinId": 1,
     "motion": "jingli",
     "onlyStopCut": 0
   },
   {
     "heroId": 3088,
+    "skinId": 1,
     "motion": "woquan|baoxiong|sikao|yaoqing",
     "onlyStopCut": 0
   },
   {
     "heroId": 3086,
+    "skinId": 1,
     "motion": "sikao|baoxiong|yaotou|taishou",
     "onlyStopCut": 0
   },
   {
     "heroId": 3094,
+    "skinId": 1,
     "motion": "daitoukui1|daitoukui2|daitoukui3",
     "onlyStopCut": 1
   },
   {
     "heroId": 3048,
+    "skinId": 1,
     "motion": "shou|xihao|beishou|zaochen|xianliao1",
     "onlyStopCut": 0
   },
   {
     "heroId": 3097,
+    "skinId": 1,
     "motion": "baqiang1|baqiang2|baqiang3",
     "onlyStopCut": 1
   },
   {
     "heroId": 3100,
+    "skinId": 1,
     "motion": "zhuashoubi|huizhua",
     "onlyStopCut": 1
   },
   {
     "heroId": 3065,
+    "skinId": 1,
     "motion": "xinshang",
     "onlyStopCut": 1
   },
   {
     "heroId": 3004,
+    "skinId": 1,
     "motion": "baoxiong",
     "onlyStopCut": 1
   },
   {
     "heroId": 3104,
+    "skinId": 1,
     "motion": "mozhang01|baishou|xingli",
     "onlyStopCut": 1
   },
   {
     "heroId": 3043,
+    "skinId": 1,
     "motion": "xuanshi|baoxiong",
     "onlyStopCut": 1
   },
   {
     "heroId": 3052,
+    "skinId": 1,
     "motion": "baoxiong",
     "onlyStopCut": 1
   },
   {
+    "heroId": 3098,
+    "skinId": 309803,
+    "motion": "paida",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3110,
+    "skinId": 1,
+    "motion": "dageda1_start|dageda2_start",
+    "onlyStopCut": 1
+  },
+  {
     "heroId": 3109,
+    "skinId": 310903,
     "motion": "wojin1|wojin2|wojin3|baoyu1|baoyu2|baoyu3|beike1|beike2|beike3",
     "onlyStopCut": 1
   }

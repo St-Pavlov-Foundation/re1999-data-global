@@ -2,6 +2,10 @@ module("modules.logic.fight.entity.mgr.FightRenderOrderMgr", package.seeall)
 
 slot0 = class("FightRenderOrderMgr")
 slot0.MaxOrder = 20 * FightEnum.OrderRegion
+slot0.MinOrder = 0
+slot0.LYEffect = 1
+slot0.AssistBossOrder = 2
+slot0.MinSpecialOrder = 2
 
 function slot0.init(slot0)
 	slot0._registIdList = {}
@@ -187,9 +191,13 @@ function slot0.sortOrder(slot0, slot1, slot2)
 		end
 	end
 
-	for slot10, slot11 in pairs(slot3) do
-		if FightDataHelper.entityMgr:isAssistBoss(slot10) then
-			slot3[slot10] = 0
+	for slot11, slot12 in pairs(slot3) do
+		slot3[slot11] = slot12 + uv0.MinSpecialOrder
+	end
+
+	for slot11, slot12 in pairs(slot3) do
+		if FightDataHelper.entityMgr:isAssistBoss(slot11) then
+			slot3[slot11] = uv0.AssistBossOrder
 		end
 	end
 

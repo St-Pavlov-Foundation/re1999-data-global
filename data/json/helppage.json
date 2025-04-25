@@ -3850,6 +3850,136 @@
     "isCn": 0
   },
   {
+    "id": 2500001,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_1",
+    "iconText": "v2a5_challenge_help_1",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
+    "id": 2500002,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_2",
+    "iconText": "v2a5_challenge_help_2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500003,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_3",
+    "iconText": "v2a5_challenge_help_3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500004,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_4",
+    "iconText": "v2a5_challenge_help_4",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500005,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_5",
+    "iconText": "v2a5_challenge_help_5",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500006,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_6",
+    "iconText": "v2a5_challenge_help_6",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500007,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_7",
+    "iconText": "v2a5_challenge_help_7",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500008,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_8",
+    "iconText": "v2a5_challenge_help_8",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2500101,
+    "title": "",
+    "type": 2,
+    "text": "小怪物翻斗棋指引",
+    "icon": "v2a5_autochess_help_1",
+    "iconText": "v2a5_autochess_help_1",
+    "unlockGuideId": 25402,
+    "isCn": 1
+  },
+  {
+    "id": 2500102,
+    "title": "",
+    "type": 2,
+    "text": "小怪物翻斗棋指引",
+    "icon": "v2a5_autochess_help_2",
+    "iconText": "v2a5_autochess_help_2",
+    "unlockGuideId": 25403,
+    "isCn": 1
+  },
+  {
+    "id": 2500103,
+    "title": "",
+    "type": 2,
+    "text": "小怪物翻斗棋指引",
+    "icon": "v2a5_autochess_help_3",
+    "iconText": "v2a5_autochess_help_3",
+    "unlockGuideId": 25406,
+    "isCn": 1
+  },
+  {
+    "id": 2500104,
+    "title": "",
+    "type": 2,
+    "text": "小怪物翻斗棋指引",
+    "icon": "v2a5_autochess_help_4",
+    "iconText": "v2a5_autochess_help_4",
+    "unlockGuideId": 25407,
+    "isCn": 1
+  },
+  {
+    "id": 2500105,
+    "title": "",
+    "type": 2,
+    "text": "小怪物翻斗棋指引",
+    "icon": "v2a5_autochess_help_5",
+    "iconText": "v2a5_autochess_help_5",
+    "unlockGuideId": 0,
+    "isCn": 1
+  },
+  {
     "id": 19001,
     "title": "language_10000135",
     "type": 1,

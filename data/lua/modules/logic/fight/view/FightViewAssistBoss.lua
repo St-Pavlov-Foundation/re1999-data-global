@@ -21,7 +21,8 @@ function slot0._editableInitView(slot0)
 		FightAssistBoss1,
 		FightAssistBoss2,
 		FightAssistBoss3,
-		FightAssistBoss4
+		FightAssistBoss4,
+		FightAssistBoss5
 	}
 end
 

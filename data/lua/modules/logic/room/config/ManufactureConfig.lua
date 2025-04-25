@@ -562,11 +562,11 @@ function slot0.getNeedTime(slot0, slot1)
 	return slot2
 end
 
-function slot0.getBatchIcon(slot0, slot1)
+function slot0.getBatchIconPath(slot0, slot1)
 	slot2 = nil
 
-	if slot0:getManufactureItemCfg(slot1, true) then
-		slot2 = slot3.batchIcon
+	if slot0:getManufactureItemCfg(slot1, true) and not string.nilorempty(slot3.batchIcon) then
+		slot2 = ResUrl.getPropItemIcon(slot3.batchIcon)
 	end
 
 	return slot2
@@ -582,8 +582,26 @@ function slot0.getBatchName(slot0, slot1)
 	return slot2
 end
 
+function slot0.getManufactureItemName(slot0, slot1)
+	if string.nilorempty(slot0:getBatchName(slot1)) then
+		slot2 = ItemConfig.instance:getItemNameById(slot0:getItemId(slot1))
+	end
+
+	return slot2
+end
+
 function slot0.getManufactureItemListByItemId(slot0, slot1)
 	return slot0._itemId2ManufactureItemDict and slot0._itemId2ManufactureItemDict[slot1] or {}
+end
+
+function slot0.getManufactureItemUnitCountRange(slot0, slot1)
+	for slot9, slot10 in ipairs(slot0:getManufactureItemListByItemId(slot0:getItemId(slot1))) do
+		slot11 = slot0:getUnitCount(slot10)
+		slot2 = math.max(slot0:getUnitCount(slot1), slot11)
+		slot3 = math.min(slot0:getUnitCount(slot1), slot11)
+	end
+
+	return slot2, slot3
 end
 
 slot0.instance = slot0.New()

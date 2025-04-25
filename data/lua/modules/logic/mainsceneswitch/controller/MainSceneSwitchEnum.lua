@@ -13,5 +13,10 @@ slot0.SceneStutas = {
 	Lock = 2,
 	LockCanGet = 3
 }
+slot0.ReddotStatus = {
+	Close = 1,
+	Open = 2
+}
+slot0.DefaultScene = 1
 
 return slot0

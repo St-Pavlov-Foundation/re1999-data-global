@@ -258,6 +258,10 @@ function slot0._refreshGoods(slot0, slot1, slot2)
 		StoreNormalGoodsItemListModel.instance:setMOList()
 	elseif slot0.storeId == StoreEnum.StoreId.CritterStore then
 		gohelper.setActive(slot0._goempty, false)
+
+		if slot1 then
+			slot0.viewContainer:playCritterStoreAnimation()
+		end
 	else
 		if StoreModel.instance:getStoreMO(slot0.storeId) then
 			if not next(slot5:getGoodsList(true)) then

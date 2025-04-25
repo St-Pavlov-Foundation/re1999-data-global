@@ -38,8 +38,14 @@ function slot0.getSeparateContent(slot0, slot1, slot2)
 		slot4 = string.gsub(slot4, "(#%d+%.?%d?%d?)", "<sep>" .. slot9 .. "</sep>", 1)
 	end
 
-	for slot10 in string.gmatch(slot4, "<sep>%d+</sep>") do
-		slot4 = string.gsub(slot4, "<sep>" .. slot6 .. "</sep>", slot3[slot2][0 + 1] or "#0")
+	slot6 = 0
+
+	if (slot0.audio == nil or slot0.audio == 0) and #slot3[slot2] == 0 then
+		slot7 = slot3[slot1]
+	end
+
+	for slot11 in string.gmatch(slot4, "<sep>%d+</sep>") do
+		slot4 = string.gsub(slot4, "<sep>" .. slot6 .. "</sep>", slot7[slot6 + 1] or "#0")
 	end
 
 	return StoryModel.instance:getStoryTxtByVoiceType(slot4, slot0.audio)

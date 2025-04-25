@@ -84,7 +84,14 @@ function slot0.isEpisodeDayOpen(slot0, slot1, slot2)
 end
 
 function slot0.isEpisodeReallyOpen(slot0, slot1)
-	return slot0:isEpisodeUnLock(slot1) and slot0:isEpisodeDayOpen(slot1)
+	slot2 = slot0:isEpisodeUnLock(slot1)
+	slot3 = slot0:isEpisodeDayOpen(slot1)
+
+	if (slot0:getEpisodeConfig(slot1) and slot4.preId or nil) and slot5 > 0 and not slot0:isEpisodeFinished(slot5) then
+		return false
+	end
+
+	return slot2 and slot3
 end
 
 function slot0.getLastEpisode(slot0)

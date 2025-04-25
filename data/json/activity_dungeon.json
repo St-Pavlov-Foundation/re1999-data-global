@@ -68,5 +68,12 @@
     "story2ChapterId": 24301,
     "story3ChapterId": 24401,
     "hardChapterId": 24201
+  },
+  {
+    "id": 12502,
+    "story1ChapterId": 25101,
+    "story2ChapterId": 25301,
+    "story3ChapterId": 25401,
+    "hardChapterId": 25201
   }
 ]

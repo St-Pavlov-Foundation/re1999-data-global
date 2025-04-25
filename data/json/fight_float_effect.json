@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "prefabPath": "fightfloat",
+    "startTime": "",
+    "endTime": "",
+    "priority": 0
+  },
+  {
+    "id": 2,
+    "prefabPath": "fightfloat_skin1",
+    "startTime": "2025-4-24 5:00:00",
+    "endTime": "2025-5-29 5:00:00",
+    "priority": 1
+  }
+]

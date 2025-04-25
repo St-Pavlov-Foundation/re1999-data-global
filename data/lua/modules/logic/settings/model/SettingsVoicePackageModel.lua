@@ -9,8 +9,11 @@ function slot0.onInit(slot0)
 
 	slot1 = {}
 	slot0._packInfoDic = {}
+	slot2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
-	for slot7 = 1, #HotUpdateVoiceMgr.instance:getSupportVoiceLangs() do
+	table.insert(slot2, "res-HD")
+
+	for slot7 = 1, #slot2 do
 		slot8 = slot2[slot7]
 
 		SettingsVoicePackageItemMo.New():setLang(slot8, SettingsVoicePackageController.instance:getLocalVersionInt(slot8))

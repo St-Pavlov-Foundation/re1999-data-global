@@ -273,7 +273,8 @@ function slot0.updateSimpleProperties(slot0, slot1)
 end
 
 slot1 = {
-	[PlayerEnum.SimpleProperty.SkinState] = KeyValueSimplePropertyMO
+	[PlayerEnum.SimpleProperty.SkinState] = KeyValueSimplePropertyMO,
+	[PlayerEnum.SimpleProperty.MainSceneSkinRedDot] = KeyValueSimplePropertyMO
 }
 
 function slot0._getSimplePropMo(slot0, slot1)

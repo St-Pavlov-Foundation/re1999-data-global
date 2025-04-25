@@ -9,7 +9,7 @@ slot0.SubType = {
 	RoomManufactureAccelerateItem = 26,
 	UtmStickers = 33,
 	SpecifiedGift = 48,
-	MainSceneSkin = 24,
+	DecorateDiscountTicket = 63,
 	CritterTrain = 28,
 	EquipBreak = 18,
 	CommonItem = 14,
@@ -27,6 +27,7 @@ slot0.SubType = {
 	RoomTicket = 60,
 	AdventureItem = 15,
 	SkinTicket = 61,
+	MainSceneSkin = 24,
 	OptionalGift = 53,
 	BreachItem = 13,
 	CritterIncubate = 30
@@ -58,5 +59,10 @@ slot0.RoomBackpackPropSubType = {
 	[slot0.SubType.CritterAccelerateItem] = true
 }
 slot0.NewbiePackGiftId = 520010
+slot0.NoExpiredNum = 70128
+slot0.Tag = {
+	PackageSkin = 2,
+	SummonSkin = 1
+}
 
 return slot0

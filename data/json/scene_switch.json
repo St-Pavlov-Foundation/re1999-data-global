@@ -6,6 +6,10 @@
     "icon": "mainsceneswitch_item01",
     "previewIcon": "",
     "resName": "m_s01_zjm_a",
+    "eggList": [],
+    "eggSwitchTime": 0,
+    "initReportId": 1,
+    "reportSwitchTime": 10,
     "previews": [
       1,
       2,
@@ -21,6 +25,10 @@
     "icon": "mainsceneswitch_item02",
     "previewIcon": "mainsceneskinmaterial_pic01",
     "resName": "v2a2_m_s01_zjm_a",
+    "eggList": [],
+    "eggSwitchTime": 0,
+    "initReportId": 1,
+    "reportSwitchTime": 10,
     "previews": [
       5,
       6,
@@ -28,5 +36,31 @@
       8
     ],
     "storyId": 800804
+  },
+  {
+    "id": 3,
+    "defaultUnlock": 0,
+    "itemId": 240003,
+    "icon": "mainsceneswitch_item03",
+    "previewIcon": "mainsceneskinmaterial_pic02",
+    "resName": "v2a5_m_s01_zjm_a",
+    "eggList": [
+      301,
+      302,
+      303,
+      304,
+      305,
+      306
+    ],
+    "eggSwitchTime": 15,
+    "initReportId": 20,
+    "reportSwitchTime": 40,
+    "previews": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "storyId": 0
   }
 ]

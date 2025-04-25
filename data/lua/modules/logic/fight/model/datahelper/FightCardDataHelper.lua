@@ -489,5 +489,18 @@ return {
 		end
 
 		return slot4
+	end,
+	remainedAfterCombine = function (slot0, slot1)
+		if FightEnum.UniversalCard[slot0.cardData.skillId] or FightEnum.UniversalCard[slot1.cardData.skillId] then
+			slot4 = FightEnum.UniversalCard[slot0.cardData.skillId] and slot1 or slot0
+
+			return slot4, slot4 == slot0 and slot1 or slot0
+		end
+
+		if slot0:getItemIndex() < slot1:getItemIndex() then
+			return slot0, slot1
+		else
+			return slot1, slot0
+		end
 	end
 }

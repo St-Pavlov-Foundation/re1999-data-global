@@ -216,7 +216,8 @@ slot0.DetailParagraphType = {
 slot0.BannerFlagType = {
 	Limit = 3,
 	Activity = 2,
-	Newbie = 1
+	Newbie = 1,
+	Reprint = 4
 }
 slot0.TenSummonAgainOpen = false
 slot0.MultiProbUp4ShowRate = 25
@@ -225,6 +226,9 @@ slot0.CustomPickRare = 5
 slot0.PoolId = {
 	Normal = 2,
 	QuNiang = 16111
+}
+slot0.ChooseNeedFirstHeroIds = {
+	3025
 }
 
 return slot0

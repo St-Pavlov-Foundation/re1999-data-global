@@ -4,7 +4,7 @@ slot0 = class("GMFightEntityBuffItem", ListScrollCell)
 
 function slot0.init(slot0, slot1)
 	slot0._go = slot1
-	slot0._id = gohelper.findChildText(slot1, "id")
+	slot0._id = gohelper.findChildTextMeshInputField(slot1, "id")
 	slot0._name = gohelper.findChildText(slot1, "name")
 	slot0._type = gohelper.findChildText(slot1, "type")
 	slot0._set = gohelper.findChildText(slot1, "set")
@@ -31,7 +31,9 @@ end
 function slot0.onUpdateMO(slot0, slot1)
 	slot0._mo = slot1
 	slot3 = lua_skill_buff.configDict[slot0._mo.buffId] and lua_skill_bufftype.configDict[slot2.typeId]
-	slot0._id.text = tostring(slot0._mo.buffId)
+
+	slot0._id:SetText(tostring(slot0._mo.buffId))
+
 	slot0._name.text = slot2 and slot2.name or ""
 	slot0._type.text = slot2 and tostring(slot2.typeId) or ""
 	slot0._set.text = slot3 and tostring(slot3.type) or ""

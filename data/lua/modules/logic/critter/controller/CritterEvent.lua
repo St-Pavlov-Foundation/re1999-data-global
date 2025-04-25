@@ -40,11 +40,14 @@ slot0.TrainStartTrainCritterReply = 1004
 slot0.CritterInfoPushReply = 1005
 slot0.FastForwardTrainReply = 1006
 slot0.StartTrainCritterPreviewReply = 1007
+slot0.CritterRenameReply = 1008
 slot0.onEnterCritterBuildingView = 501
 slot0.CritterBuildingViewRefreshCamera = 502
 slot0.CritterBuildingViewChange = 503
 slot0.CritterBuildingViewChangeBuilding = 504
 slot0.CritterTrainStarted = 6001
 slot0.CritterTrainFinished = 6002
+slot0.UICritterDragIng = 7001
+slot0.UICritterDragEnd = 7002
 
 return slot0

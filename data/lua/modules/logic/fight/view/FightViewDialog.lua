@@ -32,6 +32,7 @@ slot0.Type = {
 	checkHaveMagicCircle = 23,
 	HaveBuffAndHaveDamageSkill_onlyCheckOnce = 31,
 	AfterSummon = 35,
+	BeforeStartFightAndXXTimesEnterBattleId = 37,
 	DetectHaveCardAfterEndOperation = 33,
 	BeforeStartFight = 24,
 	AfterAppearTimeline = 27,
@@ -555,6 +556,8 @@ function slot0._onFightDialogCheck(slot0, slot1, slot2, slot3, slot4)
 		slot0:_checkShowDialog(slot1, slot2)
 	elseif slot1 == uv0.Type.Success then
 		slot0:_checkShowDialog(slot1, slot2)
+	elseif slot1 == uv0.Type.BeforeStartFightAndXXTimesEnterBattleId then
+		slot0:_checkShowDialog(slot1, nil, , slot0._onCheckBeforeStartFightAndXXTimesEnterBattleId)
 	end
 end
 
@@ -617,6 +620,19 @@ function slot0._haveDamageSkillActEffectMOS(slot0, slot1)
 	for slot5, slot6 in ipairs(slot1) do
 		if slot6.cus_stepMO and slot0:_detectStepIsDamgeSkill(slot7) then
 			return
+		end
+	end
+end
+
+function slot0._onCheckBeforeStartFightAndXXTimesEnterBattleId(slot0)
+	if FightDataHelper.fieldMgr.battleId == slot0.param1 then
+		slot3 = PlayerPrefsKey.EnterBattleIdTimes .. slot1
+		slot4 = PlayerPrefsHelper.getNumber(slot3, 0) + 1
+
+		PlayerPrefsHelper.setNumber(slot3, slot4)
+
+		if slot0.param2 <= slot4 then
+			return true
 		end
 	end
 end

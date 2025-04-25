@@ -67,7 +67,7 @@ function slot0._btnnextOnClick(slot0)
 		return
 	end
 
-	if not slot0._stepCo or slot0._stepCo.conversation.type == StoryEnum.ConversationType.None or slot0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract then
+	if not slot0._stepCo or slot0._stepCo.conversation.type == StoryEnum.ConversationType.None or slot0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or slot0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog or slot0._stepCo.conversation.type == StoryEnum.ConversationType.IrregularShake then
 		return
 	end
 
@@ -444,7 +444,13 @@ function slot0._updateConversation(slot0)
 		return
 	end
 
-	if not slot0._stepId or slot0._stepId == slot0._stepCo.id then
+	if not slot0._stepId then
+		slot0._stepId = 0
+
+		return
+	end
+
+	if slot0._storyId and slot0._storyId == slot0._curStoryId and slot0._stepId == slot0._stepCo.id then
 		slot0._stepId = 0
 
 		return
@@ -453,6 +459,7 @@ function slot0._updateConversation(slot0)
 	StoryModel.instance:enableClick(false)
 
 	slot0._stepId = slot0._stepCo.id
+	slot0._storyId = slot0._curStoryId
 
 	if slot0._confadeId then
 		ZProj.TweenHelper.KillById(slot0._confadeId)
@@ -882,8 +889,12 @@ function slot0._updateAudioList(slot0, slot1)
 		slot0:stopAllAudio(0)
 	end
 
-	if slot0._curStoryId and slot0._curStoryId == StoryController.instance._curStoryId and slot0._stepId and slot0._stepId == StoryController.instance._curStepId then
-		return
+	if slot0._curStoryId and slot0._curStoryId == StoryController.instance._curStoryId and slot0._stepId and slot0._stepId == StoryController.instance._curStepId and slot0._audios then
+		for slot9, slot10 in pairs(slot1) do
+			if not slot0._audios[slot10.audio] then
+				return
+			end
+		end
 	end
 
 	slot0._audioCo = slot1

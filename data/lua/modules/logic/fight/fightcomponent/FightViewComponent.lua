@@ -2,7 +2,7 @@ module("modules.logic.fight.fightcomponent.FightViewComponent", package.seeall)
 
 slot0 = class("FightViewComponent", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0.inner_childViews = {}
 end
 
@@ -11,8 +11,8 @@ function slot0.openSubView(slot0, slot1, slot2, slot3, ...)
 		return slot0:openSubViewForBaseView(slot1, slot2, slot3, ...)
 	end
 
-	slot4 = slot0.PARENTROOTCLASS
-	slot5 = slot0:registClass(slot1, ...)
+	slot4 = slot0.PARENT_ROOT_CLASS
+	slot5 = slot0:newClass(slot1, ...)
 	slot5.viewName = slot4.viewName
 	slot5.viewContainer = slot4.viewContainer
 	slot5.PARENT_VIEW = slot4
@@ -150,7 +150,7 @@ function slot0.killAllSubView(slot0)
 	end
 
 	for slot4 = #slot0.inner_childViews, 1, -1 do
-		if not slot0.inner_childViews[slot4].INVOKEDDISPOSE then
+		if not slot0.inner_childViews[slot4].IS_DISPOSED then
 			slot5:onCloseInternal()
 			slot5:onCloseFinishInternal()
 			slot5:removeEventsInternal()

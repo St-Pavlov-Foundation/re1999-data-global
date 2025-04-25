@@ -265,4 +265,14 @@ function slot0.setImageUIMask(slot0, slot1)
 	end
 end
 
+function slot0.setFreezeState(slot0, slot1)
+	slot0._bFreeze = slot1
+
+	if not slot0._skeletonComponent then
+		return
+	end
+
+	slot0._skeletonComponent.freeze = slot1
+end
+
 return slot0

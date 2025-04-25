@@ -10,6 +10,7 @@ function slot0.onInitView(slot0)
 	slot0._godetail = gohelper.findChild(slot0.viewGO, "#go_maturity/Left/#go_detail")
 	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_maturity/Left/#go_detail/#txt_name")
 	slot0._imagelock = gohelper.findChildImage(slot0.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#image_lock")
+	slot0._btnnameedit = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#btn_nameedit")
 	slot0._txttag1 = gohelper.findChildText(slot0.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag1")
 	slot0._txttag2 = gohelper.findChildText(slot0.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag2")
 	slot0._imagesort = gohelper.findChildImage(slot0.viewGO, "#go_maturity/Left/#go_detail/#image_sort")
@@ -41,15 +42,23 @@ end
 function slot0.addEvents(slot0)
 	uv0.super.addEvents(slot0)
 	slot0._btnreport:AddClickListener(slot0._btnreportOnClick, slot0)
+	slot0._btnnameedit:AddClickListener(slot0._btnnameeditOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	uv0.super.removeEvents(slot0)
 	slot0._btnreport:RemoveClickListener()
+	slot0._btnnameedit:RemoveClickListener()
 end
 
 function slot0._btnreportOnClick(slot0)
 	RoomCritterController.instance:openTrainReporView(slot0._critterMo:getId(), slot0._critterMo.trainHeroId, slot0._critterMo.totalFinishCount)
+end
+
+function slot0._btnnameeditOnClick(slot0)
+	if slot0._critterMo then
+		RoomCritterController.instance:openRenameView(slot0._critterMo:getId())
+	end
 end
 
 function slot0._editableInitView(slot0)
@@ -57,8 +66,15 @@ function slot0._editableInitView(slot0)
 end
 
 function slot0.onOpen(slot0)
+	slot0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, slot0._onCritterRenameReply, slot0)
 	uv0.super.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_open)
+end
+
+function slot0._onCritterRenameReply(slot0, slot1)
+	if slot0._critterMo and slot0._critterMo.id == slot1 then
+		slot0:showInfo()
+	end
 end
 
 function slot0.onRefresh(slot0)

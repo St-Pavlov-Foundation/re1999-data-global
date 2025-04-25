@@ -2,6 +2,32 @@ module("modules.logic.dialogue.view.items.DialogueNormalItem", package.seeall)
 
 slot0 = class("DialogueNormalItem", DialogueItem)
 
+function slot0._showContent(slot0, slot1)
+	TaskDispatcher.cancelTask(slot0._delayShowContent, slot0)
+
+	slot1 = slot1 or ""
+	slot0._markTopList = StoryTool.getMarkTopTextList(slot1)
+	slot0._contentStr = StoryTool.filterMarkTop(slot1)
+
+	slot0:_setLineSpacing(slot0:_getLineSpacing())
+
+	slot0.txtContent.text = slot0._contentStr
+
+	TaskDispatcher.runDelay(slot0._delayShowContent, slot0, 0.01)
+end
+
+function slot0._delayShowContent(slot0)
+	slot0._conMark:SetMarksTop(slot0._markTopList)
+end
+
+function slot0._getLineSpacing(slot0)
+	return #slot0._markTopList > 0 and slot0._lineSpacing or slot0._originalLineSpacing
+end
+
+function slot0._setLineSpacing(slot0, slot1)
+	slot0.txtContent.lineSpacing = slot1 or 0
+end
+
 function slot0.initView(slot0)
 	slot0.simageAvatar = gohelper.findChildSingleImage(slot0.go, "rolebg/#image_avatar")
 	slot0.txtName = gohelper.findChildText(slot0.go, "#txt_name")
@@ -13,20 +39,18 @@ function slot0.initView(slot0)
 	slot0._conMark = gohelper.onceAddComponent(slot0.txtContent.gameObject, typeof(ZProj.TMPMark))
 
 	slot0._conMark:SetMarkTopGo(slot0._txtmarktop.gameObject)
-	slot0._conMark:SetTopOffset(0, -2)
+	slot0._conMark:SetTopOffset(8, -2.4)
+
+	slot0._originalLineSpacing = slot0.txtContent.lineSpacing
+	slot0._lineSpacing = 26
 end
 
 function slot0.refresh(slot0)
 	slot0.simageAvatar:LoadImage(ResUrl.getHeadIconSmall(slot0.stepCo.avatar))
 
 	slot0.txtName.text = slot0.stepCo.name
-	slot1 = slot0.stepCo.content
-	slot2 = StoryTool.getMarkTopTextList(slot1)
-	slot0.txtContent.text = StoryTool.filterMarkTop(slot1)
 
-	TaskDispatcher.runDelay(function ()
-		uv0._conMark:SetMarksTop(uv1)
-	end, nil, 0.01)
+	slot0:_showContent(slot0.stepCo.content)
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
 end
 
@@ -59,6 +83,7 @@ function slot0.logHeight(slot0)
 end
 
 function slot0.onDestroy(slot0)
+	TaskDispatcher.cancelTask(slot0._delayShowContent, slot0)
 	slot0.simageAvatar:UnLoadImage()
 end
 

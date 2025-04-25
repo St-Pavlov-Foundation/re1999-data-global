@@ -306,14 +306,13 @@ function slot0._onRefreshCubeList(slot0)
 			if slot0._last_add_attr[slot7.key] then
 				if slot7.value - slot0._last_add_attr[slot7.key].value > 0 then
 					if HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(slot7.key)).type == 1 then
+						slot10 = math.floor(slot8) - math.floor(slot9)
+					end
+
+					if slot10 > 0 then
 						table.insert(slot1, {
 							key = slot7.key,
-							value = math.floor(slot7.value) - math.floor(slot0._last_add_attr[slot7.key].value)
-						})
-					else
-						table.insert(slot1, {
-							key = slot7.key,
-							value = slot7.value - slot0._last_add_attr[slot7.key].value
+							value = slot10
 						})
 					end
 				end

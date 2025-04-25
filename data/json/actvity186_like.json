@@ -1,0 +1,34 @@
+[
+  {
+    "type": 1,
+    "activityId": 12518,
+    "name": "language_10069478",
+    "nameen": "",
+    "icon": "",
+    "basevalueornot": 0
+  },
+  {
+    "type": 2,
+    "activityId": 12518,
+    "name": "language_10017042",
+    "nameen": "",
+    "icon": "",
+    "basevalueornot": 0
+  },
+  {
+    "type": 3,
+    "activityId": 12518,
+    "name": "language_10069479",
+    "nameen": "",
+    "icon": "",
+    "basevalueornot": 0
+  },
+  {
+    "type": 4,
+    "activityId": 12518,
+    "name": "language_10069480",
+    "nameen": "",
+    "icon": "",
+    "basevalueornot": 1
+  }
+]

@@ -1,6 +1,6 @@
 module("modules.logic.fight.model.data.FightEntityDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightEntityDataMgr")
+slot0 = FightDataClass("FightEntityDataMgr")
 slot1 = {
 	normal = "normal",
 	assistBoss = "assistBoss",
@@ -10,7 +10,7 @@ slot1 = {
 	player = "player"
 }
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0._entityDataDic = {}
 	slot0._sideDic = {}
 
@@ -26,6 +26,17 @@ function slot0.ctor(slot0)
 	end
 
 	slot0._deadUids = {}
+end
+
+function slot0.getAllEntityList(slot0, slot1, slot2)
+	slot1 = slot1 or {}
+
+	for slot6, slot7 in pairs(uv0) do
+		slot0:getList(FightEnum.EntitySide.MySide, slot7, slot1, slot2)
+		slot0:getList(FightEnum.EntitySide.EnemySide, slot7, slot1, slot2)
+	end
+
+	return slot1
 end
 
 function slot0.getSideList(slot0, slot1, slot2, slot3)
@@ -44,6 +55,18 @@ end
 
 function slot0.getMyPlayerList(slot0, slot1, slot2)
 	return slot0:getList(FightEnum.EntitySide.MySide, uv0.player, slot1, slot2)
+end
+
+function slot0.getEnemyPlayerList(slot0, slot1, slot2)
+	return slot0:getList(FightEnum.EntitySide.EnemySide, uv0.player, slot1, slot2)
+end
+
+function slot0.getMyVertin(slot0)
+	return slot0:getMyPlayerList()[1]
+end
+
+function slot0.getEnemyVertin(slot0)
+	return slot0:getEnemyPlayerList()[1]
 end
 
 function slot0.getNormalList(slot0, slot1, slot2, slot3)

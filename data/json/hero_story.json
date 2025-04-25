@@ -458,5 +458,28 @@
     "cgScale": "1",
     "mainviewName": "language_10063894",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 21,
+    "chapterId": 1921,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110203#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10005824",
+    "photo": "303902",
+    "cgBg": "303901",
+    "order": 21,
+    "name": "language_10066479",
+    "nameEn": "T</size>he  <color=#D2CDBC><size=30>Ghost</size></color> Master<size=140>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_21",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12517,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 192105,
+    "cgPos": "796#200",
+    "cgScale": "1",
+    "mainviewName": "language_10068190",
+    "permanentUnlock": "2#24#1"
   }
 ]

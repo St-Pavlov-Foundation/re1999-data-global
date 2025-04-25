@@ -1,0 +1,47 @@
+[
+  {
+    "activityId": 12520,
+    "bonus": "2#3",
+    "lantern": "v2a5_lanternfestival_lantern1",
+    "lanternRibbon": "1",
+    "lanternImg": "v2a5_lanternfestival_pic3",
+    "lanternImgBg": "v2a5_lanternfestival_picshadow3",
+    "blessing": "language_10069555"
+  },
+  {
+    "activityId": 12520,
+    "bonus": "9#1003",
+    "lantern": "v2a5_lanternfestival_lantern1",
+    "lanternRibbon": "1",
+    "lanternImg": "v2a5_lanternfestival_pic1",
+    "lanternImgBg": "v2a5_lanternfestival_picshadow1",
+    "blessing": "language_10069556"
+  },
+  {
+    "activityId": 12520,
+    "bonus": "1#491007",
+    "lantern": "v2a5_lanternfestival_lantern3",
+    "lanternRibbon": "2",
+    "lanternImg": "v2a5_lanternfestival_pic4",
+    "lanternImgBg": "v2a5_lanternfestival_picshadow4",
+    "blessing": "language_10069557"
+  },
+  {
+    "activityId": 12520,
+    "bonus": "1#110504",
+    "lantern": "v2a5_lanternfestival_lantern2",
+    "lanternRibbon": "3",
+    "lanternImg": "v2a5_lanternfestival_pic5",
+    "lanternImgBg": "v2a5_lanternfestival_picshadow5",
+    "blessing": "language_10069558"
+  },
+  {
+    "activityId": 12520,
+    "bonus": "1#491004",
+    "lantern": "v2a5_lanternfestival_lantern1",
+    "lanternRibbon": "1",
+    "lanternImg": "v2a5_lanternfestival_pic2",
+    "lanternImgBg": "v2a5_lanternfestival_picshadow2",
+    "blessing": "language_10069559"
+  }
+]

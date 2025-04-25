@@ -2,6 +2,7 @@ module("modules.configs.excel2json.lua_character_motion_effect", package.seeall)
 
 slot1 = {
 	node = 4,
+	everNode = 5,
 	motion = 3,
 	heroResName = 1,
 	effectCompName = 2

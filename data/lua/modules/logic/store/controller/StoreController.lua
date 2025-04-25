@@ -98,6 +98,10 @@ function slot0.openPackageStoreGoodsView(slot0, slot1)
 	end
 end
 
+function slot0.openDecorateStoreGoodsView(slot0, slot1)
+	ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, slot1)
+end
+
 function slot0.openSummonStoreGoodsView(slot0, slot1)
 	if slot1.belongStoreId == StoreEnum.Room then
 		RoomController.instance:openStoreGoodsTipView(slot1)

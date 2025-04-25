@@ -8,7 +8,8 @@ slot0.VariantKey = {
 	"_STYLIZATIONMOSTER2_ON",
 	"_STYLE_JOINT_ON",
 	"_STYLE_RAIN_STORM_ON",
-	"_STYLE_ASSIST_ON"
+	"_STYLE_ASSIST_ON",
+	"_STYLIZATIONMOSTER4_ON"
 }
 slot1 = "_NoiseMap3"
 slot2 = {
@@ -18,7 +19,8 @@ slot2 = {
 	"noise_03_manual",
 	"noise_sty_joint2_manual",
 	"textures/style_rain_strom_manual",
-	"textures/style_assist_noise_manual"
+	"textures/style_assist_noise_manual",
+	"textures/noise_05_manual"
 }
 slot3 = "_Pow"
 slot4 = {
@@ -54,6 +56,9 @@ slot6 = {
 	0,
 	1,
 	0
+}
+slot7 = {
+	[8.0] = "roleeffects/roleeffect_glitch"
 }
 
 function slot0.ctor(slot0, slot1)
@@ -143,6 +148,28 @@ function slot0._changeVariant(slot0, slot1)
 
 		loadAbAsset(slot0._texturePath, false, slot0._onLoadCallback, slot0)
 	end
+
+	if not uv6[slot1] then
+		slot0:clearLoader()
+		slot0:clearEffect()
+
+		slot0.curEffectRes = nil
+	elseif not slot0.effectWrap or slot0.curEffectRes ~= slot8 then
+		slot0.curEffectRes = slot8
+
+		slot0:clearLoader()
+
+		slot0.effectLoader = MultiAbLoader.New()
+
+		slot0.effectLoader:addPath(FightHelper.getEffectAbPath(FightHelper.getEffectUrlWithLod(slot8)))
+		slot0.effectLoader:startLoad(slot0.onEffectLoaded, slot0)
+	end
+end
+
+function slot0.onEffectLoaded(slot0)
+	slot0.effectWrap = slot0.entity.effect:addHangEffect(slot0.curEffectRes, ModuleEnum.SpineHangPointRoot)
+
+	slot0.effectWrap:setLocalPos(0, 0, 0)
 end
 
 function slot0._onLoadCallback(slot0, slot1)
@@ -154,7 +181,28 @@ function slot0._onLoadCallback(slot0, slot1)
 	end
 end
 
+function slot0.clearEffect(slot0)
+	if slot0.effectWrap then
+		slot0.entity.effect:removeEffect(slot0.effectWrap)
+
+		slot0.effectWrap = nil
+	end
+end
+
+function slot0.clearLoader(slot0)
+	if slot0.effectLoader then
+		slot0.effectLoader:dispose()
+
+		slot0.effectLoader = nil
+	end
+end
+
 function slot0.onDestroy(slot0)
+	slot0:clearLoader()
+	slot0:clearEffect()
+
+	slot0.curEffectRes = nil
+
 	if slot0._assetItem then
 		slot0._assetItem:Release()
 

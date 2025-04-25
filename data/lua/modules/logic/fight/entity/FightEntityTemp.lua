@@ -46,4 +46,11 @@ function slot0.loadSpineBySkin(slot0, slot1, slot2, slot3)
 	slot0.spine:setResPath(ResUrl.getSpineFightPrefabBySkin(slot1), slot0._onSpineLoaded, slot0)
 end
 
+function slot0.loadSpineBySpinePath(slot0, slot1, slot2, slot3)
+	slot0._callback = slot2
+	slot0._callbackObj = slot3
+
+	slot0.spine:setResPath(slot1, slot0._onSpineLoaded, slot0)
+end
+
 return slot0

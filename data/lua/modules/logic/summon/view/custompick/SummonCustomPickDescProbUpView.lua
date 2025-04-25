@@ -79,7 +79,7 @@ function slot0.refreshPropUpAD(slot0)
 
 	slot3, slot4, slot5 = SummonMainModel.instance:getCustomPickProbability(slot0._poolId)
 
-	gohelper.setActive(slot2.txtProbability, slot4 ~= 0 or not slot5)
+	gohelper.setActive(slot2.txtProbability, slot4 == 0 and not slot5)
 
 	if slot4 ~= 0 then
 		slot2.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang(slot4 ~= 0 and "summonpooldetail_up_probability_total" or "p_summonpooldetail_up_probability"), SummonEnum.CustomPickRare + 1, slot3, slot4 / 10)
@@ -170,7 +170,7 @@ function slot0.getProbUpHeroIconItem(slot0, slot1, slot2)
 end
 
 slot0.EmptyHeroIconList = {
-	"306601_1",
+	"300301_1",
 	"302501_1"
 }
 slot0.PickOneEmptyHeroIcon = "306601_1"

@@ -406,11 +406,7 @@ function slot0._refreshRedDot(slot0)
 	RedDotController.instance:addRedDotTag(slot0._gogreendot, RedDotEnum.DotNode.MainRoomCharacterFaithGetFull)
 	RedDotController.instance:addRedDotTag(slot0._goroomgiftreddot, RedDotEnum.DotNode.RoomGift)
 
-	slot0.playerRedDot = RedDotController.instance:addMultiRedDot(slot0._goplayerreddot, {
-		{
-			id = RedDotEnum.DotNode.PlayerChangeBgNew
-		}
-	}, slot0.playerRedDotRefreshFunc, slot0)
+	slot0.playerRedDot = RedDotController.instance:addMultiRedDot(slot0._goplayerreddot, {}, slot0.playerRedDotRefreshFunc, slot0)
 	slot0.thumbnailRedDot = RedDotController.instance:addMultiRedDot(slot0._gothumbnialreddot, {
 		{
 			id = RedDotEnum.DotNode.FriendBtn
@@ -449,8 +445,8 @@ end
 function slot0.thumbnailRedDotRefreshFunc(slot0, slot1)
 	slot1:defaultRefreshDot()
 
-	if not slot1.show and (NoticeModel.instance:hasNotRedNotice() or PlayerModel.instance:isHasAssistReward() or BGMSwitchController.instance:hasBgmRedDot()) then
-		slot1.show = true
+	if not slot1.show then
+		slot1.show = slot2 or NoticeModel.instance:hasNotRedNotice() or PlayerModel.instance:isHasAssistReward() or BGMSwitchController.instance:hasBgmRedDot() or LifeCircleController.instance:isShowRed()
 
 		slot1:showRedDot(RedDotEnum.Style.Normal)
 	end
@@ -537,7 +533,7 @@ function slot0.showStoreDeadline(slot0, slot1)
 	slot2 = slot0:getOrCreateStoreDeadline()
 	slot2.needShow = slot1 or slot2.needShow
 
-	if StoreConfig.instance:getTabConfig(StoreEnum.StoreId.Summon) and slot2.needShow then
+	if StoreConfig.instance:getTabConfig(StoreEnum.StoreId.LimitStore) and slot2.needShow then
 		slot4 = false
 
 		if StoreHelper.getRemainExpireTime(slot3) and slot5 > 0 and slot5 <= TimeUtil.OneDaySecond * 7 then
@@ -857,6 +853,10 @@ function slot0._refreshBgm(slot0)
 
 	if not slot2 then
 		logError("_refreshBgm no bgmGo")
+	end
+
+	if not slot1 then
+		logError("_refreshBgm no lightGo")
 	end
 end
 

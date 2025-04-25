@@ -458,8 +458,12 @@ function slot0.getRevertRotate(slot0)
 	return slot0._revertRotate
 end
 
-function slot0.getBuildingListByType(slot0, slot1)
-	return slot0._type2BuildingDict[slot1]
+function slot0.getBuildingListByType(slot0, slot1, slot2)
+	if slot0._type2BuildingDict[slot1] and slot2 then
+		table.sort(slot3, RoomHelper.sortBuildingById)
+	end
+
+	return slot3
 end
 
 function slot0.isHasCritterByBuid(slot0, slot1)

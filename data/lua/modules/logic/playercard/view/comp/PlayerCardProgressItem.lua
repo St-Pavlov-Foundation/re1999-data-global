@@ -64,7 +64,7 @@ function slot0.onUpdateMO(slot0, slot1)
 	slot0.type = slot0.config.type
 
 	UISpriteSetMgr.instance:setPlayerCardSprite(slot0._imagepic, "playercard_progress_img_" .. slot0.index)
-	UISpriteSetMgr.instance:setPlayerCardSprite(slot0._imageicon, "playercard_main_icon_" .. slot0.index)
+	UISpriteSetMgr.instance:setPlayerCardSprite(slot0._imageicon, "playercard_progress_icon_" .. slot0.index)
 	slot0:refreshItem()
 
 	if PlayerCardProgressModel.instance:getSelectIndex(slot0.index) then

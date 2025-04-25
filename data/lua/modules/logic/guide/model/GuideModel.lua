@@ -9,14 +9,22 @@ slot0.GuideFlag = {
 	MaskUseMainCamera = 23,
 	FightDoingEnterPassedEpisode = 10,
 	FightForbidClickTechnique = 7,
-	SkipShowDungeonMapLevelView = 26,
+	AutoChessToast = 45,
 	KeepEpisodeItemLock = 29,
 	FightDoingSubEntity = 5,
 	PinballBanOper = 34,
+	FeiLinShiDuoBanOper = 35,
+	AutoChessSetPlaceIndex = 37,
+	AutoChessEnableExchangeEXP = 39,
+	AutoChessEnableSale = 40,
+	AutoChessEnableDragChess = 43,
+	SkipShowDungeonMapLevelView = 26,
 	DontOpenMain = 24,
 	FightBackSkipDungeonView = 9,
+	AutoChessEnableUseSkill = 44,
 	UseBlock = 17,
 	FightForbidAutoFight = 4,
+	AutoChessEnablePreviewEnemy = 41,
 	FightForbidRestrainTag = 6,
 	FightForbidClickOpenView = 15,
 	MainViewGuideId = 32,
@@ -25,10 +33,12 @@ slot0.GuideFlag = {
 	MoveFightBtn2MapView = 21,
 	FightMoveCard = 1,
 	SkipInitElement = 20,
+	AutoChessBanAllOper = 36,
 	PutTalent = 22,
 	MainViewGuideBlock = 31,
 	TianShiNaNaBanOper = 33,
 	ForceJumpToMainView = 14,
+	AutoChessEnableDragFreeChess = 38,
 	DelayGetPointReward = 18,
 	Guidepost = 12,
 	SeasonUTTU = 27,
@@ -207,6 +217,16 @@ end
 function slot0.isDoingClickGuide(slot0)
 	for slot5 = 1, #slot0:getList() do
 		if (not slot1[slot5].isFinish or slot6.currStepId > 0) and not string.nilorempty(uv0.instance:getStepGOPath(slot6.id, slot6.currStepId)) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function slot0.isAnyGuideRunning(slot0)
+	for slot5 = 1, #slot0:getList() do
+		if not slot1[slot5].isFinish or slot6.currStepId > 0 then
 			return true
 		end
 	end

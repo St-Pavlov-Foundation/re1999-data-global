@@ -53,16 +53,39 @@ function slot0._onLevelLoaded(slot0)
 	slot0:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinish)
 end
 
-function slot0.getLightColor(slot0)
-	return lua_scene_settings.configDict[MainSceneSwitchModel.instance:getCurSceneId()]["lightColor" .. slot0]
+function slot0.getLightColor(slot0, slot1)
+	return lua_scene_settings.configDict[slot1]["lightColor" .. slot0]
 end
 
-function slot0.getPrefabLightStartRotation(slot0)
-	return lua_scene_settings.configDict[MainSceneSwitchModel.instance:getCurSceneId()].prefabLightStartRotation[slot0]
+function slot0.getPrefabLightStartRotation(slot0, slot1)
+	return lua_scene_settings.configDict[slot1].prefabLightStartRotation[slot0]
 end
 
-function slot0.getEffectLightStartRotation(slot0)
-	return lua_scene_settings.configDict[MainSceneSwitchModel.instance:getCurSceneId()].effectLightStartRotation[slot0]
+function slot0.getEffectLightStartRotation(slot0, slot1)
+	return lua_scene_settings.configDict[slot1].effectLightStartRotation[slot0]
+end
+
+function slot0.closeReddot()
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) then
+		RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.MainSceneSwitch, false)
+	end
+end
+
+function slot0.AnySceneHasReddot()
+	for slot3, slot4 in ipairs(lua_scene_switch.configList) do
+		if slot4.defaultUnlock ~= 1 and uv0.sceneHasReddot(slot4.id) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function slot0.sceneHasReddot(slot0)
+	return false
+end
+
+function slot0.closeSceneReddot(slot0)
 end
 
 slot0.instance = slot0.New()

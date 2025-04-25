@@ -39,5 +39,12 @@ slot0.CompType = {
 	Layout = 2,
 	Normal = 1
 }
+slot0.FriendViewType = {
+	black = 5,
+	offline = 2,
+	add = 3,
+	online = 1,
+	playerinfo = 4
+}
 
 return slot0

@@ -10,9 +10,10 @@ slot0.SimpleProperty = {
 	BGMViewInfo = 12,
 	ChapterUnlockEffect = 5,
 	V2a4_WarmUp_sum_help_npc = 7,
-	MainSceneSkin = 13,
+	MainSceneSkinRedDot = 15,
 	MainHero = 2,
 	Weather = 1,
+	MainSceneSkin = 13,
 	FightTechnique = 4,
 	ShowHelpIds = 6
 }

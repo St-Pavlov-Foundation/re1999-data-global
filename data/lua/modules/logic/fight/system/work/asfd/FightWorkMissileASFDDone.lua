@@ -22,6 +22,8 @@ function slot0.clearWork(slot0)
 end
 
 function slot0._delayDone(slot0)
+	logError("奥术飞弹 等待发射完成 超时了")
+
 	return slot0:onDone(true)
 end
 

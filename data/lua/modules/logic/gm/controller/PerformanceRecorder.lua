@@ -5,6 +5,8 @@ slot0 = class("PerformanceRecorder")
 function slot0.init(slot0)
 	slot0._curTime = 0
 	slot0._curFrameCount = 0
+	slot0._curSceondTime = 0
+	slot0._record = {}
 end
 
 function slot0.initProfilerConnection()
@@ -338,6 +340,228 @@ function slot0.beginCheckCasesFlow(slot0)
 	end
 
 	slot1:start()
+end
+
+function slot0.doProfilerCmdAction(slot0, slot1)
+	slot0._record = {}
+	slot0._recordDataCmdList = {}
+
+	for slot5, slot6 in ipairs(slot1) do
+		slot8 = slot6.stop
+
+		if slot0:_getProfilerAciton(slot6.cmd) then
+			if slot6.frame then
+				if slot10 > 1 then
+					-- Nothing
+				elseif slot10 == 1 then
+					-- Nothing
+				end
+			else
+				slot0:addProfilerAcitonInUpdate(slot7)
+			end
+		elseif slot7 == "WaitSceond" then
+			-- Nothing
+		end
+
+		if slot8 then
+			slot0:removeProfilerAcitonInUpdate(slot8)
+		end
+	end
+
+	if slot0.workFlow then
+		slot0.workFlow:registerDoneListener(slot0.onFlowDone, slot0)
+		slot0.workFlow:start()
+	end
+end
+
+function slot0._getProfilerAciton(slot0, slot1)
+	if slot0._cmdActionDict == nil then
+		slot0._cmdActionDict = {
+			GetTextureMemory = slot0.recordTextureMemory,
+			WaitSceond = nil,
+			GetLuaMemory = slot0.recordLuaMemory,
+			LogLuaMemory = slot0.logLuaMemory,
+			LogRenderData = slot0.logRenderDataAction,
+			LogTextureMemory = slot0.logTextureMemory
+		}
+	end
+
+	return slot0._cmdActionDict[slot1]
+end
+
+function slot0._getStopProfilerAciton(slot0, slot1)
+	if slot0._stopActionDict == nil then
+		slot0._stopActionDict = {
+			GetRenderData = slot0.stopLogRenderDataAction
+		}
+	end
+
+	return slot0._stopActionDict[slot1]
+end
+
+function slot0.addProfilerAcitonInUpdate(slot0, slot1)
+	if slot0:_getProfilerAciton(slot1) then
+		if not slot0._secondsProfilerAcitons then
+			slot0._secondsProfilerAcitons = {}
+
+			LateUpdateBeat:Add(slot0.doProfilerAcitonInUpdate, slot0)
+		end
+
+		slot0._secondsProfilerAcitons[slot1] = slot2
+	end
+end
+
+function slot0.removeProfilerAcitonInUpdate(slot0, slot1)
+	slot2 = slot0:_getStopProfilerAciton(slot1)
+
+	if not slot0._secondsProfilerAcitons then
+		return
+	end
+
+	slot0._secondsProfilerAcitons[slot1] = nil
+
+	if tabletool.len(slot0._secondsProfilerAcitons) == 0 then
+		LateUpdateBeat:Remove(slot0.doProfilerAcitonInUpdate, slot0)
+	end
+
+	if slot2 then
+		slot2(slot0)
+	end
+end
+
+function slot0.doProfilerAcitonInUpdate(slot0)
+	if not slot0._secondsProfilerAcitons then
+		return
+	end
+
+	slot0._curSceondTime = slot0._curSceondTime or 0
+
+	if os.time() <= slot0._curSceondTime then
+		return
+	end
+
+	slot0._curSceondTime = slot1
+
+	for slot6, slot7 in pairs(slot0._secondsProfilerAcitons) do
+		slot2 = 0 + 1
+
+		slot7(slot0)
+	end
+
+	if slot2 == 0 then
+		LateUpdateBeat:Remove(slot0.doProfilerAcitonInUpdate, slot0)
+	end
+end
+
+function slot0.getTextureMemory(slot0)
+	return ZProj.ProfilerHelper.GetTextureAssetMemory()
+end
+
+function slot0.recordTextureMemory(slot0, slot1)
+	if not slot1 then
+		slot0._record[#slot0._record + 1] = slot0:getTextureMemory()
+	else
+		if slot1 == 0 then
+			slot0._record[#slot0._record + 1] = {}
+		end
+
+		slot0._record[#slot0._record][slot1 + 1] = slot0:getTextureMemory()
+	end
+end
+
+function slot0.getLuaMemory(slot0)
+	return ZProj.ProfilerHelper.GetLuaMemory()
+end
+
+function slot0.recordLuaMemory(slot0, slot1)
+	if not slot1 then
+		slot0._record[#slot0._record + 1] = slot0:getLuaMemory()
+	else
+		if slot1 == 0 then
+			slot0._record[#slot0._record + 1] = {}
+		end
+
+		slot0._record[#slot0._record][slot1 + 1] = slot0:getLuaMemory()
+	end
+end
+
+function slot0.logLuaMemory(slot0)
+	BenchmarkApi.AndroidLog(string.format("luaMemory:%.2f MB", slot0:getLuaMemory()))
+end
+
+function slot0.logRenderDataAction(slot0)
+	if SLFramework.NativeUtil.IsAndroidX8664() then
+		logWarn("X86_64 not support Catch Render Data For the [ShadowHook] is not supported On X86")
+
+		return
+	end
+
+	if not slot0._benchMarkInited then
+		slot0._benchMarkInited = BenchmarkApi.init()
+	end
+
+	if not slot0._benchMarkInlineHooked then
+		BenchmarkApi.hook()
+
+		slot0._benchMarkInlineHooked = true
+	end
+
+	if slot0._catchedFrameData then
+		slot0._catchedFrameData = false
+
+		BenchmarkApi.AndroidLog(string.format("drawCall:%s|vertCount:%s|triCount:%s", slot0:getReadableNum(BenchmarkApi.pop_draw_num()), slot0:getReadableNum(BenchmarkApi.pop_num_vertices()), slot0:getReadableNum(BenchmarkApi.pop_num_triangles())))
+	end
+
+	if not slot0._catchedFrameData then
+		BenchmarkApi.clearInfo()
+		BenchmarkApi.CatchSingleFrameData()
+
+		slot0._catchedFrameData = true
+	end
+end
+
+function slot0.logTextureMemory(slot0)
+	BenchmarkApi.AndroidLog(string.format("textrueMemory:%.0f MB", slot0:getTextureMemory()))
+end
+
+function slot0.stopLogRenderDataAction(slot0)
+	if not slot0._benchMarkInited then
+		return
+	end
+
+	if slot0._benchMarkInlineHooked then
+		BenchmarkApi.clearInfo()
+		BenchmarkApi.unhook()
+	end
+
+	slot0._catchedFrameData = false
+end
+
+function slot0.getReadableNum(slot0, slot1)
+	if slot1 < 1000 then
+		return slot1
+	elseif slot1 < 1000000 then
+		return string.format("%.1f", slot1 / 1000) .. "k"
+	else
+		return string.format("%.1f", slot1 / 1000000) .. "m"
+	end
+end
+
+function slot0.onFlowDone(slot0)
+	for slot5, slot6 in ipairs(slot0._record) do
+		-- Nothing
+	end
+
+	slot2 = JsonUtil.encode({
+		[slot5 .. slot0._recordDataCmdList[slot5].cmd] = slot6
+	})
+	slot6 = io.open(System.IO.Path.Combine(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler"), "profilerResult.json"), "w")
+
+	slot6:write(tostring(slot2))
+	slot6:close()
+	BenchmarkApi.AndroidLog(slot2)
+
+	slot0.flow = nil
 end
 
 slot0.instance = slot0.New()

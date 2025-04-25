@@ -38,6 +38,8 @@ function slot0._enterActivity11804(slot0, slot1)
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_8DungeonMapLevelView)
 	end
 
+	PermanentController.instance:jump2Activity(VersionActivity1_8Enum.ActivityId.EnterView)
+
 	slot5 = FlowSequence.New()
 
 	slot5:addWork(OpenViewWork.New({
@@ -68,12 +70,19 @@ function slot0.enterActivity11806(slot0, slot1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(slot0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function ()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_8EnterView)
-		VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+		if ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila) and slot0.isRetroAcitivity == 2 then
+			PermanentController.instance:jump2Activity(VersionActivity1_8Enum.ActivityId.EnterView)
 			ActWeilaController.instance:openLevelView({
 				needShowFight = true
 			})
-		end, nil, VersionActivity1_8Enum.ActivityId.Weila)
+		else
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_8EnterView)
+			VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+				ActWeilaController.instance:openLevelView({
+					needShowFight = true
+				})
+			end, nil, VersionActivity1_8Enum.ActivityId.Weila)
+		end
 	end)
 end
 
@@ -81,12 +90,19 @@ function slot0.enterActivity11807(slot0, slot1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(slot0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function ()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_8EnterView)
-		VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+		if ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila) and slot0.isRetroAcitivity == 2 then
+			PermanentController.instance:jump2Activity(VersionActivity1_8Enum.ActivityId.EnterView)
 			ActWindSongController.instance:openLevelView({
 				needShowFight = true
 			})
-		end, nil, VersionActivity1_8Enum.ActivityId.WindSong)
+		else
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_8EnterView)
+			VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+				ActWindSongController.instance:openLevelView({
+					needShowFight = true
+				})
+			end, nil, VersionActivity1_8Enum.ActivityId.WindSong)
+		end
 	end)
 end
 

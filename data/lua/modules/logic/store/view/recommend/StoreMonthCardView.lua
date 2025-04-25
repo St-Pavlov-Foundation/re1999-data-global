@@ -49,10 +49,7 @@ function slot0._btnbuyOnClick(slot0)
 end
 
 function slot0.onWenHaoClick(slot0)
-	ViewMgr.instance:openView(ViewName.StoreTipView, {
-		showTop = true
-	})
-	AudioMgr.instance:trigger(20002004)
+	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
 end
 
 function slot0._editableInitView(slot0)

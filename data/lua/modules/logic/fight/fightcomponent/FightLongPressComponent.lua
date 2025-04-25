@@ -2,7 +2,7 @@ module("modules.logic.fight.fightcomponent.FightLongPressComponent", package.see
 
 slot0 = class("FightLongPressComponent", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._longPressArr = {
 		0.5,
 		99999

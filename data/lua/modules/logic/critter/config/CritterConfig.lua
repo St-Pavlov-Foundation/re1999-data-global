@@ -18,7 +18,8 @@ function slot0.reqConfigNames(slot0)
 		"critter_summon_pool",
 		"critter_rare",
 		"critter_catalogue",
-		"critter_filter_type"
+		"critter_filter_type",
+		"critter_patience_change"
 	}
 end
 
@@ -474,6 +475,10 @@ function slot0._findCatalogueChildIdList_(slot0, slot1, slot2)
 	end
 
 	return slot3, slot4
+end
+
+function slot0.getPatienceChangeCfg(slot0, slot1)
+	return lua_critter_patience_change.configDict[slot1]
 end
 
 slot0.instance = slot0.New()

@@ -358,10 +358,6 @@ function slot0._initCamera(slot0)
 	slot0._guiL2dLoader:startLoad(slot0._loadL2dResFinish, slot0)
 end
 
-function slot0.setSkinId(slot0, slot1)
-	slot0._skinId = slot1
-end
-
 function slot0.openBloomView(slot0, slot1)
 	slot0._openBloomView = slot1
 end

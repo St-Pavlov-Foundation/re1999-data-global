@@ -265,7 +265,7 @@ end
 
 function slot0._onPointItemShow(slot0, slot1, slot2, slot3)
 	if not slot0._expointObj[slot3] then
-		slot0._expointObj[slot3] = slot0:registTable()
+		slot0._expointObj[slot3] = slot0:newUserDataTable()
 		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
 		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
 		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)
@@ -274,7 +274,7 @@ end
 
 function slot0._onPoint2ItemShow(slot0, slot1, slot2, slot3)
 	if not slot0._expointObj[slot3 + 6] then
-		slot0._expointObj[slot3] = slot0:registTable()
+		slot0._expointObj[slot3] = slot0:newUserDataTable()
 		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
 		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
 		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)

@@ -856,4 +856,22 @@ function slot0.replaceTowerHeroList(slot0, slot1)
 	end
 end
 
+function slot0.checkAct183HeroList(slot0, slot1, slot2)
+	if slot2 then
+		for slot6, slot7 in ipairs(slot0.heroList) do
+			if slot7 ~= "0" and HeroModel.instance:getById(slot7) and slot2:isHeroRepress(slot8.heroId) then
+				slot0.heroList[slot6] = "0"
+			end
+		end
+	end
+
+	if slot1 > (slot0.heroList and #slot0.heroList or 0) then
+		for slot7 = slot3 + 1, slot1 do
+			table.insert(slot0.heroList, "0")
+		end
+	elseif slot1 < slot3 then
+		logError("角色数量超过上限")
+	end
+end
+
 return slot0

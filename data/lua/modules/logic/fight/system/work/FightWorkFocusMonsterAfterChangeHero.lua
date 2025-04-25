@@ -2,7 +2,7 @@ module("modules.logic.fight.system.work.FightWorkFocusMonsterAfterChangeHero", p
 
 slot0 = class("FightWorkFocusMonsterAfterChangeHero", FightWorkItem)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._counter = 0
 end
 

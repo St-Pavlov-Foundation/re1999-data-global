@@ -16,6 +16,10 @@ function slot0._onLevelLoaded(slot0)
 	slot0._fightScene = GameSceneMgr.instance:getCurScene()
 	slot0.listenClass = gohelper.onceAddComponent(slot0._fightScene.level:getSceneGo(), typeof(ZProj.FightSceneActiveState))
 
+	if BootNativeUtil.isWindows() and GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
+		RenderPipelineSetting.AddRCASSceneCompoment(slot1)
+	end
+
 	slot0.listenClass:releaseCallback()
 	slot0.listenClass:setCallback(slot0._onSceneStateChange, slot0)
 end

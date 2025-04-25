@@ -30,6 +30,7 @@ function slot0.onOpen(slot0)
 	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, slot1, true)
 	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, slot1, true)
 	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, slot1, true)
+	FightDataHelper.entityMgr:getEnemyPlayerList(slot1, true)
 
 	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide) then
 		table.insert(slot1, slot3)

@@ -235,6 +235,14 @@ function slot0.isStrongCustomChoice(slot0, slot1)
 	return false
 end
 
+function slot0.getStrongCustomChoiceIds(slot0, slot1)
+	if uv0.instance:getSummonPool(slot1) and slot2.type == SummonEnum.Type.StrongCustomOnePick then
+		return string.splitToNumber(slot2.param, "#")
+	end
+
+	return nil
+end
+
 slot0.instance = slot0.New()
 
 return slot0

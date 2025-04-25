@@ -32,7 +32,7 @@ end
 
 function slot0._clearFightGuide(slot0)
 	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, "")
-	ToastController.instance:showToastWithString("清空成功，重启生效", isTop)
+	ToastController.instance:showToastWithString("清空成功，重启生效")
 end
 
 function slot0._onClickGuideStatus(slot0)

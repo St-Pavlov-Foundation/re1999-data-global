@@ -124,7 +124,17 @@ function slot0._btnsaveOffsetOnClick(slot0)
 		return
 	end
 
-	SkinOffsetAdjustModel.instance:setOffset(slot0._curSkinInfo, slot0._curOffsetKey, string.format(slot0:_getXPrecision(), slot0._slideroffsetx:GetValue()), string.format(slot0:_getYPrecision(), slot0._slideroffsety:GetValue()), string.format(slot0:_getSPrecision(), slot0._slideroffsetscale:GetValue()))
+	slot1 = string.format(slot0:_getXPrecision(), slot0._slideroffsetx:GetValue())
+	slot2 = string.format(slot0:_getYPrecision(), slot0._slideroffsety:GetValue())
+	slot3 = string.format(slot0:_getSPrecision(), slot0._slideroffsetscale:GetValue())
+
+	if slot0._curOffsetKey == "decorateskinOffset" or slot0._curOffsetKey == "decorateskinl2dOffset" or slot0._curOffsetKey == "decorateskinl2dBgOffset" then
+		logError(string.format("%s#%s#%s", slot1, slot2, slot3))
+
+		return
+	end
+
+	SkinOffsetAdjustModel.instance:setOffset(slot0._curSkinInfo, slot0._curOffsetKey, slot1, slot2, slot3)
 end
 
 function slot0._btnblockOnClick(slot0)
@@ -372,14 +382,16 @@ function slot0._initViewList(slot0)
 	slot0:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, slot0._onCharacterGetViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterGetView/charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
 	slot0:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
 	slot0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
-	slot0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/PlayerCardView/Left/characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine/", "playercardViewLive2dOffset", "characterViewOffset")
+	slot0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
+	slot0:_addView("装饰商店", ViewName.StoreView, slot0._onDecorateStoreViewOpen, slot0._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
 	table.insert(slot0._viewNameList, "0#静态立绘")
 	slot0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, slot0._onCharacterDataViewOpenFromHandbook, slot0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
 	slot0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset")
 	slot0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, slot0._onCharacterSkinGainViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
 	slot0:_addView("角色界面静态立绘", ViewName.CharacterView, slot0._onCharacterViewChangeStaticDrawingOpen, slot0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
 	slot0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, slot0._onCharacterGetViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset")
-	slot0:_addView("个人名片", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardView/main/top/role/skinnode/#simage_role", "playercardViewImgOffset", "characterViewImgOffset")
+	slot0:_addView("个人名片", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset")
+	slot0:_addView("装饰商店静态立绘", ViewName.StoreView, slot0._onDecorateStoreStaticViewOpen, slot0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset")
 	slot0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, slot0._onSummonCustomThreePickOpen, slot0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
 	table.insert(slot0._viewNameList, "0#spine小人")
 	slot0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
@@ -526,20 +538,40 @@ function slot0.setOffset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	end
 
 	slot0._curOffsetKey = slot2
-	slot8, slot9, slot10, slot11 = SkinOffsetAdjustModel.instance:getOffset(slot0._curSkinInfo, slot2, slot5, slot7)
 
-	if slot11 and slot4 then
-		slot8 = slot4[1]
-		slot9 = slot4[2]
-		slot10 = slot4[3]
+	if slot2 == "decorateskinOffset" or slot2 == "decorateskinl2dOffset" then
+		slot10 = slot4[1]
+		slot11 = slot4[2]
+		slot12 = slot4[3]
+
+		if #string.splitToNumber(DecorateStoreConfig.instance:getDecorateConfig(700005)[slot2], "#") == 3 then
+			slot10 = slot9[1]
+			slot11 = slot9[2]
+			slot12 = slot9[3]
+		end
+
+		slot3(slot10, slot11, slot12)
+
+		slot0._changeOffsetCallback = slot3
+		slot0._precisionDefine = slot6
+
+		slot0:initSliderValue(slot10, slot11, slot12)
+	else
+		slot8, slot9, slot10, slot11 = SkinOffsetAdjustModel.instance:getOffset(slot0._curSkinInfo, slot2, slot5, slot7)
+
+		if slot11 and slot4 then
+			slot8 = slot4[1]
+			slot9 = slot4[2]
+			slot10 = slot4[3]
+		end
+
+		slot3(slot8, slot9, slot10)
+
+		slot0._changeOffsetCallback = slot3
+		slot0._precisionDefine = slot6
+
+		slot0:initSliderValue(slot8, slot9, slot10)
 	end
-
-	slot3(slot8, slot9, slot10)
-
-	slot0._changeOffsetCallback = slot3
-	slot0._precisionDefine = slot6
-
-	slot0:initSliderValue(slot8, slot9, slot10)
 end
 
 function slot0._onMainViewFrameUpdate(slot0)
@@ -747,8 +779,7 @@ function slot0._onPlayerCardViewStaticDrawingUpdate(slot0)
 		return
 	end
 
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/NewPlayerCardView/main/top/role/skinnode/#simage_role"), true)
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
+	gohelper.getSingleImage(gohelper.findChild(gohelper.find(slot0._curViewInfo[5]).transform:GetChild(0).gameObject, "root/main/top/role/skinnode/#simage_role")):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
 		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
 	end, nil)
 
@@ -765,6 +796,37 @@ function slot0._onPlayerCardViewStaticDrawingUpdate(slot0)
 
 		slot3.localScale = Vector3.one * slot2
 	end, slot0.playCardViewStaticDrawingDefaultOffset, slot0._curViewInfo[7])
+end
+
+function slot0._onDecorateStoreStaticViewUpdate(slot0)
+	if not slot0._curViewInfo or not slot0._curSkinInfo then
+		return
+	end
+
+	gohelper.findChildSingleImage(gohelper.find(slot0._curViewInfo[5]), "#simage_skin"):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
+		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+
+		if not string.nilorempty(uv1._curSkinInfo.skinViewImgOffset) then
+			slot1 = string.splitToNumber(slot0, "#")
+
+			recthelper.setAnchor(uv0.transform, tonumber(slot1[1]), tonumber(slot1[2]))
+			transformhelper.setLocalScale(uv0.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
+		else
+			recthelper.setAnchor(uv0.transform, -150, -150)
+			transformhelper.setLocalScale(uv0.transform, 0.6, 0.6, 0.6)
+		end
+	end, nil)
+	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
+		slot3 = uv0.transform
+
+		recthelper.setAnchor(slot3, slot0, slot1)
+
+		slot3.localScale = Vector3.one * slot2
+	end, {
+		0,
+		0,
+		1
+	})
 end
 
 function slot0._onCharacterSkinStaticDrawingViewUpdate(slot0)
@@ -891,16 +953,19 @@ function slot0._onPlayerCardViewUpdate(slot0)
 		return
 	end
 
-	gohelper.setActive(gohelper.find("UIRoot/POPUP_TOP/NewPlayerCardView/main/top/#simage_role"), false)
+	slot3 = gohelper.find(slot0._curViewInfo[5]).transform:GetChild(0)
+	slot4 = gohelper.findChild(slot3, "main/top/role/skinnode/")
 
-	slot2 = slot0._curViewInfo[6]
-	slot3 = slot0._curViewInfo[7]
+	gohelper.setActive(gohelper.findChild(slot3, "main/top/role/skinnode/#simage_role"), false)
+
+	slot6 = slot0._curViewInfo[6]
+	slot7 = slot0._curViewInfo[7]
 
 	TaskDispatcher.runDelay(function ()
-		uv0._uiSpine = GuiModelAgent.Create(gohelper.find(uv0._curViewInfo[5]), true)
+		uv0._uiSpine = GuiModelAgent.Create(uv1, true)
 
 		uv0._uiSpine:setResPath(uv0._curSkinInfo)
-		uv0:setOffset(uv0._curSkinInfo, uv1, function (slot0, slot1, slot2)
+		uv0:setOffset(uv0._curSkinInfo, uv2, function (slot0, slot1, slot2)
 			slot3 = uv0.transform
 
 			recthelper.setAnchor(slot3, slot0, slot1)
@@ -910,7 +975,58 @@ function slot0._onPlayerCardViewUpdate(slot0)
 			0,
 			0,
 			1
-		}, uv2)
+		}, uv3)
+	end, nil, 0.5)
+end
+
+function slot0._onDecorateStoreViewUpdate(slot0)
+	if not slot0._curViewInfo or not slot0._curSkinInfo then
+		return
+	end
+
+	slot2 = gohelper.find(slot0._curViewInfo[5])
+	slot3 = gohelper.findChild(slot2, "#go_spinecontainer/#go_spine")
+	slot4 = gohelper.findChildSingleImage(slot2, "#go_spinecontainer/#simage_l2d")
+	slot5 = slot0._curViewInfo[6]
+
+	TaskDispatcher.runDelay(function ()
+		if not string.nilorempty(uv0._curSkinInfo.live2dbg) then
+			gohelper.setActive(uv1.gameObject, true)
+			uv1:LoadImage(ResUrl.getCharacterSkinLive2dBg(uv0._curSkinInfo.live2dbg))
+		else
+			gohelper.setActive(uv1.gameObject, false)
+		end
+
+		uv0._uiSpine = GuiModelAgent.Create(uv2, true)
+
+		uv0._uiSpine:setResPath(uv0._curSkinInfo, function ()
+			if string.nilorempty(uv0._curSkinInfo.skinViewLive2dOffset) then
+				slot0 = uv0._curSkinInfo.characterViewOffset
+			end
+
+			slot1 = SkinConfig.instance:getSkinOffset(slot0)
+
+			recthelper.setAnchor(uv1.transform, tonumber(slot1[1]), tonumber(slot1[2]))
+			transformhelper.setLocalScale(uv1.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
+		end)
+
+		if not string.nilorempty(uv0._curSkinInfo.live2d) then
+			uv0._uiSpine:setLive2dCameraLoadedCallback(function ()
+				gohelper.setAsFirstSibling(uv0.gameObject)
+			end)
+		end
+
+		uv0:setOffset(uv0._curSkinInfo, uv3, function (slot0, slot1, slot2)
+			slot3 = uv0.transform
+
+			recthelper.setAnchor(slot3, slot0, slot1)
+
+			slot3.localScale = Vector3.one * slot2
+		end, {
+			0,
+			0,
+			1
+		})
 	end, nil, 0.5)
 end
 
@@ -987,6 +1103,40 @@ end
 
 function slot0._onPlayerCardViewOpen(slot0)
 	PlayerCardController.instance:openPlayerCardView()
+end
+
+function slot0._onDecorateStoreViewOpen(slot0)
+	DecorateStoreModel.instance:setCurGood(700005)
+
+	if slot0._curViewInfo[2] == ViewName.StoreView then
+		slot2 = DecorateStoreView._editableInitView
+
+		function DecorateStoreView._editableInitView(slot0)
+			uv0(slot0)
+
+			slot0._showLive2d = true
+			slot0._adjust = true
+		end
+	end
+
+	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
+end
+
+function slot0._onDecorateStoreStaticViewOpen(slot0)
+	DecorateStoreModel.instance:setCurGood(700005)
+
+	if slot0._curViewInfo[2] == ViewName.StoreView then
+		slot2 = DecorateStoreView._editableInitView
+
+		function DecorateStoreView._editableInitView(slot0)
+			uv0(slot0)
+
+			slot0._showLive2d = false
+			slot0._adjust = true
+		end
+	end
+
+	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
 end
 
 function slot0._onSummonCustomThreePickOpen(slot0)

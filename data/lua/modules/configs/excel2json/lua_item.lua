@@ -1,25 +1,26 @@
 module("modules.configs.excel2json.lua_item", package.seeall)
 
 slot1 = {
-	isTimeShow = 11,
+	isTimeShow = 12,
 	name = 2,
-	cd = 14,
-	isShow = 10,
-	boxOpen = 19,
-	sources = 18,
-	activityId = 17,
+	cd = 15,
+	isShow = 11,
+	boxOpen = 20,
+	activityId = 18,
+	sources = 19,
 	desc = 4,
+	rare = 8,
 	subType = 5,
-	icon = 6,
-	price = 16,
-	expireTime = 15,
-	effect = 13,
+	icon = 7,
+	price = 17,
+	expireTime = 16,
+	effect = 14,
 	useDesc = 3,
-	rare = 7,
+	clienttag = 6,
 	id = 1,
-	isStackable = 9,
-	isDynamic = 12,
-	highQuality = 8
+	isStackable = 10,
+	isDynamic = 13,
+	highQuality = 9
 }
 slot2 = {
 	"id"

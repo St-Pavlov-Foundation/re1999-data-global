@@ -65,7 +65,7 @@ function slot0._initView(slot0)
 		slot8.txtItem.text = slot7.name
 
 		if not string.nilorempty(slot7.icon) then
-			UISpriteSetMgr.instance:setRougeSprite(slot8.imageItemIcon, slot7.icon)
+			UISpriteSetMgr.instance:setRouge5Sprite(slot8.imageItemIcon, slot7.icon)
 		end
 
 		slot9 = RougeRewardModel.instance:checShowBigRewardGot(slot7.bigRewardId)
@@ -96,6 +96,7 @@ function slot0._jumpToTargetReward(slot0, slot1)
 end
 
 function slot0.onOpen(slot0)
+	RougeRewardModel.instance:setNextUnlockStage()
 	slot0:_initView()
 	slot0:_openAnim()
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRewardNoticeView)

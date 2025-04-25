@@ -112,7 +112,7 @@ function slot0._onCardItemShow(slot0, slot1, slot2, slot3)
 	gohelper.setActive(slot5, slot4 ~= 0)
 	gohelper.setActive(gohelper.findChild(slot1, "empty"), slot4 == 0)
 
-	slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, FightViewCardItem)
+	slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, FightViewCardItem, FightEnum.CardShowType.BossAction)
 
 	if slot4 ~= 0 then
 		slot9:updateItem(slot0.viewParam.entityId, slot4)

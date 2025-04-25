@@ -2,12 +2,13 @@ module("modules.configs.excel2json.lua_fight_effect_buff_skin", package.seeall)
 
 slot1 = {
 	orEnemy = 2,
-	triggerEffect = 5,
+	effectHang = 4,
 	buffId = 1,
 	skinId = 3,
-	delEffect = 6,
-	audio = 7,
-	effectPath = 4
+	delEffect = 7,
+	triggerEffect = 6,
+	effectPath = 5,
+	audio = 8
 }
 slot2 = {
 	"buffId",

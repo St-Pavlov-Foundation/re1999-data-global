@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightEntityEXDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightEntityEXDataMgr")
+slot0 = FightDataClass("FightEntityEXDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0._exDataDic = {}
 end
 

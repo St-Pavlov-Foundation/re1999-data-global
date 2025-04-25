@@ -81,10 +81,9 @@ function slot0.checkHasSkinRule(slot0, slot1)
 end
 
 function slot0.checkHasBuffActIdRule(slot0, slot1)
-	slot2 = slot1 and slot1.fromId
-	slot3 = slot2 and FightDataHelper.entityMgr:getById(slot2)
+	slot2 = slot1 and FightDataHelper.entityMgr:getById(slot1)
 
-	return slot3 and slot3:hasBuffActId(slot0[2])
+	return slot2 and slot2:hasBuffActId(slot0[2])
 end
 
 function slot0.getASFDCo(slot0, slot1, slot2)
@@ -99,6 +98,10 @@ function slot0.getASFDCo(slot0, slot1, slot2)
 	end
 
 	return slot2
+end
+
+function slot0.getBornCo(slot0)
+	return uv0.getASFDCo(slot0, FightEnum.ASFDUnit.Born, FightASFDConfig.instance.defaultBornCo)
 end
 
 function slot0.getEmitterCo(slot0)
@@ -141,36 +144,61 @@ function slot0.getRandomValue()
 	return math.random(0, 1000) / 1000
 end
 
+slot1 = {
+	Down = 2,
+	Up = 1
+}
+
+function slot0.changeRandomArea()
+	uv0.randomAreaY = uv0.randomAreaY == uv1.Up and uv1.Down or uv1.Up
+end
+
+slot0.forbidSampleYRate = 0.1
+
 function slot0.getRandomPos(slot0, slot1, slot2)
 	slot3 = Vector3()
-	slot5, slot6 = uv0.getFormatX(slot0.x, slot1.x, FightASFDConfig.instance.sampleXRate)
+	slot5, slot6 = uv0.getFormatPos(slot0.x, slot1.x, FightASFDConfig.instance.sampleXRate)
 	slot3.x = LuaTween.linear(uv0.getRandomValue(), slot5, slot6 - slot5, 1)
 	slot3.z = LuaTween.linear(uv0.getRandomValue(), slot0.z, slot1.z - slot0.z, 1)
+	slot4 = uv0.getRandomValue()
+	slot7 = math.abs(slot1.y - slot0.y)
+	slot9 = slot0.y
+	slot10 = slot1.y
 
-	if slot2.sampleMinHeight == 0 or slot8 <= math.abs(slot1.y - slot0.y) then
-		slot3.y = LuaTween.linear(uv0.getRandomValue(), slot0.y, slot1.y - slot0.y, 1)
-	else
-		slot9 = (slot8 - slot7) / 2
+	if slot2.sampleMinHeight > 0 and slot7 < slot8 then
+		slot11 = (slot8 - slot7) / 2
 
-		if slot1.y < slot0.y then
-			slot10 = slot10 + slot9
-			slot11 = slot11 - slot9
+		if slot10 < slot9 then
+			slot9 = slot9 + slot11
+			slot10 = slot10 - slot11
 		else
-			slot10 = slot10 - slot9
-			slot11 = slot11 + slot9
+			slot9 = slot9 - slot11
+			slot10 = slot10 + slot11
 		end
-
-		slot3.y = LuaTween.linear(slot4, slot10, slot11 - slot10, 1)
 	end
+
+	slot10, slot12 = uv0.getFormatPos(slot9, slot10, uv0.forbidSampleYRate)
+
+	if uv0.randomAreaY == uv1.Up then
+		-- Nothing
+	else
+		slot9 = slot12
+	end
+
+	slot3.y = LuaTween.linear(slot4, slot9, slot10 - slot9, 1)
 
 	return slot3
 end
 
-function slot0.getFormatX(slot0, slot1, slot2)
+function slot0.getFormatPos(slot0, slot1, slot2)
 	slot3 = math.min(1, math.max(0, slot2)) / 2
 	slot6 = slot1 - slot0
 
 	return LuaTween.linear(0.5 - slot3, slot0, slot6, 1), LuaTween.linear(0.5 + slot3, slot0, slot6, 1)
+end
+
+function slot0.getASFDBornRemoveRes(slot0)
+	return slot0.res .. "_end"
 end
 
 function slot0.getASFDEmitterRemoveRes(slot0)

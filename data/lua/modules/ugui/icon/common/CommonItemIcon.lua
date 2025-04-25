@@ -298,7 +298,7 @@ function slot0._isItemHasDeadline(slot0)
 	elseif slot0._itemType == MaterialEnum.MaterialType.PowerPotion then
 		return slot0._config.expireType ~= 0 and slot0._expireTime ~= 0
 	elseif slot0._itemType == MaterialEnum.MaterialType.NewInsight then
-		return slot0._expireTime > 0
+		return slot0._expireTime > 0 and slot0._expireTime ~= ItemEnum.NoExpiredNum
 	end
 end
 
@@ -332,7 +332,7 @@ function slot0._onRefreshDeadline(slot0)
 
 	slot0._timetxt.text, slot0._formattxt.text, slot0._hasday = TimeUtil.secondToRoughTime(slot1, true)
 
-	if slot0._itemType == MaterialEnum.MaterialType.NewInsight or slot0._itemType == MaterialEnum.MaterialType.PowerPotion then
+	if slot0._itemType == MaterialEnum.MaterialType.NewInsight and slot0._config.expireHours ~= ItemEnum.NoExpiredNum or slot0._itemType == MaterialEnum.MaterialType.PowerPotion then
 		gohelper.setActive(slot0._deadline, true)
 	else
 		gohelper.setActive(slot0._deadline, slot0._config.isTimeShow == 1)

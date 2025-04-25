@@ -94,6 +94,10 @@ function slot0.createItems(slot0, slot1, slot2, slot3, slot4)
 
 			slot22 = not slot4 and slot15[3] and slot15[3] ~= 0
 
+			if slot15[1] == MaterialEnum.MaterialType.HeroSkin then
+				slot22 = false
+			end
+
 			slot21:isShowEquipAndItemCount(slot22)
 
 			if slot22 then

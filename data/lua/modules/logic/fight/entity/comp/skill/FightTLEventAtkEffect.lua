@@ -133,6 +133,8 @@ function slot0._getTargetPosXYZ(slot0)
 		slot1, slot2, slot3 = FightHelper.getEntityWorldTopPos(slot0._targetEntity)
 	elseif slot0._notHangCenter == "3" then
 		slot1, slot2, slot3 = transformhelper.getPos(slot0._targetEntity.go.transform)
+	elseif slot0._notHangCenter == "4" then
+		slot1, slot2, slot3 = FightHelper.getEntityStandPos(FightDataHelper.entityMgr:getById(slot0._targetEntity.id))
 	elseif not string.nilorempty(slot0._notHangCenter) and slot0._targetEntity:getHangPoint(slot0._notHangCenter) then
 		slot5 = slot4.transform.position
 		slot3 = slot5.z

@@ -3,6 +3,8 @@ module("modules.logic.equip.model.EquipInfoTeamListModel", package.seeall)
 slot0 = class("EquipInfoTeamListModel", EquipInfoBaseListModel)
 
 function slot0.onOpen(slot0, slot1, slot2)
+	slot0.heroMo = slot1.heroMo
+
 	slot0:initTeamEquipList(slot1, slot2)
 
 	slot0.curGroupMO = slot1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
@@ -63,7 +65,7 @@ function slot0.initInTeamEquipUidToHero(slot0)
 
 	for slot5, slot6 in pairs(slot0.curGroupMO.equips) do
 		if not slot0.maxHeroNum or slot5 + 1 <= slot0.maxHeroNum then
-			if tonumber(slot0.curGroupMO.heroList[slot5 + 1]) < 0 then
+			if slot0.curGroupMO.heroList[slot5 + 1] and tonumber(slot7) < 0 then
 				slot0.equipUidToHeroMo[slot6.equipUid[1]] = HeroGroupTrialModel.instance:getById(slot7)
 			elseif slot0.otherPlayerHeroMo and slot0.otherPlayerHeroMo.uid == slot7 then
 				slot0.equipUidToHeroMo[slot6.equipUid[1]] = slot0.otherPlayerHeroMo

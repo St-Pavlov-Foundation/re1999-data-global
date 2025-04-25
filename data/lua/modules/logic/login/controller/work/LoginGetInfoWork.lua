@@ -153,6 +153,15 @@ function slot0._initInfo(slot0)
 		})
 	end
 
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
+		table.insert(slot0.GetInfoFuncList, {
+			PlayerCardRpc.sendGetPlayerCardInfoRequest,
+			PlayerCardRpc.instance,
+			"sendGetPlayerCardInfoRequest",
+			false
+		})
+	end
+
 	slot0._callbackIdDict = {}
 end
 

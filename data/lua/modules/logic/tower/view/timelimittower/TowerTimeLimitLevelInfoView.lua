@@ -203,6 +203,8 @@ function slot0.refreshRecommend(slot0)
 	gohelper.CreateObjList(slot0, slot0._onRecommendCareerItemShow, slot2, gohelper.findChild(slot0._gorecommendAttr.gameObject, "attrlist"), slot0._goattritem)
 
 	slot0._txtrecommonddes.text = #slot2 == 0 and luaLang("new_common_none") or ""
+
+	gohelper.setActive(slot0._txtrecommonddes, #slot2 == 0)
 end
 
 function slot0._onRecommendCareerItemShow(slot0, slot1, slot2, slot3)

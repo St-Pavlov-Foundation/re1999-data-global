@@ -121,7 +121,7 @@ function slot0.fadeByAnimator(slot0, slot1)
 end
 
 function slot0._effUpdate(slot0, slot1)
-	if not slot0._fadeHelper then
+	if not ViewMgr.instance:isOpen(ViewName.StoryHeroView) or not slot0._fadeHelper then
 		if slot0._effTweenId then
 			ZProj.TweenHelper.KillById(slot0._effTweenId)
 

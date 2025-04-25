@@ -9,6 +9,8 @@ function slot0.onInitView(slot0)
 	slot0._btnwarehouse = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/leftbtn/#btn_warehouse")
 	slot0._btnhide = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/rightbtn/#btn_hide")
 	slot0._btnseat = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/rightbtn/#btn_seat")
+	slot0._btnreplaceAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/quickbtn/#btn_replaceAll")
+	slot0._btnunloadAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/quickbtn/#btn_unloadAll")
 	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
 	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_arrow/#btn_left")
 	slot0._txtleftIndex = gohelper.findChildText(slot0.viewGO, "#go_arrow/#btn_left/#txt_leftIndex")
@@ -36,6 +38,8 @@ function slot0.addEvents(slot0)
 	slot0._btnwarehouse:AddClickListener(slot0._btnwarehouseOnClick, slot0)
 	slot0._btnhide:AddClickListener(slot0._btnhideOnClick, slot0)
 	slot0._btnseat:AddClickListener(slot0._btnseatOnClick, slot0)
+	slot0._btnreplaceAll:AddClickListener(slot0._btnreplaceAllOnClick, slot0)
+	slot0._btnunloadAll:AddClickListener(slot0._btnunloadAllOnClick, slot0)
 	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
 	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
 	slot0._btnShowView:AddClickListener(slot0._btnShowViewOnClick, slot0)
@@ -43,6 +47,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, slot0._canOperateCritter, slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, slot0.refreshSeatSlotBtns, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._checkSelectedCritter, slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, slot0._checkSelectedCritter, slot0)
 end
@@ -52,6 +57,8 @@ function slot0.removeEvents(slot0)
 	slot0._btnwarehouse:RemoveClickListener()
 	slot0._btnhide:RemoveClickListener()
 	slot0._btnseat:RemoveClickListener()
+	slot0._btnreplaceAll:RemoveClickListener()
+	slot0._btnunloadAll:RemoveClickListener()
 	slot0._btnleft:RemoveClickListener()
 	slot0._btnright:RemoveClickListener()
 	slot0._btnShowView:RemoveClickListener()
@@ -69,8 +76,21 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, slot0._canOperateCritter, slot0)
 	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, slot0.refreshSeatSlotBtns, slot0)
 	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
 	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._checkSelectedCritter, slot0)
 	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, slot0._checkSelectedCritter, slot0)
+end
+
+function slot0._btnreplaceAllOnClick(slot0)
+	if slot0:getViewBuilding() then
+		RoomRpc.instance:sendReplaceRestBuildingCrittersRequest(slot1)
+	end
+end
+
+function slot0._btnunloadAllOnClick(slot0)
+	if slot0:getViewBuilding() then
+		RoomRpc.instance:sendUnloadRestBuildingCrittersRequest(slot1)
+	end
 end
 
 function slot0._btnoverviewOnClick(slot0)
@@ -91,7 +111,6 @@ end
 
 function slot0._btnseatOnClick(slot0)
 	slot0:playAnim("hide")
-	CritterController.instance:clearSelectedCritterSeatSlot()
 	ManufactureController.instance:openCritterPlaceView(slot0:getViewBuilding())
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView, true, true)
 end
@@ -160,8 +179,8 @@ function slot0._onClickSeatSlot(slot0, slot1)
 		return
 	end
 
-	if slot3:getRestingCritter(slot1) and not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
-		CritterController.instance:clickCritterInCritterBuilding(slot2, slot5)
+	if slot3:getRestingCritter(slot1) and (not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) or true) then
+		CritterController.instance:clickCritterInCritterBuilding(slot2, slot6)
 	elseif slot3:getSeatSlotMO(slot1) then
 		if not slot4 then
 			slot0:_btnseatOnClick()
@@ -215,6 +234,7 @@ function slot0._onDragIng(slot0, slot1, slot2)
 	end
 
 	slot0._dragCritterEntity:setLocalPos(slot6.point.x, slot6.point.y + uv0, slot6.point.z)
+	slot0.viewContainer:dispatchEvent(CritterEvent.UICritterDragIng)
 end
 
 function slot0._onDragEnd(slot0, slot1, slot2)
@@ -245,6 +265,8 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 
 	slot0._dragCritterEntity = nil
 	slot0._critterPointPos = nil
+
+	slot0.viewContainer:dispatchEvent(CritterEvent.UICritterDragEnd)
 end
 
 function slot0._canOperateCritter(slot0, slot1)
@@ -256,7 +278,12 @@ function slot0._onCloseView(slot0, slot1)
 	if slot1 == ViewName.RoomCritterPlaceView then
 		slot0:playAnim(UIAnimationName.Open)
 		slot0:_canOperateCritter(true)
+		slot0:_checkQuickbtnActive()
 	end
+end
+
+function slot0._onOpenView(slot0, slot1)
+	slot0:_checkQuickbtnActive()
 end
 
 function slot0._checkSelectedCritter(slot0)
@@ -274,6 +301,7 @@ function slot0._checkSelectedCritter(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	slot0._goquickbtn = gohelper.findChild(slot0.viewGO, "content/quickbtn")
 	slot0._transcontent = slot0._gocontent.transform
 	slot0._transselectedArrow = slot0._goselectedArrow.transform
 	slot0._gobtnLeft = slot0._btnleft.gameObject
@@ -287,6 +315,8 @@ function slot0._editableInitView(slot0)
 	slot0._topMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gotopmood, CritterMoodItem)
 	slot0._selectMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goselectedMood, CritterMoodItem)
 	slot0._topCritterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gotopcrittericon)
+
+	slot0._selectMoodItem:setShowMoodRestore(false)
 end
 
 function slot0.initSeatSlotBtns(slot0)
@@ -326,6 +356,11 @@ function slot0.onOpen(slot0)
 	slot0:refresh(true)
 	gohelper.setActive(slot0._goShowViewBtn, false)
 	RedDotController.instance:addRedDot(slot0._goOverviewReddot, RedDotEnum.DotNode.OverviewEntrance)
+	slot0:_checkQuickbtnActive()
+end
+
+function slot0._checkQuickbtnActive(slot0)
+	gohelper.setActive(slot0._goquickbtn, ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView))
 end
 
 function slot0.refresh(slot0, slot1)
@@ -377,14 +412,13 @@ function slot0.refreshSelectCritter(slot0, slot1)
 	end
 
 	if slot4 then
-		slot8 = slot4:getDefineId()
-		slot0._txttopName.text = CritterConfig.instance:getCritterName(slot8)
+		slot0._txttopName.text = slot4:getName()
 
 		slot0._topCritterIcon:onUpdateMO(slot4)
 		slot0._topMoodItem:setCritterUid(slot7)
 		slot0._selectMoodItem:setCritterUid(slot7)
 		slot0:refreshSelectArrow(slot6)
-		slot0:refreshCritterFood(slot8)
+		slot0:refreshCritterFood(slot4:getDefineId())
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_value)
 	end
 
@@ -394,6 +428,10 @@ function slot0.refreshSelectCritter(slot0, slot1)
 		slot0._contentAnimator:Play(UIAnimationName.Close, 0, 1)
 	else
 		slot0._contentAnimator:Play(slot4 and UIAnimationName.Open or UIAnimationName.Close)
+
+		if slot4 and not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
+			slot0:_btnseatOnClick()
+		end
 	end
 end
 

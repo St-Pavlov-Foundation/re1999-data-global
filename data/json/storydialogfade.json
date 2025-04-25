@@ -234,5 +234,21 @@
   {
     "id": 59,
     "skipvideo": "2_4_activity_04"
+  },
+  {
+    "id": 60,
+    "skipvideo": "2_5_activity_01"
+  },
+  {
+    "id": 61,
+    "skipvideo": "2_5_activity_02"
+  },
+  {
+    "id": 62,
+    "skipvideo": "2_5_activity_03"
+  },
+  {
+    "id": 63,
+    "skipvideo": "2_5_activity_04"
   }
 ]

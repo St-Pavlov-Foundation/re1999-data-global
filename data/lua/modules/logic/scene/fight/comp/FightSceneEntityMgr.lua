@@ -401,6 +401,24 @@ function slot0.buildTempSpineByName(slot0, slot1, slot2, slot3, slot4, slot5)
 	return slot8
 end
 
+function slot0.buildTempSpine(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = slot1
+	slot7 = FightStrUtil.split(slot1, "/")
+	MonoHelper.addLuaComOnceToGo(gohelper.create3d(slot0._containerGO, slot7[#slot7]), slot5 or FightEntityTemp, slot2).needLookCamera = false
+
+	if slot4 then
+		slot9.spine:setLayer(slot4, true)
+	end
+
+	slot9.spine:changeLookDir(slot3 == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right)
+	slot9:setSide(slot3)
+	slot0:addUnit(slot9)
+	slot9:loadSpineBySpinePath(slot1, slot0._onTempSpineLoaded, slot0)
+	slot9:setSpeed(FightModel.instance:getSpeed())
+
+	return slot9
+end
+
 function slot0._onTempSpineLoaded(slot0, slot1, slot2)
 	if slot1 then
 		GameSceneMgr.instance:getCurScene().bloom:addEntity(slot2)

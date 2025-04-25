@@ -79,7 +79,7 @@ function slot0.refreshUI(slot0)
 
 		slot0.critterIcon:setMOValue(slot1:getId(), slot1:getDefineId())
 
-		slot0._txtname.text = slot1:getDefineCfg() and slot2.name
+		slot0._txtname.text = slot1:getName()
 
 		slot0:_refreshLineLinkUI()
 	end

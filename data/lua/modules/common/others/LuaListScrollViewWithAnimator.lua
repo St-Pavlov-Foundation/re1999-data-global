@@ -230,11 +230,15 @@ function slot0.moveToByCheckFunc(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	slot8 = slot0._csListScroll.gameObject:GetComponent(gohelper.Type_ScrollRect).content
-	slot10 = slot0._param.scrollDir == ScrollEnum.ScrollDirV
-	slot14 = slot0._param.startSpace + (math.ceil(slot6 / slot0._param.lineCount) - 1) * ((slot10 and slot0._param.cellSpaceV or slot0._param.cellSpaceH) + (slot10 and slot0._param.cellHeight or slot0._param.cellWidth))
-	slot15 = 0
-	slot14 = (not slot10 or math.min(math.max(0, recthelper.getHeight(slot8) - recthelper.getHeight(slot7.transform)), slot14)) and math.max(math.max(0, recthelper.getWidth(slot8) - recthelper.getWidth(slot7.transform)), -slot14)
+	slot0:moveToByIndex(slot6, slot2, slot3, slot4)
+end
+
+function slot0.moveToByIndex(slot0, slot1, slot2, slot3, slot4)
+	slot6 = slot0._csListScroll.gameObject:GetComponent(gohelper.Type_ScrollRect).content
+	slot8 = slot0._param.scrollDir == ScrollEnum.ScrollDirV
+	slot12 = slot0._param.startSpace + (math.ceil(slot1 / slot0._param.lineCount) - 1) * ((slot8 and slot0._param.cellSpaceV or slot0._param.cellSpaceH) + (slot8 and slot0._param.cellHeight or slot0._param.cellWidth))
+	slot13 = 0
+	slot12 = (not slot8 or math.min(math.max(0, recthelper.getHeight(slot6) - recthelper.getHeight(slot5.transform)), slot12)) and -math.min(math.max(0, recthelper.getWidth(slot6) - recthelper.getWidth(slot5.transform)), slot12)
 
 	if slot0._moveTweenId then
 		ZProj.TweenHelper.KillById(slot0._moveTweenId)
@@ -243,16 +247,16 @@ function slot0.moveToByCheckFunc(slot0, slot1, slot2, slot3, slot4)
 	end
 
 	if slot2 and slot2 > 0 then
-		if slot10 then
-			slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPosY(slot8, slot14, slot2, slot3, slot4)
+		if slot8 then
+			slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPosY(slot6, slot12, slot2, slot3, slot4)
 		else
-			slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPosX(slot8, slot14, slot2, slot3, slot4)
+			slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPosX(slot6, slot12, slot2, slot3, slot4)
 		end
 	else
-		if slot10 then
-			recthelper.setAnchorY(slot8, slot14)
+		if slot8 then
+			recthelper.setAnchorY(slot6, slot12)
 		else
-			recthelper.setAnchorX(slot8, slot14)
+			recthelper.setAnchorX(slot6, slot12)
 		end
 
 		if slot3 then

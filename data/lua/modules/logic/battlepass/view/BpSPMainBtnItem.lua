@@ -36,7 +36,15 @@ function slot0._onItemClick(slot0)
 end
 
 function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "icon_6")
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. "icon_6" or "icon_6", true)
+
+	if not slot1 and ActivityConfig.instance:getMainActAtmosphereConfig() then
+		for slot8, slot9 in ipairs(slot4.mainViewActBtn) do
+			if gohelper.findChild(slot0.go, slot9) then
+				gohelper.setActive(slot10, slot1)
+			end
+		end
+	end
 
 	slot0._redDot = RedDotController.instance:addRedDot(slot0._reddotitem, RedDotEnum.DotNode.BattlePassSPMain)
 end

@@ -34,6 +34,17 @@ function slot0.Clear(slot0)
 	TaskDispatcher.cancelTask(slot0._finishedPlaying)
 end
 
+function slot0.IsPlaying(slot0)
+	return false
+end
+
+function slot0.CanPlay(slot0)
+	return false
+end
+
+function slot0.Rewind(slot0)
+end
+
 slot0.instance = slot0.New()
 
 return slot0

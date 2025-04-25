@@ -3,10 +3,6 @@ module("modules.logic.pcInput.activityAdapter.RoomActivityAdapter", package.seea
 slot0 = class("RoomActivityAdapter", BaseActivityAdapter)
 slot0.keytoFunction = {
 	function ()
-		if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.RoomCharacterPlaceView) then
-			return
-		end
-
 		HelpController.instance:showHelp(HelpEnum.HelpId.RoomOb, true)
 	end,
 	function ()
@@ -99,6 +95,18 @@ function slot0.ctor(slot0)
 end
 
 function slot0.OnkeyUp(slot0, slot1)
+	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
+		return
+	end
+
+	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+end
+
+function slot0.OnkeyDown(slot0, slot1)
+	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
+		return
+	end
+
 	BaseActivityAdapter.OnkeyUp(slot0, slot1)
 end
 

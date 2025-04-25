@@ -12,6 +12,7 @@ slot0.keytoFunction = {
 
 function slot0.ctor(slot0)
 	slot0.keytoFunction = uv0.keytoFunction
+	slot0._priorty = 1
 
 	slot0:registerFunction()
 end
@@ -28,13 +29,21 @@ end
 function slot0.OnkeyUp(slot0, slot1)
 	if slot0.keytoFunction[slot1] then
 		slot2()
+
+		return true
 	end
+
+	return false
 end
 
 function slot0.OnkeyDown(slot0, slot1)
 	if slot0.keytoFunction[slot1] then
 		slot2()
+
+		return true
 	end
+
+	return false
 end
 
 function slot0.destroy(slot0)

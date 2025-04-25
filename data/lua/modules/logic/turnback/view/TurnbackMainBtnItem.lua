@@ -41,15 +41,23 @@ function slot0._onItemClick(slot0)
 end
 
 function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "icon_4", true)
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. "icon_4" or "icon_4", true)
+
+	if not slot1 and ActivityConfig.instance:getMainActAtmosphereConfig() then
+		for slot8, slot9 in ipairs(slot4.mainViewActBtn) do
+			if gohelper.findChild(slot0.go, slot9) then
+				gohelper.setActive(slot10, slot1)
+			end
+		end
+	end
 
 	if TurnbackModel.instance:getCurTurnbackMoWithNilError() then
 		gohelper.setActive(slot0._godeadline, true)
 		slot0:_refreshRemainTime()
 
-		slot1, slot2, slot3, slot4 = TurnbackModel.instance:getRemainTime()
+		slot4, slot5, slot6, slot7 = TurnbackModel.instance:getRemainTime()
 
-		TaskDispatcher.runDelay(slot0._delayUpdateView, slot0, slot4)
+		TaskDispatcher.runDelay(slot0._delayUpdateView, slot0, slot7)
 	else
 		gohelper.setActive(slot0._godeadline, false)
 	end

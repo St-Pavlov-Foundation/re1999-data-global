@@ -14,6 +14,7 @@ function slot0.onInit(slot0)
 	slot0.redealCardInfoList = nil
 	slot0._dissolvingCard = nil
 	slot0._changingCard = nil
+	slot0.areaSize = 0
 	slot0._longPressIndex = -1
 end
 
@@ -29,6 +30,7 @@ function slot0.clear(slot0)
 	slot0.redealCardInfoList = nil
 	slot0._dissolvingCard = nil
 	slot0._changingCard = nil
+	slot0.areaSize = 0
 
 	slot0:clearCardOps()
 
@@ -196,7 +198,10 @@ function slot0.getSelectEnemyPosLOrR(slot0, slot1)
 
 	if #slot2 > 0 then
 		table.sort(slot2, function (slot0, slot1)
-			return slot0.position < slot1.position
+			slot2, slot3, slot4 = FightHelper.getEntityStandPos(slot0)
+			slot5, slot6, slot7 = FightHelper.getEntityStandPos(slot1)
+
+			return slot5 < slot2
 		end)
 
 		for slot6 = 1, #slot2 do
@@ -229,11 +234,7 @@ end
 function slot0.resetCardOps(slot0)
 	slot0._cardOps = {}
 
-	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
-		slot6:resetSimulateExPoint()
-	end
-
-	for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)) do
+	for slot5, slot6 in pairs(FightDataHelper.entityMgr:getAllEntityData()) do
 		slot6:resetSimulateExPoint()
 	end
 end
@@ -481,6 +482,7 @@ function slot0.combineTwoCard(slot0, slot1, slot2)
 	end
 
 	slot3.energy = slot0.energy + slot1.energy
+	slot3.heatId = slot3.uid and slot3.uid ~= "0" and slot3.heatId or slot1.heatId
 
 	return slot3
 end

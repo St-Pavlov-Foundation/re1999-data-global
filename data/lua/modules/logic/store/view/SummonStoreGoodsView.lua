@@ -282,7 +282,12 @@ function slot0._refreshUI(slot0)
 		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecosticon, slot12)
 		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecosticon2, slot12)
 		gohelper.setActive(slot0._imagecosticon.gameObject, true)
-		slot0.viewContainer:setCurrencyType(slot0._costId, slot0._costType)
+
+		if slot9 ~= nil then
+			slot0.viewContainer:setCurrencyType(slot0._costId, slot0._costType, slot11)
+		else
+			slot0.viewContainer:setCurrencyType(slot0._costId, slot0._costType)
+		end
 	end
 
 	slot7 = slot0.goodsConfig.maxBuyCount - slot0._mo.buyCount

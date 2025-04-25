@@ -29,6 +29,7 @@ function slot0.onInitView(slot0)
 	slot0._goattribute = gohelper.findChild(slot0.viewGO, "#go_attribute")
 	slot0._goattributeup = gohelper.findChild(slot0.viewGO, "#go_attributeup")
 	slot0._goattributeupitem = gohelper.findChild(slot0.viewGO, "#go_attributeup/attributeup")
+	slot0._btntrainstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_trainstart")
 	slot0._goattributeupeffect = gohelper.findChild(slot0.viewGO, "#attributeup_effect")
 
 	if slot0._editableInitView then
@@ -39,11 +40,13 @@ end
 function slot0.addEvents(slot0)
 	slot0._btncurrency:AddClickListener(slot0._btncurrencyOnClick, slot0)
 	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
+	slot0._btntrainstart:AddClickListener(slot0._btntrainstartOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btncurrency:RemoveClickListener()
 	slot0._btnadd:RemoveClickListener()
+	slot0._btntrainstart:RemoveClickListener()
 end
 
 function slot0._btncurrencyOnClick(slot0)
@@ -53,13 +56,51 @@ function slot0._btncurrencyOnClick(slot0)
 end
 
 function slot0._btnaddOnClick(slot0)
-	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
+	RoomCritterController.instance:openExchangeView(string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#"))
 end
 
-function slot0._onCloseFullView(slot0, slot1)
-	gohelper.setActive(GameSceneMgr.instance:getScene(SceneType.Room):getSceneContainerGO(), true)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
+function slot0._btntrainstartOnClick(slot0)
+	slot2 = string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#")
+
+	if math.floor(ItemModel.instance:getItemQuantity(slot2[1], slot2[2]) / slot2[3]) < RoomTrainCritterModel.instance:getSelectOptionTotalCount() then
+		GameFacade.showToast(ToastEnum.RoomCritterTrainCountNotEnoughCurrency, ItemModel.instance:getItemConfig(slot2[1], slot2[2]).name)
+
+		return
+	end
+
+	CritterRpc.instance:sendSelectMultiEventOptionRequest(slot0.viewParam.critterUid, slot0.viewParam.eventId, RoomTrainCritterModel.instance:getSelectOptionInfos(), slot0._attributeSelected, slot0)
+end
+
+function slot0._attributeSelected(slot0, slot1, slot2, slot3)
+	if slot2 ~= 0 then
+		return
+	end
+
+	slot0:_showEnterBtn(false)
+	gohelper.setActive(slot0._goattribute, false)
+	gohelper.setActive(slot0._scrollselect.gameObject, false)
+	gohelper.setActive(slot0._goconversation, false)
+	slot0._critterItem:fadeOut()
+
+	if slot0.viewParam.skipStory then
+		slot0.viewContainer:getSetting().viewType = ViewType.Full
+	else
+		gohelper.setActive(slot0._storyViewGo, true)
+
+		slot0.viewContainer:getSetting().viewType = ViewType.Normal
+	end
+
+	for slot7, slot8 in ipairs(slot3.infos) do
+		slot9 = {
+			optionId = slot8.optionId,
+			count = slot8.count
+		}
+		slot0._optionInfos[slot9.optionId] = slot9
+	end
+
+	slot0._attributeItem:playBarAdd(false)
+	slot0._viewAnim:Play("close", 0, 0)
+	TaskDispatcher.runDelay(slot0._showTrainProgress, slot0, 0.17)
 end
 
 function slot0._addEvents(slot0)
@@ -67,6 +108,7 @@ function slot0._addEvents(slot0)
 	StoryController.instance:registerCallback(StoryEvent.DialogConFinished, slot0._onDialogConFinished, slot0)
 	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
 	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeSelected, slot0._onAttributeSelected, slot0)
+	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeCancel, slot0._onAttributeCancel, slot0)
 	StoryController.instance:registerCallback(StoryEvent.OnReplaceHero, slot0._onStoryReplaceHero, slot0)
 end
 
@@ -75,6 +117,7 @@ function slot0._removeEvents(slot0)
 	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, slot0._onDialogConFinished, slot0)
 	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
 	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeSelected, slot0._onAttributeSelected, slot0)
+	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeCancel, slot0._onAttributeCancel, slot0)
 	StoryController.instance:unregisterCallback(StoryEvent.Finish, slot0._onAttributeStoryFinished, slot0)
 	StoryController.instance:unregisterCallback(StoryEvent.OnReplaceHero, slot0._onStoryReplaceHero, slot0)
 end
@@ -112,34 +155,19 @@ function slot0._showAttributeSelect(slot0)
 end
 
 function slot0._onAttributeSelected(slot0, slot1, slot2)
-	slot0._optionId = slot2
-
-	CritterRpc.instance:sendSelectEventOptionRequest(slot0.viewParam.critterUid, slot0.viewParam.eventId, slot1, slot0._attributeSelected, slot0)
+	RoomTrainCritterModel.instance:addSelectOptionCount(slot1)
+	slot0:_refreshAttribute()
+	slot0._attributeItem:playBarAdd(true, slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId))
+	slot0:_refreshSelect()
+	slot0:_showEnterBtn(true)
 end
 
-function slot0._attributeSelected(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
-		return
-	end
-
-	gohelper.setActive(slot0._goattribute, false)
-	gohelper.setActive(slot0._scrollselect.gameObject, false)
-	gohelper.setActive(slot0._goconversation, false)
-	slot0._critterItem:fadeOut()
-
-	if slot0.viewParam.skipStory then
-		slot0.viewContainer:getSetting().viewType = ViewType.Full
-	else
-		gohelper.setActive(slot0._storyViewGo, true)
-
-		slot0.viewContainer:getSetting().viewType = ViewType.Normal
-	end
-
-	slot0._optionId = slot3.optionId
-
-	slot0._attributeItem:playBarAdd(false)
-	slot0._viewAnim:Play("close", 0, 0)
-	TaskDispatcher.runDelay(slot0._showTrainProgress, slot0, 0.17)
+function slot0._onAttributeCancel(slot0, slot1, slot2)
+	RoomTrainCritterModel.instance:cancelSelectOptionCount(slot1)
+	slot0:_refreshAttribute()
+	slot0._attributeItem:playBarAdd(true, slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId))
+	slot0:_refreshSelect()
+	slot0:_showEnterBtn(true)
 end
 
 slot1 = {
@@ -239,7 +267,7 @@ end
 
 function slot0._editableInitView(slot0)
 	slot0._selectItems = {}
-	slot0._optionId = 1
+	slot0._optionInfos = {}
 	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	slot0._attributeItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomCritterTrainDetailItem.prefabPath, slot0._goattribute), RoomCritterTrainDetailItem, slot0)
 	slot0._critterItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gospine, RoomCritterTrainCritterItem, slot0)
@@ -263,6 +291,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gorighttopbtns, false)
 	gohelper.setActive(slot0._goattributeup, false)
 	gohelper.setActive(slot0._goattributeupitem, false)
+	slot0:_showEnterBtn(false)
 
 	slot0._progressTime = tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.CritterTrainKeepTime)) / 1000
 end
@@ -283,7 +312,7 @@ function slot0._refreshSelect(slot0)
 			slot0._selectItems[slot5]:init(slot0._goselectitem, slot5)
 		end
 
-		slot0._selectItems[slot5]:show(slot1[slot5].optionId, slot0._critterMO, slot0.viewParam.eventId)
+		slot0._selectItems[slot5]:show(slot1[slot5].optionId, slot0._critterMO, slot0.viewParam.eventId, RoomTrainCritterModel.instance:getSelectOptionCount(slot1[slot5].optionId))
 	end
 end
 
@@ -292,7 +321,13 @@ function slot0._playConversation(slot0)
 	slot0._txtnameen.text = slot1.nameEn
 	slot0._txtnamecn.text = slot1.name
 	slot2 = CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId)
-	slot0._txtcontent.text = string.format(slot2.content, string.format("%s <sprite=0>", string.splitToNumber(slot2.cost, "#")[3]))
+	slot0._txtcontent.text = string.format(slot2.content, slot0._critterMO.trainInfo:getEvents(slot0.viewParam.eventId).remainCount, string.format("%s <sprite=0>", string.splitToNumber(slot2.cost, "#")[3]))
+
+	slot0:_showEnterBtn(true)
+end
+
+function slot0._showEnterBtn(slot0, slot1)
+	gohelper.setActive(slot0._btntrainstart, slot1 and RoomTrainCritterModel.instance:getSelectOptionTotalCount() > 0)
 end
 
 function slot0._refreshCurrency(slot0)
@@ -342,15 +377,26 @@ function slot0._startShowResult(slot0)
 	slot0._critterItem:setCritterEffectOffset(0, 30)
 	slot0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
 	slot0._critterItem:playBodyAnim(RoomCharacterEnum.CharacterAnimStateName.Idle, true)
-	slot0._viewAnim:Play("open", 0, 0)
 
-	slot1 = slot0._critterMO.trainInfo:getEventOptionMOByOptionId(slot0.viewParam.eventId, slot0._optionId).addAttriButes
+	slot4 = 0
+	slot5 = 0
 
-	slot0._attributeItem:playLevelUp(slot1)
+	slot0._viewAnim:Play("open", slot4, slot5)
+
+	slot0._resultAttributeMOs = {}
+
+	for slot4, slot5 in pairs(slot0._optionInfos) do
+		slot6 = slot5.optionId
+		slot7 = slot0._critterMO.trainInfo:getEventOptionMOByOptionId(slot0.viewParam.eventId, slot6).addAttriButes
+		slot0._resultAttributeMOs[slot6] = LuaUtil.deepCopy(slot7[1])
+		slot0._resultAttributeMOs[slot6].value = slot5.count * slot7[1].value
+	end
+
+	slot0._attributeItem:playLevelUp(slot0._resultAttributeMOs)
 
 	slot0._repeatCount = 0
 
-	TaskDispatcher.runRepeat(slot0._showAttribute, slot0, 0.3, #slot1)
+	TaskDispatcher.runRepeat(slot0._showAttribute, slot0, 0.3, #slot0._resultAttributeMOs)
 end
 
 function slot0._showAttribute(slot0)
@@ -358,10 +404,19 @@ function slot0._showAttribute(slot0)
 	slot2 = gohelper.clone(slot0._goattributeupitem)
 
 	gohelper.addChild(gohelper.findChild(slot0._goattributeup, tostring(slot0._repeatCount)), slot2)
+
+	slot3 = gohelper.findChildText(slot2, "up/#txt_up")
+	slot4 = CritterConfig.instance:getCritterAttributeCfg(slot0._resultAttributeMOs[slot0._repeatCount].attributeId).name
+
+	if slot0._resultAttributeMOs[slot0._repeatCount].value <= 0 then
+		gohelper.setActive(slot2, false)
+
+		return
+	end
+
 	gohelper.setActive(slot2, true)
 
-	slot4 = slot0._critterMO.trainInfo:getEventOptionMOByOptionId(slot0.viewParam.eventId, slot0._optionId).addAttriButes
-	gohelper.findChildText(slot2, "up/#txt_up").text = string.format("%s + %s", CritterConfig.instance:getCritterAttributeCfg(slot4[slot0._repeatCount].attributeId).name, slot4[slot0._repeatCount].value)
+	slot3.text = string.format("%s + %s", slot4, slot5)
 end
 
 slot3 = 2223
@@ -382,6 +437,9 @@ function slot0.onOpen(slot0)
 	end
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterTrainStarted)
+end
+
+function slot0._onCurrencyChanged(slot0)
 end
 
 function slot0.onClose(slot0)

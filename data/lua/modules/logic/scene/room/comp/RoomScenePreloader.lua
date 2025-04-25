@@ -35,6 +35,7 @@ slot0.InitLand = "scenes/m_s07_xiaowu/prefab/ground/floor/02.prefab"
 slot0.LandAB = "scenes/m_s07_xiaowu/prefab/ground"
 slot0.ReplaceLand = "scenes/m_s07_xiaowu/prefab/ground/floor/01b.prefab"
 slot0.ResFogParticle = "scenes/m_s07_xiaowu/a_fufeice/prefab/bxhy_fogparticle.prefab"
+slot0.DiffuseGI = "scenes/m_s07_xiaowu/prefab/diffuse_gi.prefab"
 slot0.ResEffectWaveList = {
 	"scenes/m_s07_xiaowu/prefab/effects/bolang01.prefab",
 	"scenes/m_s07_xiaowu/prefab/effects/bolang02.prefab",

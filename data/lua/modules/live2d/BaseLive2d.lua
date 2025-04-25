@@ -50,6 +50,10 @@ function slot0.setHeroId(slot0, slot1)
 	slot0._heroId = slot1
 end
 
+function slot0.setSkinId(slot0, slot1)
+	slot0._skinId = slot1
+end
+
 function slot0.getResPath(slot0)
 	return slot0._resPath
 end
@@ -244,6 +248,12 @@ function slot0._showBodyEffect(slot0, slot1)
 end
 
 function slot0._onBodyEffectShow(slot0, slot1)
+end
+
+function slot0.showEverNodes(slot0, slot1)
+	if slot0._roleEffectComp and slot0._roleEffectComp.showEverNodes then
+		slot0._roleEffectComp:showEverNodes(slot1)
+	end
 end
 
 function slot0._showFaceEffect(slot0, slot1)

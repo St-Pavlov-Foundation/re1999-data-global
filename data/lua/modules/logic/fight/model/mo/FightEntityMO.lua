@@ -292,6 +292,10 @@ function slot0.getSpineSkinCO(slot0)
 	if FightConfig.instance:getSkinCO(slot0.skin) then
 		return slot2
 	else
+		if FightEntityDataHelper.isPlayerUid(slot0.id) then
+			return
+		end
+
 		logError("skin not exist: " .. slot0.skin .. " modelId: " .. slot0.modelId)
 	end
 end

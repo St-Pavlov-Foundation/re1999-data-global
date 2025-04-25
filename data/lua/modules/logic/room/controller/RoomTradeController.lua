@@ -64,6 +64,15 @@ function slot0.onTracedDailyOrderReply(slot0, slot1)
 	slot0:dispatchEvent(RoomTradeEvent.OnTracedDailyOrder, slot1.orderId)
 end
 
+function slot0.lockedDailyOrder(slot0, slot1, slot2)
+	RoomRpc.instance:sendLockOrderRequest(slot1, slot2)
+end
+
+function slot0.onLockedDailyOrderReply(slot0, slot1)
+	RoomTradeModel.instance:setIsLockedOrder(slot1.orderId, slot1.isLocked)
+	slot0:dispatchEvent(RoomTradeEvent.OnLockedDailyOrder, slot1.orderId)
+end
+
 function slot0.openLevelUpTipView(slot0, slot1)
 	ViewMgr.instance:openView(ViewName.RoomTradeLevelUpTipsView, {
 		level = slot1

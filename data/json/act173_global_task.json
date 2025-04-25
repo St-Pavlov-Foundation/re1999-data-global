@@ -82,5 +82,173 @@
     "id": 14,
     "endValue": 19990000,
     "isVisible": 1
+  },
+  {
+    "activityId": 12587,
+    "id": 1,
+    "endValue": 661231,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 3,
+    "endValue": 1890000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 4,
+    "endValue": 3248600,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 5,
+    "endValue": 5000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 6,
+    "endValue": 6845413,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 7,
+    "endValue": 12567144,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 8,
+    "endValue": 13222000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12587,
+    "id": 24,
+    "endValue": 19990000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 1,
+    "endValue": 212316,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 3,
+    "endValue": 1890000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 4,
+    "endValue": 3248600,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 5,
+    "endValue": 5000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 6,
+    "endValue": 6845413,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 7,
+    "endValue": 8131463,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 8,
+    "endValue": 9842301,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 9,
+    "endValue": 10000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 10,
+    "endValue": 13222000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 11,
+    "endValue": 15000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 12,
+    "endValue": 16111111,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 13,
+    "endValue": 18888888,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12588,
+    "id": 14,
+    "endValue": 19990000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12589,
+    "id": 1,
+    "endValue": 212501,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12589,
+    "id": 2,
+    "endValue": 611465,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12589,
+    "id": 3,
+    "endValue": 812314,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12589,
+    "id": 4,
+    "endValue": 12671300,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12589,
+    "id": 5,
+    "endValue": 19990000,
+    "isVisible": 0
   }
 ]

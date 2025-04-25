@@ -15,7 +15,7 @@ function slot0.onInitView(slot0)
 	slot0._enemyPointEffect = gohelper.findChildText(slot0.viewGO, "enemy/#txt_eff")
 end
 
-function slot0.onInitialization(slot0, slot1)
+function slot0.onConstructor(slot0, slot1)
 	slot0._effectMO = slot1
 end
 

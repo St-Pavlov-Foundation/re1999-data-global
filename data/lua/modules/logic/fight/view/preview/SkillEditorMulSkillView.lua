@@ -9,6 +9,9 @@ function slot0.onInitView(slot0)
 	slot0._btnStart = gohelper.findChildButton(slot0.viewGO, "mulSkill/btnGroup/btnStart")
 	slot0._toggleParallel = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleParallel")
 	slot0._toggleNoSpeedUp = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleNoSpeedUp")
+	slot0._toggleHideAllUI = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleHideAllUI")
+	slot0._toggleDelay = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleDelay")
+	slot0._inputDelay = gohelper.findChildTextMeshInputField(slot0.viewGO, "mulSkill/btnGroup/toggleDelay/#input_delay")
 	slot0._mulSkillViewGO = gohelper.findChild(slot0.viewGO, "mulSkill")
 	slot0._items = {
 		gohelper.findChild(slot0.viewGO, "mulSkill/content/item")
@@ -100,7 +103,9 @@ function slot0._onClickStart(slot0)
 		FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 	end
 
-	FightRoundMO.New().fightStepMOs = {}
+	slot1 = FightRoundMO.New()
+	FightModel.instance._curRoundMO = slot1
+	slot1.fightStepMOs = {}
 
 	for slot5, slot6 in ipairs(slot0._infos) do
 		slot7 = slot6.skillId
@@ -117,16 +122,62 @@ function slot0._onClickStart(slot0)
 		end
 	end
 
-	slot2, slot3 = FightStepBuilder.buildStepWorkList(slot1.fightStepMOs)
+	slot2 = tonumber(slot0._inputDelay:GetText()) or 0
 	slot0._playSkillsFlow = FlowSequence.New()
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot0._playSkillsFlow:addWork(slot8)
+	if slot0._toggleDelay.isOn and slot2 > 0 then
+		slot0._playSkillsFlow:addWork(WorkWaitSeconds.New(slot2))
+	end
+
+	slot3, slot4 = FightStepBuilder.buildStepWorkList(slot1.fightStepMOs)
+
+	for slot8, slot9 in ipairs(slot3) do
+		slot0._playSkillsFlow:addWork(slot9)
+	end
+
+	if slot0._toggleDelay.isOn and slot2 > 0 then
+		slot0._playSkillsFlow:addWork(WorkWaitSeconds.New(slot2))
 	end
 
 	slot0._playSkillsFlow:registerDoneListener(slot0._onPlaySkillsEnd, slot0)
 	slot0._playSkillsFlow:start()
 	gohelper.setActive(slot0.viewGO, false)
+
+	if slot0._toggleHideAllUI.isOn then
+		slot0:hideAllUI()
+	end
+end
+
+function slot0.hideAllUI(slot0)
+	slot0:setNameUIActive(false)
+	slot0:setViewActive(false)
+	slot0:setFrameActive(false)
+end
+
+function slot0.showAllUI(slot0)
+	slot0:setNameUIActive(true)
+	slot0:setViewActive(true)
+	slot0:setFrameActive(true)
+end
+
+function slot0.setNameUIActive(slot0, slot1)
+	for slot7, slot8 in pairs(GameSceneMgr.instance:getCurScene().entityMgr._tagUnitDict) do
+		for slot12, slot13 in pairs(slot8) do
+			if slot13.nameUI then
+				gohelper.setActive(slot14:getGO(), slot1)
+			end
+		end
+	end
+end
+
+function slot0.setViewActive(slot0, slot1)
+	if ViewMgr.instance:getContainer(ViewName.SkillEffectStatView) then
+		gohelper.setActive(slot2.viewGO, slot1)
+	end
+end
+
+function slot0.setFrameActive(slot0, slot1)
+	gohelper.setActive(gohelper.findChild(ViewMgr.instance:getUIRoot(), "Text"), slot1)
 end
 
 function slot0._onPlaySkillsEnd(slot0)
@@ -135,6 +186,7 @@ function slot0._onPlaySkillsEnd(slot0)
 	FightReplayModel.instance:setReplay(false)
 	FightModel.instance:setUserSpeed(FightModel.instance:getUserSpeed())
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
+	slot0:showAllUI()
 end
 
 return slot0

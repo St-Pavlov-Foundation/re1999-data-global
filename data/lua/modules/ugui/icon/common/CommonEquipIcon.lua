@@ -3,6 +3,7 @@ module("modules.ugui.icon.common.CommonEquipIcon", package.seeall)
 slot0 = class("CommonEquipIcon", ListScrollCellExtend)
 
 function slot0.onInitView(slot0)
+	slot0._imageBg = gohelper.findChildImage(slot0.viewGO, "bg")
 	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "#image_rare")
 	slot0._imagerare2 = gohelper.findChildImage(slot0.viewGO, "#image_rare2")
 	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "mask/#simage_icon")
@@ -22,6 +23,7 @@ function slot0.onInitView(slot0)
 	slot0._gorefinecontainer = gohelper.findChild(slot0.viewGO, "#go_refinecontainer")
 	slot0._txtrefinelv = gohelper.findChildText(slot0.viewGO, "#go_refinecontainer/#txt_refinelv")
 	slot0._goAddition = gohelper.findChild(slot0.viewGO, "turnback")
+	slot0._gorecommend = gohelper.findChild(slot0.viewGO, "#go_recommend")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -38,6 +40,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._imagerare.gameObject, false)
 	gohelper.setActive(slot0._imagerare2.gameObject, false)
 
+	slot0._showQuality = true
 	slot0._effectGos = {}
 	slot0._effectLoader = MultiAbLoader.New()
 
@@ -61,6 +64,8 @@ function slot0._editableInitView(slot0)
 	slot0:hideHeroIcon()
 
 	slot0._itemType = MaterialEnum.MaterialType.Equip
+
+	slot0._gorecommend:SetActive(false)
 end
 
 function slot0._editableAddEvents(slot0)
@@ -89,8 +94,7 @@ function slot0.LoadEffect(slot0)
 		return
 	end
 
-	gohelper.setActive(slot0._imagerare.gameObject, true)
-	gohelper.setActive(slot0._imagerare2.gameObject, true)
+	slot0:isShowQuality(slot0._showQuality)
 
 	slot5 = "itemEffect"
 	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot0._imagerare.gameObject, slot5)
@@ -273,6 +277,10 @@ function slot0.refreshUI(slot0)
 	slot0._golock:SetActive(slot0._isLock and slot0._showLockIcon)
 end
 
+function slot0.checkRecommend(slot0)
+	slot0._gorecommend:SetActive(slot0._mo and slot0._mo.recommondIndex and slot0._mo.recommondIndex > 0)
+end
+
 function slot0._loadIconImage(slot0)
 	if slot0._overrideIconLoadFunc then
 		slot0._overrideIconLoadFunc(slot0._overrideIconLoadFuncObj)
@@ -426,7 +434,7 @@ function slot0.hideHeroIcon(slot0)
 end
 
 function slot0.setItemColor(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(slot0.viewGO, "bg"), slot1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageBg, slot1 or "#FFFFFF")
 	SLFramework.UGUI.GuiHelper.SetColor(slot0._iconImage, slot1 or "#FFFFFF")
 	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare, slot1 or "#FFFFFF")
 	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare2, slot1 or "#FFFFFF")
@@ -443,6 +451,14 @@ function slot0.setGetMask(slot0, slot1)
 	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevel, slot1 and "#525252" or "#E8E7E7")
 	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level/lv"), slot1 and "#525252" or "#E8E7E7")
 	ZProj.UGUIHelper.SetColorAlpha(slot0._txtrefinelv, slot1 and 0.4 or 1)
+end
+
+function slot0.isShowQuality(slot0, slot1)
+	slot0._showQuality = slot1
+
+	gohelper.setActive(slot0._imageBg, slot1)
+	gohelper.setActive(slot0._imagerare, slot1)
+	gohelper.setActive(slot0._imagerare2, slot1)
 end
 
 function slot0.onDestroyView(slot0)

@@ -26,5 +26,33 @@
     "useTitle": "language_10054009",
     "effect": "2#121",
     "sources": ""
+  },
+  {
+    "id": 489094,
+    "name": "language_10066476",
+    "icon": "489094",
+    "rare": 5,
+    "heroRares": "6",
+    "heroRank": 3,
+    "expireHours": 70128,
+    "useDesc": "language_10066477",
+    "desc": "language_10066478",
+    "useTitle": "language_10054009",
+    "effect": "3#121",
+    "sources": ""
+  },
+  {
+    "id": 489095,
+    "name": "language_10054006",
+    "icon": "489093",
+    "rare": 5,
+    "heroRares": "5",
+    "heroRank": 3,
+    "expireHours": 70128,
+    "useDesc": "language_10054007",
+    "desc": "language_10054008",
+    "useTitle": "language_10054009",
+    "effect": "2#121",
+    "sources": ""
   }
 ]

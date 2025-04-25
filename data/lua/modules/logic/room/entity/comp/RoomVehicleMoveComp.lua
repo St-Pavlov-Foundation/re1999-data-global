@@ -41,6 +41,7 @@ function slot0.initVehicleParam(slot0)
 		slot0.moveSpeed = slot1.moveSpeed * 0.01
 		slot0.rotationSpeed = slot1.rotationSpeed
 		slot0.endPathWaitTime = slot1.endPathWaitTime and slot1.endPathWaitTime * 0.001 or slot0.endPathWaitTime or 0
+		slot0._useType = slot1.useType
 
 		if slot1.radius and slot1.radius > 0 then
 			slot2 = RoomBlockEnum.BlockSize * math.sqrt(3) * 0.5
@@ -192,21 +193,28 @@ function slot0.findPath(slot0)
 		slot0._crossloadEndTime = 0
 	end
 
-	slot13 = {
-		slot10
-	}
-
 	if slot5:isEndNode() and slot10 ~= slot6 then
-		table.insert(slot13, slot6)
+		table.insert({
+			slot10
+		}, slot6)
 	end
 
-	slot0:_startFindPath({
-		nextNode = slot5,
-		nextEnterDire = slot6,
-		direList = slot13,
-		isCrossLoad = slot11,
-		buildingUid = slot12
-	}, slot5:isEndNode() and slot0._endNodeResourcePointOffest)
+	if slot0._useType == RoomVehicleEnum.UseType.Aircraft then
+		slot15 = slot5.hexPoint
+		slot16, slot17 = HexMath.hexXYToPosXY(slot15.x, slot15.y, RoomBlockEnum.BlockSize)
+
+		slot0:_setPathV3ListParam({
+			nextNode = slot5,
+			nextEnterDire = slot6,
+			direList = slot13,
+			isCrossLoad = slot11,
+			buildingUid = slot12
+		}, {
+			Vector3(slot16, RoomBuildingEnum.VehicleInitOffestY, slot17)
+		})
+	else
+		slot0:_startFindPath(slot14, slot5:isEndNode() and slot0._endNodeResourcePointOffest)
+	end
 end
 
 function slot0._startFindPath(slot0, slot1, slot2)
@@ -222,29 +230,43 @@ function slot0._startFindPath(slot0, slot1, slot2)
 end
 
 function slot0._onPathCall(slot0, slot1, slot2, slot3, slot4)
+	slot5 = nil
+
+	if not slot3 then
+		slot5 = RoomVectorPool.instance:packPosList(slot2)
+	end
+
+	slot0:_setPathV3ListParam(slot1, slot5, slot3)
+
+	if slot3 then
+		if #slot1.direList > 0 then
+			slot0:_startFindPath(slot1)
+		else
+			slot0:_delayFindPath()
+		end
+	end
+end
+
+function slot0._setPathV3ListParam(slot0, slot1, slot2, slot3)
 	if slot1 and slot1.nextNode and (#slot1.direList < 1 or not slot3) then
-		slot5 = slot0:getVehicleMO() or slot0._mo
-		slot6 = slot5.enterDirection
+		slot4 = slot0:getVehicleMO() or slot0._mo
+		slot5 = slot4.enterDirection
 
-		slot5:moveToNode(slot1.nextNode, slot1.nextEnterDire, slot3 and true or false)
+		slot4:moveToNode(slot1.nextNode, slot1.nextEnterDire, slot3 and true or false)
 
-		slot7 = slot5:getReplaceDefideCfg()
+		slot6 = slot4:getReplaceDefideCfg()
 
-		if slot1.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(slot7.audioCrossload) then
-			RoomHelper.audioExtendTrigger(slot7.audioCrossload, slot0.go)
-		elseif slot1.nextEnterDire ~= slot6 and RoomConfig.instance:getAudioExtendConfig(slot7.audioTurn) then
-			RoomHelper.audioExtendTrigger(slot7.audioTurn, slot0.go)
+		if slot1.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(slot6.audioCrossload) then
+			RoomHelper.audioExtendTrigger(slot6.audioCrossload, slot0.go)
+		elseif slot1.nextEnterDire ~= slot5 and RoomConfig.instance:getAudioExtendConfig(slot6.audioTurn) then
+			RoomHelper.audioExtendTrigger(slot6.audioTurn, slot0.go)
 		end
 	end
 
 	if not slot3 then
-		slot0.pathList = RoomVectorPool.instance:packPosList(slot2)
+		slot0.pathList = slot2
 
 		slot0:_moveNext()
-	elseif #slot1.direList > 0 then
-		slot0:_startFindPath(slot1)
-	else
-		slot0:_delayFindPath()
 	end
 end
 

@@ -356,6 +356,26 @@ function slot0.onStoryFinished(slot0)
 end
 
 function slot0._btnequipOnClick(slot0)
+	if slot0:_checkEquipOverflow() then
+		return
+	end
+
+	slot0:_enterFight()
+end
+
+function slot0._checkEquipOverflow(slot0)
+	if slot0._chapterType == DungeonEnum.ChapterType.Equip and EquipConfig.instance:getEquipBackpackMaxCount() <= tabletool.len(EquipModel.instance:getEquips()) then
+		MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.EquipOverflow, MsgBoxEnum.BoxType.Yes_No, luaLang("p_equipdecompose_decompose"), "DISSOCIATION", nil, , slot0._onChooseDecompose, slot0._onCancelDecompose, nil, slot0, slot0, nil)
+
+		return true
+	end
+end
+
+function slot0._onChooseDecompose(slot0)
+	EquipController.instance:openEquipDecomposeView()
+end
+
+function slot0._onCancelDecompose(slot0)
 	slot0:_enterFight()
 end
 
@@ -400,6 +420,10 @@ function slot0._btnstartOnClick(slot0)
 
 			return
 		end
+	end
+
+	if slot0:_checkEquipOverflow() then
+		return
 	end
 
 	slot0:_enterFight()

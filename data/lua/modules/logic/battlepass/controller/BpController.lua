@@ -51,12 +51,15 @@ function slot0._openBpView(slot0)
 
 			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, uv0.onViewOpen, uv0)
 
+			slot0 = uv0._openViewParam or {}
+
 			if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTaskMain) then
-				slot0 = uv0._openViewParam or {}
 				slot0.defaultTabIds = {
 					[2] = 2
 				}
 			end
+
+			slot0.isPlayDayFirstAnim = not BpModel.instance.firstShow and not uv0._isOpenCharge
 
 			if BpModel.instance.firstShow then
 				uv0._isOpenCharge = nil

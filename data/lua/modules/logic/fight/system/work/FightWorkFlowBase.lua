@@ -4,9 +4,9 @@ slot0 = class("FightWorkFlowBase", FightWorkItem)
 slot1 = 10
 
 function slot0.start(slot0, slot1)
-	if slot0.PARENTROOTCLASS then
-		if isTypeOf(slot0.PARENTROOTCLASS, FightWorkFlowSequence) or isTypeOf(slot0.PARENTROOTCLASS, uv0) then
-			slot0.ROOTFLOW = slot0.PARENTROOTCLASS.ROOTFLOW
+	if slot0.PARENT_ROOT_CLASS then
+		if isTypeOf(slot0.PARENT_ROOT_CLASS, FightWorkFlowSequence) or isTypeOf(slot0.PARENT_ROOT_CLASS, uv0) then
+			slot0.ROOTFLOW = slot0.PARENT_ROOT_CLASS.ROOTFLOW
 			slot0.ROOTFLOW.COUNTERDEEP = slot0.ROOTFLOW.COUNTERDEEP + 1
 			slot0.COUNTERDEEP = slot0.ROOTFLOW.COUNTERDEEP
 		else

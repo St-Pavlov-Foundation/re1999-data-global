@@ -113,7 +113,7 @@ function slot0.updateItem(slot0, slot1)
 
 	if slot5 then
 		if not slot0._cardItem then
-			slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem)
+			slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
 		end
 
 		slot0._cardItem:updateItem(slot2.belongToEntityId, slot2.skillId)
@@ -141,6 +141,18 @@ function slot0.updateItem(slot0, slot1)
 	end
 
 	slot0:refreshASFDEnergy()
+	slot0:refreshRedAndBlueArea()
+end
+
+function slot0.refreshRedAndBlueArea(slot0)
+	if not slot0._cardItem then
+		return
+	end
+
+	slot1 = slot0.fightBeginRoundOp and slot0.fightBeginRoundOp.cardColor
+
+	slot0._cardItem:setActiveRed(slot1 == FightEnum.CardColor.Both or slot1 == FightEnum.CardColor.Red)
+	slot0._cardItem:setActiveBlue(slot1 == FightEnum.CardColor.Both or slot1 == FightEnum.CardColor.Blue)
 end
 
 function slot0.refreshASFDEnergy(slot0)

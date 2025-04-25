@@ -72,7 +72,11 @@ function slot0.load(slot0)
 	slot2 = slot0:loadFromConfig()
 
 	if PlayerPrefsHelper.getString("keyBinding") and slot1 ~= "null" then
-		return slot0:CheckConfigUpdate(cjson.decode(slot1), slot2)
+		slot3 = cjson.decode(slot1)
+
+		GameUtil.removeJsonNull(slot3)
+
+		return slot0:CheckConfigUpdate(slot3, slot2)
 	end
 
 	return slot2

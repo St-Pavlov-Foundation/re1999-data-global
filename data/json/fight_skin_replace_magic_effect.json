@@ -66,5 +66,22 @@
       0.33,
       -1
     ]
+  },
+  {
+    "id": 22100003,
+    "skinId": 309803,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 430980341,
+    "loopEffect": "buff/v2a5_shuzhen_lsp",
+    "closeEffect": "buff/v2a5_shuzhen_lsp_off",
+    "closeTime": 1000,
+    "closeAniName": "",
+    "closeAudio": 430980342,
+    "posArr": [
+      -5.5,
+      0,
+      -1
+    ]
   }
 ]

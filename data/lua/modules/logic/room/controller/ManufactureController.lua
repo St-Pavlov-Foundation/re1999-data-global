@@ -33,6 +33,12 @@ function slot0.checkManufactureInfoUpdate(slot0)
 	end
 end
 
+function slot0.updateTraceNeedItemDict(slot0)
+	if RoomController.instance:isRoomScene() and RoomTradeModel.instance:isGetOrderInfo() then
+		RoomTradeModel.instance:calTracedItemDict()
+	end
+end
+
 function slot0.getManufactureServerInfo(slot0)
 	if not ManufactureModel.instance:isManufactureUnlock() then
 		return
@@ -88,21 +94,28 @@ function slot0.updateTradeLevel(slot0, slot1)
 	slot0:dispatchEvent(ManufactureEvent.TradeLevelChange)
 end
 
-function slot0.updateManuBuildingInfoList(slot0, slot1)
+function slot0.updateManuBuildingInfoList(slot0, slot1, slot2)
 	if not slot1 then
 		return
 	end
 
 	ManufactureModel.instance:setManuBuildingInfoList(slot1)
 
-	for slot6, slot7 in ipairs(slot1) do
+	slot3 = {
+		[slot8.buildingUid] = true
+	}
+
+	for slot7, slot8 in ipairs(slot1) do
 		-- Nothing
 	end
 
 	RoomCritterModel.instance:initStayBuildingCritters()
-	slot0:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, {
-		[slot7.buildingUid] = true
-	})
+
+	if slot2 then
+		ManufactureModel.instance:clientCalAllFrozenItemDict()
+	end
+
+	slot0:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, slot3)
 end
 
 function slot0.updateManuBuildingInfo(slot0, slot1)
@@ -110,7 +123,7 @@ function slot0.updateManuBuildingInfo(slot0, slot1)
 		return
 	end
 
-	ManufactureModel.instance:setManuBuildingInfo(slot1)
+	ManufactureModel.instance:setManuBuildingInfo(slot1, true)
 	RoomCritterModel.instance:initStayBuildingCritters()
 	slot0:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, {
 		[slot1.buildingUid] = true
@@ -119,6 +132,10 @@ end
 
 function slot0.updateWorkCritterInfo(slot0, slot1)
 	slot0:dispatchEvent(ManufactureEvent.CritterWorkInfoChange, slot1)
+end
+
+function slot0.updateFrozenItem(slot0, slot1)
+	ManufactureModel.instance:setFrozenItemDict(slot1)
 end
 
 function slot0.jumpToManufactureBuildingLevelUpView(slot0, slot1)
@@ -160,7 +177,7 @@ function slot0.jumpToManufactureBuildingLevelUpView(slot0, slot1)
 	return slot2
 end
 
-function slot0.openManufactureBuildingViewByBuilding(slot0, slot1, slot2, slot3)
+function slot0.openManufactureBuildingViewByBuilding(slot0, slot1, slot2, slot3, slot4)
 	if not ManufactureModel.instance:isManufactureUnlock(true) then
 		return
 	end
@@ -169,7 +186,7 @@ function slot0.openManufactureBuildingViewByBuilding(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot0:openManufactureBuildingViewByType(RoomConfig.instance:getBuildingType(slot1.buildingId), slot1.uid, slot2, slot3)
+	slot0:openManufactureBuildingViewByType(RoomConfig.instance:getBuildingType(slot1.buildingId), slot1.uid, slot2, slot3, slot4)
 end
 
 function slot0.openManufactureBuildingViewByType(slot0, slot1, slot2, slot3, slot4, slot5)
@@ -223,6 +240,20 @@ function slot0.openManufactureBuildingViewByType(slot0, slot1, slot2, slot3, slo
 	slot0:dispatchEvent(ManufactureEvent.ManufactureBuildingViewChange, {
 		inManufactureBuildingView = true
 	})
+end
+
+function slot0.openRoomManufactureBuildingDetailView(slot0, slot1, slot2)
+	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) and (slot3:checkSameType(RoomBuildingEnum.BuildingType.Collect) or slot3:checkSameType(RoomBuildingEnum.BuildingType.Process) or slot3:checkSameType(RoomBuildingEnum.BuildingType.Manufacture)) then
+		ViewMgr.instance:openView(ViewName.RoomManufactureBuildingDetailView, {
+			buildingUid = slot1,
+			buildingMO = slot3,
+			showIsRight = slot2
+		})
+
+		return true
+	end
+
+	return false
 end
 
 function slot0._realOpenManufactureBuildingView(slot0)
@@ -314,9 +345,9 @@ function slot0.openCritterBuildingView(slot0, slot1, slot2, slot3)
 	if RoomCameraController.instance:getRoomCamera() and ManufactureConfig.instance:getBuildingCameraIdByIndex(slot6.buildingId, slot2) then
 		ManufactureModel.instance:setCameraRecord(slot10:getCameraState(), LuaUtil.deepCopy(slot10:getCameraParam()))
 
-		slot0._tmpBuildingUid = slot1
-		slot0._tmpDefaultTab = slot2
-		slot0._tempCritterUid = slot3
+		slot0._tmpCritterBuildingUid = slot1
+		slot0._tmpCritterDefaultTab = slot2
+		slot0._tmpCritterUid = slot3
 		slot14 = false
 
 		if slot2 == RoomCritterBuildingViewContainer.SubViewTabId.Training and slot3 then
@@ -344,10 +375,10 @@ function slot0.openCritterBuildingView(slot0, slot1, slot2, slot3)
 end
 
 function slot0._realOpenCritterBuildingView(slot0, slot1, slot2, slot3)
-	slot2 = slot2 or slot0._tmpDefaultTab
-	slot3 = slot3 or slot0._tempCritterUid
+	slot2 = slot2 or slot0._tmpCritterDefaultTab
+	slot3 = slot3 or slot0._tmpCritterUid
 
-	if not (slot1 or slot0._tmpBuildingUid) then
+	if not (slot1 or slot0._tmpCritterBuildingUid) then
 		return
 	end
 
@@ -368,11 +399,11 @@ function slot0.closeCritterBuildingView(slot0, slot1)
 end
 
 function slot0._openCritterBuildingViewCameraTweenFinish(slot0)
-	slot0._tmpBuildingUid = nil
-	slot0._tmpDefaultTab = nil
-	slot0._tempCritterUid = nil
+	slot0._tmpCritterBuildingUid = nil
+	slot0._tmpCritterDefaultTab = nil
+	slot0._tmpCritterUid = nil
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, slot0._tmpDefaultTab)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, slot0._tmpCritterDefaultTab)
 end
 
 function slot0.openCritterPlaceView(slot0, slot1)
@@ -411,6 +442,8 @@ function slot0.openRoomTradeView(slot0, slot1, slot2)
 
 		return
 	end
+
+	RoomRpc.instance:sendGetFrozenItemInfoRequest()
 
 	slot1 = slot1 or slot4[1].buildingUid
 
@@ -458,21 +491,144 @@ function slot0.jump2PlaceManufactureBuildingView(slot0)
 	end
 end
 
-function slot0.clickSlotItem(slot0, slot1, slot2, slot3, slot4, slot5)
+function slot0.clickWrongBtn(slot0, slot1, slot2)
+	if ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and slot0._lastWrongBuildingUid == slot1 then
+		slot0:closeWrongTipView()
+	else
+		slot0:clearSelectedSlotItem()
+		slot0:clearSelectCritterSlotItem()
+		ViewMgr.instance:openView(ViewName.RoomManufactureWrongTipView, {
+			buildingUid = slot1,
+			isRight = slot2
+		})
+
+		slot0._lastWrongBuildingUid = slot1
+	end
+end
+
+function slot0.clickWrongJump(slot0, slot1, slot2, slot3, slot4)
+	if not slot1 then
+		return
+	end
+
+	if not RoomManufactureEnum.WrongTypeHandlerFunc[slot1] then
+		return
+	end
+
+	if slot5(slot0, slot2, slot3, slot4) then
+		slot0:closeWrongTipView()
+	end
+end
+
+function slot0._addPreMat(slot0, slot1, slot2, slot3)
+	slot4 = nil
+	slot5 = slot3.isOverView
+
+	if RoomMapBuildingModel.instance:getBuildingListByType(slot2, true) and #slot7 > 0 then
+		if slot2 == RoomBuildingEnum.BuildingType.Collect then
+			for slot11, slot12 in ipairs(slot7) do
+				if slot0:getNextEmptySlot(slot12.id) then
+					slot4 = slot12
+
+					break
+				end
+			end
+
+			if not slot4 then
+				slot4 = slot7[1]
+			end
+		else
+			for slot11, slot12 in ipairs(slot7) do
+				if ManufactureConfig.instance:isManufactureItemBelongBuilding(slot12.buildingId, slot1) then
+					slot4 = slot12
+
+					break
+				end
+			end
+		end
+	end
+
 	if not slot4 then
-		slot6 = RoomManufactureEnum.SlotState.Locked
+		return false
+	end
+
+	if slot5 then
+		slot0:dispatchEvent(ManufactureEvent.ManufactureOverViewFocusAddPop, slot4.id, slot1)
+	else
+		slot0:openManufactureBuildingViewByBuilding(slot4, true, false, slot1)
+	end
+
+	return true
+end
+
+function slot0._lvUpBuilding(slot0, slot1, slot2, slot3)
+	slot4 = nil
+	slot5 = 0
+
+	if RoomMapBuildingModel.instance:getBuildingListByType(slot2, true) and #slot6 > 0 then
+		for slot10, slot11 in ipairs(slot6) do
+			if ManufactureConfig.instance:isManufactureItemBelongBuilding(slot11.buildingId, slot1) then
+				slot15 = slot11.level
+
+				if not ManufactureModel.instance:isMaxLevel(slot11.id) and slot5 < slot15 then
+					slot4 = slot11
+					slot5 = slot15
+				end
+			end
+		end
+	end
+
+	if not slot4 then
+		return false
+	end
+
+	slot0:jumpToManufactureBuildingLevelUpView(slot4.id)
+
+	return true
+end
+
+function slot0._linPath(slot0, slot1, slot2, slot3)
+	if ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen) <= ManufactureModel.instance:getTradeLevel() then
+		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot2, slot3.pathToType) and slot7:isLinkFinish() and not (slot7 and slot7:hasCritterWorking()) then
+			slot0:closeWrongTipView()
+			ViewMgr.instance:closeView(ViewName.RoomOverView, true)
+			RoomTransportController.instance:openTransportSiteView(RoomTransportHelper.fromTo2SiteType(slot2, slot3.pathToType), RoomEnum.CameraState.Overlook)
+
+			if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
+				slot0:closeCritterBuildingView(true)
+			end
+
+			if ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView) then
+				ViewMgr.instance:closeView(ViewName.RoomManufactureBuildingView)
+				ManufactureModel.instance:setCameraRecord()
+			end
+		else
+			RoomJumpController.instance:jumpToTransportSiteView()
+		end
+	else
+		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
+	end
+end
+
+function slot0.closeWrongTipView(slot0)
+	ViewMgr.instance:closeView(ViewName.RoomManufactureWrongTipView)
+end
+
+function slot0.clickSlotItem(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+	if not slot4 then
+		slot7 = RoomManufactureEnum.SlotState.Locked
 
 		if RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-			slot6 = slot7:getSlotState(slot2)
+			slot7 = slot8:getSlotState(slot2)
 		end
 
-		if slot6 == RoomManufactureEnum.SlotState.Locked then
-			GameFacade.showToast(ToastEnum.RoomSlotLocked, ManufactureConfig.instance:getSlotUnlockNeedLevel(ManufactureConfig.instance:getBuildingUpgradeGroup(slot7.buildingId), slot5))
+		if slot7 == RoomManufactureEnum.SlotState.Locked then
+			GameFacade.showToast(ToastEnum.RoomSlotLocked, ManufactureConfig.instance:getSlotUnlockNeedLevel(ManufactureConfig.instance:getBuildingUpgradeGroup(slot8.buildingId), slot5))
 
 			return
 		end
 
-		if slot6 == RoomManufactureEnum.SlotState.Complete then
+		if slot7 == RoomManufactureEnum.SlotState.Complete then
 			if slot3 then
 				slot0:gainCompleteManufactureItem()
 			else
@@ -488,9 +644,11 @@ function slot0.clickSlotItem(slot0, slot1, slot2, slot3, slot4, slot5)
 	else
 		slot0:refreshSelectedSlotId(slot1, true)
 		slot0:clearSelectCritterSlotItem()
+		slot0:closeWrongTipView()
 		ManufactureModel.instance:setReadNewManufactureFormula(slot1)
 		ViewMgr.instance:openView(ViewName.RoomManufactureAddPopView, {
-			inRight = slot3
+			inRight = slot3,
+			highLightManufactureItem = slot6
 		})
 		slot0:dispatchEvent(ManufactureEvent.ManufactureReadNewFormula)
 	end
@@ -514,9 +672,13 @@ function slot0.clearSelectedSlotItem(slot0)
 end
 
 function slot0.setManufactureFormulaItemList(slot0, slot1)
-	RoomRpc.instance:sendGetOrderInfoRequest(function ()
-		ManufactureFormulaListModel.instance:setManufactureFormulaItemList(uv0)
-	end, slot0)
+	if RoomTradeModel.instance:isGetOrderInfo() then
+		ManufactureFormulaListModel.instance:setManufactureFormulaItemList(slot1)
+	else
+		RoomRpc.instance:sendGetOrderInfoRequest(function ()
+			ManufactureFormulaListModel.instance:setManufactureFormulaItemList(uv0)
+		end, slot0)
+	end
 end
 
 function slot0.clickFormulaItem(slot0, slot1)
@@ -550,10 +712,10 @@ function slot0.clickRemoveSlotManufactureItem(slot0, slot1, slot2)
 	end
 
 	slot5 = {
-		productionId = 0,
 		priority = -1,
 		slotId = slot2,
-		operation = RoomManufactureEnum.SlotOperation.Cancel
+		operation = RoomManufactureEnum.SlotOperation.Cancel,
+		productionId = slot4
 	}
 
 	if (slot3 and slot3:getSlotState(slot2, true)) == RoomManufactureEnum.SlotState.Stop or slot6 == RoomManufactureEnum.SlotState.Running then
@@ -664,6 +826,17 @@ function slot0.checkProduceBuildingLevel(slot0, slot1)
 	return slot3, slot2, slot4
 end
 
+function slot0.oneKeySelectCustomManufactureItem(slot0, slot1, slot2, slot3)
+	slot4, slot5 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+
+	if not slot3 and slot4 == slot1 and slot2 == slot5 then
+		return
+	end
+
+	OneKeyAddPopListModel.instance:setSelectedManufactureItem(slot1, slot2)
+	slot0:dispatchEvent(ManufactureEvent.OneKeySelectCustomManufactureItem)
+end
+
 function slot0.clickCritterSlotItem(slot0, slot1, slot2)
 	slot3 = false
 
@@ -679,6 +852,7 @@ function slot0.clickCritterSlotItem(slot0, slot1, slot2)
 		slot0:clearSelectCritterSlotItem()
 	else
 		slot0:clearSelectedSlotItem()
+		slot0:closeWrongTipView()
 		slot0:refreshSelectedCritterSlotId(slot1, true)
 		ViewMgr.instance:openView(ViewName.RoomCritterListView, {
 			buildingUid = slot1
@@ -725,15 +899,27 @@ function slot0.clickCritterItem(slot0, slot1)
 	if ManufactureModel.instance:getCritterWorkingBuilding(slot1) == slot2 then
 		slot0:allocateCritter(slot4, CritterEnum.InvalidCritterUid, RoomMapBuildingModel.instance:getBuildingMOById(slot4) and slot6:getCritterWorkSlot(slot1))
 	else
+		slot6 = false
+		slot7 = false
+
+		if not RoomMapBuildingModel.instance:getBuildingMOById(slot2) then
+			logError(string.format("ManufactureController:clickCritterItem error, can not find buildingUId:%s", slot2))
+
+			return
+		end
+
+		if slot8:getCanPlaceCritterCount() == 1 then
+			slot3 = 0
+			slot7 = true
+		end
+
 		if not slot3 then
 			GameFacade.showToast(ToastEnum.RoomNotSelectedCritterSlot)
 
 			return
 		end
 
-		slot6 = false
-
-		if RoomMapBuildingModel.instance:getBuildingMOById(slot2) and slot7:getCanPlaceCritterCount() >= slot3 + 1 then
+		if slot9 >= slot3 + 1 then
 			slot6 = true
 		end
 
@@ -743,22 +929,26 @@ function slot0.clickCritterItem(slot0, slot1)
 			return
 		end
 
-		if slot7:getWorkingCritter(slot3) then
+		if slot8:getWorkingCritter(slot3) and not slot7 then
 			logError(string.format("ManufactureController:clickCritterItem error, slot has critter, buildingUid:%s critterSlotId:%s", slot2, slot3))
 
 			return
 		end
 
-		slot9 = 0
+		slot11 = 0
 
 		if CritterModel.instance:getCritterMOByUid(slot1) then
-			slot9 = slot10:getMoodValue()
+			slot11 = slot12:getMoodValue()
 		end
 
-		if slot9 <= 0 then
+		if slot11 <= 0 then
 			GameFacade.showToast(ToastEnum.RoomCritterNoMoodWork)
 
 			return
+		end
+
+		if slot10 and slot7 then
+			slot0:allocateCritter(slot2, CritterEnum.InvalidCritterUid, slot3)
 		end
 
 		slot0:allocateCritter(slot2, slot1, slot3)
@@ -843,10 +1033,68 @@ function slot0.checkTradeLevelCondition(slot0, slot1)
 end
 
 function slot0.oneKeyManufactureItem(slot0, slot1)
+	if not slot0:checkCanFill(slot1) then
+		return
+	end
+
+	slot3, slot4, slot5, slot6 = nil
+
+	if slot1 == RoomManufactureEnum.OneKeyType.Customize then
+		OneKeyAddPopListModel.instance:recordSelectManufactureItem()
+
+		slot7, slot8 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+
+		if ManufactureConfig.instance:getManufactureItemBelongBuildingType(slot7) ~= RoomBuildingEnum.BuildingType.Collect then
+			slot4 = ManufactureConfig.instance:getManufactureItemBelongBuildingList(slot7) and slot9[1]
+		end
+
+		slot5 = ManufactureConfig.instance:getItemId(slot7)
+		slot9, slot10 = ManufactureConfig.instance:getManufactureItemUnitCountRange(slot7)
+		slot6 = slot10 * slot8
+	end
+
 	ManufactureModel.instance:setRecordOneKeyType(slot1)
 	RoomStatController.instance:oneKeyDispatch(false, slot1)
-	RoomRpc.instance:sendBatchAddProctionsRequest(slot1)
+	RoomRpc.instance:sendBatchAddProctionsRequest(slot1, slot3, slot4, slot5, slot6)
 	ViewMgr.instance:closeView(ViewName.RoomOneKeyView)
+end
+
+function slot0.checkCanFill(slot0, slot1)
+	slot2 = true
+
+	if slot1 == RoomManufactureEnum.OneKeyType.TracedOrder then
+		slot3 = false
+
+		for slot8, slot9 in ipairs(RoomTradeModel.instance:getDailyOrders()) do
+			if slot9.isTraced then
+				slot3 = true
+
+				break
+			end
+		end
+
+		if not slot3 then
+			GameFacade.showToast(ToastEnum.RoomTraceOrderIsEnough)
+
+			slot2 = false
+		end
+	elseif slot1 == RoomManufactureEnum.OneKeyType.Customize then
+		if OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
+			slot4, slot5 = ManufactureModel.instance:getMaxCanProductCount(slot3)
+
+			if slot5 then
+				GameFacade.showToast(ToastEnum.RoomNoEmptyManufactureSlot)
+
+				slot2 = false
+			end
+		else
+			GameFacade.showToast(ToastEnum.RoomNotSelectedManufactureItem)
+
+			slot2 = false
+		end
+	end
+
+	return slot2
 end
 
 function slot0.oneKeyCritter(slot0, slot1)

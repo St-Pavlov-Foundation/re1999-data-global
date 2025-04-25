@@ -282,6 +282,7 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.SwitchHero, slot0._onSwitchHero, slot0)
 	slot0:addEventCb(CharacterController.instance, CharacterEvent.SwitchHeroSkin, slot0._switchHeroSkin, slot0)
 	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinishStory, slot0._onSwitchSceneFinishStory, slot0)
 end
 
 function slot0.onClose(slot0)
@@ -290,9 +291,22 @@ function slot0.onClose(slot0)
 	TaskDispatcher.cancelTask(slot0._delayInitLightSpine, slot0)
 end
 
+function slot0._onSwitchSceneFinishStory(slot0)
+	slot0._switchSceneFinishStory = true
+end
+
+function slot0._checkSpineAnim(slot0)
+	if slot0._switchSceneFinishStory and slot0._lightSpine then
+		slot0._lightSpine:play(StoryAnimName.B_IDLE, true)
+	end
+
+	slot0._switchSceneFinishStory = false
+end
+
 function slot0.onTabSwitchOpen(slot0)
 	gohelper.setActive(slot0._golightspine, true)
 	slot0._rootAnimator:Play("open", 0, 0)
+	slot0:_checkSpineAnim()
 end
 
 function slot0.onTabSwitchClose(slot0, slot1)
@@ -308,6 +322,7 @@ function slot0.onCloseFinish(slot0)
 	end
 
 	gohelper.addChildPosStay(slot1, slot0._golightspine)
+	slot0:_checkSpineAnim()
 end
 
 function slot0._switchHeroSkin(slot0, slot1, slot2)

@@ -110,7 +110,7 @@ end
 
 function slot0.showBtnUI(slot0)
 	slot0:setNavBtnIsShow(true)
-	gohelper.setActive(slot0._gotopright, true)
+	gohelper.setActive(slot0._gotopright, false)
 	gohelper.setActive(slot0._goswitchmodecontainer, true)
 	slot0.animator:Play("open", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
@@ -259,6 +259,7 @@ end
 function slot0.onOpen(slot0)
 	VersionActivity1_8DungeonController.instance:onVersionActivityDungeonMapViewOpen()
 	slot0:refreshUI()
+	gohelper.setActive(slot0._gotopright, false)
 end
 
 function slot0.refreshUI(slot0)

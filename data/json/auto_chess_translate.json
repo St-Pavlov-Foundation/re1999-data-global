@@ -1,0 +1,32 @@
+[
+  {
+    "id": "Forest",
+    "name": "language_10066198",
+    "color": "#3F5B16",
+    "tagResName": "v2a5_autochess_tag_2"
+  },
+  {
+    "id": "Machine",
+    "name": "language_10066199",
+    "color": "#6F6F6F",
+    "tagResName": "v2a5_autochess_tag_4"
+  },
+  {
+    "id": "Supernatural",
+    "name": "language_10066200",
+    "color": "#605084",
+    "tagResName": "v2a5_autochess_tag_3"
+  },
+  {
+    "id": "Ocean",
+    "name": "language_10066201",
+    "color": "#435F79",
+    "tagResName": "v2a5_autochess_tag_5"
+  },
+  {
+    "id": "RareBeast",
+    "name": "language_10066202",
+    "color": "#876139",
+    "tagResName": "v2a5_autochess_tag_6"
+  }
+]

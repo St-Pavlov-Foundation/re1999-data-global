@@ -452,9 +452,7 @@ function slot0._rebuildEffect(slot0)
 				slot0:setLayer(slot7, slot17)
 			end
 
-			if not slot0.isEmulator then
-				-- Nothing
-			end
+			CurveWorldRenderer.InitCurveWorldRenderer(slot9)
 
 			if slot18 ~= nil and (not slot23 or slot23.shadow ~= slot18) then
 				slot0:setShadow(slot7, slot18)

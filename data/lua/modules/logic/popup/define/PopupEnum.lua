@@ -6,12 +6,14 @@ slot0.PriorityType = {
 	RoomBlockPackageGetView = 701,
 	DungeonFragmentInfoView = 200,
 	CachotTips = 100001,
-	CommonPropView = 300,
+	RoomBuildingGetView = 700,
 	SummonResultView = 500,
+	ChargeStoreQuickUseTip = 2,
 	SpecialEquipOpenTip = 1,
 	CollectionGet = 100002,
 	GainCharacterView = 600,
-	RoomBuildingGetView = 700,
+	RoomGetCritterView = 801,
+	CommonPropView = 300,
 	AdventureCompleteView = 100
 }
 slot0.CacheType = {

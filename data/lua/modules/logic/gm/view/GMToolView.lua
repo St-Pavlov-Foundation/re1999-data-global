@@ -1432,7 +1432,10 @@ function slot0._onClickOpenHuaRongViewBtn(slot0)
 end
 
 function slot0._onClickOpenSeasonViewBtn(slot0)
-	ViewMgr.instance:openView(ViewName.TowerPermanentView)
+	FeiLinShiDuoGameController.instance:openGameView({
+		mapId = FeiLinShiDuoEnum.TestMapId,
+		gameConfig = FeiLinShiDuoConfig.instance:getGameEpisode(1251301)
+	})
 end
 
 function slot0._onEarToggleValueChange(slot0)

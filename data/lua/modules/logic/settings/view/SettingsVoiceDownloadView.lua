@@ -43,6 +43,14 @@ function slot0._btncanceldownloadOnClick(slot0)
 end
 
 function slot0._btnswitchOnClick(slot0)
+	if slot0._mo.lang == "res-HD" then
+		slot0:closeThis()
+		SettingsModel.instance:setVideoHDMode(true)
+		SettingsController.instance:dispatchEvent(SettingsEvent.OnChangeHDType)
+
+		return
+	end
+
 	SettingsVoicePackageController.instance:switchVoiceType(slot0._mo.lang, "in_voiceview")
 	ToastController.instance:showToast(182)
 	slot0:closeThis()
@@ -114,7 +122,14 @@ function slot0._onDownloadPackSuccess(slot0)
 	slot0._txtloading.text = ""
 
 	gohelper.setActive(slot0._btncanceldownload.gameObject, true)
-	gohelper.setActive(slot0._txtdesc.gameObject, true)
+
+	if slot0._mo.lang == "res-HD" then
+		gohelper.setActive(slot0._txtdesc.gameObject, false)
+		gohelper.setActive(slot0._btncanceldownload, false)
+	else
+		gohelper.setActive(slot0._txtdesc.gameObject, true)
+	end
+
 	gohelper.setActive(slot0._btnswitch.gameObject, true)
 end
 

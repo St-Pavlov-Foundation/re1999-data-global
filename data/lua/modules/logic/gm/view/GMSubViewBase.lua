@@ -362,22 +362,23 @@ function slot0.addDropDown(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	slot0._setRectTransSize(slot8, slot6, slot6 and slot6.total_w or slot9.preferredWidth + 300, 90)
 	slot0._setRectTransSize(slot9, slot6, slot6 and slot6.label_w or slot9.preferredWidth + 300, 90)
 	slot0._setRectTransSize(gohelper.findChild(slot8, "Dropdown"), slot6, slot6 and slot6.drop_w or slot9.preferredWidth + 150, 90)
+	slot0._setOffset(gohelper.findChildComponent(slot8, "Dropdown/Template", gohelper.Type_RectTransform), slot6)
 
-	slot11 = gohelper.findChildDropdown(slot8, "Dropdown")
+	slot12 = gohelper.findChildDropdown(slot8, "Dropdown")
 
 	if slot4 and slot5 then
-		slot11:AddOnValueChanged(slot4, slot5)
+		slot12:AddOnValueChanged(slot4, slot5)
 	end
 
-	slot11:ClearOptions()
+	slot12:ClearOptions()
 
 	if slot3 then
-		slot11:AddOptions(slot3)
+		slot12:AddOptions(slot3)
 	end
 
-	slot0._dropDowns[#slot0._dropDowns + 1] = slot11
+	slot0._dropDowns[#slot0._dropDowns + 1] = slot12
 
-	return slot11
+	return slot12
 end
 
 function slot0.addSplitLine(slot0)
@@ -432,6 +433,16 @@ end
 function slot0._setTextAlign(slot0, slot1)
 	if slot1 and slot1.align then
 		slot0.alignment = slot2
+	end
+end
+
+function slot0._setOffset(slot0, slot1, slot2)
+	if slot2 and slot2.offsetMin then
+		slot1.offsetMin = slot2.offsetMin
+	end
+
+	if slot2 and slot2.offsetMax then
+		slot1.offsetMax = slot2.offsetMax
 	end
 end
 

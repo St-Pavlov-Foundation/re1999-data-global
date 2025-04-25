@@ -55,7 +55,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gobuyContent, false)
 	gohelper.setActive(slot0._gosource, true)
 
-	slot0._jumpParentGo = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content")
+	slot0._jumpParentGo = gohelper.findChild(slot0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
 	slot0.jumpItemGos = {}
 
 	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))

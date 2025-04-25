@@ -14,6 +14,7 @@ function slot0.init(slot0, slot1, slot2)
 	uv0.super.__onInit(slot0)
 
 	slot0.goCard = slot1
+	slot0.tr = slot1.transform
 	slot0.cardMo = slot2
 	slot0.skillId = slot2.skillId
 	slot0.entityId = slot2.uid
@@ -35,6 +36,7 @@ function slot0.init(slot0, slot1, slot2)
 		table.insert(slot0.lvImgCompList, gohelper.findChildImage(slot7, "imgIcon"))
 	end
 
+	slot0.goTag = gohelper.findChild(slot0.goCard, "tag")
 	slot0.tagPosList = {}
 
 	for slot6 = 1, 4 do
@@ -68,23 +70,14 @@ function slot0.hideOther(slot0)
 		slot1.enabled = false
 	end
 
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "arrow"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "Image"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "Text"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "#go_resistance"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "vx_balance"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "temp_text"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "predisplay"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "cardmask"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "cardAppearEffectRoot"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "#go_pcbtn"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "layout"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "asfd_icon"), false)
-	gohelper.setActive(gohelper.findChild(slot0.goCard, "asfd"), false)
+	for slot6 = 1, slot0.tr.childCount do
+		gohelper.setActive(slot0.tr:GetChild(slot6 - 1).gameObject, false)
+	end
 end
 
 function slot0.refreshCard(slot0)
 	for slot4, slot5 in ipairs(slot0.lvGoList) do
+		gohelper.setActive(slot5, true)
 		gohelper.setActiveCanvasGroup(slot5, slot0.skillCardLv == slot4)
 	end
 
@@ -112,6 +105,7 @@ function slot0.refreshCard(slot0)
 		end
 	end
 
+	gohelper.setActive(slot0.goTag, true)
 	slot0.tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot0.skillCo.showTag))
 
 	if slot0.tagPosList[slot0.skillCardLv] then

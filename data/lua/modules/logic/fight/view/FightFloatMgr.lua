@@ -33,10 +33,41 @@ function slot0.init(slot0)
 	slot0._classEnabled = true
 	slot0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightfloat"))
+	slot0._loader:addPath(slot0:getFloatPrefab())
 	slot0._loader:startLoad(slot0._onLoadCallback, slot0)
 
 	slot0._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+end
+
+function slot0.getFloatPrefab(slot0)
+	slot1 = nil
+
+	for slot6, slot7 in ipairs(lua_fight_float_effect.configList) do
+		slot8 = true
+		slot9 = false
+
+		if not string.nilorempty(slot7.startTime) then
+			slot8 = TimeUtil.stringToTimestamp(slot7.startTime) <= os.time()
+		end
+
+		if not string.nilorempty(slot7.endTime) then
+			slot9 = TimeUtil.stringToTimestamp(slot7.endTime) <= slot2
+		end
+
+		if slot8 and not slot9 then
+			if not slot1 then
+				slot1 = slot7
+			elseif slot1.priority < slot7.priority then
+				slot1 = slot7
+			end
+		end
+	end
+
+	if not slot1 then
+		return ResUrl.getSceneUIPrefab("fight", "fightfloat")
+	end
+
+	return ResUrl.getSceneUIPrefab("fight", slot1.prefabPath)
 end
 
 function slot0._onLoadCallback(slot0)

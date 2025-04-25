@@ -18,6 +18,11 @@ function slot0.init(slot0)
 	slot0.playHitAnimEntityIdDict = {}
 	slot0.startAnimLoadingStatus = uv0.LoadingStatus.NotLoad
 	slot0.endAnimLoadingStatus = uv0.LoadingStatus.NotLoad
+
+	slot0:addEventCb(FightController.instance, FightEvent.AddUseCard, slot0.onAddUseCard, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, slot0.onMySideRoundEnd, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, slot0.onBeforePlayUniqueSkill, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, slot0.onAfterPlayUniqueSkill, slot0)
 end
 
 function slot0.playAudio(slot0, slot1)
@@ -28,6 +33,59 @@ function slot0.playAudio(slot0, slot1)
 	if slot1 ~= 0 then
 		AudioMgr.instance:trigger(slot1)
 	end
+end
+
+function slot0.onBeforePlayUniqueSkill(slot0)
+	if slot0.bornEffectWrap then
+		slot0.bornEffectWrap:setActive(false)
+	end
+end
+
+function slot0.onAfterPlayUniqueSkill(slot0)
+	if slot0.bornEffectWrap then
+		slot0.bornEffectWrap:setActive(true)
+	end
+end
+
+function slot0.onAddUseCard(slot0, slot1)
+	if not (FightPlayCardModel.instance:getUsedCards() and slot2[slot1]) then
+		return
+	end
+
+	if not FightDataHelper.entityMgr:getById(slot3.uid) then
+		return
+	end
+
+	if not slot5:isASFDEmitter() then
+		return
+	end
+
+	if not (slot4 and FightHelper.getEntity(slot4)) then
+		logError("没有找到发射奥术飞弹的实体" .. tostring(slot4))
+
+		return
+	end
+
+	slot7 = FightASFDHelper.getBornCo(slot4)
+	slot0.curBornCo = slot7
+	slot0.bornEntity = slot6
+	slot0.bornEffectWrap = slot6.effect:addGlobalEffect(slot7.res)
+
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot4, slot0.bornEffectWrap, FightRenderOrderMgr.MaxOrder)
+	slot0.bornEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(slot5.side))
+
+	if slot7.scale == 0 then
+		slot9 = 1
+	end
+
+	slot0.bornEffectWrap:setEffectScale(slot9)
+	slot0:playAudio(slot7.audio)
+
+	slot0.effectWrap2EntityIdDict[slot0.bornEffectWrap] = slot4
+end
+
+function slot0.onMySideRoundEnd(slot0)
+	slot0:clearBornEffect()
 end
 
 function slot0.createEmitterWrap(slot0, slot1)
@@ -52,8 +110,9 @@ function slot0.createEmitterWrap(slot0, slot1)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, slot4, FightASFDConfig.instance.skillId, slot1)
+	slot0:clearBornEffect(true)
 
-	slot5 = FightASFDHelper.getEmitterCo(slot1)
+	slot5 = FightASFDHelper.getEmitterCo(slot2)
 	slot7 = slot4.effect:addGlobalEffect(slot5.res)
 
 	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot2, slot7, FightRenderOrderMgr.MaxOrder)
@@ -81,17 +140,16 @@ end
 
 function slot0.emitMissile(slot0, slot1, slot2)
 	if not slot1 then
-		return
+		return slot0:emitterFail(slot1)
 	end
 
 	slot0.curStepMo = slot1
 	slot0.arriveCount = 0
 	slot0.missileCount = 0
+	slot3 = true
 
-	if FightASFDHelper.hasASFDFissionEffect(slot1) then
-		slot0:emitterFissionMissile(slot1, slot2)
-	else
-		slot0:emitterNormalMissile(slot1, slot2)
+	if not ((not FightASFDHelper.hasASFDFissionEffect(slot1) or slot0:emitterFissionMissile(slot1, slot2)) and slot0:emitterNormalMissile(slot1, slot2)) then
+		return slot0:emitterFail(slot1)
 	end
 end
 
@@ -102,8 +160,8 @@ function slot0.emitterNormalMissile(slot0, slot1, slot2)
 
 	if slot0:_emitterOneMissile(slot1, FightASFDHelper.getMissileTargetId(slot1), slot2) then
 		slot0.missileCount = slot0.missileCount + 1
-	else
-		slot0:emitterFail(slot1)
+
+		return true
 	end
 end
 
@@ -135,9 +193,7 @@ function slot0.emitterFissionMissile(slot0, slot1, slot2)
 
 	tabletool.clear(slot0.targetDict)
 
-	if slot3 then
-		slot0:emitterFail(slot1)
-	end
+	return not slot3
 end
 
 function slot0._emitterOneMissile(slot0, slot1, slot2, slot3)
@@ -153,7 +209,7 @@ function slot0._emitterOneMissile(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	slot9 = FightASFDHelper.getMissileCo(slot1)
+	slot9 = FightASFDHelper.getMissileCo(slot4)
 	slot11 = slot5.effect:addGlobalEffect(slot9.res)
 
 	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot4, slot11, FightRenderOrderMgr.MaxOrder)
@@ -166,6 +222,9 @@ function slot0._emitterOneMissile(slot0, slot1, slot2, slot3)
 	slot12.missileWrap = slot11
 	slot12.stepMo = slot1
 	slot12.toId = slot2
+
+	FightASFDHelper.changeRandomArea()
+
 	slot13 = FightASFDHelper.getStartPos(slot5:getMO().side)
 	slot14 = FightASFDHelper.getEndPos(slot2)
 	slot15 = slot13
@@ -191,8 +250,7 @@ function slot0._emitterOneMissile(slot0, slot1, slot2, slot3)
 end
 
 function slot0.emitterFail(slot0, slot1)
-	slot0:onExplosionEffectDone()
-	slot0:calculateDamage(slot1)
+	return slot0:onASFDArrived(slot1)
 end
 
 function slot0.onArrived(slot0, slot1)
@@ -203,8 +261,12 @@ function slot0.onArrived(slot0, slot1)
 	slot0:clearMover(slot1)
 
 	if slot0.missileCount <= slot0.arriveCount then
-		slot0:calculateDamage(slot2)
+		return slot0:onASFDArrived(slot2)
 	end
+end
+
+function slot0.onASFDArrived(slot0, slot1)
+	return FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDArrivedDone)
 end
 
 function slot0.createExplosionEffect(slot0, slot1, slot2)
@@ -212,7 +274,7 @@ function slot0.createExplosionEffect(slot0, slot1, slot2)
 		return
 	end
 
-	slot4 = FightASFDHelper.getExplosionCo(slot1)
+	slot4 = FightASFDHelper.getExplosionCo(slot1 and slot1.fromId)
 	slot5 = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
 	slot6 = slot3.effect:addHangEffect(slot4.res, ModuleEnum.SpineHangPoint.mountbody, nil, slot5)
 
@@ -258,60 +320,54 @@ function slot0._onAnimEvent(slot0, slot1, slot2, slot3, slot4)
 	end
 end
 
-function slot0.calculateDamage(slot0, slot1)
-	if not slot1 then
-		return slot0:onEffectFlowDone()
-	end
-
-	if slot1.hasPlay then
-		return slot0:onEffectFlowDone()
-	end
-
-	slot0:clearCalculateFlow()
-
-	slot5 = FlowSequence.New()
-
-	slot5:addWork(FightStepBuilder._buildEffectWorks(slot1) and slot2[1])
-	slot5:addWork(FunctionWork.New(slot0.markStepMoHasPlay, slot0, slot1))
-	slot5:registerDoneListener(slot0.onEffectFlowDone, slot0)
-	slot5:start()
-
-	slot0.calculateFlow = slot5
-end
-
-function slot0.clearCalculateFlow(slot0)
-	if slot0.calculateFlow then
-		slot0.calculateFlow:destroy()
-
-		slot0.calculateFlow = nil
-	end
-end
-
-function slot0.onEffectFlowDone(slot0)
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDEffectFlowDone)
-end
-
-function slot0.markStepMoHasPlay(slot0, slot1)
-	slot1.hasPlay = true
-end
-
 function slot0.onContinueASFDFlowDone(slot0)
 	slot0.curStepMo = nil
 
 	TaskDispatcher.cancelTask(slot0.onExplosionEffectDone, slot0)
-	slot0:clearCalculateFlow()
 end
 
 function slot0.onASFDFlowDone(slot0, slot1)
 	slot0.curStepMo = nil
 
+	slot0:clearBornEffect(true)
 	slot0:clearEmitterEffect(slot1)
 	slot0:clearMissileEffect()
 	slot0:clearExplosionEffect()
 	tabletool.clear(slot0.effectWrap2EntityIdDict)
 	TaskDispatcher.cancelTask(slot0.onExplosionEffectDone, slot0)
-	slot0:clearCalculateFlow()
 	slot0:resetSpineAnim()
+end
+
+function slot0.clearBornEffect(slot0, slot1)
+	if not slot0.bornEffectWrap then
+		return
+	end
+
+	slot0:removeEffect(slot0.bornEffectWrap)
+
+	slot0.bornEffectWrap = nil
+
+	if not slot1 then
+		slot0:createBornRemoveEffect()
+	end
+
+	slot0.curBornCo = nil
+	slot0.bornEntity = nil
+end
+
+function slot0.createBornRemoveEffect(slot0)
+	if slot0.curBornCo and slot0.bornEntity then
+		slot2 = slot0.bornEntity.effect:addGlobalEffect(FightASFDHelper.getASFDBornRemoveRes(slot0.curBornCo), nil, 1)
+
+		FightRenderOrderMgr.instance:addEffectWrapByOrder(slot0.bornEntity.id, slot2, FightRenderOrderMgr.MaxOrder)
+		slot2:setLocalPos(FightASFDHelper.getEmitterPos(slot0.bornEntity:getMO().side))
+
+		if slot0.curBornCo.scale == 0 then
+			slot4 = 1
+		end
+
+		slot2:setEffectScale(slot4)
+	end
 end
 
 function slot0.clearEmitterEffect(slot0, slot1)
@@ -339,7 +395,7 @@ function slot0.createRemoveEmitterEffect(slot0, slot1)
 		return
 	end
 
-	slot5 = FightASFDHelper.getEmitterCo(slot1)
+	slot5 = FightASFDHelper.getEmitterCo(slot2)
 	slot7 = slot4.effect:addGlobalEffect(FightASFDHelper.getASFDEmitterRemoveRes(slot5), nil, 1)
 
 	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot2, slot7, FightRenderOrderMgr.MaxOrder)

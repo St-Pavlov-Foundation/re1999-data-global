@@ -318,10 +318,10 @@ function slot0.onPackageGoodsListEmpty(slot0)
 end
 
 function slot0.refreshScrollViewPos(slot0, slot1)
-	if slot1 then
-		for slot6, slot7 in ipairs(StorePackageGoodsItemListModel.instance:getList()) do
-			if StoreModel.instance:isGoodsItemRedDotShow(slot7.goodsId) then
-				slot0._scrollprop.horizontalNormalizedPosition = slot6
+	if slot1 or StoreModel.instance:isPackageStoreTabRedDotShow(slot0._selectSecondTabId) then
+		for slot7, slot8 in ipairs(StorePackageGoodsItemListModel.instance:getList()) do
+			if StoreModel.instance:isGoodsItemRedDotShow(slot8.goodsId) then
+				slot0._scrollprop.horizontalNormalizedPosition = (slot7 - 1) / (#slot3 - 1)
 
 				return
 			end

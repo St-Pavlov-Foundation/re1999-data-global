@@ -2,7 +2,7 @@ module("modules.logic.fight.fightcomponent.FightObjItemListItem", package.seeall
 
 slot0 = class("FightObjItemListItem", FightBaseClass)
 
-function slot0.onInitialization(slot0, slot1, slot2, slot3)
+function slot0.onConstructor(slot0, slot1, slot2, slot3)
 	slot0.autoSetSibling = true
 	slot0.siblingOffset = 0
 	slot0.recycle = true
@@ -11,6 +11,7 @@ function slot0.onInitialization(slot0, slot1, slot2, slot3)
 	slot0._class = slot2
 	slot0._parentObject = slot3 or slot0._modelGameObject.transform.parent.gameObject
 	slot0._standbyList = {}
+	slot0._gameObjectStandbyList = {}
 
 	gohelper.setActive(slot0._modelGameObject, false)
 end
@@ -214,11 +215,11 @@ function slot0.newItem(slot0)
 end
 
 function slot0.getItemIndex(slot0)
-	return slot0.PARENTROOTCLASS:getIndex(slot0)
+	return slot0.PARENT_ROOT_CLASS:getIndex(slot0)
 end
 
 function slot0.getDataListCount(slot0)
-	return #slot0.PARENTROOTCLASS.dataList
+	return #slot0.PARENT_ROOT_CLASS.dataList
 end
 
 function slot0.getItemListMgr(slot0)
@@ -234,16 +235,30 @@ function slot0.getNextItem(slot0)
 end
 
 function slot0.getItemParent(slot0)
-	return slot0.PARENTROOTCLASS.PARENTROOTCLASS.PARENTROOTCLASS
+	return slot0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
 end
 
 function slot0.createItem(slot0)
-	slot1 = gohelper.clone(slot0._modelGameObject, slot0._parentObject)
-	slot2 = slot0:registClass(slot0._class, slot1)
+	slot1 = #slot0._gameObjectStandbyList > 0 and table.remove(slot0._gameObjectStandbyList) or gohelper.clone(slot0._modelGameObject, slot0._parentObject)
+	slot2 = slot0:newClass(slot0._class, slot1)
 	slot2.keyword_gameObject = slot1
 	slot2.ITEM_LIST_MGR = slot0
 
 	return slot2
+end
+
+function slot0.cloneGameObject2Standby(slot0, slot1, slot2)
+	if slot2 then
+		slot0:com_registRepeatTimer(slot0.delaycloneGameObject2Standby, slot2, slot1)
+	else
+		for slot6 = 1, slot1 do
+			table.insert(slot0._gameObjectStandbyList, gohelper.clone(slot0._modelGameObject, slot0._parentObject))
+		end
+	end
+end
+
+function slot0.delaycloneGameObject2Standby(slot0)
+	table.insert(slot0._gameObjectStandbyList, gohelper.clone(slot0._modelGameObject, slot0._parentObject))
 end
 
 function slot0.onDestructor(slot0)

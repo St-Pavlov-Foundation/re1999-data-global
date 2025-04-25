@@ -107,6 +107,7 @@ function slot0.setResPath(slot0, slot1, slot2, slot3, slot4)
 		slot0._curModel = slot0:_getSpine()
 
 		slot0._curModel:setHeroId(slot1.characterId)
+		slot0._curModel:setSkinId(slot1.id)
 		slot0._curModel:showModel()
 		slot0._curModel:setResPath(ResUrl.getRolesPrefabStory(slot1.verticalDrawing), slot2, slot3)
 	else

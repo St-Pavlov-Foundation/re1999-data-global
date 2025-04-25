@@ -198,6 +198,10 @@ function slot0.isDragging(slot0)
 	return slot0._dragInfo.isDragging
 end
 
+function slot0.isSwipeNone(slot0)
+	return slot0._swipeH == uv0.None and slot0._swipeV == uv0.None
+end
+
 function slot0.isSwipeRight(slot0)
 	return slot0._swipeH == uv0.Right
 end
@@ -206,16 +210,28 @@ function slot0.isSwipeLeft(slot0)
 	return slot0._swipeH == uv0.Left
 end
 
-function slot0.isSwipeNone(slot0)
-	return slot0._swipeH == uv0.None and slot0._swipeV == uv0.None
-end
-
 function slot0.isSwipeUp(slot0)
 	return slot0._swipeV == uv0.Up
 end
 
 function slot0.isSwipeDown(slot0)
 	return slot0._swipeV == uv0.Down
+end
+
+function slot0.isSwipeLT(slot0)
+	return slot0:isSwipeLeft() and slot0:isSwipeUp()
+end
+
+function slot0.isSwipeRT(slot0)
+	return slot0:isSwipeRight() and slot0:isSwipeUp()
+end
+
+function slot0.isSwipeLB(slot0)
+	return slot0:isSwipeLeft() and slot0:isSwipeDown()
+end
+
+function slot0.isSwipeRB(slot0)
+	return slot0:isSwipeRight() and slot0:isSwipeDown()
 end
 
 function slot0.stopMovement(slot0)

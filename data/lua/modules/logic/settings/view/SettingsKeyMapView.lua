@@ -2,6 +2,11 @@ module("modules.logic.settings.view.SettingsKeyMapView", package.seeall)
 
 slot0 = class("SettingsKeyMapView", BaseView)
 
+function slot0._refreshLangTxt(slot0)
+	SettingsKeyListModel.instance:Init()
+	SettingsKeyListModel.instance:SetActivity(slot0._index or 1)
+end
+
 function slot0.onInitView(slot0)
 	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "pcScroll/Viewport/Content/shortcutsitem/#txt_dec")
 	slot0._btnshortcuts = gohelper.findChildButtonWithAudio(slot0.viewGO, "pcScroll/Viewport/Content/shortcutsitem/#btn_shortcuts")
@@ -27,19 +32,31 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
+	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, slot0._refreshLangTxt, slot0)
 	slot0._btnshortcuts:AddClickListener(slot0._btnshortcutsOnClick, slot0)
 	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
 	slot0._tipsBtn:AddClickListener(slot0._tipsSwtich, slot0)
 	slot0._exitgame:AddClickListener(slot0.exitgame, slot0)
 	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnKeyMapChange, slot0.onSelectChange, slot0)
+	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
 end
 
 function slot0.removeEvents(slot0)
+	slot0:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, slot0._refreshLangTxt, slot0)
 	slot0._btnshortcuts:RemoveClickListener()
 	slot0._btnreset:RemoveClickListener()
 	slot0._tipsBtn:RemoveClickListener()
 	slot0._exitgame:RemoveClickListener()
 	slot0:removeEventCb(SettingsController.instance, SettingsEvent.OnKeyMapChange, slot0.onSelectChange, slot0)
+	slot0:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
+end
+
+function slot0._onChangeLangTxt(slot0)
+	SettingsKeyTopListModel.instance:InitList()
+
+	slot0._index = 1
+
+	slot0._topScroll:selectCell(slot0._index, true)
 end
 
 function slot0._btnshortcutsOnClick(slot0)
@@ -103,7 +120,7 @@ function slot0.createTopScroll(slot0)
 	slot1.cellClass = SettingsKeyTopItem
 	slot1.scrollDir = ScrollEnum.ScrollDirH
 	slot1.lineCount = 1
-	slot1.cellWidth = 240
+	slot1.cellWidth = 284
 	slot1.cellHeight = 68
 	slot1.cellSpaceH = 0
 	slot1.cellSpaceV = 0

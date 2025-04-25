@@ -48,6 +48,7 @@ function slot0._editableInitView(slot0)
 	slot0._txtneedMattime = gohelper.findChildText(slot0.viewGO, "#go_needMat/content/time/#txt_time")
 	slot0._txtneedMatnum = gohelper.findChildText(slot0.viewGO, "#go_needMat/num/#txt_num")
 	slot0._goneedtraced = gohelper.findChild(slot0.viewGO, "#go_needMat/#go_traced")
+	slot0._txtneed = gohelper.findChildText(slot0.viewGO, "#go_needMat/#txt_need")
 	slot0._gonoMat = gohelper.findChild(slot0.viewGO, "#go_noMat")
 	slot0._btnnoMatClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_noMat/#btn_productClick")
 	slot0._imgnoMatRareBg = gohelper.findChildImage(slot0.viewGO, "#go_noMat/content/head/#image_quality")
@@ -55,7 +56,8 @@ function slot0._editableInitView(slot0)
 	slot0._txtnoMatproductionName = gohelper.findChildText(slot0.viewGO, "#go_noMat/content/#txt_productionName")
 	slot0._txtnoMattime = gohelper.findChildText(slot0.viewGO, "#go_noMat/content/time/#txt_time")
 	slot0._txtnoMatnum = gohelper.findChildText(slot0.viewGO, "#go_noMat/num/#txt_num")
-	slot0._gonotraced = gohelper.findChild(slot0.viewGO, "#go_noMat/#go_traced")
+	slot0._gonomattraced = gohelper.findChild(slot0.viewGO, "#go_noMat/#go_traced")
+	slot0._txtnomatneed = gohelper.findChildText(slot0.viewGO, "#go_noMat/#txt_need")
 	slot0.matItemList = {}
 
 	gohelper.setActive(slot0._gomatItem, false)
@@ -81,34 +83,48 @@ function slot0.refreshItem(slot0)
 		slot0._itemIcon:isShowQuality(false)
 	end
 
-	slot3 = nil
-
-	if not string.nilorempty(ManufactureConfig.instance:getBatchIcon(slot0.id)) then
-		slot3 = ResUrl.getPropItemIcon(slot2)
-	end
-
 	slot0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot1, nil, , , {
-		specificIcon = slot3
+		specificIcon = ManufactureConfig.instance:getBatchIconPath(slot0.id)
 	})
 
-	slot5 = RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()]
+	slot4 = RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()]
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imgneedMatRareBg, slot5)
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imgnoMatRareBg, slot5)
+	UISpriteSetMgr.instance:setCritterSprite(slot0._imgneedMatRareBg, slot4)
+	UISpriteSetMgr.instance:setCritterSprite(slot0._imgnoMatRareBg, slot4)
+	slot0:refreshItemName()
+	slot0:refreshItemNum()
 
-	if string.nilorempty(ManufactureConfig.instance:getBatchName(slot0.id)) then
-		slot6 = ItemConfig.instance:getItemNameById(slot1)
+	slot5, slot6 = ManufactureModel.instance:getLackMatCount(slot0.id)
+
+	if slot5 and slot5 ~= 0 then
+		if slot0._txtneed then
+			slot0._txtneed.text = GameUtil.getSubPlaceholderLuaLangOneParam(slot6 and luaLang("room_manufacture_traced_count") or luaLang("room_manufacture_formula_need_count"), slot5)
+		end
+
+		if slot0._txtnomatneed then
+			slot0._txtnomatneed.text = slot9
+		end
 	end
 
-	slot0._txtneedMatproductionName.text = slot6
-	slot0._txtnoMatproductionName.text = slot6
-	slot8 = formatLuaLang("materialtipview_itemquantity", ManufactureModel.instance:getManufactureItemCount(slot0.id))
-	slot0._txtneedMatnum.text = slot8
-	slot0._txtnoMatnum.text = slot8
-	slot9 = RoomTradeModel.instance:isTracedGoods(slot0.id)
+	gohelper.setActive(slot0._txtneed, slot7)
+	gohelper.setActive(slot0._txtnomatneed, slot7)
 
-	gohelper.setActive(slot0._goneedtraced, slot9)
-	gohelper.setActive(slot0._gonotraced, slot9)
+	slot8 = RoomTradeModel.instance:isTracedGoods(slot0.id)
+
+	gohelper.setActive(slot0._goneedtraced, slot8)
+	gohelper.setActive(slot0._gonomattraced, slot8)
+end
+
+function slot0.refreshItemName(slot0)
+	slot1 = ManufactureConfig.instance:getManufactureItemName(slot0.id)
+	slot0._txtneedMatproductionName.text = slot1
+	slot0._txtnoMatproductionName.text = slot1
+end
+
+function slot0.refreshItemNum(slot0)
+	slot2 = formatLuaLang("materialtipview_itemquantity", ManufactureModel.instance:getManufactureItemCount(slot0.id))
+	slot0._txtneedMatnum.text = slot2
+	slot0._txtnoMatnum.text = slot2
 end
 
 function slot0.refreshMats(slot0)

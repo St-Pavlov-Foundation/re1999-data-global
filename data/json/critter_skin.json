@@ -208,5 +208,19 @@
     "largeIcon": "510015",
     "spine": "v2a2_510015_zxkbk/510015_zxkbk",
     "handEffects": ""
+  },
+  {
+    "id": 50001601,
+    "headIcon": "500016",
+    "largeIcon": "500016",
+    "spine": "v2a5_500016_skyk/500016_skyk",
+    "handEffects": ""
+  },
+  {
+    "id": 50001602,
+    "headIcon": "510016",
+    "largeIcon": "510016",
+    "spine": "v2a5_510016_skyk/510016_skyk",
+    "handEffects": ""
   }
 ]

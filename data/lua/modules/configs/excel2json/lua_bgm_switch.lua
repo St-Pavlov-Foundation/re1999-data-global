@@ -10,11 +10,12 @@ slot1 = {
 	audioicon = 11,
 	sort = 12,
 	audioType = 13,
-	audioLength = 14,
+	isNonLoop = 16,
 	isReport = 3,
 	audioBg = 10,
 	id = 1,
 	audioEvaluates = 15,
+	audioLength = 14,
 	defaultUnlock = 6
 }
 slot2 = {

@@ -477,7 +477,34 @@
     ]
   },
   {
-    "name": "2_4_opening_1",
+    "name": "2_5_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "2_5_activity_01",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "2_5_activity_03",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "2_5_activity_04",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "2_5_pv",
     "supportLang": [
       "en",
       "zh",

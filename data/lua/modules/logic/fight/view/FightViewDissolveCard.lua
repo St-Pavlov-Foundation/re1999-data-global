@@ -26,8 +26,6 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0.goCardItem, false)
 
 	slot0.cardItemList = {}
-
-	slot0:addEventCb(FightController.instance, FightEvent.CardDeckDelete, slot0.onDeleteCard, slot0)
 end
 
 function slot0.onDeleteCard(slot0, slot1)

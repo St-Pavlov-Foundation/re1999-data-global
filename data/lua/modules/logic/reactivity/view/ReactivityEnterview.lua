@@ -72,7 +72,7 @@ function slot0.initRedDot(slot0)
 		return
 	end
 
-	slot0.actId = VersionActivity2_4Enum.ActivityId.Reactivity
+	slot0.actId = VersionActivity2_5Enum.ActivityId.Reactivity
 
 	RedDotController.instance:addRedDot(slot0._goreddot, ActivityConfig.instance:getActivityCo(slot0.actId).redDotId)
 end

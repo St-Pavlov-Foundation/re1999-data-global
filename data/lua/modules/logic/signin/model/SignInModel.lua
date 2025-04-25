@@ -474,7 +474,7 @@ function slot0.getShowMonthItemCo(slot0)
 end
 
 function slot0.checkFestivalDecorationUnlock()
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a2_Calendar_Decoration) == nil or slot1 == false then
+	if ActivityModel.instance:isActOnLine(ActivityController.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)) == nil or slot1 == false then
 		return false
 	end
 
@@ -482,6 +482,26 @@ function slot0.checkFestivalDecorationUnlock()
 	slot4 = ServerTime.now() * 1000
 
 	return ActivityModel.instance:getActStartTime(slot0) ~= nil and slot3 ~= nil and slot2 <= slot4 and slot4 < slot3
+end
+
+function slot0.onReceiveSignInTotalRewardReply(slot0, slot1)
+	slot0:setRewardMark(slot1.mark)
+end
+
+function slot0.isClaimedAccumulateReward(slot0, slot1)
+	return slot0._signInfo:isClaimedAccumulateReward(slot1)
+end
+
+function slot0.isClaimableAccumulateReward(slot0, slot1)
+	return slot0._signInfo:isClaimableAccumulateReward(slot1)
+end
+
+function slot0.onReceiveSignInTotalRewardAllReply(slot0, slot1)
+	slot0:setRewardMark(slot1.mark)
+end
+
+function slot0.setRewardMark(slot0, slot1)
+	slot0._signInfo:setRewardMark(slot1 or 0)
 end
 
 slot0.instance = slot0.New()

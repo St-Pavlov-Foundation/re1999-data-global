@@ -19,14 +19,21 @@ function slot0.summonCritterInfoReply(slot0, slot1)
 end
 
 function slot0.summonCritterReply(slot0, slot1)
-	slot2, slot3 = next(slot1.critterInfos)
+	slot3 = {}
 
-	if slot3 then
+	if slot1.critterInfos then
+		for slot7, slot8 in ipairs(slot2) do
+			table.insert(slot3, CritterModel.instance:addCritter(slot8))
+		end
+	end
+
+	if slot3 and #slot3 > 0 then
 		CritterSummonModel.instance:onSummon(slot1.poolId, slot1.hasSummonCritter)
 		slot0:dispatchEvent(CritterSummonEvent.onStartSummon, {
 			mode = RoomSummonEnum.SummonType.Summon,
 			poolId = slot1.poolId,
-			critterMo = CritterModel.instance:addCritter(slot3)
+			critterMo = slot3[1],
+			critterMOList = slot3
 		})
 	end
 end

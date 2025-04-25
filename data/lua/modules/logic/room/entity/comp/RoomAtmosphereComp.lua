@@ -201,12 +201,17 @@ function slot0.atmosphereSequenceFinish(slot0, slot1, slot2)
 		return
 	end
 
-	if slot0:_getAtmosphereFlow(slot2) and (RoomConfig.instance:getAtmosphereCyclesTimes(slot2) == 0 or slot3.cyclesTimes < slot4) then
-		slot7:start()
+	slot4 = RoomConfig.instance:getAtmosphereCyclesTimes(slot2)
 
-		slot3.cyclesTimes = slot5 + 1
+	if slot0:_getAtmosphereFlow(slot2) and (slot4 == 0 or slot3.cyclesTimes < slot4) and (RoomConfig.instance:getAtmosphereCfg(slot2) and slot5.cdtimes or 0) == 0 then
+		slot9:start()
+
+		slot3.cyclesTimes = slot7 + 1
 	else
-		slot7:reset()
+		if slot9 then
+			slot9:reset()
+		end
+
 		slot0:stopAtmosphere(slot2)
 		RoomModel.instance:setAtmosphereHasPlay(slot2)
 	end

@@ -702,5 +702,21 @@
     "effectRes": "v2a2_mojing/mojing_manji",
     "animName": "",
     "effectKey": "critterHighQualityEffect"
+  },
+  {
+    "skinId": 50001601,
+    "id": 51601,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/skyk/skyk_collect2",
+    "animName": "collect",
+    "effectKey": ""
+  },
+  {
+    "skinId": 50001602,
+    "id": 51602,
+    "point": "special1",
+    "effectRes": "v2a2_mojing/skyk/skyk_collect2",
+    "animName": "collect",
+    "effectKey": ""
   }
 ]

@@ -1,0 +1,30 @@
+[
+  {
+    "activityId": 12512,
+    "id": 1,
+    "attribute": "",
+    "shape": "1#1",
+    "path": ""
+  },
+  {
+    "activityId": 12512,
+    "id": 2,
+    "attribute": "",
+    "shape": "0,1#0,1#1,1",
+    "path": ""
+  },
+  {
+    "activityId": 12512,
+    "id": 3,
+    "attribute": "",
+    "shape": "0,1,0#0,1,0#1,1,1",
+    "path": ""
+  },
+  {
+    "activityId": 12512,
+    "id": 4,
+    "attribute": "",
+    "shape": "1,1#1,1",
+    "path": ""
+  }
+]

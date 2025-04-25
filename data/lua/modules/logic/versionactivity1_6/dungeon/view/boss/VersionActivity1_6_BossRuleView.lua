@@ -10,7 +10,6 @@ function slot0.onInitView(slot0)
 	slot0._gorulelist = gohelper.findChild(slot0._goadditionRule, "Viewport/content")
 	slot0._btnadditionRuleclick = gohelper.findChildButtonWithAudio(slot0._goadditionRule, "#btn_additionRuleclick")
 	slot0._goruledesc = gohelper.findChild(slot1, "Tips")
-	slot0._btncloserule = gohelper.findChildButtonWithAudio(slot0._goruledesc, "#btn_closerule")
 	slot0._goruleitem = gohelper.findChild(slot0._goruledesc, "image_TipsBG/#go_Item1")
 	slot0._goExtraRuleitem = gohelper.findChild(slot0._goruledesc, "image_TipsBG/#go_Item2")
 	slot0._goruleDescList = gohelper.findChild(slot0._goruledesc, "bg/#go_ruleDescList")
@@ -24,12 +23,10 @@ end
 
 function slot0.addEvents(slot0)
 	slot0._btnadditionRuleclick:AddClickListener(slot0._btnRuleAreaOnClick, slot0)
-	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnadditionRuleclick:RemoveClickListener()
-	slot0._btncloserule:RemoveClickListener()
 end
 
 function slot0._editableInitView(slot0)
@@ -65,14 +62,16 @@ function slot0.addNormalRuleItem(slot0, slot1, slot2)
 	gohelper.setActive(slot0._goruleitem, true)
 
 	slot8 = "#"
+	slot4 = GameUtil.splitString2(slot3, true, "|", slot8)
+	slot0._ruleList = slot4
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot3, true, "|", slot8)) do
+	for slot8, slot9 in ipairs(slot4) do
+		slot10 = slot9[1]
+
 		if lua_rule.configDict[slot9[2]] then
 			slot13 = slot0:_addRuleItem(slot9, false, slot2)
 			slot13.battleId = slot1
 			slot0._normalRuleItemList[#slot0._normalRuleItemList + 1] = slot13
-
-			slot0:_setRuleDescItem(slot0._goruleitem, slot12, slot9[1])
 		end
 	end
 end
@@ -87,12 +86,14 @@ function slot0.AddExtraRuleItem(slot0, slot1)
 	slot8 = "#"
 
 	for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, true, "|", slot8)) do
+		slot10 = slot9[1]
+
 		if lua_rule.configDict[slot9[2]] then
 			slot13 = slot0:_addRuleItem(slot9, true)
 			slot13.battleId = slot1
 			slot0._extraRuleItemList[#slot0._extraRuleItemList + 1] = slot13
 
-			slot0:_setRuleDescItem(slot0._goExtraRuleitem, slot12, slot9[1])
+			table.insert(slot0._ruleList, slot9)
 
 			slot0._nextBossTitle.text = string.format(luaLang("p_v1a6_activityboss_help_3_txt_3"), slot3:getCurBossEpisodeRemainDay())
 			slot0._nextBossDay.text = ""
@@ -133,33 +134,9 @@ function slot0._addRuleItem(slot0, slot1, slot2, slot3)
 end
 
 function slot0._btnRuleAreaOnClick(slot0)
-	gohelper.setActive(slot0._goruledesc, true)
-
-	if slot0._isHardMode then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
-	end
-end
-
-function slot0._setRuleDescItem(slot0, slot1, slot2, slot3)
-	slot4 = {
-		"#6680bd",
-		"#d05b4c",
-		"#c7b376"
-	}
-
-	gohelper.setActive(slot1, true)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot1, "#go_ruletemp"), slot2.icon)
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot1, "#go_ruletemp/#image_tagicon"), "wz_" .. slot3)
-
-	gohelper.findChildText(slot1, "#txt_Descr").text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot3), string.gsub(slot2.desc, "%【(.-)%】", "<color=#6680bd>[%1]</color>") .. ("\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot2.desc, slot4[1])), slot4[slot3])
-end
-
-function slot0._btncloseruleOnClick(slot0)
-	gohelper.setActive(slot0._goruledesc, false)
-
-	if slot0._isHardMode then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeHideRuleDesc)
-	end
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+		ruleList = slot0._ruleList
+	})
 end
 
 function slot0._clear(slot0)

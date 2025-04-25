@@ -48,6 +48,10 @@ function slot0.startInteract(slot0)
 			slot10.interactActionComp:startInteract(slot1.buildingUid, slot8, slot2.config.showTime * 0.001)
 		end
 	end
+
+	if slot2.config and not string.nilorempty(slot2.config.buildingAnim) then
+		slot0.entity:playAnimator(slot2.config.buildingAnim)
+	end
 end
 
 function slot0.getPointGOByName(slot0, slot1)

@@ -47,7 +47,16 @@ function slot0._onItemClick(slot0)
 end
 
 function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "icon_3", true)
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. "icon_3" or "icon_3", true)
+
+	if not slot1 and ActivityConfig.instance:getMainActAtmosphereConfig() then
+		for slot8, slot9 in ipairs(slot4.mainViewActBtn) do
+			if gohelper.findChild(slot0.go, slot9) then
+				gohelper.setActive(slot10, slot1)
+			end
+		end
+	end
+
 	slot0._redDot:refreshDot()
 end
 
@@ -72,7 +81,7 @@ function slot0._initReddotitem(slot0, slot1)
 
 	slot5 = gohelper.findChild(slot2, "#go_bp_red")
 	slot0._redDot = RedDotController.instance:addRedDotTag(slot5, RedDotEnum.DotNode.BattlePass, false, slot0._onRefreshDot, slot0)
-	slot0._btnitem2 = gohelper.getClickWithAudio(slot5, AudioEnum.UI.play_ui_role_pieces_open)
+	slot0._btnitem2 = gohelper.getClickWithAudio(slot5, AudioEnum2_6.BP.MainBtn)
 end
 
 function slot0._onRefreshDot(slot0, slot1)

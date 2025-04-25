@@ -102,7 +102,7 @@ function slot0._refreshItem(slot0)
 			RedDotController.instance:addRedDot(slot0._goreddot, ActivityConfig.instance:getActivityCo(slot0._mo.id).redDotId, nil, slot0.checkActivityShowFirstEnter, slot0)
 		elseif slot0._mo.id == VersionActivity2_2Enum.ActivityId.LimitDecorate then
 			RedDotController.instance:addRedDot(slot0._goreddot, slot2, slot0._mo.id, slot0.checkActivityShowFirstEnter, slot0)
-		elseif slot0._mo.id == ActivityEnum.Activity.Activity1_9WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a0_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a1_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a2_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a3_WarmUp or slot0._mo.id == ActivityEnum.Activity.RoomSign then
+		elseif slot0._mo.id == ActivityEnum.Activity.Activity1_9WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a0_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a1_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a2_WarmUp or slot0._mo.id == ActivityEnum.Activity.V2a3_WarmUp or slot0._mo.id == ActivityEnum.Activity.RoomSign or slot0._mo.id == ActivityEnum.Activity.V2a5_WarmUp then
 			slot8 = ActivityConfig.instance:getActivityCo(slot0._mo.id).redDotId
 
 			if slot0._selected then
@@ -141,6 +141,8 @@ function slot0._refreshItem(slot0)
 					uid = slot3
 				}
 			})
+		elseif slot6 == ActivityEnum.ActivityTypeID.Act201 then
+			RedDotController.instance:addRedDot(slot0._goreddot, slot5, nil, slot0.checkActivityShowFirstEnter, slot0)
 		else
 			RedDotController.instance:addRedDot(slot0._goreddot, slot2, slot0._mo.id)
 		end

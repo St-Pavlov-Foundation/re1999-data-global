@@ -13,6 +13,7 @@ function slot0.onReceiveGetChargeInfoReply(slot0, slot1, slot2)
 		PayModel.instance:setSandboxInfo(slot2.sandboxEnable, slot2.sandboxBalance)
 		PayModel.instance:setChargeInfo(slot2.infos)
 		StoreModel.instance:initChargeInfo(slot2.infos)
+		PayController.instance:dispatchEvent(PayEvent.PayInfoChanged)
 	end
 end
 
@@ -48,13 +49,12 @@ end
 
 function slot0.onReceiveOrderCompletePush(slot0, slot1, slot2)
 	if slot1 == 0 then
-		StoreModel.instance:chargeOrderComplete(slot2.id)
+		slot3 = slot2.id
 
-		if StoreConfig.instance:getMonthCardConfig(slot2.id) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
-			SignInRpc.instance:sendGetSignInInfoRequest()
-		end
+		StoreModel.instance:chargeOrderComplete(slot3)
+		slot0:_tryUpdateMonthCard(slot2)
 
-		if StoreConfig.instance:getChargeGoodsConfig(slot2.id) then
+		if StoreConfig.instance:getChargeGoodsConfig(slot3) then
 			uv0.instance:sendGetChargeInfoRequest()
 		end
 
@@ -116,6 +116,18 @@ function slot0.onReceiveReadChargeNewReply(slot0, slot1, slot2)
 	if slot1 == 0 then
 		-- Nothing
 	end
+end
+
+function slot0._tryUpdateMonthCard(slot0, slot1)
+	if not (StoreConfig.instance:getMonthCardConfig(slot1.id) and true or false) and StoreConfig.instance:getChargeGoodsConfig(slot2) then
+		slot4 = slot2 == StoreEnum.SeasonCardGoodsId
+	end
+
+	if not slot4 then
+		return
+	end
+
+	SignInController.instance:sendGetSignInInfoRequestIfUnlock()
 end
 
 slot0.instance = slot0.New()

@@ -15,26 +15,40 @@ end
 
 function slot0.addEvents(slot0)
 	slot0._btncloseAdd:AddClickListener(slot0._btncloseAddOnClick, slot0)
+	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0, LuaEventSystem.High)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btncloseAdd:RemoveClickListener()
+	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
 end
 
 function slot0._btncloseAddOnClick(slot0)
 	ManufactureController.instance:clearSelectedSlotItem()
 end
 
+function slot0._onItemChanged(slot0)
+	ManufactureController.instance:updateTraceNeedItemDict()
+end
+
 function slot0._editableInitView(slot0)
 	slot0._transroot = slot0._goroot.transform
 	slot0.animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0._goaddPop)
+
+	ManufactureController.instance:updateTraceNeedItemDict()
 end
 
 function slot0.onUpdateParam(slot0)
+	if slot0.viewParam then
+		slot0.isRight = slot0.viewParam.inRight
+		slot0.highLightManufactureItem = slot0.viewParam.highLightManufactureItem
+	end
 end
 
 function slot0.onOpen(slot0)
-	if slot0.viewParam and slot0.viewParam.inRight then
+	slot0:onUpdateParam()
+
+	if slot0.isRight then
 		gohelper.addChild(slot0._gorightroot, slot0._goaddPop)
 	end
 end

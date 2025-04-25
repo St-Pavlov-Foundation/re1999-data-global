@@ -26,6 +26,7 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	slot0._gobigTypeItem = gohelper.findChild(slot0.viewGO, "scroll_bigType/viewport/content/#go_bigTypeItem")
 	slot0._gobigTypeItem1 = gohelper.findChild(slot0.viewGO, "scroll_bigType/viewport/content/#go_bigTypeItem1")
 	slot0._bigTypeItemContent = gohelper.findChild(slot0.viewGO, "scroll_bigType/viewport/content").transform
@@ -181,9 +182,14 @@ function slot0.refreshTimeDeadline(slot0, slot1, slot2)
 
 	slot3 = false
 	slot4 = StoreHelper.getRemainExpireTime(slot1)
+	slot5 = StoreModel.instance:isTabMainRedDotShow(slot1.id)
 	slot6 = false
 
-	if StoreEnum.StoreId.Summon == slot1.id and slot1.id ~= slot0._selectFirstTabId and not StoreModel.instance:isTabMainRedDotShow(slot1.id) and slot4 and slot4 > 0 and slot4 <= TimeUtil.OneDaySecond * 7 then
+	if StoreEnum.SummonExchange == slot1.id then
+		slot4 = StoreHelper.getRemainExpireTimeDeep(slot1)
+	end
+
+	if StoreEnum.SummonExchange == slot1.id and slot1.id ~= slot0._selectFirstTabId and not slot5 and slot4 and slot4 > 0 and slot4 <= TimeUtil.OneDaySecond * 7 then
 		gohelper.setActive(slot2.godeadline, true)
 		gohelper.setActive(slot2.txttime.gameObject, true)
 
@@ -238,9 +244,19 @@ function slot0.onOpen(slot0)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._OnDailyRefresh, slot0)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDay, slot0._OnDailyRefresh, slot0)
 	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._onRefreshRedDot, slot0)
+	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._onStoreInfoChanged, slot0)
 	slot0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0._onRefreshRedDot, slot0)
+	slot0:addEventCb(StoreController.instance, StoreEvent.PlayShowStoreAnim, slot0._onPlayStoreInAnim, slot0)
+	slot0:addEventCb(StoreController.instance, StoreEvent.PlayHideStoreAnim, slot0._onPlayStoreOutAnim, slot0)
 	StoreController.instance:statSwitchStore(slot1)
+end
+
+function slot0._onPlayStoreInAnim(slot0)
+	slot0._viewAnim:Play("storeview_show", 0, 0)
+end
+
+function slot0._onPlayStoreOutAnim(slot0)
+	slot0._viewAnim:Play("storeview_hide", 0, 0)
 end
 
 function slot0._onRefreshRedDot(slot0)
@@ -262,6 +278,18 @@ end
 function slot0._OnDailyRefresh(slot0)
 	ChargeRpc.instance:sendGetChargeInfoRequest()
 	StoreRpc.instance:sendGetStoreInfosRequest(nil, slot0._handleDailyRefreshReceive, slot0)
+end
+
+function slot0._onStoreInfoChanged(slot0)
+	slot0:_onRefreshRedDot()
+
+	slot2 = #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore) <= 0
+
+	if slot0._hasDecorateGoods and slot2 then
+		slot0:closeThis()
+	end
+
+	slot0._hasDecorateGoods = not slot2
 end
 
 function slot0._handleDailyRefreshReceive(slot0)
@@ -297,8 +325,10 @@ function slot0.onClose(slot0)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._OnDailyRefresh, slot0)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDay, slot0._OnDailyRefresh, slot0)
 	slot0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._onRefreshRedDot, slot0)
+	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._onStoreInfoChanged, slot0)
 	slot0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0._onRefreshRedDot, slot0)
+	slot0:removeEventCb(StoreController.instance, StoreEvent.PlayShowStoreAnim, slot0._onPlayStoreInAnim, slot0)
+	slot0:removeEventCb(StoreController.instance, StoreEvent.PlayHideStoreAnim, slot0._onPlayStoreOutAnim, slot0)
 	StoreController.instance:statExitStore()
 
 	slot0._needCountdown = false

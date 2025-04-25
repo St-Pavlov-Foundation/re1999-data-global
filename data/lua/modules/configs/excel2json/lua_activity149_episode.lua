@@ -5,6 +5,7 @@ slot1 = {
 	multi = 5,
 	firstPassScore = 6,
 	id = 1,
+	effectCondition = 7,
 	activityId = 2,
 	episodeId = 3
 }

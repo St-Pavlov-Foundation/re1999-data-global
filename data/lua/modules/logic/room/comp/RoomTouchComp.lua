@@ -56,7 +56,7 @@ function slot0.onUpdate(slot0)
 	if GamepadController.instance:isOpen() then
 		slot0:_handleGamepadToucInput()
 	elseif BootNativeUtil.isStandalonePlayer() or slot0:getIsEmulator() then
-		if PCInputController.instance.init then
+		if PCInputController.instance:getIsUse() then
 			slot0:_handleNewKeyInput()
 		else
 			slot0:_handleKeyInput()

@@ -23,9 +23,15 @@ function slot0.startCheck(slot0, slot1, slot2)
 	slot0.eventDispatcher:AddListener(slot0.eventDispatcher.ResChecker_Finish, slot0.onCheckFinish, slot0)
 	slot0.eventDispatcher:AddListener(slot0.eventDispatcher.ResChecker_Progress, slot0.onCheckProgress, slot0)
 
-	slot5 = slot0:_getAllLocalLang()
-	slot6, slot7 = slot0:_getDLCInfo(slot5)
+	slot6, slot7 = slot0:_getDLCInfo(slot0:_getAllLocalLang())
 
+	if not string.nilorempty(SLFramework.GameUpdate.OptionalUpdate.Instance:GetLocalVersion("res-HD")) or not BootVoiceView.instance:isFirstDownloadDone() then
+		slot6 = true
+
+		table.insert(slot7, "res-HD")
+	end
+
+	logNormal("ResCheckMgr:startCheck, allLocalLang = " .. table.concat(slot5, ",") .. " useDLC = " .. tostring(slot6) .. " allDLCLocalLang = " .. table.concat(slot7, ","))
 	SLFramework.ResChecker.Instance:CheckAllRes(slot5, slot6, slot7)
 end
 
@@ -84,8 +90,11 @@ function slot0._getAllLocalLang(slot0)
 	SLFramework.GameUpdate.OptionalUpdate.Instance:Init()
 
 	slot2 = {}
+	slot3 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
-	for slot8 = 1, #HotUpdateVoiceMgr.instance:getSupportVoiceLangs() do
+	table.insert(slot3, "HD")
+
+	for slot8 = 1, #slot3 do
 		if slot3[slot8] == GameConfig:GetDefaultVoiceShortcut() or not string.nilorempty(slot1:GetLocalVersion(slot9)) or not BootVoiceView.instance:isFirstDownloadDone() then
 			table.insert(slot2, slot9)
 		end

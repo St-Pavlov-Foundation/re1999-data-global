@@ -24,7 +24,7 @@ function slot0.onRefreshViewParam(slot0)
 end
 
 function slot0.onOpen(slot0)
-	slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._cardObj, FightViewCardItem)
+	slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._cardObj, FightViewCardItem, FightEnum.CardShowType.Deck)
 end
 
 function slot0.refreshItem(slot0, slot1)

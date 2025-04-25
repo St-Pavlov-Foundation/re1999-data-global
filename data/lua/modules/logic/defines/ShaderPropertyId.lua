@@ -12,5 +12,6 @@ slot0.DissolveFactor = slot1.PropertyToID("_DissolveFactor")
 slot0.FrontSceneAlpha = slot1.PropertyToID("_FrontSceneAlpha")
 slot0.MainTex = slot1.PropertyToID("_MainTex")
 slot0.MainTexSecond = slot1.PropertyToID("_MainTexSecond")
+slot0.LightMap = slot1.PropertyToID("_LightMap")
 
 return slot0

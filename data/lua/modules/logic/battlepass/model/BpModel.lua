@@ -133,22 +133,42 @@ function slot0.getWeeklyMaxScore(slot0)
 	return slot1
 end
 
-function slot0.checkGet50FreeBonus(slot0, slot1)
+function slot0.checkShowPayBonusTip(slot0, slot1)
 	if slot0:isEnd() or slot0.payStatus ~= BpEnum.PayStatus.NotPay then
 		return false
 	end
 
-	if BpBonusModel.instance.serverBonusModel:getById(50) and slot2.hasGetfreeBonus then
+	if not string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.BpShowBonusLvs), "#") or not slot2[1] then
 		return false
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.level == 50 and slot7.hasGetfreeBonus then
-			return true
+	if slot0:getBpLv() < slot2[1] then
+		return false
+	end
+
+	slot4 = slot0.id or 0
+	slot7 = false
+	slot8 = string.splitToNumber(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. slot4, ""), "#") or {}
+
+	if ServerTime.now() - (TimeUtil.stringToTimestamp(BpConfig.instance:getBpCO(slot4).showBonusDate) + ServerTime.clientToServerOffset()) >= 0 and not tabletool.indexOf(slot8, -1) then
+		table.insert(slot8, -1)
+
+		slot7 = true
+	end
+
+	for slot14, slot15 in ipairs(slot2) do
+		if slot15 <= slot3 and not tabletool.indexOf(slot8, slot15) then
+			table.insert(slot8, slot15)
+
+			slot7 = true
 		end
 	end
 
-	return false
+	if slot7 then
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. slot4, table.concat(slot8, "#"))
+	end
+
+	return slot7
 end
 
 slot0.instance = slot0.New()

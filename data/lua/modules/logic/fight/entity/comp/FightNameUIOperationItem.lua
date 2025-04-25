@@ -5,8 +5,8 @@ slot0 = class("FightNameUIOperationItem", FightBaseView)
 function slot0.onInitView(slot0)
 	slot0._imgMat = gohelper.findChildImage(slot0.viewGO, "imgMat")
 	slot0._imgTag = gohelper.findChildImage(slot0.viewGO, "imgTag")
-	slot0._imgBgs = slot0:registTable()
-	slot0._imgBgGos = slot0:registTable()
+	slot0._imgBgs = slot0:newUserDataTable()
+	slot0._imgBgGos = slot0:newUserDataTable()
 
 	for slot4 = 1, 4 do
 		table.insert(slot0._imgBgs, gohelper.findChildImage(slot0.viewGO, "imgBg/" .. slot4))

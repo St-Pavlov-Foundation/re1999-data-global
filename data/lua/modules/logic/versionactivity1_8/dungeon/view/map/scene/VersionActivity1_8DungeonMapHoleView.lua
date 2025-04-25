@@ -102,6 +102,10 @@ function slot0.addElementHole(slot0, slot1, slot2)
 end
 
 function slot0.onRemoveElement(slot0, slot1)
+	if not slot1 then
+		return
+	end
+
 	slot0:removeElementHole(slot1:getElementId())
 end
 

@@ -1,6 +1,6 @@
 module("modules.logic.fight.model.data.FightOperationDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightOperationDataMgr")
+slot0 = FightDataClass("FightOperationDataMgr")
 slot0.StateType = {
 	PlayHandCard = GameUtil.getEnumId(),
 	PlayAssistBossCard = GameUtil.getEnumId(),
@@ -8,14 +8,14 @@ slot0.StateType = {
 	MoveHandCard = GameUtil.getEnumId()
 }
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0.operationStates = {}
 	slot0.operationList = {}
 	slot0.extraMoveUsedCount = 0
 	slot0.playerFinisherSkillUsedCount = nil
 end
 
-function slot0.clear(slot0)
+function slot0.clearClientSimulationData(slot0)
 	tabletool.clear(slot0.operationList)
 	tabletool.clear(slot0.operationStates)
 
@@ -24,7 +24,7 @@ function slot0.clear(slot0)
 end
 
 function slot0.onCancelOperation(slot0)
-	slot0:clear()
+	slot0:clearClientSimulationData()
 end
 
 function slot0.onStageChanged(slot0)
@@ -32,7 +32,7 @@ function slot0.onStageChanged(slot0)
 		logError("战斗阶段改变了，但是操作状态列表中还有值，")
 	end
 
-	slot0:clear()
+	slot0:clearClientSimulationData()
 end
 
 function slot0.enterOperationState(slot0, slot1)

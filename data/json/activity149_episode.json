@@ -5,7 +5,8 @@
     "episodeId": 1650101,
     "order": 1,
     "multi": 1.0,
-    "firstPassScore": 1000
+    "firstPassScore": 1000,
+    "effectCondition": ""
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "episodeId": 1650102,
     "order": 2,
     "multi": 1.3,
-    "firstPassScore": 1300
+    "firstPassScore": 1300,
+    "effectCondition": ""
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "episodeId": 1650103,
     "order": 3,
     "multi": 1.6,
-    "firstPassScore": 1600
+    "firstPassScore": 1600,
+    "effectCondition": ""
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "episodeId": 1650104,
     "order": 4,
     "multi": 1.8,
-    "firstPassScore": 1800
+    "firstPassScore": 1800,
+    "effectCondition": ""
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "episodeId": 1650105,
     "order": 5,
     "multi": 2.0,
-    "firstPassScore": 2000
+    "firstPassScore": 2000,
+    "effectCondition": "1_1"
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "episodeId": 1650106,
     "order": 5,
     "multi": 2.0,
-    "firstPassScore": 2000
+    "firstPassScore": 2000,
+    "effectCondition": "2_2"
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "episodeId": 1650107,
     "order": 5,
     "multi": 2.0,
-    "firstPassScore": 2000
+    "firstPassScore": 2000,
+    "effectCondition": "3_3"
   },
   {
     "id": 8,
@@ -61,6 +68,7 @@
     "episodeId": 1650108,
     "order": 5,
     "multi": 2.0,
-    "firstPassScore": 2000
+    "firstPassScore": 2000,
+    "effectCondition": "4_4"
   }
 ]

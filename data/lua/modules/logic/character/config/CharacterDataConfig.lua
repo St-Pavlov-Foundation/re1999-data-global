@@ -173,11 +173,58 @@ function slot0.checkVoiceSkin(slot0, slot1, slot2)
 end
 
 function slot0.getMonsterHp(slot0, slot1, slot2)
-	if lua_monster.configDict[slot1] and lua_monster_template.configDict[slot5[slot2 and "templateEasy" or "template"]] then
-		return slot6.life + slot5[slot2 and "levelEasy" or "level"] * slot6.lifeGrow
+	slot3 = slot2 and "templateEasy" or "template"
+	slot4 = slot2 and "levelEasy" or "level"
+
+	if lua_monster.configDict[slot1] then
+		if not slot2 and slot0:calculateMonsterHpNewFunc(slot5) then
+			return slot6
+		end
+
+		if lua_monster_template.configDict[slot5[slot3]] then
+			return slot6.life + slot5[slot4] * slot6.lifeGrow
+		end
 	end
 
 	return 0
+end
+
+function slot0.calculateMonsterHpNewFunc(slot0, slot1)
+	if lua_monster_skill_template.configDict[slot1.skillTemplate] and slot2.instance > 0 then
+		if not lua_monster_instance.configDict[slot2.instance] then
+			return
+		end
+
+		if not lua_monster_sub.configDict[slot3.sub] then
+			return
+		end
+
+		if not lua_monster_level.configDict[slot3.level] then
+			return
+		end
+
+		if not lua_monster_job.configDict[slot3[slot4.job]] then
+			return
+		end
+
+		if slot3.multiHp > 1 then
+			slot7 = math.floor(slot4.life * (slot6.life_base * slot5.base + slot6.life_equip_base * slot5.equip_base) * slot3.life / 100000000) / slot3.multiHp
+		end
+
+		return slot7
+	end
+end
+
+function slot0.getMonsterAttributeScoreList(slot0, slot1)
+	if not lua_monster_skill_template.configDict[lua_monster.configDict[slot1].skillTemplate] then
+		return {}
+	end
+
+	if slot3 and slot3.instance > 0 and lua_monster_instance.configDict[slot3.instance] and lua_monster_sub.configDict[slot4.sub] then
+		return string.splitToNumber(slot5.score, "#")
+	end
+
+	return string.splitToNumber(slot3.template, "#")
 end
 
 function slot0.getChapterNameFromId(slot0, slot1)

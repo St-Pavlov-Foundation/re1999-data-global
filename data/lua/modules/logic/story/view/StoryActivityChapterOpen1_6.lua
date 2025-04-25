@@ -71,7 +71,7 @@ function slot0.getLangResBg(slot0, slot1)
 end
 
 function slot0.getVideoName(slot0, slot1)
-	return slot1 == 1 and "1_6_kaimu"
+	return slot1 == 1 and "1_6_opening_1"
 end
 
 function slot0.getAudioId(slot0, slot1)

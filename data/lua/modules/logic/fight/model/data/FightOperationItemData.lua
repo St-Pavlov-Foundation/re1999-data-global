@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightOperationItemData", package.seeall)
 
-slot0 = FightDataBase("FightOperationItemData")
+slot0 = FightDataClass("FightOperationItemData")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0.costActPoint = 0
 end
 
@@ -81,6 +81,10 @@ end
 
 function slot0.isAssistBossPlayCard(slot0)
 	return slot0.operType == FightEnum.CardOpType.AssistBoss
+end
+
+function slot0.isPlayerFinisherSkill(slot0)
+	return slot0.operType == FightEnum.CardOpType.PlayerFinisherSkill
 end
 
 function slot0.isSimulateDissolveCard(slot0)

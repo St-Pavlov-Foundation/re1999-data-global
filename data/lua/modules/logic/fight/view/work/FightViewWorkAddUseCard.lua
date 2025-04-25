@@ -5,14 +5,12 @@ slot0 = class("FightViewWorkAddUseCard", BaseWork)
 function slot0.onStart(slot0)
 	slot1 = 0.16 / FightModel.instance:getUISpeed()
 	slot3 = #FightPlayCardModel.instance:getUsedCards()
-	slot4 = slot0.context
-	slot6 = slot4._startPosX
-	slot7 = {
-		[tabletool.indexOf(slot2, slot12._cardInfoMO)] = recthelper.getAnchorX(slot12.go.transform.parent)
+	slot6 = {
+		[tabletool.indexOf(slot2, slot11._cardInfoMO)] = recthelper.getAnchorX(slot11.go.transform.parent)
 	}
 
-	for slot11, slot12 in ipairs(slot4._cardItemList) do
-		if slot12.go.activeInHierarchy then
+	for slot10, slot11 in ipairs(slot0.context._cardItemList) do
+		if slot11.go.activeInHierarchy then
 			-- Nothing
 		end
 	end
@@ -21,56 +19,56 @@ function slot0.onStart(slot0)
 
 	slot0._flow = FlowParallel.New()
 
-	for slot11, slot12 in ipairs(slot5) do
-		slot13 = slot12.go.transform.parent
+	for slot10, slot11 in ipairs(slot5) do
+		slot12 = slot11.go.transform.parent
 
-		if slot12.go.activeInHierarchy and slot7[slot11] then
-			recthelper.setAnchorX(slot13, slot7[slot11])
+		if slot11.go.activeInHierarchy and slot6[slot10] then
+			recthelper.setAnchorX(slot12, slot6[slot10])
 			slot0._flow:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = slot13,
-				to = slot6 - 192 * (slot3 - slot11),
+				tr = slot12,
+				to = FightViewWaitingAreaVersion1.getCardPos(slot10, slot3),
 				t = slot1
 			}))
 		end
 
-		recthelper.setAnchorY(slot13, 150)
+		recthelper.setAnchorY(slot12, 150)
 	end
 
-	slot8 = 0.2 / FightModel.instance:getUISpeed()
-	slot9 = 0.25 / FightModel.instance:getUISpeed()
+	slot7 = 0.2 / FightModel.instance:getUISpeed()
+	slot8 = 0.25 / FightModel.instance:getUISpeed()
 
-	for slot13, slot14 in ipairs(slot5) do
-		if slot14.go.activeInHierarchy then
-			slot14:hideCardAppearEffect()
-			slot14:onCardAniFinish()
+	for slot12, slot13 in ipairs(slot5) do
+		if slot13.go.activeInHierarchy then
+			slot13:hideCardAppearEffect()
+			slot13:onCardAniFinish()
 
-			gohelper.onceAddComponent(slot14.go, gohelper.Type_CanvasGroup).alpha = 1
+			gohelper.onceAddComponent(slot13.go, gohelper.Type_CanvasGroup).alpha = 1
 
-			if slot14._cardInfoMO.CUSTOMADDUSECARD then
-				gohelper.onceAddComponent(slot14.go, gohelper.Type_CanvasGroup).alpha = 0
+			if slot13._cardInfoMO.CUSTOMADDUSECARD then
+				gohelper.onceAddComponent(slot13.go, gohelper.Type_CanvasGroup).alpha = 0
 
-				if not FightHelper.isASFDSkill(slot15.skillId) then
-					slot14:playAppearEffect()
+				if not FightHelper.isASFDSkill(slot14.skillId) then
+					slot13:playAppearEffect()
 				end
 
-				slot14:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
+				slot13:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
 
-				slot16 = FlowSequence.New()
+				slot15 = FlowSequence.New()
 
-				slot16:addWork(WorkWaitSeconds.New(slot8))
+				slot15:addWork(WorkWaitSeconds.New(slot7))
 
-				slot17 = slot14.go.transform.parent
+				slot16 = slot13.go.transform.parent
 
-				recthelper.setAnchorY(slot17, 300)
-				slot16:addWork(TweenWork.New({
+				recthelper.setAnchorY(slot16, 300)
+				slot15:addWork(TweenWork.New({
 					type = "DOAnchorPosY",
 					to = 150,
-					tr = slot17,
-					t = slot9,
+					tr = slot16,
+					t = slot8,
 					ease = EaseType.OutQuart
 				}))
-				slot0._flow:addWork(slot16)
+				slot0._flow:addWork(slot15)
 			end
 		end
 	end

@@ -5,7 +5,8 @@ slot0 = class("MainSceneSwitchConfig", BaseConfig)
 function slot0.reqConfigNames(slot0)
 	return {
 		"scene_switch",
-		"scene_settings"
+		"scene_settings",
+		"scene_effect_settings"
 	}
 end
 
@@ -82,6 +83,16 @@ end
 
 function slot0.getDefaultSceneId(slot0)
 	return slot0._defaultSceneId
+end
+
+function slot0.getSceneEffect(slot0, slot1, slot2)
+	if lua_scene_effect_settings.configDict[slot1] then
+		for slot7, slot8 in ipairs(slot3) do
+			if slot8.tag == slot2 then
+				return slot8
+			end
+		end
+	end
 end
 
 slot0.instance = slot0.New()

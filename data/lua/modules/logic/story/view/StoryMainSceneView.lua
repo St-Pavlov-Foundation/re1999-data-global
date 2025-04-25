@@ -56,6 +56,10 @@ function slot0.onClose(slot0)
 	end
 end
 
+function slot0.setSceneId(slot0, slot1)
+	slot0._sceneId = slot1
+end
+
 function slot0.initSceneGo(slot0, slot1, slot2)
 	if slot0._sceneGo then
 		return
@@ -68,33 +72,36 @@ function slot0.initSceneGo(slot0, slot1, slot2)
 
 	gohelper.setActive(slot0._frameBg, false)
 
-	slot0._showDefaultScene = MainSceneSwitchModel.instance:getCurSceneId() == MainSceneSwitchConfig.instance:getDefaultSceneId()
 	slot3 = slot0:getSceneNode("s01_obj_a/Anim/Effect")
 	slot0._effectRoot = slot3.transform
-	slot0._effectLightPs = gohelper.findChildComponent(slot3, "m_s01_effect_light", WeatherController.TypeOfParticleSystem)
-	slot0._effectAirPs = gohelper.findChildComponent(slot3, "m_s01_effect_air", WeatherController.TypeOfParticleSystem)
-	slot0._lightSwitch = slot1:GetComponent(WeatherController.TypeOfLightSwitch)
+	slot0._effectLightPs = gohelper.findChildComponent(slot3, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
+	slot0._effectAirPs = gohelper.findChildComponent(slot3, "m_s01_effect_air", WeatherComp.TypeOfParticleSystem)
+	slot0._lightSwitch = slot1:GetComponent(WeatherComp.TypeOfLightSwitch)
 	slot0._lightMats = {}
 	slot0._matsMap = {}
 	slot0._rawLightMats = {}
 	slot0._rainEffectMat = nil
 
 	for slot8 = 0, slot0._lightSwitch.lightMats.Length - 1 do
-		slot10 = string.split(slot4[slot8].name, "#")
-		slot12 = slot10[2]
-		slot0._lightMats[slot11] = slot0._lightMats[slot10[1]] or {}
+		slot9 = slot4[slot8]
+		slot10 = UnityEngine.Material.Instantiate(slot9)
+		slot10.name = slot9.name
+		slot4[slot8] = slot10
+		slot11 = string.split(slot10.name, "#")
+		slot13 = slot11[2]
+		slot0._lightMats[slot12] = slot0._lightMats[slot11[1]] or {}
 
-		table.insert(slot0._lightMats[slot11], slot9)
-		table.insert(slot0._rawLightMats, slot9)
+		table.insert(slot0._lightMats[slot12], slot10)
+		table.insert(slot0._rawLightMats, slot10)
 
-		slot0._matsMap[slot9.name] = slot9
+		slot0._matsMap[slot10.name] = slot10
 
-		if string.find(slot11, "m_s01_obj_e$") then
-			slot0._rainEffectMat = slot9
+		if string.find(slot12, "m_s01_obj_e$") then
+			slot0._rainEffectMat = slot10
 		end
 	end
 
-	slot0:setReport(slot0._showDefaultScene and WeatherController.instance:getCurrReport() or lua_weather_report.configDict[2])
+	slot0:setReport(lua_weather_report.configDict[2])
 end
 
 function slot0.setReport(slot0, slot1)
@@ -107,12 +114,7 @@ function slot0.setReport(slot0, slot1)
 	slot0.reportLightMode = slot0._curReport.lightMode
 
 	slot0:changeLightEffectColor()
-
-	if not slot0._showDefaultScene then
-		slot0:startSwitchReport(slot0._prevReport, slot0._curReport)
-	else
-		slot0:addAllEffect()
-	end
+	slot0:startSwitchReport(slot0._prevReport, slot0._curReport)
 end
 
 function slot0.changeLightEffectColor(slot0)
@@ -120,14 +122,14 @@ function slot0.changeLightEffectColor(slot0)
 		return
 	end
 
-	slot1 = MainSceneSwitchController.getLightColor(slot0._curReport.lightMode)
+	slot1 = MainSceneSwitchController.getLightColor(slot0._curReport.lightMode, slot0._sceneId)
 	slot2 = WeatherEnum.EffectAirColor[slot0._curReport.lightMode]
 	slot3 = ZProj.ParticleSystemHelper
 
 	slot3.SetStartColor(slot0._effectLightPs, slot1[1] / 255, slot1[2] / 255, slot1[3] / 255, slot1[4] / 255)
 	slot3.SetStartColor(slot0._effectAirPs, slot2[1] / 255, slot2[2] / 255, slot2[3] / 255, slot2[4] / 255)
 	gohelper.setActive(slot0._effectLightPs, false)
-	slot3.SetStartRotation(slot0._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(slot0._curReport.lightMode))
+	slot3.SetStartRotation(slot0._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(slot0._curReport.lightMode, slot0._sceneId))
 	gohelper.setActive(slot0._effectLightPs, true)
 end
 
@@ -250,9 +252,26 @@ function slot0._loadTexturesFinish(slot0, slot1, slot2, slot3, slot4, slot5)
 		end
 	end
 
-	slot0:_setSceneMatMapCfg(1, 1)
+	slot0:_setSceneMatMapCfg(0, 1)
 	slot0:_changeBlendValue(slot0._targetValue, true)
 	slot0:_changeEffectBlendValue(1, true)
+	slot0:_resetMats()
+end
+
+function slot0._resetMats(slot0)
+	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Sky"))
+	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Ground"))
+	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Obj"))
+end
+
+function slot0._resetGoMats(slot0, slot1)
+	if slot1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true) then
+		for slot6 = 0, slot2.Length - 1 do
+			if slot2[slot6].sharedMaterial and string.split(slot8.name, " ")[1] and slot0._matsMap[slot9] then
+				slot7.sharedMaterial = slot0._matsMap[slot9]
+			end
+		end
+	end
 end
 
 function slot0._setSceneMatMapCfg(slot0, slot1, slot2)
@@ -312,7 +331,7 @@ end
 function slot0._effectLoaded(slot0)
 	slot1 = slot0._effectLoader:getInstGO()
 	slot1.transform.parent = slot0._effectRoot
-	slot0._dynamicEffectLightPs = gohelper.findChildComponent(slot1, "m_s01_effect_light", WeatherController.TypeOfParticleSystem)
+	slot0._dynamicEffectLightPs = gohelper.findChildComponent(slot1, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
 
 	slot0:_setDynamicEffectLightStartRotation()
 end
@@ -320,7 +339,7 @@ end
 function slot0._setDynamicEffectLightStartRotation(slot0)
 	if slot0._dynamicEffectLightPs then
 		gohelper.setActive(slot0._dynamicEffectLightPs, false)
-		ZProj.ParticleSystemHelper.SetStartRotation(slot0._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(slot0._curReport.lightMode))
+		ZProj.ParticleSystemHelper.SetStartRotation(slot0._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(slot0._curReport.lightMode, slot0._sceneId))
 		gohelper.setActive(slot0._dynamicEffectLightPs, true)
 	end
 end

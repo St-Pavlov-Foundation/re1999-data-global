@@ -63,6 +63,11 @@ return {
 		Global = 1,
 		KO = 3
 	},
+	ChannelType = {
+		eFun = 2,
+		Global = 1,
+		KO = 3
+	},
 	TaskGetAnimTime = 0.5,
 	TaskMaskTime = 0.65,
 	TaskGetBonusAnimTime = 1.367,

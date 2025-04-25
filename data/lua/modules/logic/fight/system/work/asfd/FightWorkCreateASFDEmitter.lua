@@ -26,6 +26,8 @@ function slot0.waitDone(slot0)
 end
 
 function slot0.delayDone(slot0)
+	logError("创建奥术飞弹发射源，超时了")
+
 	return slot0:onDone(true)
 end
 

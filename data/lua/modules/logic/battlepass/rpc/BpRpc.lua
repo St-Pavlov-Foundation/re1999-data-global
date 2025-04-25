@@ -57,7 +57,7 @@ function slot0.onReceiveGetBpBonusReply(slot0, slot1, slot2)
 		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 
 		if BpModel.instance.cacheBonus then
-			if BpModel.instance:checkGet50FreeBonus(slot2.scoreBonusInfo) then
+			if BpModel.instance:checkShowPayBonusTip(slot2.scoreBonusInfo) then
 				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView2, BpModel.instance.cacheBonus)
 			else
 				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, BpModel.instance.cacheBonus)

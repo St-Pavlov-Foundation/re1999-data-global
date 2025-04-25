@@ -30,4 +30,20 @@ function slot0._addRuleItem(slot0, slot1, slot2)
 	slot5.maskable = true
 end
 
+function slot0._btnadditionRuleOnClick(slot0)
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+		offSet = {
+			-180,
+			0
+		},
+		ruleList = slot0._ruleList,
+		closeCb = slot0._btncloseruleOnClick,
+		closeCbObj = slot0
+	})
+
+	if slot0._isHardMode then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
+	end
+end
+
 return slot0

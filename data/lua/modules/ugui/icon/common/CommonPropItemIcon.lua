@@ -220,6 +220,10 @@ function slot0.isShowQuality(slot0, slot1)
 	if slot0._itemIcon and slot0._itemIcon.isShowQuality then
 		slot0._itemIcon:isShowQuality(slot1)
 	end
+
+	if slot0._equipIcon and slot0._isEquip then
+		slot0._equipIcon:isShowQuality(slot1)
+	end
 end
 
 function slot0.isShowEquipAndItemCount(slot0, slot1)

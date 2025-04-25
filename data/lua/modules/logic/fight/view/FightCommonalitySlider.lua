@@ -30,7 +30,7 @@ function slot0._onBtnClick(slot0)
 end
 
 function slot0._refreshData(slot0)
-	if lua_skill.configDict[FightDataHelper.fieldMgr.param[FightEnum.ParamKey.ProgressSkill]] then
+	if lua_skill.configDict[FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]] then
 		slot0._skillName.text = slot2.name
 		slot0._tipsTitle.text = slot2.name
 		slot0._desText.text = FightConfig.instance:getSkillEffectDesc(nil, slot2)

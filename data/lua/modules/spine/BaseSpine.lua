@@ -54,6 +54,10 @@ function slot0.setHeroId(slot0, slot1)
 	slot0._heroId = slot1
 end
 
+function slot0.setSkinId(slot0, slot1)
+	slot0._skinId = slot1
+end
+
 function slot0.getResPath(slot0)
 	return slot0._resPath
 end

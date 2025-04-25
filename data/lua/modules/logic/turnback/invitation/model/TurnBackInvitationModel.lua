@@ -64,7 +64,7 @@ end
 
 function slot0.getLoginUrl(slot0)
 	if TurnBackInvitationConfig.instance:getUrlByChannelId(slot0:getCurChannel()) == nil then
-		logError(string.format("TurnBackInvitationModel getUrl Fail actId: %s channelId: %s", actId, slot1))
+		logError(string.format("TurnBackInvitationModel getUrl Fail channelId: %s", slot1))
 
 		return nil
 	end
@@ -100,7 +100,7 @@ end
 function slot0.getEFunLoginUrl(slot0, slot1)
 	slot2 = SDKMgr.instance:getUserInfoExtraParams()
 	slot3 = {
-		slot1 .. "?" .. string.format("userId=%s", slot2.userId)
+		slot1 .. "&" .. string.format("userId=%s", slot2.userId)
 	}
 
 	table.insert(slot3, string.format("sign=%s", slot2.sign))

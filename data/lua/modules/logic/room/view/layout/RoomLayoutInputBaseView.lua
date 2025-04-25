@@ -60,9 +60,13 @@ end
 function slot0._checkLimit(slot0)
 	slot1 = slot0._inputsignature:GetText()
 
-	if GameUtil.utf8sub(slot1, 1, math.min(GameUtil.utf8len(slot1), CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutNameLimit))) ~= slot1 then
+	if GameUtil.utf8sub(slot1, 1, math.min(GameUtil.utf8len(slot1), slot0:_getInputLimit())) ~= slot1 then
 		slot0._inputsignature:SetText(slot3)
 	end
+end
+
+function slot0._getInputLimit(slot0)
+	return CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutNameLimit)
 end
 
 function slot0._editableInitView(slot0)

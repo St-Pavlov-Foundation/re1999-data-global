@@ -47,6 +47,7 @@ function slot0.init(slot0, slot1)
 	slot0.isHighQuality = slot1.isHighQuality == true
 	slot0.trainHeroId = slot1.trainHeroId or 0
 	slot0.totalFinishCount = slot1.totalFinishCount or 0
+	slot0.name = slot1.name or ""
 
 	slot0.trainInfo:init(slot1.trainInfo or uv0)
 	slot0.skillInfo:init(slot1.skillInfo or uv0)
@@ -245,6 +246,10 @@ function slot0.isMaturity(slot0)
 end
 
 function slot0.getName(slot0)
+	if not string.nilorempty(slot0.name) then
+		return slot0.name
+	end
+
 	return slot0:getDefineCfg().name
 end
 

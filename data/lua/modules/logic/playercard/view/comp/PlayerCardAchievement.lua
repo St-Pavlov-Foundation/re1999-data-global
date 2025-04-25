@@ -2,8 +2,14 @@ module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeal
 
 slot0 = class("PlayerCardAchievement", BaseView)
 
+function slot0.init(slot0, slot1)
+	slot0.viewGO = slot1
+
+	slot0:onInitView()
+end
+
 function slot0.onInitView(slot0)
-	slot0.go = gohelper.findChild(slot0.viewGO, "main/achieve")
+	slot0.go = gohelper.findChild(slot0.viewGO, "root/main/achieve")
 	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.go, "#btn_click")
 	slot0.txtDec = gohelper.findChildTextMesh(slot0.go, "#txt_dec")
 	slot0.goAchievement = gohelper.findChild(slot0.go, "#go_achievement")
@@ -35,6 +41,11 @@ end
 function slot0.removeEvents(slot0)
 	slot0.btnClick:RemoveClickListener()
 	slot0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, slot0.onRefreshView, slot0)
+end
+
+function slot0.canOpen(slot0)
+	slot0:onOpen()
+	slot0:addEvents()
 end
 
 function slot0.onOpen(slot0)
@@ -242,6 +253,7 @@ end
 function slot0.onDestroy(slot0)
 	slot0:_tryDisposeSingleItems()
 	slot0.groupSimageBg:UnLoadImage()
+	slot0:removeEvents()
 end
 
 return slot0

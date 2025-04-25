@@ -320,6 +320,9 @@ function slot0.getCardInfoString(slot0, slot1, slot2)
 	table.insert(slot5, string.format("%s heroId : %s", slot6, slot0.heroId))
 	table.insert(slot5, string.format("%s status : %s", slot6, slot0.status))
 	table.insert(slot5, string.format("%s targetUid : %s %s", slot6, slot0.targetUid, uv0.getEntityName(slot0.targetUid)))
+	table.insert(slot5, string.format("%s energy : %s", slot6, slot0.energy))
+	table.insert(slot5, string.format("%s areaRedOrBlue : %s", slot6, slot0.areaRedOrBlue))
+	table.insert(slot5, string.format("%s heatId : %s", slot6, slot0.heatId))
 	table.insert(slot5, uv0.getEnchantListString(slot0.enchants, slot1, "enchants"))
 	table.insert(slot5, slot3 .. "}")
 
@@ -617,8 +620,8 @@ slot0.EffectTypeNameDict = {
 	[FightEnum.EffectType.ADDUSECARD] = "加牌到出牌区",
 	[FightEnum.EffectType.LOCKDOT] = "锁毒buff，不扣除",
 	[FightEnum.EffectType.CATAPULTBUFF] = "弹射buff",
-	[FightEnum.EffectType.PLAYAROUNDUPRANK] = "出牌区前后卡牌升阶",
-	[FightEnum.EffectType.PLAYAROUNDDOWNRANK] = "出牌区前后卡牌降阶",
+	[FightEnum.EffectType.PLAYAROUNDUPRANK] = "出牌区卡牌升阶",
+	[FightEnum.EffectType.PLAYAROUNDDOWNRANK] = "出牌区卡牌降阶",
 	[FightEnum.EffectType.PLAYSETGRAY] = "出牌区置灰",
 	[FightEnum.EffectType.RESISTANCESATTR] = "抗性属性",
 	[FightEnum.EffectType.RESISTANCES] = "产生抗性 加buff失败",
@@ -700,6 +703,26 @@ slot0.EffectTypeNameDict = {
 	[FightEnum.EffectType.CONDITIONSPLITEMITTERNUM] = " 奥术飞弹条件分裂",
 	[FightEnum.EffectType.ADDSPLITEMITTERNUM] = " 奥术飞弹额外分裂",
 	[FightEnum.EffectType.EMITTERSPLITNUM] = " 奥术飞弹分裂通知",
+	[FightEnum.EffectType.MUSTCRITBUFF] = " 必定暴击buff",
+	[FightEnum.EffectType.MUSTCRIT] = " 触发必定暴击",
+	[FightEnum.EffectType.CARDAREAREDORBLUE] = " (梁月大)手牌红蓝分区Buff",
+	[FightEnum.EffectType.TOCARDAREAREDORBLUE] = " (梁月大)决定操作区手牌红蓝分区",
+	[FightEnum.EffectType.REDORBLUECOUNT] = " (梁月大)红蓝区计数Buff",
+	[FightEnum.EffectType.REDORBLUECOUNTCHANGE] = " (梁月大)红蓝区计数变更",
+	[FightEnum.EffectType.REDORBLUECHANGETRIGGER] = " (梁月大)红蓝区计数触发阈值变更buff",
+	[FightEnum.EffectType.CARDHEATINIT] = " 卡牌热力初始化",
+	[FightEnum.EffectType.CARDHEATVALUECHANGE] = " 卡牌热力值变化",
+	[FightEnum.EffectType.CARDDECKNUM] = " 牌库数量",
+	[FightEnum.EffectType.REDORBLUECOUNTEXSKILL] = " (梁月大)红蓝区队列满触发追击",
+	[FightEnum.EffectType.STORAGEDAMAGE] = " 存储伤害",
+	[FightEnum.EffectType.ELUSIVE] = " 场上有其他未携带该buff的友方时携带该buff的单位无法被选为主目标",
+	[FightEnum.EffectType.ENCHANTDEPRESSEDAMAGE] = " 附魔 气脉郁结 伤害",
+	[FightEnum.EffectType.SAVEFIGHTRECORDSTART] = " 战场回溯开始",
+	[FightEnum.EffectType.SAVEFIGHTRECORDUPDATE] = " 战场回溯更新实体信息",
+	[FightEnum.EffectType.SAVEFIGHTRECORDEND] = " 战场回溯结束",
+	[FightEnum.EffectType.ROUNDOFFSET] = " 回合数偏移",
+	[FightEnum.EffectType.SAVEFIGHTRECORD] = " 战场回溯buff",
+	[FightEnum.EffectType.ADDSPHANDCARD] = " 添加SP手牌 78有问题 没有完整cardInfo 少用 ",
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 

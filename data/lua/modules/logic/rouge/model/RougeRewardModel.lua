@@ -167,18 +167,20 @@ function slot0.isStageOpen(slot0, slot1)
 	return false
 end
 
-function slot0.isShowNextStageTag(slot0, slot1)
-	slot3 = 1
+function slot0.setNextUnlockStage(slot0)
+	for slot5, slot6 in ipairs(RougeRewardConfig.instance:getBigRewardToStage()) do
+		for slot10, slot11 in ipairs(slot6) do
+			if not slot0:isStageOpen(slot11.stage) then
+				slot0.nextstage = slot11.stage
 
-	for slot7, slot8 in ipairs(RougeRewardConfig.instance:getStageRewardConfig(slot0._season)) do
-		if slot7 < #slot2 and not slot0:isStageOpen(slot8.stage) then
-			slot3 = slot8.stage
-
-			break
+				break
+			end
 		end
 	end
+end
 
-	if slot1 == slot3 and slot3 ~= slot2[#slot2].stage then
+function slot0.isShowNextStageTag(slot0, slot1)
+	if slot1 == slot0.nextstage then
 		return true
 	end
 

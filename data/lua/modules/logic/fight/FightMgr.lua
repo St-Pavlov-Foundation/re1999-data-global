@@ -2,7 +2,10 @@ module("modules.logic.fight.FightMgr", package.seeall)
 
 slot0 = class("FightMgr", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
+end
+
+function slot0.changeCardScript(slot0, slot1)
 end
 
 function slot0.startFight(slot0, slot1, slot2)

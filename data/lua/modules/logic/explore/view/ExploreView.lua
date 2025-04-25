@@ -219,18 +219,37 @@ function slot0.checkMove(slot0)
 
 	slot1 = ExploreEnum.RoleMoveDir.None
 
-	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.W) then
-		slot1 = ExploreEnum.RoleMoveDir.Up
-	elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.A) then
-		slot1 = ExploreEnum.RoleMoveDir.Left
-	elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.S) then
-		slot1 = ExploreEnum.RoleMoveDir.Down
-	elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) then
-		slot1 = ExploreEnum.RoleMoveDir.Right
-	end
+	if SDKMgr.instance:isEmulator() then
+		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.W) then
+			slot1 = ExploreEnum.RoleMoveDir.Up
+		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.A) then
+			slot1 = ExploreEnum.RoleMoveDir.Left
+		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.S) then
+			slot1 = ExploreEnum.RoleMoveDir.Down
+		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) then
+			slot1 = ExploreEnum.RoleMoveDir.Right
+		end
 
-	if slot1 ~= ExploreEnum.RoleMoveDir.None and slot0._isTop == false then
-		slot1 = ExploreEnum.RoleMoveDir.None
+		if slot1 ~= ExploreEnum.RoleMoveDir.None and slot0._isTop == false then
+			slot1 = ExploreEnum.RoleMoveDir.None
+		end
+	else
+		slot2 = PCInputController.instance
+		slot3, slot4, slot5, slot6 = slot2:getThirdMoveKey()
+
+		if slot2:getKeyPress(slot3) then
+			slot1 = ExploreEnum.RoleMoveDir.Up
+		elseif slot2:getKeyPress(slot4) then
+			slot1 = ExploreEnum.RoleMoveDir.Left
+		elseif slot2:getKeyPress(slot5) then
+			slot1 = ExploreEnum.RoleMoveDir.Down
+		elseif slot2:getKeyPress(slot6) then
+			slot1 = ExploreEnum.RoleMoveDir.Right
+		end
+
+		if slot1 ~= ExploreEnum.RoleMoveDir.None and slot0._isTop == false then
+			slot1 = ExploreEnum.RoleMoveDir.None
+		end
 	end
 
 	ExploreController.instance:dispatchEvent(ExploreEvent.UpdateMoveDir, slot1)

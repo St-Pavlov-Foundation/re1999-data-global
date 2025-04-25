@@ -146,30 +146,41 @@ function slot0._playMouthActionList(slot0, slot1)
 		end
 
 		slot3 = #slot2
+		slot4 = 0
 
-		for slot8, slot9 in ipairs(slot2) do
-			if slot0:_checkMouthParam(string.split(slot9, "#")) then
-				slot11 = slot10[1]
-				slot12 = tonumber(slot10[2])
-				slot13 = tonumber(slot10[3])
+		for slot9, slot10 in ipairs(slot2) do
+			if slot0:_checkMouthParam(string.split(slot10, "#")) then
+				slot12 = slot11[1]
+				slot13 = tonumber(slot11[2])
+				slot14 = tonumber(slot11[3])
 
-				if slot0._autoBizui and slot13 ~= slot12 then
-					slot0:_addMouthBizui(false, 0, slot12)
+				if SLFramework.FrameworkSettings.IsEditor then
+					if slot14 < slot13 then
+						logError(string.format("SpineVoiceMouth mouth配置后面的时间比前面的时间还小, mouthStart:%s > mouthEnd:%s", slot13, slot14))
+					end
+
+					if slot13 < slot4 then
+						logError(string.format("SpineVoiceMouth mouth配置后面的时间比前面的时间还小, mouthStart:%s < lastMouthEnd:%s", slot13, slot4))
+					end
 				end
 
-				slot0:_addMouth(slot8 == slot3 and not slot0._autoBizui, slot11, slot12, slot13)
+				if slot0._autoBizui and slot14 ~= slot13 then
+					slot0:_addMouthBizui(false, slot4, slot13)
+				end
 
-				slot4 = slot13
+				slot0:_addMouth(slot9 == slot3 and not slot0._autoBizui, slot12, slot13, slot14)
+
+				slot4 = slot14
 			end
 		end
 
 		if slot0._autoBizui then
 			if slot0._faceEndTime < slot4 then
-				slot5 = slot4
+				slot6 = slot4
 			end
 
-			slot0:_addMouthBizui(false, slot4, slot5)
-			slot0:_addMouthBizui(true, slot5, slot5 + 1)
+			slot0:_addMouthBizui(false, slot4, slot6)
+			slot0:_addMouthBizui(true, slot6, slot6 + 1)
 		end
 
 		if slot3 <= 0 then

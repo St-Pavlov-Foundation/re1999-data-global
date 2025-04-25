@@ -31,7 +31,7 @@ function slot0._checkActId(slot0, slot1)
 end
 
 function slot0.getActId(slot0)
-	return ActivityEnum.Activity.FurnaceTreasure
+	return ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act147) and slot1[1]
 end
 
 function slot0.isActivityOpen(slot0)

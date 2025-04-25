@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightPaTaDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightPaTaDataMgr")
+slot0 = FightDataClass("FightPaTaDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0.bossInfoList = {}
 end
 

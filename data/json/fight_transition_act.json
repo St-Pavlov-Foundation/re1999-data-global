@@ -880,5 +880,17 @@
     "fromAct": "channel_idle",
     "endAct": "posture",
     "transitionAct": "-1"
+  },
+  {
+    "id": 309803,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 309803,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
   }
 ]

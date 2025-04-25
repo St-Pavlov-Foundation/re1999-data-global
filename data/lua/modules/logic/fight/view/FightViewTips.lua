@@ -8,6 +8,7 @@ function slot0.onInitView(slot0)
 	slot0._gobufftip = gohelper.findChild(slot0.viewGO, "root/tips/#go_bufftip")
 	slot0._passiveSkillPrefab = gohelper.findChild(slot0.viewGO, "root/tips/#go_bufftip/#scroll_buff/viewport/content/#go_buffitem")
 	slot0._goskilltip = gohelper.findChild(slot0.viewGO, "root/tips/#go_skilltip")
+	slot0._goHeatTips = gohelper.findChild(slot0.viewGO, "root/tips/#go_skilltip/#go_heat")
 	slot0._txtskillname = gohelper.findChildText(slot0.viewGO, "root/tips/#go_skilltip/skillbg/container/#txt_skillname")
 	slot0._txtskilltype = gohelper.findChildText(slot0.viewGO, "root/tips/#go_skilltip/skillbg/container/bg/#txt_skilltype")
 	slot0._txtskilldesc = gohelper.findChildText(slot0.viewGO, "root/tips/#go_skilltip/skillbg/#txt_skilldesc")
@@ -35,6 +36,9 @@ function slot0.addEvents(slot0)
 	slot0._btnclosebuffinfocontainer:AddClickListener(slot0._onCloseBuffInfoContainer, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ShowFightPrompt, slot0._onShowFightPrompt, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ShowSeasonGuardIntro, slot0._onShowSeasonGuardIntro, slot0)
+
+	slot0._loader = slot0._loader or FightLoaderComponent.New()
+
 	slot0:addEventCb(FightController.instance, FightEvent.LongPressHandCard, slot0._onLongPressHandCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.HideFightViewTips, slot0._onGlobalTouch, slot0)
 end
@@ -48,6 +52,13 @@ function slot0.removeEvents(slot0)
 
 	TaskDispatcher.cancelTask(slot0._delayCheckHideTips, slot0)
 	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+
+	if slot0._loader then
+		slot0._loader:disposeSelf()
+
+		slot0._loader = nil
+	end
+
 	slot0:removeEventCb(FightController.instance, FightEvent.LongPressHandCard, slot0._onLongPressHandCard, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.HideFightViewTips, slot0._onGlobalTouch, slot0)
 end
@@ -185,13 +196,71 @@ function slot0._setPassiveSkillTip(slot0, slot1, slot2, slot3)
 	gohelper.findChildText(slot1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(slot3, slot6), "#CC492F", "#485E92")
 end
 
-function slot0._setSkillTip(slot0, slot1, slot2)
+function slot0._setSkillTip(slot0, slot1, slot2, slot3)
 	gohelper.setActive(slot0._goskilltip, GMFightShowState.playSkillDes)
 
-	slot3 = lua_skill.configDict[slot1]
-	slot0._txtskillname.text = slot3.name
-	slot0._txtskilltype.text = slot0:_formatSkillType(slot3)
-	slot0._txtskilldesc.text = HeroSkillModel.instance:skillDesToSpot(slot0:_buildLinkTag(FightConfig.instance:getEntitySkillDesc(slot2, slot3)), "#c56131", "#7c93ad")
+	slot4 = lua_skill.configDict[slot1]
+	slot0._txtskillname.text = slot4.name
+	slot0._txtskilltype.text = slot0:_formatSkillType(slot4)
+	slot0._txtskilldesc.text = HeroSkillModel.instance:skillDesToSpot(slot0:_buildLinkTag(FightConfig.instance:getEntitySkillDesc(slot2, slot4)), "#c56131", "#7c93ad")
+
+	gohelper.setActive(slot0._goHeatTips, false)
+
+	if slot3 and slot3.heatId ~= 0 then
+		gohelper.setActive(slot0._goHeatTips, true)
+
+		slot0._heatId = slot3.heatId
+
+		if lua_card_heat.configDict[slot0._heatId] then
+			if slot0._heatTitle then
+				slot0:_refreshCardHeat()
+			elseif not slot0._loadHeatTips then
+				slot0._loadHeatTips = true
+
+				slot0._loader:loadAsset("ui/viewres/fight/fightheattipsview.prefab", slot0._onHeatTipsLoadFinish, slot0)
+			end
+		end
+	end
+end
+
+function slot0._refreshCardHeat(slot0)
+	if not lua_card_heat.configDict[slot0._heatId] then
+		return
+	end
+
+	if FightDataHelper.teamDataMgr.myData.cardHeat.values[slot1] then
+		slot5 = FightDataHelper.teamDataMgr.myCardHeatOffset[slot1] or 0
+		slot6 = {}
+
+		if not string.nilorempty(slot2.descParam) then
+			for slot11, slot12 in ipairs(string.split(slot2.descParam, "#")) do
+				if slot12 == "curValue" then
+					table.insert(slot6, slot4.value + slot5)
+				elseif slot12 == "upperLimit" then
+					table.insert(slot6, slot4.upperLimit)
+				elseif slot12 == "lowerLimit" then
+					table.insert(slot6, slot4.lowerLimit)
+				elseif slot12 == "changeValue" then
+					table.insert(slot6, slot4.changeValue)
+				end
+			end
+		end
+
+		slot0._heatTitle.text = ""
+		slot0._heatDesc.text = GameUtil.getSubPlaceholderLuaLang(slot2.desc, slot6)
+	end
+end
+
+function slot0._onHeatTipsLoadFinish(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot4 = gohelper.clone(slot2:GetResource(), slot0._goHeatTips)
+	slot0._heatTitle = gohelper.findChildText(slot4, "tips/heatbg/#txt_heatname")
+	slot0._heatDesc = gohelper.findChildText(slot4, "tips/heatbg/#txt_heatdesc")
+
+	slot0:_refreshCardHeat()
 end
 
 function slot0._buildLinkTag(slot0, slot1)
@@ -218,18 +287,18 @@ function slot0.onClose(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, slot0._onCloseBuffInfoContainer, slot0)
 end
 
-function slot0._showCardSkillTips(slot0, slot1, slot2)
+function slot0._showCardSkillTips(slot0, slot1, slot2, slot3)
 	slot0:_hideTips()
-	slot0:_setSkillTip(slot1, slot2)
+	slot0:_setSkillTip(slot1, slot2, slot3)
 
 	if PCInputController.instance:getIsUse() and PlayerPrefsHelper.getNumber("keyTips", 0) ~= 0 then
 		if FightConfig.instance:isUniqueSkill(slot1) then
 			recthelper.setAnchor(slot0._goskilltip.transform, slot0._originSkillPosX, uv0.OnKeyTipsUniquePosY)
 		else
-			recthelper.setAnchor(slot3, slot0._originSkillPosX, uv0.OnKeyTipsPosY)
+			recthelper.setAnchor(slot4, slot0._originSkillPosX, uv0.OnKeyTipsPosY)
 		end
 	else
-		recthelper.setAnchor(slot3, slot0._originSkillPosX, slot0._originSkillPosY)
+		recthelper.setAnchor(slot4, slot0._originSkillPosX, slot0._originSkillPosY)
 	end
 end
 
@@ -374,7 +443,7 @@ function slot0._onShowSeasonGuardIntro(slot0, slot1, slot2, slot3)
 	if not slot0._guardTipsRoot then
 		slot0._guardTipsRoot = gohelper.create2d(slot0._tipsRoot, "guardTips")
 
-		slot0:com_loadAsset("ui/viewres/fight/fightseasonguardtipsview.prefab", slot0._onGuardTipsLoadFinish)
+		slot0._loader:loadAsset("ui/viewres/fight/fightseasonguardtipsview.prefab", slot0._onGuardTipsLoadFinish, slot0)
 
 		slot0._guardTipsTran = slot0._guardTipsRoot.transform
 	end
@@ -383,11 +452,15 @@ function slot0._onShowSeasonGuardIntro(slot0, slot1, slot2, slot3)
 	recthelper.setAnchor(slot0._guardTipsTran, slot2 + 307, slot3)
 end
 
-function slot0._onGuardTipsLoadFinish(slot0, slot1)
-	slot3 = gohelper.clone(slot1:GetResource(), slot0._guardTipsRoot)
-	gohelper.findChildText(slot3, "#scroll_ShieldTips/viewport/content/#go_shieldtipsitem/layout/#txt_title").text = lua_activity166_const_global.configDict[109] and slot6.value2 or ""
-	gohelper.findChildText(slot3, "#scroll_ShieldTips/viewport/content/#go_shieldtipsitem/layout/#txt_dec").text = lua_activity166_const_global.configDict[110] and slot6.value2 or ""
-	slot0._guardTipsContent = gohelper.findChild(slot3, "#scroll_ShieldTips/viewport/content").transform
+function slot0._onGuardTipsLoadFinish(slot0, slot1, slot2)
+	if not slot1 then
+		return
+	end
+
+	slot4 = gohelper.clone(slot2:GetResource(), slot0._guardTipsRoot)
+	gohelper.findChildText(slot4, "#scroll_ShieldTips/viewport/content/#go_shieldtipsitem/layout/#txt_title").text = lua_activity166_const_global.configDict[109] and slot7.value2 or ""
+	gohelper.findChildText(slot4, "#scroll_ShieldTips/viewport/content/#go_shieldtipsitem/layout/#txt_dec").text = lua_activity166_const_global.configDict[110] and slot7.value2 or ""
+	slot0._guardTipsContent = gohelper.findChild(slot4, "#scroll_ShieldTips/viewport/content").transform
 end
 
 function slot0.onDestroyView(slot0)

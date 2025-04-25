@@ -3301,5 +3301,125 @@
     "levels": [
       28301
     ]
+  },
+  {
+    "id": 274,
+    "name": "language_10066258",
+    "nameen": "Shehuo Parade, Chinatown Street",
+    "levels": [
+      27401
+    ]
+  },
+  {
+    "id": 275,
+    "name": "language_10066258",
+    "nameen": "Shehuo Parade, Chinatown Street",
+    "levels": [
+      27501
+    ]
+  },
+  {
+    "id": 276,
+    "name": "language_10065676",
+    "nameen": "Chinatown Street",
+    "levels": [
+      27601
+    ]
+  },
+  {
+    "id": 277,
+    "name": "language_10066259",
+    "nameen": "Guangfu Restaurant",
+    "levels": [
+      27701
+    ]
+  },
+  {
+    "id": 278,
+    "name": "language_10066260",
+    "nameen": "Street, Los Angeles",
+    "levels": [
+      27801
+    ]
+  },
+  {
+    "id": 279,
+    "name": "language_10066261",
+    "nameen": "Noire's Set",
+    "levels": [
+      27901
+    ]
+  },
+  {
+    "id": 280,
+    "name": "language_10066262",
+    "nameen": "Chinatown Alley, Day",
+    "levels": [
+      28001
+    ]
+  },
+  {
+    "id": 281,
+    "name": "language_10066263",
+    "nameen": "Hotel Room",
+    "levels": [
+      28101
+    ]
+  },
+  {
+    "id": 284,
+    "name": "language_10066264",
+    "nameen": "Chinatown Alley, Night",
+    "levels": [
+      28401
+    ]
+  },
+  {
+    "id": 285,
+    "name": "language_10066265",
+    "nameen": "City Hall",
+    "levels": [
+      28501
+    ]
+  },
+  {
+    "id": 18502,
+    "name": "language_10000303",
+    "nameen": "Spring, Uluru Rock",
+    "levels": [
+      18502
+    ]
+  },
+  {
+    "id": 20102,
+    "name": "language_10066266",
+    "nameen": "Walled City",
+    "levels": [
+      20101
+    ]
+  },
+  {
+    "id": 23702,
+    "name": "language_10066263",
+    "nameen": "Hotel Room",
+    "levels": [
+      23701
+    ]
+  },
+  {
+    "id": 23902,
+    "name": "language_10066267",
+    "nameen": "Haunted Mansion",
+    "levels": [
+      23901
+    ]
+  },
+  {
+    "id": 15702,
+    "name": "language_10066268",
+    "nameen": "Lighthouse",
+    "levels": [
+      15701
+    ]
   }
 ]

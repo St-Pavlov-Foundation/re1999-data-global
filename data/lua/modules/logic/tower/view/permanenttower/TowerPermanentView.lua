@@ -128,7 +128,6 @@ function slot0._editableInitView(slot0)
 		slot5 = {
 			go = gohelper.findChild(slot0.viewGO, "Bg/" .. slot4 .. "/#go_Elitebg")
 		}
-		slot5.bgAnim = slot5.go:GetComponent(gohelper.Type_Animator)
 		slot0.eliteBgAnimTab[slot4] = slot5
 
 		gohelper.setActive(slot5.go, false)
@@ -260,7 +259,6 @@ function slot0.playFinishEffect(slot0)
 
 		if TowerConfig.instance:getPermanentEpisodeCo(slot0.jumpParam.layerId).isElite == 1 then
 			gohelper.setActive(slot0.eliteBgAnimTab[slot3].go, true)
-			slot0.eliteBgAnimTab[slot3].bgAnim:Play("in", 0, 0)
 		end
 	elseif slot3 == slot2 and slot3 > 1 then
 		slot0._bgAnim:Play(slot3 - 1 .. "to" .. slot3, 0, 1)
@@ -341,6 +339,13 @@ function slot0.refreshUI(slot0)
 	slot0:refreshReward()
 	slot0:selectUnfinishEpisode()
 	slot0:refreshEnterTitle()
+	slot0:refreshStageItemEffect()
+end
+
+function slot0.refreshStageItemEffect(slot0)
+	for slot4 = 1, uv0.maxStageCount do
+		gohelper.setActive(slot0.eliteBgAnimTab[slot4].go, slot4 == slot0.curStage and slot0.layerConfig.isElite == 1)
+	end
 end
 
 function slot0.refreshEnterTitle(slot0, slot1)

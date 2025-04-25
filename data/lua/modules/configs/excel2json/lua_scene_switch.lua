@@ -1,13 +1,17 @@
 module("modules.configs.excel2json.lua_scene_switch", package.seeall)
 
 slot1 = {
+	eggSwitchTime = 8,
+	initReportId = 9,
 	itemId = 3,
-	previews = 7,
+	storyId = 12,
+	reportSwitchTime = 10,
+	previewIcon = 5,
+	eggList = 7,
 	resName = 6,
-	storyId = 8,
+	previews = 11,
 	id = 1,
 	icon = 4,
-	previewIcon = 5,
 	defaultUnlock = 2
 }
 slot2 = {

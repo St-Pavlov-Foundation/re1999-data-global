@@ -191,7 +191,9 @@ function slot0._onLoaded(slot0)
 	end
 
 	slot0._ani = slot0._uiGO:GetComponent(typeof(UnityEngine.Animator))
+	slot0._goBossFocusIcon = gohelper.findChild(slot0._uiGO, "go_bossfocusicon")
 
+	gohelper.setActive(slot0._goBossFocusIcon, false)
 	slot0:updateUI()
 	slot0:_insteadSpecialHp()
 	slot0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._updateFollow, slot0)
@@ -214,9 +216,63 @@ function slot0._onLoaded(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, slot0._onUpdateUIFollower, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.StageChanged, slot0._onStageChange, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
 	slot0._power:onOpen()
 	slot0:_setPosOffset()
 	slot0:updateInnerLayout()
+end
+
+function slot0._onStageChange(slot0)
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
+		slot0:refreshBossFocusIcon(FightModel.instance:getCurRoundMO() and slot2:getAIUseCardMOList())
+	end
+end
+
+function slot0.refreshBossFocusIcon(slot0, slot1)
+	if not slot1 then
+		gohelper.setActive(slot0._goBossFocusIcon, false)
+
+		return
+	end
+
+	slot3 = false
+
+	if slot0.entity and slot0.entity:getMO() and slot2.side == FightEnum.EntitySide.MySide then
+		for slot7, slot8 in ipairs(slot1) do
+			if slot0:_checkCanMark(slot8) then
+				slot3 = true
+
+				break
+			end
+		end
+	end
+
+	gohelper.setActive(slot0._goBossFocusIcon, slot3)
+end
+
+function slot0._onSkillPlayFinish(slot0)
+	slot0:refreshBossFocusIcon(FightModel.instance:getCurRoundMO() and slot1:getAILastUseCard())
+end
+
+function slot0._checkCanMark(slot0, slot1)
+	if not slot1 then
+		return false
+	end
+
+	if slot1.targetUid ~= slot0.entity.id then
+		return false
+	end
+
+	if not FightDataHelper.entityMgr:getById(slot1.uid) or slot2:isStatusDead() then
+		return false
+	end
+
+	if not lua_ai_mark_skill.configDict[slot1.skillId] then
+		return false
+	end
+
+	return true
 end
 
 function slot0.initExPointMgr(slot0)

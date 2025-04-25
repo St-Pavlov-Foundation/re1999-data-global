@@ -541,6 +541,12 @@ function slot0.saveCurGroupData(slot0, slot1, slot2, slot3)
 		return
 	end
 
+	if slot4.type == DungeonEnum.EpisodeType.Act183 then
+		Act183HeroGroupController.instance:saveGroupData(slot3, slot0.heroGroupType, slot0.episodeId, slot1, slot2)
+
+		return
+	end
+
 	if slot0.curGroupSelectIndex == 0 then
 		if slot0.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
 			HeroGroupRpc.instance:sendUpdateHeroGroupRequest(slot3.id, slot3.heroList, slot3.name, slot3.clothId, slot3.equips, nil, slot1, slot2)

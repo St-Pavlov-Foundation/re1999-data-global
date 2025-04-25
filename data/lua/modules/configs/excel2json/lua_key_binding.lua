@@ -11,7 +11,9 @@ slot2 = {
 	"hud",
 	"id"
 }
-slot3 = {}
+slot3 = {
+	description = 1
+}
 
 return {
 	onLoad = function (slot0)

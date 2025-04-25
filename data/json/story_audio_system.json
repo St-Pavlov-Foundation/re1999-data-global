@@ -808,5 +808,120 @@
     "id": 920201145,
     "eventName": "play_battle_plot24_hero5043_30",
     "bankName": "hero5043_level_diqiu2_4"
+  },
+  {
+    "id": 925011401,
+    "eventName": "play_battle_plot25_npc630601_1",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011402,
+    "eventName": "play_battle_plot25_npc630601_2",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011403,
+    "eventName": "play_battle_plot25_npc630601_3",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011404,
+    "eventName": "play_battle_plot25_npc630601_4",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011405,
+    "eventName": "play_battle_plot25_npc630601_5",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011406,
+    "eventName": "play_battle_plot25_npc630601_6",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011407,
+    "eventName": "play_battle_plot25_hero3110_7",
+    "bankName": "hero3110_level_tangren2_5"
+  },
+  {
+    "id": 925011408,
+    "eventName": "play_battle_plot25_npc630601_8",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011409,
+    "eventName": "play_battle_plot25_npc630601_9",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011410,
+    "eventName": "play_battle_plot25_npc630601_10",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011411,
+    "eventName": "play_battle_plot25_npc630601_11",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011412,
+    "eventName": "play_battle_plot25_npc630601_12",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011413,
+    "eventName": "play_battle_plot25_npc630601_13",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011414,
+    "eventName": "play_battle_plot25_hero3111_14",
+    "bankName": "hero3111_level_tangren2_5"
+  },
+  {
+    "id": 925011415,
+    "eventName": "play_battle_plot25_hero3110_15",
+    "bankName": "hero3110_level_tangren2_5"
+  },
+  {
+    "id": 925011416,
+    "eventName": "play_battle_plot25_npc630601_16",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011417,
+    "eventName": "play_battle_plot25_npc630601_17",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011418,
+    "eventName": "play_battle_plot25_npc630601_18",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011419,
+    "eventName": "play_battle_plot25_npc630601_19",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011420,
+    "eventName": "play_battle_plot25_hero3110_20",
+    "bankName": "hero3110_level_tangren2_5"
+  },
+  {
+    "id": 925011421,
+    "eventName": "play_battle_plot25_hero3110_21",
+    "bankName": "hero3110_level_tangren2_5"
+  },
+  {
+    "id": 925011422,
+    "eventName": "play_battle_plot25_npc630601_22",
+    "bankName": "npc630601_level_tangren2_5"
+  },
+  {
+    "id": 925011423,
+    "eventName": "play_battle_plot25_hero3111_23",
+    "bankName": "hero3111_level_tangren2_5"
   }
 ]

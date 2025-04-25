@@ -14,6 +14,7 @@ function slot0.onSceneStart(slot0, slot1, slot2)
 	UnityEngine.Physics.autoSimulation = false
 	UnityEngine.Physics.autoSyncTransforms = true
 	RenderPipelineSetting.selectedOutlineToggle = false
+	RenderPipelineSetting.ForwardPlusToggle = true
 	slot3 = CameraMgr.instance:getMainCamera()
 	slot0._farClip = slot3.farClipPlane
 	slot0._nearClip = slot3.nearClipPlane
@@ -51,6 +52,7 @@ function slot0.onSceneClose(slot0)
 	PostProcessingMgr.setCameraLayer(slot1, "CullOnLowQuality", false)
 
 	RenderPipelineSetting.selectedOutlineToggle = false
+	RenderPipelineSetting.ForwardPlusToggle = false
 end
 
 function slot0._refreshGraphics(slot0)

@@ -56,6 +56,7 @@ slot0.BgTransType = {
 	Dissolve = 8,
 	XiQuKeKe1 = 17,
 	MovieChangeStart = 19,
+	HotPixel = 21,
 	XiQuKeKe2 = 18,
 	ChangeScene1 = 14,
 	RightDarkFade = 6,

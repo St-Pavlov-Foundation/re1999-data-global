@@ -151,8 +151,10 @@ function slot0.onOpen(slot0)
 	end
 
 	slot15 = "#"
+	slot11 = GameUtil.splitString2(slot10, true, "|", slot15)
+	slot0._ruleList = slot11
 
-	for slot15, slot16 in ipairs(GameUtil.splitString2(slot10, true, "|", slot15)) do
+	for slot15, slot16 in ipairs(slot11) do
 		slot0:_setRuleDescItem(lua_rule.configDict[slot16[2]], slot16[1])
 
 		break
@@ -171,7 +173,7 @@ function slot0._setRuleDescItem(slot0, slot1, slot2)
 	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot0._imageruleicon, slot1.icon)
 	UISpriteSetMgr.instance:setCommonSprite(slot0._imageruletag, "wz_" .. slot2)
 
-	slot0._txtruledesc.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot2), string.gsub(slot1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>") .. ("\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot1.desc, slot3[1])), slot3[slot2])
+	slot0._txtruledesc.text = formatLuaLang("fight_rule_desc", slot3[slot2], luaLang("dungeon_add_rule_target_" .. slot2), string.gsub(slot1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>") .. ("\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot1.desc, slot3[1])))
 end
 
 function slot0.onClose(slot0)

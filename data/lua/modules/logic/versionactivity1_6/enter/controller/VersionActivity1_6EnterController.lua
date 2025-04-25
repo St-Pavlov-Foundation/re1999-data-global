@@ -19,7 +19,7 @@ function slot0.getSelectActId(slot0)
 end
 
 function slot0.openVersionActivityEnterViewIfNotOpened(slot0, slot1, slot2, slot3, slot4)
-	if ViewMgr.instance:isOpen(ViewName.VersionActivity1_6EnterView) then
+	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_5EnterView) then
 		if slot1 then
 			slot1(slot2)
 		end
@@ -35,7 +35,7 @@ function slot0.openVersionActivityEnterView(slot0, slot1, slot2, slot3, slot4)
 	slot0.openedCallbackObj = slot2
 	slot0.actId = slot3
 
-	slot0:_enterVersionActivityView(ViewName.VersionActivity1_6EnterView, VersionActivity1_6Enum.ActivityId.EnterView, slot0._openVersionActivityEnterView, slot0, {
+	slot0:_enterVersionActivityView(ViewName.VersionActivity2_5EnterView, VersionActivity2_5Enum.ActivityId.EnterView, slot0._openVersionActivityEnterView, slot0, {
 		jumpActId = slot3,
 		enterVideo = slot4
 	})

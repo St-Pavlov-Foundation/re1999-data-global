@@ -6,6 +6,11 @@ function slot0.ctor(slot0)
 	slot0.keytoFunction = {}
 	slot0.activitid = nil
 	slot0._registeredKey = {}
+	slot0._priorty = 0
+end
+
+function slot0.getPriorty(slot0)
+	return slot0._priorty or 0
 end
 
 function slot0.registerFunction(slot0)
@@ -40,8 +45,6 @@ end
 
 function slot0.OnkeyDown(slot0, slot1)
 	if not PCInputModel.instance:getkeyidBykeyName(slot0.activitid, slot1) then
-		logError("keyName not exist in keyBinding")
-
 		return
 	end
 

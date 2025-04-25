@@ -15,8 +15,12 @@ function slot0._editableInitView(slot0)
 	slot0._gocritterItem = gohelper.findChild(slot0.go, "critterInfo/#go_critterInfoItem")
 	slot0._txtbuilding = gohelper.findChildText(slot0.go, "manufactureInfo/progress/#txt_building")
 	slot0._imagebuildingicon = gohelper.findChildImage(slot0.go, "manufactureInfo/progress/#txt_building/#image_buildingicon")
-	slot0._btnaccelerate = gohelper.findChildButtonWithAudio(slot0.go, "manufactureInfo/progress/#txt_building/#btn_accelerate")
+	slot0._btnaccelerate = gohelper.findChildButtonWithAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_accelerate")
+	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail")
 	slot0._goaccelerate = slot0._btnaccelerate.gameObject
+	slot0._btnwrong = gohelper.findChildClickWithDefaultAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong")
+	slot0._gowrongselect = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_select")
+	slot0._gowrongunselect = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_unselect")
 	slot0._btngoto = gohelper.findChildClickWithAudio(slot0.go, "manufactureInfo/progress/#btn_goto/clickarea")
 	slot0._goscrollslot = gohelper.findChild(slot0.go, "manufactureInfo/#scroll_slot")
 	slot0._scrollSlot = slot0._goscrollslot:GetComponent(typeof(ZProj.LimitedScrollRect))
@@ -25,22 +29,39 @@ function slot0._editableInitView(slot0)
 	slot0._goslotItem = gohelper.findChild(slot0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent/#go_slotItem")
 
 	gohelper.setActive(slot0._goslotItem, false)
+
+	slot0._gounselectdetail = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/unselect")
+	slot0._goselectdetail = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/select")
+
 	slot0:clearVar()
+	slot0:_setDetailSelect(false)
 end
 
 function slot0.addEventListeners(slot0)
 	slot0._btnaccelerate:AddClickListener(slot0._btnaccelerateOnClick, slot0)
+	slot0._btnwrong:AddClickListener(slot0._btnwrongOnClick, slot0)
 	slot0._btngoto:AddClickListener(slot0._btngotoOnClick, slot0)
+	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
+	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, slot0._onCloseDetatilView, slot0)
+	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, slot0._onWrongViewChange, slot0)
 end
 
 function slot0.removeEventListeners(slot0)
 	slot0._btnaccelerate:RemoveClickListener()
+	slot0._btnwrong:RemoveClickListener()
 	slot0._btngoto:RemoveClickListener()
+	slot0._btndetail:RemoveClickListener()
+	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, slot0._onCloseDetatilView, slot0)
+	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, slot0._onWrongViewChange, slot0)
 end
 
 function slot0._btnaccelerateOnClick(slot0)
 	ManufactureController.instance:openManufactureAccelerateView(slot0:getViewBuilding())
 	slot0:closePopView()
+end
+
+function slot0._btnwrongOnClick(slot0)
+	ManufactureController.instance:clickWrongBtn(slot0:getViewBuilding(), true)
 end
 
 function slot0._btngotoOnClick(slot0)
@@ -59,6 +80,14 @@ function slot0._btngotoOnClick(slot0)
 	end
 
 	ManufactureController.instance:openManufactureBuildingViewByBuilding(slot2, slot4)
+end
+
+function slot0._btndetailOnClick(slot0)
+	slot0:_setDetailSelect(ManufactureController.instance:openRoomManufactureBuildingDetailView(slot0:getViewBuilding(), true))
+end
+
+function slot0._onCloseDetatilView(slot0)
+	slot0:_setDetailSelect(false)
 end
 
 function slot0.onManufactureInfoUpdate(slot0)
@@ -91,10 +120,20 @@ function slot0.onChangeSelectedSlotItem(slot0)
 	end
 end
 
-function slot0.setData(slot0, slot1, slot2)
+function slot0._setDetailSelect(slot0, slot1)
+	gohelper.setActive(slot0._goselectdetail, slot1)
+	gohelper.setActive(slot0._gounselectdetail, not slot1)
+end
+
+function slot0._onWrongViewChange(slot0, slot1)
+	slot0:refreshWrongBtnSelect(slot1)
+end
+
+function slot0.setData(slot0, slot1, slot2, slot3)
 	slot0.buildingMO = slot1
-	slot0.parentView = slot2
-	slot0._scrollSlot.parentGameObject = slot2._goscrollbuilding
+	slot0.index = slot2
+	slot0.parentView = slot3
+	slot0._scrollSlot.parentGameObject = slot3._goscrollbuilding
 	slot0._curViewManufactureState = nil
 
 	slot0:_setSlotItems()
@@ -205,6 +244,8 @@ function slot0.refresh(slot0)
 	slot0:refreshCritter()
 	slot0:checkManufactureState()
 	slot0:refreshSlotItems()
+	slot0:refreshWrongBtnShow()
+	slot0:refreshDetailBtn()
 end
 
 function slot0.refreshTitle(slot0)
@@ -263,6 +304,24 @@ function slot0.refreshSelectedCritterSlot(slot0)
 	end
 end
 
+function slot0.refreshWrongBtnShow(slot0)
+	slot0:refreshWrongBtnSelect()
+	gohelper.setActive(slot0._btnwrong, #ManufactureModel.instance:getManufactureWrongTipItemList(slot0:getViewBuilding()) > 0)
+end
+
+function slot0.refreshWrongBtnSelect(slot0, slot1)
+	slot4 = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and slot1 == slot0:getViewBuilding()
+
+	gohelper.setActive(slot0._gowrongselect, slot4)
+	gohelper.setActive(slot0._gowrongunselect, not slot4)
+end
+
+function slot0.refreshDetailBtn(slot0)
+	slot1, slot2 = slot0:getViewBuilding()
+
+	gohelper.setActive(slot0._btndetail, next(slot2:getSlot2CritterDict()))
+end
+
 function slot0.everySecondCall(slot0)
 	for slot4, slot5 in ipairs(slot0._slotItemList) do
 		slot5:everySecondCall()
@@ -283,6 +342,10 @@ function slot0.getSlotItemContentTrans(slot0)
 	return slot0._transslotItemContent
 end
 
+function slot0.getIndex(slot0)
+	return slot0.index
+end
+
 function slot0.isShowAddPop(slot0)
 	return slot0.parentView:isShowAddPop()
 end
@@ -292,6 +355,7 @@ function slot0.setViewBuildingUid(slot0)
 end
 
 function slot0.clearVar(slot0)
+	slot0.index = nil
 	slot0._curViewManufactureState = nil
 
 	slot0:clearSlotPool()

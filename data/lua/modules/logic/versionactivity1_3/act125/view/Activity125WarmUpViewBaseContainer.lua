@@ -4,23 +4,34 @@ slot0 = class("Activity125WarmUpViewBaseContainer", Activity125ViewBaseContainer
 
 function slot0.onContainerInit(slot0)
 	uv0.super.onContainerInit(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, slot0._onDataUpdate, slot0)
-	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, slot0._onSwitchEpisode, slot0)
 end
 
 function slot0.onContainerOpen(slot0)
 	uv0.super.onContainerOpen(slot0)
-	Activity125Controller.instance:getAct125InfoFromServer(slot0:actId())
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, slot0._onUpdateActivity, slot0)
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, slot0._onDataUpdate, slot0)
+	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, slot0._onSwitchEpisode, slot0)
+
+	if not slot0._isInited then
+		Activity125Controller.instance:getAct125InfoFromServer(slot0:actId())
+	end
 end
 
 function slot0.onContainerClose(slot0)
-	uv0.super.onContainerClose(slot0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.UpdateActivity, slot0._onUpdateActivity, slot0)
 	Activity125Controller.instance:unregisterCallback(Activity125Event.SwitchEpisode, slot0._onSwitchEpisode, slot0)
 	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, slot0._onDataUpdate, slot0)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	uv0.super.onContainerClose(slot0)
+end
+
+function slot0.onContainerDestroy(slot0)
+	slot0._isInited = false
+
+	uv0.super.onContainerDestroy(slot0)
 end
 
 function slot0._onDataUpdate(slot0)
@@ -45,6 +56,14 @@ function slot0._onSwitchEpisode(slot0)
 	end
 
 	slot0:onSwitchEpisode()
+end
+
+function slot0._onUpdateActivity(slot0)
+	if not slot0._isInited then
+		return
+	end
+
+	slot0:onUpdateActivity()
 end
 
 function slot0._onDailyRefresh(slot0)
@@ -82,6 +101,9 @@ function slot0.onSwitchEpisode(slot0)
 end
 
 function slot0.onCloseViewFinish(slot0, ...)
+end
+
+function slot0.onUpdateActivity(slot0)
 end
 
 return slot0

@@ -1003,5 +1003,245 @@
     "monsterId": 90063301,
     "hpPerScore": 10000,
     "killScore": 0
+  },
+  {
+    "monsterId": 90071101,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90071102,
+    "hpPerScore": 0,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90071201,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90071202,
+    "hpPerScore": 0,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90071301,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90071302,
+    "hpPerScore": 0,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072101,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072102,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072201,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072202,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072301,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90072302,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90073101,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90073201,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90073301,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90081101,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90081201,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90081301,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082101,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082102,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082201,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082202,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082301,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90082302,
+    "hpPerScore": 3000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083101,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083102,
+    "hpPerScore": 1500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083201,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083202,
+    "hpPerScore": 1500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083301,
+    "hpPerScore": 4000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90083302,
+    "hpPerScore": 1500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091101,
+    "hpPerScore": 3334,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091102,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091103,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091201,
+    "hpPerScore": 3334,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091202,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091203,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091301,
+    "hpPerScore": 3334,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091302,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90091303,
+    "hpPerScore": 3333,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092101,
+    "hpPerScore": 6000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092102,
+    "hpPerScore": 2000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092201,
+    "hpPerScore": 6000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092202,
+    "hpPerScore": 2000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092301,
+    "hpPerScore": 6000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90092302,
+    "hpPerScore": 2000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90093101,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90093201,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 90093301,
+    "hpPerScore": 2500,
+    "killScore": 0
   }
 ]

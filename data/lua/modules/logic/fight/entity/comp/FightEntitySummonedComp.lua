@@ -17,9 +17,9 @@ end
 
 function slot0._instantiateSummoned(slot0, slot1)
 	if _G["FightEntitySummonedItem" .. slot1.summonedId] then
-		slot0:registClass(_G[slot2], slot0._entity, slot1)
+		slot0:newClass(_G[slot2], slot0._entity, slot1)
 	else
-		slot0:registClass(FightEntitySummonedItem, slot0._entity, slot1)
+		slot0:newClass(FightEntitySummonedItem, slot0._entity, slot1)
 	end
 end
 

@@ -1,20 +1,30 @@
 [
   {
     "heroId": 3091,
+    "skinId": 1,
     "motion": "idle",
     "whenStopped": 0,
     "whenNotStopped": 1
   },
   {
     "heroId": 3097,
+    "skinId": 1,
     "motion": "baqiang1|baqiang2|baqiang3",
     "whenStopped": 0,
     "whenNotStopped": 0
   },
   {
     "heroId": 3108,
+    "skinId": 1,
     "motion": "zhihui",
     "whenStopped": 0,
     "whenNotStopped": 0
+  },
+  {
+    "heroId": 3110,
+    "skinId": 1,
+    "motion": "ruchang",
+    "whenStopped": 0,
+    "whenNotStopped": 1
   }
 ]

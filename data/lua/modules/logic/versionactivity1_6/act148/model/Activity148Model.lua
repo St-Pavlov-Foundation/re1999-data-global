@@ -44,8 +44,12 @@ function slot1.onReceiveInfos(slot0, slot1)
 	slot0._actId = slot1.activityId
 	slot0._totalSkillPoint = slot1.totalSkillPoint
 
-	for slot6 = 1, #slot1.skillTrees do
-		slot0:updateAct148Mo(slot2[slot6])
+	if #slot1.skillTrees > 0 then
+		for slot6 = 1, #slot2 do
+			slot0:updateAct148Mo(slot2[slot6])
+		end
+	else
+		slot0:initActivity148Mo()
 	end
 end
 

@@ -91,7 +91,8 @@ function slot0.onDragEnd(slot0, slot1, slot2)
 		CritterSummonController.instance:onSummonDragEnd(slot0.viewParam.mode, slot4.rare)
 		slot0:_hideGuide()
 		gohelper.setActive(slot0._godrag.gameObject, false)
-		AudioMgr.instance:trigger(RoomSummonEnum.SummonMode[slot0.viewParam.mode].AudioId)
+
+		slot0._audioId = AudioMgr.instance:trigger(RoomSummonEnum.SummonMode[slot0.viewParam.mode].AudioId)
 
 		return
 	end
@@ -104,6 +105,10 @@ end
 
 function slot0._onSummonSkip(slot0)
 	slot0:openSummonGetCritterView(slot0.viewParam, true)
+
+	if slot0._audioId then
+		AudioMgr.instance:stopPlayingID(slot0._audioId)
+	end
 end
 
 function slot0._onCanDrag(slot0)
@@ -116,7 +121,12 @@ function slot0._onSummonDragEnd(slot0)
 end
 
 function slot0.openSummonGetCritterView(slot0, slot1, slot2)
-	CritterSummonController.instance:openSummonGetCritterView(slot1, slot2)
+	if slot1.mode == RoomSummonEnum.SummonType.Summon and slot1.critterMOList and #slot1.critterMOList > 1 then
+		ViewMgr.instance:openView(ViewName.RoomCritterSummonResultView, slot1)
+		ViewMgr.instance:closeView(ViewName.RoomCritterSummonSkipView)
+	else
+		CritterSummonController.instance:openSummonGetCritterView(slot1, slot2)
+	end
 end
 
 return slot0

@@ -1,16 +1,17 @@
 module("modules.logic.fight.model.data.FightCalculateDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightCalculateDataMgr", FightBaseCalculateDataMgr)
+slot0 = FightDataClass("FightCalculateDataMgr")
 
 function slot0.updateFightData(slot0, slot1)
 	if not slot1 then
 		return
 	end
 
-	slot0.dataMgr.fieldMgr:updateData(slot1)
-	slot0.dataMgr.entityMgr:updateData(slot1)
-	slot0.dataMgr.paTaMgr:updateData(slot1)
-	slot0.dataMgr.ASFDDataMgr:updateData(slot1)
+	for slot5, slot6 in ipairs(slot0.dataMgr.mgrList) do
+		if slot6.updateData then
+			slot6:updateData(slot1)
+		end
+	end
 end
 
 function slot0.beforePlayRoundProto(slot0, slot1)
@@ -1257,6 +1258,14 @@ function slot0.playEffect244(slot0, slot1)
 	slot2:changeServerUniqueCost(slot3[2] - slot2:getExpointCostOffsetNum())
 end
 
+function slot0.playEffect247(slot0, slot1)
+	slot0.dataMgr.fieldMgr:changeDeckNum(slot1.cardInfoList and #slot2)
+end
+
+function slot0.playEffect248(slot0, slot1)
+	slot0.dataMgr.fieldMgr:changeDeckNum(-(slot1.cardInfoList and #slot2))
+end
+
 function slot0.playEffect251(slot0, slot1)
 	slot0.dataMgr.fieldMgr.progress = slot0.dataMgr.fieldMgr.progress + slot1.effectNum
 end
@@ -1275,7 +1284,8 @@ end
 
 function slot0.playEffect256(slot0, slot1)
 	slot0.dataMgr.fieldMgr.progressMax = slot0.dataMgr.fieldMgr.progressMax + slot1.effectNum
-	slot0.dataMgr.fieldMgr.param[FightEnum.ParamKey.ProgressSkill] = tonumber(slot1.reserveStr)
+	slot0.dataMgr.fieldMgr.param[FightParamData.ParamKey.ProgressSkill] = tonumber(slot1.reserveStr)
+	slot0.dataMgr.fieldMgr.param[FightParamData.ParamKey.ProgressId] = slot1.effectNum1
 end
 
 function slot0.playEffect258(slot0, slot1)
@@ -1417,6 +1427,48 @@ function slot0.playEffect295(slot0, slot1)
 	slot2:refreshPowerInfo(slot1.powerInfo)
 end
 
+function slot0.playEffect308(slot0, slot1)
+	slot2 = slot0.dataMgr.teamDataMgr[slot1.teamType]
+	slot3 = slot1.cardHeatValue.id
+	slot2.cardHeat.values[slot3] = FightDataHelper.coverData(FightDataCardHeatValue.New(slot1.cardHeatValue), slot2.cardHeat.values[slot3])
+end
+
+function slot0.playEffect309(slot0, slot1)
+	if not slot0.dataMgr.teamDataMgr[slot1.teamType].cardHeat.values[slot1.effectNum] then
+		return
+	end
+
+	slot4.value = slot4.value + slot1.effectNum1
+end
+
+function slot0.playEffect310(slot0, slot1)
+	slot0.dataMgr.fieldMgr:dirSetDeckNum(slot1.effectNum)
+end
+
+function slot0.playEffect314(slot0, slot1)
+	if not slot0:getTarEntityMO(slot1) then
+		return
+	end
+
+	slot2:setHp(slot2.currentHp - slot1.effectNum)
+end
+
+function slot0.playEffect316(slot0, slot1)
+	if not slot1.entityMO then
+		return
+	end
+
+	slot0.dataMgr.entityMgr:replaceEntityMO(slot1.entityMO)
+end
+
+function slot0.playEffect320(slot0, slot1)
+	if not FightCardDataHelper.cardChangeIsMySide(slot1) then
+		return
+	end
+
+	table.insert(slot0:getHandCard(), FightCardData.New(slot1.cardInfo))
+end
+
 function slot0.playUndefineEffect(slot0)
 end
 
@@ -1516,6 +1568,53 @@ end
 
 function slot0.isPerformanceData(slot0)
 	return slot0.dataMgr.__cname == FightDataMgr.__cname
+end
+
+function slot0.onConstructor(slot0)
+	slot0._type2FuncName = {}
+end
+
+function slot0.playStepProto(slot0, slot1)
+	slot2 = {}
+
+	for slot6, slot7 in ipairs(slot1) do
+		slot8 = FightStepMO.New()
+
+		slot8:init(slot7, true)
+		table.insert(slot2, slot8)
+	end
+
+	for slot6, slot7 in ipairs(slot2) do
+		slot0:playStepData(slot7)
+	end
+end
+
+function slot0.playStepData(slot0, slot1)
+	if slot1.actType == FightEnum.ActType.SKILL or slot1.actType == FightEnum.ActType.EFFECT then
+		for slot5, slot6 in ipairs(slot1.actEffectMOs) do
+			slot0:playActEffectData(slot6)
+		end
+	elseif slot1.actType == FightEnum.ActType.CHANGEWAVE then
+		slot0:playChangeWave()
+	elseif slot1.actType == FightEnum.ActType.CHANGEHERO then
+		slot0:playChangeHero(slot1)
+	end
+end
+
+function slot0.playActEffectData(slot0, slot1)
+	if not slot0._type2FuncName[slot1.effectType] then
+		slot0._type2FuncName[slot1.effectType] = slot0["playEffect" .. slot1.effectType] or slot0.playUndefineEffect
+	end
+
+	if slot0:isPerformanceData() then
+		slot1:setDone()
+		xpcall(slot2, uv0.ingoreLogError, slot0, slot1)
+	else
+		xpcall(slot2, __G__TRACKBACK__, slot0, slot1)
+	end
+end
+
+function slot0.ingoreLogError(slot0)
 end
 
 return slot0

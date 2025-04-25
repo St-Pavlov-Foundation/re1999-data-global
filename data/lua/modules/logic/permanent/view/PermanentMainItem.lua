@@ -64,6 +64,10 @@ function slot0.onUpdateMO(slot0, slot1)
 		gohelper.setActive(slot0._goNormal, false)
 		gohelper.setActive(slot0._goLocked, false)
 
+		if slot0._view.playOpen then
+			slot0.animator:Play(UIAnimationName.Open)
+		end
+
 		return
 	end
 

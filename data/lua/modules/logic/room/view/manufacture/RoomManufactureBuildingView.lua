@@ -16,6 +16,9 @@ function slot0.onInitView(slot0)
 	slot0._gocritterItem = gohelper.findChild(slot0.viewGO, "#go_left/critterInfo/#go_critterInfoItem")
 	slot0._gomanufacture = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture")
 	slot0._btnaccelerate = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/txt_title/#btn_accelerate")
+	slot0._btnwrong = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/txt_title/#btn_wrong")
+	slot0._gowrongselect = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/txt_title/#btn_wrong/#go_select")
+	slot0._gowrongunselect = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/txt_title/#btn_wrong/#go_unselect")
 	slot0._btnproduction = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/#btn_production")
 	slot0._goproductionReddot = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/#btn_production/#go_reddot")
 	slot0._goscrollslot = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/#scroll_slot")
@@ -24,6 +27,7 @@ function slot0.onInitView(slot0)
 	slot0._goslotItemContent = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/#scroll_slot/viewport/content")
 	slot0._transslotItemContent = slot0._goslotItemContent.transform
 	slot0._goslotItem = gohelper.findChild(slot0.viewGO, "#go_right/#go_manufacture/slotQueue/#scroll_slot/viewport/content/#go_slotItem")
+	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -33,8 +37,10 @@ end
 function slot0.addEvents(slot0)
 	slot0._btnupgrade:AddClickListener(slot0._btnupgradeOnClick, slot0)
 	slot0._btnaccelerate:AddClickListener(slot0._btnaccelerateOnClick, slot0)
+	slot0._btnwrong:AddClickListener(slot0._btnwrongOnClick, slot0)
 	slot0._btnproduction:AddClickListener(slot0._btnproductionOnClick, slot0)
 	slot0._btnpopBlock:AddClickListener(slot0._btnpopBlockOnClick, slot0)
+	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
 	slot0:addEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, slot0._onManufactureGuideTweenFinish, slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, slot0._onTradeLevelChange, slot0)
@@ -42,14 +48,18 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, slot0._onChangeSelectedCritterSlotItem, slot0)
 	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, slot0._onReadNewFormula, slot0)
 	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
+	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
+	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
 	NavigateMgr.instance:addEscape(ViewName.RoomManufactureBuildingView, slot0._onEscape, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnupgrade:RemoveClickListener()
 	slot0._btnaccelerate:RemoveClickListener()
+	slot0._btnwrong:RemoveClickListener()
 	slot0._btnproduction:RemoveClickListener()
 	slot0._btnpopBlock:RemoveClickListener()
+	slot0._btndetail:RemoveClickListener()
 	slot0:clearSwitchBtnList()
 	slot0:removeEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, slot0._onManufactureGuideTweenFinish, slot0)
 	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
@@ -58,6 +68,14 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, slot0._onChangeSelectedCritterSlotItem, slot0)
 	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, slot0._onReadNewFormula, slot0)
 	slot0:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
+	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
+	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+end
+
+function slot0._btndetailOnClick(slot0)
+	slot1, slot2 = slot0:getViewBuilding()
+
+	ManufactureController.instance:openRoomManufactureBuildingDetailView(slot1)
 end
 
 function slot0._btnupgradeOnClick(slot0)
@@ -68,13 +86,27 @@ function slot0._btnaccelerateOnClick(slot0)
 	ManufactureController.instance:openManufactureAccelerateView(slot0:getViewBuilding())
 end
 
-function slot0._btnproductionOnClick(slot0)
-	ManufactureController.instance:clickSlotItem(slot0:getViewBuilding(), nil, , true)
+function slot0._btnwrongOnClick(slot0)
+	ManufactureController.instance:clickWrongBtn(slot0:getViewBuilding())
 end
 
+function slot0._btnproductionOnClick(slot0, slot1)
+	ManufactureController.instance:clickSlotItem(slot0:getViewBuilding(), nil, , true, nil, slot1)
+end
+
+slot2 = {
+	ViewName.RoomManufactureAddPopView,
+	ViewName.RoomCritterListView,
+	ViewName.RoomManufactureWrongTipView
+}
+
 function slot0._btnpopBlockOnClick(slot0)
-	if ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) or ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
-		slot0:closePopView()
+	for slot4, slot5 in ipairs(uv0) do
+		if ViewMgr.instance:isOpen(slot5) then
+			slot0:closePopView()
+
+			break
+		end
 	end
 end
 
@@ -180,6 +212,12 @@ function slot0._onBuildingLevelUp(slot0, slot1)
 	slot0:_onReadNewFormula()
 end
 
+function slot0._onViewChange(slot0, slot1)
+	if slot1 == ViewName.RoomManufactureWrongTipView then
+		slot0:refreshWrongBtnSelect()
+	end
+end
+
 function slot0._onEscape(slot0)
 	ViewMgr.instance:closeView(ViewName.RoomManufactureBuildingView)
 	ManufactureController.instance:resetCameraOnCloseView()
@@ -194,11 +232,22 @@ function slot0.onUpdateParam(slot0)
 	slot0.buildingType = slot0.viewParam.buildingType
 	slot0.defaultBuildingUid = slot0.viewParam.defaultBuildingUid
 
-	slot0:_setSwitchBtnGroup()
+	slot0:setView()
+
+	if slot0.viewParam.addManuItem then
+		slot0:_btnproductionOnClick(slot0.viewParam.addManuItem)
+	end
 end
 
 function slot0.onOpen(slot0)
 	slot0:onUpdateParam()
+	slot0:everySecondCall()
+	TaskDispatcher.runRepeat(slot0.everySecondCall, slot0, TimeUtil.OneSecond)
+	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_click)
+end
+
+function slot0.setView(slot0)
+	slot0:_setSwitchBtnGroup()
 
 	slot1 = uv0
 
@@ -216,24 +265,10 @@ function slot0.onOpen(slot0)
 		isOnOpen = true,
 		index = slot1
 	})
-	slot0:everySecondCall()
-	TaskDispatcher.runRepeat(slot0.everySecondCall, slot0, TimeUtil.OneSecond)
-	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_click)
-end
-
-function slot2(slot0, slot1)
-	if not slot0 or not slot1 then
-		return false
-	end
-
-	return slot0.buildingId < slot1.buildingId
 end
 
 function slot0._setSwitchBtnGroup(slot0)
-	slot1 = RoomMapBuildingModel.instance:getBuildingListByType(slot0.buildingType) or {}
-
-	table.sort(slot1, uv0)
-	gohelper.CreateObjList(slot0, slot0._onSetSwitchBtnItem, slot1, slot0._goswithbtnlayout, slot0._goswithItem)
+	gohelper.CreateObjList(slot0, slot0._onSetSwitchBtnItem, RoomMapBuildingModel.instance:getBuildingListByType(slot0.buildingType, true) or {}, slot0._goswithbtnlayout, slot0._goswithItem)
 end
 
 function slot0._onSetSwitchBtnItem(slot0, slot1, slot2, slot3)
@@ -323,6 +358,7 @@ end
 function slot0.closePopView(slot0)
 	slot0:_closeFormulaListView()
 	slot0:_closeCritterListView()
+	slot0:_closeWrongTipView()
 end
 
 function slot0._closeCritterListView(slot0)
@@ -331,6 +367,10 @@ end
 
 function slot0._closeFormulaListView(slot0)
 	ManufactureController.instance:clearSelectedSlotItem()
+end
+
+function slot0._closeWrongTipView(slot0)
+	ManufactureController.instance:closeWrongTipView()
 end
 
 function slot0.getSlotItem(slot0, slot1)
@@ -380,6 +420,7 @@ function slot0.refresh(slot0)
 	slot0:refreshSlotItems()
 	slot0:checkManufactureState()
 	slot0:refreshReddot()
+	slot0:refreshWrongBtnShow()
 end
 
 function slot0.refreshTitle(slot0)
@@ -462,6 +503,21 @@ end
 
 function slot0.checkNewFormulaReddot(slot0)
 	return ManufactureModel.instance:hasNewManufactureFormula(slot0:getViewBuilding())
+end
+
+function slot0.refreshWrongBtnShow(slot0)
+	if #ManufactureModel.instance:getManufactureWrongTipItemList(slot0:getViewBuilding()) > 0 then
+		slot0:refreshWrongBtnSelect()
+	end
+
+	gohelper.setActive(slot0._btnwrong, slot3)
+end
+
+function slot0.refreshWrongBtnSelect(slot0)
+	slot1 = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView)
+
+	gohelper.setActive(slot0._gowrongselect, slot1)
+	gohelper.setActive(slot0._gowrongunselect, not slot1)
 end
 
 function slot0.everySecondCall(slot0)

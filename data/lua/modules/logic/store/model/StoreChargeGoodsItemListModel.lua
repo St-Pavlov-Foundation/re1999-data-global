@@ -2,12 +2,14 @@ module("modules.logic.store.model.StoreChargeGoodsItemListModel", package.seeall
 
 slot0 = class("StoreChargeGoodsItemListModel", ListScrollModel)
 
-function slot0.setMOList(slot0, slot1)
+function slot0.setMOList(slot0, slot1, slot2)
 	slot0._moList = {}
 
 	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			table.insert(slot0._moList, slot6)
+		for slot6, slot7 in pairs(slot1) do
+			if slot7.config.belongStoreId == slot2 then
+				table.insert(slot0._moList, slot7)
+			end
 		end
 
 		if #slot0._moList > 1 then

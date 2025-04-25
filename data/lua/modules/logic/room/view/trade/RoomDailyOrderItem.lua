@@ -8,6 +8,8 @@ function slot0.onInitView(slot0)
 	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.viewGO, "customer/#simage_headicon")
 	slot0._txtcustomername = gohelper.findChildText(slot0.viewGO, "customer/#txt_customername")
 	slot0._btnrefresh = gohelper.findChildButtonWithAudio(slot0.viewGO, "refresh/#btn_refresh")
+	slot0._gocanrefresh = gohelper.findChild(slot0.viewGO, "refresh/#btn_refresh/#go_refresh")
+	slot0._golockrefresh = gohelper.findChild(slot0.viewGO, "refresh/#btn_refresh/#go_lock")
 	slot0._gotime = gohelper.findChild(slot0.viewGO, "refresh/#go_time")
 	slot0._txttime = gohelper.findChildText(slot0.viewGO, "refresh/#go_time/#txt_time")
 	slot0._gostuffitem = gohelper.findChild(slot0.viewGO, "stuff/#go_stuffitem")
@@ -16,6 +18,9 @@ function slot0.onInitView(slot0)
 	slot0._txtrewardcount = gohelper.findChildText(slot0.viewGO, "reward/#txt_rewardcount")
 	slot0._gotips = gohelper.findChild(slot0.viewGO, "reward/#go_tips")
 	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "reward/#go_tips/#txt_num")
+	slot0._btnlocked = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#btn_lock")
+	slot0._golocked = gohelper.findChild(slot0.viewGO, "#btn_lock/#go_locked")
+	slot0._gounlocked = gohelper.findChild(slot0.viewGO, "#btn_lock/#go_unlocked")
 	slot0._gounselect = gohelper.findChild(slot0.viewGO, "btn/traced/#go_unselect")
 	slot0._gounselecticon = gohelper.findChild(slot0.viewGO, "btn/traced/#go_unselect/icon")
 	slot0._goselect = gohelper.findChild(slot0.viewGO, "btn/traced/#go_select")
@@ -33,6 +38,7 @@ end
 function slot0.addEvents(slot0)
 	slot0._btnrefresh:AddClickListener(slot0._btnrefreshOnClick, slot0)
 	slot0._btntraced:AddClickListener(slot0._btntracedOnClick, slot0)
+	slot0._btnlocked:AddClickListener(slot0._btnlockedOnClick, slot0)
 	slot0._btnunconfirm:AddClickListener(slot0._btnunconfirmOnClick, slot0)
 	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
 	slot0._btnwrongjump:AddClickListener(slot0._btnwrongjumpOnClick, slot0)
@@ -41,6 +47,7 @@ end
 function slot0.removeEvents(slot0)
 	slot0._btnrefresh:RemoveClickListener()
 	slot0._btntraced:RemoveClickListener()
+	slot0._btnlocked:RemoveClickListener()
 	slot0._btnunconfirm:RemoveClickListener()
 	slot0._btnconfirm:RemoveClickListener()
 	slot0._btnwrongjump:RemoveClickListener()
@@ -66,8 +73,30 @@ function slot0._btntracedOnClick(slot0)
 	end
 end
 
+function slot0._btnlockedOnClick(slot0)
+	if not slot0._mo then
+		return
+	end
+
+	slot1 = not slot0._mo:getLocked()
+
+	RoomTradeController.instance:lockedDailyOrder(slot0._mo.orderId, slot1)
+
+	if slot1 then
+		GameFacade.showToast(ToastEnum.RoomOrderLocked)
+	else
+		GameFacade.showToast(ToastEnum.RoomOrderUnlocked)
+	end
+end
+
 function slot0._btnrefreshOnClick(slot0)
 	if not slot0._mo or slot0:isHasRefreshTime() then
+		return
+	end
+
+	if slot0._mo:getLocked() then
+		GameFacade.showToast(ToastEnum.RoomOrderLockedWrong)
+
 		return
 	end
 
@@ -147,6 +176,7 @@ function slot0.onUpdateMo(slot0, slot1)
 	slot0._mo = slot1
 	slot0.isWrong = false
 	slot0.wrongBuildingUid = nil
+	slot0.refreshTime = slot0._mo:getRefreshTime()
 
 	if slot1.isFinish then
 		slot0:playFinishAnim()
@@ -187,6 +217,7 @@ function slot0.onRefresh(slot0)
 	slot0:onRefreshMaterials()
 	slot0:refreshConfirmBtn()
 	slot0:refreshTraced()
+	slot0:refreshLocked()
 	slot0:checkRefreshTime()
 end
 
@@ -284,6 +315,22 @@ function slot0.refreshTraced(slot0)
 	end
 end
 
+function slot0.refreshLocked(slot0)
+	slot1 = slot0._mo:getLocked()
+
+	gohelper.setActive(slot0._golocked, slot1)
+	gohelper.setActive(slot0._gounlocked, not slot1)
+
+	if slot1 then
+		gohelper.setActive(slot0._gotime, false)
+	else
+		slot0:checkRefreshTime()
+	end
+
+	gohelper.setActive(slot0._gocanrefresh, not slot1)
+	gohelper.setActive(slot0._golockrefresh, slot1)
+end
+
 function slot0._refreshTimeCB(slot0)
 	if not slot0:isHasRefreshTime() then
 		if slot0._mo:getRefreshTime() <= 0 then
@@ -300,7 +347,11 @@ function slot0._refreshTimeCB(slot0)
 		slot0.refreshTime = slot0.refreshTime - 1
 	end
 
-	slot0._txttime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_dailyorder_refreshtime"), math.ceil(slot0.refreshTime / 6) / 10)
+	slot0:_updateTime()
+end
+
+function slot0._updateTime(slot0)
+	slot0._txttime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_dailyorder_refreshtime"), slot0.refreshTime)
 end
 
 function slot0.isHasRefreshTime(slot0)
@@ -315,8 +366,8 @@ function slot0.checkRefreshTime(slot0)
 	gohelper.setActive(slot0._gotime, slot1)
 
 	if slot1 then
-		slot0:_refreshTimeCB()
-		TaskDispatcher.runRepeat(slot0._refreshTimeCB, slot0, 2)
+		slot0:_updateTime()
+		TaskDispatcher.runRepeat(slot0._refreshTimeCB, slot0, 1)
 	end
 
 	gohelper.setActive(slot0._gorefresh, RoomTradeModel.instance:isCanRefreshDailyOrder())

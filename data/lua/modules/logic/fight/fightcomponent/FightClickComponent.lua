@@ -2,7 +2,7 @@ module("modules.logic.fight.fightcomponent.FightClickComponent", package.seeall)
 
 slot0 = class("FightClickComponent", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._clickDic = {}
 end
 

@@ -37,6 +37,7 @@ function slot0.init(slot0, slot1)
 
 	slot0.cloth = slot1.cloth
 	slot0.rate = slot1.rate
+	slot0.assistBossId = slot1.assistBossId
 end
 
 return slot0

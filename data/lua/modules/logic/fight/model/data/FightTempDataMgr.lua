@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightTempDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightTempDataMgr")
+slot0 = FightDataClass("FightTempDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 end
 
 function slot0.onCancelOperation(slot0)

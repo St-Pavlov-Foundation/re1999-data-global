@@ -68,6 +68,31 @@ function slot0.onReceiveGetHeroBirthdayReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.sendSignInTotalRewardRequest(slot0, slot1, slot2, slot3)
+	slot4 = SignInModule_pb.SignInTotalRewardRequest()
+	slot4.id = slot1
+
+	return slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveSignInTotalRewardReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardReply(slot2)
+		SignInController.instance:dispatchEvent(SignInEvent.OnSignInTotalRewardReply, slot2.id)
+	end
+end
+
+function slot0.sendSignInTotalRewardAllRequest(slot0, slot1, slot2)
+	return slot0:sendMsg(SignInModule_pb.SignInTotalRewardAllRequest(), slot1, slot2)
+end
+
+function slot0.onReceiveSignInTotalRewardAllReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardAllReply(slot2)
+		SignInController.instance:dispatchEvent(SignInEvent.OnReceiveSignInTotalRewardAllReply)
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

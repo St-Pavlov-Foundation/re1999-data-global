@@ -4,6 +4,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseEfficiency#10000"
   },
@@ -12,6 +13,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseEfficiency#12000"
   },
@@ -20,6 +22,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseEfficiency#13000"
   },
@@ -28,6 +31,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseEfficiency#14000"
   },
@@ -36,6 +40,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseEfficiency#15000"
   },
@@ -44,6 +49,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#10000"
   },
@@ -52,6 +58,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#9000"
   },
@@ -60,6 +67,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#8500"
   },
@@ -68,6 +76,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#8000"
   },
@@ -76,6 +85,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#7500"
   },
@@ -84,6 +94,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#0"
   },
@@ -92,6 +103,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#500"
   },
@@ -100,6 +112,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#1000"
   },
@@ -108,6 +121,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#1200"
   },
@@ -116,6 +130,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#1500"
   },
@@ -124,6 +139,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#2500"
   },
@@ -132,6 +148,7 @@
     "target": 1,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -140,6 +157,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#1000"
   },
@@ -148,6 +166,7 @@
     "target": 2,
     "catalogue": 131314,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 2,
     "parameter": "131314#baseLucky#500"
   },
@@ -156,6 +175,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "critters.size()==1 && buildingType==3",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#5000"
   },
@@ -164,6 +184,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "critters.size()==1 && buildingType==3",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#3000"
   },
@@ -172,6 +193,7 @@
     "target": 1,
     "catalogue": 0,
     "condition": "buildingType==4 && target.mood<3000",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseMoodRestore#1000"
   },
@@ -180,6 +202,7 @@
     "target": 1,
     "catalogue": 0,
     "condition": "buildingType==4 && target.mood>=3000",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseMoodRestore#500"
   },
@@ -188,6 +211,7 @@
     "target": 2,
     "catalogue": 131300,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 2,
     "parameter": "131300#rateEfficiency#1500"
   },
@@ -196,6 +220,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingType==1",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -204,6 +229,7 @@
     "target": 1,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseMoodRestore#500"
   },
@@ -212,6 +238,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "baseLucky#750"
   },
@@ -220,6 +247,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#1500"
   },
@@ -228,6 +256,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22006",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#1500"
   },
@@ -236,6 +265,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22006",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#-500"
   },
@@ -244,6 +274,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#-500"
   },
@@ -252,6 +283,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -260,6 +292,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "user.mood>=5000",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -268,6 +301,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "user.mood<5000",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#-1000"
   },
@@ -276,6 +310,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "basePatience#-500"
   },
@@ -284,6 +319,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "user.mood<100",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "mood#100"
   },
@@ -292,6 +328,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "user.mood<1000",
+    "previewCondition": "buildingId==-1",
     "type": 0,
     "parameter": "rateEfficiency#-5000"
   },
@@ -300,6 +337,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "buildingType==4",
     "type": 0,
     "parameter": "baseMoodRestore#1000"
   },
@@ -308,6 +346,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -316,6 +355,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "basePatience#2000"
   },
@@ -324,6 +364,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -332,6 +373,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "rateEfficiency#-1000"
   },
@@ -340,6 +382,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "baseLucky#1000"
   },
@@ -348,6 +391,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "basePatience#2000"
   },
@@ -356,6 +400,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "baseLucky#1000"
   },
@@ -364,6 +409,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "rateEfficiency#-2000"
   },
@@ -372,6 +418,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "rateEfficiency#1500"
   },
@@ -380,6 +427,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingType==1",
+    "previewCondition": "buildingType==1",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -388,6 +436,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22004",
+    "previewCondition": "buildingId==22004",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -396,6 +445,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22005",
+    "previewCondition": "buildingId==22005",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -404,6 +454,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22006",
+    "previewCondition": "buildingId==22006",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -412,6 +463,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22007",
+    "previewCondition": "buildingId==22007",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -420,6 +472,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22008",
+    "previewCondition": "buildingId==22008",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -428,6 +481,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22009",
+    "previewCondition": "buildingId==22009",
     "type": 0,
     "parameter": "rateEfficiency#2000"
   },
@@ -436,6 +490,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "basePatience#-500"
   },
@@ -444,6 +499,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingType==1",
+    "previewCondition": "buildingType==1",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -452,6 +508,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22004",
+    "previewCondition": "buildingId==22004",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -460,6 +517,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22005",
+    "previewCondition": "buildingId==22005",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -468,6 +526,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22006",
+    "previewCondition": "buildingId==22006",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -476,6 +535,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22007",
+    "previewCondition": "buildingId==22007",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -484,6 +544,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22008",
+    "previewCondition": "buildingId==22008",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -492,6 +553,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22009",
+    "previewCondition": "buildingId==22009",
     "type": 0,
     "parameter": "basePatience#-1000"
   },
@@ -500,6 +562,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "0",
     "type": 0,
     "parameter": "baseLucky#750"
   },
@@ -508,6 +571,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingType==1",
+    "previewCondition": "buildingType==1",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -516,6 +580,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22004",
+    "previewCondition": "buildingId==22004",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -524,6 +589,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22005",
+    "previewCondition": "buildingId==22005",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -532,6 +598,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22006",
+    "previewCondition": "buildingId==22006",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -540,6 +607,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22007",
+    "previewCondition": "buildingId==22007",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -548,6 +616,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22008",
+    "previewCondition": "buildingId==22008",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -556,6 +625,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "buildingId==22009",
+    "previewCondition": "buildingId==22009",
     "type": 0,
     "parameter": "baseLucky#1250"
   },
@@ -564,6 +634,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "",
     "type": 0,
     "parameter": "baseDomesticationEfficiency#500"
   },
@@ -572,6 +643,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "",
     "type": 0,
     "parameter": "baseDomesticationPatience#500"
   },
@@ -580,6 +652,7 @@
     "target": 0,
     "catalogue": 0,
     "condition": "",
+    "previewCondition": "",
     "type": 0,
     "parameter": "baseDomesticationLucky#500"
   },
@@ -588,6 +661,7 @@
     "target": 2,
     "catalogue": 131321,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131314#baseLucky#500"
   },
@@ -596,6 +670,7 @@
     "target": 2,
     "catalogue": 131315,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131314#baseLucky#500"
   },
@@ -604,6 +679,7 @@
     "target": 2,
     "catalogue": 131314,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131321#baseLucky#500"
   },
@@ -612,6 +688,7 @@
     "target": 2,
     "catalogue": 131321,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131321#baseLucky#500"
   },
@@ -620,6 +697,7 @@
     "target": 2,
     "catalogue": 131315,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131321#baseLucky#500"
   },
@@ -628,6 +706,7 @@
     "target": 2,
     "catalogue": 131314,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131315#baseLucky#500"
   },
@@ -636,6 +715,7 @@
     "target": 2,
     "catalogue": 131321,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131315#baseLucky#500"
   },
@@ -644,7 +724,17 @@
     "target": 2,
     "catalogue": 131315,
     "condition": "",
+    "previewCondition": "",
     "type": 2,
     "parameter": "131315#baseLucky#500"
+  },
+  {
+    "id": "sikuiyinke",
+    "target": 0,
+    "catalogue": 0,
+    "condition": "buildingType==2",
+    "previewCondition": "buildingType==2",
+    "type": 0,
+    "parameter": "rateEfficiency#3500"
   }
 ]

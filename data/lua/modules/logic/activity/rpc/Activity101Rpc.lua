@@ -46,6 +46,37 @@ function slot0.onReceiveGet101SpBonusReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.sendGetAct186SpBonusInfoRequest(slot0, slot1, slot2, slot3, slot4)
+	slot5 = Activity101Module_pb.GetAct186SpBonusInfoRequest()
+	slot5.activityId = slot1
+	slot5.act186ActivityId = slot2
+
+	slot0:sendMsg(slot5, slot3, slot4)
+end
+
+function slot0.onReceiveGetAct186SpBonusInfoReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		Activity186Model.instance:onGetAct186SpBonusInfo(slot2)
+		Activity186Controller.instance:dispatchEvent(Activity186Event.SpBonusStageChange)
+	end
+end
+
+function slot0.sendAcceptAct186SpBonusRequest(slot0, slot1, slot2, slot3, slot4)
+	slot5 = Activity101Module_pb.AcceptAct186SpBonusRequest()
+	slot5.activityId = slot1
+	slot5.act186ActivityId = slot2
+
+	slot0:sendMsg(slot5, slot3, slot4)
+end
+
+function slot0.onReceiveAcceptAct186SpBonusReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		Activity186Model.instance:onAcceptAct186SpBonus(slot2)
+		Activity186Controller.instance:dispatchEvent(Activity186Event.SpBonusStageChange)
+		Activity186Controller.instance:dispatchEvent(Activity186Event.RefreshRed)
+	end
+end
+
 slot0.instance = slot0.New()
 
 return slot0

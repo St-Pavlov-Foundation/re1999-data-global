@@ -31,6 +31,7 @@ end
 function slot0._OnDailyRefresh(slot0)
 	PlayerModel.instance:checkCanRenameReset()
 	PlayerRpc.instance:sendMarkMainThumbnailRequest()
+	PlayerRpc.instance:sendGetPlayerInfoRequest(slot0._onDailyRefreshGetPlayerInfo, slot0)
 	logNormal("每日五点刷新， 发送获取player信息的请求， PlayerRpc")
 end
 
@@ -57,6 +58,10 @@ function slot0.getAssistReward(slot0)
 end
 
 function slot0.reInit(slot0)
+end
+
+function slot0._onDailyRefreshGetPlayerInfo(slot0)
+	slot0:dispatchEvent(PlayerEvent.OnDailyRefresh)
 end
 
 slot0.instance = slot0.New()

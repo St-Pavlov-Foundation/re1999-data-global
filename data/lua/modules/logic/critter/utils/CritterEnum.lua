@@ -18,6 +18,7 @@ slot0.ConstId = {
 slot0.AttributeType = {
 	Patience = 2,
 	Efficiency = 1,
+	MoodRestore = 10001,
 	Lucky = 3
 }
 slot0.OrderType = {
@@ -107,6 +108,27 @@ slot0.QualityImageNameMap = {
 	"critter_manufacture_quality4",
 	"critter_manufacture_quality5"
 }
+slot0.QualityEggImageNameMap = {
+	"room_summon_egg_1",
+	"room_summon_egg_1",
+	"room_summon_egg_1",
+	"room_summon_egg_2",
+	"room_summon_egg_3"
+}
+slot0.QualityEggLightImageNameMap = {
+	"room_summon_egglight_1",
+	"room_summon_egglight_1",
+	"room_summon_egglight_1",
+	"room_summon_egglight_2",
+	"room_summon_egglight_3"
+}
+slot0.QualityEggSummomResNameMap = {
+	"roomcrittersummonresult_egg1",
+	"roomcrittersummonresult_egg1",
+	"roomcrittersummonresult_egg1",
+	"roomcrittersummonresult_egg2",
+	"roomcrittersummonresult_egg3"
+}
 slot0.LangKey = {
 	AgeChildhood = "critter_age_childhood_txt",
 	AgeAult = "critter_age_adult_txt",
@@ -115,6 +137,10 @@ slot0.LangKey = {
 slot0.TrainOPState = {
 	PairOP = 2,
 	Normal = 1
+}
+slot0.Summon = {
+	Ten = 10,
+	One = 1
 }
 slot0.OppenFuncGuide = {
 	RoomManufacture = 414,

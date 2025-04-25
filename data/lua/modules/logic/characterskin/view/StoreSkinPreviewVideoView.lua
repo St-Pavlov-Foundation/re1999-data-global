@@ -54,7 +54,7 @@ function slot0.onOpen(slot0)
 		slot0._videoAudioId = slot4.audio
 		slot0._stopAudioId = slot4.stopAudio
 		slot0._stopBgm = slot0._videoAudioId > 0
-		slot0._videoPath = langVideoUrl(slot4.entranceMv)
+		slot0._videoPath = string.nilorempty(slot4.entranceMv) and "" or langVideoUrl(slot4.entranceMv)
 		slot0._mvTime = slot4.mvtime
 	end
 
@@ -65,7 +65,7 @@ function slot0.onOpen(slot0)
 
 	gohelper.setActive(slot0._videoRoot, true)
 
-	if slot0._videoPath then
+	if not string.nilorempty(slot0._videoPath) then
 		if not slot0._videoPlayer then
 			slot0._videoPlayer, slot0._displauUGUI, slot0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(slot0._videoGO)
 			slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._videoPlayerGO, FullScreenVideoAdapter)
@@ -78,7 +78,6 @@ function slot0.onOpen(slot0)
 			TaskDispatcher.runDelay(slot0._timeout, slot0, slot0._mvTime)
 		end
 	else
-		logError("open viewParam limitCO = null")
 		TaskDispatcher.runDelay(slot0._hideVideoGo, slot0, 1)
 	end
 end

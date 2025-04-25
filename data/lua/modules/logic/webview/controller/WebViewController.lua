@@ -66,17 +66,24 @@ function slot3.urlEncode(slot0, slot1)
 end
 
 function slot3.getVideoUrl(slot0, slot1, slot2)
-	slot6 = {
-		string.format((GameChannelConfig.getServerType() == GameChannelConfig.ServerType.OutRelease or slot3 == GameChannelConfig.ServerType.OutPreview) and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?", slot1) .. string.format("gameId=%s", SDKMgr.instance:getGameId())
+	slot4 = {
+		string.format(slot0:getVideoUrlHead(), slot1) .. string.format("gameId=%s", SDKMgr.instance:getGameId())
 	}
 
-	table.insert(slot6, string.format("accountId=%s", LoginModel.instance.channelUserId))
-	table.insert(slot6, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(slot6, string.format("skinId=%s", slot2))
-	table.insert(slot6, string.format("language=%s", uv0.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))))
-	table.insert(slot6, string.format("deviceType=%s", TurnBackInvitationModel.instance:getCurrentDeviceType()))
+	table.insert(slot4, string.format("accountId=%s", LoginModel.instance.channelUserId))
+	table.insert(slot4, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(slot4, string.format("skinId=%s", slot2))
+	table.insert(slot4, string.format("language=%s", uv0.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))))
+	table.insert(slot4, string.format("deviceType=%s", TurnBackInvitationModel.instance:getCurrentDeviceType()))
 
-	return table.concat(slot6, "&")
+	return table.concat(slot4, "&")
+end
+
+function slot3.getVideoUrlHead(slot0)
+	slot2 = nil
+	slot4 = GameChannelConfig.getServerType() == GameChannelConfig.ServerType.OutRelease or slot3 == GameChannelConfig.ServerType.OutPreview
+
+	return tostring(SDKMgr.instance:getGameId()) == "50001" and (slot4 and "https://re.bluepoch.com/event/skinvideo/%s?" or "https://re-test.sl916.com/event/skinvideo/%s?") or slot4 and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?"
 end
 
 function slot3.getWebViewTopOffset(slot0, slot1, slot2, slot3)

@@ -128,9 +128,9 @@ function slot0.playBarAdd(slot0, slot1, slot2)
 
 	if slot1 then
 		slot0._addAttributeMO = slot2
-		slot6 = CritterConfig.instance:getCritterAttributeLevelCfg(CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeBaseValue).level + 1) and (slot0._attributeBaseValue + slot0._addAttributeMO.value - slot4.minValue) / (slot5.minValue - slot4.minValue) or 1
-		slot0._imagelvbar.fillAmount = slot6
-		slot0._imagedetailbar.fillAmount = slot6
+		slot7 = CritterConfig.instance:getCritterAttributeLevelCfg(CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot0._attributeBaseValue).level + 1) and (slot0._attributeBaseValue + RoomTrainCritterModel.instance:getSelectOptionCount(slot2.attributeId) * slot0._addAttributeMO.value - slot5.minValue) / (slot6.minValue - slot5.minValue) or 1
+		slot0._imagelvbar.fillAmount = slot7
+		slot0._imagedetailbar.fillAmount = slot7
 	else
 		slot0._imagelvbar.fillAmount = 0
 		slot0._imagedetailbar.fillAmount = 0

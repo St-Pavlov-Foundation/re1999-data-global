@@ -2,6 +2,14 @@ module("modules.logic.character.rpc.HeroRpc", package.seeall)
 
 slot0 = class("HeroRpc", BaseRpc)
 
+function slot0.onInit(slot0)
+	slot0:reInit()
+end
+
+function slot0.reInit(slot0)
+	slot0:set_onReceiveHeroGainPushOnce(nil, )
+end
+
 function slot0.sendHeroInfoListRequest(slot0, slot1, slot2)
 	return slot0:sendMsg(HeroModule_pb.HeroInfoListRequest(), slot1, slot2)
 end
@@ -83,13 +91,15 @@ function slot0.onReceiveHeroSkinGainPush(slot0, slot1, slot2)
 		skinId = slot2.skinId,
 		firstGain = slot2.firstGain
 	}).firstGain then
-		return
+		slot0:_showTipsGainSkinRedundantly(slot2.skinId)
 	end
 
 	HeroModel.instance:onGainSkinList(slot2.skinId)
 
 	if slot2.getApproach == MaterialEnum.GetApproach.Task or slot2.getApproach == MaterialEnum.GetApproach.TaskAct then
 		TaskController.instance:getRewardByLine(slot2.getApproach, ViewName.CharacterSkinGainView, slot3)
+	elseif slot2.getApproach == MaterialEnum.GetApproach.AutoChessRankReward then
+		AutoChessController.instance:addPopupView(ViewName.CharacterSkinGainView, slot3)
 	elseif slot2.getApproach ~= MaterialEnum.GetApproach.NoviceStageReward then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, ViewName.CharacterSkinGainView, slot3)
 	else
@@ -97,22 +107,59 @@ function slot0.onReceiveHeroSkinGainPush(slot0, slot1, slot2)
 	end
 end
 
+function slot0._showTipsGainSkinRedundantly(slot0, slot1)
+	slot2 = lua_skin.configDict[slot1]
+
+	if not string.nilorempty(slot2.compensate) then
+		slot6 = string.splitToNumber(slot3, "#")
+		slot10 = ItemConfig.instance:getItemConfig(slot6[1], slot6[2])
+
+		GameFacade.showIconToastWithTableParam(ToastEnum.GainSkinRedundantly, ResUrl.getCurrencyItemIcon(slot10.icon), {
+			slot2.characterSkin,
+			slot10.name,
+			slot6[3],
+			[2.0] = "",
+			[3.0] = ""
+		})
+	else
+		GameFacade.showToastWithTableParam(slot5, slot4)
+	end
+end
+
+function slot0.set_onReceiveHeroGainPushOnce(slot0, slot1, slot2)
+	slot0._heroGainPushOnceCb = slot1
+	slot0._heroGainPushOnceCbObj = slot2
+end
+
 function slot0.onReceiveHeroGainPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+	if slot0._heroGainPushOnceCb then
+		slot0:set_onReceiveHeroGainPushOnce(nil, )
+		slot3(slot0._heroGainPushOnceCbObj, slot1, slot2)
+
 		return
 	end
 
-	slot3 = {
-		heroId = slot2.heroId,
-		duplicateCount = slot2.duplicateCount or 0
+	if slot1 ~= 0 then
+		slot0._onReceiveHeroGainPushMsg = nil
+
+		return
+	end
+
+	slot0:_onReceiveHeroGainPush(slot2)
+end
+
+function slot0._onReceiveHeroGainPush(slot0, slot1)
+	slot2 = {
+		heroId = slot1.heroId,
+		duplicateCount = slot1.duplicateCount or 0
 	}
 
 	if not CharacterModel.instance:getGainHeroViewShowState() then
-		if CharacterModel.instance:getGainHeroViewShowNewState() and slot2.duplicateCount > 0 then
+		if CharacterModel.instance:getGainHeroViewShowNewState() and slot1.duplicateCount > 0 then
 			return
 		end
 
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, slot3)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, slot2)
 	end
 end
 

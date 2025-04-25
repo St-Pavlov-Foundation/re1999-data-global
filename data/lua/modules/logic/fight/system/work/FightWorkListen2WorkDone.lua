@@ -2,12 +2,12 @@ module("modules.logic.fight.system.work.FightWorkListen2WorkDone", package.seeal
 
 slot0 = class("FightWorkListen2WorkDone", FightWorkItem)
 
-function slot0.onInitialization(slot0, slot1)
+function slot0.onConstructor(slot0, slot1)
 	slot0._work = slot1
 end
 
 function slot0.onStart(slot0)
-	if slot0._work.INVOKEDDISPOSE then
+	if slot0._work.IS_DISPOSED then
 		slot0:onDone(true)
 
 		return

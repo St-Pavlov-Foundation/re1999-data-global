@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "1#100",
+    "capacity": 3,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 1002,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "1#100|2#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 1003,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "1#100|2#100|3#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 1004,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "1#100|2#100|3#100|4#100",
+    "capacity": 6,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 1005,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "1#100|2#100|3#100|4#100|5#100",
+    "capacity": 7,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 2001,
+    "type": 2,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  },
+  {
+    "id": 3001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "3001#100",
+    "capacity": 1,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 3002,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "3002#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 3003,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "1#100|2#100|3#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 3004,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "1#100|2#100|3#100|4#100",
+    "capacity": 6,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 3005,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "1#100|2#100|3#100|4#100|5#100",
+    "capacity": 7,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 4001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "4001#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  }
+]

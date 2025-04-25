@@ -41,10 +41,34 @@
   },
   {
     "season": 6,
-    "startTime": "2025-01-13",
-    "endTime": "2025-01-27",
+    "startTime": "2025-05-05",
+    "endTime": "2025-05-19",
     "bossPool": "1#2#4",
     "taskGroupId": 910006,
+    "isOnline": 1
+  },
+  {
+    "season": 7,
+    "startTime": "2025-05-19",
+    "endTime": "2025-06-02",
+    "bossPool": "1#2#5",
+    "taskGroupId": 910007,
+    "isOnline": 1
+  },
+  {
+    "season": 8,
+    "startTime": "2025-02-10",
+    "endTime": "2025-02-24",
+    "bossPool": "2#3#5",
+    "taskGroupId": 910008,
+    "isOnline": 1
+  },
+  {
+    "season": 9,
+    "startTime": "2025-02-24",
+    "endTime": "2025-03-10",
+    "bossPool": "3#4#5",
+    "taskGroupId": 910009,
     "isOnline": 1
   }
 ]

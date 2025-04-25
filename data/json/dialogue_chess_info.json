@@ -412,5 +412,83 @@
     "id": 2,
     "res": "dialogue_role13_right",
     "pos": "420#0"
+  },
+  {
+    "dialogueId": 32,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 32,
+    "id": 2,
+    "res": "dialogue_role18_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 33,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 33,
+    "id": 2,
+    "res": "dialogue_role18_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 34,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 34,
+    "id": 2,
+    "res": "dialogue_role18_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 35,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 35,
+    "id": 2,
+    "res": "dialogue_role18_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 36,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 36,
+    "id": 2,
+    "res": "dialogue_role19_right",
+    "pos": "420#0"
+  },
+  {
+    "dialogueId": 37,
+    "id": 1,
+    "res": "dialogue_role17_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 37,
+    "id": 2,
+    "res": "dialogue_role20_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 37,
+    "id": 3,
+    "res": "dialogue_role19_right",
+    "pos": "420#0"
   }
 ]

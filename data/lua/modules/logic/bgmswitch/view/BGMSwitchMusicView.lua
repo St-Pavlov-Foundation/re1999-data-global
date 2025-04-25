@@ -12,6 +12,7 @@ function slot0.onInitView(slot0)
 	slot0._gofilterbtn2 = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter/btn2")
 	slot0._gotab = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab")
 	slot0._btntaball = gohelper.findChildButton(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball")
+	slot0._goallreddot = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_allreddot")
 	slot0._gotaballselected = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_taballselected")
 	slot0._btntablike = gohelper.findChildButton(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike")
 	slot0._gotablikeselected = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike/#go_tablikeselected")
@@ -220,10 +221,14 @@ function slot0._focusItem(slot0)
 	end
 end
 
-function slot0._refreshView(slot0)
+function slot0._refreshView(slot0, slot1, slot2)
 	slot0:_refreshTop()
 	slot0:_refreshMusicItems()
 	slot0:_refreshBottom()
+
+	if slot2 then
+		slot0:_delayFocus()
+	end
 end
 
 function slot0._refreshTop(slot0)
@@ -234,6 +239,7 @@ function slot0._refreshTop(slot0)
 
 	gohelper.setActive(slot0._gofilterbtn1, not slot2)
 	gohelper.setActive(slot0._gofilterbtn2, slot2)
+	gohelper.setActive(slot0._goallreddot, BGMSwitchModel.instance:hasUnreadBgm())
 end
 
 function slot0._refreshBottom(slot0)

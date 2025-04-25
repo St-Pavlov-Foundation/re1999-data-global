@@ -504,7 +504,11 @@ function slot0.refreshEpisodeTextInfo(slot0)
 
 	gohelper.setActive(slot0._gorecommond, FightHelper.getEpisodeRecommendLevel(slot0.showEpisodeCo.id) > 0)
 
-	if slot4 > 0 then
+	slot5 = lua_battle.configDict[slot0.showEpisodeCo.battleId]
+
+	if (lua_battle.configDict[slot0.showEpisodeCo.firstBattleId] and not string.nilorempty(slot6.balance) or slot5 and not string.nilorempty(slot5.balance)) and not DungeonModel.instance:hasPassLevel(slot0.showEpisodeCo.id) then
+		slot0._txtrecommondlv.text = "---"
+	elseif slot4 > 0 then
 		slot0._txtrecommondlv.text = HeroConfig.instance:getCommonLevelDisplay(slot4)
 	end
 end
@@ -578,6 +582,7 @@ function slot0.refreshReward(slot0)
 		slot2 = #slot1
 	end
 
+	tabletool.addValues(slot1, DungeonModel.instance:getEpisodeReward(slot0.showEpisodeCo.id))
 	tabletool.addValues(slot1, DungeonModel.instance:getEpisodeRewardDisplayList(slot0.showEpisodeCo.id))
 	gohelper.setActive(slot0._gorewards, #slot1 > 0)
 	gohelper.setActive(slot0._gonorewards, slot4 == 0)
@@ -626,13 +631,19 @@ function slot0.refreshReward(slot0)
 		else
 			gohelper.setActive(slot7.gonormal, true)
 
-			slot7.txtnormal.text = luaLang("dungeon_prob_flag" .. slot6[3])
+			slot16 = slot6[3]
+			slot15 = true
 
-			if #slot6 >= 4 then
+			if slot6.tagType then
+				slot16 = slot6.tagType
+				slot15 = slot14 ~= 0
+			elseif #slot6 >= 4 then
 				slot14 = slot6[4]
 			else
 				slot15 = false
 			end
+
+			slot7.txtnormal.text = luaLang("dungeon_prob_flag" .. slot16)
 		end
 
 		slot7.iconItem:setMOValue(slot6[1], slot6[2], slot14, nil, true)

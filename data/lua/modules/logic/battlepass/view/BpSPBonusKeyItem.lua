@@ -95,7 +95,6 @@ function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 		slot13:showStackableNum()
 		slot13:setHideLvAndBreakFlag(true)
 		slot13:hideEquipLvAndBreak(true)
-		slot13:isShowCount(true)
 
 		if slot7 then
 			slot13:customOnClickCallback(slot4, slot0)
@@ -109,7 +108,7 @@ function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
 			slot13:setAlpha(1, 1)
 		end
 
-		slot13:isShowCount(slot12[1] ~= MaterialEnum.MaterialType.Hero and not slot7)
+		slot13:isShowCount(slot12[1] ~= MaterialEnum.MaterialType.HeroSkin and not slot7)
 		gohelper.setActive(slot13.go.transform.parent.gameObject, true)
 	end
 

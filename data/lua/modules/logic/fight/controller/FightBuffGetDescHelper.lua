@@ -36,7 +36,8 @@ function slot0.getBuffFeatureHandle(slot0)
 			[FightEnum.BuffFeature.ModifyAttrByBuffLayer] = uv0.getModifyAttrByBuffLayerDesc,
 			[FightEnum.BuffFeature.ResistancesAttr] = uv0.getResistancesAttrDesc,
 			[FightEnum.BuffFeature.FixAttrTeamEnergyAndBuff] = uv0.getFixAttrTeamEnergyAndBuffDesc,
-			[FightEnum.BuffFeature.FixAttrTeamEnergy] = uv0.getFixAttrTeamEnergyDesc
+			[FightEnum.BuffFeature.FixAttrTeamEnergy] = uv0.getFixAttrTeamEnergyDesc,
+			[FightEnum.BuffFeature.StorageDamage] = uv0.getStorageDamageDesc
 		}
 	end
 
@@ -85,6 +86,10 @@ function slot0.getFixAttrTeamEnergyDesc(slot0, slot1, slot2, slot3)
 	end
 
 	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot5 / 10 .. "%%")
+end
+
+function slot0.getStorageDamageDesc(slot0, slot1, slot2, slot3)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot3[2])
 end
 
 return slot0

@@ -148,6 +148,22 @@ function slot0.calRewardProgressWidth(slot0, slot1, slot2, slot3, slot4, slot5, 
 	return math.max(0, slot11 - slot6), slot10
 end
 
+function slot0.getAlternateDay(slot0)
+	if not slot0._alternateDay then
+		slot0._alternateDay = 1
+
+		if slot0._bossEpisodeCfgDict then
+			for slot4, slot5 in pairs(slot0._bossEpisodeCfgDict) do
+				if not string.nilorempty(slot5.effectCondition) and string.splitToNumber(slot5.effectCondition, "_") and slot6[2] then
+					slot0._alternateDay = math.max(slot0._alternateDay, slot6[2])
+				end
+			end
+		end
+	end
+
+	return slot0._alternateDay
+end
+
 slot0.instance = slot0.New()
 
 return slot0

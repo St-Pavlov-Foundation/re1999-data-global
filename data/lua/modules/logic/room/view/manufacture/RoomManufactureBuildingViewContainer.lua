@@ -7,6 +7,7 @@ function slot0.buildViews(slot0)
 
 	table.insert(slot1, RoomManufactureBuildingView.New())
 	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(slot1, TabViewGroup.New(2, "go_detailBanner"))
 
 	return slot1
 end
@@ -21,6 +22,12 @@ function slot0.buildTabViews(slot0, slot1)
 
 		return {
 			slot0.navigateView
+		}
+	elseif slot1 == 2 then
+		slot0.detailBanner = RoomManufactureBuildingDetailBanner.New()
+
+		return {
+			slot0.detailBanner
 		}
 	end
 end

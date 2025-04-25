@@ -11,6 +11,11 @@ function slot0.onInitView(slot0)
 	slot0._gopos42 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_2")
 	slot0._gopos43 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_3")
 	slot0._gopos44 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_4")
+	slot0._gorighttopbtns = gohelper.findChild(slot0.viewGO, "#go_righttopbtns")
+	slot0._btncurrency = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_currency")
+	slot0._imagecurrency = gohelper.findChildImage(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#image")
+	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_add")
+	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_righttopbtns/#go_container/currency/content/#txt")
 	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
 
 	if slot0._editableInitView then
@@ -19,14 +24,36 @@ function slot0.onInitView(slot0)
 end
 
 function slot0.addEvents(slot0)
+	slot0._btncurrency:AddClickListener(slot0._btncurrencyOnClick, slot0)
+	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
 	slot0._btnevent:AddClickListener(slot0._btneventOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
+	slot0._btncurrency:RemoveClickListener()
+	slot0._btnadd:RemoveClickListener()
 	slot0._btnevent:RemoveClickListener()
 end
 
+function slot0._btncurrencyOnClick(slot0)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoomCritterTrain, false, nil, false)
+end
+
+function slot0._btnaddOnClick(slot0)
+	RoomCritterController.instance:openExchangeView({
+		MaterialEnum.MaterialType.Currency,
+		CurrencyEnum.CurrencyType.RoomCritterTrain,
+		1
+	})
+end
+
 function slot0._btneventOnClick(slot0)
+end
+
+function slot0._refreshCurrency(slot0)
+	slot0._txtcurrency.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.RoomCritterTrain).quantity)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecurrency, CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoomCritterTrain).icon .. "_1")
 end
 
 function slot0._editableInitView(slot0)
@@ -66,6 +93,7 @@ end
 
 function slot0.onOpen(slot0)
 	slot0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, slot0._refreshUI, slot0)
+	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
 
 	slot0._critterUid = slot0.viewParam and slot0.viewParam.critterUid
 
@@ -73,6 +101,10 @@ function slot0.onOpen(slot0)
 end
 
 function slot0.onClose(slot0)
+	slot4 = slot0._refreshCurrency
+
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, slot4, slot0)
+
 	for slot4 = 1, #slot0._eventTbList do
 		slot0._eventTbList[slot4]._btnevent:RemoveClickListener()
 	end
@@ -161,6 +193,7 @@ function slot0._refreshUI(slot0)
 	end
 
 	slot0:_refreshEventBnts(slot1.trainInfo.events)
+	slot0:_refreshCurrency()
 end
 
 function slot0._refreshEventBnts(slot0, slot1)

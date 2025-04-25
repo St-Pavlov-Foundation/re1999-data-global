@@ -73,6 +73,28 @@ function slot0.onReceiveSelectEventOptionReply(slot0, slot1, slot2)
 	end
 end
 
+function slot0.sendSelectMultiEventOptionRequest(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = CritterModule_pb.SelectMultiEventOptionRequest()
+	slot6.uid = slot1
+	slot6.eventId = slot2
+
+	for slot10, slot11 in ipairs(slot3) do
+		slot12 = CritterModule_pb.EventOptionInfo()
+		slot12.optionId = slot11.optionId
+		slot12.count = slot11.count
+
+		table.insert(slot6.infos, slot12)
+	end
+
+	return slot0:sendMsg(slot6, slot4, slot5)
+end
+
+function slot0.onReceiveSelectMultiEventOptionReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		-- Nothing
+	end
+end
+
 function slot0.sendFastForwardTrainRequest(slot0, slot1, slot2, slot3, slot4, slot5)
 	slot6 = CritterModule_pb.FastForwardTrainRequest()
 	slot6.uid = slot1
@@ -276,14 +298,16 @@ function slot0.onReceiveMarkCritterBookNewReadReply(slot0, slot1, slot2)
 	RoomHandBookListModel.instance:clearItemNewState(slot2.id)
 end
 
-function slot0.sendGetRealCritterAttributeRequest(slot0, slot1, slot2, slot3, slot4)
-	CritterModule_pb.GetRealCritterAttributeRequest().buildingId = slot1
+function slot0.sendGetRealCritterAttributeRequest(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = CritterModule_pb.GetRealCritterAttributeRequest()
+	slot6.buildingId = slot1
+	slot6.isPreview = slot3
 
-	for slot9, slot10 in ipairs(slot2) do
-		table.insert(slot5.critterUids, slot10)
+	for slot10, slot11 in ipairs(slot2) do
+		table.insert(slot6.critterUids, slot11)
 	end
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	slot0:sendMsg(slot6, slot4, slot5)
 end
 
 function slot0.onReceiveGetRealCritterAttributeReply(slot0, slot1, slot2)
@@ -291,7 +315,9 @@ function slot0.onReceiveGetRealCritterAttributeReply(slot0, slot1, slot2)
 		return
 	end
 
-	ManufactureCritterListModel.instance:setAttrPreview(slot2.attributeInfos)
+	slot7 = slot2.isPreview
+
+	ManufactureCritterListModel.instance:setAttrPreview(slot2.attributeInfos, slot2.buildingId, slot7)
 
 	for slot7, slot8 in ipairs(slot2.attributeInfos) do
 		-- Nothing
@@ -300,6 +326,22 @@ function slot0.onReceiveGetRealCritterAttributeReply(slot0, slot1, slot2)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterUpdateAttrPreview, {
 		[slot8.critterUid] = true
 	})
+end
+
+function slot0.onReceiveRealCritterAttributePush(slot0, slot1, slot2)
+	if slot1 == 0 then
+		slot7 = slot2.isPreview
+
+		ManufactureCritterListModel.instance:setAttrPreview(slot2.attributeInfos, slot2.buildingId, slot7)
+
+		for slot7, slot8 in ipairs(slot2.attributeInfos) do
+			-- Nothing
+		end
+
+		CritterController.instance:dispatchEvent(CritterEvent.CritterUpdateAttrPreview, {
+			[slot8.critterUid] = true
+		})
+	end
 end
 
 function slot0.sendStartTrainCritterPreviewRequest(slot0, slot1, slot2, slot3, slot4)
@@ -313,6 +355,20 @@ end
 function slot0.onReceiveStartTrainCritterPreviewReply(slot0, slot1, slot2)
 	if slot1 == 0 then
 		CritterController.instance:startTrainCritterPreviewReply(slot2)
+	end
+end
+
+function slot0.sendCritterRenameRequest(slot0, slot1, slot2, slot3, slot4)
+	slot5 = CritterModule_pb.CritterRenameRequest()
+	slot5.uid = slot1
+	slot5.name = slot2
+
+	slot0:sendMsg(slot5, slot3, slot4)
+end
+
+function slot0.onReceiveCritterRenameReply(slot0, slot1, slot2)
+	if slot1 == 0 then
+		CritterController.instance:critterRenameReply(slot2)
 	end
 end
 

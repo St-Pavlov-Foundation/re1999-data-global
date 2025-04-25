@@ -846,4 +846,20 @@ function slot0.isHasDestinySystem(slot0)
 	return CharacterDestinyConfig.instance:hasDestinyHero(slot0.heroId)
 end
 
+function slot0.getRecommendEquip(slot0)
+	if slot0.recommendEquips then
+		return slot0.recommendEquips
+	end
+
+	slot0.recommendEquips = {}
+
+	if not slot0.config or string.nilorempty(slot0.config.equipRec) then
+		return slot0.recommendEquips
+	end
+
+	slot0.recommendEquips = string.splitToNumber(slot0.config.equipRec, "#")
+
+	return slot0.recommendEquips
+end
+
 return slot0

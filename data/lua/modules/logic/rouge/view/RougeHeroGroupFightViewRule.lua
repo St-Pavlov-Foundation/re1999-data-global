@@ -12,10 +12,6 @@ function slot0.onInitView(slot0)
 	slot0._txtBalanceRoleLv = gohelper.findChildTextMesh(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/roleLvTxtbg/roleLvTxt/#txt_roleLv")
 	slot0._txtBalanceEquipLv = gohelper.findChildTextMesh(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/equipLvTxtbg/equipLvTxt/#txt_equipLv")
 	slot0._txtBalanceTalent = gohelper.findChildTextMesh(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/talentTxtbg/talentTxt/#txt_talent")
-	slot0._goruledesc = gohelper.findChild(slot0.viewGO, "#go_container2/#go_ruledesc")
-	slot0._btncloserule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container2/#go_ruledesc/#btn_closerule")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "#go_container2/#go_ruledesc/bg/#go_ruleitem")
-	slot0._goruleDescList = gohelper.findChild(slot0.viewGO, "#go_container2/#go_ruledesc/bg/#go_ruleDescList")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -24,31 +20,24 @@ end
 
 function slot0.addEvents(slot0)
 	slot0._btnadditionRuleclick:AddClickListener(slot0._btnadditionRuleOnClick, slot0)
-	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
 	slot0:addEventCb(slot0.viewContainer, HeroGroupEvent.SwitchBalance, slot0._refreshUI, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnadditionRuleclick:RemoveClickListener()
-	slot0._btncloserule:RemoveClickListener()
 	slot0:removeEventCb(slot0.viewContainer, HeroGroupEvent.SwitchBalance, slot0._refreshUI, slot0)
 end
 
 function slot0._btncloseruleOnClick(slot0)
-	if slot0._ruleItemClick then
-		slot0._ruleItemClick = false
-
-		return
-	end
-
-	gohelper.setActive(slot0._goruledesc, false)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeHideRuleDesc)
 end
 
 function slot0._btnadditionRuleOnClick(slot0)
-	slot0._ruleItemClick = slot0._goruledesc.activeSelf
-
-	gohelper.setActive(slot0._goruledesc, true)
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+		ruleList = slot0._ruleList,
+		closeCb = slot0._btncloseruleOnClick,
+		closeCbObj = slot0
+	})
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
 end
 
@@ -76,31 +65,6 @@ function slot0._addRuleItem(slot0, slot1, slot2, slot3)
 
 	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot6, slot1.icon)
 	SLFramework.UGUI.GuiHelper.SetColor(slot6, slot3 and uv0 or uv1)
-end
-
-function slot0._setRuleDescItem(slot0, slot1, slot2, slot3)
-	slot5 = gohelper.clone(slot0._goruleitem, slot0._goruleDescList, slot1.id)
-
-	gohelper.setActive(slot5, true)
-	table.insert(slot0._cloneRuleGos, slot5)
-
-	slot6 = gohelper.findChildImage(slot5, "icon")
-
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot6, slot1.icon)
-	SLFramework.UGUI.GuiHelper.SetColor(slot6, slot3 and uv0 or uv1)
-	table.insert(slot0._rulesimagelineList, gohelper.findChild(slot5, "line"))
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot5, "tag"), "wz_" .. slot2)
-
-	slot9 = gohelper.findChildText(slot5, "desc")
-
-	SkillHelper.addHyperLinkClick(slot9)
-
-	slot10 = slot1.desc
-	slot9.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot2), SkillHelper.buildDesc(slot10, nil, "#6680bd") .. ("\n" .. SkillHelper.getTagDescRecursion(slot10, "#6680bd")), ({
-		"#6680bd",
-		"#d05b4c",
-		"#c7b376"
-	})[slot2])
 end
 
 function slot0.onOpen(slot0)
@@ -145,14 +109,11 @@ function slot0._refreshUI(slot0)
 	slot0:_clearRules()
 	gohelper.setActive(slot0._goadditionRule, true)
 
+	slot0._ruleList = slot9
+
 	for slot14, slot15 in ipairs(slot9) do
-		slot16 = slot15[1]
-
 		if lua_rule.configDict[slot15[2]] then
-			slot19 = slot10 < slot14
-
-			slot0:_addRuleItem(slot18, slot16, slot19)
-			slot0:_setRuleDescItem(slot18, slot16, slot19)
+			slot0:_addRuleItem(slot18, slot15[1], slot10 < slot14)
 		end
 
 		if slot14 == #slot9 then

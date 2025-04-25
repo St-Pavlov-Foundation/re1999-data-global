@@ -33,5 +33,19 @@
     "icon": "singlebg_lang/txt_act174_singlebg/act174_img_01.png",
     "sortId": 3,
     "show": 1
+  },
+  {
+    "id": 7,
+    "name": "language_10062659",
+    "icon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a4_tutushizi_enter_banner.png",
+    "sortId": 3,
+    "show": 1
+  },
+  {
+    "id": 8,
+    "name": "language_10065872",
+    "icon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a5_autochess_main_enter.png",
+    "sortId": 3,
+    "show": 1
   }
 ]

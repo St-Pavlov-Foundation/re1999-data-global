@@ -2822,5 +2822,301 @@
     "titleEn": "Such a Serene Evening",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 1,
+    "title": "language_10066483",
+    "titleEn": "Fresh Police Story",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 2,
+    "title": "language_10066485",
+    "titleEn": "Total Crisis",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 3,
+    "title": "language_10066487",
+    "titleEn": "Order and Chaos",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 4,
+    "title": "language_10066489",
+    "titleEn": "Exorcism",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 5,
+    "title": "language_10039736",
+    "titleEn": "Other Side, Same Coin",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 6,
+    "title": "language_10066492",
+    "titleEn": "Secret Warrant",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 7,
+    "title": "language_10066494",
+    "titleEn": "Rookie Actor's Guide",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 8,
+    "title": "language_10066496",
+    "titleEn": "Post-lunch Questioning",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 9,
+    "title": "language_10066498",
+    "titleEn": "A Name Deserved",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 10,
+    "title": "language_10066500",
+    "titleEn": "Unraveling the Mystery",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 11,
+    "title": "language_10066502",
+    "titleEn": "Hey, Kelefe!",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 12,
+    "title": "language_10066504",
+    "titleEn": "Mousetrap",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 13,
+    "title": "language_10066506",
+    "titleEn": "A Project Gone Awry",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 14,
+    "title": "language_10066508",
+    "titleEn": "Lit Screen, Lit Eyes",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 15,
+    "title": "language_10066510",
+    "titleEn": "This Just In",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 16,
+    "title": "language_10066512",
+    "titleEn": "Before the Spotlight",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 17,
+    "title": "language_10066514",
+    "titleEn": "Watchers, Protectors, Defenders",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 18,
+    "title": "language_10066516",
+    "titleEn": "The Law of Causation",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 19,
+    "title": "language_10066518",
+    "titleEn": "False Dilemma",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 20,
+    "title": "language_10066520",
+    "titleEn": "Until the Light Fades",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 21,
+    "title": "language_10066522",
+    "titleEn": "Rescreen",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 22,
+    "title": "language_10066524",
+    "titleEn": "Anonymous Visitor",
+    "labelRes": "22",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 23,
+    "title": "language_10003349",
+    "titleEn": "Red",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 24,
+    "title": "language_10003347",
+    "titleEn": "Blue",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 25,
+    "title": "language_10003350",
+    "titleEn": "Green",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 26,
+    "title": "language_10003353",
+    "titleEn": "Purple",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 27,
+    "title": "language_10069583",
+    "titleEn": "Aqua",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 28,
+    "title": "language_10003352",
+    "titleEn": "Yellow",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 29,
+    "title": "language_10003351",
+    "titleEn": "White",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 30,
+    "title": "language_10069394",
+    "titleEn": "Descent of Frost",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 31,
+    "title": "language_10069395",
+    "titleEn": "Commencement of Winter",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 32,
+    "title": "language_10069396",
+    "titleEn": "Light Snow",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 33,
+    "title": "language_10069397",
+    "titleEn": "Winter Solstice",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 34,
+    "title": "language_10069398",
+    "titleEn": "Severe Cold",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 35,
+    "title": "language_10069399",
+    "titleEn": "Commencement of Spring",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 36,
+    "title": "language_10069400",
+    "titleEn": "Rain Water",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 25,
+    "part": 37,
+    "title": "language_10069401",
+    "titleEn": "Waking of Insects",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

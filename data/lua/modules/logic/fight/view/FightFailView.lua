@@ -263,7 +263,7 @@ function slot0.refreshConditionsContainer(slot0, slot1)
 	for slot5, slot6 in ipairs(slot1) do
 		if lua_rule.configDict[slot6[2]] then
 			slot10 = gohelper.clone(slot0._goconditionitem, slot0._goconditions, "item" .. slot5)
-			gohelper.findChildText(slot10, "#txt_extratips").text = string.format("[%s] %s", luaLang("dungeon_add_rule_target_" .. slot6[1]), slot9.desc)
+			gohelper.findChildText(slot10, "#txt_extratips").text = string.format("[%s] %s", luaLang("dungeon_add_rule_target_" .. slot6[1]), SkillHelper.buildDesc(slot9.desc, "#FFFFFF", "#FFFFFF"))
 
 			gohelper.setActive(slot10, true)
 		end

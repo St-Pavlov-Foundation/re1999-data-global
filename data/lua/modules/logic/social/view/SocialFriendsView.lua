@@ -6,6 +6,7 @@ function slot0.onInitView(slot0)
 	slot0._gohas = gohelper.findChild(slot0.viewGO, "#go_has")
 	slot0._gono = gohelper.findChild(slot0.viewGO, "#go_no")
 	slot0._simagecharbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_has/right/#simage_chartbg")
+	slot0._goSkinbg = gohelper.findChild(slot0.viewGO, "#go_has/right/#go_skinbg")
 	slot0._gomessage = gohelper.findChild(slot0.viewGO, "#go_has/right/#go_message")
 	slot0._inputsend = gohelper.findChildTextMeshInputField(slot0.viewGO, "#go_has/right/#go_message/send/#input_send")
 	slot0._scrollmessage = gohelper.findChildScrollRect(slot0.viewGO, "#go_has/right/#go_message/#scroll_message")
@@ -32,6 +33,27 @@ function slot0._editableInitView(slot0)
 	slot0._txtcd.text = luaLang("social_chat_send")
 
 	slot0._simagecharbg:LoadImage(ResUrl.getSocialIcon("img_chat_bg.png"))
+	slot0:_loadBg()
+end
+
+function slot0._loadBg(slot0)
+	if PlayerCardModel.instance:getPlayerCardSkinId() and slot1 ~= 0 then
+		slot0._hasSkin = true
+		slot0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", slot1)
+		slot0._loader = MultiAbLoader.New()
+
+		slot0._loader:addPath(slot0._skinPath)
+		slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	else
+		slot0._hasSkin = false
+	end
+
+	gohelper.setActive(slot0._goSkinbg, slot0._hasSkin)
+	gohelper.setActive(slot0._simagecharbg.gameObject, not slot0._hasSkin)
+end
+
+function slot0._onLoadFinish(slot0)
+	slot0._goskinEffect = gohelper.clone(slot0._loader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goSkinbg)
 end
 
 function slot0._btnsendOnClick(slot0)
@@ -206,6 +228,12 @@ end
 function slot0.onDestroyView(slot0)
 	if slot0._tweenId then
 		ZProj.TweenHelper.KillById(slot0._tweenId)
+	end
+
+	if slot0._loader then
+		slot0._loader:dispose()
+
+		slot0._loader = nil
 	end
 
 	slot0._simagecharbg:UnLoadImage()

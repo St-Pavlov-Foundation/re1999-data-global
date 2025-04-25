@@ -12,6 +12,8 @@ end
 function slot0.onSceneClose(slot0, slot1, slot2)
 	if slot0.mgr then
 		slot0.mgr:disposeSelf()
+
+		slot0.mgr = nil
 	end
 end
 

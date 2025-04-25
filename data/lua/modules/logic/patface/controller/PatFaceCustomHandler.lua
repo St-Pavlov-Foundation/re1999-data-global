@@ -37,6 +37,13 @@ return {
 
 		return BpModel.instance.firstShowSp
 	end,
+	bPViewCanPat = function (slot0)
+		if BpModel.instance:isEnd() then
+			return false
+		end
+
+		return BpModel.instance.firstShow and tonumber(PlayerPrefsHelper.getString(string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId), "")) ~= BpModel.instance.id
+	end,
 	limitDecorateCanPat = function (slot0)
 		if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.LimitDecorate, true) == ActivityEnum.ActivityStatus.Normal then
 			return uv0.checkIsFistShow(slot0)

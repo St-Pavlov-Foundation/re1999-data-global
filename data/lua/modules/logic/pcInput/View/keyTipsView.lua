@@ -24,15 +24,7 @@ end
 function slot0._onCallback(slot0)
 	slot0._instGO = slot0._loader:getInstGO()
 
-	if PlayerPrefsHelper.getNumber("keyTips", 0) == 0 then
-		slot0._instGO:SetActive(false)
-
-		return
-	else
-		slot0._instGO:SetActive(true)
-	end
-
-	gohelper.setActive(slot0._instGO, not ViewMgr.instance:isOpen(ViewName.GuideView))
+	gohelper.setActive(slot0._instGO, not GuideController.instance:isAnyGuideRunningNoBlock() and PlayerPrefsHelper.getNumber("keyTips", 0) == 1)
 
 	slot0._text1 = gohelper.findChildText(slot0._instGO, "btn_1/#txt_btn")
 	slot0._text2 = gohelper.findChildText(slot0._instGO, "btn_2/#txt_btn")
@@ -54,7 +46,11 @@ end
 
 function slot0.Show(slot0, slot1)
 	if slot0._instGO then
-		slot0._instGO:SetActive(slot1 and not ViewMgr.instance:isOpen(ViewName.GuideView) and PlayerPrefsHelper.getNumber("keyTips", 0) == 1)
+		slot0._instGO:SetActive(slot1 and not GuideController.instance:isAnyGuideRunningNoBlock() and PlayerPrefsHelper.getNumber("keyTips", 0) == 1)
+	end
+
+	if slot0._go then
+		gohelper.setActive(slot0._go, slot1)
 	end
 end
 
@@ -100,13 +96,13 @@ end
 
 function slot0.onOpenViewCallBack(slot0, slot1)
 	if slot1 == ViewName.GuideView then
-		slot0._instGO:SetActive(false)
+		slot0:Show(false)
 	end
 end
 
 function slot0.onCloseViewCallBack(slot0, slot1)
 	if slot1 == ViewName.GuideView then
-		slot0._instGO:SetActive(true)
+		slot0:Show(true)
 	end
 end
 

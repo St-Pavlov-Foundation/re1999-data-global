@@ -247,69 +247,73 @@ function slot0._playDefHit(slot0, slot1, slot2)
 		slot10 = 1100
 	end
 
-	slot11 = nil
+	if slot0._attacker.buff and slot11:haveBuffId(72540006) then
+		slot10 = (slot8 == 1 or slot8 == 2 or slot8 == 3 or slot8 == 4) and 1100 or 1000
+	end
+
+	slot12 = nil
 
 	if slot0._floatFixedPosArr then
 		slot0._floatTotalIndex = slot0._floatTotalIndex and slot0._floatTotalIndex + 1 or 1
-		slot11 = slot0._floatFixedPosArr[slot0._floatTotalIndex] or slot0._floatFixedPosArr[#slot0._floatFixedPosArr]
+		slot12 = slot0._floatFixedPosArr[slot0._floatTotalIndex] or slot0._floatFixedPosArr[#slot0._floatFixedPosArr]
 	end
 
 	if slot2.effectType == FightEnum.EffectType.DAMAGE then
-		slot12 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio)
+		slot13 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio)
 
 		if slot1.nameUI then
-			slot1.nameUI:addHp(-slot12)
+			slot1.nameUI:addHp(-slot13)
 		end
 
 		table.insert(slot0._floatParams, {
 			slot2.targetId,
 			slot10 == 1000 and FightEnum.FloatType.damage or slot10 > 1000 and FightEnum.FloatType.restrain or FightEnum.FloatType.berestrain,
-			slot1:isMySide() and -slot12 or slot12
+			slot1:isMySide() and -slot13 or slot13
 		})
 
-		if slot12 ~= 0 then
+		if slot13 ~= 0 then
 			slot0:_checkPlayAction(slot1, slot0._defeAction, slot2)
 		end
 
 		slot0:_playHitAudio(slot1, false)
 		slot0:_playHitVoice(slot1)
 		slot0:_playDefRestrain(slot1, slot10)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot12)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot14, slot0._isLastHit, slot11)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot13)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot12)
 	elseif slot2.effectType == FightEnum.EffectType.CRIT then
-		slot12 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio)
+		slot13 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.effectNum, slot0._ratio)
 
 		if slot1.nameUI then
-			slot1.nameUI:addHp(-slot12)
+			slot1.nameUI:addHp(-slot13)
 		end
 
 		table.insert(slot0._floatParams, {
 			slot2.targetId,
 			slot10 == 1000 and FightEnum.FloatType.crit_damage or slot10 > 1000 and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_berestrain,
-			slot1:isMySide() and -slot12 or slot12
+			slot1:isMySide() and -slot13 or slot13
 		})
 
-		if slot12 ~= 0 then
+		if slot13 ~= 0 then
 			slot0:_checkPlayAction(slot1, slot0._critAction, slot2)
 		end
 
 		slot0:_playHitAudio(slot1, true)
 		slot0:_playHitVoice(slot1)
 		slot0:_playDefRestrain(slot1, slot10)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot12)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot14, slot0._isLastHit, slot11)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot13)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot12)
 	elseif slot2.effectType == FightEnum.EffectType.MISS then
 		if slot0._ratio > 0 then
 			slot0:_checkPlayAction(slot1, slot0._missAction, slot2)
 			FightFloatMgr.instance:float(slot2.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good)
 		end
 	elseif slot2.effectType == FightEnum.EffectType.SHIELD then
-		slot12 = slot4.shieldValue
-		slot13 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.diffValue or 0, slot0._ratio)
-		slot14 = slot1:isMySide() and -slot13 or slot13
+		slot13 = slot4.shieldValue
+		slot14 = slot0:_calcNum(slot2.clientId, slot2.targetId, slot2.diffValue or 0, slot0._ratio)
+		slot15 = slot1:isMySide() and -slot14 or slot14
 
 		if slot1.nameUI then
-			slot1.nameUI:setShield(slot1.nameUI._curShield + slot13 * slot2.sign)
+			slot1.nameUI:setShield(slot1.nameUI._curShield + slot14 * slot2.sign)
 		end
 
 		if slot2.sign == -1 then
@@ -317,63 +321,63 @@ function slot0._playDefHit(slot0, slot1, slot2)
 				table.insert(slot0._floatParams, {
 					slot2.targetId,
 					slot10 == 1000 and FightEnum.FloatType.shield_damage or slot10 > 1000 and FightEnum.FloatType.shield_restrain or FightEnum.FloatType.shield_berestrain,
-					slot14
+					slot15
 				})
 			end
 
-			slot15 = true
+			slot16 = true
 
 			if not FightHelper.checkShieldHit(slot2) then
-				slot15 = false
+				slot16 = false
 			end
 
 			if slot2.effectNum1 == FightEnum.EffectType.ORIGINDAMAGE and not slot0._forcePlayHitForOrigin then
-				slot15 = false
+				slot16 = false
 			end
 
 			if slot2.effectNum1 == FightEnum.EffectType.ORIGINCRIT and not slot0._forcePlayHitForOrigin then
-				slot15 = false
+				slot16 = false
 			end
 
-			if slot13 ~= 0 and slot15 then
+			if slot14 ~= 0 and slot16 then
 				slot0:_checkPlayAction(slot1, slot0._defeAction, slot2)
 			end
 
-			if slot15 then
+			if slot16 then
 				slot0:_playHitAudio(slot1, false)
 				slot0:_playHitVoice(slot1)
 				slot0:_playDefRestrain(slot1, slot10)
 			end
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, slot1, slot13 * slot2.sign)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot14, slot0._isLastHit, slot11)
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, slot1, slot14 * slot2.sign)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot12)
 	elseif uv0[slot2.effectType] then
-		slot13 = slot2.effectType == FightEnum.EffectType.ORIGINCRIT
+		slot14 = slot2.effectType == FightEnum.EffectType.ORIGINCRIT
 
 		if slot2.effectNum > 0 and slot1.nameUI then
-			slot1.nameUI:addHp(-slot12)
+			slot1.nameUI:addHp(-slot13)
 		end
 
 		if not slot2.shieldOriginEffectNum then
-			if slot12 > 0 then
+			if slot13 > 0 then
 				table.insert(slot0._floatParams, {
 					slot2.targetId,
-					slot13 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin,
-					slot1:isMySide() and -slot12 or slot12
+					slot14 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin,
+					slot1:isMySide() and -slot13 or slot13
 				})
 			end
 		else
 			table.insert(slot0._floatParams, {
 				slot2.targetId,
-				slot14,
+				slot15,
 				slot1:isMySide() and -slot2.shieldOriginEffectNum or slot2.shieldOriginEffectNum
 			})
 		end
 
-		if slot12 > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot12)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot11)
+		if slot13 > 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot13)
+			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot16, slot0._isLastHit, slot12)
 		end
 
 		if slot0._forcePlayHitForOrigin then
@@ -383,31 +387,31 @@ function slot0._playDefHit(slot0, slot1, slot2)
 			slot0:_playDefRestrain(slot1, slot10)
 		end
 	elseif uv1[slot2.effectType] then
-		slot13 = slot2.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
+		slot14 = slot2.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
 
 		if slot2.effectNum > 0 and slot1.nameUI then
-			slot1.nameUI:addHp(-slot12)
+			slot1.nameUI:addHp(-slot13)
 		end
 
 		if not slot2.shieldAdditionalEffectNum then
-			if slot12 > 0 then
+			if slot13 > 0 then
 				table.insert(slot0._floatParams, {
 					slot2.targetId,
-					slot13 and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage,
-					slot1:isMySide() and -slot12 or slot12
+					slot14 and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage,
+					slot1:isMySide() and -slot13 or slot13
 				})
 			end
 		else
 			table.insert(slot0._floatParams, {
 				slot2.targetId,
-				slot14,
+				slot15,
 				slot1:isMySide() and -slot2.shieldAdditionalEffectNum or slot2.shieldAdditionalEffectNum
 			})
 		end
 
-		if slot12 > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot12)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot15, slot0._isLastHit, slot11)
+		if slot13 > 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot13)
+			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, slot0._fightStepMO, slot2, slot1, slot16, slot0._isLastHit, slot12)
 		end
 	end
 

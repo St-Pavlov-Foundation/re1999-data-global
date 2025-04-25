@@ -5,6 +5,7 @@ slot0 = class("ActWindSongTaskView", BaseView)
 function slot0.onInitView(slot0)
 	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
 	slot0._simagelangtxt = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_langtxt")
+	slot0._goLimitTime = gohelper.findChild(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG")
 	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 	slot0._scrollTaskList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_TaskList")
 	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_lefttop")
@@ -30,8 +31,16 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._oneClaimReward, slot0)
 	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
 	ActWindSongTaskListModel.instance:init()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:_showLeftTime()
+
+	slot2 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.WindSong) and slot1.isRetroAcitivity == 2
+
+	gohelper.setActive(slot0._goLimitTime.gameObject, not slot2)
+
+	if not slot2 then
+		TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, TimeUtil.OneMinuteSecond)
+		slot0:_showLeftTime()
+	end
+
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 

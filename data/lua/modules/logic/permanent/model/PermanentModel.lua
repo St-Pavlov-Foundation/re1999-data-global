@@ -73,7 +73,9 @@ function slot0.isActivityLocalRead(slot0, slot1)
 
 	if not slot1 then
 		for slot6, slot7 in pairs(slot2) do
-			if not slot0.localReadDic[tostring(slot6)] then
+			slot6 = tostring(slot6)
+
+			if ActivityModel.instance:isActOnLine(slot6) and not slot0.localReadDic[slot6] then
 				return false
 			end
 		end

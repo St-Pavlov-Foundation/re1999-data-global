@@ -23,11 +23,23 @@ function slot0.critterGetInfoReply(slot0, slot1)
 end
 
 function slot0.critterInfoPush(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1.critterInfos or {}) do
+	slot2 = slot1.critterInfos or {}
+
+	for slot6, slot7 in ipairs(slot2) do
 		CritterModel.instance:addCritter(slot7)
 	end
 
 	slot0:dispatchEvent(CritterEvent.CritterInfoPushReply)
+
+	slot0.tempCritterMoList = {}
+
+	for slot6, slot7 in ipairs(slot2) do
+		slot8 = CritterMO.New()
+
+		slot8:init(slot7)
+
+		slot0.tempCritterMoList[slot6] = slot8
+	end
 end
 
 function slot0.startTrainCritterReply(slot0, slot1)
@@ -115,8 +127,14 @@ function slot0.lockCritterRequest(slot0, slot1)
 	slot0:dispatchEvent(CritterEvent.CritterChangeLockStatus, slot1.uid)
 end
 
+function slot0.critterRenameReply(slot0, slot1)
+	CritterModel.instance:getCritterMOByUid(slot1.uid).name = slot1.name
+
+	slot0:dispatchEvent(CritterEvent.CritterRenameReply, slot1.uid)
+end
+
 function slot0.updateCritterPreviewAttr(slot0, slot1, slot2, slot3, slot4)
-	CritterRpc.instance:sendGetRealCritterAttributeRequest(slot1, slot2, slot3, slot4)
+	CritterRpc.instance:sendGetRealCritterAttributeRequest(slot1, slot2, true, slot3, slot4)
 end
 
 function slot0.setManufactureCritterList(slot0, slot1, slot2, slot3, slot4)
@@ -167,6 +185,60 @@ function slot0.clickCritterPlaceItem(slot0, slot1, slot2)
 	end
 
 	slot0:changeRestCritter(slot1, slot5, slot4)
+end
+
+function slot0.waitSendBuildManufacturAttrByBuid(slot0, slot1)
+	slot0._waitBuildManufacturBuidList = slot0._waitBuildManufacturBuidList or {}
+
+	if not slot1 or tabletool.indexOf(slot0._waitBuildManufacturBuidList, slot1) then
+		return
+	end
+
+	table.insert(slot0._waitBuildManufacturBuidList, slot1)
+
+	if #slot0._waitBuildManufacturBuidList == 1 then
+		TaskDispatcher.runDelay(slot0._onRunSendBuildManufacturAll, slot0, 1)
+	end
+end
+
+function slot0._onRunSendBuildManufacturAll(slot0)
+	slot0._waitBuildManufacturBuidList = nil
+
+	if slot0._waitBuildManufacturBuidList then
+		for slot5 = 1, #slot1 do
+			slot0:sendBuildManufacturAttrByBuid(slot1[slot5])
+		end
+	end
+end
+
+function slot0.sendBuildManufacturAttrByBtype(slot0, slot1, slot2)
+	for slot7, slot8 in ipairs(RoomMapBuildingModel.instance:getBuildingMOList()) do
+		if slot8 and slot8.config and slot8.config.buildingType == slot1 then
+			if slot2 == true then
+				slot0:waitSendBuildManufacturAttrByBuid(slot8.id)
+			else
+				slot0:sendBuildManufacturAttrByBuid(slot8.id)
+			end
+		end
+	end
+end
+
+function slot0.sendBuildManufacturAttrByBuid(slot0, slot1)
+	if not RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
+		return
+	end
+
+	slot4 = nil
+
+	for slot8, slot9 in ipairs(CritterModel.instance:getAllCritters()) do
+		if slot9:isMaturity() and slot9.workInfo and slot9.workInfo.workBuildingUid == slot1 or slot9.restInfo and slot9.restInfo.restBuildingUid == slot1 then
+			table.insert(slot4 or {}, slot9:getId())
+		end
+	end
+
+	if slot4 then
+		CritterRpc.instance:sendGetRealCritterAttributeRequest(slot2.buildingId, slot4, false)
+	end
 end
 
 function slot0.clickCritterInCritterBuilding(slot0, slot1, slot2)
@@ -283,6 +355,18 @@ function slot0.openRoomCritterDetailView(slot0, slot1, slot2, slot3, slot4)
 		})
 	else
 		ViewMgr.instance:openView(ViewName.RoomCritterDetailMaturityView, slot5)
+	end
+end
+
+function slot0.popUpCritterGetView(slot0)
+	if slot0.tempCritterMoList and #slot1 > 0 then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.RoomGetCritterView, ViewName.RoomGetCritterView, {
+			isSkip = true,
+			mode = RoomSummonEnum.SummonType.ItemGet,
+			critterMOList = slot1
+		})
+
+		slot0.tempCritterMoList = nil
 	end
 end
 

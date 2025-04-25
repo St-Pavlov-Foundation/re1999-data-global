@@ -549,9 +549,9 @@ function slot0.getAtmosphereCacheData(slot0)
 		slot0._atmosphereCacheData = {}
 
 		if not string.nilorempty(GameUtil.playerPrefsGetStringByUserId(RoomEnum.AtmosphereCacheKey, "")) then
-			for slot6, slot7 in ipairs(cjson.decode(slot1)) do
-				if LuaUtil.isNumber(slot7) then
-					slot0._atmosphereCacheData[slot6] = slot7
+			for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true) or {}) do
+				if slot7 and #slot7 > 1 then
+					slot0._atmosphereCacheData[slot7[1]] = slot7[2]
 				end
 			end
 		end
@@ -563,8 +563,40 @@ end
 function slot0.setAtmosphereHasPlay(slot0, slot1)
 	slot3 = slot0:getAtmosphereCacheData()
 	slot3[slot1] = ServerTime.now()
+	slot4 = ""
 
-	GameUtil.playerPrefsSetStringByUserId(RoomEnum.AtmosphereCacheKey, cjson.encode(slot3))
+	for slot9, slot10 in pairs(slot3) do
+		if true then
+			slot5 = false
+			slot4 = slot9 .. "#" .. slot10
+		else
+			slot4 = slot4 .. "|" .. slot9 .. "#" .. slot10
+		end
+	end
+
+	GameUtil.playerPrefsSetStringByUserId(RoomEnum.AtmosphereCacheKey, slot4)
+end
+
+function slot0._isCdTimeAtmosphereTrigger(slot0, slot1)
+	if not uv0._checkAtmospherCdTime(slot0, slot1) then
+		return false
+	end
+
+	slot3 = RoomConfig.instance:getAtmosphereOpenTime(slot0)
+
+	if slot3 <= ServerTime.now() and slot5 <= slot3 + RoomConfig.instance:getAtmosphereDurationDay(slot0) * TimeUtil.OneDaySecond then
+		slot2 = true
+	end
+
+	return slot2
+end
+
+function slot0._checkAtmospherCdTime(slot0, slot1)
+	if (RoomConfig.instance:getAtmosphereCfg(slot0) and slot2.cdtimes or 0) and slot3 ~= 0 and slot3 > ServerTime.now() - slot1 then
+		return false
+	end
+
+	return true
 end
 
 slot4 = {
@@ -572,7 +604,10 @@ slot4 = {
 		return false
 	end,
 	[RoomEnum.AtmosphereTriggerType.Disposable] = function (slot0, slot1)
-		slot2 = false
+		if not uv0._checkAtmospherCdTime(slot0, slot1) then
+			return false
+		end
+
 		slot3 = RoomConfig.instance:getAtmosphereOpenTime(slot0)
 
 		if slot1 < slot3 or slot3 + RoomConfig.instance:getAtmosphereDurationDay(slot0) * TimeUtil.OneDaySecond < slot1 then
@@ -587,12 +622,13 @@ slot4 = {
 		slot5 = math.modf((slot3 + TimeUtil.OneMinuteSecond) / TimeUtil.OneHourSecond) * TimeUtil.OneHourSecond
 		slot7 = slot5 + TimeUtil.OneMinuteSecond
 
-		if slot5 - TimeUtil.OneMinuteSecond <= slot3 and slot3 <= slot7 and not (slot6 <= slot1 and slot1 <= slot7) then
+		if slot5 - TimeUtil.OneMinuteSecond <= slot3 and slot3 <= slot7 and not (slot6 <= slot1 and slot1 <= slot7) and uv0._checkAtmospherCdTime(slot0, slot1) then
 			slot2 = true
 		end
 
 		return slot2, not slot2
-	end
+	end,
+	[RoomEnum.AtmosphereTriggerType.CDTime] = slot0._isCdTimeAtmosphereTrigger
 }
 
 function slot0.isAtmosphereTrigger(slot0, slot1)

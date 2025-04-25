@@ -4,29 +4,19 @@ slot0 = class("GMLangController", BaseController)
 
 GameUtil.getEventId()
 
+slot1 = GameUtil.getSubPlaceholderLuaLang
+
 function slot0.getSubPlaceholderLuaLang(slot0, slot1)
 	slot2 = uv0.instance:cur2AllLang(slot0)
 
-	if slot1 and #slot1 > 0 then
-		for slot6, slot7 in pairs(slot1) do
-			slot0 = string.gsub(slot0, "▩" .. slot6 .. "%%s", slot7)
-			slot0 = (type(slot7) ~= "number" or string.gsub(slot0, "▩" .. slot6 .. "%%d", string.format("%d", slot7))) and string.gsub(slot0, "▩" .. slot6 .. "%%d", slot7)
+	if slot1 and #slot1 > 0 and uv0.instance:checkHasCache(uv1(slot0, slot1)) == false then
+		uv0.instance._inUseDic[slot0] = {}
+
+		for slot6, slot7 in pairs(slot2) do
+			uv0.instance._inUseDic[slot0][slot6] = uv1(slot7, slot1)
 		end
 
-		if uv0.instance:checkHasCache(slot0) == false then
-			uv0.instance._inUseDic[slot0] = {}
-
-			for slot6, slot7 in pairs(slot2) do
-				for slot11, slot12 in pairs(slot1) do
-					slot7 = string.gsub(slot7, "▩" .. slot11 .. "%%s", slot12)
-					slot7 = (type(slot12) ~= "number" or string.gsub(slot7, "▩" .. slot11 .. "%%d", string.format("%d", slot12))) and string.gsub(slot7, "▩" .. slot11 .. "%%d", slot12)
-				end
-
-				uv0.instance._inUseDic[slot0][slot6] = slot7
-			end
-
-			uv0.instance:dispatchInUseUpdate(slot0)
-		end
+		uv0.instance:dispatchInUseUpdate(slot0)
 	end
 
 	return slot0
@@ -106,15 +96,21 @@ function slot0.cur2AllLang(slot0, slot1)
 	return slot0._inUseDic[slot1]
 end
 
-require("tolua.reflection")
-tolua.loadassembly("Assembly-CSharp")
-tolua.loadassembly("Assembly-CSharp-Editor")
-tolua.loadassembly("System.Core")
+if GameResMgr.IsFromEditorDir then
+	require("tolua.reflection")
+	tolua.loadassembly("Assembly-CSharp")
+	tolua.loadassembly("Assembly-CSharp-Editor")
+	tolua.loadassembly("System.Core")
 
-slot0.AddMsg = tolua.getmethod(tolua.findtype("ZProjEditor.LangTextSearchWindows"), "AddMsg", tolua.findtype("System.String"))
+	slot0.AddMsg = tolua.getmethod(tolua.findtype("ZProjEditor.LangTextSearchWindows"), "AddMsg", tolua.findtype("System.String"))
+end
 
 function slot0.dispatchInUseUpdate(slot0, slot1)
-	uv0.AddMsg:Call(slot1)
+	if GameResMgr.IsFromEditorDir then
+		uv0.AddMsg:Call(slot1)
+	end
+
+	GMLangTxtModel.instance:addLangTxt(slot1)
 end
 
 function slot0.print(slot0)
@@ -133,6 +129,7 @@ end
 
 function slot0.clearInUse(slot0)
 	tabletool.clear(slot0._inUseDic)
+	GMLangTxtModel.instance:clearAll()
 end
 
 function slot0.hasInit(slot0)
@@ -158,7 +155,11 @@ function slot0.init(slot0)
 	slot0._supportedLangCount = GameConfig:GetSupportedLangShortcuts().Length
 
 	for slot7 = 0, slot0._supportedLangCount - 1 do
-		loadNonAbAsset("configs/language/json_language_" .. slot3[slot7] .. ".json", SLFramework.AssetType.TEXT, slot0._onConfigAbCallback, slot0)
+		if GameResMgr.IsFromEditorDir then
+			loadNonAbAsset("configs/language/json_language_" .. slot3[slot7] .. ".json", SLFramework.AssetType.TEXT, slot0._onConfigAbCallback, slot0)
+		else
+			loadNonAbAsset("configs/language/json_language_" .. slot8 .. ".json.dat", SLFramework.AssetType.DATA, slot0._onConfigAbCallback, slot0)
+		end
 	end
 
 	return slot0._hasInit
@@ -188,7 +189,8 @@ function slot0._onChangeLangTxtType2(slot0)
 end
 
 function slot0._onConfigAbCallback(slot0, slot1)
-	slot3 = cjson.decode(slot1.TextAsset)
+	slot2 = ""
+	slot3 = cjson.decode((not GameResMgr.IsFromEditorDir or slot1.TextAsset) and slot1:GetNonAbTextAsset(true))
 	slot11, slot12 = JsonToLuaParser.parse(slot3[2], {
 		content = 2,
 		key = 1

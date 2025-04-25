@@ -4,7 +4,7 @@ slot0 = class("MainController", BaseController)
 
 function slot0.addConstEvents(slot0)
 	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, slot0._onLoginEnterMainScene, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, slot0._onActivityUpdate, slot0)
 end
 

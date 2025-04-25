@@ -159,6 +159,8 @@ function slot0.onInitView(slot0)
 		slot0._btnswitchdecorate = gohelper.findChildButtonWithAudio(slot1, "#_btns_switchdecorate")
 	end
 
+	slot0._godayrewarditem_image3 = gohelper.findChild(slot0._godayrewarditem, "image3")
+
 	if slot0._editableInitView then
 		slot0:_editableInitView()
 	end
@@ -185,19 +187,11 @@ function slot0.removeEvents(slot0)
 
 	if slot0._btnswitchdecorate then
 		slot0._btnswitchdecorate:RemoveClickListener()
-
-		slot0._showDecorate = nil
 	end
 end
 
 function slot0._onBtnChangeDecorate(slot0)
-	if slot0._showDecorate == nil then
-		slot0._showDecorate = SignInModel.instance.checkFestivalDecorationUnlock()
-	end
-
-	slot0._showDecorate = not slot0._showDecorate
-
-	slot0:_switchFestivalDecoration(slot0._showDecorate)
+	slot0:_switchFestivalDecoration(not slot0._haveFestival)
 end
 
 function slot0._btngiftOnClick(slot0)
@@ -335,7 +329,7 @@ function slot0._addCustomEvent(slot0)
 	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, slot0._closeViewEffect, slot0)
 	SignInController.instance:registerCallback(SignInEvent.GetHeroBirthday, slot0._onGetHeroBirthday, slot0)
 	SignInController.instance:registerCallback(SignInEvent.CloseSignInDetailView, slot0._onEscapeBtnClick, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 end
 
@@ -357,7 +351,7 @@ function slot0._removeCustomEvent(slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, slot0._closeViewEffect, slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.GetHeroBirthday, slot0._onGetHeroBirthday, slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.CloseSignInDetailView, slot0._onEscapeBtnClick, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 end
 
@@ -451,7 +445,7 @@ function slot0.onOpen(slot0)
 	slot0:_setRedDot()
 	slot0:_addCustomEvent()
 	NavigateMgr.instance:addEscape(ViewName.SignInDetailView, slot0._onEscapeBtnClick, slot0)
-	slot0:_switchFestivalDecoration(SignInModel.instance.checkFestivalDecorationUnlock())
+	slot0:_refreshFestivalDecoration()
 end
 
 function slot0._onDailyRefresh(slot0)
@@ -878,7 +872,12 @@ function slot0._delaySignInRequest(slot0)
 	slot0._monthcarddayrewardAni:Play("lingqu")
 	slot0._monthcarddayrewardAni_gold:Play("lingqu")
 	UIBlockMgr.instance:endBlock("signshowing")
-	SignInRpc.instance:sendSignInRequest()
+
+	if slot0._startGetReward then
+		return
+	end
+
+	LifeCircleController.instance:sendSignInRequest()
 
 	slot0._startGetReward = true
 end
@@ -1135,17 +1134,28 @@ function slot0._setGoldRewards(slot0, slot1)
 end
 
 function slot0._switchFestivalDecoration(slot0, slot1)
+	if slot0._haveFestival == slot1 then
+		return
+	end
+
+	slot0._haveFestival = slot1
+
+	slot0:_refreshFestivalDecoration()
+end
+
+function slot0._refreshFestivalDecoration(slot0)
+	slot1 = slot0:haveFestival()
+
 	gohelper.setActive(slot0._gofestivaldecorationtop, slot1)
 	gohelper.setActive(slot0._gofestivaldecorationbottom, slot1)
-	gohelper.setActive(slot0._gorewardicon, slot1 == false)
+	gohelper.setActive(slot0._gorewardicon, not slot1)
 	gohelper.setActive(slot0._goeffect, slot1)
-	slot0._simagebg:LoadImage(ResUrl.getSignInBg(slot1 and "v2a2_bg_white" or "bg_white"))
-
-	slot3 = slot1 and "#08634F" or "#222222"
-
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmonth, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgbias, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtday, slot3)
+	gohelper.setActive(slot0._godayrewarditem_image3, slot1)
+	slot0:_setFestivalColor(slot0._txtmonth)
+	slot0:_setFestivalColor(slot0._imgbias)
+	slot0:_setFestivalColor(slot0._txtday)
+	slot0._simagebg:LoadImage(ResUrl.getSignInBg(slot1 and "act_bg_white" or "bg_white"))
+	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg(slot1 and "act_img_di" or "img_di"))
 end
 
 function slot0.onDestroyView(slot0)
@@ -1170,6 +1180,18 @@ end
 function slot0.closeThis(slot0)
 	uv0.super.closeThis(slot0)
 	MailController.instance:showOrRegisterEvent()
+end
+
+function slot0.haveFestival(slot0)
+	if slot0._haveFestival == nil then
+		slot0._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
+	end
+
+	return slot0._haveFestival
+end
+
+function slot0._setFestivalColor(slot0, slot1)
+	SLFramework.UGUI.GuiHelper.SetColor(slot1, slot0:haveFestival() and "#3D201A" or "#222222")
 end
 
 return slot0

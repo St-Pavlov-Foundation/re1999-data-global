@@ -63,6 +63,7 @@ function slot0.init(slot0, slot1, slot2)
 
 	slot0.playerFinisherInfo = slot1.playerFinisherInfo
 	slot0.powerInfo = slot1.powerInfo
+	slot0.cardHeatValue = slot1.cardHeatValue
 end
 
 function slot0._buildBuff(slot0, slot1)

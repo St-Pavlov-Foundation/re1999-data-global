@@ -55,13 +55,15 @@ slot0.HeroGroupType = {
 slot0.HeroGroupSnapshotType = {
 	Season166Base = 8,
 	Resources = 3,
-	Common = 2,
+	Act183Normal = 12,
 	TowerBoss = 11,
 	Season = 5,
+	Common = 2,
 	Season166Train = 9,
 	Season123 = 6,
 	TowerPermanentAndLimit = 10,
-	Season123Retail = 7
+	Season123Retail = 7,
+	Act183Boss = 13
 }
 slot0.HeroGroupServerType = {
 	Activity = 100,

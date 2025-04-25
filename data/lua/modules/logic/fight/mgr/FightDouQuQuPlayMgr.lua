@@ -2,7 +2,7 @@ module("modules.logic.fight.mgr.FightDouQuQuPlayMgr", package.seeall)
 
 slot0 = class("FightDouQuQuPlayMgr", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0:com_registMsg(FightMsgId.MaybeCrashed, slot0._onMaybeCrashed)
 end
 

@@ -882,6 +882,10 @@ function slot2(slot0, slot1)
 	return slot2
 end
 
+function slot0.getAtmosphereCfg(slot0, slot1)
+	return uv0(slot1, true)
+end
+
 function slot0.getAtmosphereRelatedBuilding(slot0, slot1)
 	slot2 = 0
 

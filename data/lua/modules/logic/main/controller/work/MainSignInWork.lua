@@ -2,7 +2,7 @@ module("modules.logic.main.controller.work.MainSignInWork", package.seeall)
 
 slot0 = class("MainSignInWork", BaseWork)
 
-function slot0._checkShow()
+function slot1()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		return false
 	end
@@ -22,7 +22,7 @@ function slot0._checkShow()
 	return true
 end
 
-function slot0._needWaitShow()
+function slot2()
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MainViewGuideBlock) then
 		return true
 	end
@@ -30,54 +30,87 @@ function slot0._needWaitShow()
 	return not MainController.instance:isInMainView()
 end
 
+function slot0._isNeedWaitShow(slot0)
+	slot0._isWaiting = uv0()
+
+	return slot0._isWaiting
+end
+
 function slot0.onStart(slot0, slot1)
-	UIBlockMgr.instance:startBlock("waitStartSignIn")
-	TaskDispatcher.runDelay(slot0._waitStartSignInWork, slot0, 0.1)
+	slot0:clearWork()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	slot0:_tryStart()
 end
 
-function slot0._waitStartSignInWork(slot0)
-	UIBlockMgr.instance:endBlock("waitStartSignIn")
+function slot0._tryStart(slot0)
+	slot0:_endBlock()
 
-	if uv0._needWaitShow() then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._viewChangeCheckIsInMainView, slot0)
-
-		return
+	if not slot0:_isNeedWaitShow() then
+		slot0:_startSignInWork()
 	end
-
-	slot0:_startSignInWork()
-end
-
-function slot0._removeViewChangeEvent(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._viewChangeCheckIsInMainView, slot0)
 end
 
 function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 ~= ViewName.MainView then
-		return
-	end
+	if slot0._isWaiting then
+		if slot1 ~= ViewName.MainView then
+			return
+		end
 
-	slot0:_viewChangeCheckIsInMainView()
+		slot0:_tryStart()
+	elseif slot0._isShowingLifeCircle then
+		if slot1 ~= ViewName.LifeCircleRewardView then
+			return
+		end
+
+		slot0:_endBlock()
+	end
 end
 
-function slot0._viewChangeCheckIsInMainView(slot0)
-	if uv0._needWaitShow() then
-		return
-	end
+function slot0._onCloseViewFinish(slot0, slot1)
+	if slot0._isWaiting then
+		slot0:_tryStart()
+	elseif slot0._isShowingLifeCircle then
+		if slot1 ~= ViewName.LifeCircleRewardView then
+			return
+		end
 
-	slot0:_removeViewChangeEvent()
-	UIBlockMgr.instance:startBlock("waitStartSignIn")
-	TaskDispatcher.runDelay(slot0._waitStartSignInWork, slot0, 0.6)
+		if ViewMgr.instance:isOpen(slot2) then
+			return
+		end
+
+		slot0:_showSignInDetailView()
+	end
 end
 
 function slot0._startSignInWork(slot0)
-	if not uv0._checkShow() then
+	slot0:_startBlock()
+
+	if not uv0() then
 		slot0:onDone(true)
 
 		return
 	end
 
+	if LifeCircleController.instance:isClaimableAccumulateReward() then
+		slot0._isShowingLifeCircle = true
+
+		LifeCircleController.instance:sendSignInTotalRewardAllRequest(function (slot0, slot1)
+			uv0:_endBlock()
+
+			if slot1 ~= 0 then
+				uv0:_showSignInDetailView()
+			end
+		end)
+
+		return
+	else
+		slot0:_showSignInDetailView()
+	end
+end
+
+function slot0._showSignInDetailView(slot0)
+	slot0._isShowingLifeCircle = false
 	slot1 = SignInModel.instance:getCurDate()
 
 	SignInModel.instance:setTargetDate(tonumber(slot1.year), tonumber(slot1.month), tonumber(slot1.day))
@@ -85,12 +118,14 @@ function slot0._startSignInWork(slot0)
 		callback = slot0._closeSignInViewFinished,
 		callbackObj = slot0
 	})
+	slot0:_endBlock()
 end
 
 function slot0._closeSignInViewFinished(slot0)
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
 		slot0:onDone(true)
 	else
+		TaskDispatcher.cancelTask(slot0._onCheckEnterMainView, slot0)
 		TaskDispatcher.runRepeat(slot0._onCheckEnterMainView, slot0, 0.5)
 	end
 end
@@ -109,16 +144,38 @@ function slot0._onCheckEnterMainView(slot0)
 	end
 
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
-		TaskDispatcher.cancelTask(slot0._onCheckEnterMainView, slot0)
 		slot0:onDone(true)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_removeViewChangeEvent()
-	UIBlockMgr.instance:endBlock("waitStartSignIn")
-	TaskDispatcher.cancelTask(slot0._waitStartSignInWork, slot0)
+function slot0.clearWork(slot0)
+	slot0._isWaiting = false
+	slot0._isShowingLifeCircle = false
+
 	TaskDispatcher.cancelTask(slot0._onCheckEnterMainView, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	slot0:_endBlock()
+end
+
+function slot0._endBlock(slot0)
+	if not slot0:_isBlock() then
+		return
+	end
+
+	UIBlockMgr.instance:endBlock()
+end
+
+function slot0._startBlock(slot0)
+	if slot0:_isBlock() then
+		return
+	end
+
+	UIBlockMgr.instance:startBlock()
+end
+
+function slot0._isBlock(slot0)
+	return UIBlockMgr.instance:isBlock() and true or false
 end
 
 return slot0

@@ -15,7 +15,7 @@ function slot0.init(slot0, slot1)
 
 	gohelper.setAsFirstSibling(slot0._innerGO)
 
-	slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem)
+	slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem, FightEnum.CardShowType.HandCard)
 	slot0._cardAni = slot0._innerGO:GetComponent(typeof(UnityEngine.Animator))
 	slot0._cardAni.enabled = false
 	slot0._innerTr = slot0._innerGO.transform
@@ -72,7 +72,7 @@ function slot0.addEventListeners(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ResetCard, slot0._resetCard, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
 end
@@ -105,7 +105,7 @@ function slot0.removeEventListeners(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ResetCard, slot0._resetCard, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
 	TaskDispatcher.cancelTask(slot0._delayDisableAnim, slot0)
@@ -121,7 +121,7 @@ function slot0._showASFD(slot0)
 	slot0:setASFDActive(true)
 end
 
-function slot0._resetCard(slot0)
+function slot0._onCancelOperation(slot0)
 	slot0:setASFDActive(true)
 end
 
@@ -181,6 +181,12 @@ function slot0.setUniversal(slot0, slot1)
 	gohelper.setActive(slot0._universalGO, slot1)
 end
 
+function slot0.refreshPreDelete(slot0, slot1)
+	if slot1 then
+		-- Nothing
+	end
+end
+
 function slot0.updateItem(slot0, slot1, slot2)
 	slot0.index = slot1 or slot0.index
 
@@ -210,6 +216,11 @@ function slot0.updateItem(slot0, slot1, slot2)
 	slot0:_hideEffect()
 	slot0:_refreshBlueStar()
 	slot0:showKeytips()
+	slot0:showCardHeat()
+end
+
+function slot0.showCardHeat(slot0)
+	slot0._cardItem:showCardHeat()
 end
 
 function slot0.showKeytips(slot0)
@@ -1208,25 +1219,8 @@ function slot0.dissolveCard(slot0)
 		return
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.dissolveScale = transformhelper.getLocalScale(slot0._subViewInst._handCardContainer.transform)
-	slot2 = slot0:getUserDataTb_()
-
-	table.insert(slot2, slot0.go)
-
-	slot1.dissolveSkillItemGOs = slot2
-
 	slot0:setASFDActive(false)
-
-	if not slot0._dissolveFlow then
-		slot0._dissolveFlow = FlowSequence.New()
-
-		slot0._dissolveFlow:addWork(FightCardDissolveEffect.New())
-	else
-		slot0._dissolveFlow:stop()
-	end
-
-	slot0._dissolveFlow:start(slot1)
+	slot0._cardItem:dissolveCard(transformhelper.getLocalScale(slot0._subViewInst._handCardContainer.transform))
 end
 
 function slot0.moveSelfPos(slot0, slot1, slot2)
@@ -1345,6 +1339,36 @@ end
 
 function slot0.getASFDScreenPos(slot0)
 	return slot0._cardItem:getASFDScreenPos()
+end
+
+function slot0.refreshPreDeleteImage(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:_refreshPreDeleteImage(slot1)
+	end
+end
+
+function slot0.setActiveRed(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:setActiveRed(slot1)
+	end
+end
+
+function slot0.setActiveBlue(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:setActiveBlue(slot1)
+	end
+end
+
+function slot0.setActiveBoth(slot0, slot1)
+	if slot0._cardItem then
+		slot0._cardItem:setActiveBoth(slot1)
+	end
+end
+
+function slot0.resetRedAndBlue(slot0)
+	if slot0._cardItem then
+		slot0._cardItem:resetRedAndBlue()
+	end
 end
 
 function slot0._releaseMoveFlow(slot0)

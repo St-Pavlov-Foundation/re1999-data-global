@@ -28,5 +28,10 @@
     "id": 11701,
     "kvIcon": "reappear_img_kv07",
     "enterview": "Permanent1_7EnterView"
+  },
+  {
+    "id": 11803,
+    "kvIcon": "reappear_img_kv08",
+    "enterview": "Permanent1_8EnterView"
   }
 ]

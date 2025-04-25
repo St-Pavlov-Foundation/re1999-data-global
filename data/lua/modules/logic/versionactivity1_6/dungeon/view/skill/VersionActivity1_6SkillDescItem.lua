@@ -34,7 +34,7 @@ function slot0.refreshInfo(slot0)
 	slot5 = ""
 
 	if slot0._skillCfg.skillId and slot2 ~= 0 then
-		slot5 = FightConfig.instance:getSkillEffectCO(slot2) and slot6.desc
+		slot5 = FightConfig.instance:getSkillEffectDesc(nil, FightConfig.instance:getSkillEffectCO(slot2))
 	elseif slot3 then
 		slot6 = string.splitToNumber(slot3, "#")
 		slot8 = slot6[2]

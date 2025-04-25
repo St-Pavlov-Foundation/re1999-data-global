@@ -22,5 +22,11 @@
     "bossId": 4,
     "name": "language_10064231",
     "nameEn": "Ashen Beast"
+  },
+  {
+    "towerId": 5,
+    "bossId": 5,
+    "name": "language_10068621",
+    "nameEn": "Primitive Urge"
   }
 ]

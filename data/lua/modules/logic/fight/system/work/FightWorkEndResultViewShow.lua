@@ -131,6 +131,10 @@ function slot0._showSuccView(slot0)
 			ViewMgr.instance:openView(ViewName.TowerPermanentResultView)
 
 			return
+		elseif slot1.type == DungeonEnum.EpisodeType.Act183 then
+			ViewMgr.instance:openView(ViewName.Act183FightSuccView)
+
+			return
 		end
 	end
 

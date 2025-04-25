@@ -94,6 +94,37 @@ function slot0.initViewContent(slot0)
 	slot0.toEntityASFDInput = slot0:addInputText(slot0:getLineGroup(), "", "奥术飞弹目标uid...")
 	slot0.btnSendASFD = slot0:addButton(slot0:getLineGroup(), "发射", slot0.onClickSendASFDBtn, slot0)
 
+	slot0:getEntityNameList()
+	slot0:getMountList()
+	slot0:addLineIndex()
+	slot0:addLabel(slot0:getLineGroup(), "特效预览：", {
+		fsize = 30,
+		w = 100
+	})
+
+	slot0.effectPath = slot0:addInputText(slot0:getLineGroup(), "", "特效资源名...")
+	slot0.entityDrop = slot0:addDropDown(slot0:getLineGroup(), "挂载对象:", slot0.entityNameList, nil, , {
+		total_w = 400,
+		fsize = 25,
+		drop_w = 300,
+		label_w = 100,
+		offsetMax = {
+			-100,
+			0
+		}
+	})
+	slot0.mountDrop = slot0:addDropDown(slot0:getLineGroup(), "挂载节点:", slot0.mountList, nil, , {
+		total_w = 400,
+		fsize = 25,
+		drop_w = 300,
+		label_w = 100,
+		offsetMax = {
+			-100,
+			0
+		}
+	})
+	slot0.btnMount = slot0:addButton(slot0:getLineGroup(), "挂载", slot0.onClickBtnMount, slot0)
+
 	slot0:addTitleSplitLine("战中打印")
 	slot0:addLineIndex()
 
@@ -101,6 +132,27 @@ function slot0.initViewContent(slot0)
 	slot0.btnLogAttr = slot0:addButton(slot0:getLineGroup(), "打印当前属性", slot0.onClickLogAttr, slot0)
 	slot0.btnLogBaseAttr = slot0:addButton(slot0:getLineGroup(), "打印基础属性", slot0.onClickLogBaseAttr, slot0)
 	slot0.btnLogLife = slot0:addButton(slot0:getLineGroup(), "打印生命百分比", slot0.onClickLogLife, slot0)
+end
+
+function slot0.getEntityNameList(slot0)
+	slot0.entityNameList = {}
+	slot0.entityList = {}
+
+	FightDataHelper.entityMgr:getAllEntityList(slot0.entityList)
+
+	for slot4, slot5 in ipairs(slot0.entityList) do
+		table.insert(slot0.entityNameList, slot5:getCO() and slot6.name or slot5.id)
+	end
+end
+
+function slot0.getMountList(slot0)
+	slot0.mountList = {
+		ModuleEnum.SpineHangPointRoot
+	}
+
+	for slot4, slot5 in pairs(ModuleEnum.SpineHangPoint) do
+		table.insert(slot0.mountList, slot5)
+	end
 end
 
 function slot0.addFightNumToggle(slot0)
@@ -395,6 +447,28 @@ function slot0.createASFDEmitter(slot0, slot1)
 	(GameSceneMgr.instance:getCurScene() and slot4.entityMgr):addASFDUnit()
 
 	return slot2
+end
+
+function slot0.onClickBtnMount(slot0)
+	slot2 = slot0.entityDrop:GetValue() + 1
+	slot3 = slot0.mountDrop:GetValue() + 1
+
+	if string.nilorempty(slot0.effectPath:GetText()) then
+		ToastController.instance:showToastWithString("特效资源名 不能为空 ！")
+
+		return
+	end
+
+	if not (slot0.entityList[slot2] and FightHelper.getEntity(slot4.id)) then
+		ToastController.instance:showToastWithString("没有找到对应 entity 实体 ！")
+
+		return
+	end
+
+	if slot5.effect:addHangEffect(slot1, slot0.mountList[slot3]) then
+		slot7:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(slot5.id, slot7)
+	end
 end
 
 return slot0

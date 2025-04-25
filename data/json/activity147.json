@@ -6,5 +6,13 @@
     "spineRes": "rolesstory/rolesprefab/v1a6_623801_hzd_p/623801_hzd_p.prefab",
     "dialogs": "language_10033673",
     "jumpId": 10110
+  },
+  {
+    "activityId": 12521,
+    "descList": "language_10028643",
+    "rewardList": "1#111013|1#111003|1#110704|1#110104|1#110604|1#110304|1#110204|1#110404|1#110504",
+    "spineRes": "rolesstory/rolesprefab/v1a6_623801_hzd_p/623801_hzd_p.prefab",
+    "dialogs": "language_10033673",
+    "jumpId": 10110
   }
 ]

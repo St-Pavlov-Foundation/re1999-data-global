@@ -126,19 +126,27 @@ function slot0._play(slot0)
 
 	slot0._emitter = slot0._emitter or ZProj.AudioEmitter.Get(slot0._go)
 
+	function slot1(slot0, slot1)
+		if slot0 == AudioEnum.AkCallbackType.AK_Duration then
+			uv0:_setAudioDuration(slot1)
+		elseif slot0 == AudioEnum.AkCallbackType.AK_EndOfEvent then
+			uv0:_onAudioStop()
+		end
+	end
+
 	if slot0._audioLang then
 		if GameConfig:GetCurVoiceShortcut() == LangSettings.shortcutTab[LangSettings.zh] then
-			slot4 = AudioConfig.instance:getAudioCOById(slot0._audioId).bankName
+			if not AudioConfig.instance:getAudioCOById(slot0._audioId) then
+				logError("audio cfg not config : " .. tostring(slot0._audioId))
+			end
 
-			ZProj.AudioManager.Instance:LoadBank(slot4, slot0._audioLang)
-			slot0._emitter:EmitterByName(slot0._bankName, slot0._eventName, slot0._audioLang, function (slot0, slot1)
-				if slot0 == AudioEnum.AkCallbackType.AK_Duration then
-					uv0:_setAudioDuration(slot1)
-				elseif slot0 == AudioEnum.AkCallbackType.AK_EndOfEvent then
-					uv0:_onAudioStop()
-				end
-			end)
-			ZProj.AudioManager.Instance:UnloadBank(slot4)
+			if slot3 then
+				slot4 = slot3.bankName
+
+				ZProj.AudioManager.Instance:LoadBank(slot4, slot0._audioLang)
+				slot0._emitter:EmitterByName(slot0._bankName, slot0._eventName, slot0._audioLang, slot1)
+				ZProj.AudioManager.Instance:UnloadBank(slot4)
+			end
 		else
 			slot0._emitter:EmitterByName(slot0._bankName, slot0._eventName, slot0._audioLang, slot1)
 		end

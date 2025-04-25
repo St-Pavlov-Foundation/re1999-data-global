@@ -47,7 +47,6 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 
 		if slot0.context and slot0.context.noReloadScene then
 			slot0:_correctRootState()
-			slot2.view:onScenePrepared()
 			slot0:onDone(true)
 
 			return
@@ -62,7 +61,6 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 			slot0._loadTime = Time.time
 		else
 			slot0:_correctRootState()
-			slot2.view:onScenePrepared()
 			slot0:onDone(true)
 		end
 	end
@@ -98,7 +96,8 @@ function slot0._onLevelLoaded(slot0)
 end
 
 function slot0._delayDone(slot0)
-	GameSceneMgr.instance:getCurScene().view:onScenePrepared()
+	slot1 = GameSceneMgr.instance:getCurScene()
+
 	slot0:onDone(true)
 end
 

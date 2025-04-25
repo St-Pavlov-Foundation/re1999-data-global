@@ -250,7 +250,7 @@ function slot0.refreshSlotUI(slot0)
 			slot0._simageheroIcon:LoadImage(ResUrl.getRoomHeadIcon(slot3.headIcon))
 		end
 
-		slot0._txttrainingname.text = slot1:getDefineCfg() and slot4.name
+		slot0._txttrainingname.text = slot1:getName()
 	end
 end
 

@@ -69,7 +69,7 @@ function slot0._onLoaded(slot0, slot1)
 	slot0._animComp:SetBool("isRight", slot0._attacker and slot0._attacker:isMySide() or false)
 
 	if slot0._attacker and slot0._attacker:getMO() and slot0._attacker:getMO().position then
-		slot0._animComp:SetInteger("pos", slot15)
+		slot0._animComp:SetInteger("pos", slot15 > 4 and 4 or slot15)
 	end
 
 	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)

@@ -27,6 +27,14 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	if LangSettings.instance:isJp() then
+		DialogueEnum.MessageBgOffsetWidth = 60
+		DialogueEnum.MessageBgOffsetHeight = 45
+	else
+		DialogueEnum.MessageBgOffsetWidth = 30
+		DialogueEnum.MessageBgOffsetHeight = 20
+	end
+
 	slot0.itemSourceGoDict = {
 		[DialogueEnum.Type.LeftMessage] = slot0._goleftdialogueitem,
 		[DialogueEnum.Type.RightMessage] = slot0._gorightdialogueitem,

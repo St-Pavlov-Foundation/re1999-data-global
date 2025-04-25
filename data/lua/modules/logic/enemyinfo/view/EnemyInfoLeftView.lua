@@ -12,8 +12,6 @@ function slot0.onInitView(slot0)
 	slot0._goenemygroupitem = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool/#go_enemygroupitem")
 	slot0._goenemyitempool = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool")
 	slot0._goenemyitem = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool/#go_enemyitem")
-	slot0._goruleipitem = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_ruletip/#go_ruletipitem")
-	slot0._gorulelist = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_ruletip/#go_rulelist")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -36,8 +34,9 @@ function slot0.onClickRule(slot0)
 
 	slot5, slot6 = recthelper.worldPosToAnchorPos2(slot0.ruleItemList[slot2].go:GetComponent(gohelper.Type_Transform).position, slot0.ruleTipContainerRectTr)
 
-	recthelper.setAnchorX(slot0.ruleTipRectTr, slot5 + EnemyInfoEnum.TipOffsetX)
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.ShowTip, EnemyInfoEnum.Tip.RuleTip)
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+		ruleList = slot0._ruleList
+	})
 end
 
 function slot0._editableInitView(slot0)
@@ -126,6 +125,7 @@ function slot0.refreshRule(slot0)
 
 	slot6 = "#"
 	slot2 = GameUtil.splitString2(slot1, true, "|", slot6)
+	slot0._ruleList = slot2
 
 	slot0:filterRule(slot2)
 
@@ -194,13 +194,6 @@ function slot0.addRuleItem(slot0, slot1, slot2)
 
 	UISpriteSetMgr.instance:setCommonSprite(slot3.tagIcon, "wz_" .. slot2)
 	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot3.ruleIcon, slot1.icon)
-
-	slot4 = slot0:getRuleTipItem()
-
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot4.icon, slot1.icon)
-	UISpriteSetMgr.instance:setCommonSprite(slot4.tag, "wz_" .. slot2)
-
-	slot4.txtDesc.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot2), SkillHelper.buildDesc(slot1.desc, nil, "#6680bd"), EnemyInfoEnum.TagColor[slot2])
 end
 
 function slot0.getRuleItem(slot0)
@@ -221,33 +214,6 @@ function slot0.getRuleItem(slot0)
 
 	gohelper.setActive(slot1.go, true)
 	table.insert(slot0.ruleItemList, slot1)
-
-	return slot1
-end
-
-function slot0.getRuleTipItem(slot0)
-	if #slot0.ruleTipItemPool > 0 then
-		slot1 = table.remove(slot0.ruleTipItemPool)
-
-		table.insert(slot0.ruleTipItemList, slot1)
-		gohelper.setActive(slot1.go, true)
-		gohelper.setActive(slot1.goLine, true)
-		gohelper.setAsLastSibling(slot1.go)
-
-		return slot1
-	end
-
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.clone(slot0._goruleipitem, slot0._gorulelist)
-	slot1.icon = gohelper.findChildImage(slot1.go, "icon")
-	slot1.goLine = gohelper.findChild(slot1.go, "line")
-	slot1.tag = gohelper.findChildImage(slot1.go, "tag")
-	slot1.txtDesc = gohelper.findChildText(slot1.go, "desc")
-
-	SkillHelper.addHyperLinkClick(slot1.txtDesc)
-	gohelper.setActive(slot1.go, true)
-	gohelper.setActive(slot1.goLine, true)
-	table.insert(slot0.ruleTipItemList, slot1)
 
 	return slot1
 end

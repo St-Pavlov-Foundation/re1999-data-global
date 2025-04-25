@@ -4,11 +4,11 @@ slot0 = _M
 slot0.REWARD_INDEX = 1
 slot0.DISPLAY_SKIN_COUNT = 5
 slot0.Index2Skin = {
-	300703,
-	303903,
-	300305,
-	302403,
-	301303
+	300904,
+	309803,
+	308303,
+	307703,
+	301202
 }
 
 return slot0

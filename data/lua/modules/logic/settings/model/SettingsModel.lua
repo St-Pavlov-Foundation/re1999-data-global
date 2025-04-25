@@ -207,10 +207,6 @@ function slot0.canShowCategory(slot0, slot1)
 		return false
 	end
 
-	if slot1.name == "key_binding" then
-		return false
-	end
-
 	slot2 = #slot1.openIds == 0 and slot1.showIds == nil or false
 
 	for slot6, slot7 in pairs(slot1.openIds) do
@@ -525,6 +521,28 @@ function slot0.getRecordVideo(slot0)
 	slot0:checkInitRecordVideo()
 
 	return slot0._isRecordVideo == 1
+end
+
+function slot0.setVideoHDMode(slot0, slot1)
+	slot0._isVideoHDMode = slot1 and 1 or 0
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoHDMode, slot0._isVideoHDMode)
+end
+
+function slot0.getVideoHDMode(slot0)
+	if not PlayerPrefsHelper.hasKey(PlayerPrefsKey.SettingsVideoHDMode) and BootNativeUtil.isWindows() then
+		slot0:setVideoHDMode(true)
+	end
+
+	if SettingsVoicePackageModel.instance:getPackInfo("res-HD") == nil or slot1:needDownload() then
+		slot0:setVideoHDMode(false)
+	end
+
+	if slot0._isVideoHDMode == nil then
+		slot0._isVideoHDMode = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoHDMode, 0)
+	end
+
+	return slot0._isVideoHDMode == 1
 end
 
 function slot0.setPushState(slot0, slot1)

@@ -74,17 +74,19 @@ function slot0._againOpenLoading(slot0)
 end
 
 function slot0._setIcon(slot0)
-	slot2 = slot0:_getRandomCO(slot0:_getFitIcons()).pic
+	if slot0:_getRandomCO(slot0:_getFitIcons()) then
+		slot3 = slot2.pic
 
-	slot0._simageicon:LoadImage(ResUrl.getLoadingBg(slot2))
-	slot0._simageiconhui:LoadImage(ResUrl.getLoadingBg(slot2))
+		slot0._simageicon:LoadImage(ResUrl.getLoadingBg(slot3))
+		slot0._simageiconhui:LoadImage(ResUrl.getLoadingBg(slot3))
+	end
 end
 
 function slot0._getFitIcons(slot0)
 	slot1 = uv0.getLoadingSceneType(slot0.viewParam)
 	slot3 = {}
 
-	for slot7, slot8 in ipairs(SceneConfig.instance:getLoadingIcons()) do
+	for slot7, slot8 in pairs(SceneConfig.instance:getLoadingIcons()) do
 		for slot13, slot14 in pairs(string.splitToNumber(slot8.scenes, "#")) do
 			if slot14 == slot1 then
 				table.insert(slot3, slot8)

@@ -84,6 +84,12 @@ end
 function slot0._refreshPosition(slot0)
 	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
 		slot6:resetStandPos()
+
+		if slot6.nameUI then
+			slot6.nameUI._nameUIVisible = true
+
+			slot6.nameUI:setActive(true)
+		end
 	end
 end
 

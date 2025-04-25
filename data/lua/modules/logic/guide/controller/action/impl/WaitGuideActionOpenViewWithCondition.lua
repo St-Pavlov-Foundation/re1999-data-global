@@ -208,4 +208,28 @@ function slot0.enterWuErLiXiMap(slot0)
 	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(slot0)
 end
 
+function slot0.enterFeiLinShiDuoMap(slot0)
+	return FeiLinShiDuoGameModel.instance:getCurMapId() == tonumber(slot0)
+end
+
+function slot0.isOpenEpisode(slot0)
+	return LiangYueModel.instance:getCurEpisodeId() == tonumber(slot0)
+end
+
+function slot0.isAutoChessInEpisodeAndRound(slot0)
+	if not AutoChessModel.instance.episodeId or AutoChessModel.instance.episodeId ~= string.splitToNumber(slot0, ",")[1] then
+		return
+	end
+
+	if AutoChessModel.instance:getChessMo() == nil or slot3.sceneRound == nil then
+		return false
+	end
+
+	return slot3.sceneRound == slot1[2]
+end
+
+function slot0.isUnlockEpisode(slot0)
+	return LiangYueModel.instance:isEpisodeFinish(LiangYueModel.instance:getCurActId(), slot0) == tonumber(slot0)
+end
+
 return slot0

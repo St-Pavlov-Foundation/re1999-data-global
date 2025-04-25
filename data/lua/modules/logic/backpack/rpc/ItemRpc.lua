@@ -2,22 +2,22 @@ module("modules.logic.backpack.rpc.ItemRpc", package.seeall)
 
 slot0 = class("ItemRpc", BaseRpc)
 
-function slot0.sendUseItemRequest(slot0, slot1, slot2)
+function slot0.sendUseItemRequest(slot0, slot1, slot2, slot3, slot4)
 	logNormal("Send Use Item Request !")
 
-	slot3 = ItemModule_pb.UseItemRequest()
+	slot5 = ItemModule_pb.UseItemRequest()
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = MaterialModule_pb.M2QEntry()
-		slot9.materialId = slot8.materialId
-		slot9.quantity = slot8.quantity
+	for slot9, slot10 in ipairs(slot1) do
+		slot11 = MaterialModule_pb.M2QEntry()
+		slot11.materialId = slot10.materialId
+		slot11.quantity = slot10.quantity
 
-		table.insert(slot3.entry, slot9)
+		table.insert(slot5.entry, slot11)
 	end
 
-	slot3.targetId = slot2
+	slot5.targetId = slot2
 
-	slot0:sendMsg(slot3)
+	slot0:sendMsg(slot5, slot3, slot4)
 end
 
 function slot0.onReceiveUseItemReply(slot0, slot1, slot2)
@@ -139,6 +139,19 @@ function slot0.onReceiveUseInsightItemReply(slot0, slot1, slot2)
 	slot3.isRank = true
 
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, slot3)
+end
+
+function slot0.simpleSendUseItemRequest(slot0, slot1, slot2, slot3, slot4, slot5)
+	if not slot2 or slot2 <= 0 then
+		return
+	end
+
+	slot0:sendUseItemRequest({
+		{
+			materialId = slot1,
+			quantity = slot2
+		}
+	}, slot3 or 0, slot4, slot5)
 end
 
 slot0.instance = slot0.New()

@@ -12,24 +12,32 @@ function slot0.onInit(slot0)
 	slot0.equipMoList = {}
 	slot0.levelAscend = false
 	slot0.rareAscend = false
+	slot0.isChangeSort = false
 	slot0.sortBy = uv0.SortBy.Level
 end
 
 function slot0.onOpen(slot0, slot1)
+	slot0.heroMo = slot1.heroMo
+
 	slot0:initEquipList()
 end
 
 function slot0.initEquipList(slot0, slot1)
 	slot0.equipMoList = {}
+	slot0.recommendEquip = slot0.heroMo and slot0.heroMo:getRecommendEquip() or {}
 
-	for slot6, slot7 in ipairs(EquipModel.instance:getEquips()) do
-		if EquipHelper.isNormalEquip(slot7.config) then
+	for slot7, slot8 in ipairs(EquipModel.instance:getEquips()) do
+		if EquipHelper.isNormalEquip(slot8.config) then
 			if slot1:isFiltering() then
-				if slot1:checkIsIncludeTag(slot7.config) then
-					table.insert(slot0.equipMoList, slot7)
+				if slot1:checkIsIncludeTag(slot8.config) then
+					slot8.recommondIndex = LuaUtil.tableNotEmpty(slot0.recommendEquip) and tabletool.indexOf(slot0.recommendEquip, slot8.equipId) or -1
+
+					table.insert(slot0.equipMoList, slot8)
 				end
 			else
-				table.insert(slot0.equipMoList, slot7)
+				slot8.recommondIndex = slot2 and tabletool.indexOf(slot0.recommendEquip, slot8.equipId) or -1
+
+				table.insert(slot0.equipMoList, slot8)
 			end
 		end
 	end
@@ -52,6 +60,7 @@ end
 function slot0.resortEquip(slot0)
 	uv0.levelAscend = slot0.levelAscend
 	uv0.rareAscend = slot0.rareAscend
+	uv0.isChangeSort = slot0.isChangeSort
 
 	if slot0.sortBy == uv0.SortBy.Level then
 		table.sort(slot0.equipMoList, slot0._sortByLevel)
@@ -70,6 +79,8 @@ function slot0._changeSortByLevel(slot0)
 		slot0.sortBy = uv0.SortBy.Level
 		slot0.levelAscend = false
 	end
+
+	slot0.isChangeSort = true
 end
 
 function slot0._changeSortByRare(slot0)
@@ -79,6 +90,8 @@ function slot0._changeSortByRare(slot0)
 		slot0.sortBy = uv0.SortBy.Rare
 		slot0.rareAscend = false
 	end
+
+	slot0.isChangeSort = true
 end
 
 function slot0.changeSortByLevel(slot0)
@@ -116,6 +129,16 @@ function slot0._sortByLevel(slot0, slot1)
 		return slot0.equipType == EquipEnum.ClientEquipType.TrialEquip
 	end
 
+	if slot0.recommondIndex ~= slot1.recommondIndex then
+		if slot0.recommondIndex < 0 or slot1.recommondIndex < 0 then
+			return slot0.recommondIndex > 0
+		end
+
+		if not uv0.isChangeSort then
+			return slot0.recommondIndex < slot1.recommondIndex
+		end
+	end
+
 	if slot0.level ~= slot1.level then
 		if uv0.levelAscend then
 			return slot0.level < slot1.level
@@ -148,6 +171,10 @@ function slot0._sortByRare(slot0, slot1)
 
 	if slot0.equipType == EquipEnum.ClientEquipType.TrialEquip ~= (slot1.equipType == EquipEnum.ClientEquipType.TrialEquip) then
 		return slot0.equipType == EquipEnum.ClientEquipType.TrialEquip
+	end
+
+	if slot0.recommondIndex ~= slot1.recommondIndex and (slot0.recommondIndex < 0 or slot1.recommondIndex < 0) then
+		return slot0.recommondIndex > 0
 	end
 
 	if slot0.config.rare ~= slot1.config.rare then
@@ -189,6 +216,16 @@ function slot0.clear(slot0)
 	slot0:onInit()
 
 	slot0.selectedEquipMo = nil
+end
+
+function slot0.clearRecommend(slot0)
+	if not EquipModel.instance:getEquips() then
+		return
+	end
+
+	for slot4, slot5 in ipairs(EquipModel.instance:getEquips()) do
+		slot5:clearRecommend()
+	end
 end
 
 return slot0

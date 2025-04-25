@@ -292,6 +292,10 @@ function slot0.getCurrencyItemIcon(slot0)
 	return string.format("singlebg/currencyitem/%s.png", slot0)
 end
 
+function slot0.getCritterItemIcon(slot0)
+	return string.format("singlebg/propitem/critter/%s.png", slot0)
+end
+
 function slot0.getEffect(slot0)
 	return string.format("effects/prefabs/%s.prefab", slot0)
 end
@@ -373,7 +377,22 @@ function slot0.getStoryEpisodeIcon(slot0)
 end
 
 function slot0.getStoryItem(slot0)
-	return string.match(slot0, "1.2tanchuang") and string.format("singlebg_lang/txt_story/%s", tostring(slot0)) or string.format("singlebg/storybg/item/%s", tostring(slot0))
+	slot2 = string.format("singlebg/storybg/item/%s", tostring(slot0))
+	slot3 = string.format("singlebg_lang/txt_story/%s", tostring(slot0))
+	slot4 = false
+
+	for slot8, slot9 in pairs({
+		"1_2tanchuang",
+		"v2a5_liangyue_story"
+	}) do
+		if string.match(slot0, slot9) then
+			slot4 = true
+
+			break
+		end
+	end
+
+	return slot4 and slot3 or slot2
 end
 
 function slot0.getStoryLangPath(slot0)
@@ -526,6 +545,10 @@ end
 
 function slot0.getPlayerBg(slot0)
 	return string.format("singlebg/player/%s.png", slot0)
+end
+
+function slot0.getPlayerCardIcon(slot0)
+	return string.format("singlebg/playercard/%s.png", slot0)
 end
 
 function slot0.getStoreBottomBgIcon(slot0)
@@ -1342,6 +1365,14 @@ function slot0.getChessDialogueSingleBg(slot0)
 	return string.format("singlebg/dialogue/chess/%s.png", slot0)
 end
 
+function slot0.getV2a5SignSingleBg(slot0)
+	return string.format("singlebg/v2a5_sign_singlebg/%s.png", slot0)
+end
+
+function slot0.getV2a5SignSingleBgLang(slot0)
+	return string.format("singlebg_lang/txt_v2a5_sign_singlebg/%s.png", slot0)
+end
+
 slot2 = string.len("Assets/ZResourcesLib/")
 
 function slot0.getPathWithoutAssetLib(slot0)
@@ -1400,6 +1431,26 @@ function slot0.getV2a4WuErLiXiIcon(slot0)
 	return string.format("singlebg/v2a4_wuerlixi_singlebg/%s.png", slot0)
 end
 
+function slot0.getAutoChessIcon(slot0, slot1)
+	if slot1 then
+		return string.format("singlebg/v2a5_autochess_singlebg/%s/%s.png", slot1, slot0)
+	else
+		return string.format("singlebg/v2a5_autochess_singlebg/%s.png", slot0)
+	end
+end
+
+function slot0.getChallengeIcon(slot0)
+	return string.format("singlebg/v2a5_challenge_singlebg/%s.png", slot0)
+end
+
+function slot0.getAct184LanternIcon(slot0)
+	return string.format("singlebg/v2a5_lanternfestival_singlebg/%s.png", slot0)
+end
+
+function slot0.getV2a5FeiLinShiDuoBg(slot0)
+	return string.format("singlebg/v2a5_feilinshiduo_singlebg/%s.png", slot0)
+end
+
 function slot0.getLiveHeadIconPrefab(slot0)
 	return string.format("ui/viewres/dynamichead/%s.prefab", tostring(slot0))
 end
@@ -1414,6 +1465,14 @@ end
 
 function slot0.getV2a4WarmUpSingleBg(slot0)
 	return string.format("singlebg/v2a4_warmup_singlebg/%s.png", slot0)
+end
+
+function slot0.getDecorateStoreImg(slot0)
+	return string.format("singlebg/store/decorate/%s.png", tostring(slot0))
+end
+
+function slot0.getV2a5LiangYueImg(slot0)
+	return string.format("singlebg_lang/txt_v2a5_liangyue_singlebg/%s.png", tostring(slot0))
 end
 
 return slot0

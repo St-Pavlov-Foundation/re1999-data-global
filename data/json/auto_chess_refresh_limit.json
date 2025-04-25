@@ -1,0 +1,322 @@
+[
+  {
+    "id": 11001,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 11002,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 11003,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 11004,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 11005,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11006,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 11007,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 11008,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 11009,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11010,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11011,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 11012,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 12001,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 12002,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 12003,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 12004,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 12005,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 12006,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 12007,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 12008,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 12009,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 12010,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 12011,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 12012,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 13001,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 13002,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 13003,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 13004,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 13005,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 13006,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 13007,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 13008,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 13009,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 13010,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 13011,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 13012,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 13013,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 14001,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 14003,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 14004,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 14006,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 14007,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 14008,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 14009,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 14011,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 14012,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 14013,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 14014,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 14015,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 15001,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 15002,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 15003,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 15004,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 15005,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 15006,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 15007,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 15009,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 15010,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 15011,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 15012,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 15013,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 15014,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 16001,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 16003,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 16005,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 16006,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 16007,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 16008,
+    "maxRefreshLimit": 3
+  },
+  {
+    "id": 16009,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 16010,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 16011,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 16012,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 16013,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 21002,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 21003,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 21004,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 31001,
+    "maxRefreshLimit": 2
+  },
+  {
+    "id": 31002,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 31003,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 31004,
+    "maxRefreshLimit": 1
+  }
+]

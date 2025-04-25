@@ -246,7 +246,13 @@ function slot0.playInteraction(slot0)
 	end
 
 	if slot0._interaTionCfg.buildingInside then
-		slot0:moveCharacterInsideBuilding()
+		TaskDispatcher.cancelTask(slot0.moveCharacterInsideBuilding, slot0)
+
+		if slot0._interaTionCfg.delayEnterBuilding and slot0._interaTionCfg.delayEnterBuilding > 0 then
+			TaskDispatcher.runDelay(slot0.moveCharacterInsideBuilding, slot0, slot0._interaTionCfg.delayEnterBuilding)
+		else
+			slot0:moveCharacterInsideBuilding()
+		end
 	end
 end
 
@@ -450,6 +456,7 @@ function slot0.clear(slot0)
 	TaskDispatcher.cancelTask(slot0._onDelayLoadDone, slot0)
 	TaskDispatcher.cancelTask(slot0._onDelayNextCamera, slot0)
 	TaskDispatcher.cancelTask(slot0._onPlayHeroAnimState, slot0)
+	TaskDispatcher.cancelTask(slot0.moveCharacterInsideBuilding)
 end
 
 return slot0

@@ -15,7 +15,7 @@ function slot0.onStart(slot0)
 			slot8 = true
 		end
 
-		if not slot7:isCharacter() then
+		if slot6.spine and not slot6.spine:hasAnimation(SpineAnimState.born) then
 			slot8 = true
 		end
 

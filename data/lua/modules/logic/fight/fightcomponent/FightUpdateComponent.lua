@@ -2,7 +2,7 @@ module("modules.logic.fight.fightcomponent.FightUpdateComponent", package.seeall
 
 slot0 = class("FightUpdateComponent", FightBaseClass)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0._updateItemList = {}
 end
 

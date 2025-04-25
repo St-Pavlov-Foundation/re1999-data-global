@@ -3810,6 +3810,726 @@
     "bankName": "activity_diqiu2_4_sfx_part03"
   },
   {
+    "id": 25500001,
+    "eventName": "play_activitysfx_tangren_zhibei_throw",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500002,
+    "eventName": "play_activitysfx_tangren_partition_snickering",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500003,
+    "eventName": "play_activitysfx_tangren_doorbell",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500004,
+    "eventName": "play_activitysfx_tangren_mojing_um_1",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500005,
+    "eventName": "play_activitysfx_tangren_mojing_um_2",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500006,
+    "eventName": "play_activitysfx_tangren_intercom_activation",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500007,
+    "eventName": "play_activitysfx_tangren_machines_vending",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500008,
+    "eventName": "play_activitysfx_tangren_street_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500009,
+    "eventName": "play_activitysfx_tangren_street_parade_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500010,
+    "eventName": "play_activitysfx_tangren_parade_enchantment_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500011,
+    "eventName": "play_activitysfx_tangren_movieset_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500012,
+    "eventName": "play_activitysfx_tangren_wheelchair_long",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500013,
+    "eventName": "play_activitysfx_tangren_wheelchair_leave",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500014,
+    "eventName": "play_activitysfx_tangren_wheelchair_short",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500015,
+    "eventName": "play_activitysfx_tangren_zhongcanting_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500016,
+    "eventName": "play_activitysfx_tangren_chopsticks_drop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500017,
+    "eventName": "play_activitysfx_tangren_keycard_swipe",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500018,
+    "eventName": "play_activitysfx_tangren_bag_turn",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500019,
+    "eventName": "play_activitysfx_tangren_bag_pour",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500020,
+    "eventName": "play_activitysfx_tangren_filmdiscs_scroll",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500021,
+    "eventName": "play_activitysfx_tangren_screen_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500022,
+    "eventName": "play_activitysfx_tangren_street_whistle_loop",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500023,
+    "eventName": "play_activitysfx_tangren_liangyue_footsteps",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500024,
+    "eventName": "play_activitysfx_tangren_liangyue_footsteps_short",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500025,
+    "eventName": "play_activitysfx_tangren_liangyue_jogging",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500026,
+    "eventName": "play_activitysfx_tangren_qiangliang_hoot_1",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500027,
+    "eventName": "play_activitysfx_tangren_qiangliang_hoot_2",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500028,
+    "eventName": "play_activitysfx_tangren_image_roar",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500029,
+    "eventName": "play_activitysfx_tangren_lily_guaixiao",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500030,
+    "eventName": "play_activitysfx_tangren_image_dissipate",
+    "bankName": "activity_tangren2_5_sfx_part01"
+  },
+  {
+    "id": 25500031,
+    "eventName": "play_activitysfx_tangren_noises_loop",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500032,
+    "eventName": "play_activitysfx_tangren_film_swings",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500033,
+    "eventName": "play_activitysfx_tangren_film_swings_intense",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500034,
+    "eventName": "play_activitysfx_tangren_film_shift",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500035,
+    "eventName": "play_activitysfx_tangren_crystal_vision_loop",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500036,
+    "eventName": "play_activitysfx_tangren_kongnaodai_walk",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500037,
+    "eventName": "play_activitysfx_tangren_kongnaodai_footsteps",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500038,
+    "eventName": "play_activitysfx_tangren_kongnaodai_leave",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500039,
+    "eventName": "play_activitystorysfx_tangren_stone_slipped",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500040,
+    "eventName": "play_activitystorysfx_tangren_plasticbag_grab",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500041,
+    "eventName": "play_activitystorysfx_tangren_cicada_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500042,
+    "eventName": "play_activitystorysfx_tangren_tennis_rebound",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500043,
+    "eventName": "play_activitystorysfx_tangren_whistle_satire",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500044,
+    "eventName": "play_activitystorysfx_tangren_airflow_podi",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500045,
+    "eventName": "play_activitystorysfx_tangren_airflow_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500046,
+    "eventName": "play_activitystorysfx_tangren_hopscotch_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500047,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_summon_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500048,
+    "eventName": "play_activitystorysfx_tangren_lapao",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500049,
+    "eventName": "play_activitystorysfx_tangren_zhongqing",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500050,
+    "eventName": "play_activitystorysfx_tangren_dv_recording",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500051,
+    "eventName": "play_activitystorysfx_tangren_bell_strike",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500052,
+    "eventName": "play_activitystorysfx_tangren_boot_scroll",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500053,
+    "eventName": "play_activitystorysfx_tangren_plane_landing",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500054,
+    "eventName": "play_activitystorysfx_tangren_hand_cut",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500055,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_gasp_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500056,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_mozhua",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500057,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_sprint",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500058,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_bellow",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500059,
+    "eventName": "play_activitystorysfx_tangren_liangyue_bell_1",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500060,
+    "eventName": "play_activitystorysfx_tangren_liangyue_bell_2",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500061,
+    "eventName": "play_activitystorysfx_tangren_liangyue_bell_3",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500062,
+    "eventName": "play_activitystorysfx_tangren_bell_slow_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500063,
+    "eventName": "play_activitystorysfx_tangren_bell_shortness_loop",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500064,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_pain",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500065,
+    "eventName": "play_activitystorysfx_tangren_qiangliang_sms",
+    "bankName": "activitystory_tangren2_5_liangyue_sfx"
+  },
+  {
+    "id": 25500066,
+    "eventName": "play_activitystory_tangren_camera_shutter",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500067,
+    "eventName": "play_activitystory_tangren_film_run",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500068,
+    "eventName": "play_activitystory_tangren_fan_noise",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500069,
+    "eventName": "play_activitystory_tangren_outage",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500070,
+    "eventName": "play_activitystory_tangren_spotlight_on",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500071,
+    "eventName": "play_activitystory_tangren_item_collision",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500072,
+    "eventName": "play_activitystory_tangren_car_collision",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500073,
+    "eventName": "play_activitystory_tangren_fast_horn",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500074,
+    "eventName": "play_activitystory_tangren_icu_beep",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500075,
+    "eventName": "play_activitystory_tangren_mask_breathe",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500076,
+    "eventName": "play_activitystory_tangren_asystole_beep",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500077,
+    "eventName": "play_activitystory_tangren_pull_quilts",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500078,
+    "eventName": "play_activitystory_tangren_ignite",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500079,
+    "eventName": "play_activitystory_tangren_engine_start",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500080,
+    "eventName": "play_activitystory_tangren_cough_mask",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500081,
+    "eventName": "play_activitystory_tangren_desk_clean",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500082,
+    "eventName": "play_activitystory_tangren_book_drop",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500083,
+    "eventName": "play_activitystory_tangren_ringing",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500084,
+    "eventName": "play_activitystory_tangren_car_engine",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500085,
+    "eventName": "play_activitystory_tangren_crowd_cheered",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500086,
+    "eventName": "play_activitystory_tangren_brief_cheer",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500087,
+    "eventName": "play_activitystory_tangren_guffaw",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500088,
+    "eventName": "play_activitystory_tangren_mic_distortion",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500089,
+    "eventName": "play_activitystory_tangren_varygood",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500090,
+    "eventName": "play_activitystorysfx_tangren_footsteps_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500091,
+    "eventName": "play_activitystorysfx_tangren_sweep",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500092,
+    "eventName": "play_activitystorysfx_tangren_head",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500093,
+    "eventName": "play_activitystorysfx_tangren_step_plastics",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500094,
+    "eventName": "play_activitystorysfx_tangren_bag_drop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500095,
+    "eventName": "play_activitystorysfx_tangren_bag_pour",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500096,
+    "eventName": "play_activitystorysfx_tangren_ghost",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500097,
+    "eventName": "play_activitystorysfx_tangren_book_slap",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500098,
+    "eventName": "play_activitystorysfx_tangren_book_tear",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500099,
+    "eventName": "play_activitystorysfx_tangren_house_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500100,
+    "eventName": "play_activitystorysfx_tangren_cooking_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500101,
+    "eventName": "play_activitystorysfx_tangren_sleep_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500102,
+    "eventName": "play_activitystorysfx_tangren_traffic",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500103,
+    "eventName": "play_activitystorysfx_tangren_cloth",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500104,
+    "eventName": "play_activitystorysfx_tangren_touch",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500105,
+    "eventName": "play_activitystorysfx_tangren_fast_step",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500106,
+    "eventName": "play_activitystorysfx_tangren_chain",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500107,
+    "eventName": "play_activitystorysfx_tangren_bucket_climb",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500108,
+    "eventName": "play_activitystorysfx_tangren_bucket_fall",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500109,
+    "eventName": "play_activitystorysfx_tangren_bucket_drop",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500110,
+    "eventName": "play_activitystorysfx_tangren_garb",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500111,
+    "eventName": "play_activitystorysfx_tangren_finger",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500112,
+    "eventName": "play_activitystorysfx_tangren_soil",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500113,
+    "eventName": "play_activitystorysfx_tangren_glowing",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500114,
+    "eventName": "play_activitystorysfx_tangren_rope",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500115,
+    "eventName": "play_activitystorysfx_tangren_step_mud",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500116,
+    "eventName": "play_activitystorysfx_tangren_water_spray",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500117,
+    "eventName": "play_activitystorysfx_tangren_stream",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500118,
+    "eventName": "play_activitystorysfx_tangren_step_plastics",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500119,
+    "eventName": "play_activitystorysfx_tangren_step_metal",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500120,
+    "eventName": "play_activitystorysfx_tangren_smoke",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500121,
+    "eventName": "play_activitystorysfx_tangren_knife_move",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500122,
+    "eventName": "play_activitystorysfx_tangren_catch",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500123,
+    "eventName": "play_activitystorysfx_tangren_money",
+    "bankName": "activitystorysfx_tangren2_5yishi_anan_sfx"
+  },
+  {
+    "id": 25500124,
+    "eventName": "play_activitysfx_tangren_communicator_receive_loop",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500125,
+    "eventName": "play_activitysfx_tangren_shushi_device",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500126,
+    "eventName": "play_activitysfx_tangren_film_play_loop",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500127,
+    "eventName": "play_activitysfx_tangren_closeup_lightning",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500128,
+    "eventName": "play_activitysfx_tangren_mysticism_daoguang",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500129,
+    "eventName": "play_activitysfx_tangren_mysticism_bullet",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500130,
+    "eventName": "play_activitysfx_tangren_thought_dianliu",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500131,
+    "eventName": "play_activitysfx_tangren_yishi_huilong",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500132,
+    "eventName": "play_activitysfx_tangren_yinzhen_swipe",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500133,
+    "eventName": "play_activitysfx_tangren_yinzhen_bloodstain",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500134,
+    "eventName": "play_activitysfx_tangren_yinzhen_blooddrop",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500135,
+    "eventName": "play_activitysfx_tangren_yinzhen_cross",
+    "bankName": "activity_tangren2_5_sfx_part02"
+  },
+  {
+    "id": 25500136,
+    "eventName": "play_activitystory_tangren_click_mouse",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500137,
+    "eventName": "play_activitystory_tangren_knock_wheelchair",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500138,
+    "eventName": "play_activitystory_tangren_puppet_run",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500139,
+    "eventName": "play_activitystory_tangren_printer_button",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500140,
+    "eventName": "play_activitystory_tangren_printing_paper",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500141,
+    "eventName": "play_activitystory_tangren_aircraft_window",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500142,
+    "eventName": "play_activitystory_tangren_takeoff",
+    "bankName": "activitystory_tangren2_5_fresto_sfx"
+  },
+  {
+    "id": 25500143,
+    "eventName": "play_activitysfx_tangren_child_laughing",
+    "bankName": "activity_tangren2_5_sfx_fuyong"
+  },
+  {
+    "id": 25500144,
+    "eventName": "play_activitysfx_tangren_cuffs",
+    "bankName": "activity_tangren2_5_sfx_fuyong"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -3923,6 +4643,26 @@
     "id": 21530004,
     "eventName": "play_activitymusic_seasonmain_2_1",
     "bankName": "activity2_1_music"
+  },
+  {
+    "id": 25530001,
+    "eventName": "",
+    "bankName": ""
+  },
+  {
+    "id": 25530002,
+    "eventName": "play_activitymusic_intofilm_2_5",
+    "bankName": "activity2_5_music"
+  },
+  {
+    "id": 25530003,
+    "eventName": "play_activitymusic_daluogu_2_5",
+    "bankName": "activity2_5_music"
+  },
+  {
+    "id": 25530004,
+    "eventName": "play_activitymusic_qiangliang_2_5",
+    "bankName": "activity2_5_music"
   },
   {
     "id": 520105,
@@ -4108,5 +4848,60 @@
     "id": 24520008,
     "eventName": "play_diqiu2_4_pv_sfx_vo_music",
     "bankName": "diqiu2_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 25520001,
+    "eventName": "play_tangren2_5_pv_sfx_vo_music",
+    "bankName": "tangren2_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 25520002,
+    "eventName": "play_activitymusic_endingtheme_2_5",
+    "bankName": "activity2_5_music"
+  },
+  {
+    "id": 25520003,
+    "eventName": "play_tangren2_5_cutscene_jinghuajiaopian_sfx",
+    "bankName": "tangren2_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 25520004,
+    "eventName": "play_tangren2_5_cutscene_juezhan_sfx",
+    "bankName": "tangren2_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 25520005,
+    "eventName": "play_activitysfx_tangren_chapter_big_open",
+    "bankName": "activitysfx_tangren2_5_sfx"
+  },
+  {
+    "id": 25520006,
+    "eventName": "play_activitysfx_tangren_chapter_small_open",
+    "bankName": "activitysfx_tangren2_5_sfx"
+  },
+  {
+    "id": 25520007,
+    "eventName": "play_activitysfx_tangren_chapter_small_close",
+    "bankName": "activitysfx_tangren2_5_sfx"
+  },
+  {
+    "id": 25520008,
+    "eventName": "play_activitysfx_tangren_chapter_special_open",
+    "bankName": "activitysfx_tangren2_5_sfx"
+  },
+  {
+    "id": 25520009,
+    "eventName": "play_activitysfx_tangren_chapter_special_close",
+    "bankName": "activitysfx_tangren2_5_sfx"
+  },
+  {
+    "id": 25520010,
+    "eventName": "play_tangren2_5_cutscene_summon_brutal",
+    "bankName": "tangren2_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 25520011,
+    "eventName": "play_tangren2_5_cutscene_mutation",
+    "bankName": "tangren2_5_cutscene_sfx_vo"
   }
 ]

@@ -25,9 +25,7 @@ function slot0._delayCheckFuncUnlock(slot0)
 		FriendRpc.instance:sendLoadFriendInfosRequest()
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
-		SignInRpc.instance:sendGetSignInInfoRequest()
-	end
+	SignInController.instance:sendGetSignInInfoRequestIfUnlock()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Bank) then
 		StoreRpc.instance:sendGetStoreInfosRequest()

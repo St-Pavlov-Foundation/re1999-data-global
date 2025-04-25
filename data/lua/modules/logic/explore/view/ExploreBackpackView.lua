@@ -69,7 +69,9 @@ function slot0.onDestroyView(slot0)
 end
 
 function slot0.OnItemKeyDown(slot0, slot1)
-	if ViewMgr.instance:IsPopUpViewOpen() then
+	if PCInputController.instance:isPopUpViewOpen({
+		ViewName.ExploreBackpackView
+	}) then
 		return
 	end
 

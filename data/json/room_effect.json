@@ -28,5 +28,35 @@
     "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_zd.prefab",
     "duration": 60,
     "audioId": 20009067
+  },
+  {
+    "id": 6,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_chadi.prefab",
+    "duration": 10,
+    "audioId": 0
+  },
+  {
+    "id": 7,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_h.prefab",
+    "duration": 13,
+    "audioId": 20009066
+  },
+  {
+    "id": 8,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_m.prefab",
+    "duration": 10,
+    "audioId": 20009065
+  },
+  {
+    "id": 9,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_l.prefab",
+    "duration": 5,
+    "audioId": 20009064
+  },
+  {
+    "id": 10,
+    "resPath": "effects/prefabs/v1a6_yhcd/v2a5_yanhua_zd.prefab",
+    "duration": 60,
+    "audioId": 20009067
   }
 ]

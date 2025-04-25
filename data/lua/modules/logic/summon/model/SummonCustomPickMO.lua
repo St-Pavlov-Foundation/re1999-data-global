@@ -16,6 +16,19 @@ function slot0.update(slot0, slot1)
 		end
 	end
 
+	if SummonEnum.ChooseNeedFirstHeroIds then
+		for slot5, slot6 in ipairs(SummonEnum.ChooseNeedFirstHeroIds) do
+			for slot10, slot11 in ipairs(slot0.pickHeroIds) do
+				if slot11 == slot6 then
+					table.remove(slot0.pickHeroIds, slot10)
+					table.insert(slot0.pickHeroIds, 1, slot6)
+
+					break
+				end
+			end
+		end
+	end
+
 	if slot1.usedFirstSSRGuarantee ~= nil then
 		slot0._haveFirstSSR = slot1.usedFirstSSRGuarantee
 	end

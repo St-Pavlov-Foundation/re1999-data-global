@@ -71,11 +71,10 @@ function slot0._enterActivity11602(slot0, slot1)
 	end
 
 	slot5 = FlowSequence.New()
-	slot8 = slot6 and slot6.isRetroAcitivity == 1 and VersionActivity2_5EnterController or VersionActivity1_6EnterController
 
 	slot5:addWork(OpenViewWork.New({
-		openFunction = slot8.directOpenVersionActivityEnterView,
-		openFunctionObj = slot8.instance,
+		openFunction = uv0.open2_5ReactivityEnterView,
+		openFunctionObj = (slot6 and slot6.isRetroAcitivity == 1 and VersionActivity2_5EnterController or VersionActivity1_6EnterController).instance,
 		waitOpenViewName = ActivityConfig.instance:getActivityCo(VersionActivity1_6Enum.ActivityId.Dungeon) and slot6.isRetroAcitivity == 1 and ViewName.VersionActivity2_5EnterView or ViewName.VersionActivity1_6EnterView
 	}))
 	slot5:registerDoneListener(function ()
@@ -92,6 +91,10 @@ function slot0._enterActivity11602(slot0, slot1)
 	slot5:start()
 
 	uv0.sequence = slot5
+end
+
+function slot0.open2_5ReactivityEnterView()
+	VersionActivity2_5EnterController.instance:directOpenVersionActivityEnterView(VersionActivity2_5Enum.ActivityId.Reactivity)
 end
 
 function slot0.enterActivity11609(slot0, slot1)

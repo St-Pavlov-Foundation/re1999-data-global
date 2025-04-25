@@ -1,13 +1,14 @@
 module("modules.configs.excel2json.lua_room_atmosphere", package.seeall)
 
 slot1 = {
-	buildingId = 2,
-	openTime = 6,
 	effectSequence = 3,
-	cyclesTimes = 5,
-	id = 1,
+	openTime = 6,
+	buildingId = 2,
+	cdtimes = 9,
 	residentEffect = 4,
 	triggerType = 8,
+	cyclesTimes = 5,
+	id = 1,
 	durationDay = 7
 }
 slot2 = {

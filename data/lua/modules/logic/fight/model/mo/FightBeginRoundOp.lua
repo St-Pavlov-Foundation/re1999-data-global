@@ -12,6 +12,7 @@ function slot0.ctor(slot0)
 	slot0.moveToIndex = nil
 	slot0.costActPoint = 1
 	slot0._needCopyCard = nil
+	slot0.cardColor = FightEnum.CardColor.None
 end
 
 function slot0.init(slot0, slot1)

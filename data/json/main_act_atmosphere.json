@@ -6,6 +6,8 @@
       "#simage_actbg",
       "left/#go_activity/vx_actbg"
     ],
+    "mainViewActBtn": [],
+    "mainViewActBtnPrefix": "",
     "isShowLogo": false,
     "isShowActBg": false,
     "mainThumbnailView": [
@@ -17,8 +19,32 @@
     "id": 12431,
     "effectDuration": 0,
     "mainView": [],
+    "mainViewActBtn": [],
+    "mainViewActBtnPrefix": "",
     "isShowLogo": false,
     "isShowActBg": true,
     "mainThumbnailView": []
+  },
+  {
+    "id": 12510,
+    "effectDuration": 0,
+    "mainView": [
+      "#simage_actbg",
+      "left/#go_activity/vx_actbg",
+      "left/#go_activity/star_02",
+      "left/#go_activity/scroll_view/#go_actbg",
+      "left/#go_activity/scroll_view/#go_actbg_eff"
+    ],
+    "mainViewActBtn": [
+      "act_iconbg",
+      "act_iconbg_eff"
+    ],
+    "mainViewActBtnPrefix": "act_",
+    "isShowLogo": true,
+    "isShowActBg": true,
+    "mainThumbnailView": [
+      "#simage_actbg",
+      "#simage_logo"
+    ]
   }
 ]

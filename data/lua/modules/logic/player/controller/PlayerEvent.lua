@@ -15,6 +15,7 @@ slot0.SelectCloth = 11
 slot0.ShowClothSkillTips = 12
 slot0.UpdateSimpleProperty = 13
 slot0.UpdateAssistRewardCount = 14
+slot0.OnDailyRefresh = 15
 slot0.RenameFlagUpdate = 20
 slot0.ChangeBgTab = 1000
 slot0.ShowHideRoot = 1001

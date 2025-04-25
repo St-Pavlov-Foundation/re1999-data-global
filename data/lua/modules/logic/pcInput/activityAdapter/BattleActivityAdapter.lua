@@ -92,7 +92,27 @@ function slot0.OnkeyUp(slot0, slot1)
 		return
 	end
 
+	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(102) then
+		return
+	end
+
 	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+end
+
+function slot0.OnkeyDown(slot0, slot1)
+	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, slot1) then
+		return
+	end
+
+	if ViewMgr.instance:IsPopUpViewOpen() then
+		return
+	end
+
+	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(102) then
+		return
+	end
+
+	BaseActivityAdapter.OnkeyDown(slot0, slot1)
 end
 
 return slot0

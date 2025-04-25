@@ -23,7 +23,7 @@ function slot0._openPlayerCardView(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.NewPlayerCardView, slot0.viewParam)
+	ViewMgr.instance:openView(ViewName.NewPlayerCardContentView, slot0.viewParam)
 end
 
 function slot0.playChangeEffectAudio(slot0)
@@ -65,7 +65,9 @@ function slot0.statEnd(slot0)
 		[StatEnum.EventProperties.GameProgress] = slot0:getStatProgress(),
 		[StatEnum.EventProperties.BaseInfomation] = slot0:getStatBaseInfo(),
 		[StatEnum.EventProperties.CritterId] = slot12,
-		[StatEnum.EventProperties.CritterName] = slot13
+		[StatEnum.EventProperties.CritterName] = slot13,
+		[StatEnum.EventProperties.PlayerCardSkinName] = slot0:getSkinName(),
+		[StatEnum.EventProperties.HeadName] = slot0:getHeadName()
 	})
 end
 
@@ -204,10 +206,6 @@ function slot0.getAchievementNameListByTaskId(slot0, slot1)
 	return slot2
 end
 
-function slot0.getStatTheme(slot0)
-	slot2 = PlayerCardModel.instance:getCardInfo():getThemeId()
-end
-
 function slot0.getUseTime(slot0)
 	slot1 = 0
 
@@ -233,6 +231,18 @@ function slot0.getGroupNameListByTaskId(slot0, slot1)
 	end
 
 	return slot2
+end
+
+function slot0.getSkinName(slot0)
+	if PlayerCardModel.instance:getCardInfo():getThemeId() ~= 0 then
+		return ItemConfig.instance:getItemCo(slot2).name
+	end
+
+	return "默认"
+end
+
+function slot0.getHeadName(slot0)
+	return lua_item.configDict[PlayerModel.instance:getPlayinfo().portrait].name
 end
 
 slot0.instance = slot0.New()

@@ -1,0 +1,74 @@
+[
+  {
+    "type": 1,
+    "rewardId": 1,
+    "prob": 200,
+    "bonus": "26#1#20|2#2503#15|1#491004#1",
+    "blessingtitle": "",
+    "blessingdes": ""
+  },
+  {
+    "type": 1,
+    "rewardId": 2,
+    "prob": 200,
+    "bonus": "26#2#20|2#2503#20|2#3#5000",
+    "blessingtitle": "",
+    "blessingdes": ""
+  },
+  {
+    "type": 1,
+    "rewardId": 3,
+    "prob": 200,
+    "bonus": "26#3#20|2#2503#25",
+    "blessingtitle": "",
+    "blessingdes": ""
+  },
+  {
+    "type": 2,
+    "rewardId": 1,
+    "prob": 166,
+    "bonus": "26#2#20|26#4#20|2#2503#20|1#491003#1",
+    "blessingtitle": "language_10069481",
+    "blessingdes": "language_10069482"
+  },
+  {
+    "type": 2,
+    "rewardId": 2,
+    "prob": 166,
+    "bonus": "26#2#20|26#4#20|2#2503#20|2#3#5000",
+    "blessingtitle": "language_10069483",
+    "blessingdes": "language_10069484"
+  },
+  {
+    "type": 2,
+    "rewardId": 3,
+    "prob": 170,
+    "bonus": "26#3#20|26#4#20|2#2503#30",
+    "blessingtitle": "language_10069485",
+    "blessingdes": "language_10069486"
+  },
+  {
+    "type": 2,
+    "rewardId": 4,
+    "prob": 166,
+    "bonus": "26#3#20|26#4#20|2#2503#25|2#5#3000",
+    "blessingtitle": "language_10069487",
+    "blessingdes": "language_10069488"
+  },
+  {
+    "type": 2,
+    "rewardId": 5,
+    "prob": 166,
+    "bonus": "26#1#20|26#4#20|2#2503#15|1#491004#1",
+    "blessingtitle": "language_10069489",
+    "blessingdes": "language_10069490"
+  },
+  {
+    "type": 2,
+    "rewardId": 6,
+    "prob": 166,
+    "bonus": "26#1#20|26#4#20|2#2503#10|1#491004#2",
+    "blessingtitle": "language_10069491",
+    "blessingdes": "language_10069492"
+  }
+]

@@ -89,36 +89,50 @@ function slot0.isFullPool(slot0, slot1)
 	return true
 end
 
-function slot0.getPoolCurrency(slot0, slot1)
+function slot0.getPoolCritterCount(slot0, slot1)
+	if slot0:getById(slot1) then
+		return slot2:getCritterCount()
+	end
+
+	return 0
+end
+
+function slot0.getPoolCurrency(slot0, slot1, slot2)
 	if not slot1 then
 		return
 	end
 
-	return slot0:getCostInfo(CritterConfig.instance:getCritterSummonCfg(slot1).cost)
+	return slot0:getCostInfo(CritterConfig.instance:getCritterSummonCfg(slot1).cost, slot2)
 end
 
-function slot0.notSummonToast(slot0, slot1)
-	slot2, slot3 = slot0:isCanSummon(slot1)
-	slot4, slot5, slot6, slot7 = slot0:getPoolCurrency(slot1)
+function slot0.notSummonToast(slot0, slot1, slot2)
+	slot3, slot4 = slot0:isCanSummon(slot1)
+	slot5, slot6, slot7, slot8 = slot0:getPoolCurrency(slot1, slot2)
 
-	if not slot2 then
-		return slot3
-	elseif not slot6 then
-		return ToastEnum.RoomCritterNotEnough, slot7
+	if not slot3 then
+		return slot4
+	elseif not slot7 then
+		return ToastEnum.RoomCritterNotEnough, slot8
 	end
 
 	return ""
 end
 
-function slot0.getCostInfo(slot0, slot1)
+function slot0.getCostInfo(slot0, slot1, slot2)
 	if string.nilorempty(slot1) then
 		return
 	end
 
-	slot2, slot3, slot4 = SummonMainModel.getCostByConfig(slot1)
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot2, slot3)
+	slot3 = 1
 
-	return slot6, luaLang("multiple") .. slot4, slot4 <= ItemModel.instance:getItemQuantity(slot2, slot3), slot5.name
+	if slot2 then
+		slot3 = math.max(1, tonumber(slot2))
+	end
+
+	slot4, slot5, slot6 = SummonMainModel.getCostByConfig(slot1)
+	slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot4, slot5)
+
+	return slot8, luaLang("multiple") .. slot6 * slot3, ItemModel.instance:getItemQuantity(slot4, slot5) >= slot6 * slot3, slot7.name
 end
 
 function slot0.getCostCurrency(slot0)

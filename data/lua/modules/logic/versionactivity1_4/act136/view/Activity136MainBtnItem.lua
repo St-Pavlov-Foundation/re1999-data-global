@@ -8,7 +8,15 @@ function slot0.init(slot0, slot1)
 	slot0._btnitem = gohelper.findChildClick(slot0.go, "bg")
 	slot0._redDotParent = gohelper.findChild(slot0.go, "go_activityreddot")
 
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "icon_5")
+	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. "icon_5" or "icon_5", true)
+
+	if not slot2 and ActivityConfig.instance:getMainActAtmosphereConfig() then
+		for slot9, slot10 in ipairs(slot5.mainViewActBtn) do
+			if gohelper.findChild(slot0.go, slot10) then
+				gohelper.setActive(slot11, slot2)
+			end
+		end
+	end
 
 	slot0.redDot = RedDotController.instance:addNotEventRedDot(slot0._redDotParent, Activity136Model.isShowRedDot, Activity136Model.instance)
 

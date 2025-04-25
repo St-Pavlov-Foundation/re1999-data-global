@@ -1,15 +1,16 @@
 module("modules.configs.excel2json.lua_version_res_split", package.seeall)
 
 slot1 = {
-	path = 7,
-	folderPath = 6,
+	path = 8,
 	guide = 4,
+	videoPath = 7,
 	audio = 2,
-	uiFolder = 8,
+	folderPath = 6,
+	uiFolder = 9,
 	story = 5,
 	chapter = 3,
 	id = 1,
-	uiPath = 9
+	uiPath = 10
 }
 slot2 = {
 	"id"

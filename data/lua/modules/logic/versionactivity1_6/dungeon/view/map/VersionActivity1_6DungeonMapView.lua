@@ -42,11 +42,11 @@ function slot0.removeEvents(slot0)
 end
 
 function slot0.btnActivityStoreOnClick(slot0)
-	VersionActivity1_6EnterController.instance:openStoreView()
+	ReactivityController.instance:openReactivityStoreView(VersionActivity2_5Enum.ActivityId.Reactivity)
 end
 
 function slot0.btnActivityTaskOnClick(slot0)
-	VersionActivity1_6DungeonController.instance:openTaskView()
+	ReactivityController.instance:openReactivityTaskView(VersionActivity2_5Enum.ActivityId.Reactivity)
 end
 
 function slot0.btnActivitySkillOnClick(slot0)
@@ -142,7 +142,7 @@ function slot0.refreshSkillProgress(slot0)
 end
 
 function slot0.refreshStoreRemainTime(slot0)
-	if TimeUtil.OneDaySecond < ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now() then
+	if TimeUtil.OneDaySecond < ActivityModel.instance:getActivityInfo()[VersionActivity2_5Enum.ActivityId.ReactivityStore]:getRealEndTimeStamp() - ServerTime.now() then
 		slot0._txtStoreRemainTime.text = Mathf.Floor(slot3 / TimeUtil.OneDaySecond) .. "d"
 
 		return

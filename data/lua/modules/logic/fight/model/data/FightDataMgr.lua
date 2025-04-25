@@ -28,6 +28,7 @@ function slot0.initTrueDataMgr(slot0)
 	slot0.paTaMgr = slot0:registMgr(FightPaTaDataMgr)
 	slot0.playCardMgr = slot0:registMgr(FightPlayCardDataMgr)
 	slot0.ASFDDataMgr = slot0:registMgr(FightASFDDataMgr)
+	slot0.teamDataMgr = slot0:registMgr(FightTeamDataMgr)
 end
 
 function slot0.initTempDataMgr(slot0)
@@ -35,6 +36,7 @@ function slot0.initTempDataMgr(slot0)
 	slot0.operationMgr = slot0:registMgr(FightOperationDataMgr)
 	slot0.simulationMgr = slot0:registMgr(FightSimulationDataMgr)
 	slot0.tempMgr = slot0:registMgr(FightTempDataMgr)
+	slot0.LYDataMgr = slot0:registMgr(FightLYDataMgr)
 end
 
 function slot0.cancelOperation(slot0)

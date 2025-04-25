@@ -146,12 +146,6 @@ end
 function slot0._getReport(slot0)
 	slot1, slot2 = WeatherModel.instance:getReport()
 
-	if not slot1 or not slot2 then
-		WeatherModel.instance:resetDay()
-
-		slot1, slot2 = WeatherModel.instance:getReport()
-	end
-
 	return slot1, slot2
 end
 

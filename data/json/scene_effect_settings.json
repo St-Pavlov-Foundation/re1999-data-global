@@ -1,0 +1,188 @@
+[
+  {
+    "sceneId": 3,
+    "id": 1,
+    "path": "s01_obj_a/Anim/Obj/v2a5_m_s01_light_a2",
+    "tag": "",
+    "colorKey": "_MainCol",
+    "lightColor1": [
+      255,
+      243,
+      231,
+      50
+    ],
+    "lightColor2": [
+      141,
+      219,
+      255,
+      26
+    ],
+    "lightColor3": [
+      255,
+      182,
+      130,
+      0
+    ],
+    "lightColor4": [
+      89,
+      175,
+      255,
+      26
+    ]
+  },
+  {
+    "sceneId": 3,
+    "id": 2,
+    "path": "s01_obj_a/Anim/Obj/v2a5_m_s01_light_a1",
+    "tag": "",
+    "colorKey": "_MainCol",
+    "lightColor1": [
+      255,
+      243,
+      231,
+      45
+    ],
+    "lightColor2": [
+      141,
+      219,
+      255,
+      26
+    ],
+    "lightColor3": [
+      255,
+      182,
+      130,
+      40
+    ],
+    "lightColor4": [
+      51,
+      157,
+      255,
+      76
+    ]
+  },
+  {
+    "sceneId": 3,
+    "id": 3,
+    "path": "s01_obj_a/Anim/Effect/smoke/l_smoke1",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      230,
+      198,
+      172,
+      203
+    ],
+    "lightColor2": [
+      217,
+      217,
+      206,
+      178
+    ],
+    "lightColor3": [
+      204,
+      171,
+      142,
+      230
+    ],
+    "lightColor4": [
+      142,
+      178,
+      204,
+      204
+    ]
+  },
+  {
+    "sceneId": 3,
+    "id": 4,
+    "path": "s01_obj_a/Anim/Effect/smoke/l_smoke2",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      230,
+      198,
+      172,
+      203
+    ],
+    "lightColor2": [
+      217,
+      217,
+      206,
+      178
+    ],
+    "lightColor3": [
+      204,
+      171,
+      142,
+      230
+    ],
+    "lightColor4": [
+      142,
+      178,
+      204,
+      204
+    ]
+  },
+  {
+    "sceneId": 3,
+    "id": 5,
+    "path": "s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back",
+    "tag": "frame",
+    "colorKey": "",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      83,
+      111,
+      175,
+      110
+    ],
+    "lightColor3": [
+      204,
+      144,
+      133,
+      152
+    ],
+    "lightColor4": [
+      78,
+      145,
+      204,
+      148
+    ]
+  },
+  {
+    "sceneId": 3,
+    "id": 6,
+    "path": "s01_obj_a/Anim/Effect/bgm/bg",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      20
+    ],
+    "lightColor2": [
+      107,
+      127,
+      121,
+      38
+    ],
+    "lightColor3": [
+      204,
+      153,
+      143,
+      38
+    ],
+    "lightColor4": [
+      3,
+      26,
+      72,
+      38
+    ]
+  }
+]

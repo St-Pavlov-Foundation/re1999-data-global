@@ -220,7 +220,7 @@ function slot0.refreshHeader(slot0)
 end
 
 function slot0.refreshMultiHp(slot0)
-	if string.nilorempty(lua_monster_template.configDict[slot0.monsterConfig.template].multiHp) then
+	if not FightConfig.instance:getMultiHpListByMonsterId(slot0.monsterConfig.id, slot0.isSimple) then
 		gohelper.setActive(slot0._gomultihp, false)
 
 		return
@@ -228,16 +228,16 @@ function slot0.refreshMultiHp(slot0)
 
 	gohelper.setActive(slot0._gomultihp, true)
 
-	for slot7 = 1, #string.split(slot1.multiHp, "#") do
-		if not slot0.multiHpGoList[slot7] then
+	for slot6 = 1, #slot1 do
+		if not slot0.multiHpGoList[slot6] then
 			table.insert(slot0.multiHpGoList, gohelper.cloneInPlace(slot0._gomultihpitem))
 		end
 
-		gohelper.setActive(slot8, true)
+		gohelper.setActive(slot7, true)
 	end
 
-	for slot7 = slot3 + 1, #slot0.multiHpGoList do
-		gohelper.setActive(slot0.multiHpGoList[slot7], false)
+	for slot6 = slot2 + 1, #slot0.multiHpGoList do
+		gohelper.setActive(slot0.multiHpGoList[slot6], false)
 	end
 end
 

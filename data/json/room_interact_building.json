@@ -30,6 +30,16 @@
     "cameraId": 2343
   },
   {
+    "buildingId": 22304,
+    "heroCount": 5,
+    "intervalTime": 300000,
+    "interactType": 1,
+    "showTime": 30000,
+    "heroAnimStr": "idle|idle|idle|idle|idle",
+    "buildingAnim": "interact",
+    "cameraId": 2521
+  },
+  {
     "buildingId": 12723,
     "heroCount": 1,
     "intervalTime": 30000,

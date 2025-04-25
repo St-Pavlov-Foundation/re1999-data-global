@@ -61,7 +61,7 @@ function slot0.startAllocateCardEnergy(slot0)
 			slot0.tempVector2:Set(slot8, slot9)
 
 			slot10, slot11 = recthelper.screenPosToAnchorPos2(slot0.tempVector2, slot0.rectFlyContainer)
-			slot12 = slot0:getFlyItem(flyIndex)
+			slot12 = slot0:getFlyItem(slot0.flyCount)
 
 			recthelper.setAnchor(slot12.rectTr, 0, 0)
 			table.insert(slot0.tweenIdList, ZProj.TweenHelper.DOAnchorPos(slot12.rectTr, slot10, slot11, uv0.FlyDuration, slot0.onFlyDone, slot0))

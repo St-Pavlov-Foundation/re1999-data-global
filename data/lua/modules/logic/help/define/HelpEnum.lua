@@ -45,7 +45,7 @@ slot0.HelpId = {
 	RougeCollectionChessViewHelp = 19714,
 	VersionActivityMeiLanNi = 150,
 	Adventure = 103,
-	Season1_8CardGetViewHelp = 1800007,
+	Act183Repress = 2500003,
 	VersionActivity_1_3Role1Chess = 178,
 	RougeFactionViewHelp = 19704,
 	RoomBuildingView = 126,
@@ -73,8 +73,12 @@ slot0.HelpId = {
 	RougeDifficultyViewHelp = 19703,
 	PinballGameHelp = 2400301,
 	HeroGroupNormal = 109,
+	Act183EnterMain = 2500001,
 	Fight = 115,
 	Season1_4MainViewHelp = 181,
+	Act183EnterDungeon = 2500002,
+	Season1_8CardGetViewHelp = 1800007,
+	Act183DungeonAndRepress = 2500004,
 	RougeHeroGroupFightViewHelp = 19711,
 	SeasonGuide803 = 152,
 	VersionActivity_1_3_119 = 171,
@@ -112,6 +116,10 @@ slot0.SaveServer = {
 slot0.HelpType = {
 	VersionActivity = 2,
 	Normal = 1
+}
+slot0.PageTabShowType = {
+	Video = 1,
+	HelpView = 2
 }
 
 return slot0

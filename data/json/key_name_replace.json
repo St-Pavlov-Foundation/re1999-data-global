@@ -49,7 +49,7 @@
   },
   {
     "name": "BackQuote",
-    "replacedName": "~"
+    "replacedName": "`"
   },
   {
     "name": "Return",
@@ -94,5 +94,45 @@
   {
     "name": "Keypad0",
     "replacedName": "Pad10"
+  },
+  {
+    "name": "Semicolon",
+    "replacedName": ";"
+  },
+  {
+    "name": "Quote",
+    "replacedName": " '"
+  },
+  {
+    "name": "Backslash",
+    "replacedName": "\\"
+  },
+  {
+    "name": "Comma",
+    "replacedName": ","
+  },
+  {
+    "name": "Period",
+    "replacedName": "."
+  },
+  {
+    "name": "Slash",
+    "replacedName": "/"
+  },
+  {
+    "name": "LeftBracket",
+    "replacedName": "["
+  },
+  {
+    "name": "RightBracket",
+    "replacedName": "]"
+  },
+  {
+    "name": "Minus",
+    "replacedName": "-"
+  },
+  {
+    "name": "Equals",
+    "replacedName": "="
   }
 ]

@@ -2,7 +2,7 @@ module("modules.logic.fight.system.work.FightWorkUpdateFightByProto", package.se
 
 slot0 = class("FightWorkUpdateFightByProto", FightWorkItem)
 
-function slot0.onInitialization(slot0, slot1)
+function slot0.onConstructor(slot0, slot1)
 	slot0._fightProto = slot1
 end
 

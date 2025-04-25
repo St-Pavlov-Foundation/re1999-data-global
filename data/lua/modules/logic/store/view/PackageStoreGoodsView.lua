@@ -120,6 +120,15 @@ function slot0._editableInitView(slot0)
 	slot0._gooffTag = gohelper.findChild(slot0.viewGO, "view/propinfo/#simage_icon/#go_offTag")
 	slot0._txtoff = gohelper.findChildText(slot0.viewGO, "view/propinfo/#simage_icon/#go_offTag/#txt_off")
 	slot0._gotxtCost = gohelper.findChildText(slot0.viewGO, "view/propinfo/#btn_buy/cost/txt")
+	slot0._seasoncardGo = gohelper.findChild(slot0.viewGO, "view/seasoncard")
+	slot1 = gohelper.findChild(slot0._seasoncardGo, "reward")
+	slot0._seasoncard_txtleft = gohelper.findChildText(slot1, "left/txt")
+	slot0._seasoncard_txtright = gohelper.findChildText(slot1, "right/txt")
+	slot0._seasoncard_iconleft = gohelper.findChild(slot1, "left/#go_lefticon")
+	slot0._seasoncard_iconleft2 = gohelper.findChild(slot1, "left/#go_lefticon2")
+	slot0._seasoncard_goicon2new = gohelper.findChild(slot1, "left/#go_lefticon2/new")
+	slot0._seasoncard_iconright = gohelper.findChild(slot1, "right/#go_righticon")
+	slot0._seasoncard_iconpower = gohelper.findChild(slot1, "right/#go_powericon")
 end
 
 function slot0.onUpdateParam(slot0)
@@ -148,27 +157,32 @@ function slot0.onOpen(slot0)
 	slot0:_refreshPriceArea()
 	slot0:_refreshTagArea()
 
-	slot2 = slot0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId
-	slot3 = slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
-	slot4 = slot0._mo.id == StoreEnum.NewbiePackId
-	slot5 = not string.nilorempty(slot0._mo.config.detailDesc)
+	slot2 = slot0._mo.goodsId == StoreEnum.SeasonCardGoodsId
+	slot3 = slot0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId
+	slot4 = slot0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
+	slot5 = slot0._mo.id == StoreEnum.NewbiePackId
+	slot6 = not string.nilorempty(slot0._mo.config.detailDesc)
 
 	gohelper.setActive(slot0._gonormal, false)
 	gohelper.setActive(slot0._goDetailDescNormal, false)
 	gohelper.setActive(slot0._goyueka, false)
 	gohelper.setActive(slot0._godailyrelease, false)
 	gohelper.setActive(slot0._golittlemonthcard, false)
+	gohelper.setActive(slot0._seasoncardGo, false)
 
 	if slot0._mo.goodsId == StoreEnum.MonthCardGoodsId then
 		gohelper.setActive(slot0._goyueka, true)
 		slot0:_updateMonthCard()
 	elseif slot2 then
+		gohelper.setActive(slot0._seasoncardGo, true)
+		slot0:_updateSeasonCard()
+	elseif slot3 then
 		gohelper.setActive(slot0._golittlemonthcard, true)
 		slot0:_updateLittleMonthCard()
-	elseif slot3 then
+	elseif slot4 then
 		gohelper.setActive(slot0._godailyrelease, true)
 		slot0:_updateDailyReleasePackage()
-	elseif slot5 then
+	elseif slot6 then
 		gohelper.setActive(slot0._goDetailDescNormal, true)
 		slot0:_updateDetailDescNormalPack()
 	else
@@ -176,7 +190,7 @@ function slot0.onOpen(slot0)
 		slot0:_updateNormal()
 	end
 
-	gohelper.setActive(slot0._gonewbiePick, slot4)
+	gohelper.setActive(slot0._gonewbiePick, slot5)
 	slot0:refreshSkinTips(slot0._mo)
 end
 
@@ -308,8 +322,10 @@ function slot0._updateDetailDescNormalPack(slot0)
 
 	gohelper.setActive(slot7, false)
 	slot0:_updateNormalPackGoods(slot7, gohelper.findChild(slot0._goDetailDescNormal, "info/scroll/#scroll_product/Viewport/Content"))
+	gohelper.CreateObjList(nil, function (slot0, slot1, slot2, slot3)
+		gohelper.findChildText(slot1, "").text = slot2
+	end, string.split(slot0._mo.config.detailDesc, "\n"), nil, gohelper.findChild(slot0._goDetailDescNormal, "info/desc/info/txt"))
 
-	gohelper.findChildText(slot0._goDetailDescNormal, "info/desc/info/txt").text = slot0._mo.config.detailDesc
 	gohelper.findChildText(slot0._goDetailDescNormal, "title/#txt_goodsNameCn").text = slot0._mo.config.name
 end
 
@@ -403,6 +419,33 @@ function slot0._updateLittleMonthCard(slot0)
 	slot0._littleMonthCardPowerItemIcon = slot0._littleMonthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(slot0._littlemonthcardiconpower)
 
 	slot0:_setIcon(slot0._littleMonthCardPowerItemIcon, slot4[1], slot4[2], slot4[3])
+end
+
+function slot0._updateSeasonCard(slot0)
+	gohelper.setActive(slot0._btnbuy.gameObject, true)
+	gohelper.setActive(slot0._gotips, false)
+
+	slot4 = string.splitToNumber(string.split(StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId).onceBonus, "|")[1], "#")
+	slot0._monthCardItemIcon = slot0._monthCardItemIcon or IconMgr.instance:getCommonItemIcon(slot0._seasoncard_iconleft)
+
+	slot0:_setIcon(slot0._monthCardItemIcon, slot4[1], slot4[2], slot4[3] * StoreConfig.instance:getSeasonCardMultiFactor())
+
+	slot9 = string.splitToNumber(string.split(slot2.onceBonus, "|")[2], "#")
+	slot0._monthCardItemIcon2 = slot0._monthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(slot0._seasoncard_iconleft2)
+
+	gohelper.setAsFirstSibling(slot0._monthCardItemIcon2.go)
+	slot0:_setIcon(slot0._monthCardItemIcon2, slot9[1], slot9[2], slot9[3] * slot1)
+	gohelper.setActive(slot0._seasoncard_goicon2new, StoreHelper.checkMonthCardLevelUpTagOpen())
+
+	slot9 = string.splitToNumber(string.split(slot2.dailyBonus, "|")[1], "#")
+	slot0._monthCardDailyItemIcon = slot0._monthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(slot0._seasoncard_iconright)
+
+	slot0:_setIcon(slot0._monthCardDailyItemIcon, slot9[1], slot9[2], slot9[3])
+
+	slot9 = string.splitToNumber(string.split(slot2.dailyBonus, "|")[2], "#")
+	slot0._monthCardPowerItemIcon = slot0._monthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(slot0._seasoncard_iconpower)
+
+	slot0:_setIcon(slot0._monthCardPowerItemIcon, slot9[1], slot9[2], slot9[3])
 end
 
 function slot0._updateDailyReleasePackage(slot0, slot1)
@@ -522,10 +565,7 @@ function slot0.onDestroyView(slot0)
 	slot0._simageicon:UnLoadImage()
 	slot0._simageleftbg:UnLoadImage()
 	slot0._simagerightbg:UnLoadImage()
-
-	for slot4, slot5 in pairs(slot0._productList) do
-		slot5:onDestroyView()
-	end
+	GameUtil.onDestroyViewMemberList(slot0, "_productList")
 
 	if slot0._monthCardItemIcon then
 		slot0._monthCardItemIcon:onDestroy()

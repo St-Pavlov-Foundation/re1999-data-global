@@ -89,7 +89,9 @@ function slot0.btnEnterActivityOnClick(slot0)
 end
 
 function slot0.OnNotifyEnterActivity(slot0)
-	slot0:btnEnterActivityOnClick()
+	if slot0.showActivityId ~= nil then
+		slot0:btnEnterActivityOnClick()
+	end
 end
 
 function slot0._editableInitView(slot0)
@@ -268,7 +270,8 @@ function slot0.getActivityEnterHandleFunc(slot0, slot1)
 			[ActivityEnum.VersionActivityIdDict.Activity2_1] = VersionActivity2_1EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity2_5] = VersionActivity2_5EnterController.instance
 		}
 	end
 

@@ -2,8 +2,19 @@ module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall
 
 slot0 = class("PlayerCardPlayerInfo", BaseView)
 
+function slot0.init(slot0, slot1)
+	slot0.viewGO = slot1
+
+	slot0:onInitView()
+end
+
+function slot0.canOpen(slot0)
+	slot0:onOpen()
+	slot0:addEvents()
+end
+
 function slot0.onInitView(slot0)
-	slot0.go = gohelper.findChild(slot0.viewGO, "main/playerinfo")
+	slot0.go = gohelper.findChild(slot0.viewGO, "root/main/playerinfo")
 	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.go, "ani/headframe/#simage_headicon")
 	slot0._btnheadicon = gohelper.findChildButtonWithAudio(slot0.go, "ani/headframe/#simage_headicon")
 	slot0._goframenode = gohelper.findChild(slot0.go, "ani/headframe/#simage_headicon/#go_framenode")
@@ -118,6 +129,8 @@ function slot0.onDestroy(slot0)
 
 		slot0._loader = nil
 	end
+
+	slot0:removeEvents()
 end
 
 return slot0

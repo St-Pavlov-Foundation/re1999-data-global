@@ -4,7 +4,7 @@ slot0 = class("DecalogPresentModel", BaseModel)
 slot0.REWARD_INDEX = 1
 
 function slot0.getDecalogPresentActId(slot0)
-	return ActivityEnum.Activity.V2a2_DecalogPresent
+	return ActivityEnum.Activity.V2a5_DecaLogPresent
 end
 
 function slot0.isDecalogPresentOpen(slot0)

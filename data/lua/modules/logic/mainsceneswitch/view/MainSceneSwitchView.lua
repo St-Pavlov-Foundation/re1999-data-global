@@ -13,6 +13,7 @@ function slot0.onInitView(slot0)
 	slot0._goSceneLogo = gohelper.findChild(slot0.viewGO, "right/#go_SceneLogo")
 	slot0._goHideBtn = gohelper.findChild(slot0.viewGO, "left/LayoutGroup/#go_HideBtn")
 	slot0._btnHide = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/LayoutGroup/#go_HideBtn/#btn_Hide")
+	slot0._btnShow = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_show")
 	slot0._goSceneName = gohelper.findChild(slot0.viewGO, "left/LayoutGroup/#go_SceneName")
 	slot0._txtSceneName = gohelper.findChildText(slot0.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName")
 	slot0._goTime = gohelper.findChild(slot0.viewGO, "left/LayoutGroup/#go_Time")
@@ -31,6 +32,7 @@ function slot0.addEvents(slot0)
 	slot0._btntimerank:AddClickListener(slot0._btntimerankOnClick, slot0)
 	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
 	slot0._btnHide:AddClickListener(slot0._btnHideOnClick, slot0)
+	slot0._btnShow:AddClickListener(slot0._btnShowOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -39,6 +41,7 @@ function slot0.removeEvents(slot0)
 	slot0._btntimerank:RemoveClickListener()
 	slot0._btnrarerank:RemoveClickListener()
 	slot0._btnHide:RemoveClickListener()
+	slot0._btnShow:RemoveClickListener()
 end
 
 function slot0._btngetOnClick(slot0)
@@ -53,7 +56,12 @@ function slot0._btnHideOnClick(slot0)
 	slot0._hideTime = Time.time
 	slot0._showUI = not slot0._showUI
 
+	gohelper.setActive(slot0._btnShow, not slot0._showUI)
 	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SceneSwitchUIVisible, slot0._showUI)
+end
+
+function slot0._btnShowOnClick(slot0)
+	slot0:_btnHideOnClick()
 end
 
 function slot0._btnchangeOnClick(slot0)
@@ -85,9 +93,14 @@ function slot0._btnchangeOnClick(slot0)
 		uv0._curSceneSkinId = uv0._selectSceneSkinId
 
 		MainSceneSwitchModel.instance:setCurSceneId(uv0._selectSceneSkinId)
-		MainSceneSwitchController.instance:switchScene()
+		MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.BeforeStartSwitchScene)
+		TaskDispatcher.runDelay(uv0._delaySwitchScene, uv0, 0.8)
 		uv0._rootAnimator:Play("switch", 0, 0)
 	end)
+end
+
+function slot0._delaySwitchScene(slot0)
+	MainSceneSwitchController.instance:switchScene()
 end
 
 function slot0._btntimerankOnClick(slot0)
@@ -114,6 +127,7 @@ function slot0._editableInitView(slot0)
 	slot0._goLeft = gohelper.findChild(slot0.viewGO, "left")
 	slot0._rootAnimator = slot0.viewGO:GetComponent("Animator")
 
+	gohelper.setActive(slot0._btnShow, false)
 	gohelper.addUIClickAudio(slot0._btnchange, AudioEnum.MainSceneSkin.play_ui_main_fit_scene)
 	gohelper.setActive(slot0._btnchange, false)
 	gohelper.setActive(slot0._btnget, false)
@@ -129,7 +143,6 @@ function slot0._editableInitView(slot0)
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, slot0._onSceneSwitchUIVisible, slot0)
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneInitFinish, slot0._onSwitchSceneInitFinish, slot0)
 	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, slot0._onStartSwitchScene, slot0)
-	slot0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, slot0._onTouchScreen, slot0)
 	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
 end
 
@@ -156,7 +169,7 @@ function slot0._onSwitchSceneInitFinish(slot0)
 
 	TaskDispatcher.cancelTask(slot0._delaySwitchSceneInitFinish, slot0)
 
-	slot4 = math.max(0, 0.9 - (Time.time - slot0._startSwitchTime))
+	slot4 = math.max(0, 0.9 - (Time.time - slot0._startSwitchTime)) + 0.3
 
 	TaskDispatcher.cancelTask(slot0._delayFinishForPlayLoadingAnim, slot0)
 	TaskDispatcher.runDelay(slot0._delayFinishForPlayLoadingAnim, slot0, slot4)
@@ -181,6 +194,7 @@ function slot0._playStory(slot0)
 			mark = true
 		}, function ()
 			uv0:_showTip()
+			MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinishStory)
 		end)
 
 		return
@@ -194,20 +208,11 @@ function slot0._showTip(slot0)
 	slot0._rootAnimator:Play("open", 0, 0)
 end
 
-function slot0._onTouchScreen(slot0)
-	if not slot0._showUI then
-		slot0:_btnHideOnClick()
-	end
-end
-
 function slot0.onOpenFinish(slot0)
 	slot2 = 1
 
 	slot0:_setSelectedItemMo(MainSceneSwitchListModel.instance:getList()[slot2], slot2)
-
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) then
-		RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.MainSceneSwitch, false)
-	end
+	MainSceneSwitchController.closeReddot()
 end
 
 function slot0._onSceneSwitchUIVisible(slot0, slot1)
@@ -262,6 +267,10 @@ function slot0.onTabSwitchClose(slot0)
 	MainHeroView.setPostProcessBlur()
 end
 
+function slot0.onClose(slot0)
+	MainSceneSwitchController.closeReddot()
+end
+
 function slot0.onDestroyView(slot0)
 	MainSceneSwitchListModel.instance:clearList()
 	TaskDispatcher.cancelTask(slot0._delaySwitchSceneInitFinish, slot0)
@@ -269,6 +278,7 @@ function slot0.onDestroyView(slot0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	TaskDispatcher.cancelTask(slot0._playStory, slot0)
 	TaskDispatcher.cancelTask(slot0._delayFinishForPlayLoadingAnim, slot0)
+	TaskDispatcher.cancelTask(slot0._delaySwitchScene, slot0)
 end
 
 return slot0

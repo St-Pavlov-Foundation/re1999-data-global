@@ -6,6 +6,17 @@ slot2 = "RoomTrade_BarrageBatch"
 slot3 = "RoomTrade_PlayTradeEnterBtnAnim"
 
 function slot0.onInit(slot0)
+	slot0:clearData()
+end
+
+function slot0.reInit(slot0)
+	slot0:clearData()
+end
+
+function slot0.clearData(slot0)
+	slot0._traceItemDict = {}
+	slot0._traceChildItemDict = {}
+	slot0._isGetOrderInfo = false
 end
 
 function slot0.onGetOrderInfo(slot0, slot1)
@@ -24,6 +35,8 @@ function slot0.onGetOrderInfo(slot0, slot1)
 		end
 	end
 
+	slot0:calTracedItemDict()
+
 	slot0._wholesaleOrderMos = {}
 
 	if slot3 then
@@ -34,6 +47,8 @@ function slot0.onGetOrderInfo(slot0, slot1)
 			table.insert(slot0._wholesaleOrderMos, slot9)
 		end
 	end
+
+	slot0._isGetOrderInfo = true
 end
 
 function slot0.getDailyOrderFinishCount(slot0)
@@ -52,6 +67,8 @@ function slot0.onFinishDailyOrder(slot0, slot1, slot2, slot3)
 	else
 		slot4:setFinish()
 	end
+
+	slot0:calTracedItemDict()
 end
 
 function slot0.onRefeshDailyOrder(slot0, slot1, slot2)
@@ -66,6 +83,8 @@ function slot0.onRefeshDailyOrder(slot0, slot1, slot2)
 			end
 		end
 	end
+
+	slot0:calTracedItemDict()
 end
 
 function slot0.getRefreshCount(slot0)
@@ -73,40 +92,78 @@ function slot0.getRefreshCount(slot0)
 end
 
 function slot0.isCanRefreshDailyOrder(slot0)
-	return slot0._remainRefreshCount > 0
+	return slot0._remainRefreshCount ~= 0
 end
 
 function slot0.onTracedDailyOrder(slot0, slot1, slot2)
 	if slot0:getDailyOrderById(slot1) then
 		slot3:setTraced(slot2)
 	end
+
+	slot0:calTracedItemDict()
 end
 
-function slot0.getTracedDailyOrdersMaterials(slot0)
-	slot1, slot2 = slot0:getDailyOrderFinishCount()
+function slot0.calTracedItemDict(slot0)
+	slot0._traceItemDict = {}
+	slot0._traceChildItemDict = {}
 
-	if slot2 <= slot1 then
-		return
-	end
+	for slot5, slot6 in ipairs(slot0:getDailyOrders()) do
+		if slot6.isTraced then
+			for slot10, slot11 in ipairs(slot6:getGoodsInfo()) do
+				slot0._traceItemDict[slot12] = (slot0._traceItemDict[ManufactureConfig.instance:getItemId(slot11.productionId)] or 0) + slot11.quantity
+				slot13, slot14 = ManufactureModel.instance:getManufactureItemCount(slot11.productionId, true, true)
 
-	slot3 = {}
-
-	for slot8, slot9 in ipairs(slot0:getDailyOrders()) do
-		if slot9.isTraced then
-			for slot13, slot14 in ipairs(slot9:getGoodsInfo()) do
-				if not LuaUtil.tableContains(slot3, ManufactureConfig.instance:getItemId(slot14.productionId)) then
-					table.insert(slot3, slot15)
-				end
+				slot0:_addMatTracedCount(slot11.productionId, slot11.quantity - (slot13 + slot14))
 			end
 		end
 	end
+end
 
-	return slot3
+function slot0._addMatTracedCount(slot0, slot1, slot2)
+	if not slot1 or not ManufactureConfig.instance:getNeedMatItemList(slot1) or #slot3 <= 0 then
+		return
+	end
+
+	for slot7, slot8 in ipairs(slot3) do
+		slot10 = slot8.quantity * math.max(0, slot2)
+		slot0._traceChildItemDict[slot9] = (slot0._traceChildItemDict[ManufactureConfig.instance:getItemId(slot8.id)] or 0) + slot10
+		slot11, slot12 = ManufactureModel.instance:getManufactureItemCount(slot8.id, true, true)
+
+		slot0:_addMatTracedCount(slot8.id, slot10 - (slot11 + slot12))
+	end
 end
 
 function slot0.isTracedGoods(slot0, slot1)
-	if LuaUtil.tableNotEmpty(slot0:getTracedDailyOrdersMaterials()) then
-		return LuaUtil.tableContains(slot2, ManufactureConfig.instance:getItemId(slot1))
+	slot2 = false
+	slot3, slot4 = slot0:getDailyOrderFinishCount()
+
+	if slot3 < slot4 then
+		slot5 = ManufactureConfig.instance:getItemId(slot1)
+		slot2 = slot0._traceItemDict and slot0._traceItemDict[slot5] or slot0._traceChildItemDict and slot0._traceChildItemDict[slot5]
+	end
+
+	return slot2
+end
+
+function slot0.getTracedGoodsCount(slot0, slot1)
+	if not slot0:isTracedGoods(slot1) then
+		return 0, 0
+	end
+
+	slot5 = ManufactureConfig.instance:getItemId(slot1)
+
+	return slot0._traceItemDict and slot0._traceItemDict[slot5] or 0, slot0._traceChildItemDict and slot0._traceChildItemDict[slot5] or 0
+end
+
+function slot0.setIsLockedOrder(slot0, slot1, slot2)
+	if slot0:getDailyOrderById(slot1) then
+		slot3:setLocked(slot2)
+	end
+end
+
+function slot0.isLockedOrder(slot0, slot1)
+	if slot0:getDailyOrderById(slot1) then
+		return slot2:getLocked()
 	end
 end
 
@@ -281,6 +338,10 @@ end
 
 function slot0.setPlayTradeEnterBtnUnlockAnim(slot0)
 	GameUtil.playerPrefsSetNumberByUserId(uv0, 1)
+end
+
+function slot0.isGetOrderInfo(slot0)
+	return slot0._isGetOrderInfo
 end
 
 slot0.instance = slot0.New()

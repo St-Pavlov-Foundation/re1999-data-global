@@ -2,7 +2,7 @@ module("modules.logic.fight.system.work.FightWorkBuildSubEntityAfterChangeHero",
 
 slot0 = class("FightWorkBuildSubEntityAfterChangeHero", FightWorkItem)
 
-function slot0.onInitialization(slot0)
+function slot0.onConstructor(slot0)
 	slot0.SAFETIME = 10
 end
 

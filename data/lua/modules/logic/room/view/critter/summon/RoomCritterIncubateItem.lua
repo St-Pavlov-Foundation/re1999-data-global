@@ -20,6 +20,7 @@ function slot0.addEvents(slot0)
 	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
 	CritterSummonController.instance:registerCallback(CritterSummonEvent.onSelectParentCritter, slot0.refreshSelectParent, slot0)
 	CritterSummonController.instance:registerCallback(CritterSummonEvent.onRemoveParentCritter, slot0.refreshSelectParent, slot0)
+	slot0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, slot0._onCritterRenameReply, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -27,6 +28,7 @@ function slot0.removeEvents(slot0)
 	slot0._btnlongPrees:RemoveLongPressListener()
 	CritterSummonController.instance:unregisterCallback(CritterSummonEvent.onSelectParentCritter, slot0.refreshSelectParent, slot0)
 	CritterSummonController.instance:unregisterCallback(CritterSummonEvent.onRemoveParentCritter, slot0.refreshSelectParent, slot0)
+	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterRenameReply, slot0._onCritterRenameReply, slot0)
 end
 
 function slot0._btnclickOnClick(slot0)
@@ -83,6 +85,12 @@ function slot0.onSelect(slot0, slot1)
 end
 
 function slot0.onDestroyView(slot0)
+end
+
+function slot0._onCritterRenameReply(slot0, slot1)
+	if slot0._mo and slot0._uid == slot1 then
+		slot0._txtname.text = slot0._mo:getName()
+	end
 end
 
 function slot0.showAttr(slot0)

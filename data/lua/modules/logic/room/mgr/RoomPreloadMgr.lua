@@ -166,6 +166,10 @@ function slot0._getGOUrlList(slot0)
 	table.insert(slot1, RoomScenePreloader.ResOcean)
 	table.insert(slot1, RoomScenePreloader.ResFogParticle)
 
+	if BootNativeUtil.isWindows() then
+		table.insert(slot1, RoomScenePreloader.DiffuseGI)
+	end
+
 	return slot1
 end
 

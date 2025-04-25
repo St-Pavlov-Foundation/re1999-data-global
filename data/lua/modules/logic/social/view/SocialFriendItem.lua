@@ -3,10 +3,12 @@ module("modules.logic.social.view.SocialFriendItem", package.seeall)
 slot0 = class("SocialFriendItem", ListScrollCellExtend)
 
 function slot0.onInitView(slot0)
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_bg")
-	slot0._gobgselect = gohelper.findChild(slot0.viewGO, "#go_bgselect")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "#simage_bg")
+	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
+	slot0._goskinbg = gohelper.findChild(slot0.viewGO, "#go_skinbg")
+	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_normal/#go_bg")
+	slot0._imagegobg = gohelper.findChildImage(slot0.viewGO, "#go_normal/#go_bg")
+	slot0._gobgselect = gohelper.findChild(slot0.viewGO, "#go_normal/#go_bgselect")
+	slot0._imagegoselectbg = gohelper.findChildImage(slot0.viewGO, "#go_normal/#go_bgselect")
 	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
 	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "#go_playericon")
 	slot0._txtname = gohelper.findChildText(slot0.viewGO, "name/#txt_name")
@@ -60,9 +62,70 @@ function slot0._refreshUI(slot0)
 	end
 
 	slot0:updateName()
-	slot0:_onFriendSelect()
 
 	slot0._txtstatus.text = luaLang("social_online")
+
+	slot0:_loadBg(slot0._mo.bg)
+	slot0:_onFriendSelect()
+end
+
+function slot0._loadBg(slot0, slot1)
+	if not slot1 or slot1 == 0 then
+		slot0._hasSkin = false
+	else
+		slot0._hasSkin = true
+
+		if not slot0.lastskinId or slot0.lastskinId ~= slot1 then
+			slot0._skinPath = string.format("ui/viewres/social/socialfrienditem_bg_%s.prefab", slot1)
+
+			slot0:_disposeBg()
+
+			slot0._loader = MultiAbLoader.New()
+
+			slot0._loader:addPath(slot0._skinPath)
+			slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+		end
+	end
+
+	gohelper.setActive(slot0._gonormal, not slot0._hasSkin)
+	gohelper.setActive(slot0._goskinbg, slot0._hasSkin)
+end
+
+function slot0._disposeBg(slot0)
+	if slot0._loader then
+		slot0._loader:dispose()
+
+		slot0._loader = nil
+	end
+
+	if slot0._goskinEffect then
+		gohelper.destroy(slot0._goskinEffect)
+
+		slot0._goskinEffect = nil
+	end
+end
+
+function slot0._onLoadFinish(slot0)
+	slot0._goskinEffect = gohelper.clone(slot0._loader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goskinbg)
+	slot0.lastskinId = slot0._mo.bg
+end
+
+function slot0.setBgState(slot0, slot1)
+	if not slot0._isplaycard then
+		slot4 = slot0:_isSelectFriend()
+
+		gohelper.setActive(gohelper.findChild(slot1, "offline"), not slot4)
+		gohelper.setActive(gohelper.findChild(slot1, "online"), slot4)
+	else
+		gohelper.setActive(slot3, false)
+		gohelper.setActive(slot2, true)
+	end
+end
+
+function slot0.selectSkin(slot0, slot1)
+	slot0._isplaycard = true
+
+	slot0:_loadBg(slot1)
 end
 
 function slot0.updateName(slot0, slot1)
@@ -70,7 +133,7 @@ function slot0.updateName(slot0, slot1)
 		return
 	end
 
-	slot2 = slot0._mo.name
+	slot2 = slot0._mo and slot0._mo.name or ""
 
 	if slot0:_isSelectFriend() then
 		if not string.nilorempty(slot0._mo.desc) then
@@ -111,21 +174,8 @@ function slot0._onFriendSelect(slot0)
 	gohelper.setActive(slot0._gobgselect, slot2)
 	gohelper.setActive(slot0._goarrow, slot2)
 	slot0._playericon:isSelectInFriend(slot0:_isSelectFriend())
-
-	if not slot0._mo.bg or slot0._mo.bg == 0 then
-		gohelper.setActive(slot0._simagebg, false)
-	else
-		gohelper.setActive(slot0._simagebg, true)
-		slot0._simagebg:LoadImage(string.format("singlebg/playerinfo/%s.png", PlayerConfig.instance:getBgCo(slot0._mo.bg).chatbg))
-
-		if slot2 then
-			slot0._imagebg.color = uv0
-		else
-			slot0._imagebg.color = uv1
-		end
-	end
-
 	slot0:updateName()
+	slot0:setBgState(slot0._goskinEffect)
 end
 
 function slot0._isSelectFriend(slot0)
@@ -137,8 +187,8 @@ function slot0._isSelectFriend(slot0)
 end
 
 function slot0.onDestroy(slot0)
-	slot0._simagebg:UnLoadImage()
 	slot0:removeEventCb(SocialController.instance, SocialEvent.SelectFriend, slot0._onFriendSelect, slot0)
+	slot0:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, slot0.updateName, slot0)
 end
 
 return slot0

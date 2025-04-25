@@ -810,7 +810,9 @@ function slot0._initVersionActivityEpisodeList(slot0)
 		VersionActivity2_3DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity2_3DungeonEnum.DungeonChapterId.Story3,
 		VersionActivity2_4DungeonEnum.DungeonChapterId.Story2,
-		VersionActivity2_4DungeonEnum.DungeonChapterId.Story3
+		VersionActivity2_4DungeonEnum.DungeonChapterId.Story3,
+		VersionActivity2_5DungeonEnum.DungeonChapterId.Story2,
+		VersionActivity2_5DungeonEnum.DungeonChapterId.Story3
 	}) do
 		for slot11, slot12 in ipairs(slot0._chapterEpisodeDict[slot7]) do
 			slot0.versionActivityPreEpisodeDict[slot12.preEpisode] = slot12
@@ -1514,6 +1516,42 @@ function slot0.getEpisodeByElement(slot0, slot1)
 	end
 
 	return slot0:getEpisodeIdByMapCo(lua_chapter_map.configDict[slot2.mapId])
+end
+
+function slot0.getRewardGroupCOList(slot0, slot1)
+	return slot0._rewardConfigDict[slot1]
+end
+
+function slot0.calcRewardGroupRateInfoList(slot0, slot1)
+	slot2 = {}
+
+	slot0:_calcRewardGroupRateInfoList(slot2, slot1)
+
+	return slot2
+end
+
+function slot0._calcRewardGroupRateInfoList(slot0, slot1, slot2)
+	if not slot0:getRewardGroupCOList(slot2) or #slot3 == 0 then
+		return
+	end
+
+	slot5 = #slot1
+
+	for slot9, slot10 in ipairs(slot3) do
+		slot11 = tonumber(slot10.count) or 0
+		slot4 = 0 + slot11
+
+		table.insert(slot1, {
+			weight = slot11,
+			materialType = slot10.materialType,
+			materialId = slot10.materialId
+		})
+	end
+
+	for slot10 = slot5 + 1, #slot1 do
+		slot11 = slot1[slot10]
+		slot11.rate = slot4 == 0 and 0 or slot11.weight / slot4
+	end
 end
 
 slot0.instance = slot0.New()

@@ -67,8 +67,8 @@ end
 function slot0._addSceneSwitch(slot0, slot1)
 	slot2 = {}
 
+	table.insert(slot2, MainSceneSwitchDisplayView.New())
 	table.insert(slot2, MainSceneSwitchView.New())
-	table.insert(slot2, MainSceneSwitchPageView.New())
 
 	slot3 = MixScrollParam.New()
 	slot3.scrollGOPath = "right/mask/#scroll_card"

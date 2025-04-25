@@ -69,7 +69,12 @@ end
 function slot0.onOpen(slot0)
 	gohelper.setActive(slot0._gointerface, false)
 	slot0:checkTrigger()
-	slot0:_startCheckEasterEgg()
+
+	if not BGMSwitchModel.instance:getEggHideState() then
+		slot0:_startCheckEasterEgg()
+	end
+
+	BGMSwitchModel.instance:setEggHideState(false)
 	slot0:_updateEggBtnsAndShowPpt()
 end
 

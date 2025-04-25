@@ -48,6 +48,7 @@ function slot0._editableInitView(slot0)
 	slot0._scrollarrowpos = gohelper.findChild(slot0.viewGO, "left/#go_activity/scroll_view/arrow_pos")
 	slot0._scrollreddot = gohelper.findChild(slot0._scrollarrow, "#go_reddot")
 	slot0._horizontal = slot0._scrollcontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	slot0._horizontal.spacing = ActivityModel.showActivityEffect() and slot0._horizontal.spacing or 0
 	slot0._horizontalLeft = slot0._horizontal.padding.left
 	slot0._horizontalRight = slot0._horizontal.padding.right
 
@@ -166,35 +167,15 @@ function slot0._freshBtns(slot0)
 	slot0:_checkTestTaskBtn()
 	slot0:_checkTurnbackBtn()
 	slot0:_checkRoleSignViewBtn()
-	slot0:_checkGoldenMilletPresentBtn()
 	slot0:_checkSpringSignViewBtn()
+	slot0:_checkActivity186Btn()
 	slot0:_checkActivityImgVisible()
 	slot0:_sortBtns()
 end
 
-function slot0.showActivityEffect()
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
-		return false
-	end
-
-	if not DungeonModel.instance:hasPassLevelAndStory(ActivityEnum.ShowVersionActivityEpisode) then
-		return false
-	end
-
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
-		return false
-	end
-
-	if ActivityHelper.getActivityStatus(slot1.id) == ActivityEnum.ActivityStatus.Normal or slot3 == ActivityEnum.ActivityStatus.NotUnlock then
-		return true
-	end
-
-	return false
-end
-
 function slot0._checkActivityImgVisible(slot0)
-	gohelper.setActive(slot0._activityLogo, uv0.showActivityEffect() and slot0:_checkIsShowLogoVisible())
-	gohelper.setActive(slot0._goactbg, slot1 and slot0:_checkIsShowActBgVisible())
+	gohelper.setActive(slot0._activityLogo, ActivityModel.showActivityEffect() and ActivityModel.checkIsShowLogoVisible())
+	gohelper.setActive(slot0._goactbg, slot1 and ActivityModel.checkIsShowActBgVisible())
 
 	if ActivityConfig.instance:getMainActAtmosphereConfig() then
 		for slot8, slot9 in ipairs(slot4.mainView) do
@@ -247,6 +228,10 @@ function slot0._sortBtns(slot0)
 
 	if slot0._bpItem then
 		gohelper.setSibling(slot0._bpItem.go, 0)
+	end
+
+	if slot0._act186Item then
+		gohelper.setSibling(slot0._act186Item.go, 2)
 	end
 
 	for slot5, slot6 in pairs(slot0._checkBtnList) do
@@ -504,6 +489,26 @@ function slot0._checkSpringSignViewBtn(slot0)
 	slot0:_addSortBtn(slot1, slot0._springSignViewBtn)
 end
 
+function slot0._checkActivity186Btn(slot0)
+	if not Activity186Model.instance:isActivityOnline() then
+		if slot0._act186Item then
+			slot0._act186Item:onDestroyView()
+
+			slot0._act186Item = nil
+		end
+
+		return
+	end
+
+	if not slot0._act186Item then
+		slot0._act186Item = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._itemGo), Activity186MainBtnItem)
+
+		slot0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Act186, slot0._act186Item)
+	end
+
+	slot0._act186Item:refresh()
+end
+
 function slot0._createActCenterItem(slot0, slot1)
 	slot0:_refreshActBgWidth()
 
@@ -550,6 +555,12 @@ function slot0.onDestroyView(slot0)
 		slot0._selfSelectCharacterBtn = nil
 	end
 
+	if slot0._act186Item then
+		slot0._act186Item:onDestroyView()
+
+		slot0._act186Item = nil
+	end
+
 	GameUtil.onDestroyViewMember(slot0, "_roleSignViewBtn")
 	GameUtil.onDestroyViewMember(slot0, "_springSignViewBtn")
 	slot0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, slot0._freshBtns, slot0)
@@ -576,22 +587,6 @@ function slot0._onDailyRefresh(slot0)
 	slot0:_freshBtns()
 	slot0:_updateRoleSignViewBtn()
 	slot0:_updateSpringSignViewBtn()
-end
-
-function slot0._checkIsShowLogoVisible(slot0)
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
-		return false
-	end
-
-	return slot1.isShowLogo or false
-end
-
-function slot0._checkIsShowActBgVisible(slot0)
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
-		return false
-	end
-
-	return slot1.isShowActBg or false
 end
 
 slot2 = 840.4

@@ -2169,7 +2169,7 @@
   },
   {
     "id": "bp_rule",
-    "lang": "language_10065809"
+    "lang": "language_10068382"
   },
   {
     "id": "bp_score_limit",
@@ -4697,7 +4697,7 @@
   },
   {
     "id": "bp_deduction_item_deadtime",
-    "lang": "language_10055607"
+    "lang": "language_10068383"
   },
   {
     "id": "bp_deduction_item_count",
@@ -4821,7 +4821,7 @@
   },
   {
     "id": "room_dailyorder_refreshtime",
-    "lang": "language_10055635"
+    "lang": "language_10068384"
   },
   {
     "id": "fight_season_change_hero_select",
@@ -5434,6 +5434,338 @@
   {
     "id": "towerbossepisodepasscount",
     "lang": "language_10064078"
+  },
+  {
+    "id": "fight_rule_desc",
+    "lang": "language_10055702"
+  },
+  {
+    "id": "v2a5_challenge_mainview_finished",
+    "lang": "language_10051181"
+  },
+  {
+    "id": "v2a5_challenge_mainview_unlock",
+    "lang": "language_10061104"
+  },
+  {
+    "id": "autochess_forcepick_tip",
+    "lang": "language_10068385"
+  },
+  {
+    "id": "autochess_forcepick_warningtip",
+    "lang": "language_10068386"
+  },
+  {
+    "id": "autochess_badgeitem_unlock",
+    "lang": "language_10068387"
+  },
+  {
+    "id": "room_manufacture_one_key_add_count",
+    "lang": "language_10068388"
+  },
+  {
+    "id": "room_manufacture_traced_count",
+    "lang": "language_10068389"
+  },
+  {
+    "id": "room_manufacture_formula_need_count",
+    "lang": "language_10068390"
+  },
+  {
+    "id": "room_manufacture_wrong_need_count",
+    "lang": "language_10068391"
+  },
+  {
+    "id": "room_manufacture_lack_mat",
+    "lang": "language_10068392"
+  },
+  {
+    "id": "room_manufacture_lack_mat_level_up",
+    "lang": "language_10068393"
+  },
+  {
+    "id": "room_manufacture_lack_mat_link_path",
+    "lang": "language_10068394"
+  },
+  {
+    "id": "room_manufacture_wait_mat",
+    "lang": "language_10068395"
+  },
+  {
+    "id": "room_manufacture_no_critter",
+    "lang": "language_10068396"
+  },
+  {
+    "id": "room_manufacture_jump_add",
+    "lang": "language_10068397"
+  },
+  {
+    "id": "room_manufacture_jump_level_up_unlock",
+    "lang": "language_10068398"
+  },
+  {
+    "id": "room_manufacture_jump_link_path",
+    "lang": "language_10068399"
+  },
+  {
+    "id": "room_manufacture_jump_place_critter",
+    "lang": "language_10068400"
+  },
+  {
+    "id": "room_manufacture_detail_no_item",
+    "lang": "language_10068401"
+  },
+  {
+    "id": "room_manufacture_detail_item_title",
+    "lang": "language_10068402"
+  },
+  {
+    "id": "autochess_badgeitem_noget",
+    "lang": "language_10029834"
+  },
+  {
+    "id": "room_critter_inputtip_rename_title",
+    "lang": "language_10068403"
+  },
+  {
+    "id": "room_critter_rename_fontcount_desc",
+    "lang": "language_10068404"
+  },
+  {
+    "id": "act183dungeonview_normalmainepisode",
+    "lang": "language_10068405"
+  },
+  {
+    "id": "act183dungeonview_hardmainepisode",
+    "lang": "language_10068406"
+  },
+  {
+    "id": "act183dungeonview_dailyepisode",
+    "lang": "language_10068407"
+  },
+  {
+    "id": "langtype_res-HD",
+    "lang": "language_10068408"
+  },
+  {
+    "id": "act183taskview_dailytask",
+    "lang": "language_10068409"
+  },
+  {
+    "id": "act183taskview_normalmaintask",
+    "lang": "language_10068405"
+  },
+  {
+    "id": "act183taskview_hardmaintask",
+    "lang": "language_10068406"
+  },
+  {
+    "id": "autochess_leaderitem_unlock",
+    "lang": "language_10068410"
+  },
+  {
+    "id": "autochess_gameview_startarget",
+    "lang": "language_10068411"
+  },
+  {
+    "id": "material_packageskin_rate_desc",
+    "lang": "language_10068412"
+  },
+  {
+    "id": "act184_target_not_complete",
+    "lang": "language_10068413"
+  },
+  {
+    "id": "act184_target_complete",
+    "lang": "language_10068414"
+  },
+  {
+    "id": "act184_stroy_title",
+    "lang": "language_10068415"
+  },
+  {
+    "id": "act184_puzzle_title",
+    "lang": "language_10068416"
+  },
+  {
+    "id": "lifecirclesignview_txt_Days",
+    "lang": "language_10068417"
+  },
+  {
+    "id": "act185_gametarget",
+    "lang": "language_10068418"
+  },
+  {
+    "id": "LifeCircleSignRewardsItemItemLastOnePtValue",
+    "lang": "language_10003361"
+  },
+  {
+    "id": "act186_stagetime",
+    "lang": "language_10068419"
+  },
+  {
+    "id": "decoratestore_discount_limittime",
+    "lang": "language_10068420"
+  },
+  {
+    "id": "act186_signview_task_txt",
+    "lang": "language_10068421"
+  },
+  {
+    "id": "act183task_condition_title",
+    "lang": "language_10068422"
+  },
+  {
+    "id": "act183task_condition_title_complete",
+    "lang": "language_10068423"
+  },
+  {
+    "id": "act187_painting_count",
+    "lang": "language_10068424"
+  },
+  {
+    "id": "lifecirclepickchoice_txt_Title_custom",
+    "lang": "language_10068425"
+  },
+  {
+    "id": "lifecirclepickchoice_txt_confirm_custom",
+    "lang": "language_10055894"
+  },
+  {
+    "id": "lifecirclepickchoice_txt_Title_random",
+    "lang": "language_10068426"
+  },
+  {
+    "id": "lifecirclepickchoice_txt_confirm_random",
+    "lang": "language_10068427"
+  },
+  {
+    "id": "MaterialTipViewPackageSkinDesc",
+    "lang": "language_10068428"
+  },
+  {
+    "id": "autochess_resultview_damage",
+    "lang": "language_10068429"
+  },
+  {
+    "id": "act186_signview_day1",
+    "lang": "language_10068430"
+  },
+  {
+    "id": "act186_signview_day2",
+    "lang": "language_10068431"
+  },
+  {
+    "id": "act186_signview_day3",
+    "lang": "language_10068432"
+  },
+  {
+    "id": "act186_signview_day4",
+    "lang": "language_10068433"
+  },
+  {
+    "id": "act186_signview_day5",
+    "lang": "language_10068434"
+  },
+  {
+    "id": "act186_signview_day6",
+    "lang": "language_10068435"
+  },
+  {
+    "id": "act186_signview_day7",
+    "lang": "language_10068436"
+  },
+  {
+    "id": "act186_signview_day8",
+    "lang": "language_10068437"
+  },
+  {
+    "id": "act186_signview_day9",
+    "lang": "language_10068438"
+  },
+  {
+    "id": "summon_reprint_banner_flag",
+    "lang": "language_10068439"
+  },
+  {
+    "id": "activity186view_txt_stage1",
+    "lang": "language_10068440"
+  },
+  {
+    "id": "activity186view_txt_stage2",
+    "lang": "language_10068441"
+  },
+  {
+    "id": "activity186view_txt_stage3",
+    "lang": "language_10068442"
+  },
+  {
+    "id": "autochess_levelview_unlocktips1",
+    "lang": "language_10068443"
+  },
+  {
+    "id": "autochess_levelview_unlocktips2",
+    "lang": "language_10068444"
+  },
+  {
+    "id": "autochess_levelview_unlocktips3",
+    "lang": "language_10068445"
+  },
+  {
+    "id": "act186_hero_name",
+    "lang": "language_90001131"
+  },
+  {
+    "id": "act186_gameview_remaintimes",
+    "lang": "language_10068446"
+  },
+  {
+    "id": "autochess_malllevelupview_level",
+    "lang": "language_10068447"
+  },
+  {
+    "id": "autochess_mainview_tips1",
+    "lang": "language_10068448"
+  },
+  {
+    "id": "autochess_mallview_nocost",
+    "lang": "language_10068449"
+  },
+  {
+    "id": "autochess_pvesettleview_tips1",
+    "lang": "language_10068450"
+  },
+  {
+    "id": "autochess_pvesettleview_tips2",
+    "lang": "language_10068451"
+  },
+  {
+    "id": "autochess_pvesettleview_tips3",
+    "lang": "language_10068452"
+  },
+  {
+    "id": "autochess_gameview_damagelimit",
+    "lang": "language_10068453"
+  },
+  {
+    "id": "AutoChessLeaderCard_txtSkillDesc",
+    "lang": "language_10068454"
+  },
+  {
+    "id": "DecorateStoreView_txttitle_setFirstStrSize",
+    "lang": "language_10068455"
+  },
+  {
+    "id": "Activity186View_txtStage",
+    "lang": "language_90001128"
+  },
+  {
+    "id": "MaterialTipView_jumpText_unlock",
+    "lang": "language_10035622"
+  },
+  {
+    "id": "TurnBackFullView_title",
+    "lang": "language_10069580"
   },
   {
     "id": "NewPlayerCardView_activity_only",

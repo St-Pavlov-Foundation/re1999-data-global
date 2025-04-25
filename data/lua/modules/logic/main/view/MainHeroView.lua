@@ -246,11 +246,13 @@ function slot0._initFrame(slot0)
 
 	gohelper.setActive(slot0._frameBg, false)
 
-	slot0._frameBgMaterial = slot0._frameBg:GetComponent(typeof(UnityEngine.Renderer)).sharedMaterial
 	slot0._frameSpineNodeX = 3.11
 	slot0._frameSpineNodeY = 0.51
 	slot0._frameSpineNodeZ = 3.09
 	slot0._frameSpineNodeScale = 0.39
+	slot2 = slot0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
+	slot0._frameBgMaterial = UnityEngine.Material.Instantiate(slot2.sharedMaterial)
+	slot2.material = slot0._frameBgMaterial
 end
 
 function slot0._editableInitView(slot0)
@@ -407,10 +409,9 @@ function slot0.onRoleBlend(slot0, slot1, slot2)
 			return
 		end
 
-		slot5 = WeatherEnum.FrameTintColor[slot3]
-		slot0._targetFrameTintColor = Color.New(slot5[1], slot5[2], slot5[3], slot5[4])
-		slot6 = WeatherEnum.FrameTintColor[slot4]
-		slot0._srcFrameTintColor = Color.New(slot6[1], slot6[2], slot6[3], slot6[4])
+		slot5 = MainSceneSwitchModel.instance:getCurSceneId()
+		slot0._targetFrameTintColor = WeatherFrameComp.getFrameColor(slot5, slot3)
+		slot0._srcFrameTintColor = WeatherFrameComp.getFrameColor(slot5, slot4)
 
 		slot0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
 	end
@@ -731,7 +732,7 @@ function slot0._clickDefault(slot0, slot1)
 	end
 
 	if slot0._skinInteraction:needRespond() then
-		if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, slot1) then
+		if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, slot1) and slot0._skinInteraction:canPlay(slot3) then
 			slot0:_doClickPlayVoice(slot3)
 		end
 

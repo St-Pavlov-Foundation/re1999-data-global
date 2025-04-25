@@ -35,6 +35,10 @@ function slot0.initViewContent(slot0)
 	slot0:addLineIndex()
 	slot0:addButton(slot0:getLineGroup(), "Event开始统计", slot0.eventCalBegin, slot0)
 	slot0:addButton(slot0:getLineGroup(), "Event结束统计", slot0.eventCalEnd, slot0)
+	slot0:addTitleSplitLine("PROFILER")
+	slot0:addLineIndex()
+	slot0:addButton(slot0:getLineGroup(), "性能文件输出", slot0.profilerCalOut, slot0)
+	slot0:addButton(slot0:getLineGroup(), "清空记录", slot0.clearRecord, slot0)
 	slot0:addTitleSplitLine("性能数据")
 	slot0:addLineIndex()
 
@@ -63,6 +67,18 @@ end
 
 function slot0.eventCalEnd(slot0)
 	LuaProfilerController.instance:collectEventParamsState()
+end
+
+function slot0.profilerCalOut(slot0)
+	ZProj.ProfilerMan.Instance:outCsv()
+end
+
+function slot0.clearRecord(slot0)
+	ZProj.ProfilerMan.Instance:BeginRecord()
+end
+
+function slot0._onLangDropChange(slot0, slot1)
+	ZProj.ProfilerMan.Instance.IsProfiler = slot1 == 1 and true or false
 end
 
 function slot0.initProfilerConnection(slot0)

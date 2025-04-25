@@ -467,6 +467,14 @@ function slot0._continueCallback(slot0)
 	end
 end
 
+function slot0.isAnyGuideRunning(slot0)
+	return ViewMgr.instance:isOpen(ViewName.GuideView) or ViewMgr.instance:isOpen(ViewName.GuideView2) or UIBlockMgr.instance:isBlock() and true or false
+end
+
+function slot0.isAnyGuideRunningNoBlock(slot0)
+	return ViewMgr.instance:isOpen(ViewName.GuideView) or ViewMgr.instance:isOpen(ViewName.GuideView2) and true or false
+end
+
 slot0.instance = slot0.New()
 
 return slot0

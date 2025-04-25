@@ -1,0 +1,2402 @@
+[
+  {
+    "id": 1,
+    "base": 2240,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 0,
+    "equip_super": 0
+  },
+  {
+    "id": 2,
+    "base": 2280,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 34,
+    "equip_super": 69
+  },
+  {
+    "id": 3,
+    "base": 2320,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 69,
+    "equip_super": 138
+  },
+  {
+    "id": 4,
+    "base": 2360,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 103,
+    "equip_super": 207
+  },
+  {
+    "id": 5,
+    "base": 2400,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 138,
+    "equip_super": 276
+  },
+  {
+    "id": 6,
+    "base": 2440,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 172,
+    "equip_super": 345
+  },
+  {
+    "id": 7,
+    "base": 2480,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 207,
+    "equip_super": 414
+  },
+  {
+    "id": 8,
+    "base": 2520,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 241,
+    "equip_super": 483
+  },
+  {
+    "id": 9,
+    "base": 2560,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 276,
+    "equip_super": 552
+  },
+  {
+    "id": 10,
+    "base": 2600,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 310,
+    "equip_super": 621
+  },
+  {
+    "id": 11,
+    "base": 2640,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 345,
+    "equip_super": 690
+  },
+  {
+    "id": 12,
+    "base": 2680,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 379,
+    "equip_super": 759
+  },
+  {
+    "id": 13,
+    "base": 2720,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 414,
+    "equip_super": 828
+  },
+  {
+    "id": 14,
+    "base": 2760,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 448,
+    "equip_super": 897
+  },
+  {
+    "id": 15,
+    "base": 2800,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 483,
+    "equip_super": 966
+  },
+  {
+    "id": 16,
+    "base": 2840,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 517,
+    "equip_super": 1034
+  },
+  {
+    "id": 17,
+    "base": 2880,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 552,
+    "equip_super": 1103
+  },
+  {
+    "id": 18,
+    "base": 2920,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 586,
+    "equip_super": 1172
+  },
+  {
+    "id": 19,
+    "base": 2960,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 621,
+    "equip_super": 1241
+  },
+  {
+    "id": 20,
+    "base": 3000,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 655,
+    "equip_super": 1310
+  },
+  {
+    "id": 21,
+    "base": 3040,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 690,
+    "equip_super": 1379
+  },
+  {
+    "id": 22,
+    "base": 3080,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 724,
+    "equip_super": 1448
+  },
+  {
+    "id": 23,
+    "base": 3120,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 759,
+    "equip_super": 1517
+  },
+  {
+    "id": 24,
+    "base": 3160,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 793,
+    "equip_super": 1586
+  },
+  {
+    "id": 25,
+    "base": 3200,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 828,
+    "equip_super": 1655
+  },
+  {
+    "id": 26,
+    "base": 3240,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 862,
+    "equip_super": 1724
+  },
+  {
+    "id": 27,
+    "base": 3280,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 897,
+    "equip_super": 1793
+  },
+  {
+    "id": 28,
+    "base": 3320,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 931,
+    "equip_super": 1862
+  },
+  {
+    "id": 29,
+    "base": 3360,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 966,
+    "equip_super": 1931
+  },
+  {
+    "id": 30,
+    "base": 3400,
+    "technic": 10000,
+    "base_super": 0,
+    "equip_base": 1000,
+    "equip_super": 2000
+  },
+  {
+    "id": 31,
+    "base": 3458,
+    "technic": 10000,
+    "base_super": 63,
+    "equip_base": 1075,
+    "equip_super": 2075
+  },
+  {
+    "id": 32,
+    "base": 3515,
+    "technic": 10000,
+    "base_super": 125,
+    "equip_base": 1150,
+    "equip_super": 2150
+  },
+  {
+    "id": 33,
+    "base": 3573,
+    "technic": 10000,
+    "base_super": 188,
+    "equip_base": 1225,
+    "equip_super": 2225
+  },
+  {
+    "id": 34,
+    "base": 3630,
+    "technic": 10000,
+    "base_super": 250,
+    "equip_base": 1300,
+    "equip_super": 2300
+  },
+  {
+    "id": 35,
+    "base": 3688,
+    "technic": 10000,
+    "base_super": 313,
+    "equip_base": 1375,
+    "equip_super": 2375
+  },
+  {
+    "id": 36,
+    "base": 3745,
+    "technic": 10000,
+    "base_super": 375,
+    "equip_base": 1450,
+    "equip_super": 2450
+  },
+  {
+    "id": 37,
+    "base": 3803,
+    "technic": 10000,
+    "base_super": 438,
+    "equip_base": 1525,
+    "equip_super": 2525
+  },
+  {
+    "id": 38,
+    "base": 3860,
+    "technic": 10000,
+    "base_super": 500,
+    "equip_base": 1600,
+    "equip_super": 2600
+  },
+  {
+    "id": 39,
+    "base": 3918,
+    "technic": 10000,
+    "base_super": 563,
+    "equip_base": 1675,
+    "equip_super": 2675
+  },
+  {
+    "id": 40,
+    "base": 3975,
+    "technic": 10000,
+    "base_super": 625,
+    "equip_base": 1750,
+    "equip_super": 2750
+  },
+  {
+    "id": 41,
+    "base": 4033,
+    "technic": 10000,
+    "base_super": 688,
+    "equip_base": 1825,
+    "equip_super": 2825
+  },
+  {
+    "id": 42,
+    "base": 4090,
+    "technic": 10000,
+    "base_super": 750,
+    "equip_base": 1900,
+    "equip_super": 2900
+  },
+  {
+    "id": 43,
+    "base": 4148,
+    "technic": 10000,
+    "base_super": 813,
+    "equip_base": 1975,
+    "equip_super": 2975
+  },
+  {
+    "id": 44,
+    "base": 4205,
+    "technic": 10000,
+    "base_super": 875,
+    "equip_base": 2050,
+    "equip_super": 3050
+  },
+  {
+    "id": 45,
+    "base": 4263,
+    "technic": 10000,
+    "base_super": 938,
+    "equip_base": 2125,
+    "equip_super": 3125
+  },
+  {
+    "id": 46,
+    "base": 4320,
+    "technic": 10000,
+    "base_super": 1000,
+    "equip_base": 2200,
+    "equip_super": 3200
+  },
+  {
+    "id": 47,
+    "base": 4378,
+    "technic": 10000,
+    "base_super": 1063,
+    "equip_base": 2275,
+    "equip_super": 3275
+  },
+  {
+    "id": 48,
+    "base": 4435,
+    "technic": 10000,
+    "base_super": 1125,
+    "equip_base": 2350,
+    "equip_super": 3350
+  },
+  {
+    "id": 49,
+    "base": 4493,
+    "technic": 10000,
+    "base_super": 1188,
+    "equip_base": 2425,
+    "equip_super": 3425
+  },
+  {
+    "id": 50,
+    "base": 4550,
+    "technic": 10000,
+    "base_super": 1250,
+    "equip_base": 2500,
+    "equip_super": 3500
+  },
+  {
+    "id": 51,
+    "base": 4608,
+    "technic": 10000,
+    "base_super": 1313,
+    "equip_base": 2575,
+    "equip_super": 3575
+  },
+  {
+    "id": 52,
+    "base": 4665,
+    "technic": 10000,
+    "base_super": 1375,
+    "equip_base": 2650,
+    "equip_super": 3650
+  },
+  {
+    "id": 53,
+    "base": 4723,
+    "technic": 10000,
+    "base_super": 1438,
+    "equip_base": 2725,
+    "equip_super": 3725
+  },
+  {
+    "id": 54,
+    "base": 4780,
+    "technic": 10000,
+    "base_super": 1500,
+    "equip_base": 2800,
+    "equip_super": 3800
+  },
+  {
+    "id": 55,
+    "base": 4838,
+    "technic": 10000,
+    "base_super": 1563,
+    "equip_base": 2875,
+    "equip_super": 3875
+  },
+  {
+    "id": 56,
+    "base": 4895,
+    "technic": 10000,
+    "base_super": 1625,
+    "equip_base": 2950,
+    "equip_super": 3950
+  },
+  {
+    "id": 57,
+    "base": 4952,
+    "technic": 10000,
+    "base_super": 1688,
+    "equip_base": 3025,
+    "equip_super": 4025
+  },
+  {
+    "id": 58,
+    "base": 5010,
+    "technic": 10000,
+    "base_super": 1750,
+    "equip_base": 3100,
+    "equip_super": 4100
+  },
+  {
+    "id": 59,
+    "base": 5067,
+    "technic": 10000,
+    "base_super": 1813,
+    "equip_base": 3175,
+    "equip_super": 4175
+  },
+  {
+    "id": 60,
+    "base": 5125,
+    "technic": 10000,
+    "base_super": 1875,
+    "equip_base": 3250,
+    "equip_super": 4250
+  },
+  {
+    "id": 61,
+    "base": 5183,
+    "technic": 10000,
+    "base_super": 1938,
+    "equip_base": 3325,
+    "equip_super": 4325
+  },
+  {
+    "id": 62,
+    "base": 5240,
+    "technic": 10000,
+    "base_super": 2000,
+    "equip_base": 3400,
+    "equip_super": 4400
+  },
+  {
+    "id": 63,
+    "base": 5298,
+    "technic": 10000,
+    "base_super": 2063,
+    "equip_base": 3475,
+    "equip_super": 4475
+  },
+  {
+    "id": 64,
+    "base": 5355,
+    "technic": 10000,
+    "base_super": 2125,
+    "equip_base": 3550,
+    "equip_super": 4550
+  },
+  {
+    "id": 65,
+    "base": 5413,
+    "technic": 10000,
+    "base_super": 2188,
+    "equip_base": 3625,
+    "equip_super": 4625
+  },
+  {
+    "id": 66,
+    "base": 5470,
+    "technic": 10000,
+    "base_super": 2250,
+    "equip_base": 3700,
+    "equip_super": 4700
+  },
+  {
+    "id": 67,
+    "base": 5528,
+    "technic": 10000,
+    "base_super": 2313,
+    "equip_base": 3775,
+    "equip_super": 4775
+  },
+  {
+    "id": 68,
+    "base": 5585,
+    "technic": 10000,
+    "base_super": 2375,
+    "equip_base": 3850,
+    "equip_super": 4850
+  },
+  {
+    "id": 69,
+    "base": 5643,
+    "technic": 10000,
+    "base_super": 2438,
+    "equip_base": 3925,
+    "equip_super": 4925
+  },
+  {
+    "id": 70,
+    "base": 5700,
+    "technic": 10000,
+    "base_super": 2500,
+    "equip_base": 4000,
+    "equip_super": 5000
+  },
+  {
+    "id": 71,
+    "base": 5756,
+    "technic": 10000,
+    "base_super": 2590,
+    "equip_base": 4060,
+    "equip_super": 5060
+  },
+  {
+    "id": 72,
+    "base": 5812,
+    "technic": 10000,
+    "base_super": 2680,
+    "equip_base": 4120,
+    "equip_super": 5120
+  },
+  {
+    "id": 73,
+    "base": 5868,
+    "technic": 10000,
+    "base_super": 2770,
+    "equip_base": 4180,
+    "equip_super": 5180
+  },
+  {
+    "id": 74,
+    "base": 5924,
+    "technic": 10000,
+    "base_super": 2860,
+    "equip_base": 4240,
+    "equip_super": 5240
+  },
+  {
+    "id": 75,
+    "base": 5980,
+    "technic": 10000,
+    "base_super": 2950,
+    "equip_base": 4300,
+    "equip_super": 5300
+  },
+  {
+    "id": 76,
+    "base": 6036,
+    "technic": 10000,
+    "base_super": 3040,
+    "equip_base": 4360,
+    "equip_super": 5360
+  },
+  {
+    "id": 77,
+    "base": 6092,
+    "technic": 10000,
+    "base_super": 3130,
+    "equip_base": 4420,
+    "equip_super": 5420
+  },
+  {
+    "id": 78,
+    "base": 6148,
+    "technic": 10000,
+    "base_super": 3220,
+    "equip_base": 4480,
+    "equip_super": 5480
+  },
+  {
+    "id": 79,
+    "base": 6204,
+    "technic": 10000,
+    "base_super": 3310,
+    "equip_base": 4540,
+    "equip_super": 5540
+  },
+  {
+    "id": 80,
+    "base": 6260,
+    "technic": 10000,
+    "base_super": 3400,
+    "equip_base": 4600,
+    "equip_super": 5600
+  },
+  {
+    "id": 81,
+    "base": 6316,
+    "technic": 10000,
+    "base_super": 3490,
+    "equip_base": 4660,
+    "equip_super": 5660
+  },
+  {
+    "id": 82,
+    "base": 6372,
+    "technic": 10000,
+    "base_super": 3580,
+    "equip_base": 4720,
+    "equip_super": 5720
+  },
+  {
+    "id": 83,
+    "base": 6428,
+    "technic": 10000,
+    "base_super": 3670,
+    "equip_base": 4780,
+    "equip_super": 5780
+  },
+  {
+    "id": 84,
+    "base": 6484,
+    "technic": 10000,
+    "base_super": 3760,
+    "equip_base": 4840,
+    "equip_super": 5840
+  },
+  {
+    "id": 85,
+    "base": 6540,
+    "technic": 10000,
+    "base_super": 3850,
+    "equip_base": 4900,
+    "equip_super": 5900
+  },
+  {
+    "id": 86,
+    "base": 6596,
+    "technic": 10000,
+    "base_super": 3940,
+    "equip_base": 4960,
+    "equip_super": 5960
+  },
+  {
+    "id": 87,
+    "base": 6652,
+    "technic": 10000,
+    "base_super": 4030,
+    "equip_base": 5020,
+    "equip_super": 6020
+  },
+  {
+    "id": 88,
+    "base": 6708,
+    "technic": 10000,
+    "base_super": 4120,
+    "equip_base": 5080,
+    "equip_super": 6080
+  },
+  {
+    "id": 89,
+    "base": 6764,
+    "technic": 10000,
+    "base_super": 4210,
+    "equip_base": 5140,
+    "equip_super": 6140
+  },
+  {
+    "id": 90,
+    "base": 6820,
+    "technic": 10000,
+    "base_super": 4300,
+    "equip_base": 5200,
+    "equip_super": 6200
+  },
+  {
+    "id": 91,
+    "base": 6876,
+    "technic": 10000,
+    "base_super": 4390,
+    "equip_base": 5260,
+    "equip_super": 6260
+  },
+  {
+    "id": 92,
+    "base": 6932,
+    "technic": 10000,
+    "base_super": 4480,
+    "equip_base": 5320,
+    "equip_super": 6320
+  },
+  {
+    "id": 93,
+    "base": 6988,
+    "technic": 10000,
+    "base_super": 4570,
+    "equip_base": 5380,
+    "equip_super": 6380
+  },
+  {
+    "id": 94,
+    "base": 7044,
+    "technic": 10000,
+    "base_super": 4660,
+    "equip_base": 5440,
+    "equip_super": 6440
+  },
+  {
+    "id": 95,
+    "base": 7100,
+    "technic": 10000,
+    "base_super": 4750,
+    "equip_base": 5500,
+    "equip_super": 6500
+  },
+  {
+    "id": 96,
+    "base": 7156,
+    "technic": 10000,
+    "base_super": 4840,
+    "equip_base": 5560,
+    "equip_super": 6560
+  },
+  {
+    "id": 97,
+    "base": 7212,
+    "technic": 10000,
+    "base_super": 4930,
+    "equip_base": 5620,
+    "equip_super": 6620
+  },
+  {
+    "id": 98,
+    "base": 7268,
+    "technic": 10000,
+    "base_super": 5020,
+    "equip_base": 5680,
+    "equip_super": 6680
+  },
+  {
+    "id": 99,
+    "base": 7324,
+    "technic": 10000,
+    "base_super": 5110,
+    "equip_base": 5740,
+    "equip_super": 6740
+  },
+  {
+    "id": 100,
+    "base": 7380,
+    "technic": 10000,
+    "base_super": 5200,
+    "equip_base": 5800,
+    "equip_super": 6800
+  },
+  {
+    "id": 101,
+    "base": 7436,
+    "technic": 10000,
+    "base_super": 5290,
+    "equip_base": 5860,
+    "equip_super": 6860
+  },
+  {
+    "id": 102,
+    "base": 7492,
+    "technic": 10000,
+    "base_super": 5380,
+    "equip_base": 5920,
+    "equip_super": 6920
+  },
+  {
+    "id": 103,
+    "base": 7548,
+    "technic": 10000,
+    "base_super": 5470,
+    "equip_base": 5980,
+    "equip_super": 6980
+  },
+  {
+    "id": 104,
+    "base": 7604,
+    "technic": 10000,
+    "base_super": 5560,
+    "equip_base": 6040,
+    "equip_super": 7040
+  },
+  {
+    "id": 105,
+    "base": 7660,
+    "technic": 10000,
+    "base_super": 5650,
+    "equip_base": 6100,
+    "equip_super": 7100
+  },
+  {
+    "id": 106,
+    "base": 7716,
+    "technic": 10000,
+    "base_super": 5740,
+    "equip_base": 6160,
+    "equip_super": 7160
+  },
+  {
+    "id": 107,
+    "base": 7772,
+    "technic": 10000,
+    "base_super": 5830,
+    "equip_base": 6220,
+    "equip_super": 7220
+  },
+  {
+    "id": 108,
+    "base": 7828,
+    "technic": 10000,
+    "base_super": 5920,
+    "equip_base": 6280,
+    "equip_super": 7280
+  },
+  {
+    "id": 109,
+    "base": 7884,
+    "technic": 10000,
+    "base_super": 6010,
+    "equip_base": 6340,
+    "equip_super": 7340
+  },
+  {
+    "id": 110,
+    "base": 7940,
+    "technic": 10000,
+    "base_super": 6100,
+    "equip_base": 6400,
+    "equip_super": 7400
+  },
+  {
+    "id": 111,
+    "base": 7996,
+    "technic": 10000,
+    "base_super": 6190,
+    "equip_base": 6460,
+    "equip_super": 7460
+  },
+  {
+    "id": 112,
+    "base": 8052,
+    "technic": 10000,
+    "base_super": 6280,
+    "equip_base": 6520,
+    "equip_super": 7520
+  },
+  {
+    "id": 113,
+    "base": 8108,
+    "technic": 10000,
+    "base_super": 6370,
+    "equip_base": 6580,
+    "equip_super": 7580
+  },
+  {
+    "id": 114,
+    "base": 8164,
+    "technic": 10000,
+    "base_super": 6460,
+    "equip_base": 6640,
+    "equip_super": 7640
+  },
+  {
+    "id": 115,
+    "base": 8220,
+    "technic": 10000,
+    "base_super": 6550,
+    "equip_base": 6700,
+    "equip_super": 7700
+  },
+  {
+    "id": 116,
+    "base": 8276,
+    "technic": 10000,
+    "base_super": 6640,
+    "equip_base": 6760,
+    "equip_super": 7760
+  },
+  {
+    "id": 117,
+    "base": 8332,
+    "technic": 10000,
+    "base_super": 6730,
+    "equip_base": 6820,
+    "equip_super": 7820
+  },
+  {
+    "id": 118,
+    "base": 8388,
+    "technic": 10000,
+    "base_super": 6820,
+    "equip_base": 6880,
+    "equip_super": 7880
+  },
+  {
+    "id": 119,
+    "base": 8444,
+    "technic": 10000,
+    "base_super": 6910,
+    "equip_base": 6940,
+    "equip_super": 7940
+  },
+  {
+    "id": 120,
+    "base": 8500,
+    "technic": 10000,
+    "base_super": 7000,
+    "equip_base": 7000,
+    "equip_super": 8000
+  },
+  {
+    "id": 121,
+    "base": 8525,
+    "technic": 10000,
+    "base_super": 7033,
+    "equip_base": 7050,
+    "equip_super": 8033
+  },
+  {
+    "id": 122,
+    "base": 8550,
+    "technic": 10000,
+    "base_super": 7067,
+    "equip_base": 7100,
+    "equip_super": 8067
+  },
+  {
+    "id": 123,
+    "base": 8575,
+    "technic": 10000,
+    "base_super": 7100,
+    "equip_base": 7150,
+    "equip_super": 8100
+  },
+  {
+    "id": 124,
+    "base": 8600,
+    "technic": 10000,
+    "base_super": 7133,
+    "equip_base": 7200,
+    "equip_super": 8133
+  },
+  {
+    "id": 125,
+    "base": 8625,
+    "technic": 10000,
+    "base_super": 7167,
+    "equip_base": 7250,
+    "equip_super": 8167
+  },
+  {
+    "id": 126,
+    "base": 8650,
+    "technic": 10000,
+    "base_super": 7200,
+    "equip_base": 7300,
+    "equip_super": 8200
+  },
+  {
+    "id": 127,
+    "base": 8675,
+    "technic": 10000,
+    "base_super": 7233,
+    "equip_base": 7350,
+    "equip_super": 8233
+  },
+  {
+    "id": 128,
+    "base": 8700,
+    "technic": 10000,
+    "base_super": 7267,
+    "equip_base": 7400,
+    "equip_super": 8267
+  },
+  {
+    "id": 129,
+    "base": 8725,
+    "technic": 10000,
+    "base_super": 7300,
+    "equip_base": 7450,
+    "equip_super": 8300
+  },
+  {
+    "id": 130,
+    "base": 8750,
+    "technic": 10000,
+    "base_super": 7333,
+    "equip_base": 7500,
+    "equip_super": 8333
+  },
+  {
+    "id": 131,
+    "base": 8775,
+    "technic": 10000,
+    "base_super": 7367,
+    "equip_base": 7550,
+    "equip_super": 8367
+  },
+  {
+    "id": 132,
+    "base": 8800,
+    "technic": 10000,
+    "base_super": 7400,
+    "equip_base": 7600,
+    "equip_super": 8400
+  },
+  {
+    "id": 133,
+    "base": 8825,
+    "technic": 10000,
+    "base_super": 7433,
+    "equip_base": 7650,
+    "equip_super": 8433
+  },
+  {
+    "id": 134,
+    "base": 8850,
+    "technic": 10000,
+    "base_super": 7467,
+    "equip_base": 7700,
+    "equip_super": 8467
+  },
+  {
+    "id": 135,
+    "base": 8875,
+    "technic": 10000,
+    "base_super": 7500,
+    "equip_base": 7750,
+    "equip_super": 8500
+  },
+  {
+    "id": 136,
+    "base": 8900,
+    "technic": 10000,
+    "base_super": 7533,
+    "equip_base": 7800,
+    "equip_super": 8533
+  },
+  {
+    "id": 137,
+    "base": 8925,
+    "technic": 10000,
+    "base_super": 7567,
+    "equip_base": 7850,
+    "equip_super": 8567
+  },
+  {
+    "id": 138,
+    "base": 8950,
+    "technic": 10000,
+    "base_super": 7600,
+    "equip_base": 7900,
+    "equip_super": 8600
+  },
+  {
+    "id": 139,
+    "base": 8975,
+    "technic": 10000,
+    "base_super": 7633,
+    "equip_base": 7950,
+    "equip_super": 8633
+  },
+  {
+    "id": 140,
+    "base": 9000,
+    "technic": 10000,
+    "base_super": 7667,
+    "equip_base": 8000,
+    "equip_super": 8667
+  },
+  {
+    "id": 141,
+    "base": 9025,
+    "technic": 10000,
+    "base_super": 7700,
+    "equip_base": 8050,
+    "equip_super": 8700
+  },
+  {
+    "id": 142,
+    "base": 9050,
+    "technic": 10000,
+    "base_super": 7733,
+    "equip_base": 8100,
+    "equip_super": 8733
+  },
+  {
+    "id": 143,
+    "base": 9075,
+    "technic": 10000,
+    "base_super": 7767,
+    "equip_base": 8150,
+    "equip_super": 8767
+  },
+  {
+    "id": 144,
+    "base": 9100,
+    "technic": 10000,
+    "base_super": 7800,
+    "equip_base": 8200,
+    "equip_super": 8800
+  },
+  {
+    "id": 145,
+    "base": 9125,
+    "technic": 10000,
+    "base_super": 7833,
+    "equip_base": 8250,
+    "equip_super": 8833
+  },
+  {
+    "id": 146,
+    "base": 9150,
+    "technic": 10000,
+    "base_super": 7867,
+    "equip_base": 8300,
+    "equip_super": 8867
+  },
+  {
+    "id": 147,
+    "base": 9175,
+    "technic": 10000,
+    "base_super": 7900,
+    "equip_base": 8350,
+    "equip_super": 8900
+  },
+  {
+    "id": 148,
+    "base": 9200,
+    "technic": 10000,
+    "base_super": 7933,
+    "equip_base": 8400,
+    "equip_super": 8933
+  },
+  {
+    "id": 149,
+    "base": 9225,
+    "technic": 10000,
+    "base_super": 7967,
+    "equip_base": 8450,
+    "equip_super": 8967
+  },
+  {
+    "id": 150,
+    "base": 9250,
+    "technic": 10000,
+    "base_super": 8000,
+    "equip_base": 8500,
+    "equip_super": 9000
+  },
+  {
+    "id": 151,
+    "base": 9275,
+    "technic": 10000,
+    "base_super": 8033,
+    "equip_base": 8550,
+    "equip_super": 9033
+  },
+  {
+    "id": 152,
+    "base": 9300,
+    "technic": 10000,
+    "base_super": 8067,
+    "equip_base": 8600,
+    "equip_super": 9067
+  },
+  {
+    "id": 153,
+    "base": 9325,
+    "technic": 10000,
+    "base_super": 8100,
+    "equip_base": 8650,
+    "equip_super": 9100
+  },
+  {
+    "id": 154,
+    "base": 9350,
+    "technic": 10000,
+    "base_super": 8133,
+    "equip_base": 8700,
+    "equip_super": 9133
+  },
+  {
+    "id": 155,
+    "base": 9375,
+    "technic": 10000,
+    "base_super": 8167,
+    "equip_base": 8750,
+    "equip_super": 9167
+  },
+  {
+    "id": 156,
+    "base": 9400,
+    "technic": 10000,
+    "base_super": 8200,
+    "equip_base": 8800,
+    "equip_super": 9200
+  },
+  {
+    "id": 157,
+    "base": 9425,
+    "technic": 10000,
+    "base_super": 8233,
+    "equip_base": 8850,
+    "equip_super": 9233
+  },
+  {
+    "id": 158,
+    "base": 9450,
+    "technic": 10000,
+    "base_super": 8267,
+    "equip_base": 8900,
+    "equip_super": 9267
+  },
+  {
+    "id": 159,
+    "base": 9475,
+    "technic": 10000,
+    "base_super": 8300,
+    "equip_base": 8950,
+    "equip_super": 9300
+  },
+  {
+    "id": 160,
+    "base": 9500,
+    "technic": 10000,
+    "base_super": 8333,
+    "equip_base": 9000,
+    "equip_super": 9333
+  },
+  {
+    "id": 161,
+    "base": 9525,
+    "technic": 10000,
+    "base_super": 8367,
+    "equip_base": 9050,
+    "equip_super": 9367
+  },
+  {
+    "id": 162,
+    "base": 9550,
+    "technic": 10000,
+    "base_super": 8400,
+    "equip_base": 9100,
+    "equip_super": 9400
+  },
+  {
+    "id": 163,
+    "base": 9575,
+    "technic": 10000,
+    "base_super": 8433,
+    "equip_base": 9150,
+    "equip_super": 9433
+  },
+  {
+    "id": 164,
+    "base": 9600,
+    "technic": 10000,
+    "base_super": 8467,
+    "equip_base": 9200,
+    "equip_super": 9467
+  },
+  {
+    "id": 165,
+    "base": 9625,
+    "technic": 10000,
+    "base_super": 8500,
+    "equip_base": 9250,
+    "equip_super": 9500
+  },
+  {
+    "id": 166,
+    "base": 9650,
+    "technic": 10000,
+    "base_super": 8533,
+    "equip_base": 9300,
+    "equip_super": 9533
+  },
+  {
+    "id": 167,
+    "base": 9675,
+    "technic": 10000,
+    "base_super": 8567,
+    "equip_base": 9350,
+    "equip_super": 9567
+  },
+  {
+    "id": 168,
+    "base": 9700,
+    "technic": 10000,
+    "base_super": 8600,
+    "equip_base": 9400,
+    "equip_super": 9600
+  },
+  {
+    "id": 169,
+    "base": 9725,
+    "technic": 10000,
+    "base_super": 8633,
+    "equip_base": 9450,
+    "equip_super": 9633
+  },
+  {
+    "id": 170,
+    "base": 9750,
+    "technic": 10000,
+    "base_super": 8667,
+    "equip_base": 9500,
+    "equip_super": 9667
+  },
+  {
+    "id": 171,
+    "base": 9775,
+    "technic": 10000,
+    "base_super": 8700,
+    "equip_base": 9550,
+    "equip_super": 9700
+  },
+  {
+    "id": 172,
+    "base": 9800,
+    "technic": 10000,
+    "base_super": 8733,
+    "equip_base": 9600,
+    "equip_super": 9733
+  },
+  {
+    "id": 173,
+    "base": 9825,
+    "technic": 10000,
+    "base_super": 8767,
+    "equip_base": 9650,
+    "equip_super": 9767
+  },
+  {
+    "id": 174,
+    "base": 9850,
+    "technic": 10000,
+    "base_super": 8800,
+    "equip_base": 9700,
+    "equip_super": 9800
+  },
+  {
+    "id": 175,
+    "base": 9875,
+    "technic": 10000,
+    "base_super": 8833,
+    "equip_base": 9750,
+    "equip_super": 9833
+  },
+  {
+    "id": 176,
+    "base": 9900,
+    "technic": 10000,
+    "base_super": 8867,
+    "equip_base": 9800,
+    "equip_super": 9867
+  },
+  {
+    "id": 177,
+    "base": 9925,
+    "technic": 10000,
+    "base_super": 8900,
+    "equip_base": 9850,
+    "equip_super": 9900
+  },
+  {
+    "id": 178,
+    "base": 9950,
+    "technic": 10000,
+    "base_super": 8933,
+    "equip_base": 9900,
+    "equip_super": 9933
+  },
+  {
+    "id": 179,
+    "base": 9975,
+    "technic": 10000,
+    "base_super": 8967,
+    "equip_base": 9950,
+    "equip_super": 9967
+  },
+  {
+    "id": 180,
+    "base": 10000,
+    "technic": 10000,
+    "base_super": 9000,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 181,
+    "base": 10038,
+    "technic": 10000,
+    "base_super": 9033,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 182,
+    "base": 10075,
+    "technic": 10000,
+    "base_super": 9067,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 183,
+    "base": 10113,
+    "technic": 10000,
+    "base_super": 9100,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 184,
+    "base": 10150,
+    "technic": 10000,
+    "base_super": 9133,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 185,
+    "base": 10188,
+    "technic": 10000,
+    "base_super": 9167,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 186,
+    "base": 10225,
+    "technic": 10000,
+    "base_super": 9200,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 187,
+    "base": 10263,
+    "technic": 10000,
+    "base_super": 9233,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 188,
+    "base": 10300,
+    "technic": 10000,
+    "base_super": 9267,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 189,
+    "base": 10338,
+    "technic": 10000,
+    "base_super": 9300,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 190,
+    "base": 10375,
+    "technic": 10000,
+    "base_super": 9333,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 191,
+    "base": 10413,
+    "technic": 10000,
+    "base_super": 9367,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 192,
+    "base": 10450,
+    "technic": 10000,
+    "base_super": 9400,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 193,
+    "base": 10488,
+    "technic": 10000,
+    "base_super": 9433,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 194,
+    "base": 10525,
+    "technic": 10000,
+    "base_super": 9467,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 195,
+    "base": 10563,
+    "technic": 10000,
+    "base_super": 9500,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 196,
+    "base": 10600,
+    "technic": 10000,
+    "base_super": 9533,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 197,
+    "base": 10638,
+    "technic": 10000,
+    "base_super": 9567,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 198,
+    "base": 10675,
+    "technic": 10000,
+    "base_super": 9600,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 199,
+    "base": 10713,
+    "technic": 10000,
+    "base_super": 9633,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 200,
+    "base": 10750,
+    "technic": 10000,
+    "base_super": 9667,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 201,
+    "base": 10788,
+    "technic": 10000,
+    "base_super": 9700,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 202,
+    "base": 10825,
+    "technic": 10000,
+    "base_super": 9733,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 203,
+    "base": 10863,
+    "technic": 10000,
+    "base_super": 9767,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 204,
+    "base": 10900,
+    "technic": 10000,
+    "base_super": 9800,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 205,
+    "base": 10938,
+    "technic": 10000,
+    "base_super": 9833,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 206,
+    "base": 10975,
+    "technic": 10000,
+    "base_super": 9867,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 207,
+    "base": 11013,
+    "technic": 10000,
+    "base_super": 9900,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 208,
+    "base": 11050,
+    "technic": 10000,
+    "base_super": 9933,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 209,
+    "base": 11088,
+    "technic": 10000,
+    "base_super": 9967,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 210,
+    "base": 11125,
+    "technic": 10000,
+    "base_super": 10000,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 211,
+    "base": 11163,
+    "technic": 10000,
+    "base_super": 10033,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 212,
+    "base": 11200,
+    "technic": 10000,
+    "base_super": 10067,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 213,
+    "base": 11238,
+    "technic": 10000,
+    "base_super": 10100,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 214,
+    "base": 11275,
+    "technic": 10000,
+    "base_super": 10133,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 215,
+    "base": 11313,
+    "technic": 10000,
+    "base_super": 10167,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 216,
+    "base": 11350,
+    "technic": 10000,
+    "base_super": 10200,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 217,
+    "base": 11388,
+    "technic": 10000,
+    "base_super": 10233,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 218,
+    "base": 11425,
+    "technic": 10000,
+    "base_super": 10267,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 219,
+    "base": 11463,
+    "technic": 10000,
+    "base_super": 10300,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 220,
+    "base": 11500,
+    "technic": 10000,
+    "base_super": 10333,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 221,
+    "base": 11538,
+    "technic": 10000,
+    "base_super": 10367,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 222,
+    "base": 11575,
+    "technic": 10000,
+    "base_super": 10400,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 223,
+    "base": 11613,
+    "technic": 10000,
+    "base_super": 10433,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 224,
+    "base": 11650,
+    "technic": 10000,
+    "base_super": 10467,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 225,
+    "base": 11688,
+    "technic": 10000,
+    "base_super": 10500,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 226,
+    "base": 11725,
+    "technic": 10000,
+    "base_super": 10533,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 227,
+    "base": 11763,
+    "technic": 10000,
+    "base_super": 10567,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 228,
+    "base": 11800,
+    "technic": 10000,
+    "base_super": 10600,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 229,
+    "base": 11838,
+    "technic": 10000,
+    "base_super": 10633,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 230,
+    "base": 11875,
+    "technic": 10000,
+    "base_super": 10667,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 231,
+    "base": 11913,
+    "technic": 10000,
+    "base_super": 10700,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 232,
+    "base": 11950,
+    "technic": 10000,
+    "base_super": 10733,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 233,
+    "base": 11987,
+    "technic": 10000,
+    "base_super": 10767,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 234,
+    "base": 12025,
+    "technic": 10000,
+    "base_super": 10800,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 235,
+    "base": 12062,
+    "technic": 10000,
+    "base_super": 10833,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 236,
+    "base": 12100,
+    "technic": 10000,
+    "base_super": 10867,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 237,
+    "base": 12137,
+    "technic": 10000,
+    "base_super": 10900,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 238,
+    "base": 12175,
+    "technic": 10000,
+    "base_super": 10933,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 239,
+    "base": 12212,
+    "technic": 10000,
+    "base_super": 10967,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 240,
+    "base": 12250,
+    "technic": 10000,
+    "base_super": 11000,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 241,
+    "base": 12287,
+    "technic": 10000,
+    "base_super": 11033,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 242,
+    "base": 12325,
+    "technic": 10000,
+    "base_super": 11067,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 243,
+    "base": 12362,
+    "technic": 10000,
+    "base_super": 11100,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 244,
+    "base": 12400,
+    "technic": 10000,
+    "base_super": 11133,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 245,
+    "base": 12437,
+    "technic": 10000,
+    "base_super": 11167,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 246,
+    "base": 12475,
+    "technic": 10000,
+    "base_super": 11200,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 247,
+    "base": 12512,
+    "technic": 10000,
+    "base_super": 11233,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 248,
+    "base": 12550,
+    "technic": 10000,
+    "base_super": 11267,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 249,
+    "base": 12587,
+    "technic": 10000,
+    "base_super": 11300,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 250,
+    "base": 12625,
+    "technic": 10000,
+    "base_super": 11333,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 251,
+    "base": 12662,
+    "technic": 10000,
+    "base_super": 11367,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 252,
+    "base": 12700,
+    "technic": 10000,
+    "base_super": 11400,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 253,
+    "base": 12737,
+    "technic": 10000,
+    "base_super": 11433,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 254,
+    "base": 12775,
+    "technic": 10000,
+    "base_super": 11467,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 255,
+    "base": 12812,
+    "technic": 10000,
+    "base_super": 11500,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 256,
+    "base": 12850,
+    "technic": 10000,
+    "base_super": 11533,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 257,
+    "base": 12887,
+    "technic": 10000,
+    "base_super": 11567,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 258,
+    "base": 12925,
+    "technic": 10000,
+    "base_super": 11600,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 259,
+    "base": 12962,
+    "technic": 10000,
+    "base_super": 11633,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 260,
+    "base": 13000,
+    "technic": 10000,
+    "base_super": 11667,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 261,
+    "base": 13037,
+    "technic": 10000,
+    "base_super": 11700,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 262,
+    "base": 13075,
+    "technic": 10000,
+    "base_super": 11733,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 263,
+    "base": 13112,
+    "technic": 10000,
+    "base_super": 11767,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 264,
+    "base": 13150,
+    "technic": 10000,
+    "base_super": 11800,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 265,
+    "base": 13187,
+    "technic": 10000,
+    "base_super": 11833,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 266,
+    "base": 13225,
+    "technic": 10000,
+    "base_super": 11867,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 267,
+    "base": 13262,
+    "technic": 10000,
+    "base_super": 11900,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 268,
+    "base": 13300,
+    "technic": 10000,
+    "base_super": 11933,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 269,
+    "base": 13337,
+    "technic": 10000,
+    "base_super": 11967,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 270,
+    "base": 13375,
+    "technic": 10000,
+    "base_super": 12000,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 271,
+    "base": 13412,
+    "technic": 10000,
+    "base_super": 12033,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 272,
+    "base": 13450,
+    "technic": 10000,
+    "base_super": 12067,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 273,
+    "base": 13487,
+    "technic": 10000,
+    "base_super": 12100,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 274,
+    "base": 13525,
+    "technic": 10000,
+    "base_super": 12133,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 275,
+    "base": 13562,
+    "technic": 10000,
+    "base_super": 12167,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 276,
+    "base": 13600,
+    "technic": 10000,
+    "base_super": 12200,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 277,
+    "base": 13637,
+    "technic": 10000,
+    "base_super": 12233,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 278,
+    "base": 13675,
+    "technic": 10000,
+    "base_super": 12267,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 279,
+    "base": 13712,
+    "technic": 10000,
+    "base_super": 12300,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 280,
+    "base": 13750,
+    "technic": 10000,
+    "base_super": 12333,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 281,
+    "base": 13787,
+    "technic": 10000,
+    "base_super": 12367,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 282,
+    "base": 13825,
+    "technic": 10000,
+    "base_super": 12400,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 283,
+    "base": 13862,
+    "technic": 10000,
+    "base_super": 12433,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 284,
+    "base": 13900,
+    "technic": 10000,
+    "base_super": 12467,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 285,
+    "base": 13937,
+    "technic": 10000,
+    "base_super": 12500,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 286,
+    "base": 13975,
+    "technic": 10000,
+    "base_super": 12533,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 287,
+    "base": 14012,
+    "technic": 10000,
+    "base_super": 12567,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 288,
+    "base": 14050,
+    "technic": 10000,
+    "base_super": 12600,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 289,
+    "base": 14087,
+    "technic": 10000,
+    "base_super": 12633,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 290,
+    "base": 14125,
+    "technic": 10000,
+    "base_super": 12667,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 291,
+    "base": 14162,
+    "technic": 10000,
+    "base_super": 12700,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 292,
+    "base": 14200,
+    "technic": 10000,
+    "base_super": 12733,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 293,
+    "base": 14237,
+    "technic": 10000,
+    "base_super": 12767,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 294,
+    "base": 14275,
+    "technic": 10000,
+    "base_super": 12800,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 295,
+    "base": 14312,
+    "technic": 10000,
+    "base_super": 12833,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 296,
+    "base": 14350,
+    "technic": 10000,
+    "base_super": 12867,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 297,
+    "base": 14387,
+    "technic": 10000,
+    "base_super": 12900,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 298,
+    "base": 14425,
+    "technic": 10000,
+    "base_super": 12933,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 299,
+    "base": 14462,
+    "technic": 10000,
+    "base_super": 12967,
+    "equip_base": 10000,
+    "equip_super": 10000
+  },
+  {
+    "id": 300,
+    "base": 14500,
+    "technic": 10000,
+    "base_super": 13000,
+    "equip_base": 10000,
+    "equip_super": 10000
+  }
+]

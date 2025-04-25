@@ -33,5 +33,19 @@
     "waitVoice": 1306671,
     "timeoutVoice": 1306673,
     "protectionTime": 0
+  },
+  {
+    "id": 1311036,
+    "time": 5.0,
+    "waitVoice": 1311037,
+    "timeoutVoice": 1311038,
+    "protectionTime": 10
+  },
+  {
+    "id": 1308370,
+    "time": 5.0,
+    "waitVoice": 1308371,
+    "timeoutVoice": 1308372,
+    "protectionTime": 10
   }
 ]

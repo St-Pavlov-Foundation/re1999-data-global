@@ -83,6 +83,7 @@ function slot0.onReceiveSetPlayerCardThemeReply(slot0, slot1, slot2)
 	end
 
 	PlayerCardModel.instance:updateThemeId(slot2.themeId)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ChangeSkin, slot2.themeId)
 end
 
 function slot0.sendSetPlayerCardShowAchievementRequest(slot0, slot1, slot2, slot3, slot4)

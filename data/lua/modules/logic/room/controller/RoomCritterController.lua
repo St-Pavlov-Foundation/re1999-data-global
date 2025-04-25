@@ -292,6 +292,29 @@ function slot0.openTrainEventView(slot0, slot1)
 	})
 end
 
+function slot0.openRenameView(slot0, slot1)
+	if CritterModel.instance:getCritterMOByUid(slot1) then
+		ViewMgr.instance:openView(ViewName.RoomCritterRenameView, {
+			critterMO = slot2
+		})
+	end
+end
+
+function slot0.openExchangeView(slot0, slot1)
+	ViewMgr.instance:openView(ViewName.RoomCritterExchangeView, slot1)
+end
+
+function slot0.sendCritterRename(slot0, slot1, slot2)
+	CritterRpc.instance:sendCritterRenameRequest(slot1, slot2, slot0._onCritterRenameReply, slot0)
+end
+
+function slot0._onCritterRenameReply(slot0, slot1, slot2, slot3)
+	if slot2 == 0 then
+		GameFacade.showToast(ToastEnum.RoomCritterRenameSuccess)
+		ViewMgr.instance:closeView(ViewName.RoomCritterRenameView)
+	end
+end
+
 function slot0.sendFinishTrainCritter(slot0, slot1)
 	if not slot0._lastSendFinishTrainCritterTime or slot0._lastSendFinishTrainCritterTime + 3 < Time.time then
 		slot0._lastSendFinishTrainCritterTime = Time.time
@@ -333,6 +356,9 @@ function slot0.startTrain(slot0, slot1, slot2, slot3)
 			CritterController.instance:finishTrainSpecialEventByUid(slot2)
 		end
 	elseif slot4.type == CritterEnum.EventType.ActiveTime then
+		RoomTrainCritterModel.instance:clearSelectOptionInfos()
+		RoomTrainCritterModel.instance:setOptionsSelectTotalCount(CritterModel.instance:getCritterMOByUid(slot2).trainInfo:getEvents(slot1).remainCount)
+
 		if not RoomTrainCritterModel.instance:isEventTrainStoryPlayed(slot3) then
 			slot0:_startEnterTrainWithStory(slot1, slot3, slot2, slot4)
 		else

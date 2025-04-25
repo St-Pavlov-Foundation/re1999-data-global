@@ -57,7 +57,7 @@ function slot0._onVideoState(slot0, slot1)
 		slot0:unregisterCallback(uv0.VideoState, slot0._onVideoState, slot0)
 
 		if slot0._limitedCO and slot0._limitedCO.audio > 0 then
-			AudioMgr.instance:trigger(slot0._limitedCO.audio)
+			AudioMgr.instance:trigger(slot0._limitedCO.audio, nil)
 		end
 	end
 end
@@ -228,6 +228,8 @@ function slot0.getNeedPlayLimitedCO(slot0)
 	if lua_character_limited.configDict[slot2] and not string.nilorempty(slot3.entranceMv) then
 		return slot3
 	end
+
+	return nil
 end
 
 function slot0._blockMainViewClick(slot0, slot1)

@@ -19498,5 +19498,1517 @@
   {
     "id": 215,
     "type": "None"
+  },
+  {
+    "id": 703000,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703002,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703004,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703100,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703101,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703102,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703103,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703104,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703105,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703106,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703201,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703202,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703203,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703204,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703205,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703206,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703207,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703208,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703209,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703210,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703211,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703212,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703213,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703301,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703302,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703303,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703304,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703305,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703306,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703307,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703401,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 703402,
+    "type": "PerRedOrBlue"
+  },
+  {
+    "id": 57005,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 704000,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704002,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704004,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704100,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704101,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704102,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704103,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704104,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704105,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704106,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704201,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704202,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704203,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 7042032,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704204,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704205,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704206,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704207,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704208,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704209,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704210,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704211,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704212,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704213,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704301,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704302,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704303,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704304,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704305,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704306,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704307,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704401,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 704402,
+    "type": "HaveTriggerBuff"
+  },
+  {
+    "id": 705000,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705002,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705004,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705100,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705101,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705102,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705103,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705104,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705105,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705106,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705201,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705202,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705203,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705204,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705205,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705206,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705207,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705208,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705209,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705210,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705211,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705212,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705213,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705301,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705302,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705303,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705304,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705305,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705306,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705307,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705401,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 705402,
+    "type": "PerBuffTypeCountWithLimit"
+  },
+  {
+    "id": 706000,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706002,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706004,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706100,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706101,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706102,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706103,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706104,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706105,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706106,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706201,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706202,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706203,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706204,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706205,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706206,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706207,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706208,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706209,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706210,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706211,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706212,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706213,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706301,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706302,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706303,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706304,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706305,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706306,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706307,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706401,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 706402,
+    "type": "PerBuffLayerCountWithLimit"
+  },
+  {
+    "id": 707000,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707002,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707004,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707100,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707101,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707102,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707103,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707104,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707105,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707106,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707201,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707202,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707203,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707204,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707205,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707206,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707207,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707208,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707209,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707210,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707211,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707212,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707213,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707301,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707302,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707303,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707304,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707305,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707306,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707307,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707401,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 707402,
+    "type": "CardHeatCompare"
+  },
+  {
+    "id": 708000,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708002,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708004,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708100,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708101,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708102,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708103,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708104,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708105,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708106,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708201,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708202,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708203,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708204,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708205,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708206,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708207,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708208,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708209,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708210,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708211,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708212,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708213,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708301,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708302,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708303,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708304,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708305,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708306,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708307,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708401,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 708402,
+    "type": "HandCardHasSkillId"
+  },
+  {
+    "id": 709000,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709002,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709004,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709100,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709101,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709102,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709103,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709104,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709105,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709106,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709201,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709202,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709203,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709204,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709205,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709206,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709207,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709208,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709209,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709210,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709211,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709212,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709213,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709301,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709302,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709303,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709304,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709305,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709306,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709307,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709401,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 709402,
+    "type": "GenerateCardDeckNum"
+  },
+  {
+    "id": 710000,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710002,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710004,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710100,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710101,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710102,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710103,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710104,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710105,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710106,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710201,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710202,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710203,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710204,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710205,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710206,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710207,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710208,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710209,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710210,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710211,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710212,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710213,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710301,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710302,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710303,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710304,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710305,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710306,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710307,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710401,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 710402,
+    "type": "PerHandCardHasSkillId"
+  },
+  {
+    "id": 502107,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 5022081,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 612081,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 711039,
+    "type": "AddMagicCircle"
+  },
+  {
+    "id": 712040,
+    "type": "RemoveMagicCircle"
+  },
+  {
+    "id": 713000,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713002,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713004,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713100,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713101,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713102,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713103,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713104,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713105,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713106,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713201,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713202,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713203,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713204,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713205,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713206,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713207,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713208,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713209,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713210,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713211,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713212,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713213,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713301,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713302,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713303,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713304,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713305,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713306,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713307,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713401,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 713402,
+    "type": "AssistBossLostPowerDifference"
+  },
+  {
+    "id": 714000,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714002,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714004,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714100,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714101,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714102,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714103,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714104,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714105,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714106,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714201,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714202,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714203,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714204,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714205,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714206,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714207,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714208,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714209,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714210,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714211,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714212,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714213,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714301,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714302,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714303,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714304,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714305,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714306,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714307,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714401,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 714402,
+    "type": "PerTeamCardEnchant"
+  },
+  {
+    "id": 715000,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715002,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715004,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715100,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715101,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715102,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715103,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715104,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715105,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715106,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715201,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715202,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715203,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715204,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715205,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715206,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715207,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715208,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715209,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715210,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715211,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715212,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715213,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715301,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715302,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715303,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715304,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715305,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715306,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715307,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715401,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 715402,
+    "type": "FightLoadRecord"
+  },
+  {
+    "id": 22213999,
+    "type": "BeAttacked"
+  },
+  {
+    "id": 514102,
+    "type": "SelfTeamHasBuffTypeLayerLessThan"
+  },
+  {
+    "id": 508102,
+    "type": "CareerCheck"
+  },
+  {
+    "id": 508212,
+    "type": "CareerCheck"
+  },
+  {
+    "id": 508208,
+    "type": "CareerCheck"
+  },
+  {
+    "id": 678102,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 508104,
+    "type": "CareerCheck"
+  },
+  {
+    "id": 542012,
+    "type": "InMagicCircleId"
+  },
+  {
+    "id": 678302,
+    "type": "ProgressFull"
+  },
+  {
+    "id": 61213,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 85304,
+    "type": "PerBuffTypeCountGroupByTypeId"
+  },
+  {
+    "id": 716210,
+    "type": "TeammateInjuryCount2"
+  },
+  {
+    "id": 514012,
+    "type": "SelfTeamHasBuffTypeLayerLessThan"
+  },
+  {
+    "id": 51002,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 513012,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 180213,
+    "type": "PowerCompare"
+  },
+  {
+    "id": 501204,
+    "type": "UseHurtSkill"
+  },
+  {
+    "id": 502204,
+    "type": "ActiveUseSkill"
+  },
+  {
+    "id": 5012081,
+    "type": "UseHurtSkill"
   }
 ]

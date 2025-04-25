@@ -6,7 +6,7 @@ slot2 = 200
 slot3 = 2
 slot4 = 262
 
-function slot5(slot0, slot1)
+function slot0.sortFormula(slot0, slot1)
 	if ManufactureConfig.instance:getItemId(slot0.id) ~= ManufactureConfig.instance:getItemId(slot1.id) then
 		return slot4 < slot5
 	end
@@ -35,7 +35,7 @@ function slot0.setManufactureFormulaItemList(slot0, slot1)
 		end
 	end
 
-	table.sort(slot2, uv0)
+	table.sort(slot2, slot0.sortFormula)
 	slot0:setList(slot2)
 end
 

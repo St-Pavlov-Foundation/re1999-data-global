@@ -2,6 +2,7 @@ module("modules.logic.room.define.RoomSummonEnum", package.seeall)
 
 slot0 = _M
 slot0.SummonType = {
+	ItemGet = 3,
 	Summon = 1,
 	Incubate = 2
 }

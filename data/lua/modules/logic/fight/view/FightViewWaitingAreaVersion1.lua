@@ -2,6 +2,7 @@ module("modules.logic.fight.view.FightViewWaitingAreaVersion1", package.seeall)
 
 slot0 = class("FightViewWaitingAreaVersion1", BaseViewExtended)
 slot1 = 0
+slot0.StartPosX = 0
 
 function slot0.onInitView(slot0)
 	slot0._waitingAreaTran = gohelper.findChild(slot0.viewGO, "root/waitingArea").transform
@@ -12,7 +13,7 @@ function slot0.onInitView(slot0)
 	slot0._cardItemList = {}
 	slot0._cardItemGOList = slot0:getUserDataTb_()
 	slot0._cardObjModel = gohelper.findChild(slot0._waitingAreaGO, "cardItemModel")
-	slot0._startPosX = recthelper.getAnchorX(slot0._cardObjModel.transform)
+	uv0.StartPosX = recthelper.getAnchorX(slot0._cardObjModel.transform)
 
 	slot0:_refreshTipsVisibleState()
 end
@@ -60,6 +61,12 @@ function slot0.onDestroyView(slot0)
 	end
 
 	slot0:_releaseScalseTween()
+
+	if slot0.LYCard then
+		slot0.LYCard:dispose()
+
+		slot0.LYCard = nil
+	end
 end
 
 function slot0._onAddUseCard(slot0, slot1)
@@ -85,8 +92,18 @@ end
 
 function slot0._fixWaitingAreaItemCount(slot0, slot1)
 	for slot5 = 1, slot1 do
-		recthelper.setAnchorX((gohelper.findChild(slot0._waitingAreaGO, "cardItem" .. slot5) or gohelper.cloneInPlace(slot0._cardObjModel, "cardItem" .. slot5)).transform, slot0._startPosX - 192 * (slot1 - slot5))
+		recthelper.setAnchorX((gohelper.findChild(slot0._waitingAreaGO, "cardItem" .. slot5) or gohelper.cloneInPlace(slot0._cardObjModel, "cardItem" .. slot5)).transform, uv0.getCardPos(slot5, slot1))
 	end
+end
+
+function slot0.getCardPos(slot0, slot1)
+	slot2 = 0
+
+	if FightDataHelper.LYDataMgr:hasCountBuff() then
+		slot2 = 1
+	end
+
+	return uv0.StartPosX - 192 * (slot1 - (slot0 - slot2))
 end
 
 function slot0._onSetUseCards(slot0)
@@ -115,6 +132,11 @@ function slot0._onShowSimulateClientUsedCard(slot0)
 
 	for slot5, slot6 in ipairs(slot1) do
 		slot6.custom_lock = FightViewHandCardItemLock.setCardLock(slot6.uid, slot6.skillId, gohelper.findChild(slot0._cardItemList[slot5].tr.parent.gameObject, "lock"), false)
+	end
+
+	if slot0.LYCard then
+		slot0.LYCard:resetState()
+		slot0.LYCard:playAnim("in")
 	end
 end
 
@@ -288,7 +310,7 @@ function slot0._updateView(slot0, slot1, slot2)
 			slot16 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], gohelper.findChild(slot0._waitingAreaGO, "cardItem" .. slot9) or gohelper.cloneInPlace(slot0._cardObjModel, "cardItem" .. slot9), "card")
 
 			gohelper.setAsFirstSibling(slot16)
-			table.insert(slot0._cardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(slot16, FightViewCardItem))
+			table.insert(slot0._cardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(slot16, FightViewCardItem, FightEnum.CardShowType.PlayCard))
 		end
 
 		transformhelper.setLocalScale(slot13.tr, 1, 1, 1)
@@ -302,6 +324,7 @@ function slot0._updateView(slot0, slot1, slot2)
 
 		slot13:updateItem(slot11, slot12, slot10)
 		slot13:detectShowBlueStar()
+		slot0:refreshCardRedAndBlue(slot13, slot10)
 		gohelper.setActive(slot13.go, slot4 < slot9)
 	end
 
@@ -313,6 +336,31 @@ function slot0._updateView(slot0, slot1, slot2)
 	end
 
 	slot0:playScaleTween(slot5)
+	slot0:refreshLYCard(slot3)
+end
+
+function slot0.refreshCardRedAndBlue(slot0, slot1, slot2)
+	slot3 = slot2 and slot2.areaRedOrBlue
+
+	slot1:setActiveRed(slot3 == FightEnum.CardColor.Red)
+	slot1:setActiveBlue(slot3 == FightEnum.CardColor.Blue)
+	slot1:setActiveBoth(slot3 == FightEnum.CardColor.Both)
+end
+
+function slot0.refreshLYCard(slot0, slot1)
+	if FightDataHelper.LYDataMgr:hasCountBuff() then
+		slot0.LYCard = slot0.LYCard or FightLYWaitAreaCard.Create(slot0._waitingAreaGO)
+
+		slot0.LYCard:setScale(FightEnum.LYCardWaitAreaScale)
+	end
+
+	if slot0.LYCard then
+		slot0.LYCard:refreshLYCard()
+
+		slot2 = slot1 and #slot1 or 0
+
+		slot0.LYCard:setAnchorX(uv0.getCardPos(slot2 + 1, slot2))
+	end
 end
 
 function slot0.playScaleTween(slot0, slot1)

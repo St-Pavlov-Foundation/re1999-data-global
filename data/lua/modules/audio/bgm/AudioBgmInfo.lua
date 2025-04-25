@@ -62,7 +62,7 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Act_GeTian, AudioEnum.Bgm.role_activity_getian, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.Cachot, AudioEnum.Bgm.CachotMainScene, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_7Main, AudioEnum.Bgm.Act1_7DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
-	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_8Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_8Main, AudioEnum.Bgm.Act1_8DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_8Dungeon, AudioEnum.Bgm.Act1_8DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity1_9SemmelWeisGift, AudioEnum.Bgm.SemmelWeisGift, AudioEnum.UI.Stop_UIMusic)
@@ -89,6 +89,7 @@ function slot0._initBgmDatas(slot0)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4Act178Game, AudioEnum.Act178.bgm_game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi, AudioEnum.WuErLiXi.bgm_wuerliximap, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXiGame, AudioEnum.WuErLiXi.bgm_wuerliximapgame, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	slot0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_5Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function slot0._initBgmUsage(slot0)
@@ -348,7 +349,8 @@ function slot0._initBgmUsage(slot0)
 	slot0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_8Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity1_8EnterView
+		ViewName.VersionActivity1_8EnterView,
+		ViewName.Permanent1_8EnterView
 	}, nil, , true)
 	slot0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_8Dungeon
@@ -487,6 +489,11 @@ function slot0._initBgmUsage(slot0)
 		AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.WuErLiXiLevelView
+	}, nil, , true)
+	slot0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_5Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_5EnterView
 	}, nil, , true)
 end
 

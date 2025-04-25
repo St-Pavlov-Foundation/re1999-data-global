@@ -169,6 +169,24 @@ function slot0.isUniqueById(slot0, slot1, slot2)
 	return slot0:isUniqueByCo(slot1, slot0:getItemConfig(slot1, slot2))
 end
 
+function slot0.getRewardGroupRateInfoList(slot0, slot1)
+	slot2 = lua_reward.configDict[tonumber(slot1)]
+	slot3 = {}
+	slot4 = 0
+
+	repeat
+		if string.nilorempty(slot2["rewardGroup" .. slot4 + 1]) then
+			return slot3
+		end
+
+		if string.split(slot5, ":") then
+			DungeonConfig.instance:_calcRewardGroupRateInfoList(slot3, slot6[1])
+		end
+	until not slot6 or #slot6 == 0
+
+	return slot3
+end
+
 slot0.instance = slot0.New()
 
 return slot0

@@ -418,5 +418,33 @@
     "attachAttribute": "",
     "attachStoryId": 0,
     "spEventId": 122306231
+  },
+  {
+    "heroId": 3077,
+    "preferenceType": 3,
+    "preferenceValue": "500016",
+    "critterIcon": "500016",
+    "effectAttribute": 1,
+    "addIncrRate": 1500,
+    "desc": "language_10056159",
+    "attachEventId": 0,
+    "attachOption": "",
+    "attachAttribute": "",
+    "attachStoryId": 0,
+    "spEventId": 125307731
+  },
+  {
+    "heroId": 3104,
+    "preferenceType": 3,
+    "preferenceValue": "500016",
+    "critterIcon": "500016",
+    "effectAttribute": 3,
+    "addIncrRate": 1500,
+    "desc": "language_10056159",
+    "attachEventId": 0,
+    "attachOption": "",
+    "attachAttribute": "",
+    "attachStoryId": 0,
+    "spEventId": 125310431
   }
 ]

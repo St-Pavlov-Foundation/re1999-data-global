@@ -21,7 +21,8 @@ function slot0.ctor(slot0)
 		[TaskEnum.TaskType.Activity128] = uv0._getActivity128,
 		[TaskEnum.TaskType.Season123] = uv0._getSeason123,
 		[TaskEnum.TaskType.RoleActivity] = uv0._getRoleActivity,
-		[TaskEnum.TaskType.Activity125] = uv0._getActivity125
+		[TaskEnum.TaskType.Activity125] = uv0._getActivity125,
+		[TaskEnum.TaskType.Activity183] = uv0._getAct183Task
 	}
 end
 
@@ -71,6 +72,10 @@ end
 
 function slot0._getRoleActivity(slot0)
 	return RoleActivityConfig.instance:getTaskCo(slot0)
+end
+
+function slot0._getAct183Task(slot0)
+	return Act183Config.instance:getTaskConfig(slot0)
 end
 
 function slot0.getTaskConfigFunc(slot0, slot1)

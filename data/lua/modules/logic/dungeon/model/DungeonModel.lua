@@ -560,7 +560,8 @@ slot1 = {
 	[DungeonEnum.EpisodeType.Season166Teach] = true,
 	[DungeonEnum.EpisodeType.TowerPermanent] = true,
 	[DungeonEnum.EpisodeType.TowerBoss] = true,
-	[DungeonEnum.EpisodeType.TowerLimited] = true
+	[DungeonEnum.EpisodeType.TowerLimited] = true,
+	[DungeonEnum.EpisodeType.Act183] = true
 }
 
 function slot0.isBattleEpisode(slot0)

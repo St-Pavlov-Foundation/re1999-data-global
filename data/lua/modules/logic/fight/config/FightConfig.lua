@@ -91,7 +91,15 @@ function slot0.reqConfigNames(slot0)
 		"ai_monster_card_tag",
 		"assist_boss_stance",
 		"fight_skin_replace_magic_effect",
-		"simple_polarization"
+		"simple_polarization",
+		"fight_card_pre_delete",
+		"ai_mark_skill",
+		"monster_instance",
+		"monster_sub",
+		"monster_level",
+		"monster_job",
+		"card_heat",
+		"fight_float_effect"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then
@@ -801,6 +809,36 @@ end
 
 function slot0.isSetDescFlag(slot0)
 	return slot0.descFlag
+end
+
+function slot0.getMultiHpListByMonsterId(slot0, slot1, slot2)
+	if not lua_monster.configDict[slot1] then
+		return nil
+	end
+
+	slot4 = CharacterDataConfig.instance:getMonsterHp(slot1, slot2)
+
+	if lua_monster_skill_template.configDict[slot3.skillTemplate] and slot5.instance > 0 and lua_monster_instance.configDict[slot5.instance] and slot6.multiHp > 1 then
+		slot7 = {}
+
+		for slot11 = 1, slot6.multiHp do
+			table.insert(slot7, slot4)
+		end
+
+		return slot7
+	end
+
+	if string.nilorempty(lua_monster_template.configDict[slot3.template].multiHp) then
+		return nil
+	end
+
+	slot8 = {}
+
+	for slot12 = 1, #string.split(slot6, "#") do
+		table.insert(slot8, slot4)
+	end
+
+	return slot8
 end
 
 slot0.instance = slot0.New()

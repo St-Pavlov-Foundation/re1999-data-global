@@ -885,6 +885,7 @@ function slot0.onReceiveManuBuildingInfoPush(slot0, slot1, slot2)
 		return
 	end
 
+	ManufactureController.instance:updateFrozenItem(slot2.frozenItems2Count)
 	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos)
 	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, ManufactureController.instance:getPlayAddEffDict(slot2.manuBuildingInfos))
 end
@@ -925,7 +926,7 @@ function slot0.onReceiveSelectSlotProductionPlanReply(slot0, slot1, slot2)
 		return
 	end
 
-	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos)
+	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos, true)
 	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, ManufactureController.instance:getPlayAddEffDict(slot2.manuBuildingInfos))
 end
 
@@ -945,7 +946,7 @@ function slot0.onReceiveManufactureAccelerateReply(slot0, slot1, slot2)
 		return
 	end
 
-	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos)
+	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos, true)
 end
 
 function slot0.sendReapFinishSlotRequest(slot0, slot1)
@@ -995,7 +996,7 @@ function slot0.onReceiveReapFinishSlotReply(slot0, slot1, slot2)
 		GameFacade.showToast(ToastEnum.RoomNoManufactureItemGet)
 	end
 
-	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos)
+	ManufactureController.instance:updateManuBuildingInfoList(slot2.manuBuildingInfos, true)
 end
 
 function slot0.sendDispatchCritterRequest(slot0, slot1, slot2, slot3)
@@ -1149,17 +1150,35 @@ function slot0.onReceiveRouseCrittersReply(slot0, slot1, slot2)
 	CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, slot3, slot4)
 end
 
-function slot0.sendBatchAddProctionsRequest(slot0, slot1)
-	slot2 = RoomModule_pb.BatchAddProctionsRequest()
-	slot2.type = slot1
+function slot0.sendBatchAddProctionsRequest(slot0, slot1, slot2, slot3, slot4, slot5)
+	slot6 = RoomModule_pb.BatchAddProctionsRequest()
+	slot6.type = slot1
+	slot6.freeInfo.buildingType = slot2 or 0
+	slot6.freeInfo.buildingDefineId = slot3 or 0
+	slot7 = MaterialModule_pb.M2QEntry()
+	slot7.materialId = slot4 or 0
+	slot7.quantity = slot5 or 0
 
-	slot0:sendMsg(slot2)
+	table.insert(slot6.freeInfo.item2Count, slot7)
+	slot0:sendMsg(slot6)
 end
 
 function slot0.onReceiveBatchAddProctionsReply(slot0, slot1, slot2)
 	if slot1 ~= 0 then
 		return
 	end
+end
+
+function slot0.sendGetFrozenItemInfoRequest(slot0)
+	slot0:sendMsg(RoomModule_pb.GetFrozenItemInfoRequest())
+end
+
+function slot0.onReceiveGetFrozenItemInfoReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	ManufactureController.instance:updateFrozenItem(slot2.frozenItems2Count)
 end
 
 function slot0.sendGetOrderInfoRequest(slot0, slot1, slot2)
@@ -1225,6 +1244,21 @@ function slot0.onReceiveChangePurchaseOrderTraceStateReply(slot0, slot1, slot2)
 	end
 
 	RoomTradeController.instance:onTracedDailyOrderReply(slot2)
+end
+
+function slot0.sendLockOrderRequest(slot0, slot1, slot2)
+	RoomModule_pb.LockOrderRequest().orderId = slot1
+	slot3.operation = slot2 and 1 or 2
+
+	slot0:sendMsg(slot3)
+end
+
+function slot0.onReceiveLockOrderReply(slot0, slot1, slot2)
+	if slot1 ~= 0 then
+		return
+	end
+
+	RoomTradeController.instance:onLockedDailyOrderReply(slot2)
 end
 
 function slot0.sendGetTradeTaskInfoRequest(slot0, slot1, slot2)
@@ -1360,6 +1394,26 @@ function slot0.onReceiveAccelerateGuidePlanReply(slot0, slot1, slot2)
 	end
 
 	RoomController.instance:dispatchEvent(RoomEvent.AccelerateGuidePlan, slot2)
+end
+
+function slot0.sendUnloadRestBuildingCrittersRequest(slot0, slot1, slot2, slot3)
+	slot4 = RoomModule_pb.UnloadRestBuildingCrittersRequest()
+	slot4.buildingUid = slot1
+
+	slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveUnloadRestBuildingCrittersReply(slot0, slot1, slot2)
+end
+
+function slot0.sendReplaceRestBuildingCrittersRequest(slot0, slot1, slot2, slot3)
+	slot4 = RoomModule_pb.ReplaceRestBuildingCrittersRequest()
+	slot4.buildingUid = slot1
+
+	slot0:sendMsg(slot4, slot2, slot3)
+end
+
+function slot0.onReceiveReplaceRestBuildingCrittersReply(slot0, slot1, slot2)
 end
 
 slot0.instance = slot0.New()

@@ -34,73 +34,91 @@ function slot0.onInitView(slot0)
 
 	slot0:_setBlockOperate(false)
 
+	slot0.areaSize = 0
+	slot0.LyNeedCheckFlowList = {}
+
+	slot0:initRedOrBlueArea()
+	slot0:addEventCb(FightController.instance, FightEvent.OnHandCardFlowCreate, slot0._onHandCardFlowCreate, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.OnHandCardFlowStart, slot0._onHandCardFlowStart, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.OnHandCardFlowEnd, slot0._onHandCardFlowEnd, slot0)
+
 	uv0.handCardContainer = slot0._handCardContainer
 	uv0.HalfWidth = recthelper.getWidth(slot0._handCardTr) / 2
 	uv0.HalfItemWidth = recthelper.getWidth(slot0._handCardItemPrefab.transform) / 2
 	uv0.HandCardWidth = uv1
 	uv0.HandCardHeight = uv2
 	slot0._autoPlayCardFlow = nil
-	slot0._correctHandCardScale = FlowSequence.New()
+	slot0._correctHandCardScale = FightViewHandCardSequenceFlow.New()
 
 	slot0._correctHandCardScale:addWork(FigthCardDistributeCorrectScale.New())
 
-	slot0._cardDistributeFlow = FlowParallel.New()
+	slot0._cardDistributeFlow = FightViewHandCardParallelFlow.New()
 
 	slot0._cardDistributeFlow:addWork(FigthCardDistributeCorrectScale.New())
 	slot0._cardDistributeFlow:addWork(FigthCardDistributeEffect.New())
 	slot0._cardDistributeFlow:addWork(FightCardCombineEndEffect.New())
 
-	slot0._cardPlayFlow = FlowSequence.New()
+	slot0._cardPlayFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardPlayFlow:addWork(FightCardPlayEffect.New())
 	slot0._cardPlayFlow:addWork(FightCardDissolveCardsAfterPlay.New())
 	slot0._cardPlayFlow:addWork(FightCardDiscardAfterPlay.New())
 	slot0._cardPlayFlow:addWork(FightCardCheckCombineCards.New())
 
-	slot0._cardCombineFlow = FlowSequence.New()
+	slot0._cardCombineFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardCombineFlow:addWork(FightCardCombineEffect.New())
 
-	slot0._cardLongPressFlow = FlowSequence.New()
+	slot0._cardLongPressFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardLongPressFlow:addWork(FightCardLongPressEffect.New())
 
-	slot0._cardLongPressEndFlow = FlowSequence.New()
+	slot0._cardLongPressEndFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardLongPressEndFlow:addWork(FightCardLongPressEndEffect.New())
 
-	slot0._cardDragFlow = FlowSequence.New()
+	slot0._cardDragFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardDragFlow:addWork(FightCardDragEffect.New())
 
-	slot0._cardDragEndFlow = FlowSequence.New()
+	slot0._cardDragEndFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardDragEndFlow:addWork(FightCardDragEndEffect.New())
 
-	slot0._cardEndFlow = FlowSequence.New()
+	slot0._cardEndFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._cardEndFlow:addWork(FightGuideCardEnd.New())
 	slot0._cardEndFlow:addWork(FightCardEndEffect.New())
 
-	slot0._changeCardFlow = FlowSequence.New()
+	slot0._changeCardFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._changeCardFlow:addWork(FightCardChangeEffect.New())
 
-	slot0._redealCardFlow = FlowSequence.New()
+	slot0._redealCardFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._redealCardFlow:addWork(FightCardRedealEffect.New())
 
-	slot0._universalAppearFlow = FlowSequence.New()
+	slot0._universalAppearFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._universalAppearFlow:addWork(FightCardUniversalAppearEffect.New())
 
-	slot0._magicEffectCardFlow = FlowSequence.New()
+	slot0._magicEffectCardFlow = FightViewHandCardSequenceFlow.New()
 
 	slot0._magicEffectCardFlow:addWork(FightCardChangeMagicEffect.New())
 end
 
+function slot0.initRedOrBlueArea(slot0)
+	slot0.goLYAreaRoot = gohelper.findChild(slot0.viewGO, "root/handcards/LiangyueframeRoot")
+	slot0.animatorLyRoot = slot0.goLYAreaRoot:GetComponent(gohelper.Type_Animator)
+	slot0.goRedArea = gohelper.findChild(slot0.goLYAreaRoot, "redarea")
+	slot0.goGreenArea = gohelper.findChild(slot0.goLYAreaRoot, "greenarea")
+	slot0.rectTrRedArea = slot0.goRedArea:GetComponent(gohelper.Type_RectTransform)
+	slot0.rectTrGreenArea = slot0.goGreenArea:GetComponent(gohelper.Type_RectTransform)
+end
+
 function slot0.onDestroyView(slot0)
 	uv0.handCardContainer = nil
+	slot0.LyNeedCheckFlowList = nil
 end
 
 function slot0.onOpen(slot0)
@@ -111,7 +129,6 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.PlayHandCard, slot0._playHandCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.PlayCombineCards, slot0._onPlayCombineCards, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.UpdateHandCards, slot0._updateHandCards, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RevertCard, slot0._revertCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ResetCard, slot0._resetCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.DragHandCardBegin, slot0._onDragHandCardBegin, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, slot0._onDragHandCardEnd, slot0)
@@ -152,10 +169,13 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelectRight, slot0.selectRightCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.EnterStage, slot0._onEnterStage, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ExitStage, slot0._onExitStage, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.StageChanged, slot0._onStageChanged, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.EnterOperateState, slot0._onEnterOperateState, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.CardEffectChange, slot0._onCardEffectChange, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.RefreshHandCardPrecisionEffect, slot0._onRefreshHandCardPrecisionEffect, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.LY_CardAreaSizeChange, slot0.onLY_CardAreaSizeChange, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.RefreshCardHeatShow, slot0._onRefreshCardHeatShow, slot0)
 	slot0:_setBlockOperate(false)
 	slot0:_refreshPrecisionShow()
 end
@@ -200,6 +220,113 @@ function slot0.onClose(slot0)
 	slot0._redealCardFlow:stop()
 	slot0._universalAppearFlow:stop()
 	slot0._magicEffectCardFlow:stop()
+end
+
+function slot0._onHandCardFlowCreate(slot0, slot1)
+	table.insert(slot0.LyNeedCheckFlowList, slot1)
+end
+
+function slot0._onHandCardFlowEnd(slot0, slot1)
+	if slot1 == slot0._cardLongPressEndFlow or slot1 == slot0._cardDragEndFlow then
+		slot0.longPressing = false
+	end
+
+	return slot0:refreshLYAreaActive()
+end
+
+function slot0._onHandCardFlowStart(slot0, slot1)
+	if slot1 == slot0._cardLongPressFlow then
+		slot0.longPressing = true
+	end
+
+	return slot0:refreshLYAreaActive()
+end
+
+function slot0._onStageChanged(slot0)
+	return slot0:refreshLYAreaActive()
+end
+
+function slot0.refreshLYAreaActive(slot0)
+	if uv0.blockOperate then
+		return slot0:setActiveLyRoot(false)
+	end
+
+	if slot0.longPressing then
+		return slot0:setActiveLyRoot(false)
+	end
+
+	if not (FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal) then
+		return slot0:setActiveLyRoot(false)
+	end
+
+	if slot0.LyNeedCheckFlowList then
+		for slot6, slot7 in ipairs(slot0.LyNeedCheckFlowList) do
+			if slot7.status == WorkStatus.Running then
+				return slot0:setActiveLyRoot(false)
+			end
+		end
+	end
+
+	slot0:refreshLyAreaPos()
+	slot0:setActiveLyRoot(true)
+end
+
+function slot0.setActiveLyRoot(slot0, slot1)
+	if FightDataHelper.LYDataMgr.LYCardAreaSize < 1 then
+		gohelper.setActive(slot0.goLYAreaRoot, false)
+
+		return
+	end
+
+	gohelper.setActive(slot0.goLYAreaRoot, true)
+
+	if slot1 then
+		if not slot0.goLYAreaRoot.activeInHierarchy then
+			gohelper.setActive(slot0.goLYAreaRoot, true)
+			slot0.animatorLyRoot:Play("open", 0, 0)
+		end
+	else
+		gohelper.setActive(slot0.goLYAreaRoot, false)
+	end
+end
+
+function slot0.onLY_CardAreaSizeChange(slot0)
+	slot0:refreshLyCardTag()
+	slot0:refreshLYAreaActive()
+end
+
+function slot0.refreshLyCardTag(slot0)
+	slot2 = FightDataHelper.LYDataMgr.LYCardAreaSize
+	slot3 = FightCardModel.instance:getHandCards() and #slot1 or 0
+
+	for slot7 = 1, slot3 do
+		if slot0._handCardItemList[slot7] then
+			slot8:resetRedAndBlue()
+
+			if slot2 > slot3 - slot7 and slot7 <= slot2 then
+				slot8:setActiveBoth(true)
+			else
+				slot8:setActiveBlue(slot2 > slot3 - slot7)
+				slot8:setActiveRed(slot7 <= slot2)
+			end
+		end
+	end
+end
+
+function slot0.refreshLyAreaPos(slot0)
+	slot1 = math.min(FightDataHelper.LYDataMgr.LYCardAreaSize, FightCardModel.instance:getHandCards() and #slot2 or 0)
+	slot6 = slot1 and slot1 > 0 and (FightCardModel.instance:getHandCards() and #slot4 or 0) > 0
+
+	gohelper.setActive(slot0.goRedArea, slot6)
+	gohelper.setActive(slot0.goGreenArea, slot6)
+
+	if slot6 then
+		slot7 = uv0.calcTotalWidth(slot1, 1) + FightEnum.LYCardAreaWidthOffset
+
+		recthelper.setWidth(slot0.rectTrRedArea, slot7)
+		recthelper.setWidth(slot0.rectTrGreenArea, slot7)
+		recthelper.setAnchorX(slot0.rectTrGreenArea, -uv0.calcTotalWidth(slot5 - slot1, 1))
+	end
 end
 
 function slot0._onApplicationPause(slot0, slot1)
@@ -315,6 +442,34 @@ end
 
 function slot0._onExitStage(slot0, slot1)
 	slot0:_refreshPrecisionShow()
+end
+
+function slot0.refreshPreDeleteCard(slot0, slot1)
+	slot0.needPreDeleteCardIndexDict = slot0.needPreDeleteCardIndexDict or {}
+
+	tabletool.clear(slot0.needPreDeleteCardIndexDict)
+
+	if slot1 then
+		for slot5, slot6 in ipairs(slot1) do
+			if slot6.skillId and lua_fight_card_pre_delete.configDict[slot7] then
+				if slot8.left > 0 then
+					for slot13 = 1, slot9 do
+						slot0.needPreDeleteCardIndexDict[slot5 + slot13] = true
+					end
+				end
+
+				if slot8.right > 0 then
+					for slot14 = 1, slot10 do
+						slot0.needPreDeleteCardIndexDict[slot5 - slot14] = true
+					end
+				end
+			end
+		end
+	end
+
+	for slot5, slot6 in ipairs(slot0._handCardItemList) do
+		slot6:refreshPreDeleteImage(slot0.needPreDeleteCardIndexDict and slot0.needPreDeleteCardIndexDict[slot5])
+	end
 end
 
 function slot0._refreshPrecisionShow(slot0)
@@ -499,8 +654,19 @@ function slot0._playHandCard(slot0, slot1, slot2, slot3)
 	slot0:_setBlockOperate(true)
 
 	slot5.playCanAddExpoint = FightCardDataHelper.playCanAddExpoint(slot4, slot5)
+	slot6 = FightCardModel.instance:playHandCardOp(slot1, slot2, slot5.skillId, slot5.uid, slot5)
+	slot6.cardColor = FightDataHelper.LYDataMgr:getCardColor(slot4, slot1)
+	slot6.cardInfoMO.areaRedOrBlue = slot6.cardColor
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, FightCardModel.instance:playHandCardOp(slot1, slot2, slot5.skillId, slot5.uid, slot5))
+	if slot5.heatId ~= 0 then
+		slot7 = FightDataHelper.teamDataMgr
+		slot8 = slot5.heatId
+		slot7.myCardHeatOffset[slot8] = (slot7.myCardHeatOffset[slot8] or 0) + slot7.myData.cardHeat.values[slot8].changeValue
+
+		FightController.instance:dispatchEvent(FightEvent.RefreshCardHeatShow, slot8)
+	end
+
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot6)
 
 	slot7 = nil
 
@@ -1023,11 +1189,6 @@ function slot0._onCombineCardDone(slot0, slot1)
 	slot0:_combineCards(slot0._cardsForCombines, nil, slot0._cardCombineFlow.context.fightBeginRoundOp)
 end
 
-function slot0._revertCard(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnRevertCard, FightCardModel.instance:revertOp())
-	slot0:_updateNow()
-end
-
 function slot0._resetCard(slot0, slot1)
 	FightCardModel.instance:resetCardOps()
 	FightDataHelper.paTaMgr:resetOp()
@@ -1084,6 +1245,9 @@ function slot0._updateHandCards(slot0, slot1, slot2)
 
 		slot8:updateItem(slot7, nil)
 	end
+
+	slot0:refreshPreDeleteCard(slot1)
+	slot0:refreshLyCardTag()
 end
 
 function slot0._setBlockOperate(slot0, slot1)
@@ -1099,6 +1263,8 @@ function slot0._setBlockOperate(slot0, slot1)
 	else
 		TaskDispatcher.cancelTask(slot0._delayCancelBlock, slot0)
 	end
+
+	slot0:refreshLYAreaActive()
 end
 
 function slot0._delayCancelBlock(slot0)
@@ -1504,6 +1670,14 @@ end
 function slot0._onExitOperateState(slot0, slot1)
 	if slot1 == FightStageMgr.OperateStateType.Discard then
 		slot0:cancelAbandonState()
+	end
+end
+
+function slot0._onRefreshCardHeatShow(slot0, slot1)
+	if slot0._handCardItemList then
+		for slot5, slot6 in ipairs(slot0._handCardItemList) do
+			slot6:showCardHeat()
+		end
 	end
 end
 

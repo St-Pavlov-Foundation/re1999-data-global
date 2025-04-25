@@ -1,8 +1,8 @@
 module("modules.logic.fight.model.data.FightASFDDataMgr", package.seeall)
 
-slot0 = FightDataBase("FightASFDDataMgr")
+slot0 = FightDataClass("FightASFDDataMgr")
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 end
 
 function slot0.updateData(slot0, slot1)

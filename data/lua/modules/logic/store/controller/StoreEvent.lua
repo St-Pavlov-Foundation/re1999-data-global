@@ -20,5 +20,8 @@ slot0.jumpClickRoomChildGoods = GameUtil.getEventId()
 slot0.DragSkinListBegin = GameUtil.getEventId()
 slot0.DraggingSkinList = GameUtil.getEventId()
 slot0.DragSkinListEnd = GameUtil.getEventId()
+slot0.DecorateGoodItemClick = GameUtil.getEventId()
+slot0.PlayShowStoreAnim = GameUtil.getEventId()
+slot0.PlayHideStoreAnim = GameUtil.getEventId()
 
 return slot0

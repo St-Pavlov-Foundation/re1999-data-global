@@ -45,6 +45,10 @@ slot0.VersionSetting = {
 	[24] = {
 		[slot0.StoryType.Open] = "StoryActivityChapterOpen2_4",
 		[slot0.StoryType.Close] = "StoryActivityChapterClose2_4"
+	},
+	[25] = {
+		[slot0.StoryType.Open] = "StoryActivityChapterOpen2_5",
+		[slot0.StoryType.Close] = "StoryActivityChapterClose2_5"
 	}
 }
 

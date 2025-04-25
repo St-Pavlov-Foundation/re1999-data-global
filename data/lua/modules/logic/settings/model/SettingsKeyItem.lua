@@ -15,8 +15,8 @@ end
 
 function slot0.onUpdateMO(slot0, slot1)
 	slot0._mo = slot1
-	slot0._txtdec.text = slot0._mo.value[PCInputModel.Configfield.description]
-	slot0._txtshortcuts.text = PCInputController.instance:KeyNameToDescName(slot0._mo.value[PCInputModel.Configfield.key])
+	slot0._txtdec.text = slot0._mo.value.description
+	slot0._txtshortcuts.text = PCInputController.instance:KeyNameToDescName(slot0._mo.value.key)
 
 	recthelper.setAnchorY(slot0._go.transform, 0)
 end

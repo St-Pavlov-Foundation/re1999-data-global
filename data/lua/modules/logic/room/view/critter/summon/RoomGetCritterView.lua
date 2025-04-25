@@ -19,6 +19,7 @@ function slot0.onInitView(slot0)
 	slot0._btnsummon = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critter/#go_again/#btn_summon")
 	slot0._simagecurrency = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#go_again/currency/#simage_currency")
 	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_critter/#go_again/currency/#txt_currency")
+	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_skip")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -29,12 +30,14 @@ function slot0.addEvents(slot0)
 	slot0._btnegg:AddClickListener(slot0._btnEggOnClick, slot0)
 	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
 	slot0._btnsummon:AddClickListener(slot0._btnsummonOnClick, slot0)
+	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
 	slot0._btnegg:RemoveClickListener()
 	slot0._btnclose:RemoveClickListener()
 	slot0._btnsummon:RemoveClickListener()
+	slot0._btnskip:RemoveClickListener()
 end
 
 function slot0._addEvents(slot0)
@@ -68,16 +71,20 @@ function slot0._btnEggOnClick(slot0)
 end
 
 function slot0._btncloseOnClick(slot0)
-	if slot0._mode == RoomSummonEnum.SummonType.Incubate and CritterIncubateController.instance:checkHasChildCritter() then
-		slot0._critterMo = slot1
+	if slot0._critterMOList and #slot0._critterMOList > 0 then
+		slot0._critterMo = slot0._critterMOList[1]
 
+		table.remove(slot0._critterMOList, 1)
 		slot0:_showGetCritter()
 
 		return
 	end
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewRefreshCamera)
-	CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onCloseGetCritter)
+	if slot0._mode ~= RoomSummonEnum.SummonType.ItemGet and not ViewMgr.instance:isOpen(ViewName.RoomCritterSummonResultView) then
+		CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewRefreshCamera)
+		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onCloseGetCritter)
+	end
+
 	slot0:closeThis()
 end
 
@@ -95,8 +102,18 @@ function slot0._btncardOnClick(slot0)
 	CritterController.instance:openCriiterDetailSimpleView(slot0._critterMo)
 end
 
+function slot0._btnskipOnClick(slot0)
+	slot0:closeThis()
+end
+
 function slot0._editableInitView(slot0)
 	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_critter/txt_crittername")
+	slot4 = "#go_egg/bg/ssr"
+	slot0._eggRareVX = {
+		[3] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/r"),
+		[4] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/sr"),
+		[5] = gohelper.findChild(slot0.viewGO, slot4)
+	}
 	slot0._star = slot0:getUserDataTb_()
 
 	for slot4 = 1, slot0._gostarList.transform.childCount do
@@ -131,14 +148,30 @@ function slot0.onOpen(slot0)
 
 	slot0._summonCount = 1
 	slot0._mode = slot0.viewParam.mode
+	slot0._critterMOList = {}
 
 	if slot0._mode == RoomSummonEnum.SummonType.Summon then
 		slot0._poolId = slot0.viewParam.poolId
 		slot0._critterMo = slot0.viewParam.critterMo
+
+		if slot0.viewParam and slot0.viewParam.critterMOList then
+			tabletool.addValues(slot0._critterMOList, slot0.viewParam.critterMOList)
+			tabletool.removeValue(slot0._critterMOList, slot0._critterMo)
+		end
+	elseif slot0._mode == RoomSummonEnum.SummonType.ItemGet then
+		slot0._critterMOList = slot0.viewParam.critterMOList
+		slot0._critterMo = slot0._critterMOList[1]
+
+		table.remove(slot0._critterMOList, 1)
 	else
 		slot0._critterMo = slot0.viewParam.critterMo
+
+		if CritterIncubateController.instance:checkHasChildCritter() then
+			table.insert(slot0._critterMOList, slot1)
+		end
 	end
 
+	gohelper.setActive(slot0._btnskip, slot0._critterMOList and #slot0._critterMOList > 1)
 	slot0:_showGetCritter()
 end
 
@@ -149,12 +182,6 @@ function slot0._showGetCritter(slot0)
 
 	slot0._rare = slot0._critterMo:getDefineCfg().rare
 	slot0._rareCo = CritterConfig.instance:getCritterRareCfg(slot0._rare)
-	slot5 = "#go_egg/bg/ssr"
-	slot0._eggRareVX = {
-		[3] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/r"),
-		[4] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/sr"),
-		[5] = gohelper.findChild(slot0.viewGO, slot5)
-	}
 
 	for slot5, slot6 in pairs(slot0._eggRareVX) do
 		gohelper.setActive(slot6, slot5 == slot0._rare)

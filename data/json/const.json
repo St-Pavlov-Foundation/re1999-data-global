@@ -571,7 +571,7 @@
   },
   {
     "id": 119,
-    "value": "https://reverse1999.store/",
+    "value": "zh#https://reverse1999.store/|en#https://reverse1999.store/|jp#https://jp.reverse1999.store/|tw#https://reverse1999.store/|ko#https://reverse1999.store/",
     "value2": ""
   },
   {
@@ -942,12 +942,12 @@
   {
     "id": 812,
     "value": "",
-    "value2": "language_10033662"
+    "value2": "language_10066269"
   },
   {
     "id": 813,
     "value": "",
-    "value2": "language_10000359"
+    "value2": "language_10066270"
   },
   {
     "id": 814,
@@ -1147,6 +1147,66 @@
   {
     "id": 2499,
     "value": "jp#2025-4-21 19:00:00|en#2025-4-21 06:00:00|ko#2025-4-21 19:00:00|tw#2025-4-21 18:00:00",
+    "value2": ""
+  },
+  {
+    "id": 2501,
+    "value": "3",
+    "value2": ""
+  },
+  {
+    "id": 2502,
+    "value": "610001",
+    "value2": ""
+  },
+  {
+    "id": 2503,
+    "value": "6",
+    "value2": ""
+  },
+  {
+    "id": 817,
+    "value": "",
+    "value2": "language_10066271"
+  },
+  {
+    "id": 2504,
+    "value": "0",
+    "value2": ""
+  },
+  {
+    "id": 2505,
+    "value": "",
+    "value2": "language_10066272"
+  },
+  {
+    "id": 2506,
+    "value": "500",
+    "value2": ""
+  },
+  {
+    "id": 819,
+    "value": "",
+    "value2": "language_10066273"
+  },
+  {
+    "id": 2507,
+    "value": "300",
+    "value2": ""
+  },
+  {
+    "id": 2508,
+    "value": "10",
+    "value2": ""
+  },
+  {
+    "id": 2509,
+    "value": "10",
+    "value2": ""
+  },
+  {
+    "id": 2601,
+    "value": "10#50",
     "value2": ""
   },
   {

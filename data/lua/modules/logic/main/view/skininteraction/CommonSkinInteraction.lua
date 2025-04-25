@@ -68,7 +68,8 @@ function slot0._onPlayVoice(slot0)
 			return
 		end
 
-		slot2 = lua_character_special_interaction_voice.configDict[slot1]
+		slot0._startTime = Time.time
+		slot0._protectionTime = lua_character_special_interaction_voice.configDict[slot1].protectionTime or 0
 		slot0._waitTime = slot2.time
 		slot0._waitVoice = slot2.waitVoice
 		slot0._timeoutVoiceConfig = lua_character_voice.configDict[slot0._voiceConfig.heroId][slot2.timeoutVoice]
@@ -97,6 +98,10 @@ end
 
 function slot0.canPlay(slot0, slot1)
 	if slot0._isSpecialInteraction then
+		if Time.time - slot0._startTime <= slot0._protectionTime then
+			return false
+		end
+
 		return slot1.audio == slot0._waitVoice
 	end
 

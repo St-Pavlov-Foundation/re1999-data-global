@@ -23,7 +23,7 @@ slot1 = {
 
 function slot0._registBuffIdClass(slot0, slot1, slot2)
 	if uv0[slot1] then
-		slot0:registClass(uv0[slot1], slot0._entity, slot1, slot2)
+		slot0:newClass(uv0[slot1], slot0._entity, slot1, slot2)
 	end
 end
 

@@ -54,6 +54,7 @@ end
 
 function slot0.onOpen(slot0)
 	slot0._showType = slot0.viewParam.showType
+	slot0._needShowHeroIds = slot0.viewParam.heroId or nil
 	slot0._actId = slot0.viewParam.actId
 
 	slot0:refreshUI()
@@ -126,7 +127,23 @@ function slot0.onSelectRoleItem(slot0, slot1)
 end
 
 function slot0._refreshRoleInfo(slot0)
-	if #CharacterDestinyConfig.instance:getAllDestinyConfigList() <= 0 then
+	slot1 = CharacterDestinyConfig.instance:getAllDestinyConfigList()
+
+	if slot0._needShowHeroIds ~= nil then
+		slot2 = {}
+
+		for slot6, slot7 in ipairs(slot1) do
+			for slot11, slot12 in ipairs(slot0._needShowHeroIds) do
+				if slot7.heroId == slot12 then
+					table.insert(slot2, slot7)
+				end
+			end
+		end
+
+		slot1 = slot2
+	end
+
+	if #slot1 <= 0 then
 		return
 	end
 

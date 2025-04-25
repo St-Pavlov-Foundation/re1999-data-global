@@ -72,6 +72,8 @@ function slot0.setEffectVisible(slot0, slot1)
 end
 
 function slot0.setEffectFrameVisible(slot0, slot1)
+	slot0:showEverNodes(slot1)
+
 	if slot0._uiEffectList and slot0._uiEffectConfig.frameVisible == 1 then
 		for slot5, slot6 in ipairs(slot0._uiEffectList) do
 			gohelper.setActive(gohelper.findChild(slot0._spineGo, slot6), slot1)

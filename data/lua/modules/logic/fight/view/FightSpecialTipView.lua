@@ -8,10 +8,19 @@ function slot0.onInitView(slot0)
 	slot0._gospecialTip = gohelper.findChild(slot0.viewGO, "content/#go_specialTip")
 	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "content/#go_specialTip/#txt_desc")
 	slot0._golayout = gohelper.findChild(slot0.viewGO, "content/layout")
-	slot0._goadditionTip = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip/#go_ruleitem")
+	slot0._goadditionTip = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content")
+	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content/#go_ruleitem")
 	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
 	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	slot0._goadditionTip2 = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip")
+	slot0.additionTipLayout = slot0._goadditionTip2:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	slot0.additionTipLayoutElement = slot0._goadditionTip2:GetComponent(typeof(UnityEngine.UI.LayoutElement))
+	slot0.goViewPort = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip/Viewport")
+	slot0.viewPortLayout = slot0.goViewPort:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	slot0.viewPortTrans = slot0.goViewPort:GetComponent(gohelper.Type_RectTransform)
+	slot0.goLayoutContent = gohelper.findChild(slot0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent")
+	slot0.layoutContentTrans = slot0.goLayoutContent:GetComponent(gohelper.Type_RectTransform)
+	slot0.layoutContentSizeFilter = slot0.goLayoutContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -100,35 +109,74 @@ function slot0.onOpen(slot0)
 		return
 	end
 
+	slot6 = nil
+
 	if slot5 and not string.nilorempty(slot5.additionRule) then
 		slot3 = FightEnum.FightSpecialTipsType.Addition
 
 		if Activity104Model.instance:isSeasonEpisodeType(slot2 and slot2.type) then
-			slot7 = SeasonConfig.instance:filterRule(GameUtil.splitString2(slot5.additionRule, true, "|", "#"))
+			slot6 = SeasonConfig.instance:filterRule(GameUtil.splitString2(slot5.additionRule, true, "|", "#"))
 		elseif Season123Controller.isSeason123EpisodeType(slot8) and Season123Model.instance:getBattleContext() then
 			if slot9.stage then
-				slot7 = Season123Config.instance:filterRule(Season123HeroGroupModel.filterRule(slot9.actId, slot7), slot9.stage)
+				slot6 = Season123Config.instance:filterRule(Season123HeroGroupModel.filterRule(slot9.actId, slot6), slot9.stage)
+			end
+		end
+	end
+
+	if FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183] then
+		if cjson.decode(slot7).currRules then
+			for slot12, slot13 in ipairs(slot8.currRules) do
+				tabletool.addValues(slot6 or {}, GameUtil.splitString2(slot13, true, "|", "#"))
 			end
 		end
 
-		if slot7 and #slot7 > 0 then
-			slot3 = FightEnum.FightSpecialTipsType.Addition
-
-			if slot8 == DungeonEnum.EpisodeType.Meilanni then
-				slot7 = HeroGroupFightViewRule.meilanniExcludeRules(slot7)
+		if slot8.transferRules then
+			for slot12, slot13 in ipairs(slot8.transferRules) do
+				tabletool.addValues(slot6 or {}, GameUtil.splitString2(slot13, true, "|", "#"))
 			end
-
-			if #slot7 > 2 and #slot7 % 2 == 1 then
-				table.insert(slot7, {})
-			end
-
-			gohelper.CreateObjList(slot0, slot0._onRuleItemShow, slot7, slot0._goadditionTip, slot0._goruleitem)
 		end
+	end
+
+	if slot6 and #slot6 > 0 then
+		slot3 = FightEnum.FightSpecialTipsType.Addition
+
+		if slot4 == DungeonEnum.EpisodeType.Meilanni then
+			slot6 = HeroGroupFightViewRule.meilanniExcludeRules(slot6)
+		end
+
+		if #slot6 > 2 and #slot6 % 2 == 1 then
+			table.insert(slot6, {})
+		end
+
+		gohelper.CreateObjList(slot0, slot0._onRuleItemShow, slot6, slot0._goadditionTip, slot0._goruleitem)
 	end
 
 	gohelper.setActive(slot0._gospecialTip, slot3 == FightEnum.FightSpecialTipsType.Special)
 	gohelper.setActive(slot0._golayout, slot3 == FightEnum.FightSpecialTipsType.Addition)
 	gohelper.setActive(slot0._goBossRushLayer4, BossRushModel.instance:isSpecialLayerCurBattle())
+	slot0:setTipLayout(slot6)
+end
+
+function slot0.setTipLayout(slot0, slot1)
+	if slot1 and #slot1 > 6 then
+		slot0.additionTipLayout.enabled = false
+		slot0.additionTipLayoutElement.enabled = true
+		slot0.viewPortLayout.enabled = false
+		slot0.layoutContentSizeFilter.enabled = true
+
+		recthelper.setHeight(slot0.viewPortTrans, 720)
+
+		slot3 = Vector2(0, 1)
+		slot0.viewPortTrans.pivot = slot3
+		slot0.viewPortTrans.anchorMin = slot3
+		slot0.viewPortTrans.anchorMax = slot3
+		slot0.layoutContentTrans.pivot = slot3
+		slot0.layoutContentTrans.anchorMin = slot3
+		slot0.layoutContentTrans.anchorMax = slot3
+
+		recthelper.setAnchorY(slot0.viewPortTrans, 0)
+		recthelper.setAnchorY(slot0.layoutContentTrans, 0)
+	end
 end
 
 function slot0._onRuleItemShow(slot0, slot1, slot2, slot3)

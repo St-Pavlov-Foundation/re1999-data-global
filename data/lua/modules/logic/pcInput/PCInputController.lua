@@ -20,7 +20,23 @@ function slot0.onInit(slot0)
 	logNormal("PCInputController:onInit()" .. tostring(slot0.init))
 end
 
+function slot0.PauseListen(slot0)
+	slot0._pauseListen = true
+end
+
+function slot0.resumeListen(slot0)
+	slot0._pauseListen = false
+end
+
 function slot0.getIsUse(slot0)
+	if ZProj.PCInputManager and ZProj.PCInputManager.Instance:isWindows() then
+		if UnityEngine.Application.isEditor then
+			return UnityEngine.PlayerPrefs.GetInt("PCInputSwitch", 1) == 1
+		else
+			return true
+		end
+	end
+
 	return false
 end
 
@@ -69,7 +85,7 @@ function slot0.onOpenViewCallBack(slot0, slot1)
 			if uv1.Adapters[PCInputModel.Activity.storyDialog] == nil then
 				uv1.Adapters[PCInputModel.Activity.storyDialog] = StoryDialogAdapter.New()
 			end
-		elseif (uv0 == ViewName.MessageBoxView or uv0 == ViewName.TopMessageBoxView or uv0 == ViewName.SDKExitGameView or uv0 == ViewName.FightQuitTipView) and uv1.Adapters[PCInputModel.Activity.CommonDialog] == nil then
+		elseif (uv0 == ViewName.MessageBoxView or uv0 == ViewName.TopMessageBoxView or uv0 == ViewName.SDKExitGameView or uv0 == ViewName.FightQuitTipView or uv0 == ViewName.FixResTipView) and uv1.Adapters[PCInputModel.Activity.CommonDialog] == nil then
 			uv1.Adapters[PCInputModel.Activity.CommonDialog] = CommonActivityAdapter.New()
 		end
 	end, slot0, 0.01)
@@ -145,7 +161,7 @@ function slot0.unregisterKeys(slot0, slot1, slot2)
 end
 
 function slot0.getKeyPress(slot0, slot1)
-	if slot0.init and slot0.inputInst and not ViewMgr.instance:isOpen(ViewName.GuideView) then
+	if slot0.init and slot0.inputInst and not GuideController.instance:isAnyGuideRunning() then
 		return slot0.inputInst:getKeyPress(slot1)
 	end
 
@@ -165,33 +181,55 @@ function slot0.getActivityFunPress(slot0, slot1, slot2)
 end
 
 function slot0.OnKeyDown(slot0, slot1)
-	if not slot0.init or not slot0.inputInst then
+	if not slot0.init or not slot0.inputInst or slot0._pauseListen then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(ViewName.GuideView) or ViewMgr.instance:isOpen(ViewName.SettingsView) then
+	if GuideController.instance:isAnyGuideRunning() then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0.Adapters) do
-		if slot7 then
-			slot7:OnkeyDown(slot0.inputInst:keyCodeToKey(slot1))
+	slot2 = slot0.inputInst:keyCodeToKey(slot1)
+	slot3 = {}
+
+	for slot7, slot8 in pairs(slot0.Adapters) do
+		table.insert(slot3, slot8)
+	end
+
+	table.sort(slot3, function (slot0, slot1)
+		return slot1:getPriorty() < slot0:getPriorty()
+	end)
+
+	for slot7, slot8 in ipairs(slot3) do
+		if slot8 and slot8:OnkeyDown(slot2) then
+			return
 		end
 	end
 end
 
 function slot0.OnKeyUp(slot0, slot1)
-	if not slot0.init or not slot0.inputInst then
+	if not slot0.init or not slot0.inputInst or slot0._pauseListen then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(ViewName.GuideView) then
+	if GuideController.instance:isAnyGuideRunning() then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0.Adapters) do
-		if slot7 then
-			slot7:OnkeyUp(slot0.inputInst:keyCodeToKey(slot1))
+	slot2 = slot0.inputInst:keyCodeToKey(slot1)
+	slot3 = {}
+
+	for slot7, slot8 in pairs(slot0.Adapters) do
+		table.insert(slot3, slot8)
+	end
+
+	table.sort(slot3, function (slot0, slot1)
+		return slot1:getPriorty() < slot0:getPriorty()
+	end)
+
+	for slot7, slot8 in ipairs(slot3) do
+		if slot8 and slot8:OnkeyDown(slot2) then
+			return
 		end
 	end
 end
@@ -228,6 +266,26 @@ end
 
 function slot0.KeyNameToDescName(slot0, slot1)
 	return PCInputModel.instance:ReplaceKeyName(slot1)
+end
+
+function slot0.isPopUpViewOpen(slot0, slot1)
+	for slot6 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
+		if (ViewMgr.instance:getSetting(slot2[slot6]).layer == UILayerName.PopUpTop or slot8.layer == UILayerName.PopUp or slot8.layer == UILayerName.Guide) and not slot0:viewInList(slot7, slot1) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function slot0.viewInList(slot0, slot1, slot2)
+	for slot6, slot7 in pairs(slot2) do
+		if slot7 == slot1 then
+			return true
+		end
+	end
+
+	return false
 end
 
 slot0.instance = slot0.New()

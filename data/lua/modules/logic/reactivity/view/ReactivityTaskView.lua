@@ -46,6 +46,8 @@ function slot0.onOpen(slot0)
 	slot0:refreshActivityCurrency()
 	UIBlockMgr.instance:startBlock(UIBlockKey.WaitItemAnimeDone)
 	TaskDispatcher.runDelay(slot0._delayEndBlock, slot0, uv0)
+	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
+	gohelper.setActive(gohelper.findChild(slot0.viewGO, "Left/LimitTime"), false)
 end
 
 function slot0._delayEndBlock(slot0)

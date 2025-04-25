@@ -128,17 +128,24 @@ function slot0.onOpen(slot0)
 	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0.OnStoryFinish, slot0)
 	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, slot0.OnEndDungeonPush, slot0)
 	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0.OnDotChange, slot0)
-	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId)
+
+	slot2 = slot0.actConfig and slot0.actConfig.isRetroAcitivity == 2
+
+	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), slot2 and RedDotEnum.DotNode.PermanentRoleActivityTask or RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId)
 	slot0:OnDotChange()
-	slot0:_showLeftTime()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
+	gohelper.setActive(slot0._gotime.gameObject, not slot2)
+
+	if not slot2 then
+		slot0:_showLeftTime()
+		TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
+	end
 
 	if slot0.viewParam and slot0.viewParam.needShowFight then
 		if ActWeilaModel.instance:getEnterFightIndex() then
-			slot0.latestfightItem = slot2
+			slot0.latestfightItem = slot4
 
-			for slot6, slot7 in ipairs(slot0.fightItemList) do
-				slot7:refreshSelect(slot2)
+			for slot8, slot9 in ipairs(slot0.fightItemList) do
+				slot9:refreshSelect(slot4)
 			end
 		end
 

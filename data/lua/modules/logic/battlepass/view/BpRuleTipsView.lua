@@ -23,6 +23,8 @@ function slot0.removeEvents(slot0)
 	slot0._btnclose2:RemoveClickListener()
 end
 
+slot1 = string.split
+
 function slot0._btnclose1OnClick(slot0)
 	slot0:closeThis()
 end
@@ -32,26 +34,38 @@ function slot0._btnclose2OnClick(slot0)
 end
 
 function slot0._editableInitView(slot0)
+	slot0._titlecn = gohelper.findChildText(slot0.viewGO, "title/titlecn")
+	slot0._titleen = gohelper.findChildText(slot0.viewGO, "title/titlecn/titleen")
 end
 
-function slot0.onUpdateParam(slot0)
+function slot0._ruleDesc(slot0)
+	if slot0.viewParam and slot0.viewParam.ruleDesc then
+		return slot1
+	end
+
+	return slot0.viewName == ViewName.BpSPRuleTipsView and luaLang("bp_sp_rule") or luaLang("bp_rule")
+end
+
+function slot0._title(slot0)
+	return slot0.viewParam and slot0.viewParam.title or luaLang("p_bpruletipsview_title")
+end
+
+function slot0._titleEn(slot0)
+	return slot0.viewParam and slot0.viewParam.titleEn or "JUKEBOX DETAILS"
 end
 
 function slot0.onOpen(slot0)
-	for slot6 = 1, #string.split(slot0.viewName == ViewName.BpSPRuleTipsView and luaLang("bp_sp_rule") or luaLang("bp_rule"), "|"), 2 do
-		slot7 = gohelper.cloneInPlace(slot0._goinfoitem, "infoitem")
+	slot0._titlecn.text = slot0:_title()
+	slot0._titleen.text = slot0:_titleEn()
 
-		gohelper.setActive(slot7, true)
+	for slot5 = 1, #uv0(slot0:_ruleDesc(), "|"), 2 do
+		slot6 = gohelper.cloneInPlace(slot0._goinfoitem, "infoitem")
 
-		gohelper.findChildTextMesh(slot7, "txt_title").text = slot2[slot6]
-		gohelper.findChildTextMesh(slot7, "txt_desc").text = string.gsub(slot2[slot6 + 1] or "", "UTC%+8", ServerTime.GetUTCOffsetStr())
+		gohelper.setActive(slot6, true)
+
+		gohelper.findChildTextMesh(slot6, "txt_title").text = slot1[slot5]
+		gohelper.findChildTextMesh(slot6, "txt_desc").text = string.gsub(slot1[slot5 + 1] or "", "UTC%+8", ServerTime.GetUTCOffsetStr())
 	end
-end
-
-function slot0.onClose(slot0)
-end
-
-function slot0.onDestroyView(slot0)
 end
 
 return slot0

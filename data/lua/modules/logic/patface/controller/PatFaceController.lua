@@ -35,6 +35,14 @@ function slot0._onOpenViewFinish(slot0, slot1)
 		slot0._skipBlurViewName = slot1
 
 		PostProcessingMgr.instance:setCloseSkipRefreshBlur(slot0._skipBlurViewName, true)
+		slot0:_checkAndCloseTryCallView(slot1)
+	end
+end
+
+function slot0._checkAndCloseTryCallView(slot0, slot1)
+	if ViewMgr.instance:isOpenFinish(slot1) and ViewMgr.instance:getContainer(slot1) and slot2.isHasTryCallFail and slot2:isHasTryCallFail() then
+		logError(string.format("PatFace view open has error, try close . name:[%s] .", slot1))
+		ViewMgr.instance:closeView(slot1)
 	end
 end
 

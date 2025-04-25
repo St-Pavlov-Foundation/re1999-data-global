@@ -290,6 +290,10 @@ function slot0.correctAllCharacterHeight(slot0)
 end
 
 function slot0.correctCharacterHeight(slot0, slot1)
+	if slot1 == nil then
+		return
+	end
+
 	if slot1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move or slot1:getIsFreeze() then
 		return
 	end

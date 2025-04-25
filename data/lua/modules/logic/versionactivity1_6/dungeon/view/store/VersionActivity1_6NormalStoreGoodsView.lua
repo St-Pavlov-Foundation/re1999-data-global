@@ -157,16 +157,16 @@ end
 
 function slot0.onOpen(slot0)
 	slot0.storeGoodsCo = slot0.viewParam
-	slot1 = string.splitToNumber(slot0.storeGoodsCo.product, "#")
-	slot0.itemType = slot1[1]
-	slot0.itemId = slot1[2]
-	slot0.oneItemCount = slot1[3]
-	slot2 = string.split(slot0.storeGoodsCo.cost, "#")
-	slot0.costType = slot2[1]
-	slot0.costId = slot2[2]
-	slot0.oneCostQuantity = tonumber(slot2[3])
+	slot2 = GameUtil.splitString2(slot0.storeGoodsCo.product, true)[1]
+	slot0.itemType = slot2[1]
+	slot0.itemId = slot2[2]
+	slot0.oneItemCount = slot2[3]
+	slot3 = string.split(slot0.storeGoodsCo.cost, "#")
+	slot0.costType = slot3[1]
+	slot0.costId = slot3[2]
+	slot0.oneCostQuantity = tonumber(slot3[3])
 	slot0.hadQuantity = ItemModel.instance:getItemQuantity(slot0.costType, slot0.costId)
-	slot0.costName = ItemModel.instance:getItemConfig(slot0.costType, slot0.costId) and slot3.name or ""
+	slot0.costName = ItemModel.instance:getItemConfig(slot0.costType, slot0.costId) and slot4.name or ""
 	slot0.maxBuyCount = math.floor(slot0.hadQuantity / slot0.oneCostQuantity)
 	slot0.remainBuyCount = slot0.storeGoodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.storeGoodsCo.activityId, slot0.storeGoodsCo.id)
 

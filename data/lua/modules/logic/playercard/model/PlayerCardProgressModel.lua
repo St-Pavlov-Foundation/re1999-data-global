@@ -150,7 +150,7 @@ function slot0.checkDiff(slot0)
 		return true
 	else
 		for slot5 = 1, #slot0.selectList do
-			if slot0._lastSelectList[slot5] ~= slot0.selectList[slot5] then
+			if slot0._lastSelectList[slot5][2] ~= slot0.selectList[slot5][2] then
 				return true
 			end
 		end

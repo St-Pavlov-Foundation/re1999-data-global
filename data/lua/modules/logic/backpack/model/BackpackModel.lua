@@ -144,8 +144,8 @@ function slot0._convertItemData(slot0, slot1, slot2, slot3)
 		slot4.isStackable = 1
 		slot4.isShow = 1
 		slot4.subType = 0
-		slot4.isTimeShow = 1
 		slot4.expireTime = ItemInsightModel.instance:getInsightItemDeadline(slot1)
+		slot4.isTimeShow = ItemConfig.instance:getInsightItemCo(slot4.id) and slot7.expireType ~= 0 and slot7.expireHours ~= ItemEnum.NoExpiredNum and 1 or 0
 	elseif slot4.type == MaterialEnum.MaterialType.Currency then
 		slot4.isStackable = 1
 		slot4.isShow = 1
@@ -262,7 +262,7 @@ function slot0.getItemDeadline(slot0)
 	end
 
 	for slot8, slot9 in pairs(ItemInsightModel.instance:getInsightItemList() or {}) do
-		if ItemConfig.instance:getInsightItemCo(slot9.insightId).expireType ~= 0 and ItemInsightModel.instance:getInsightItemCount(slot9.uid) > 0 then
+		if ItemConfig.instance:getInsightItemCo(slot9.insightId).expireType ~= 0 and slot10.expireHours ~= ItemEnum.NoExpiredNum and ItemInsightModel.instance:getInsightItemCount(slot9.uid) > 0 then
 			slot11 = ItemInsightModel.instance:getInsightItemDeadline(slot9.uid)
 
 			if not slot2 or slot11 < slot2 then

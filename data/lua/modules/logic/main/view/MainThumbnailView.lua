@@ -134,7 +134,7 @@ function slot0._freshBtns(slot0)
 end
 
 function slot0._checkActivityImgVisible(slot0)
-	slot1 = MainActivityCenterView.showActivityEffect()
+	slot1 = ActivityModel.showActivityEffect()
 	slot3 = true
 
 	if ActivityConfig.instance:getMainActAtmosphereConfig() then

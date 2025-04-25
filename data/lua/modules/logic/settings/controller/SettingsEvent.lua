@@ -5,6 +5,7 @@ return {
 	PlayCloseCategoryAnim = 2,
 	OnChangeLangTxt = 3,
 	OnChangeScrollValue = 4,
+	OnChangeHDType = 5,
 	OnDownloadPrepareStart = 100,
 	OnNotEnoughDiskSpace = 101,
 	OnDownloadStart = 102,

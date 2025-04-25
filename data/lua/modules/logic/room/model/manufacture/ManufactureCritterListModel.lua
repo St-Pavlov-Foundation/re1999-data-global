@@ -20,6 +20,8 @@ function slot0.clearData(slot0)
 	slot0._newList = nil
 	slot0._curPreviewIndex = 0
 	slot0.critterAttrPreviewDict = {}
+	slot0._buildingCritterAttrPreviewDict = {}
+	slot0._buildingCritterAttrDict = {}
 end
 
 function slot0.clearSort(slot0)
@@ -120,49 +122,73 @@ function slot0.getPreviewCritterUidList(slot0, slot1)
 	return slot2
 end
 
-function slot0.getPreviewAttrInfo(slot0, slot1)
-	if slot0.critterAttrPreviewDict then
-		slot2 = slot0.critterAttrPreviewDict[slot1] or {}
+slot5 = {}
+
+function slot0.getPreviewAttrInfo(slot0, slot1, slot2, slot3)
+	slot4 = slot0.critterAttrPreviewDict
+
+	if slot2 then
+		slot4 = (slot3 == false and slot0._buildingCritterAttrDict or slot0._buildingCritterAttrPreviewDict)[slot2] or slot0.critterAttrPreviewDict
 	end
 
-	return slot2
+	return slot4 and slot4[slot1] or uv0
 end
 
-function slot0.setAttrPreview(slot0, slot1)
+function slot0.setAttrPreview(slot0, slot1, slot2, slot3)
 	if not slot1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.critterAttrPreviewDict[slot6.critterUid] = {
-			isSpSkillEffect = slot6.isSpSkillEffect,
-			efficiency = slot6.efficiency,
-			moodCostSpeed = slot6.moodCostSpeed,
-			criRate = slot6.criRate
-		}
+	slot4 = nil
+
+	if slot2 then
+		if not (slot3 == false and slot0._buildingCritterAttrDict or slot0._buildingCritterAttrPreviewDict)[slot2] or slot5 then
+			slot6[slot2] = {}
+		end
+
+		slot4 = slot6[slot2]
 	end
 
-	slot2 = 0
+	for slot8, slot9 in ipairs(slot1) do
+		slot11 = {
+			isSpSkillEffect = slot9.isSpSkillEffect,
+			efficiency = slot9.efficiency,
+			moodCostSpeed = slot9.moodChangeSpeed,
+			moodChangeSpeed = slot9.moodChangeSpeed,
+			criRate = slot9.criRate,
+			skillTags = {}
+		}
 
-	for slot6, slot7 in pairs(slot0.critterAttrPreviewDict) do
-		slot8 = 0
+		tabletool.addValues(slot11.skillTags, slot9.skillTags)
+
+		slot0.critterAttrPreviewDict[slot9.critterUid] = slot11
+
+		if slot4 then
+			slot4[slot10] = slot11
+		end
+	end
+
+	slot5 = 0
+
+	for slot9, slot10 in pairs(slot0.critterAttrPreviewDict) do
+		slot11 = 0
 
 		if slot0._newList then
-			for slot12, slot13 in ipairs(slot0._newList) do
-				if slot13:getId() == slot6 then
-					slot8 = slot12
+			for slot15, slot16 in ipairs(slot0._newList) do
+				if slot16:getId() == slot9 then
+					slot11 = slot15
 				end
 			end
-		elseif slot0:getById(slot6) then
-			slot8 = slot0:getIndex(slot9)
+		elseif slot0:getById(slot9) then
+			slot11 = slot0:getIndex(slot12)
 		end
 
-		if slot2 < slot8 then
-			slot2 = slot8
+		if slot5 < slot11 then
+			slot5 = slot11
 		end
 	end
 
-	slot0._curPreviewIndex = slot2
+	slot0._curPreviewIndex = slot5
 end
 
 function slot0.setManufactureCritterList(slot0)

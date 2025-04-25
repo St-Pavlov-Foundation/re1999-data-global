@@ -635,9 +635,14 @@ function slot0._reOpenWhileOpen(slot0, slot1)
 	end
 end
 
+function slot0._setViewVisible(slot0, slot1)
+	recthelper.setAnchorY(slot0.viewGO.transform, slot1 and 0 or 10000)
+	slot0.viewContainer:_setVisible(slot1)
+end
+
 function slot0._onOpenView(slot0, slot1)
 	if slot1 == slot0:_getSwitchViewName() then
-		slot0.viewContainer:_setVisible(false)
+		slot0:_setViewVisible(false)
 		slot0:_startForceUpdateCameraPos()
 		slot0._cameraPlayer:Play("ani02", slot0._onCameraAnimDone, slot0)
 		slot0:resetSpineAnchorTween()
@@ -679,7 +684,7 @@ function slot0._onCloseViewFinish(slot0, slot1)
 
 	if slot1 == slot0:_getSwitchViewName() then
 		slot0:_hideRedDot()
-		slot0.viewContainer:_setVisible(true)
+		slot0:_setViewVisible(true)
 		slot0._viewPlayer:Play("open3", slot0._onViewAnimDone, slot0)
 		slot0:_startForceUpdateCameraPos()
 		slot0._cameraPlayer:Play("ani03", slot0._onCameraAnimDone, slot0)

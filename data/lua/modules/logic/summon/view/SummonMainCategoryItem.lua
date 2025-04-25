@@ -186,6 +186,7 @@ end
 
 function slot0._refreshSingleFlag(slot0, slot1, slot2, slot3, slot4, slot5)
 	slot8 = false
+	slot9 = 0.5
 
 	if SummonMainModel.instance:getPoolServerMO(slot0._mo.originConf.id) ~= nil and slot6.bannerFlag == SummonEnum.BannerFlagType.Newbie then
 		slot8 = true
@@ -199,19 +200,24 @@ function slot0._refreshSingleFlag(slot0, slot1, slot2, slot3, slot4, slot5)
 
 		UISpriteSetMgr.instance:setSummonSprite(slot3, "bg123123", true)
 		SLFramework.UGUI.GuiHelper.SetColor(slot2, "#808080")
-	elseif slot7 ~= nil and slot6.bannerFlag == SummonEnum.BannerFlagType.Limit then
+	elseif slot7 ~= nil and (slot6.bannerFlag == SummonEnum.BannerFlagType.Limit or slot6.bannerFlag == SummonEnum.BannerFlagType.Reprint) then
 		slot8 = true
 
 		if slot5 then
-			slot4.text = string.format("<color=#fefefe>%s</color>", luaLang("summon_limit_banner_flag"))
+			slot4.text = string.format("<color=#fefefe>%s</color>", slot6.bannerFlag == SummonEnum.BannerFlagType.Limit and luaLang("summon_limit_banner_flag") or luaLang("summon_reprint_banner_flag"))
 		else
-			slot4.text = slot9
+			slot4.text = string.format("<color=#c5c6c7>%s</color>", slot10)
+			slot9 = 1
 		end
 
 		UISpriteSetMgr.instance:setSummonSprite(slot3, "v1a6_quniang_summon_tag", true)
 		SLFramework.UGUI.GuiHelper.SetColor(slot2, "#808080")
 	else
 		slot4.text = ""
+	end
+
+	if not slot5 then
+		ZProj.UGUIHelper.SetColorAlpha(slot4, slot9)
 	end
 
 	if slot8 then

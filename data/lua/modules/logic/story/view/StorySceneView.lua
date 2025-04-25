@@ -47,6 +47,7 @@ function slot0._initScene(slot0)
 		uv0._assetItem:Retain()
 
 		if uv3 == 10101 and uv0.viewContainer:getStoryMainSceneView() then
+			slot3:setSceneId(1)
 			slot3:initSceneGo(gohelper.clone(uv0._assetItem:GetResource(uv1), uv0._sceneContainer, uv2.resName), uv2.resName)
 		end
 	end)

@@ -11,6 +11,7 @@ function slot0.ctor(slot0)
 	slot0._storeChargeGoodsConfig = nil
 	slot0._dailyReleasePackageCfg = nil
 	slot0._storeMonthAddCfg = nil
+	slot0._critterStoreGoods = {}
 	slot0._preGoodsIdDict = nil
 	slot0._roomProduct2GoodsId = {}
 	slot0._configPriceKey = "price"
@@ -96,6 +97,12 @@ function slot0.initPreGoodsIdDict(slot0, slot1)
 
 				slot11[slot9] = slot6.id
 			end
+		elseif slot7 == StoreEnum.StoreId.CritterStore then
+			if not slot0._critterStoreGoods[string.splitToNumber(slot6.product, "#")[2]] then
+				slot0._critterStoreGoods[slot8[2]] = {}
+			end
+
+			table.insert(slot0._critterStoreGoods[slot8[2]], slot6)
 		end
 	end
 end
@@ -395,6 +402,10 @@ function slot0.getRoomProductGoodsId(slot0, slot1, slot2)
 	return slot3
 end
 
+function slot0.getRoomCritterProductGoods(slot0, slot1)
+	return slot0._critterStoreGoods[slot1] or {}
+end
+
 function slot0.getChargeOptionalGroup(slot0, slot1)
 	if not slot0._chargeOptionalConfig.configDict[slot1] then
 		logError("充值商品ID未配置充值自选礼包表" .. tostring(slot1))
@@ -405,6 +416,10 @@ end
 
 function slot0.getMonthCardAddConfig(slot0, slot1)
 	return slot0._storeMonthAddCfg.configDict[slot1]
+end
+
+function slot0.getSeasonCardMultiFactor(slot0)
+	return CommonConfig.instance:getConstNum(2501)
 end
 
 slot0.instance = slot0.New()

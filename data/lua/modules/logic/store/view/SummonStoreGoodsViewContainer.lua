@@ -19,8 +19,8 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.setCurrencyType(slot0, slot1, slot2)
-	slot3 = nil
+function slot0.setCurrencyType(slot0, slot1, slot2, slot3)
+	slot4 = nil
 
 	if slot0._currencyView then
 		slot0._currencyView:setCurrencyType((CurrencyEnum.CurrencyType.FreeDiamondCoupon ~= slot1 or {
@@ -30,7 +30,8 @@ function slot0.setCurrencyType(slot0, slot1, slot2)
 			{
 				isCurrencySprite = true,
 				id = slot1,
-				type = slot2
+				icon = slot3,
+				type = MaterialEnum.MaterialType.Item
 			}
 		})
 	end

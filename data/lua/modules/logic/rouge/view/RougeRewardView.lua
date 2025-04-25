@@ -321,6 +321,7 @@ function slot0._initBigRewardNode(slot0)
 				slot10.simge = gohelper.findChildSingleImage(slot10.go, "img_reward")
 				slot10.img = gohelper.findChildImage(slot10.go, "img_reward")
 				slot10.txt = gohelper.findChildText(slot10.go, "txt_reward")
+				slot10.defultposx, slot10.defultposy = recthelper.getAnchor(slot10.txt.transform)
 
 				table.insert(slot5.nodeList, slot10)
 			end
@@ -386,64 +387,84 @@ function slot0.refreshBigReward(slot0)
 
 	if slot2 == RougeEnum.BigRewardType.Multi then
 		slot6 = string.split(slot1.value, "|")
+		slot7 = string.split(slot1.rewardName, "|")
+		slot8 = nil
 
-		for slot12, slot13 in ipairs(string.split(slot1.rewardName, "|")) do
-			slot14 = string.split(slot13, "#")
+		if not string.nilorempty(slot1.offset) then
+			slot8 = GameUtil.splitString2(slot1.offset, true)
+		end
+
+		for slot13, slot14 in ipairs(slot7) do
+			slot15 = string.split(slot14, "#")
 
 			table.insert({}, {
-				name = slot14[1],
-				icon = slot14[2],
-				hideConfigIcon = slot14[3]
+				name = slot15[1],
+				icon = slot15[2],
+				hideConfigIcon = slot15[3],
+				hideNumber = slot15[4]
 			})
 		end
 
-		for slot12, slot13 in ipairs(slot6) do
-			slot14 = string.splitToNumber(slot13, "#")
-			slot16 = slot14[2]
-			slot17 = slot14[3]
-			slot18 = slot4.nodeList[slot12]
+		for slot13, slot14 in ipairs(slot6) do
+			slot15 = string.splitToNumber(slot14, "#")
+			slot16 = slot15[1]
+			slot17 = slot15[2]
+			slot18 = slot15[3]
+			slot19 = slot4.nodeList[slot13]
 
-			if slot14[1] == MaterialEnum.MaterialType.Equip then
-				slot19 = false
+			if not slot9[slot13] then
+				break
+			end
 
-				if slot8[slot12].icon then
-					slot19 = true
-				end
-
-				gohelper.setActive(slot18.simge.gameObject, slot19)
-				gohelper.setActive(slot18.img.gameObject, slot19)
-
-				if slot19 then
-					slot18.simge:LoadImage(ResUrl.getRougeIcon("reward/" .. slot8[slot12].icon))
-				end
-
-				if slot17 > 1 then
-					slot18.txt.text = slot8[slot12].name .. "×" .. slot17
-				else
-					slot18.txt.text = slot8[slot12].name
-				end
-			elseif slot15 == MaterialEnum.MaterialType.Item then
-				slot19, slot20 = ItemModel.instance:getItemConfigAndIcon(slot15, slot16, true)
+			if slot16 == MaterialEnum.MaterialType.Equip then
 				slot21 = false
 
-				if not string.nilorempty(slot8[slot12].icon) or not slot8[slot12].hideConfigIcon then
+				if slot9[slot13].icon then
 					slot21 = true
 				end
 
-				gohelper.setActive(slot18.simge.gameObject, slot21)
-				gohelper.setActive(slot18.img.gameObject, slot21)
+				gohelper.setActive(slot19.simge.gameObject, slot21)
+				gohelper.setActive(slot19.img.gameObject, slot21)
 
-				if not string.nilorempty(slot8[slot12].icon) then
-					slot18.simge:LoadImage(slot8[slot12].icon)
-				elseif not slot8[slot12].hideConfigIcon then
-					slot18.simge:LoadImage(slot20)
+				if slot21 then
+					slot19.simge:LoadImage(ResUrl.getRougeIcon("reward/" .. slot9[slot13].icon))
 				end
 
-				if slot17 > 1 then
-					slot18.txt.text = slot8[slot12].name .. "×" .. slot17
+				if not slot9[slot13].hideNumber and slot18 > 1 then
+					slot19.txt.text = slot9[slot13].name .. "×" .. slot18
 				else
-					slot18.txt.text = slot8[slot12].name
+					slot19.txt.text = slot9[slot13].name
 				end
+			elseif slot16 == MaterialEnum.MaterialType.Item then
+				slot21, slot22 = ItemModel.instance:getItemConfigAndIcon(slot16, slot17, true)
+				slot23 = false
+
+				if not string.nilorempty(slot9[slot13].icon) or not slot9[slot13].hideConfigIcon then
+					slot23 = true
+				end
+
+				gohelper.setActive(slot19.simge.gameObject, slot23)
+				gohelper.setActive(slot19.img.gameObject, slot23)
+
+				if not string.nilorempty(slot9[slot13].icon) then
+					slot19.simge:LoadImage(slot9[slot13].icon)
+				elseif not slot9[slot13].hideConfigIcon then
+					slot19.simge:LoadImage(slot22)
+				end
+
+				if not slot9[slot13].hideNumber and slot18 > 1 then
+					slot19.txt.text = slot9[slot13].name .. "×" .. slot18
+				else
+					slot19.txt.text = slot9[slot13].name
+				end
+			end
+
+			if slot8 and #slot8 > 0 then
+				slot21 = slot8[slot13]
+
+				recthelper.setAnchor(slot19.txt.transform, slot21[1], slot21[2])
+			else
+				recthelper.setAnchor(slot19.txt.transform, slot19.defultposx, slot19.defultposy)
 			end
 		end
 	else

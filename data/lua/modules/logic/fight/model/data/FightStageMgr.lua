@@ -1,6 +1,6 @@
 module("modules.logic.fight.model.data.FightStageMgr", package.seeall)
 
-slot0 = FightDataBase("FightStageMgr")
+slot0 = FightDataClass("FightStageMgr")
 slot0.StageType = {
 	Normal = GameUtil.getEnumId(),
 	Play = GameUtil.getEnumId(),
@@ -17,6 +17,7 @@ slot0.FightStateType = {
 	DouQuQu = GameUtil.getEnumId(),
 	Season2AutoChangeHero = GameUtil.getEnumId(),
 	Distribute1Card = GameUtil.getEnumId(),
+	OperationView2PlayView = GameUtil.getEnumId(),
 	SendOperation2Server = GameUtil.getEnumId(),
 	PlaySeasonChangeHero = GameUtil.getEnumId()
 }
@@ -34,7 +35,7 @@ for slot5, slot6 in pairs(slot0.StageType) do
 	-- Nothing
 end
 
-function slot0.ctor(slot0)
+function slot0.onConstructor(slot0)
 	slot0.stages = {}
 	slot0.stageParam = {}
 	slot0.operateStates = {}
@@ -212,6 +213,10 @@ function slot0.isFree(slot0, slot1, slot2)
 	end
 
 	if slot0:inAutoFightState() then
+		return
+	end
+
+	if slot0:inFightState(uv0.FightStateType.OperationView2PlayView) then
 		return
 	end
 

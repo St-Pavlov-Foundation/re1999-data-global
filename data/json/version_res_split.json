@@ -84,17 +84,11 @@
       306308
     ],
     "folderPath": [],
-    "path": [
-      "videos/en/dajiekaimu1.mp4",
-      "videos/en/xiaojiekaimu1.mp4",
-      "videos/zh/dajiekaimu1.mp4",
-      "videos/zh/xiaojiekaimu1.mp4",
-      "videos/Android/zh/dajiekaimu1.mp4",
-      "videos/Android/zh/xiaojiekaimu1.mp4",
-      "videos/Android/en/dajiekaimu1.mp4",
-      "videos/Android/en/xiaojiekaimu1.mp4",
-      ""
+    "videoPath": [
+      "dajiekaimu1",
+      "xiaojiekaimu1"
     ],
+    "path": [],
     "uiFolder": [
       "ui/viewres/activity/chessmap",
       "ui/viewres/meilanni",
@@ -291,12 +285,11 @@
       305688
     ],
     "folderPath": [],
-    "path": [
-      "videos/1_2lvhuemeng.mp4",
-      "videos/1_2lvhuemeng_1.mp4",
-      "videos/Android/1_2lvhuemeng.mp4",
-      "videos/Android/1_2lvhuemeng_1.mp4"
+    "videoPath": [
+      "1_2lvhuemeng",
+      "1_2lvhuemeng_1"
     ],
+    "path": [],
     "uiFolder": [
       "ui/viewres/versionactivity_1_2/activity114",
       "ui/viewres/versionactivity_1_2/yaxian",
@@ -451,16 +444,13 @@
       307001
     ],
     "folderPath": [],
-    "path": [
-      "videos/1_3dahezhao.mp4",
-      "videos/1_3jialabona.mp4",
-      "videos/1_3molupangka.mp4",
-      "videos/1_3yinduguanxingpv.mp4",
-      "videos/Android/1_3dahezhao.mp4",
-      "videos/Android/1_3jialabona.mp4",
-      "videos/Android/1_3molupangka.mp4",
-      "videos/Android/1_3yinduguanxingpv.mp4"
+    "videoPath": [
+      "1_3dahezhao",
+      "1_3jialabona",
+      "1_3molupangka",
+      "1_3yinduguanxingpv"
     ],
+    "path": [],
     "uiFolder": [
       "ui/viewres/versionactivity_1_3/map",
       "ui/viewres/versionactivity_1_3/v1a3_buffview",
@@ -507,6 +497,7 @@
       307901
     ],
     "folderPath": [],
+    "videoPath": [],
     "path": [],
     "uiFolder": [
       "ui/viewres/versionactivity_1_4/v1a4_6role",
@@ -567,6 +558,7 @@
       307301
     ],
     "folderPath": [],
+    "videoPath": [],
     "path": [
       "videos/1_5_activity_01.mp4",
       "videos/1_5_activity_02.mp4",
@@ -629,14 +621,56 @@
       308308
     ],
     "folderPath": [],
-    "path": [
-      "1_7_chapter6_05.mp4",
-      "1_7_chapter6_05.mp4",
-      "1_7_pv.mp4"
+    "videoPath": [
+      "1_7_chapter6_05",
+      "1_7_pv"
     ],
+    "path": [],
     "uiFolder": [
       "ui/viewres/versionactivity_1_7/v1a7_isolde",
       "ui/viewres/versionactivity_1_7/v1a7_marcus"
+    ],
+    "uiPath": []
+  },
+  {
+    "id": 17,
+    "audio": [
+      3200127,
+      3200130
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [
+      307701,
+      307702,
+      307703,
+      307704,
+      307705,
+      307706,
+      307707,
+      307708,
+      308701,
+      308702,
+      308703,
+      308704,
+      308705,
+      308706,
+      308707,
+      308708
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "1_8_activity_01",
+      "1_8_activity_02",
+      "1_8_activity_03",
+      "1_8_enter",
+      "1_8_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_1_8/v1a8_dungeon",
+      "ui/viewres/versionactivity_1_8/v1a8_weila",
+      "ui/viewres/versionactivity_1_8/v1a8_windsong"
     ],
     "uiPath": []
   }

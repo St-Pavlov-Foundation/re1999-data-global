@@ -211,8 +211,13 @@ function slot0._onUISpineLoaded(slot0)
 
 	slot0.retainRateW = uv0.RetainRate.Live2DWidth
 	slot0.retainRateH = uv0.RetainRate.Live2DHeight
+	slot1 = nil
 
-	if string.nilorempty(slot0._showSkinConfig.fullScreenLive2dOffset) then
+	if slot0.isLive2D then
+		slot1 = slot0._showSkinConfig.fullScreenLive2dOffset
+	end
+
+	if string.nilorempty(slot1) then
 		slot1 = slot0._showSkinConfig.characterViewOffset
 	end
 

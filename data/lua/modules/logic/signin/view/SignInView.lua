@@ -1,6 +1,7 @@
 module("modules.logic.signin.view.SignInView", package.seeall)
 
 slot0 = class("SignInView", BaseView)
+slot1 = SLFramework.AnimatorPlayer
 
 function slot0.onInitView(slot0)
 	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
@@ -14,141 +15,141 @@ function slot0.onInitView(slot0)
 	slot0._goget = gohelper.findChild(slot0.viewGO, "rightContent/#go_get")
 	slot0._gonoget = gohelper.findChild(slot0.viewGO, "rightContent/#go_noget")
 	slot0._gomonthdetail = gohelper.findChild(slot0.viewGO, "rightContent/monthdetail")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "leftContent/scroll_desc/Viewport/Content/#txt_desc")
+	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "scroll_desc/Viewport/Content/#txt_desc")
 	slot0._txtday = gohelper.findChildText(slot0.viewGO, "leftContent/#txt_day")
 	slot0._txtmonth = gohelper.findChildText(slot0.viewGO, "leftContent/#txt_month")
 	slot0._txtdate = gohelper.findChildText(slot0.viewGO, "leftContent/#txt_date")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "leftcontent/#go_rewarditem")
-	slot0._simageorangebg = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#simage_orangebg")
-	slot0._godayrewarditem = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem")
-	slot0._gorewardbg = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#simage_rewardbg")
-	slot0._simagerewardbg = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#simage_rewardbg")
-	slot0._gototalreward = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward")
-	slot0._txtmonthtitle = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/monthtitle")
-	slot0._txtdaycount = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/monthtitle/#txt_daycount")
-	slot0._gomonth1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1")
+	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "leftBottomContent/#go_rewarditem")
+	slot0._simageorangebg = gohelper.findChildSingleImage(slot0._gorewarditem, "#simage_orangebg")
+	slot0._godayrewarditem = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem")
+	slot0._gorewardbg = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#simage_rewardbg")
+	slot0._simagerewardbg = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#simage_rewardbg")
+	slot0._gototalreward = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward")
+	slot0._txtdaycount = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/monthtitle/#txt_daycount")
+	slot0._txtmonthtitle = gohelper.findChildText(slot0.viewGO, "leftBottomContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/monthtitle")
+	slot0._gomonth1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1")
 	slot0._monthreward1Click = gohelper.getClick(slot0._gomonth1)
-	slot0._gomonthmask1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1")
+	slot0._gomonthmask1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1")
 	slot0._month1canvasGroup = slot0._gomonthmask1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._gorewardmark1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_rewardmark1")
-	slot0._txtmonthquantity1 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthquantity1")
-	slot0._txtrewardcount1 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_count1")
-	slot0._gomonthtip1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthtip1")
-	slot0._gomonthget1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1")
-	slot0._gomonthgetlightanim1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1/vxeffect")
-	slot0._gonomonthget1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_nomonthget1")
-	slot0._gogetmonthbg1 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_getbg1")
-	slot0._simagemonthicon1 = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#simage_monthicon1")
+	slot0._gorewardmark1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_rewardmark1")
+	slot0._txtmonthquantity1 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthquantity1")
+	slot0._txtrewardcount1 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_count1")
+	slot0._gomonthtip1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthtip1")
+	slot0._gomonthget1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1")
+	slot0._gomonthgetlightanim1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1/vxeffect")
+	slot0._gonomonthget1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_nomonthget1")
+	slot0._gogetmonthbg1 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_getbg1")
+	slot0._simagemonthicon1 = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#simage_monthicon1")
 	slot0._month1Ani = slot0._simagemonthicon1.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gomonth2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2")
+	slot0._gomonth2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2")
 	slot0._monthreward2Click = gohelper.getClick(slot0._gomonth2)
-	slot0._gomonthmask2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2")
+	slot0._gomonthmask2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2")
 	slot0._month2canvasGroup = slot0._gomonthmask2:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._gorewardmark2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_rewardmark2")
-	slot0._txtmonthquantity2 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthquantity2")
-	slot0._txtrewardcount2 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_count2")
-	slot0._gomonthtip2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthtip2")
-	slot0._gomonthget2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2")
-	slot0._gomonthgetlightanim2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2/vxeffect")
-	slot0._gonomonthget2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_nomonthget2")
-	slot0._gogetmonthbg2 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_getbg2")
-	slot0._simagemonthicon2 = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#simage_monthicon2")
+	slot0._gorewardmark2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_rewardmark2")
+	slot0._txtmonthquantity2 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthquantity2")
+	slot0._txtrewardcount2 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_count2")
+	slot0._gomonthtip2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthtip2")
+	slot0._gomonthget2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2")
+	slot0._gomonthgetlightanim2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2/vxeffect")
+	slot0._gonomonthget2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_nomonthget2")
+	slot0._gogetmonthbg2 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_getbg2")
+	slot0._simagemonthicon2 = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#simage_monthicon2")
 	slot0._month2Ani = slot0._simagemonthicon2.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gomonth3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3")
+	slot0._gomonth3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3")
 	slot0._monthreward3Click = gohelper.getClick(slot0._gomonth3)
-	slot0._gomonthmask3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3")
+	slot0._gomonthmask3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3")
 	slot0._month3canvasGroup = slot0._gomonthmask3:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._gorewardmark3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_rewardmark3")
-	slot0._txtmonthquantity3 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthquantity3")
-	slot0._txtrewardcount3 = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_count3")
-	slot0._gomonthtip3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthtip3")
-	slot0._gomonthget3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3")
-	slot0._gomonthgetlightanim3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3/vxeffect")
-	slot0._gonomonthget3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_nomonthget3")
-	slot0._gogetmonthbg3 = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_getbg3")
-	slot0._simagemonthicon3 = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#simage_monthicon3")
+	slot0._gorewardmark3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_rewardmark3")
+	slot0._txtmonthquantity3 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthquantity3")
+	slot0._txtrewardcount3 = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_count3")
+	slot0._gomonthtip3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthtip3")
+	slot0._gomonthget3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3")
+	slot0._gomonthgetlightanim3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3/vxeffect")
+	slot0._gonomonthget3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_nomonthget3")
+	slot0._gogetmonthbg3 = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_getbg3")
+	slot0._simagemonthicon3 = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#simage_monthicon3")
 	slot0._month3Ani = slot0._simagemonthicon3.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gocurrentreward = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal")
-	slot0._gonormaldayreward = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/")
-	slot0._gonormalday = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday")
+	slot0._gocurrentreward = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward")
+	slot0._gonormal = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal")
+	slot0._gonormaldayreward = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/")
+	slot0._gonormalday = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday")
 	slot0._normaldayClick = gohelper.getClick(slot0._gonormalday)
-	slot0._gonormalday_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday")
+	slot0._gonormalday_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday")
 	slot0._normaldayClick_gold = gohelper.getClick(slot0._gonormalday_gold)
-	slot0._simagenormaldayrewardicon = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon")
-	slot0._txtnormaldayrewardcount = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
-	slot0._txtnormaldayrewardname = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#txt_normaldayrewardname")
-	slot0._gonormaldaysigned = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned")
-	slot0._gonormaldayget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldayget")
-	slot0._gonormaldaynoget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldaynoget")
+	slot0._simagenormaldayrewardicon = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon")
+	slot0._txtnormaldayrewardcount = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
+	slot0._txtnormaldayrewardname = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#txt_normaldayrewardname")
+	slot0._gonormaldaysigned = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned")
+	slot0._gonormaldayget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldayget")
+	slot0._gonormaldaynoget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldaynoget")
 	slot0._normaldayrewardAni = slot0._simagenormaldayrewardicon.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gonormaldayreward_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2")
-	slot0._simagenormaldayrewardicon_gold = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon")
-	slot0._txtnormaldayrewardcount_gold = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
-	slot0._txtnormaldayrewardname_gold = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#txt_normaldayrewardname")
-	slot0._gonormaldaysigned_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned")
-	slot0._gonormaldayget_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldayget")
-	slot0._gonormaldaynoget_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldaynoget")
+	slot0._gonormaldayreward_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2")
+	slot0._simagenormaldayrewardicon_gold = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon")
+	slot0._txtnormaldayrewardcount_gold = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
+	slot0._txtnormaldayrewardname_gold = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#txt_normaldayrewardname")
+	slot0._gonormaldaysigned_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned")
+	slot0._gonormaldayget_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldayget")
+	slot0._gonormaldaynoget_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldaynoget")
 	slot0._normaldayrewardAni_gold = slot0._simagenormaldayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gomonthcard = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard")
-	slot0._gomonthcarddayreward = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward")
-	slot0._gomonthcardday = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday")
+	slot0._gomonthcard = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard")
+	slot0._gomonthcarddayreward = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward")
+	slot0._gomonthcardday = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday")
 	slot0._monthcarddayClick = gohelper.getClick(slot0._gomonthcardday)
-	slot0._gomonthcardday_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday")
+	slot0._gomonthcardday_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday")
 	slot0._monthcarddayClick_gold = gohelper.getClick(slot0._gomonthcardday_gold)
-	slot0._txtmonthcarddayrewardname = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#txt_monthcarddayrewardname")
-	slot0._simagemonthcarddayrewardicon = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon")
-	slot0._txtmonthcarddayrewardcount = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
-	slot0._gomonthcarddaysigned = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned")
-	slot0._gomonthcarddayget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddayget")
-	slot0._gomonthcarddaynoget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_nomonthcarddayget")
-	slot0._gomonthcarddayreward_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2")
-	slot0._txtmonthcarddayrewardname_gold = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#txt_monthcarddayrewardname")
-	slot0._simagemonthcarddayrewardicon_gold = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon")
-	slot0._txtmonthcarddayrewardcount_gold = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
-	slot0._gomonthcarddaysigned_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned")
-	slot0._gomonthcarddayget_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddayget")
-	slot0._gomonthcarddaynoget_gold = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_nomonthcarddayget")
-	slot0._gomonthcardreward = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward")
-	slot0._gomonthcardrewarditem = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem")
-	slot0._txtmonthcardname = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#txt_monthcardname")
-	slot0._simagemonthcardicon = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon")
+	slot0._txtmonthcarddayrewardname = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#txt_monthcarddayrewardname")
+	slot0._simagemonthcarddayrewardicon = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon")
+	slot0._txtmonthcarddayrewardcount = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
+	slot0._gomonthcarddaysigned = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned")
+	slot0._gomonthcarddayget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddayget")
+	slot0._gomonthcarddaynoget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_nomonthcarddayget")
+	slot0._gomonthcarddayreward_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2")
+	slot0._txtmonthcarddayrewardname_gold = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#txt_monthcarddayrewardname")
+	slot0._simagemonthcarddayrewardicon_gold = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon")
+	slot0._txtmonthcarddayrewardcount_gold = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
+	slot0._gomonthcarddaysigned_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned")
+	slot0._gomonthcarddayget_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddayget")
+	slot0._gomonthcarddaynoget_gold = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_nomonthcarddayget")
+	slot0._gomonthcardreward = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward")
+	slot0._gomonthcardrewarditem = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem")
+	slot0._txtmonthcardname = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#txt_monthcardname")
+	slot0._simagemonthcardicon = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon")
 	slot0._monthcardClick = gohelper.getClick(slot0._gomonthcardrewarditem.gameObject)
-	slot0._gomonthcardpowerrewarditem = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem")
-	slot0._txtmonthcardcount = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon/#txt_monthcardcount")
-	slot0._txtmonthcardpowername = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#txt_monthcardname")
-	slot0._simagemonthcardpowericon = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon")
+	slot0._gomonthcardpowerrewarditem = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem")
+	slot0._txtmonthcardcount = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon/#txt_monthcardcount")
+	slot0._txtmonthcardpowername = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#txt_monthcardname")
+	slot0._simagemonthcardpowericon = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon")
 	slot0._monthcardpowerClick = gohelper.getClick(slot0._gomonthcardpowerrewarditem.gameObject)
-	slot0._txtmonthcardpowercount = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon/#txt_monthcardcount")
-	slot0._gopowerlimittime = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_powerlimittime")
-	slot0._golimittime = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime")
-	slot0._txtlimittime = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/#txt_limittime")
-	slot0._gonormallimittimebg = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/normalbg")
-	slot0._goredlimittimebg = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/redbg")
-	slot0._gomonthcardsigned = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned")
-	slot0._gomonthcardget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardget")
-	slot0._gomonthcardnoget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardnoget")
-	slot0._gomonthcardpowernoget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardpowernoget")
-	slot0._gobirthdayrewarditem = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem")
-	slot0._simagebirthdaybg = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#simage_birthdaybg")
-	slot0._simagebirthdaybg2 = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#simage_birthdaybg2")
-	slot0._gobirthday = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday")
-	slot0._simagebirthdayIcon = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#simage_icon")
-	slot0._btngift = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#btn_gift")
-	slot0._gogiftget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_get")
-	slot0._gogiftnoget = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_noget")
-	slot0._gogiftreddot = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_reddot")
-	slot0._gobirthdayrewarddetail = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail")
-	slot0._gocontentSize = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize")
-	slot0._trstitle = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title").transform
-	slot0._txtrewarddetailtitle = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/title/#txt_rewarddetailtitle")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content")
-	slot0._goclickarea = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content/#go_rewardContent/#go_clickarea")
-	slot0._gorewarddetailitem = gohelper.findChild(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/#go_rewarddetailItem")
-	slot0._txtdeco = gohelper.findChildText(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/scroll_desc/Viewport/Content/#txt_deco")
-	slot0._simagesignature = gohelper.findChildSingleImage(slot0.viewGO, "leftContent/#go_rewarditem/#go_birthdayrewarditem/#go_birthday/#simage_signature")
-	slot0._btnqiehuan = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftContent/#btn_qiehuan")
-	slot0._goqiehuan = gohelper.findChild(slot0.viewGO, "leftContent/#btn_qiehuan/#qiehuan")
+	slot0._txtmonthcardpowercount = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon/#txt_monthcardcount")
+	slot0._gopowerlimittime = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_powerlimittime")
+	slot0._golimittime = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime")
+	slot0._txtlimittime = gohelper.findChildText(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/#txt_limittime")
+	slot0._gonormallimittimebg = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/normalbg")
+	slot0._goredlimittimebg = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/redbg")
+	slot0._gomonthcardsigned = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned")
+	slot0._gomonthcardget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardget")
+	slot0._gomonthcardnoget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardnoget")
+	slot0._gomonthcardpowernoget = gohelper.findChild(slot0._gorewarditem, "#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardpowernoget")
+	slot0._gobirthdayrewarditem = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem")
+	slot0._simagebirthdaybg = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_birthdayrewarditem/#simage_birthdaybg")
+	slot0._simagebirthdaybg2 = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_birthdayrewarditem/#simage_birthdaybg2")
+	slot0._gobirthday = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday")
+	slot0._simagebirthdayIcon = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#simage_icon")
+	slot0._btngift = gohelper.findChildButtonWithAudio(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#btn_gift")
+	slot0._gogiftget = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_get")
+	slot0._gogiftnoget = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_noget")
+	slot0._gogiftreddot = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_reddot")
+	slot0._gobirthdayrewarddetail = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail")
+	slot0._gocontentSize = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize")
+	slot0._trstitle = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title").transform
+	slot0._txtrewarddetailtitle = gohelper.findChildText(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/title/#txt_rewarddetailtitle")
+	slot0._gorewardContent = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content")
+	slot0._goclickarea = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content/#go_rewardContent/#go_clickarea")
+	slot0._gorewarddetailitem = gohelper.findChild(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/#go_rewarddetailItem")
+	slot0._txtdeco = gohelper.findChildText(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/scroll_desc/Viewport/Content/#txt_deco")
+	slot0._simagesignature = gohelper.findChildSingleImage(slot0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#simage_signature")
+	slot0._btnqiehuan = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftBottomContent/#btn_qiehuan")
+	slot0._goqiehuan = gohelper.findChild(slot0.viewGO, "leftBottomContent/#btn_qiehuan/#qiehuan")
 
 	if GMController.instance:getGMNode("signinview", gohelper.findChild(slot0.viewGO, "leftContent")) then
 		slot0._gogmhelp = gohelper.findChild(slot1, "#go_gmhelp")
@@ -174,14 +175,23 @@ function slot0.onInitView(slot0)
 	slot0._gonodes = gohelper.findChild(slot0.viewGO, "#go_nodes")
 	slot0._gonodeitem = gohelper.findChild(slot0.viewGO, "#go_nodes/node")
 	slot0._btnrewarddetailclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rewarddetailclose")
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	slot0._viewAnimPlayer = uv0.Get(slot0.viewGO)
 	slot0._viewAniEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 	slot0._gofestivaldecorationright = gohelper.findChild(slot0.viewGO, "bg/#go_festivaldecorationright")
-	slot0._gofestivaldecorationleft = gohelper.findChild(slot0.viewGO, "leftContent/#go_festivaldecorationleft")
+	slot0._gofestivaldecorationleft = gohelper.findChild(slot0.viewGO, "#go_festivaldecorationleft")
 	slot0._gofestivaldecorationtop = gohelper.findChild(slot0.viewGO, "bg/#simage_bg/#go_festivaldecorationtop")
+	slot0._godayrewarditem_festivaldecorationtop = gohelper.findChild(slot0._godayrewarditem, "#go_festivaldecorationtop")
+	slot0._godayrewarditem_gofestivaldecorationleft2 = gohelper.findChild(slot0._godayrewarditem, "#go_festivaldecorationleft2")
 	slot0._gorewardicon = gohelper.findChild(slot0.viewGO, "bg/#go_rewardicon")
 	slot0._imgbias = gohelper.findChildImage(slot0.viewGO, "leftContent/#image_bias")
 	slot0._goeffect = gohelper.findChild(slot0.viewGO, "#go_effect")
+	slot0._goLifeCircle = gohelper.findChild(slot0.viewGO, "#go_LifeCircle")
+	slot0._gobtnchange = gohelper.findChild(slot0.viewGO, "#go_btnchange")
+	slot0._btnchange = gohelper.findChildButtonWithAudio(slot0._gobtnchange, "#btn_change")
+	slot0._btnchange2 = gohelper.findChildButtonWithAudio(slot0._gobtnchange, "#btn_change2")
+	slot0._gochange = gohelper.findChild(slot0._gobtnchange, "#go_change")
+	slot0._gobtnchange_gofestivaldecoration = gohelper.findChild(slot0._gobtnchange, "#go_festivaldecoration")
+	slot0._goLifeCircleRed = gohelper.findChild(slot0._gobtnchange, "#go_LifeCircleRed")
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -217,6 +227,9 @@ function slot0.addEvents(slot0)
 	if slot0._btnswitchdecorate then
 		slot0._btnswitchdecorate:AddClickListener(slot0._onBtnChangeDecorate, slot0)
 	end
+
+	slot0._btnchange:AddClickListener(slot0._btnchangeOnClick, slot0)
+	slot0._btnchange2:AddClickListener(slot0._btnchangeOnClick, slot0)
 end
 
 function slot0.removeEvents(slot0)
@@ -247,14 +260,16 @@ function slot0.removeEvents(slot0)
 
 	if slot0._btnswitchdecorate then
 		slot0._btnswitchdecorate:RemoveClickListener()
-
-		slot0._showDecorate = nil
 	end
+
+	slot0._btnchange:RemoveClickListener()
+	slot0._btnchange2:RemoveClickListener()
 end
 
 slot0.MaxTipContainerHeight = 420
 slot0.EveryTipItemHeight = 135
 slot0.TipVerticalInterval = 25
+slot2 = "SignInView:_switchLifeCircleAnsSignIn"
 
 function slot0._onTimesValueChanged(slot0, slot1)
 end
@@ -271,13 +286,14 @@ function slot0._onBtnChangeDateRightClick(slot0)
 end
 
 function slot0._onBtnChangeDecorate(slot0)
-	if slot0._showDecorate == nil then
-		slot0._showDecorate = SignInModel.instance.checkFestivalDecorationUnlock()
+	if slot0._isActiveLifeCircle then
+		GameFacade.showToast(ToastEnum.IconId, "生命签界面是常驻界面，无法切换氛围！")
+
+		return
 	end
 
-	slot0._showDecorate = not slot0._showDecorate
-
-	slot0:_switchFestivalDecoration(slot0._showDecorate)
+	slot0:_switchFestivalDecoration(not slot0._haveFestival)
+	slot0:_setPropItems()
 end
 
 function slot0._refreshGMDateContent(slot0, slot1)
@@ -340,11 +356,11 @@ function slot0._btnqiehuanOnClick(slot0)
 
 	if slot0._index == 1 then
 		slot0:_setRewardItems()
-		slot0._viewAnim:Play("tobirthday", 0, 0)
+		slot0:_playAnim("tobirthday")
 	elseif slot0._index > 1 then
-		slot0._viewAnim:Play("birhtobirth", 0, 0)
+		slot0:_playAnim("birhtobirth")
 	else
-		slot0._viewAnim:Play("tonormal", 0, 0)
+		slot0:_playAnim("tonormal")
 	end
 end
 
@@ -399,7 +415,7 @@ function slot0._addCustomEvent(slot0)
 	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, slot0._closeViewEffect, slot0)
 	SignInController.instance:registerCallback(SignInEvent.GetHeroBirthday, slot0._onGetHeroBirthday, slot0)
 	SignInController.instance:registerCallback(SignInEvent.CloseSignInView, slot0._onEscapeBtnClick, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 end
 
@@ -421,13 +437,13 @@ function slot0._removeCustomEvent(slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, slot0._closeViewEffect, slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.GetHeroBirthday, slot0._onGetHeroBirthday, slot0)
 	SignInController.instance:unregisterCallback(SignInEvent.CloseSignInView, slot0._onEscapeBtnClick, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
 end
 
 function slot0._onEscapeBtnClick(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_close)
-	slot0._viewAnim:Play("out")
+	slot0:_playAnim("out")
 	TaskDispatcher.runDelay(slot0._waitCloseView, slot0, 0.2)
 end
 
@@ -496,7 +512,7 @@ function slot0._closeViewEffect(slot0)
 	slot0._clickMonth = true
 	slot0._index = 0
 
-	slot0._viewAnim:Play("idel")
+	slot0:_playAnim("idel")
 	slot0:_setMonthView()
 	gohelper.setSiblingBefore(slot0._gobirthdayrewarditem, slot0._godayrewarditem)
 end
@@ -531,7 +547,7 @@ function slot0._editableInitView(slot0)
 	gohelper.setActive(slot0._gonormaldaysigned_gold, false)
 	slot0._normaldayrewardAni:Play("none")
 	slot0._normaldayrewardAni_gold:Play("none")
-	slot0._viewAnim:Play("go_view_in2")
+	slot0:_playAnim("go_view_in2")
 
 	slot0._gogetmonthbgs = slot0:getUserDataTb_()
 
@@ -578,6 +594,12 @@ function slot0._editableInitView(slot0)
 	for slot4, slot5 in ipairs(slot0._monthgetlightanimTab) do
 		gohelper.setActive(slot5, false)
 	end
+
+	slot0._btnchangeGo = slot0._btnchange.gameObject
+	slot0._btnchange2Go = slot0._btnchange2.gameObject
+
+	slot0:_setActive_LifeCicle(false)
+	RedDotController.instance:addRedDot(slot0._goLifeCircleRed, RedDotEnum.DotNode.LifeCircleNewConfig, nil, slot0._checkLifeCircleRed, slot0)
 end
 
 function slot0.onOpen(slot0)
@@ -599,7 +621,7 @@ function slot0.onOpen(slot0)
 
 	SignInModel.instance:setNewShowDetail(true)
 	NavigateMgr.instance:addEscape(ViewName.SignInView, slot0._onEscapeBtnClick, slot0)
-	slot0:_switchFestivalDecoration(SignInModel.instance.checkFestivalDecorationUnlock())
+	slot0:_refreshFestivalDecoration()
 end
 
 function slot0._initIndex(slot0)
@@ -664,12 +686,13 @@ function slot0._onDailyRefresh(slot0)
 	gohelper.setActive(slot0._goget, false)
 	gohelper.setActive(slot0._gonoget, false)
 	slot0:_setMonthView()
+	slot0:_onChangeToNormal()
 end
 
 function slot0._onChangeItemClick(slot0)
 	slot0._index = 0
 
-	slot0._viewAnim:Play("idel")
+	slot0:_playAnim("idel")
 	slot0:_setMonthView()
 	gohelper.setSiblingBefore(slot0._gobirthdayrewarditem, slot0._godayrewarditem)
 end
@@ -926,7 +949,12 @@ function slot0._delaySignInRequest(slot0)
 	slot0._normaldayrewardAni_gold:Play("lingqu")
 	ZProj.UGUIHelper.SetColorAlpha(slot0._txtnormaldayrewardcount, 0.7)
 	UIBlockMgr.instance:endBlock("signshowing")
-	SignInRpc.instance:sendSignInRequest()
+
+	if slot0._startGetReward then
+		return
+	end
+
+	LifeCircleController.instance:sendSignInRequest()
 
 	slot0._startGetReward = true
 end
@@ -1216,7 +1244,8 @@ function slot0._setPropItems(slot0)
 			materilType = slot7[1],
 			materilId = slot7[2],
 			quantity = slot7[3],
-			isIcon = true
+			isIcon = true,
+			parent = slot0
 		})
 	end
 
@@ -1346,26 +1375,49 @@ function slot0._setRedDot(slot0)
 end
 
 function slot0._switchFestivalDecoration(slot0, slot1)
+	if slot0._haveFestival == slot1 then
+		return
+	end
+
+	slot0._haveFestival = slot1
+
+	slot0:_refreshFestivalDecoration()
+end
+
+function slot0._refreshFestivalDecoration(slot0)
+	slot1 = slot0:haveFestival()
+
 	gohelper.setActive(slot0._gofestivaldecorationright, slot1)
 	gohelper.setActive(slot0._gofestivaldecorationleft, slot1)
 	gohelper.setActive(slot0._gofestivaldecorationtop, slot1)
 	gohelper.setActive(slot0._gorewardicon, not slot1)
 	gohelper.setActive(slot0._goeffect, slot1)
-	slot0._simagebg:LoadImage(ResUrl.getSignInBg(slot1 and "v2a2_bg_white2" or "bg_white2"))
-
-	slot3 = slot1 and "#08634F" or "#222222"
-
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmonth, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgbias, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtday, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtdate, slot1 and "#AF3805" or "#222222")
+	gohelper.setActive(slot0._godayrewarditem_festivaldecorationtop, slot1)
+	gohelper.setActive(slot0._godayrewarditem_gofestivaldecorationleft2, slot1)
+	gohelper.setActive(slot0._gobtnchange_gofestivaldecoration, slot1)
+	gohelper.setActive(slot0._gochange, not slot1)
+	slot0:_setFestivalColor(slot0._txtmonth)
+	slot0:_setFestivalColor(slot0._imgbias)
+	slot0:_setFestivalColor(slot0._txtday)
+	slot0:_setFestivalColor(slot0._txtdate)
+	slot0._simagebg:LoadImage(ResUrl.getSignInBg(slot1 and "act_bg_white2" or "bg_white2"))
+	slot0._simagerewardbg:LoadImage(ResUrl.getSignInBg(slot1 and "act_img_di" or "img_di"))
 end
 
 function slot0.onClose(slot0)
+	TaskDispatcher.cancelTask(slot0._setActive_LifeCircle, slot0)
+	TaskDispatcher.cancelTask(slot0._onSwitchRewardAnim, slot0)
+	UIBlockHelper.instance:endBlock(uv0)
+
+	if slot0._lifeCircleSignView then
+		slot0._lifeCircleSignView:onClose()
+	end
+
 	slot0:_removeCustomEvent()
 end
 
 function slot0.onDestroyView(slot0)
+	GameUtil.onDestroyViewMember(slot0, "_lifeCircleSignView")
 	UIBlockMgr.instance:endBlock("signshowing")
 	SignInModel.instance:setNewSwitch(false)
 	SignInListModel.instance:clearPropList()
@@ -1405,6 +1457,101 @@ function slot0._getTextInputheros(slot0)
 	end
 
 	return ""
+end
+
+function slot0.haveFestival(slot0, slot1)
+	if slot0._haveFestival == nil or slot1 then
+		slot0._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
+	end
+
+	return slot0._haveFestival
+end
+
+function slot0._setFestivalColor(slot0, slot1)
+	SLFramework.UGUI.GuiHelper.SetColor(slot1, slot0:haveFestival() and "#3D201A" or "#222222")
+end
+
+function slot0._btnchangeOnClick(slot0)
+	slot0:_setActive_LifeCicle(not slot0._isActiveLifeCircle)
+end
+
+function slot0._setActive_LifeCicle(slot0, slot1)
+	if slot0._isActiveLifeCircle == slot1 then
+		return
+	end
+
+	slot0._isActiveLifeCircle = slot1
+
+	if slot1 then
+		slot0:_refreshLifeCircleView()
+	end
+
+	if slot0._lifeCircleSignView then
+		slot0:_switchLifeCircleAnsSignIn(slot1)
+	else
+		slot0:_setActive_LifeCircle(slot1)
+	end
+end
+
+function slot0._refreshLifeCircleView(slot0)
+	if not slot0._lifeCircleSignView then
+		slot1 = LifeCircleSignView.New({
+			parent = slot0,
+			baseViewContainer = slot0.viewContainer
+		})
+
+		slot1:init(slot0.viewContainer:getResInst(SignInEnum.ResPath.lifecirclesignview, slot0._goLifeCircle))
+		slot1:onOpen()
+
+		slot0._lifeCircleSignView = slot1
+	else
+		slot1:onUpdateParam()
+	end
+end
+
+function slot0._switchLifeCircleAnsSignIn(slot0, slot1)
+	TaskDispatcher.cancelTask(slot0._setActive_LifeCircle, slot0)
+	UIBlockHelper.instance:endBlock(uv0)
+
+	if slot1 then
+		slot0:_playAnim("switch_reward")
+		TaskDispatcher.runDelay(slot0._onSwitchRewardAnim, slot0, 0.16)
+	else
+		UIBlockHelper.instance:startBlock(uv0, 2, slot0.viewName)
+		slot0:_playAnim("switch_main")
+		TaskDispatcher.runDelay(slot0._setActive_LifeCircle, slot0, 0.16)
+	end
+end
+
+function slot0._setActive_LifeCircle(slot0, slot1)
+	gohelper.setActive(slot0._goLifeCircle, slot1 and true or false)
+	gohelper.setActive(slot0._btnchangeGo, slot1)
+	gohelper.setActive(slot0._btnchange2Go, not slot1)
+
+	if slot1 then
+		slot0:_switchFestivalDecoration(false)
+	else
+		if slot0._haveFestival ~= slot0:haveFestival(true) then
+			slot0:_refreshFestivalDecoration()
+		end
+
+		UIBlockHelper.instance:endBlock(uv0)
+	end
+end
+
+function slot0._checkLifeCircleRed(slot0, slot1)
+	slot1.show = LifeCircleController.instance:isShowRed()
+
+	slot1:showRedDot(RedDotEnum.Style.Normal)
+end
+
+function slot0._onSwitchRewardAnim(slot0)
+	slot0:_setActive_LifeCircle(true)
+end
+
+function slot0._playAnim(slot0, slot1, slot2, slot3)
+	slot0._viewAnimPlayer:Play(slot1, slot2 or function ()
+	end, slot3)
 end
 
 return slot0

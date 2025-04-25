@@ -467,4 +467,16 @@ function slot0.checkPlayDuDuGuAddExPointEffect(slot0)
 	return slot1:hasBuffFeature(FightEnum.BuffType_UseCardFixExPoint) or slot1:hasBuffFeature(FightEnum.BuffType_ExPointCardMove)
 end
 
+function slot0.getFeatureList(slot0, slot1)
+	if not slot0 then
+		return
+	end
+
+	for slot7, slot8 in ipairs(FightStrUtil.instance:getSplitCache(slot0.features, "|")) do
+		if tonumber(FightStrUtil.instance:getSplitCache(slot8, "#")[1]) and lua_buff_act.configDict[slot10] and slot11.type == slot1 then
+			return slot9
+		end
+	end
+end
+
 return slot0

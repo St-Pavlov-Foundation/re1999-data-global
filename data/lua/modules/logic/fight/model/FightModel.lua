@@ -33,6 +33,7 @@ function slot0.onInit(slot0)
 		OnGuideBeforeSkillPause = false
 	}
 	slot0._startFinish = false
+	slot0.roundOffset = 0
 end
 
 function slot0.reInit(slot0)
@@ -60,6 +61,7 @@ function slot0.clear(slot0)
 	slot0.canContractList = nil
 	slot0.contractEntityUid = nil
 	slot0.beContractEntityUid = nil
+	slot0.roundOffset = 0
 end
 
 function slot0.onRestart(slot0)
@@ -95,7 +97,15 @@ function slot0.getCurWaveId(slot0)
 end
 
 function slot0.getCurRoundId(slot0)
-	return slot0._curRoundId
+	return slot0._curRoundId - slot0.roundOffset
+end
+
+function slot0.getMaxRound(slot0)
+	return slot0.maxRound - slot0.roundOffset
+end
+
+function slot0.setRoundOffset(slot0, slot1)
+	slot0.roundOffset = slot1 or 0
 end
 
 function slot0.getCurRoundMO(slot0)

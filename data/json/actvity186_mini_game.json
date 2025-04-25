@@ -1,0 +1,317 @@
+[
+  {
+    "activityId": 12518,
+    "id": 1,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "1",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 2,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "2",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 3,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "3",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 4,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "4",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 5,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "5",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 6,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "6",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 7,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "7",
+    "conditionStage": "1",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 8,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "1",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 9,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "2",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 10,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "3",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 11,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "4",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 12,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "5",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 13,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "6",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 14,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "7",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 15,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "8",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 16,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "9",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 17,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "10",
+    "conditionStage": "2",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 18,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "1",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 19,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "2",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 20,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "3",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 21,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "4",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 22,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "5",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 23,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "6",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 24,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "7",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 25,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "8",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 26,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "9",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 27,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "10",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 28,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "11",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 29,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "12",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 30,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "13",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 31,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "14",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 32,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "15",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 33,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "16",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 34,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "17",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  },
+  {
+    "activityId": 12518,
+    "id": 35,
+    "triggerConditionType": 1,
+    "triggerConditionParams": "18",
+    "conditionStage": "3",
+    "gameType2Prob": "1#500|2#500",
+    "expireSeconds": 21600
+  }
+]

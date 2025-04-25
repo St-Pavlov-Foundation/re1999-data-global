@@ -70,22 +70,12 @@ function slot0.setManufactureItem(slot0)
 			slot0._itemIcon:isShowQuality(false)
 		end
 
-		slot3 = nil
-
-		if not string.nilorempty(ManufactureConfig.instance:getBatchIcon(slot1)) then
-			slot3 = ResUrl.getPropItemIcon(slot4)
-		end
-
 		slot0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot2, nil, , , {
-			specificIcon = slot3
+			specificIcon = ManufactureConfig.instance:getBatchIconPath(slot1)
 		})
 		UISpriteSetMgr.instance:setCritterSprite(slot0._imgquality, RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()])
 
-		if string.nilorempty(ManufactureConfig.instance:getBatchName(slot1)) then
-			slot7 = ItemConfig.instance:getItemNameById(slot2)
-		end
-
-		slot0._txtmanufactureItemName.text = slot7
+		slot0._txtmanufactureItemName.text = ManufactureConfig.instance:getManufactureItemName(slot1)
 	end
 
 	slot0:refreshProgress()

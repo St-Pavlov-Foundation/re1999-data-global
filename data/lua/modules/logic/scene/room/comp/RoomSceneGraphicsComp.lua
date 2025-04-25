@@ -17,6 +17,10 @@ function slot0.onInit(slot0)
 	else
 		slot0.compatibility = true
 	end
+
+	if SDKMgr.instance:isEmulator() then
+		SceneCulling.useBurst = false
+	end
 end
 
 function slot0.init(slot0, slot1, slot2)
@@ -48,6 +52,22 @@ function slot0.init(slot0, slot1, slot2)
 	PostProcessingMgr.setCameraLayerInt(slot3, slot0.LAYER_MASK_CullOnLowQuality, false)
 
 	slot3.layerCullSpherical = true
+
+	if BootNativeUtil.isWindows() then
+		RenderPipelineSetting.ForwardPlusToggle = true
+	end
+
+	if BootNativeUtil.isWindows() and GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
+		slot0:getCurScene().loader:makeSureLoaded({
+			RoomScenePreloader.DiffuseGI
+		}, slot0._OnGetInstance, slot0)
+	end
+end
+
+function slot0._OnGetInstance(slot0)
+	slot0.go_GI = RoomGOPool.getInstance(RoomScenePreloader.DiffuseGI, slot0:getCurScene().go.sceneGO, "diffuse_gi")
+
+	transformhelper.setPos(slot0.go_GI.transform, 0, 0, 0)
 end
 
 function slot0.setPPValue(slot0, slot1, slot2)
@@ -86,6 +106,12 @@ function slot0.onSceneClose(slot0)
 	slot0._unitPPVolume = nil
 	RenderPipelineSetting.useRenderOpaqueWithSceneColorPass = false
 	UnityEngine.QualitySettings.masterTextureLimit = 0
+
+	if BootNativeUtil.isWindows() then
+		RenderPipelineSetting.ForwardPlusToggle = false
+	end
+
+	slot0.go_GI = nil
 end
 
 function slot0._refreshGraphics(slot0)

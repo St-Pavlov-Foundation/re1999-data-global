@@ -36,7 +36,7 @@ function slot1(slot0, slot1)
 		return (uv0.SkillLevel2Order[slot6] or 999) < (uv0.SkillLevel2Order[slot7] or 999)
 	end
 
-	return slot0.id < slot1.id
+	return slot1.id < slot0.id
 end
 
 function slot0.initList(slot0)

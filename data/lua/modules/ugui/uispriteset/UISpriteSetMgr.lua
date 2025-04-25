@@ -98,6 +98,7 @@ function slot0.ctor(slot0)
 	slot0._rouge2 = slot0:newSpriteSetUnit("ui/spriteassets/rouge2.asset")
 	slot0._rouge3 = slot0:newSpriteSetUnit("ui/spriteassets/rouge3.asset")
 	slot0._rouge4 = slot0:newSpriteSetUnit("ui/spriteassets/rouge4.asset")
+	slot0._rouge5 = slot0:newSpriteSetUnit("ui/spriteassets/rouge5.asset")
 	slot0._fairyland = slot0:newSpriteSetUnit("ui/spriteassets/fairyland_spriteset.asset")
 	slot0._bgmswitch = slot0:newSpriteSetUnit("ui/spriteassets/bgmtoggle.asset")
 	slot0._v2a0_main_activity = slot0:newSpriteSetUnit("ui/spriteassets/v2a0_mainactivity_spriteset.asset")
@@ -131,6 +132,12 @@ function slot0.ctor(slot0)
 	slot0._act178 = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_tutushizi_spriteset.asset")
 	slot0._v2a4_wuerlixi_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a4_wuerlixi_spriteset.asset")
 	slot0._playercard = slot0:newSpriteSetUnit("ui/spriteassets/playercard.asset")
+	slot0._v2a5_main_activity = slot0:newSpriteSetUnit("ui/spriteassets/v2a5_mainactivity_spriteset.asset")
+	slot0._v2a5_dungeon_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a5_dungeon.asset")
+	slot0._v2a5_autochess_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a5_autochess_spriteset.asset")
+	slot0._v2a5_challenge_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a5_challenge_spriteset.asset")
+	slot0._v2a5_liangyue_sprite = slot0:newSpriteSetUnit("ui/spriteassets/v2a5_liangyue_spriteset.asset")
+	slot0._socialskin = slot0:newSpriteSetUnit("ui/spriteassets/social_1.asset")
 end
 
 function slot0.newSpriteSetUnit(slot0, slot1)
@@ -522,6 +529,10 @@ function slot0.setRouge4Sprite(slot0, slot1, slot2, slot3)
 	slot0._rouge4:setSprite(slot1, slot2, slot3)
 end
 
+function slot0.setRouge5Sprite(slot0, slot1, slot2, slot3)
+	slot0._rouge5:setSprite(slot1, slot2, slot3)
+end
+
 function slot0.setFairyLandSprite(slot0, slot1, slot2, slot3)
 	slot0._fairyland:setSprite(slot1, slot2, slot3)
 end
@@ -652,6 +663,30 @@ end
 
 function slot0.setPlayerCardSprite(slot0, slot1, slot2, slot3)
 	slot0._playercard:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a5MainActivitySprite(slot0, slot1, slot2, slot3)
+	slot0._v2a5_main_activity:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a5DungeonSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a5_dungeon_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setAutoChessSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a5_autochess_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setChallengeSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a5_challenge_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setV2a5LiangYueSprite(slot0, slot1, slot2, slot3)
+	slot0._v2a5_liangyue_sprite:setSprite(slot1, slot2, slot3)
+end
+
+function slot0.setSocialSkinSprite(slot0, slot1, slot2, slot3)
+	slot0._socialskin:setSprite(slot1, slot2, slot3)
 end
 
 function slot0.tryDispose(slot0)

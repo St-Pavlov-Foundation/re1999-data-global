@@ -32,30 +32,32 @@ function slot0.getJumpConfig(slot0, slot1)
 	return slot2
 end
 
-function slot0.getJumpName(slot0, slot1)
+function slot0.getJumpName(slot0, slot1, slot2)
 	if slot0:getJumpConfig(slot1) then
-		if string.nilorempty(slot2.param) then
+		if string.nilorempty(slot3.param) then
 			logError("跳转参数为空")
 
 			return ""
 		end
 
-		if tonumber(string.split(slot3, "#")[1]) == JumpEnum.JumpView.DungeonViewWithEpisode then
-			return slot0:getEpisodeNameAndIndex(tonumber(slot4[2]))
-		elseif slot5 == JumpEnum.JumpView.DungeonViewWithChapter then
-			slot7 = DungeonConfig.instance:getChapterCO(tonumber(slot4[2]))
-			slot8 = slot7.chapterIndex
+		slot5 = slot2 or "#3f485f"
 
-			if slot7 then
-				return string.format("<color=#3f485f><size=32>%s</size></color>", slot2.name), ""
+		if tonumber(string.split(slot4, "#")[1]) == JumpEnum.JumpView.DungeonViewWithEpisode then
+			return slot0:getEpisodeNameAndIndex(tonumber(slot6[2]))
+		elseif slot7 == JumpEnum.JumpView.DungeonViewWithChapter then
+			slot9 = DungeonConfig.instance:getChapterCO(tonumber(slot6[2]))
+			slot10 = slot9.chapterIndex
+
+			if slot9 then
+				return string.format("<color=%s><size=32>%s</size></color>", slot5, slot3.name), ""
 			end
-		elseif slot5 == JumpEnum.JumpView.Show then
-			return slot2.name or ""
+		elseif slot7 == JumpEnum.JumpView.Show then
+			return slot3.name or ""
 		else
-			return string.format("<color=#3f485f><size=32>%s</size></color>", slot2.name) or ""
+			return string.format("<color=%s><size=32>%s</size></color>", slot5, slot3.name) or ""
 		end
 
-		logError("跳转参数错误: " .. slot3)
+		logError("跳转参数错误: " .. slot4)
 
 		return ""
 	end

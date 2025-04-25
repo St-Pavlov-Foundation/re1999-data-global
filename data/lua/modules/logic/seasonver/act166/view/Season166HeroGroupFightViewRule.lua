@@ -29,9 +29,8 @@ function slot0.onInitView(slot0)
 	slot0._txtrecommonddes = gohelper.findChildTextMesh(slot0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr/#txt_recommonddes")
 	slot0._gorulewindow = gohelper.findChild(slot0.viewGO, "#go_rulewindow")
 	slot0._goruledesc = gohelper.findChild(slot0.viewGO, "#go_rulewindow/#go_ruledesc")
-	slot0._btncloserule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rulewindow/#go_ruledesc/#btn_closerule")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "#go_rulewindow/#go_ruledesc/bg/#go_ruleitem")
-	slot0._goruleDescList = gohelper.findChild(slot0.viewGO, "#go_rulewindow/#go_ruledesc/bg/#go_ruleDescList")
+
+	gohelper.setActive(slot0._goruledesc, false)
 
 	if slot0._editableInitView then
 		slot0:_editableInitView()
@@ -43,7 +42,6 @@ function slot0.addEvents(slot0)
 	slot0._btnadditionRuleclick:AddClickListener(slot0._btnadditionRuleOnClick, slot0)
 	slot0._btnenemy:AddClickListener(slot0._btnenemyOnClick, slot0)
 	slot0._enemylist:AddClickListener(slot0._btnenemyOnClick, slot0)
-	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
 	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._recommendCareer, slot0)
 end
 
@@ -52,7 +50,6 @@ function slot0.removeEvents(slot0)
 	slot0._btnadditionRuleclick:RemoveClickListener()
 	slot0._btnenemy:RemoveClickListener()
 	slot0._enemylist:RemoveClickListener()
-	slot0._btncloserule:RemoveClickListener()
 	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._recommendCareer, slot0)
 end
 
@@ -61,15 +58,13 @@ function slot0._btntargetShowOnClick(slot0)
 end
 
 function slot0._btnadditionRuleOnClick(slot0)
-	gohelper.setActive(slot0._gorulewindow, true)
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+		ruleList = slot0._ruleList
+	})
 end
 
 function slot0._btnenemyOnClick(slot0)
 	EnemyInfoController.instance:openEnemyInfoViewByBattleId(slot0.battleId)
-end
-
-function slot0._btncloseruleOnClick(slot0)
-	gohelper.setActive(slot0._gorulewindow, false)
 end
 
 function slot0._editableInitView(slot0)
@@ -183,12 +178,11 @@ function slot0.refreshRuleUI(slot0)
 	slot0:_clearRules()
 	gohelper.setActive(slot0._goadditionRule, true)
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot9 = slot8[1]
+	slot0._ruleList = slot3
 
+	for slot7, slot8 in ipairs(slot3) do
 		if lua_rule.configDict[slot8[2]] then
-			slot0:_addRuleItem(slot11, slot9)
-			slot0:_setRuleDescItem(slot11, slot9)
+			slot0:_addRuleItem(slot11, slot8[1])
 		end
 
 		if slot7 == #slot3 then
@@ -204,26 +198,6 @@ function slot0._addRuleItem(slot0, slot1, slot2)
 	table.insert(slot0._cloneRuleGos, slot3)
 	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot3, "#image_tagicon"), "wz_" .. slot2)
 	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot3, ""), slot1.icon)
-end
-
-function slot0._setRuleDescItem(slot0, slot1, slot2)
-	slot4 = gohelper.clone(slot0._goruleitem, slot0._goruleDescList, slot1.id)
-
-	gohelper.setActive(slot4, true)
-	table.insert(slot0._cloneRuleGos, slot4)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot4, "icon"), slot1.icon)
-	table.insert(slot0._rulesimagelineList, gohelper.findChild(slot4, "line"))
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot4, "tag"), "wz_" .. slot2)
-
-	slot8 = gohelper.findChildText(slot4, "desc")
-
-	SkillHelper.addHyperLinkClick(slot8)
-
-	slot8.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot2), SkillHelper.buildDesc(slot1.desc, nil, "#6680bd"), ({
-		"#6680bd",
-		"#d05b4c",
-		"#c7b376"
-	})[slot2])
 end
 
 function slot0._clearRules(slot0)

@@ -396,6 +396,8 @@ function slot0._setEpisodeName(slot0, slot1, slot2, slot3)
 			slot2 = VersionActivity2_3DungeonConfig.instance:getEpisodeIndex(slot1.id)
 		elseif slot5.actId == VersionActivity2_4Enum.ActivityId.Dungeon then
 			slot2 = VersionActivity2_4DungeonConfig.instance:getEpisodeIndex(slot1.id)
+		elseif slot5.actId == VersionActivity2_5Enum.ActivityId.Dungeon then
+			slot2 = VersionActivity2_5DungeonConfig.instance:getEpisodeIndex(slot1.id)
 		end
 	end
 

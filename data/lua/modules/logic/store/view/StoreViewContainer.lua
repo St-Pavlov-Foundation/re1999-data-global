@@ -82,22 +82,10 @@ function slot0.buildTabViews(slot0, slot1)
 		slot5.cellSpaceH = 29.5
 		slot5.cellSpaceV = 0
 		slot5.startSpace = 8
-		slot6 = ListScrollParam.New()
+		slot6 = TreeScrollParam.New()
 		slot6.scrollGOPath = "#scroll_prop"
-		slot6.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot6.prefabUrl = slot0._viewSetting.otherRes[5]
-		slot6.cellClass = SummonStoreGoodsItem
-		slot6.scrollDir = ScrollEnum.ScrollDirV
-		slot6.lineCount = 4
-		slot6.cellWidth = 332
-		slot6.cellHeight = 355
-		slot6.cellSpaceH = 29
-		slot6.cellSpaceV = 37
-		slot6.startSpace = 31
-		slot7 = TreeScrollParam.New()
-		slot7.scrollGOPath = "#scroll_prop"
-		slot7.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot7.prefabUrls = {
+		slot6.prefabType = ScrollEnum.ScrollPrefabFromView
+		slot6.prefabUrls = {
 			"roomstoreitem/root",
 			"roomstoreitem/node",
 			"roomstoreitem/node",
@@ -105,39 +93,39 @@ function slot0.buildTabViews(slot0, slot1)
 			"roomstoreitem/node",
 			"roomstoreitem/node"
 		}
-		slot7.cellClass = StoreRoomTreeItem
-		slot7.scrollDir = ScrollEnum.ScrollDirV
-		slot8 = {
-			[slot12] = math.floor((slot12 - 1) / 4) * 0.07
+		slot6.cellClass = StoreRoomTreeItem
+		slot6.scrollDir = ScrollEnum.ScrollDirV
+		slot7 = {
+			[slot11] = math.floor((slot11 - 1) / 4) * 0.07
 		}
 
-		for slot12 = 1, 12 do
+		for slot11 = 1, 12 do
 		end
 
-		for slot13 = 1, 9 do
+		for slot12 = 1, 9 do
 		end
 
-		slot10 = {}
+		slot9 = {}
 
-		setmetatable(slot10, {
+		setmetatable(slot9, {
 			__index = function (slot0, slot1)
 				return (slot1 - 1) * 0.07
 			end
 		})
 
-		slot0._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, slot2, slot8)
+		slot0._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, slot2, slot7)
 		slot0._ScrollViewChargeStore = LuaListScrollViewWithAnimator.New(StoreChargeGoodsItemListModel.instance, slot3, {
-			[slot13] = math.floor((slot13 - 1) / 3) * 0.07
+			[slot12] = math.floor((slot12 - 1) / 3) * 0.07
 		})
-		slot0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, slot5, slot10)
-		slot0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, slot4, slot10)
-		slot0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, slot7)
-		slot0._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, slot6, slot8)
+		slot0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, slot5, slot9)
+		slot0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, slot4, slot9)
+		slot0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, slot6)
 
 		return {
 			MultiView.New({
 				NormalStoreView.New(),
-				slot0._ScrollViewNormalStore
+				slot0._ScrollViewNormalStore,
+				TabViewGroup.New(6, "#go_limit")
 			}),
 			MultiView.New({
 				ChargeStoreView.New(),
@@ -160,8 +148,7 @@ function slot0.buildTabViews(slot0, slot1)
 				TabViewGroup.New(5, "#go_critter")
 			}),
 			MultiView.New({
-				StoreSummonView.New(),
-				slot0._ScrollViewSummonStore
+				DecorateStoreView.New()
 			})
 		}
 	elseif slot1 == 4 then
@@ -173,7 +160,9 @@ function slot0.buildTabViews(slot0, slot1)
 			StoreRoleSkinView.New(),
 			StoreBlockPackageView.New(),
 			GiftrecommendView1.New(),
-			GiftrecommendView2.New()
+			GiftrecommendView2.New(),
+			StoreSeasonCardView.New(),
+			StoreSkinBagView.New()
 		}
 	elseif slot1 == 5 then
 		slot2 = ListScrollParam.New()
@@ -200,6 +189,33 @@ function slot0.buildTabViews(slot0, slot1)
 			MultiView.New({
 				RoomCritterStoreView.New(),
 				slot0._ScrollViewRoomCritterStore
+			})
+		}
+	elseif slot1 == 6 then
+		slot2 = ListScrollParam.New()
+		slot2.scrollGOPath = "#scroll_prop"
+		slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
+		slot2.prefabUrl = slot0._viewSetting.otherRes[5]
+		slot2.cellClass = SummonStoreGoodsItem
+		slot2.scrollDir = ScrollEnum.ScrollDirV
+		slot2.lineCount = 4
+		slot2.cellWidth = 332
+		slot2.cellHeight = 355
+		slot2.cellSpaceH = 29
+		slot2.cellSpaceV = 37
+		slot2.startSpace = 31
+
+		for slot7 = 1, 12 do
+		end
+
+		slot0._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, slot2, {
+			[slot7] = math.floor((slot7 - 1) / 4) * 0.07
+		})
+
+		return {
+			MultiView.New({
+				StoreSummonView.New(),
+				slot0._ScrollViewSummonStore
 			})
 		}
 	end
@@ -266,12 +282,22 @@ function slot0.playNormalStoreAnimation(slot0)
 	slot0._ScrollViewNormalStore:playOpenAnimation()
 end
 
+function slot0.playSummonStoreAnimation(slot0)
+	if slot0._ScrollViewSummonStore ~= nil then
+		slot0._ScrollViewSummonStore:playOpenAnimation()
+	end
+end
+
 function slot0.playChargeStoreAnimation(slot0)
 	slot0._ScrollViewChargeStore:playOpenAnimation()
 end
 
 function slot0.playRoomtoreAnimation(slot0)
 	slot0._ScrollViewRoomStore:playOpenAnimation()
+end
+
+function slot0.playCritterStoreAnimation(slot0)
+	slot0._ScrollViewRoomCritterStore:playOpenAnimation()
 end
 
 function slot0.setRoomStoreAnimation(slot0, slot1)

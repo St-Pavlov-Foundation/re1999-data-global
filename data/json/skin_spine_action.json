@@ -5733,6 +5733,285 @@
     "dieAnim": ""
   },
   {
+    "skinId": 311001,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431100191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311001,
+    "actionName": "die",
+    "effect": "v2a5_ly/ly_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431100192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311002,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431100193,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311101,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431110191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311101,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431110192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311201,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431120191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311201,
+    "actionName": "die",
+    "effect": "v2a5_knd/knd_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431120192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300306,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a5_hjs_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430030691,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300306,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430030142,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309803,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a5_lsp_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430980391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309803,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430980392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 307703,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a5_bfsg_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430770391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 307703,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430770192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300904,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a5_sfb_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430090491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300904,
+    "actionName": "die",
+    "effect": "v2a5_sfb/sfb_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430090492,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 308303,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a5_qn_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430830391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 308303,
+    "actionName": "die",
+    "effect": "v2a5_qn/qn_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430830392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 620152,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 462015292,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630118,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463011892,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630119,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463011992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630215,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463021592,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630216,
+    "actionName": "die",
+    "effect": "v2a5_knd/knd_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431120192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630217,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463021792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630218,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463021892,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630219,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463021992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640127,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464012792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640128,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464012792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640129,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464011392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640216,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 441130192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670209,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467020992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 6304101,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463041092,
+    "dieAnim": ""
+  },
+  {
     "skinId": 310903,
     "actionName": "born",
     "effect": "buff/born/pre_v2a7_ttsz_born_s2#buff/born/pre_v2a7_ttsz_born_s5",

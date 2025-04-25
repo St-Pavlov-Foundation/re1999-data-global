@@ -3,7 +3,7 @@ module("modules.logic.fight.view.work.FightTweenWork", package.seeall)
 slot0 = class("FightTweenWork", FightWorkItem)
 slot1 = ZProj.TweenHelper
 
-function slot0.onInitialization(slot0, slot1)
+function slot0.onConstructor(slot0, slot1)
 	slot0:setParam(slot1)
 end
 

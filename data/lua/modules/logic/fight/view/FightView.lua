@@ -356,22 +356,29 @@ function slot0._onRefreshUIRound(slot0)
 end
 
 function slot0._updateRound(slot0)
-	slot4 = math.min(FightModel.instance:getCurWaveId(), FightModel.instance.maxWave)
-	slot3 = math.min(FightModel.instance:getCurRoundId(), FightModel.instance.maxRound)
-
-	if FightDataHelper.fieldMgr:isDouQuQu() then
-		slot4 = FightDataModel.instance.douQuQuMgr.index or 1
-		slot1 = slot5.maxIndex or 1
-	end
-
-	slot0._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), slot4, slot1)
-	slot0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), slot3, slot2)
-
+	slot0:_refreshWaveUI()
+	slot0:_refreshRoundUI()
 	slot0:_showEnemySubHeroCount()
 end
 
+function slot0._refreshWaveUI(slot0)
+	slot2 = math.min(FightModel.instance:getCurWaveId(), FightModel.instance.maxWave)
+
+	if FightDataHelper.fieldMgr:isDouQuQu() then
+		slot2 = FightDataModel.instance.douQuQuMgr.index or 1
+		slot1 = slot3.maxIndex or 1
+	end
+
+	slot0._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), slot2, slot1)
+end
+
+function slot0._refreshRoundUI(slot0)
+	slot1 = FightModel.instance:getMaxRound()
+	slot0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), math.min(FightModel.instance:getCurRoundId(), slot1), slot1)
+end
+
 function slot0._onChangeRound(slot0)
-	slot0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), FightModel.instance:getCurRoundId(), FightModel.instance.maxRound)
+	slot0:_refreshRoundUI()
 end
 
 function slot0._showEnemySubHeroCount(slot0)

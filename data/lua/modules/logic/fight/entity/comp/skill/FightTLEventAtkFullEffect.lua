@@ -71,14 +71,25 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		end
 
 		slot0._effectWrap = slot0._attacker.effect:addGlobalEffect(slot4, nil, slot0._releaseTime)
+		slot8 = true
+
+		if slot3[13] == "1" then
+			gohelper.addChild(CameraMgr.instance:getMainCameraGO(), slot0._effectWrap.containerGO)
+
+			slot8 = false
+		end
 
 		if (tonumber(slot3[3]) or -1) == -1 then
 			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._attacker.id, slot0._effectWrap)
 		else
-			FightRenderOrderMgr.instance:setEffectOrder(slot0._effectWrap, slot8)
+			FightRenderOrderMgr.instance:setEffectOrder(slot0._effectWrap, slot9)
 		end
 
-		slot0._effectWrap:setWorldPos(slot5, slot6, slot7)
+		if slot8 then
+			slot0._effectWrap:setWorldPos(slot5, slot6, slot7)
+		else
+			slot0._effectWrap:setLocalPos(slot5, slot6, slot7)
+		end
 
 		slot0._releaseByServer = tonumber(slot3[8])
 

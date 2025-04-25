@@ -219,6 +219,7 @@ function slot0.changeMainHero(slot0, slot1, slot2, slot3)
 	if not string.nilorempty(slot4) then
 		PlayerModel.instance:forceSetSimpleProperty(PlayerEnum.SimpleProperty.MainHero, slot4)
 		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.MainHero, tostring(slot4))
+		CharacterController.instance:dispatchEvent(CharacterEvent.ChangeMainHero)
 	end
 end
 

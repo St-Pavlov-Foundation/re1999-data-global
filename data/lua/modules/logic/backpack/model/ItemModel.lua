@@ -156,6 +156,9 @@ slot1 = {
 		end
 
 		return slot3
+	end,
+	[MaterialEnum.MaterialType.Critter] = function (slot0)
+		return CritterModel.instance:getCritterCntById(slot0)
 	end
 }
 

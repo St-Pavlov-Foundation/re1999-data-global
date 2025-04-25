@@ -4454,5 +4454,101 @@
     "invokeType": 8,
     "param": "610406_change_1",
     "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2520119,
+    "battleId": 9250413,
+    "monster": 925041302,
+    "invokeType": 8,
+    "param": "670406_born",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2520119,
+    "battleId": 9250413,
+    "monster": 925041302,
+    "invokeType": 8,
+    "param": "670406_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2510119,
+    "battleId": 9250113,
+    "monster": 925011302,
+    "invokeType": 8,
+    "param": "670406_born",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2510119,
+    "battleId": 9250113,
+    "monster": 925011302,
+    "invokeType": 8,
+    "param": "670406_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2510119,
+    "battleId": 9250114,
+    "monster": 925011401,
+    "invokeType": 8,
+    "param": "670406_born",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2510119,
+    "battleId": 9250114,
+    "monster": 925011401,
+    "invokeType": 8,
+    "param": "670406_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2530119,
+    "battleId": 9250210,
+    "monster": 925021002,
+    "invokeType": 8,
+    "param": "670406_born",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2530119,
+    "battleId": 9250210,
+    "monster": 925021002,
+    "invokeType": 8,
+    "param": "670406_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2540119,
+    "battleId": 9250310,
+    "monster": 925031002,
+    "invokeType": 8,
+    "param": "670406_born",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2540119,
+    "battleId": 9250310,
+    "monster": 925031002,
+    "invokeType": 8,
+    "param": "670406_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 18302005,
+    "battleId": 25130105,
+    "monster": 251301053,
+    "invokeType": 3,
+    "param": "50",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 18303005,
+    "battleId": 25131105,
+    "monster": 251311053,
+    "invokeType": 3,
+    "param": "50",
+    "switch": "Fightboos_Second"
   }
 ]

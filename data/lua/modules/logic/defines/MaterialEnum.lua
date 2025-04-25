@@ -17,6 +17,8 @@ slot0.MaterialType = {
 	Season123EquipCard = 19,
 	Hero = 4,
 	BlockPackage = 13,
+	Act186Like = 26,
+	Critter = 27,
 	Equip = 9,
 	PowerPotion = 10,
 	PlayerClothExp = 8,
@@ -41,10 +43,12 @@ slot0.GetApproach = {
 	Act1_6SkillReset = 85,
 	MonthCard = 42,
 	Activity = 25,
+	AutoChessRankReward = 134,
 	v1a8Act157ComponentReward = 96,
 	Act1_6SkillLvDown = 84,
 	Charge = 31,
 	RoomInteraction = 47,
+	AutoChessPveReward = 127,
 	DungeonRewardPoint = 28,
 	Task = 8,
 	TaskAct = 13,
@@ -52,6 +56,7 @@ slot0.GetApproach = {
 	BattlePass = 49,
 	AstrologyStarReward = 62,
 	SignIn = 20,
+	LifeCircleSign = 133,
 	NoviceStageReward = 54
 }
 slot0.SubTypePackages = {
@@ -84,6 +89,11 @@ slot0.PowerType = {
 	Big = 2,
 	Act = 3,
 	Small = 1
+}
+slot0.ItemSubType = {
+	MainScene = 24,
+	Icon = 17,
+	SelfCard = 21
 }
 slot0.ActPowerBindActId = 11904
 

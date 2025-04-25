@@ -16,6 +16,7 @@ function slot0.reInit(slot0)
 	slot0._exSklAscend = false
 	slot0._showHeroDict = {}
 	slot0._heroList = nil
+	slot0._hideGainHeroView = false
 end
 
 function slot0.getBtnTag(slot0, slot1)

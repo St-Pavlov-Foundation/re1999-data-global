@@ -2,9 +2,7 @@ module("modules.logic.fight.system.work.asfd.effectwork.FightWorkAllocateCardEne
 
 slot0 = class("FightWorkAllocateCardEnergy", FightEffectBase)
 
-function slot0.onInitialization(slot0)
-	uv0.super.onInitialization(slot0)
-
+function slot0.onConstructor(slot0)
 	slot0.SAFETIME = 3
 end
 

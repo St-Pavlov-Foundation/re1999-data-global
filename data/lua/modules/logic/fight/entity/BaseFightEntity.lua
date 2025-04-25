@@ -249,7 +249,7 @@ function slot0.resetAnimState(slot0)
 end
 
 function slot0._onChange2AnimEvent(slot0, slot1, slot2, slot3)
-	if slot1 == SpineAnimState.change2 and slot2 == SpineAnimEvent.ActionComplete then
+	if (slot0.spine and slot0.spine:getAnimState()) == slot1 and slot1 == SpineAnimState.change2 and slot2 == SpineAnimEvent.ActionComplete then
 		slot0.spine:removeAnimEventCallback(slot0._onChange2AnimEvent, slot0)
 		slot0.spine:play(SpineAnimState.idle1, true, true)
 	end
@@ -481,11 +481,11 @@ function slot0.registClasses(slot0)
 
 	slot0._instantiateClass = {}
 
-	slot0:registClass(FightEntitySummonedComp, slot0)
-	slot0:registClass(FightEntityBuffSpecialPrecessComp, slot0)
+	slot0:newClass(FightEntitySummonedComp, slot0)
+	slot0:newClass(FightEntityBuffSpecialPrecessComp, slot0)
 end
 
-function slot0.registClass(slot0, slot1, ...)
+function slot0.newClass(slot0, slot1, ...)
 	slot2 = slot1.New(...)
 
 	table.insert(slot0._instantiateClass, slot2)

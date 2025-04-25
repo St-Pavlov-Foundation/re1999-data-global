@@ -279,6 +279,42 @@ function slot0.isReceiveAllBonus(slot0, slot1)
 	return false
 end
 
+function slot0.checkIsShowLogoVisible()
+	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+		return false
+	end
+
+	return slot0.isShowLogo or false
+end
+
+function slot0.checkIsShowActBgVisible()
+	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+		return false
+	end
+
+	return slot0.isShowActBg or false
+end
+
+function slot0.showActivityEffect()
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
+		return false
+	end
+
+	if not DungeonModel.instance:hasPassLevelAndStory(ActivityEnum.ShowVersionActivityEpisode) then
+		return false
+	end
+
+	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+		return false
+	end
+
+	if ActivityHelper.getActivityStatus(slot1.id) == ActivityEnum.ActivityStatus.Normal or slot3 == ActivityEnum.ActivityStatus.NotUnlock then
+		return true
+	end
+
+	return false
+end
+
 slot0.instance = slot0.New()
 
 return slot0

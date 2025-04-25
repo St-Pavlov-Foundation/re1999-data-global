@@ -28,7 +28,7 @@ return {
 		slot3 = ResUrl.getRoomResAB(string.format("heliu_floor/%s", slot1 + 1))
 
 		if GameResMgr.IsFromEditorDir then
-			slot3 = ResUrl.getRoomRes(string.format("heliu_floor/%s", slot1 + 1))
+			slot3 = slot2
 		end
 
 		return slot2, slot3

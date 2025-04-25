@@ -1,14 +1,15 @@
 module("modules.configs.excel2json.lua_bp", package.seeall)
 
 slot1 = {
-	isSp = 16,
+	isSp = 19,
 	name = 7,
 	chargeId2 = 3,
 	bpSkinEnNametxt = 12,
 	bpviewicon = 13,
-	payStatus1Bonus = 5,
-	bpId = 1,
+	payStatus2Bonus = 6,
 	chargeId1 = 2,
+	bpId = 1,
+	showBonusDate = 16,
 	chargeId1to2 = 4,
 	bpviewpos = 14,
 	showBonus = 15,
@@ -16,7 +17,7 @@ slot1 = {
 	bpSkinDesc = 10,
 	bpSkinNametxt = 11,
 	expLevelUp = 9,
-	payStatus2Bonus = 6,
+	payStatus1Bonus = 5,
 	payStatus2AddLevel = 8,
 	expUpShow = 18
 }

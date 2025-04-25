@@ -21,7 +21,7 @@ function slot0.onInitView(slot0)
 	slot0._gosoldouttagbg = gohelper.findChild(slot0._gosoldout, "bg_tag")
 	slot0._gooptionalgift = gohelper.findChild(slot0.viewGO, "#go_optionalgift")
 	slot0._gooptionalvx = gohelper.findChild(slot0.viewGO, "#packs_vx")
-	slot0._gosummonsimulationpickfx = gohelper.findChild(slot0.viewGO, "#go_summonSimulationPickFX")
+	slot0._gosummonSimulationPickFX = gohelper.findChild(slot0.viewGO, "#go_summonSimulationPickFX")
 	slot0._txtpickdesc = gohelper.findChildText(slot0.viewGO, "#txt_pickdesc")
 	slot0._goSkinTips = gohelper.findChild(slot0.viewGO, "#go_SkinTips")
 	slot0._imgProp = gohelper.findChildImage(slot0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
@@ -204,8 +204,6 @@ function slot0.onUpdateMO(slot0, slot1)
 		slot0._txtremiantime.text = luaLang("not_enough_one_hour")
 	end
 
-	gohelper.setActive(slot0._gonewtag, false)
-
 	if tonumber(slot1:getDiscount()) and slot7 > 0 then
 		slot0.hasTag = true
 
@@ -217,6 +215,8 @@ function slot0.onUpdateMO(slot0, slot1)
 
 		gohelper.setActive(slot0._gotag, false)
 	end
+
+	gohelper.setActive(slot0._gonewtag, slot1:needShowNew())
 
 	slot0._hascloth = slot0._mo:alreadyHas()
 
@@ -233,21 +233,23 @@ function slot0.onUpdateMO(slot0, slot1)
 		ZProj.UGUIHelper.SetColorAlpha(slot0._iconImage, 0.8)
 	end
 
+	gohelper.setActive(slot0._gowenhao, false)
+
 	if slot0._mo.goodsId == StoreEnum.MonthCardGoodsId then
 		gohelper.setActive(slot0._gowenhao, true)
 
-		slot0.wenhaoClick = gohelper.getClick(slot0._gowenhao)
+		slot0._wenhaoClick = gohelper.getClick(slot0._gowenhao)
 
-		slot0.wenhaoClick:AddClickListener(slot0.showMonthCardTips, slot0)
+		slot0._wenhaoClick:AddClickListener(slot0.showMonthCardTips, slot0)
 		gohelper.setActive(slot0._gomooncardup, StoreHelper.checkMonthCardLevelUpTagOpen())
+	elseif slot0._mo.goodsId == StoreEnum.SeasonCardGoodsId then
+		gohelper.setActive(slot0._gowenhao, true)
+
+		slot0._wenhaoClick = gohelper.getClick(slot0._gowenhao)
+
+		slot0._wenhaoClick:AddClickListener(slot0._showSeasonCardTips, slot0)
 	else
-		gohelper.setActive(slot0._gowenhao, false)
-
-		if slot0.wenhaoClick then
-			slot0.wenhaoClick:RemoveClickListener()
-
-			slot0.wenhaoClick = nil
-		end
+		GameUtil.onDestroyViewMember_ClickListener(slot0, "_wenhaoClick")
 	end
 
 	slot0.isLevelOpen = slot1:isLevelOpen()
@@ -272,22 +274,15 @@ function slot0.onUpdateMO(slot0, slot1)
 
 	gohelper.setActive(slot0._gooptionalgift, slot8)
 	gohelper.setActive(slot0._gooptionalvx, slot8 and not slot1.goodsId == StoreEnum.NewbiePackId)
-
-	if slot0._gosummonsimulationpickfx then
-		gohelper.setActive(slot0._gosummonsimulationpickfx, slot0._mo.config.bigImg == StoreEnum.SummonSimulationPick)
-	end
-
 	gohelper.setActive(slot0._txtpickdesc.gameObject, slot1.goodsId == StoreEnum.NewbiePackId)
 	slot0:_onUpdateMO_newMatUpTag(slot1)
 	slot0:_onUpdateMO_coBrandedTag(slot1)
+	slot0:_onUpdateMO_gosummonSimulationPickFX(slot1)
 	slot0:refreshSkinTips(slot1)
 end
 
 function slot0.showMonthCardTips(slot0)
-	ViewMgr.instance:openView(ViewName.StoreTipView, {
-		showTop = true
-	})
-	AudioMgr.instance:trigger(20002004)
+	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
 end
 
 function slot0.getAnimator(slot0)
@@ -319,12 +314,7 @@ end
 function slot0.onDestroy(slot0)
 	slot0._btn:RemoveClickListener()
 	slot0._btnCost:RemoveClickListener()
-
-	if slot0.wenhaoClick then
-		slot0.wenhaoClick:RemoveClickListener()
-
-		slot0.wenhaoClick = nil
-	end
+	GameUtil.onDestroyViewMember_ClickListener(slot0, "_wenhaoClick")
 end
 
 function slot0._onUpdateMO_newMatUpTag(slot0, slot1)
@@ -333,6 +323,29 @@ end
 
 function slot0._onUpdateMO_coBrandedTag(slot0, slot1)
 	gohelper.setActive(slot0._gocobranded, slot1.config.showLinkageTag or false)
+end
+
+function slot0._showSeasonCardTips(slot0)
+	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.SeasonCardTipsDesc))
+end
+
+slot1 = {
+	811466,
+	StoreEnum.SeasonCardGoodsId
+}
+
+function slot0._onUpdateMO_gosummonSimulationPickFX(slot0, slot1)
+	if not (slot1.config.bigImg == StoreEnum.SummonSimulationPick) then
+		for slot6, slot7 in ipairs(uv0) do
+			if slot1.goodsId == slot7 then
+				slot2 = true
+
+				break
+			end
+		end
+	end
+
+	gohelper.setActive(slot0._gosummonSimulationPickFX, slot2)
 end
 
 return slot0

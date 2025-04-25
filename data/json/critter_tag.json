@@ -9,7 +9,9 @@
     "name": "language_10056046",
     "desc": "language_10056047",
     "effects": "baseEfficiency_lv1_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseEfficiency_lv2",
@@ -21,7 +23,9 @@
     "name": "language_10056048",
     "desc": "language_10056049",
     "effects": "baseEfficiency_lv2_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseEfficiency_lv3",
@@ -33,7 +37,9 @@
     "name": "language_10056050",
     "desc": "language_10056051",
     "effects": "baseEfficiency_lv3_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseEfficiency_lv4",
@@ -45,7 +51,9 @@
     "name": "language_10056052",
     "desc": "language_10056053",
     "effects": "baseEfficiency_lv4_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseEfficiency_lv5",
@@ -57,7 +65,9 @@
     "name": "language_10056054",
     "desc": "language_10056055",
     "effects": "baseEfficiency_lv5_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "basePatience_lv1",
@@ -69,7 +79,9 @@
     "name": "language_10056056",
     "desc": "language_10056057",
     "effects": "basePatience_lv1_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "basePatience_lv2",
@@ -81,7 +93,9 @@
     "name": "language_10056058",
     "desc": "language_10056059",
     "effects": "basePatience_lv2_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "basePatience_lv3",
@@ -93,7 +107,9 @@
     "name": "language_10056060",
     "desc": "language_10056061",
     "effects": "basePatience_lv3_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "basePatience_lv4",
@@ -105,7 +121,9 @@
     "name": "language_10056062",
     "desc": "language_10056063",
     "effects": "basePatience_lv4_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "basePatience_lv5",
@@ -117,7 +135,9 @@
     "name": "language_10056064",
     "desc": "language_10056065",
     "effects": "basePatience_lv5_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseIdea_lv1",
@@ -129,7 +149,9 @@
     "name": "language_10056066",
     "desc": "language_10056067",
     "effects": "baseIdea_lv1_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseIdea_lv2",
@@ -141,7 +163,9 @@
     "name": "language_10056068",
     "desc": "language_10056069",
     "effects": "baseIdea_lv2_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseIdea_lv3",
@@ -153,7 +177,9 @@
     "name": "language_10056070",
     "desc": "language_10056071",
     "effects": "baseIdea_lv3_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseIdea_lv4",
@@ -165,7 +191,9 @@
     "name": "language_10056072",
     "desc": "language_10056073",
     "effects": "baseIdea_lv4_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "baseIdea_lv5",
@@ -177,7 +205,9 @@
     "name": "language_10056074",
     "desc": "language_10056075",
     "effects": "baseIdea_lv5_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "titekele",
@@ -189,7 +219,9 @@
     "name": "language_10009005",
     "desc": "language_10056076",
     "effects": "titekele",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "abangaku",
@@ -201,7 +233,9 @@
     "name": "language_10009005",
     "desc": "language_10056077",
     "effects": "abangaku",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "telibodeluo",
@@ -213,7 +247,9 @@
     "name": "language_10009005",
     "desc": "language_10056078",
     "effects": "telibodeluo_01|telibodeluo_02|telibodeluo_03|telibodeluo_04|telibodeluo_05|telibodeluo_06|telibodeluo_07|telibodeluo_08|telibodeluo_09|telibodeluo_10",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "fengbaobaomao",
@@ -225,7 +261,9 @@
     "name": "language_10009005",
     "desc": "language_10056079",
     "effects": "fengbaobaomao_01|fengbaobaomao_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "shengshikabang",
@@ -237,7 +275,9 @@
     "name": "language_10009005",
     "desc": "language_10056080",
     "effects": "shengshikabang_01|shengshikabang_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "xianjingdudu",
@@ -249,7 +289,9 @@
     "name": "language_10009005",
     "desc": "language_10056081",
     "effects": "xianjingdudu_01",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "fubingliequan",
@@ -261,7 +303,9 @@
     "name": "language_10009005",
     "desc": "language_10056082",
     "effects": "fubingliequan",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 2,
+    "luckyItemIds": "250003"
   },
   {
     "id": "ganjukabang",
@@ -273,7 +317,9 @@
     "name": "language_10009005",
     "desc": "language_10056083",
     "effects": "ganjukabang",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "jianfengzuanzi",
@@ -285,7 +331,9 @@
     "name": "language_10009005",
     "desc": "language_10056084",
     "effects": "jianfengzuanzi",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "kabangkelu",
@@ -297,7 +345,9 @@
     "name": "language_10009005",
     "desc": "language_10056085",
     "effects": "kabangkelu",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "maoyu",
@@ -309,7 +359,9 @@
     "name": "language_10009005",
     "desc": "language_10056086",
     "effects": "maoyu_01|maoyu_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "saermati",
@@ -321,7 +373,9 @@
     "name": "language_10009005",
     "desc": "language_10056087",
     "effects": "saermati_01|saermati_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "shouhuakabang",
@@ -333,7 +387,9 @@
     "name": "language_10009005",
     "desc": "language_10056088",
     "effects": "shouhuakabang_01|shouhuakabang_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "yuexiangzhaochao",
@@ -345,7 +401,9 @@
     "name": "language_10009005",
     "desc": "language_10056089",
     "effects": "yuexiangzhaochao",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "zhixiangkabang",
@@ -357,7 +415,9 @@
     "name": "language_10009005",
     "desc": "language_10056090",
     "effects": "zhixiangkabang_01|zhixiangkabang_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_rest_1",
@@ -369,7 +429,9 @@
     "name": "language_10056091",
     "desc": "language_10056092",
     "effects": "normal_rest_1",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_mix_1",
@@ -381,7 +443,9 @@
     "name": "language_10056093",
     "desc": "language_10056094",
     "effects": "normal_mix_1_01|normal_mix_1_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_mix_2",
@@ -393,7 +457,9 @@
     "name": "language_10056095",
     "desc": "language_10056096",
     "effects": "normal_mix_2_01|normal_mix_2_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_mix_3",
@@ -405,7 +471,9 @@
     "name": "language_10056097",
     "desc": "language_10056098",
     "effects": "normal_mix_3_01|normal_mix_3_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_mix_4",
@@ -417,7 +485,9 @@
     "name": "language_10056099",
     "desc": "language_10056100",
     "effects": "normal_mix_4_01|normal_mix_4_02",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_1",
@@ -429,7 +499,9 @@
     "name": "language_10056101",
     "desc": "language_10056085",
     "effects": "normal_efficiency_1",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_2",
@@ -441,7 +513,9 @@
     "name": "language_10056102",
     "desc": "language_10056103",
     "effects": "normal_efficiency_2",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_3",
@@ -453,7 +527,9 @@
     "name": "language_10056104",
     "desc": "language_10056105",
     "effects": "normal_efficiency_3",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_4",
@@ -465,7 +541,9 @@
     "name": "language_10056106",
     "desc": "language_10056107",
     "effects": "normal_efficiency_4",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_5",
@@ -477,7 +555,9 @@
     "name": "language_10056108",
     "desc": "language_10056109",
     "effects": "normal_efficiency_5",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_6",
@@ -489,7 +569,9 @@
     "name": "language_10056110",
     "desc": "language_10056111",
     "effects": "normal_efficiency_6",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_7",
@@ -501,7 +583,9 @@
     "name": "language_10056112",
     "desc": "language_10056113",
     "effects": "normal_efficiency_7",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_efficiency_8",
@@ -513,7 +597,9 @@
     "name": "language_10056114",
     "desc": "language_10056115",
     "effects": "normal_efficiency_8",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_1",
@@ -525,7 +611,9 @@
     "name": "language_10056116",
     "desc": "language_10056089",
     "effects": "normal_patience_1",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_2",
@@ -537,7 +625,9 @@
     "name": "language_10056117",
     "desc": "language_10056118",
     "effects": "normal_patience_2",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_3",
@@ -549,7 +639,9 @@
     "name": "language_10056119",
     "desc": "language_10056120",
     "effects": "normal_patience_3",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_4",
@@ -561,7 +653,9 @@
     "name": "language_10056121",
     "desc": "language_10056122",
     "effects": "normal_patience_4",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_5",
@@ -573,7 +667,9 @@
     "name": "language_10056123",
     "desc": "language_10056124",
     "effects": "normal_patience_5",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_6",
@@ -585,7 +681,9 @@
     "name": "language_10056125",
     "desc": "language_10056126",
     "effects": "normal_patience_6",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_7",
@@ -597,7 +695,9 @@
     "name": "language_10056127",
     "desc": "language_10056128",
     "effects": "normal_patience_7",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_patience_8",
@@ -609,7 +709,9 @@
     "name": "language_10056129",
     "desc": "language_10056130",
     "effects": "normal_patience_8",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_1",
@@ -621,7 +723,9 @@
     "name": "language_10056131",
     "desc": "language_10056132",
     "effects": "normal_idea_1",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_2",
@@ -633,7 +737,9 @@
     "name": "language_10056133",
     "desc": "language_10056134",
     "effects": "normal_idea_2",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_3",
@@ -645,7 +751,9 @@
     "name": "language_10056135",
     "desc": "language_10056136",
     "effects": "normal_idea_3",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_4",
@@ -657,7 +765,9 @@
     "name": "language_10056137",
     "desc": "language_10056138",
     "effects": "normal_idea_4",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_5",
@@ -669,7 +779,9 @@
     "name": "language_10056139",
     "desc": "language_10056140",
     "effects": "normal_idea_5",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_6",
@@ -681,7 +793,9 @@
     "name": "language_10056141",
     "desc": "language_10056142",
     "effects": "normal_idea_6",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_7",
@@ -693,7 +807,9 @@
     "name": "language_10056143",
     "desc": "language_10056144",
     "effects": "normal_idea_7",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_idea_8",
@@ -705,7 +821,9 @@
     "name": "language_10056145",
     "desc": "language_10056146",
     "effects": "normal_idea_8",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 1,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_reproduction_1",
@@ -717,7 +835,9 @@
     "name": "language_10056147",
     "desc": "language_10056148",
     "effects": "normal_reproduction_1",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_reproduction_2",
@@ -729,7 +849,9 @@
     "name": "language_10056149",
     "desc": "language_10056150",
     "effects": "normal_reproduction_2",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   },
   {
     "id": "normal_reproduction_3",
@@ -741,6 +863,22 @@
     "name": "language_10056151",
     "desc": "language_10056152",
     "effects": "normal_reproduction_3",
-    "inheritance": false
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
+  },
+  {
+    "id": "sikuiyinke",
+    "type": 3,
+    "group": 0,
+    "needAttributeLevel": 0,
+    "skillIcon": "critter_manufacture_skillicon_4",
+    "filterTag": "201",
+    "name": "language_10009005",
+    "desc": "language_10068618",
+    "effects": "sikuiyinke",
+    "inheritance": false,
+    "luckyItemType": 0,
+    "luckyItemIds": ""
   }
 ]

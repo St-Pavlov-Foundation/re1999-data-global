@@ -6,7 +6,7 @@ slot1 = 5
 function slot0.start(slot0, slot1, slot2)
 	slot0._langShortcuts, slot0._langVersions = slot0:_getLangVersions()
 
-	if #slot0._langShortcuts == 0 or GameResMgr.IsFromEditorDir then
+	if #slot0._langShortcuts == 0 then
 		slot0._result = {}
 
 		slot1(slot2)
@@ -67,7 +67,7 @@ function slot0._onWebResponse(slot0, slot1, slot2, slot3)
 
 			slot0._useBackupUrl = not slot0._useBackupUrl
 
-			MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.CheckVersionFail, MsgBoxEnum.BoxType.Yes_No, slot0._httpGet, nil, , slot0, nil, , slot3)
+			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.CheckVersionFail, MsgBoxEnum.BoxType.Yes_No, booterLang("retry"), "retry", nil, , slot0._httpGet, nil, , slot0, nil, , slot3)
 		else
 			slot0:_httpGet()
 		end
@@ -119,8 +119,11 @@ function slot0._getLangVersions(slot0)
 	slot1 = SLFramework.GameUpdate.OptionalUpdate.Instance
 	slot2 = {}
 	slot3 = {}
+	slot4 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
-	for slot9 = 1, #HotUpdateVoiceMgr.instance:getSupportVoiceLangs() do
+	table.insert(slot4, "res-HD")
+
+	for slot9 = 1, #slot4 do
 		if slot4[slot9] ~= GameConfig:GetDefaultVoiceShortcut() and string.nilorempty(slot1:GetLocalVersion(slot10)) then
 			table.insert(slot2, slot10)
 

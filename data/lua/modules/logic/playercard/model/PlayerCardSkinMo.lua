@@ -38,6 +38,14 @@ function slot0.setEmpty(slot0)
 	slot0.id = 0
 end
 
+function slot0.isUnLock(slot0)
+	if slot0._isEmpty then
+		return true
+	end
+
+	return ItemModel.instance:getItemCount(slot0.id) > 0
+end
+
 function slot0.checkIsUse(slot0)
 	if PlayerCardModel.instance:getPlayerCardSkinId() and slot1 ~= 0 then
 		return slot1 == slot0.id

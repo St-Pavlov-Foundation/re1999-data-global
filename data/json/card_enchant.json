@@ -58,5 +58,15 @@
     "decStage": 303,
     "feature": "precision#201#1000#213#1000",
     "desc": "language_10054304"
+  },
+  {
+    "id": 10007,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "",
+    "stage": 212,
+    "decStage": 303,
+    "feature": "depresse#100#100",
+    "desc": "language_10066655"
   }
 ]

@@ -11,7 +11,7 @@ function slot0.onStart(slot0, slot1)
 	slot0._hasAddEvent = false
 	slot0._entity = slot1
 
-	if FightDataHelper.entityMgr:getById(slot0._entity.id) and not slot2:isCharacter() then
+	if FightDataHelper.entityMgr:getById(slot0._entity.id) and slot0._entity and slot0._entity.spine and not slot0._entity.spine:hasAnimation(SpineAnimState.posture) then
 		slot0:onDone(true)
 
 		return

@@ -14,7 +14,7 @@ function slot0.onStart(slot0)
 		slot0:com_sendFightEvent(FightEvent.PlayCardAroundUpRank, slot1, slot3.skillId)
 	end
 
-	slot0:com_registTimer(slot0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	slot0:com_registTimer(slot0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed() + 0.1)
 end
 
 function slot0.clearWork(slot0)

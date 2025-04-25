@@ -9,7 +9,7 @@ function slot0.addEvents(slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, slot0._onCombineOneCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, slot0._onPlayHandCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnRevertCard, slot0._onRevertCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RespResetCard, slot0._RespResetCard, slot0)
+	slot0:addEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnResetCard, slot0._onResetCard, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.RespBeginRound, slot0._respBeginRound, slot0)
 	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
@@ -23,7 +23,7 @@ function slot0.removeEvents(slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, slot0._onCombineOneCard, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, slot0._onPlayHandCard, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnRevertCard, slot0._onRevertCard, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RespResetCard, slot0._RespResetCard, slot0)
+	slot0:removeEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnResetCard, slot0._onResetCard, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, slot0._respBeginRound, slot0)
 	slot0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
@@ -127,7 +127,7 @@ end
 function slot0._onRevertCard(slot0, slot1)
 end
 
-function slot0._RespResetCard(slot0)
+function slot0._onCancelOperation(slot0)
 	slot0.last_move_point = {}
 
 	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)) do
@@ -138,7 +138,7 @@ function slot0._RespResetCard(slot0)
 end
 
 function slot0._onResetCard(slot0)
-	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)) do
+	for slot5, slot6 in pairs(FightDataHelper.entityMgr:getAllEntityData()) do
 		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, slot6.id)
 	end
 end

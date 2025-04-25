@@ -778,7 +778,8 @@ function slot0._getHeroBaseAttr(slot0, slot1)
 end
 
 function slot0._getMontBaseAttr(slot0, slot1)
-	slot3 = string.splitToNumber(lua_monster_skill_template.configDict[slot1.skillTemplate].template, "#")
+	slot2 = lua_monster_skill_template.configDict[slot1.skillTemplate]
+	slot3 = CharacterDataConfig.instance:getMonsterAttributeScoreList(slot1.id)
 	slot9 = 4
 
 	table.insert(slot3, 2, table.remove(slot3, slot9))

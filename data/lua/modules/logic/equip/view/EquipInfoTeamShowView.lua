@@ -870,6 +870,7 @@ function slot0.onClose(slot0)
 	slot0._simageequip:UnLoadImage()
 	slot0._simagebg:UnLoadImage()
 	slot0._simagecompare:UnLoadImage()
+	slot0.listModel:clearRecommend()
 	slot0.listModel:clear()
 	EquipFilterModel.instance:clear(slot0.viewName)
 end

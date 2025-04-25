@@ -57,6 +57,7 @@ slot0.Layer = {
 	VersionActivity1_4Main = 400,
 	VersionActivity1_3ArmPipe = 305,
 	VersionActivity2_4WuErLiXi = 2405,
+	VersionActivity2_5Main = 2105,
 	VersionActivity1_9SemmelWeisGift = 902,
 	VersionActivity1_3Act120 = 308,
 	RoleStoryActivity = 402,

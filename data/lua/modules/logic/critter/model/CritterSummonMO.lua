@@ -52,4 +52,12 @@ function slot0.getCritterMos(slot0)
 	return slot0.critterMos
 end
 
+function slot0.getCritterCount(slot0)
+	for slot5, slot6 in ipairs(slot0.critterMos) do
+		slot1 = 0 + slot6:getPoolCount()
+	end
+
+	return slot1
+end
+
 return slot0

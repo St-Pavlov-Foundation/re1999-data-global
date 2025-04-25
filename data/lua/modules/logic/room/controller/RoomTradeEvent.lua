@@ -6,6 +6,7 @@ slot0.OnFinishOrder = 102
 slot0.OnRefreshDailyOrder = 103
 slot0.OnTracedDailyOrder = 104
 slot0.PlayCloseTVAnim = 105
+slot0.OnLockedDailyOrder = 106
 slot0.OnCutOrderPage = 110
 slot0.OnFlyCurrency = 120
 slot0.OnGetTradeTaskInfo = 201

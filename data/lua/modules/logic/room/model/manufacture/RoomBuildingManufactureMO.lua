@@ -30,6 +30,8 @@ function slot0.setSlotInfos(slot0, slot1)
 
 		table.sort(slot0.slotMOList, uv0)
 	end
+
+	slot0:setNeedMatDict()
 end
 
 function slot0.setWorkCritterInfoList(slot0, slot1, slot2)
@@ -76,6 +78,20 @@ function slot0.clearAllWorkCritterInfo(slot0)
 		slotDict = {},
 		critterDict = {}
 	}
+end
+
+function slot0.setNeedMatDict(slot0)
+	slot0._needMatDict = {}
+
+	if RoomConfig.instance:getBuildingType(RoomMapBuildingModel.instance:getBuildingMOById(slot0.id) and slot1.buildingId) == RoomBuildingEnum.BuildingType.Process or slot2 == RoomBuildingEnum.BuildingType.Manufacture then
+		for slot6, slot7 in pairs(slot0.slotMODict) do
+			if slot7:getSlotManufactureItemId() and slot8 ~= 0 then
+				for slot13, slot14 in ipairs(ManufactureConfig.instance:getNeedMatItemList(slot8)) do
+					slot0._needMatDict[slot16] = slot14.quantity + (slot0._needMatDict[ManufactureConfig.instance:getItemId(slot14.id)] or 0)
+				end
+			end
+		end
+	end
 end
 
 function slot0.getBuildingUid(slot0)
@@ -324,6 +340,10 @@ function slot0.getNextEmptyCritterSlot(slot0)
 	end
 
 	return slot1
+end
+
+function slot0.getNeedMatDict(slot0)
+	return slot0._needMatDict or {}
 end
 
 return slot0
