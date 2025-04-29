@@ -191,12 +191,14 @@ function slot0._onLoadCallback(slot0)
 end
 
 function slot0.onClose(slot0)
+	slot0:disposeLoader()
 	slot0:removeEventCb(Activity201Controller.instance, Activity201Event.OnGetInfoSuccess, slot0._refreshUI, slot0)
 	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
 end
 
 function slot0.onDestroyView(slot0)
 	GameUtil.onDestroyViewMemberList(slot0, "_friendItemList")
+	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
 end
 
 function slot0._create_TurnBackFullViewFriendItem(slot0, slot1, slot2)
@@ -209,6 +211,20 @@ function slot0._create_TurnBackFullViewFriendItem(slot0, slot1, slot2)
 	slot3:init(slot2 or gohelper.cloneInPlace(slot0._goplayer1))
 
 	return slot3
+end
+
+function slot0.disposeLoader(slot0)
+	if slot0._loader then
+		slot0._loader:dispose()
+
+		slot0._loader = nil
+	end
+
+	for slot4, slot5 in ipairs(slot0._friendItemList or {}) do
+		if slot5 then
+			slot5:disposeLoader()
+		end
+	end
 end
 
 return slot0

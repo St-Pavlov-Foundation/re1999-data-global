@@ -30366,6 +30366,9 @@
   "lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_liangyue.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_liangyue.png"
   ],
+  "lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_saimeierweisi.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_saimeierweisi.png"
+  ],
   "lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_selfselectsix2.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_adventuretask/v2a5_summon_selfselectsix2.png"
   ],
@@ -33608,6 +33611,9 @@
   ],
   "lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_liangyue.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_liangyue.png"
+  ],
+  "lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_saimeierweisi.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_saimeierweisi.png"
   ],
   "lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_selfselectsix2.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_adventuretask/v2a5_summon_selfselectsix2.png"

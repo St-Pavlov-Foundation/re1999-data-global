@@ -104,11 +104,24 @@ end
 function slot0.onDestroyView(slot0)
 end
 
+slot0.OffX = 0
+slot0.ItemW = 284
+slot0.ItemSpace = 0
+slot0.ListW = 968.8
+
 function slot0.onSelectChange(slot0, slot1)
 	if slot0._index ~= slot1 then
 		slot0._index = slot1
 
 		SettingsKeyListModel.instance:SetActivity(slot0._index)
+
+		if recthelper.getAnchorX(slot0._topScrollContent) < -(uv0.OffX + (uv0.ItemW + uv0.ItemSpace) * (slot1 - 1)) - uv0.OffX or -(slot3 - uv0.ItemW) > -slot2 + uv0.ListW then
+			if slot2 > slot3 - uv0.OffX then
+				slot4 = slot3 + uv0.ListW - uv0.ItemW + uv0.OffX
+			end
+
+			recthelper.setAnchorX(slot0._topScrollContent, slot4)
+		end
 	end
 end
 
@@ -125,11 +138,13 @@ function slot0.createTopScroll(slot0)
 	slot1.cellSpaceH = 0
 	slot1.cellSpaceV = 0
 	slot0._topScroll = LuaListScrollView.New(SettingsKeyTopListModel.instance, slot1)
+	slot0._topScrollContent = gohelper.findChild(slot0.viewGO, "topScroll/Viewport/Content").transform
 
 	slot0:addChildView(slot0._topScroll)
 	SettingsKeyTopListModel.instance:InitList()
 
 	slot0._index = 1
+	slot0._keyTopListCount = SettingsKeyTopListModel.instance:getCount()
 
 	slot0._topScroll:selectCell(slot0._index, true)
 end

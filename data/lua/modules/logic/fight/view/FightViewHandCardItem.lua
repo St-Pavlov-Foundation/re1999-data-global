@@ -763,7 +763,7 @@ function slot0._onStageChange(slot0, slot1)
 			slot0._long:AddLongPressListener(slot0._onLongPress, slot0)
 
 			if PCInputController.instance:getIsUse() then
-				slot0._long:AddHoverListener(slot0._onHover, slot0)
+				-- Nothing
 			end
 
 			slot0._rightClick:AddClickListener(slot0._onClickRight, slot0)
@@ -797,6 +797,14 @@ function slot0.stopLongPressEffect(slot0)
 end
 
 function slot0._onClickThis(slot0)
+	if slot0._isLongPress then
+		slot0._isLongPress = false
+
+		logNormal("has LongPress, can't click card")
+
+		return
+	end
+
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end

@@ -18,9 +18,14 @@ function StoryTool.filterMarkTop(slot0)
 	for slot6 = 1, #string.split(slot0, "</marktop>") do
 		slot7 = string.gsub(slot2[slot6], "(<marktop=%s>)", "")
 		slot10 = string.format("<marktop=%s>", string.split(string.split(slot7, "<marktop=")[2], ">")[1])
+		slot1 = "" .. string.gsub(slot7, slot10, "<nobr>")
 
 		if string.find(slot7, slot10) then
-			slot1 = "" .. string.gsub(slot7, slot10, "<nobr>") .. "​</nobr>"
+			for slot15 = 1, slot6 do
+				slot1 = slot1 .. "​"
+			end
+
+			slot1 = slot1 .. "</nobr>"
 		end
 	end
 
@@ -66,7 +71,11 @@ function StoryTool.getMarkTopTextList(slot0)
 		for slot6 = 1, #slot2 - 1 do
 			slot8 = string.split(string.split(slot2[slot6], "<marktop=")[2], ">")
 
-			table.insert(slot1, slot8[1] .. "|" .. slot8[2] .. "​")
+			for slot13 = 1, slot6 do
+				slot9 = slot8[1] .. "|" .. slot8[2] .. "​"
+			end
+
+			table.insert(slot1, slot9)
 		end
 	end
 

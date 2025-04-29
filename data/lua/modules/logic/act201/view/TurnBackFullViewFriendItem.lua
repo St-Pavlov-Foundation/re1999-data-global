@@ -97,12 +97,7 @@ function slot0.destroy(slot0)
 
 	slot0._roleInfo = nil
 
-	if slot0._loader then
-		slot0._loader:dispose()
-
-		slot0._loader = nil
-	end
-
+	slot0:disposeLoader()
 	slot0:__onDispose()
 end
 
@@ -118,6 +113,14 @@ function slot0._refreshItemNum(slot0)
 	slot1 = slot0._index < 10 and "0" .. slot0._index or slot0._index
 	slot0._txtframenum1.text = slot1
 	slot0._txtframenum2.text = slot1
+end
+
+function slot0.disposeLoader(slot0)
+	if slot0._loader then
+		slot0._loader:dispose()
+
+		slot0._loader = nil
+	end
 end
 
 return slot0
